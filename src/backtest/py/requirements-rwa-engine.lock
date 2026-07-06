@@ -1,0 +1,27 @@
+# ORGΛNON — the LOCKED RWA-verdict reproducibility environment (Warranty Phase 1, F-ENV). This is the environment under
+# which the settled RWA verdict (RWA-VERDICT.md, pinned NOT-YET) is reproducible — NOT the studio-slim env. The Phase-1
+# forensics (forensics-rwa.json) proved the NOT-YET->DISQUALIFIED drift is ENVIRONMENTAL: running the generator in the
+# studio-slim Python-3.9 env fails the golden-noise self-test (purgedcv is Python-3.11-only) -> the verdict fail-safes to
+# DISQUALIFIED. Under THIS environment the golden-noise keystone reproduces byte-identically (DSR=0.478421, matches the
+# independent purgedcv impl). The generator itself lives in the MONOREPO (script/rwa-verdict.ts), not the standalone.
+#
+# Interpreter: Python 3.11.x (built/verified on 3.11.15). Create fresh:
+#   python3.11 -m venv .venv-engine && .venv-engine/bin/pip install -r requirements-rwa-engine.lock
+#
+# The golden-noise KEYSTONE minimal set (proven to reproduce the keystone this sprint):
+numpy==1.26.4
+scipy==1.17.1
+purgedcv==0.1.2
+# The FULL engine set (requirements.txt, needed by the generator's Loop.run/DataAdapter path — heavy solver stack):
+pandas==2.3.3
+quantstats==0.0.81
+PyPortfolioOpt==1.6.0
+riskfolio-lib==7.3.0
+scikit-learn==1.9.0
+cvxpy==1.7.5
+clarabel==0.11.1
+matplotlib==3.11.0
+#
+# INPUT DATA (F-ENV): the generator additionally requires the pinned FRED-gated discovery snapshot at data/snapshot/
+# (frozen.ts IMMUTABLE_DATA: data/snapshot/MANIFEST.json). It is gitignored local data and ABSENT on a clone — so full
+# byte-reproduction of the NOT-YET token is BLOCKED-on-absent-data here, named honestly (owner: the data-plane sprint / P1-1).

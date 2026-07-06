@@ -1,0 +1,30 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "identity-provenance-note",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "POST /pool/compose",
+      "interaction": "read the K-LEGIBLE note on a pool report + a funding verdict",
+      "expected": "the identity provenance note renders neutral — self-declared identity, the edit-ratchet keyed per declared author, the limiter per connection",
+      "met": true,
+      "evidence": "Identity provenance: author identity is self-declared and not verified. The family-of-attempts bar (the edit-ratchet) is keyed per declared "
+    }
+  ],
+  "failureState": {
+    "route": "(neutrality control)",
+    "interaction": "a seeded reassuring identity sentence ('your work is safe')",
+    "expected": "CAUGHT by the neutrality check — false comfort about self-declared identity is refused",
+    "met": true,
+    "evidence": "identityNoteNeutral rejects reassurance"
+  },
+  "allMet": true,
+  "at": "2026-07-06",
+  "mappings": [
+    {
+      "criterionId": "identity-sentences-neutral",
+      "exerciseRef": "POST /pool/compose",
+      "expectedBehavior": "the identity provenance note renders neutral — self-declared identity, the edit-ratchet keyed per declared author, the limiter per connection"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "guided-builder-basis",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "GET /",
+      "interaction": "load the dashboard — the BASIS form shows the MIN-tier + EXPERIMENTAL BEFORE composing",
+      "expected": "the weakest-leg tier (MIN(legs)) + EXPERIMENTAL render INLINE in the form, before the user composes (R-BASIS)",
+      "met": true,
+      "evidence": "status 200; weakest-leg tier + EXPERIMENTAL in-form"
+    },
+    {
+      "route": "POST /builder/basis",
+      "interaction": "compose a basis spec (binance CeFi T1 vs hyperliquid DeFi T2) and submit",
+      "expected": "a verdict renders with the per-leg tiers + the basis tier = MIN(legs) = T2 + EXPERIMENTAL (the cross-venue domain at its true tier)",
+      "met": true,
+      "evidence": "status 200; VERDICT + MIN(legs)=T2 + EXPERIMENTAL"
+    }
+  ],
+  "failureState": {
+    "route": "POST /builder/basis",
+    "interaction": "compose a MISMATCHED-venue pair (binance as both legs — a basis needs one CeFi + one DeFi leg)",
+    "expected": "the mismatched pair is REFUSED before registration with an honest message; no fabricated verdict",
+    "met": true,
+    "evidence": "status 200; INVALID COMPOSITION, no VERDICT"
+  },
+  "allMet": true,
+  "at": "2026-07-05",
+  "contentSha": "1d898e5e8a8d136a456280da8d21dcdb18b64cc2031153b2739e33c20cf66ebe",
+  "verify": {
+    "ok": true,
+    "issues": []
+  }
+}

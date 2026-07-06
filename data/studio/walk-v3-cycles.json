@@ -1,0 +1,155 @@
+{
+  "protocol": "walk-v3-cycles",
+  "rule": "T-ROTATE (rotation-complete + two consecutive clean), C-LOOP, C-PARK, F-BUDGET (the protected majority)",
+  "cap": 10,
+  "cyclesRun": 3,
+  "rotationComplete": true,
+  "rotationThemes": [
+    "injection",
+    "laundering",
+    "tamper",
+    "availability",
+    "doc-lies",
+    "ux-priming",
+    "park-legitimacy"
+  ],
+  "cleanFlags": [
+    false,
+    true,
+    true
+  ],
+  "converged2": true,
+  "subject": "the STRENGTHENED standalone (V8 surfaces: capability matrix, publication gate, reproducibility contracts, terminal-marker wall, absences inventory)",
+  "priorCycleReplay": "cycle-3 replayed cycle-1 from its transcript",
+  "pollutionSpotAudit": "cycle-3 tamper theme — CLEAN (0 pollution, 0 deletions)",
+  "docLiesMatrixVsReality": "green + README byte-match locked (W1-01 fix)",
+  "chainOk": true,
+  "cycles": [
+    {
+      "cycle": 1,
+      "themes": [
+        "injection",
+        "laundering",
+        "tamper",
+        "availability",
+        "doc-lies",
+        "ux-priming",
+        "park-legitimacy"
+      ],
+      "depth": {
+        "personas": [
+          "user",
+          "external-agent",
+          "auditor"
+        ],
+        "acts": [
+          "fresh-clone setup (studio-slim lock)",
+          "battery",
+          "exercise the capability matrix (README + Trust Panel)",
+          "exercise the publication gate",
+          "run the forensics verify",
+          "7-theme red-team"
+        ],
+        "mode": "full"
+      },
+      "arms": {
+        "RUN": "ADVANCE",
+        "IDENTIFY": "ADVANCE",
+        "FIX": "ADVANCE",
+        "QA": "ADVANCE",
+        "RED-TEAM": "REPEAT",
+        "RE-EVALUATE": "REPEAT"
+      },
+      "headline": "REPEAT",
+      "newIssues": [
+        "W1-01",
+        "W2-01"
+      ],
+      "openNonParked": 0,
+      "clean": false,
+      "notes": "surfaced 3 candidates; 1 REFUTED on verification (W3: the matrix claims MCP, alleged absent — but src/studio/routes.ts MCP_TOOLS is genuinely present, so the claim is TRUE; a walk-check error, not a system defect), 2 GENUINE (W1-01 doc-lies README-matrix drift; W2-01 publication gate with no chokepoint), both fixed. Adversarial verification before counting (A′#8)."
+    },
+    {
+      "cycle": 2,
+      "themes": [
+        "injection",
+        "laundering",
+        "tamper",
+        "availability",
+        "doc-lies",
+        "ux-priming",
+        "park-legitimacy"
+      ],
+      "depth": {
+        "personas": [
+          "user",
+          "external-agent"
+        ],
+        "acts": [
+          "fresh-clone-with-fixes",
+          "battery",
+          "README matrix byte-match on trial",
+          "publish-preflight refuses (agent)",
+          "7-theme red-team"
+        ],
+        "mode": "abbreviated"
+      },
+      "arms": {
+        "RUN": "ADVANCE",
+        "IDENTIFY": "ADVANCE",
+        "FIX": "ADVANCE",
+        "QA": "ADVANCE",
+        "RED-TEAM": "ADVANCE",
+        "RE-EVALUATE": "ADVANCE"
+      },
+      "headline": "ADVANCE",
+      "newIssues": [],
+      "openNonParked": 0,
+      "clean": true,
+      "notes": "W1/W2 fixes on trial: the README matrix byte-match test is green; the publish-preflight refuses without consent (exit 1) and allows with it (exit 0). All 7 themes CLEAN."
+    },
+    {
+      "cycle": 3,
+      "themes": [
+        "injection",
+        "laundering",
+        "tamper",
+        "availability",
+        "doc-lies",
+        "ux-priming",
+        "park-legitimacy"
+      ],
+      "depth": {
+        "personas": [
+          "user",
+          "external-agent",
+          "auditor"
+        ],
+        "acts": [
+          "fresh-clone",
+          "battery",
+          "PRIOR-CYCLE-1 REPLAY",
+          "pollution SPOT-AUDIT (tamper)",
+          "tense scan (doc-lies)",
+          "matrix-vs-reality (doc-lies)",
+          "park-legitimacy re-review",
+          "7-theme red-team"
+        ],
+        "mode": "full"
+      },
+      "arms": {
+        "RUN": "ADVANCE",
+        "IDENTIFY": "ADVANCE",
+        "FIX": "ADVANCE",
+        "QA": "ADVANCE",
+        "RED-TEAM": "ADVANCE",
+        "RE-EVALUATE": "ADVANCE"
+      },
+      "headline": "ADVANCE",
+      "newIssues": [],
+      "openNonParked": 0,
+      "clean": true,
+      "notes": "prior-cycle-1 replay from the transcript (W3 stays refuted; W1/W2 stay fixed). Pollution spot-audit over the live ledgers CLEAN (0 pollution, 0 deletions, positive-control-verified). doc-lies: matrix-vs-reality green + byte-match locked; tense scan flags only descriptive past-tense pointer prose (human-reckoned evidenced, not overclaims). park-legitimacy: every open park re-reviewed four-fielded (P0-1 RESOLVED-ENVIRONMENTAL, P1-1, P2-1, + 2 inherited); zero convenience parks. All 7 themes CLEAN."
+    }
+  ]
+}

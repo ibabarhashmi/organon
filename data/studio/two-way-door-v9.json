@@ -1,0 +1,17 @@
+{
+  "protocol": "two-way-door-v9",
+  "at": "2026-07-04",
+  "rule": "D-TWOWAY — MATCH closes ENVIRONMENTAL at the letter (asterisk retired); MISMATCH reopens as LOGIC-candidate via supersession (the system working); the pin unchanged in both; a re-pin without root cause is a Halt",
+  "credentialPresent": false,
+  "snapshotPresent": false,
+  "outcome": "BLOCKED-on-credential",
+  "rwaPinUnchanged": true,
+  "rwaVerdictSha": "9cf94c8abf3570f08dc474cb47c4e37c5fbda9fd9fd190f7571ad713277465a5",
+  "rePins": 0,
+  "preDeclaredOutcomes": {
+    "MATCH": "the regenerated RWA-VERDICT.md reproduces the pinned NOT-YET sha → the ENVIRONMENTAL classification closes at the letter, the asterisk retires (a conscious re-pin is NOT required — the pin already IS that sha)",
+    "MISMATCH": "the regen does NOT reproduce the pinned sha → the classification REOPENS as a LOGIC-candidate via a superseding entry, forensics resume, the finding is celebrated as the system working; the pin still does not move (a re-pin without root cause is a Halt)"
+  },
+  "unblock": "Operator: export FRED_API_KEY=<free key from fredaccount.stlouisfed.org>, then run the snapshot regeneration + the two-way-door byte-regen (Phase 3).",
+  "note": "the door stays open; the credential is the Operator's free registration; nothing is presumed vindicated."
+}

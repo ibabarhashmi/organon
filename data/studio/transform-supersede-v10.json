@@ -1,0 +1,18 @@
+{
+  "protocol": "transform-differential-supersede-v10",
+  "at": "2026-07-05",
+  "rule": "T-SUPERSEDE — truth is corrected by APPEND, never by re-pointing; this entry supersedes the V9 D-DIFF caveat, it does not edit it",
+  "supersedes": {
+    "record": "V9 BUILDLOG §HONEST-STATE + the V9 audit finding 1",
+    "priorClaim": "\"oracle-judged\" — V9 proved the frozen ENGINE (lending_accrual.py) byte-equivalent to the monorepo oracle, but the TS TRANSFORM the standalone rewrote (DataPlaneEngine.buildLendingJob / marketPayload / commonWindow) was NEVER differentially run against its original, because the monorepo had no installed dependencies. The adjective 'oracle-judged' was true of the engine, a half-step ahead of the transform."
+  },
+  "newState": {
+    "outcome": "MATCH",
+    "evidence": "data/studio/transform-differential-v10.json",
+    "claim": "the standalone TRANSFORM is byte-identical to its ORIGINAL — the monorepo's exact Runner.legSeries (yield branch) + Runner.commonWindow, run in a sandbox on identical pinned captured snapshots (5 real lending pools), produce per-market series (apyBase·tvl·turnover) + a common window BYTE-IDENTICAL to the standalone rewrite. 'oracle-judged' is now true of the PORT, not just the engine.",
+    "asteriskDisposition": "RETIRED AT THE LETTER for the lending transform: the D-DIFF asterisk V9 carried (transform not differentially tested) is closed on byte evidence a skeptic can reproduce (re-run script/transform-differential.ts against the sandbox). The differential was direction-blind and prepared to lose (a seeded flattering divergence is caught); it MATCHED.",
+    "scopeHonesty": "the comparison is the LOAD-BEARING per-market series the accrual consumes + the window; the full monorepo Job's RWA scaffolding (pegMark, benchmarks, redemption/issuer/assetClass, seed/nTrials) feeds the FULL accrual.py and is out-of-scope-by-construction for the slim lending path — named, not hidden. A whole-Job byte-diff is impossible (different shapes, different sidecars); the transform slice is the honest, load-bearing comparison."
+  },
+  "rePins": 0,
+  "frozenTreeWrites": 0
+}

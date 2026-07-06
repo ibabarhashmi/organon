@@ -1,0 +1,22 @@
+{
+  "protocol": "phase0-baseline-v10",
+  "at": "2026-07-05",
+  "floor": 44,
+  "anchorHash": "488d7226c01c084cf6bc50fe4a0ac2a89324bdc8ffb7317d6906d25aa7673f58",
+  "absences": [
+    {
+      "id": "engine-backtest",
+      "park": "P1-1"
+    },
+    {
+      "id": "rwa-own-data-reexecution",
+      "park": "P1-1"
+    },
+    {
+      "id": "rwa-verdict-regeneration",
+      "park": "P0-1"
+    }
+  ],
+  "absencesOk": true,
+  "openAbsences": []
+}

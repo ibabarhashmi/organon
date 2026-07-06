@@ -1,0 +1,6 @@
+{
+  "protocol": "served-surface-hardened",
+  "positiveControl": "test/organon/surface_fuzz.test.ts — 9 hostile-input tests × 5 routes → honest JSON envelopes, zero stacks; authn 401, size-cap 413, rate-limit 429, malformed-JSON 400 all fire",
+  "noSigningReGrep": "test/walls/no_signing_grep.test.ts green over the hardened surface (auth Bearer tokens are not signing primitives)",
+  "result": "9/9 green + no-signing re-grep green"
+}

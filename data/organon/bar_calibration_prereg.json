@@ -1,0 +1,115 @@
+{
+  "$schema": "ORGANON-bar-calibration-preregistration/v1",
+  "sprint": "ORGΛNON — Sentinel-Driven Hypothesis Generation (Comprehensive) · Phase 0.1 bar-calibration",
+  "authored": "ORGΛNON",
+  "committedBeforeAnyRun": true,
+  "statement": "FRESH pre-registration (Rule XXXVIII / IX) — NOT a re-parameterization of the discernment daily test. It fixes a documented, realistic-strength edge (weekly-horizon cross-sectional crypto momentum), its expected sign, its construction, its adequate-power sampling, its held-out split, and its pass threshold (= the engine's own gates) BEFORE any verdict is run. Changing any field after a result, to make it pass, is a Halt (tuning). The runner (backtest/py/selftest_bar_calibration.py) READS its construction from THIS file; it edits NO frozen .py (Rule VII) and judges nothing itself — the frozen funding_discriminate.discriminate rules on the data.",
+
+  "why": "The discernment sprint proved the frozen validator emits GO on SYNTHETIC perfect-foresight (t≈224) and refuses noise + beta, but its ONE real-edge test used the WRONG horizon — a 1-day-forward target (short-horizon REVERSAL, not momentum) — in an UNDERPOWERED panel (a 30-day-lookback signal stepped daily is ~97% autocorrelated → the residual-IC series barely decorrelates → effective-N collapsed to ~24). So the bar's yes-path was never shown to bless a REAL, realistic-strength edge, and the acceptance-under-scrutiny path (held-out confirmation) was never exercised. Until that is fixed, an AI-generated NO-GO is uninterpretable (ambiguous between 'no edge' and 'bar too tight'). This pre-registration fixes it at the DOCUMENTED weekly horizon with NON-OVERLAPPING weekly sampling for honest power.",
+
+  "edge": {
+    "name": "weekly-horizon cross-sectional momentum in liquid crypto perpetuals",
+    "description": "Relative strength at the WEEKLY horizon: assets with higher recent (skip-adjusted) multi-week trailing return earn higher forward WEEKLY return than assets with lower trailing return, cross-sectionally. The horizon at which crypto momentum is documented to live (weekly-to-monthly), unlike the 1-day horizon (reversal) the discernment test mistakenly used.",
+    "documentedBy": [
+      "Liu, Y. & Tsyvinski, A. (2021). Risks and Returns of Cryptocurrency. Review of Financial Studies 34(6):2689-2727. — documents cryptocurrency momentum at WEEKLY-to-monthly horizons (the horizon fixed here); short-horizon (daily) exhibits reversal, not momentum.",
+      "Liu, Y., Tsyvinski, A. & Wu, X. (2022). Common Risk Factors in Cryptocurrency. Journal of Finance 77(2):1133-1177. — documents a cryptocurrency momentum factor.",
+      "Jegadeesh, N. & Titman, S. (1993). Returns to Buying Winners and Selling Losers. Journal of Finance 48(1):65-91. — the foundational cross-sectional (relative-strength) momentum effect.",
+      "Jegadeesh (1990) & Lehmann (1990) short-term reversal — the most-recent-period is SKIPPED (skip=1 week) to avoid the short-horizon reversal that contaminates raw trailing return."
+    ],
+    "expectedSign": "positive",
+    "expectedSignMeaning": "winners (high skip-adjusted multi-week trailing return) out-perform losers on the forward WEEK → positive cross-sectional rank IC of the momentum signal vs forward weekly return, AND a positive top-minus-bottom (long-short) forward weekly return.",
+    "notFromData": "The construction predates this sprint and is standard weekly cross-sectional relative-strength with a one-week skip. No parameter was chosen by inspecting this panel. The lookback (8 weeks) is the LOW end of the blueprint's documented ~8-12w range (chosen a priori, before any run — never after seeing a result)."
+  },
+
+  "construction": {
+    "cadence": "weekly (non-overlapping)",
+    "priceField": "close",
+    "lookbackDays": 56,
+    "skipDays": 7,
+    "forwardHorizonDays": 7,
+    "weeklyStep": true,
+    "samplingStrideDays": 7,
+    "samplingPhase": 0,
+    "signalDefinition": "signal(t) = close[t-7] / close[t-63] - 1  (cumulative return over the 56 days ending 7 days — one week — before the decision day t; the most-recent week is SKIPPED to avoid short-term reversal). Uses ONLY prices at or before t-7 — strictly causal. Computed by the frozen momentum.build_panels(closes, lookback=56, skip=7, horizon=7).",
+    "forwardDefinition": "forward(t) = close[t+7] / close[t] - 1  (the next-WEEK return; strictly AFTER the decision day t).",
+    "nonOverlapSampling": "Decision days are sampled at a stride of 7 days starting at samplingPhase=0 (the first eligible decision day, then every 7th). This makes the forward WEEKLY returns NON-OVERLAPPING → the residual-IC series satisfies the t-stat's independence assumption and the effective sample is HONEST (the fix for the discernment test's effN collapse, which stepped DAILY with a persistent signal). This sub-sampling is panel PREPARATION performed in the runner; it edits no frozen file and the frozen discriminator still computes the Newey–West deflation + power floor on the prepared panel.",
+    "crossSectional": "at each sampled decision day t, the signal is the vector of signal(t) across the universe; the frozen discriminator ranks it (Spearman IC) vs the forward vector. No per-asset time-series tuning.",
+    "hardTargetNote": "The target is a forward RETURN — the reflexive, fat-tailed, hard target. Predicting weekly return is the documented-horizon choice; if momentum cannot clear the bar even here (the right horizon, honest power), that is itself the finding."
+  },
+
+  "universe": {
+    "symbols": ["BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT","XRPUSDT","ADAUSDT","DOGEUSDT","AVAXUSDT","LINKUSDT","DOTUSDT","LTCUSDT","TRXUSDT","ATOMUSDT","NEARUSDT","APTUSDT","ARBUSDT","OPUSDT","FILUSDT","INJUSDT","UNIUSDT"],
+    "count": 20,
+    "source": "the 20 liquid Binance USD-M perps already checksum-validated in the Free-PIT Data Plane + Discernment sprints. Fixed HERE, before the run → survivorship-safe: a late-listed asset (e.g. ARBUSDT ~2023-03) enters the panel when its checksummed price data begins; its pre-listing ABSENCE is never silently a winner (the cross-sectional IC uses finite pairs only).",
+    "survivorship": "the PRE-REGISTERED set, not a post-hoc survivor set. No asset added or dropped after seeing results."
+  },
+
+  "window": {
+    "start": "2023-01",
+    "end": "2025-12",
+    "cadence": "daily dumps (weekly-sampled)",
+    "rationale": "36 monthly checksum-anchored 1d-kline dumps per symbol (~1090 daily bars → ~155 weekly decision points before warmup). Extended BEYOND the discernment window (2023-2024) specifically to carve a GENUINE held-out forward window (2025) the discovery construction never saw. Chosen BEFORE any run: (1) full-universe breadth by early-2023; (2) enough weekly periods to give the momentum signal a fair shot at the derived power floor AND leave a held-out year. NOT chosen by inspecting results (none exist yet). Fixed: it will NOT be extended after a NO-GO to chase a GO."
+  },
+
+  "split": {
+    "discovery": { "start": "2023-01", "end": "2024-12", "note": "in-sample discovery — the primary verdict is computed here." },
+    "heldOut": { "start": "2025-01", "end": "2025-12", "note": "held-out FORWARD window — a period the pre-registered construction never saw. A discovery GO must be CONFIRMED here (the acceptance-under-scrutiny path the discernment sprint never exercised). The construction has ZERO fitted parameters, so the held-out is a genuine temporal out-of-sample check that the effect PERSISTS." },
+    "boundaryRule": "a sampled weekly decision day t belongs to discovery iff its calendar date < 2025-01-01, else held-out. No decision day straddles the boundary (the forward week may extend a few days past; the SIGNAL is fixed at t, so no discovery leak into held-out signal)."
+  },
+
+  "neutralization": {
+    "loadings": ["marketBeta", "realizedVol"],
+    "marketBetaDefinition": "per-asset OLS beta of the asset's daily close-to-close return on the equal-weight cross-sectional mean daily return (the 'market'), over the full window. Static (M,).",
+    "realizedVolDefinition": "per-asset standard deviation of daily close-to-close returns over the full window. Static (M,).",
+    "disclosure": "Identical to the discernment/funding-runner precedent — full-sample static (M,K) loadings, the frozen neutralize contract. Neutralization only SUBTRACTS explanatory power (cross-sectional residualization), so full-sample loadings make a GO HARDER, never easier — the safe direction. A momentum GO that survives neutralization against market beta + vol is residual cross-sectional alpha, not beta. The SAME neutralization strips funding carry to nothing (funding IS beta, Rule XIII → NO-GO); genuine cross-sectional momentum, if real, survives it."
+  },
+
+  "threshold": {
+    "note": "THE ENGINE'S OWN GATES — byte-identical from neutralize.py / effective_n.py, NOT special-cased (Rule XXXVIII: the bar is the engine's own, not lowered to admit momentum).",
+    "tGate": 3.0,
+    "icMin": 0.02,
+    "portGate": 2.5,
+    "targetIC": 0.05,
+    "minPeriods": 30,
+    "cadenceHours": 168.0,
+    "powerFloor": "the derived effective-N floor (effective_n.derive_power_floor): a deflated GO is DOWNGRADED to INSUFFICIENT-EVIDENCE if the effective sample is below the floor. cadenceHours=168 (one week) reflects the weekly sampling. minPeriods=30 is the engine's small-sample guard for a weekly panel (NOT lowered to admit momentum; the deflation + power floor remain the binding gates).",
+    "verdictRule": "GO requires ALL of: residual-IC NW-deflated t > 3.0 AND residual-IC mean > 0.02 AND long-short portfolio t > 2.5 AND portfolio mean > 0 AND effective-N >= derived power floor. Anything else is NO-GO or INSUFFICIENT-EVIDENCE."
+  },
+
+  "grid": {
+    "searched": false,
+    "primaryIsSoleHeadline": true,
+    "note": "A SINGLE pre-registered construction (lookback 56d / skip 7d / holding 7d / weekly non-overlap) is the SOLE headline — nothing is searched, so NO multiple-testing inflation exists on the headline (the strongest anti-tuning stance, Rule XXXIV). Had a lookback/holding grid been searched, a Šidák/Bonferroni correction on the best t-stat would be pre-committed here. Any secondary construction shown later (e.g. a daily-step sensitivity) is a DISCLOSED diagnostic, explicitly NOT used to override the primary verdict, and NOT re-run to chase a GO."
+  },
+
+  "powerIntent": {
+    "problemFixed": "the discernment test's effN≈24 (a persistent daily-stepped signal → residual-IC series barely decorrelates).",
+    "fix": "the DOCUMENTED weekly horizon + NON-OVERLAPPING weekly sampling → the residual-IC series decorrelates and the effective sample is honest. effN is MEASURED and reported (not assumed); the PASS bar requires effN materially > 24 AND >= the derived power floor.",
+    "honesty": "If, even at the right horizon with non-overlapping sampling, effN is still small or the edge NO-GOes, that is diagnosed rigorously (edge genuinely absent at the documented horizon vs. bar too tight for realistic signal) — never fixed by re-parameterizing toward a GO."
+  },
+
+  "controls": {
+    "positive": {
+      "name": "perfect-foresight (signal = the forward return itself)",
+      "expectation": "MUST GO — proves the frozen engine's yes-path fires on this weekly panel shape (the same positive control the discernment sprint used, retained on the SAME engine)."
+    },
+    "negative": {
+      "name": "seeded noise (numpy default_rng)",
+      "definition": "a seeded standard-normal signal of the IDENTICAL weekly panel shape, generated by numpy.random.default_rng(20260703). True forward IC = 0 in expectation.",
+      "expectation": "MUST NO-GO — a noise GO means the bar is too loose (a false-GO Halt that overrides everything)."
+    }
+  },
+
+  "passCondition": {
+    "barProven": "the REAL weekly-momentum edge GOes at REALISTIC strength (a genuine documented-effect IC/t, not a perfect-foresight artifact) in DISCOVERY, is ADEQUATELY POWERED (effN materially > 24 AND >= the derived floor), AND SURVIVES held-out forward confirmation (2025) — while perfect-foresight GOes and noise NO-GOes on the same engine.",
+    "stopSprint": "the bar will NOT bless the real edge at realistic strength AND the diagnosis is 'bar too tight' (real raw IC present but the deflation/floor rejects a realistic-strength signal) → STOP THE SPRINT (generation is premature; every AI NO-GO would be uninterpretable). A decisive, valuable finding.",
+    "edgeAbsent": "the real edge NO-GOes AND the diagnosis is 'edge genuinely absent even at the documented weekly horizon' (raw IC ≈ 0, not real signal being deflated away) → a distinct finding about crypto momentum in this universe/window (not primarily a bar verdict)."
+  },
+
+  "antiTuning": {
+    "frozenEngine": "ZERO engine changes. The 6 computational-core .py + the loop wall stay byte-identical; existing verdicts (RWA, lending, fee-yield, funding, discernment) stay byte-identical. A GO must come from the real signal clearing the real, unaltered bar.",
+    "noPostHocChange": "No field in this file changes after a result is seen. If weekly momentum NO-GOes, the honest terminal is the diagnosis (edge-absent or bar-too-tight) — never a re-parameterized re-run.",
+    "freshNotReparam": "This is a FRESH pre-registration at the correct horizon, committed before the run — NOT the discernment daily construction edited to pass (that would be the exact horizon-lesson Halt).",
+    "admissibleDataOnly": "the momentum panel is all-T1 checksum-anchored dumps or the run is void (A3). No paid data."
+  }
+}

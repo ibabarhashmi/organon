@@ -1,0 +1,81 @@
+{
+  "protocol": "phase6-verification-v14",
+  "at": "2026-07-06",
+  "summaryDifferential": {
+    "prose": {
+      "floor": 86,
+      "matrixPresent": 40,
+      "matrixAbsent": 3,
+      "catalogCount": 46
+    },
+    "derived": {
+      "floor": 86,
+      "matrixPresent": 40,
+      "matrixAbsent": 3,
+      "catalogCount": 46
+    },
+    "ok": true,
+    "mismatches": []
+  },
+  "deltaDifferential": {
+    "claims": "floor 74→86 · matrixPresent 34→40 · catalogCount 36→46",
+    "ok": true,
+    "mismatches": []
+  },
+  "noiseWalls": {
+    "voc": {
+      "clean": true,
+      "survivors": 0
+    },
+    "pooled": {
+      "clean": true,
+      "survivors": 0
+    }
+  },
+  "verdictDifferential": {
+    "byteIdentical": true,
+    "fingerprintSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54"
+  },
+  "newestDoorReRun": {
+    "door": "the WHY panel",
+    "everyTerminalStateExplainable": true,
+    "reachableThroughServedConsole": true
+  },
+  "parksForward": {
+    "selection": "DISPOSED — TERM (the pick priced by experiment; the surcharge live in pool.ts; existing verdicts re-stated, none moved)",
+    "whyPanel": "DELIVERED (ADOPT — the WHY panel ships; every terminal state bilingual)",
+    "scopeParity": "FILED + CURED (the funding-parity narrowing retro-filed Phase 0, cured Phase 2 with REAL-PIT wiring)",
+    "sybilIdentity": "FILED — the identity provenance truth + the ratchet-bypass vector filed into the sybil park (self-declared, rotation-free; owner unchanged)",
+    "tournament": "NO standing (stays parked)",
+    "hrp": "DISPOSED NO (stays parked)",
+    "cpcvPromotion": "accruing toward ≥30 @ ≥80% agreement (advisory-first; not gating)",
+    "zkml": "re-check 2027-01-01 (parked; immature)",
+    "poolRecursion": "deferred by default (depth-1; a pool of pools is schema-refused)",
+    "signing": "ever-standing constitutional decision (Operator-only; nothing signs)"
+  },
+  "floor": 86,
+  "matrix": {
+    "present": 40,
+    "absent": 3
+  },
+  "catalog": {
+    "version": "v14",
+    "count": 46,
+    "contentSha": "723424ff0044ac0439f6ea04352ecca97760f4c82b4c71360bc5d727203bdbb1"
+  },
+  "frozenSeven": "byte-identical in both trees (test/walls/core_byte_identity.test.ts); no frozen byte changed",
+  "rwaPinUnchanged": true,
+  "noRePin": true,
+  "ratification": {
+    "entries": 21,
+    "chainOk": true,
+    "coherent": true,
+    "experimentRegistryCoherent": true
+  },
+  "pristineHarness": {
+    "evidence": "pristine-clone-v14.json",
+    "pristineGreen": true
+  },
+  "independence": "pending-non-author (DOORS-OPEN waits for a genuine stranger — now four doors each with a WHY, one command away)",
+  "operatorLane": "zero agent residue: publication re-ratification against the again-grown matrix (40 PRESENT) · the free FRED credential · the V4-backup restoration window · the genuine second party"
+}

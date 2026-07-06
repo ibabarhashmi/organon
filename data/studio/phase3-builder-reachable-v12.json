@@ -1,0 +1,47 @@
+{
+  "protocol": "phase3-builder-reachable-v12",
+  "at": "2026-07-05",
+  "gate": "BUILDER-REACHABLE",
+  "amendment": {
+    "screensNine": true,
+    "screens": [
+      "verdictCard",
+      "rigorPanel",
+      "breadthMap",
+      "forwardClocks",
+      "leaderboard",
+      "report",
+      "trustPanel",
+      "goalConsole",
+      "guidedBuilder"
+    ],
+    "note": "the set amended 8→9 (Guided Builder), once, closed again — a tenth refused by construction"
+  },
+  "defaults": {
+    "conservative": true,
+    "values": {
+      "policy": "static",
+      "rebalanceTrigger": "monthly",
+      "weightMode": "equal"
+    }
+  },
+  "helpHonest": {
+    "ok": true,
+    "issues": []
+  },
+  "lineageStiffening": {
+    "firstNTrials": 1,
+    "editNTrials": 2,
+    "stiffens": true,
+    "note": "editing + resubmitting counts as another attempt — the family-size deflation raises the bar (this is the product working)"
+  },
+  "traversal": {
+    "file": "data/studio/traversal-guided-builder.json",
+    "admissible": true,
+    "issues": [],
+    "note": "the gate's ONLY sufficient evidence (U-SURFACE): fresh serve → compose → verdict → panels + a failure state (an invalid composition refused)"
+  },
+  "verdictDifferential": {
+    "byteIdentical": true
+  }
+}

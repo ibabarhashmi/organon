@@ -1,0 +1,40 @@
+{
+  "protocol": "phase3-joined-loop-v10",
+  "at": "2026-07-05",
+  "gate": "JOINED-LOOP",
+  "console": {
+    "screen": "goalConsole (screen 8 — closed set amended 7→8, once, closed again; SCREENS.length===8)",
+    "live": "served /console/goal (write-then-invoke, input-capped, honest failure states) — proven end-to-end",
+    "derivesNothing": true,
+    "honestFailureStates": {
+      "modelUnavailable": "model-unavailable",
+      "malformedGoal": "malformed-goal"
+    }
+  },
+  "joinedLoop": {
+    "verdict": "NO-GO",
+    "reality": "REAL-PIT",
+    "reportHonest": true,
+    "reproduces": true,
+    "modelCannotBless": true,
+    "artifactHashes": {
+      "spec": "1f8549ed9754",
+      "verdictRepro": "d1996b2b179d",
+      "report": "efc939a46968"
+    }
+  },
+  "identityRetold": {
+    "matrixPresent": 18,
+    "matrixRows": "18 PRESENT / 3 ABSENT",
+    "matrixVsReality": true,
+    "mismatches": [],
+    "memoAddendum": "docs/IDENTITY-MEMO.md — the End-User addendum (2026-07-05) filed",
+    "publicationReArmed": "the gate re-reads the matrix live (identity gate SATISFIED on the NEW matrix, byte-match re-locked; consent gate PENDING the Operator — re-ratification against the new matrix, not V8/V9)"
+  },
+  "fBudgetProjection": {
+    "rule": "F-BUDGET — the walk (Phase 4) is the PROTECTED MAJORITY; the micro-loop (Phases 0-3) was deliberately bounded",
+    "phases0to3": "COMPLETE — governance/prevention/catalog (P0), the transform asterisk retired (P1), funding delivered + fee-yield attempted (P2), the console + joined loop (P3)",
+    "walkBudgetConfirmed": true,
+    "walkPlan": "THE WALK v5: fresh clones → through the UI/UX first (the console is the user's door) → the pinned catalog traversed in full → every issue root-caused → fixed → re-tested → logged (E-ROOTCAUSE); seven console-aware themes rotated; converge at catalog-complete + rotation-complete + two consecutive FULL-depth clean + ≥4 cycles (CONVERGED-4), or the cap's honest STOP"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "protocol": "walk-v8-cycles",
+  "at": "2026-07-05",
+  "gate": "CONVERGED-7",
+  "outcome": "CONVERGED-7",
+  "cycles": [
+    {
+      "cycle": 1,
+      "cleanTraverse": false,
+      "newFindings": [
+        "W8-01"
+      ],
+      "scenarios": 36,
+      "depth": "FULL (all 36 scenarios × all doors preset·goal·builder×3·pool; UNWIRED baseline)",
+      "note": "1 genuine finding (W8-01, the pool swap ratchet not reachable through the served door) — root-caused, fixed, re-tested"
+    },
+    {
+      "cycle": 2,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 36,
+      "depth": "FULL (all doors preset·goal·builder×3·pool × all acts, through the UI first)",
+      "replay": "cycle 1 replayed from its transcript — registers stable",
+      "bothNoiseWalls": {
+        "pooledClean": true,
+        "vocClean": true
+      },
+      "fails": [],
+      "note": "CLEAN — catalog v13 traversed in full; both noise walls green (single + pooled)"
+    },
+    {
+      "cycle": 3,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 36,
+      "depth": "FULL (all doors preset·goal·builder×3·pool × all acts, through the UI first)",
+      "replay": "cycle 2 replayed from its transcript — registers stable",
+      "bothNoiseWalls": {
+        "pooledClean": true,
+        "vocClean": true
+      },
+      "fails": [],
+      "note": "CLEAN — catalog v13 traversed in full; both noise walls green (single + pooled)"
+    },
+    {
+      "cycle": 4,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 36,
+      "depth": "FULL (all doors preset·goal·builder×3·pool × all acts, through the UI first)",
+      "replay": "cycle 3 replayed from its transcript — registers stable",
+      "bothNoiseWalls": {
+        "pooledClean": true,
+        "vocClean": true
+      },
+      "fails": [],
+      "note": "CLEAN — catalog v13 traversed in full; both noise walls green (single + pooled)"
+    },
+    {
+      "cycle": 5,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 36,
+      "depth": "FULL (all doors preset·goal·builder×3·pool × all acts, through the UI first)",
+      "replay": "cycle 4 replayed from its transcript — registers stable",
+      "bothNoiseWalls": {
+        "pooledClean": true,
+        "vocClean": true
+      },
+      "fails": [],
+      "note": "CLEAN — catalog v13 traversed in full; both noise walls green (single + pooled)"
+    }
+  ],
+  "cleanFlags": [
+    false,
+    true,
+    true,
+    true,
+    true
+  ],
+  "catalogComplete": true,
+  "rotationComplete": true,
+  "twoConsecutiveClean": true,
+  "cycleCount": 5,
+  "converged7": true,
+  "catalog": {
+    "count": 36,
+    "byClass": {
+      "realistic": 18,
+      "adversarial": 8,
+      "edge": 10
+    },
+    "contentSha": "c092e77b4abe6d46fd9e8443b65ed62a6e6551599098bcd8497a7093e24cfe1b",
+    "traversedInFull": true,
+    "judgedAgainstExpected": true
+  },
+  "doors": [
+    "preset",
+    "goal",
+    "builder-lending",
+    "builder-funding",
+    "builder-basis",
+    "pool"
+  ],
+  "themes": [
+    "injection",
+    "laundering",
+    "tamper",
+    "availability",
+    "doc-lies",
+    "ux-priming",
+    "park-legitimacy"
+  ],
+  "walkLedger": {
+    "file": "data/studio/walk-v8-ledger.jsonl",
+    "chainOk": true,
+    "issues": 2,
+    "open": 0,
+    "parks": 0,
+    "findings": [
+      {
+        "id": "W8-01",
+        "status": "fixed",
+        "title": "the pool member-swap RATCHET was built (Pool.composeAndAdjudicate + priorCompositions) but the served /pool/compose door did NOT thread edit lineage — a user's successive composes did not stiffen the family through the UI (the U-SURFACE disease in the laundering theme: the anti-laundering ratchet built, not reached the user's screen)"
+      }
+    ]
+  },
+  "note": "the walk ran through the UI/UX across all doors (preset · goal · builder×3 · the pool composer); catalog v13 (36 scenarios) traversed in full each cycle; laundering hunted the pool hardest (the member-swap ratchet W8-01) — root-caused → fixed → re-tested; both noise walls green each clean cycle; two consecutive FULL-depth clean cycles across five total."
+}

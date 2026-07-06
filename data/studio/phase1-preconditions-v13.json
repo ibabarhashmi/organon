@@ -1,0 +1,164 @@
+{
+  "protocol": "phase1-preconditions-v13",
+  "at": "2026-07-05",
+  "gate": "PRECONDITIONS-TRUE",
+  "keffFormulaHashChecked": true,
+  "keffMappingHash": "5ee7730ad3c2eeeee0742053c1cdb2814fae6bbdf51abb25ace044906d4d6f0d",
+  "middleStress": {
+    "seeds": 30,
+    "cells": [
+      {
+        "rho": 0.3,
+        "avgRealizedRhoBar": 0.30402169080161023,
+        "avgKEff": 2.259340050906905,
+        "avgCharge": 3,
+        "seeds": 30,
+        "genuinePoolKeffRate": 0.9333333333333333,
+        "singleMemberRate": 0.6666666666666666,
+        "diversificationLift": true,
+        "noisePoolKeffRate": 0,
+        "launderSweep": [
+          {
+            "edge": 0.0006,
+            "naiveRate": 0.3,
+            "keffRate": 0.2,
+            "caughtRate": 0.1
+          },
+          {
+            "edge": 0.001,
+            "naiveRate": 0.8666666666666667,
+            "keffRate": 0.6,
+            "caughtRate": 0.26666666666666666
+          },
+          {
+            "edge": 0.0014,
+            "naiveRate": 1,
+            "keffRate": 0.9333333333333333,
+            "caughtRate": 0.06666666666666667
+          },
+          {
+            "edge": 0.0018,
+            "naiveRate": 1,
+            "keffRate": 0.9666666666666667,
+            "caughtRate": 0.03333333333333333
+          }
+        ],
+        "launderCaughtMax": 0.26666666666666666,
+        "cloneKEff": 1,
+        "cloneCharge": 1,
+        "cloneAddsNothing": true,
+        "held": true
+      },
+      {
+        "rho": 0.6,
+        "avgRealizedRhoBar": 0.5947280633055695,
+        "avgKEff": 1.4813286625772648,
+        "avgCharge": 2,
+        "seeds": 30,
+        "genuinePoolKeffRate": 0.9333333333333333,
+        "singleMemberRate": 0.8,
+        "diversificationLift": true,
+        "noisePoolKeffRate": 0,
+        "launderSweep": [
+          {
+            "edge": 0.0006,
+            "naiveRate": 0.13333333333333333,
+            "keffRate": 0.13333333333333333,
+            "caughtRate": 0
+          },
+          {
+            "edge": 0.001,
+            "naiveRate": 0.4666666666666667,
+            "keffRate": 0.4666666666666667,
+            "caughtRate": 0
+          },
+          {
+            "edge": 0.0014,
+            "naiveRate": 0.8666666666666667,
+            "keffRate": 0.8666666666666667,
+            "caughtRate": 0
+          },
+          {
+            "edge": 0.0018,
+            "naiveRate": 0.9666666666666667,
+            "keffRate": 0.9666666666666667,
+            "caughtRate": 0
+          }
+        ],
+        "launderCaughtMax": 0,
+        "cloneKEff": 1,
+        "cloneCharge": 1,
+        "cloneAddsNothing": true,
+        "held": false
+      }
+    ],
+    "stress": {
+      "preRho": 0.2,
+      "postRho": 0.95,
+      "kEffEarly": 2.8256969957959646,
+      "kEffStress": 1.0416295996007965,
+      "divRatioEarly": 1.6763547505540508,
+      "divRatioStress": 1.020401712934376,
+      "collapses": true
+    },
+    "coreHeldEveryRho": true,
+    "noiseNeverPasses": true,
+    "launderingDetectableSomewhere": true,
+    "conditions": [
+      "at ρ=0.6 the naive-pass/honest-fail laundering window is empty over the marginal sweep — K_eff≈1.48 (charge 2) so the honest correction over naive n=1 is only ~1 trial(s); the laundering the adjustment can catch shrinks as ρ→1. BINDS Phase 3: the composer must render K_eff + ρ̄ prominently and carry the mandatory stress caveat so a high-ρ pool reads plainly as barely diversified."
+    ],
+    "doorState": "OPEN-WITH-CONDITIONS",
+    "fragility": "single-seed pass/fail is fragile at N=400 (the realized edge is sampling-noise-dominated) — hence the survivor-rate battery; the noise control's ≈0 rate is the HARD firewall (if noise ever survives the honest charge the outcome is REJECT regardless of the genuine rate); the fragile corner is ρ=0.6 (K_eff≈1.5, the thinnest diversification, the correction only +1 trial) — reported per the robustness clause and bound into Phase 3 as a condition."
+  },
+  "lambdaSensitivity": {
+    "construction": "target_t = signalCoef · base_t[signalDim] + N(0, targetNoise) — a weak-but-REAL linear edge the OOS ridge can partially recover through the random Fourier features; the sweep must DETECT it (a max-DSR distinguishable from the pure-noise ≈0.000, confirming the sweep HAS resolution) or state its limits plainly (the max-DSR-exactly-0.000 ambiguity resolved either way)",
+    "signalCoef": 0.35,
+    "seeds": 12,
+    "realEdge": {
+      "detectedFraction": 1,
+      "maxDsr": 1
+    },
+    "noiseControl": {
+      "detectedFraction": 0,
+      "maxDsr": 0.3638
+    },
+    "hasResolution": true,
+    "answer": "RESOLUTION CONFIRMED — the sweep detects the pinned weak-real edge (max DSR 1 vs the pure-noise 0.3638); the noise wall's zeros are ROBUSTNESS (real rejection), not blindness (the max-DSR-exactly-0.000 ambiguity resolved)."
+  },
+  "hrp": {
+    "criterionUnchanged": true,
+    "rowHash": "bf6764cd0a6e9f884905265307cd1e31cb54486fc071d8e3cf9922dd86a8ba17",
+    "criterionHash": "e9f2e07933588ab891976f2538a513e3d6f6677b9020c0cb77144347158bebf1",
+    "result": {
+      "assets": 6,
+      "windows": 20,
+      "hrpWins": 1,
+      "hrpVsEqual": 10,
+      "hrpVsMinVar": 11,
+      "majorityDominance": false,
+      "meanSharpe": {
+        "hrp": 1.0315864866814646,
+        "equal": 1.0716069162718127,
+        "minVar": 0.9330248673863355
+      },
+      "outcome": "NO — HRP does not dominate; the mixed evidence did not resolve in our favour (keep parked)"
+    },
+    "outcome": "NO — HRP does not dominate; the mixed evidence did not resolve in our favour (keep parked)"
+  },
+  "poolCodeAbsence": {
+    "composerFiles": [],
+    "tenthScreen": false,
+    "unratified": [],
+    "serveHasPoolRoute": false,
+    "poolCodeAbsent": true
+  },
+  "marginalSweep": [
+    0.0006,
+    0.001,
+    0.0014,
+    0.0018
+  ],
+  "door": "OPEN-WITH-CONDITIONS",
+  "doorOpen": true,
+  "outcome": "PASS-WITH-CONDITIONS — the hard firewall holds decisively (noise NEVER survives the honest charge); the genuine diversified pool passes at the honest K_eff charge above a single member at every ρ; the stress cell collapses; laundering is caught at ρ=0.3. A sub-clause was vacuous at a plausible corner (ρ=0.6, where the honest correction is a single trial) — recorded as a CONDITION binding Phase 3's schema, not argued past. The two-way door OPENS-WITH-CONDITIONS (A′-adversarial: a corner flip → PASS-WITH-CONDITIONS)."
+}

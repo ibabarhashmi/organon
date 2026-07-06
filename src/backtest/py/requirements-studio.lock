@@ -1,0 +1,10 @@
+# ORGΛNON STUDIO — the LOCKED sidecar environment (Warranty Phase 1, F-ENV). The go-forward STUDIO env, pinned.
+# This is the environment the studio verdict path (rigor.py / attest / lending_accrual) runs under and the full
+# trust battery validates green. Interpreter: Python 3.9.x (CommandLineTools python3 on this host). Regenerate the
+# venv fresh (never copy — the shebang hazard, Phase 0): python3 -m venv .venv && .venv/bin/pip install -r requirements-studio.lock
+#
+# Pinned to the exact versions resolved in the battery-green standalone env (2026-07-04). The RWA-verdict generator
+# runs under a DIFFERENT, heavier environment — see requirements-rwa-engine.lock (Py3.11 + purgedcv + scipy 1.17.1) —
+# because the golden-noise self-test cross-checks against purgedcv, which has no Python-3.9 distribution (forensics-rwa.json).
+numpy==2.0.2
+scipy==1.13.1

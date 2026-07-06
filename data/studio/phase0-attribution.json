@@ -1,0 +1,82 @@
+{
+  "protocol": "blocker-attribution",
+  "rule": "C-ATTRIB — an item is 'operator-gated' ONLY when agent-side residue is ZERO",
+  "v5ConflationNamed": "V5 filed 'commit/push' as one operator-gated item. It is TWO: commit (AGENT-side, no consent needed — done, e5bfa77) + push (OPERATOR-side, outward-facing). The pair-label laundered an agent obligation. Dead (C-ATTRIB).",
+  "items": [
+    {
+      "item": "commit the world locally",
+      "tag": "AGENT",
+      "agentShare": "100% — DONE (world commit)",
+      "residue": "zero",
+      "status": "CLOSED this sprint"
+    },
+    {
+      "item": "legacy battery disposition",
+      "tag": "AGENT",
+      "agentShare": "100% — DONE (line-by-line)",
+      "residue": "zero",
+      "status": "CLOSED this sprint"
+    },
+    {
+      "item": "second live trial",
+      "tag": "AGENT",
+      "agentShare": "100% — DONE (CONDITIONAL@1 → NO-GO@8)",
+      "residue": "zero",
+      "status": "CLOSED this sprint"
+    },
+    {
+      "item": "unattended scheduler cadence",
+      "tag": "MIXED",
+      "agentShare": "local daemon + killed-scheduler GAP proof (Phase 1, agent-side)",
+      "residue": "GHA cron needs the push (operator)",
+      "status": "agent share in Phase 1"
+    },
+    {
+      "item": "backup/restore drill",
+      "tag": "AGENT",
+      "agentShare": "build + prove the drill incl. a torn backup (Phase 1)",
+      "residue": "zero",
+      "status": "agent share in Phase 1"
+    },
+    {
+      "item": "served-surface hardening + fuzz",
+      "tag": "AGENT",
+      "agentShare": "authn/limits/caps/fuzz + no-signing re-grep (Phase 1)",
+      "residue": "zero",
+      "status": "agent share in Phase 1"
+    },
+    {
+      "item": "reachability from a second context",
+      "tag": "MIXED",
+      "agentShare": "tunnel/deploy script + reached-from-a-second-process evidence (Phase 1)",
+      "residue": "a PUBLIC deploy needs operator hosting; a second DEVICE needs the operator",
+      "status": "agent share in Phase 1"
+    },
+    {
+      "item": "push to origin (observed CI)",
+      "tag": "OPERATOR",
+      "agentShare": "the workflow is written + validated locally",
+      "residue": "zero agent residue — pushing is outward-facing (needs consent)",
+      "status": "REPEAT, operator lane"
+    },
+    {
+      "item": "genuine non-author second party (DOORS-OPEN)",
+      "tag": "OPERATOR",
+      "agentShare": "served URL + verify-v3 + submit path all exist",
+      "residue": "zero agent residue — the author cannot be the second party (L-2P)",
+      "status": "REPEAT, operator lane"
+    },
+    {
+      "item": "restore the ACTUAL V4 forward-capture backups (L-FINAL)",
+      "tag": "OPERATOR",
+      "agentShare": "the restore DRILL is agent-side (Phase 1); the specific V4 backups live on operator machines",
+      "residue": "zero agent residue after Phase 1's drill",
+      "status": "REPEAT, operator lane"
+    }
+  ],
+  "operatorLaneReissued": [
+    "push to origin (observed CI)",
+    "genuine non-author second party (DOORS-OPEN)",
+    "restore the actual V4 forward-capture backups (L-FINAL)"
+  ]
+}

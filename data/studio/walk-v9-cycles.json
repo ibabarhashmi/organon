@@ -1,0 +1,120 @@
+{
+  "protocol": "walk-v9-cycles",
+  "at": "2026-07-06",
+  "gate": "CONVERGED-8",
+  "outcome": "CONVERGED-8",
+  "bootstrappedThroughRunner": true,
+  "cycles": [
+    {
+      "cycle": 1,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 46,
+      "depth": "FULL (all doors preset·goal·builder×3-real·pool × all acts, through the UI first, bootstrapped through the runner)",
+      "novicePersona": "at every refusal the novice answered 'why did it fail?' from the plain register alone (consistency-checked)",
+      "replay": "baseline",
+      "bothNoiseWalls": {
+        "pooledClean": true,
+        "vocClean": true
+      },
+      "fails": [],
+      "note": "CLEAN — catalog v14 (46) traversed in full; both noise walls green; the WHY panel + runner + parity + selection outcome all honest"
+    },
+    {
+      "cycle": 2,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 46,
+      "depth": "FULL (all doors preset·goal·builder×3-real·pool × all acts, through the UI first, bootstrapped through the runner)",
+      "novicePersona": "at every refusal the novice answered 'why did it fail?' from the plain register alone (consistency-checked)",
+      "replay": "cycle 1 replayed from its transcript — registers stable",
+      "bothNoiseWalls": {
+        "pooledClean": true,
+        "vocClean": true
+      },
+      "fails": [],
+      "note": "CLEAN — catalog v14 (46) traversed in full; both noise walls green; the WHY panel + runner + parity + selection outcome all honest"
+    },
+    {
+      "cycle": 3,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 46,
+      "depth": "FULL (all doors preset·goal·builder×3-real·pool × all acts, through the UI first, bootstrapped through the runner)",
+      "novicePersona": "at every refusal the novice answered 'why did it fail?' from the plain register alone (consistency-checked)",
+      "replay": "cycle 2 replayed from its transcript — registers stable",
+      "bothNoiseWalls": {
+        "pooledClean": true,
+        "vocClean": true
+      },
+      "fails": [],
+      "note": "CLEAN — catalog v14 (46) traversed in full; both noise walls green; the WHY panel + runner + parity + selection outcome all honest"
+    },
+    {
+      "cycle": 4,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 46,
+      "depth": "FULL (all doors preset·goal·builder×3-real·pool × all acts, through the UI first, bootstrapped through the runner)",
+      "novicePersona": "at every refusal the novice answered 'why did it fail?' from the plain register alone (consistency-checked)",
+      "replay": "cycle 3 replayed from its transcript — registers stable",
+      "bothNoiseWalls": {
+        "pooledClean": true,
+        "vocClean": true
+      },
+      "fails": [],
+      "note": "CLEAN — catalog v14 (46) traversed in full; both noise walls green; the WHY panel + runner + parity + selection outcome all honest"
+    }
+  ],
+  "cleanFlags": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "catalogComplete": true,
+  "rotationComplete": true,
+  "twoConsecutiveClean": true,
+  "cycleCount": 4,
+  "converged8": true,
+  "catalog": {
+    "count": 46,
+    "byClass": {
+      "realistic": 23,
+      "adversarial": 10,
+      "edge": 13
+    },
+    "contentSha": "723424ff0044ac0439f6ea04352ecca97760f4c82b4c71360bc5d727203bdbb1",
+    "traversedInFull": true,
+    "judgedAgainstExpected": true
+  },
+  "doors": [
+    "runner",
+    "preset",
+    "goal",
+    "builder-lending",
+    "builder-funding-real",
+    "builder-basis",
+    "pool",
+    "why-panel"
+  ],
+  "themes": [
+    "injection",
+    "laundering",
+    "tamper",
+    "availability",
+    "doc-lies",
+    "ux-priming",
+    "park-legitimacy"
+  ],
+  "novicePersona": "the novice read ONLY the plain WHY at every refusal and answered 'why did it fail?' in one correct sentence (checked against the fact table's deciding row, consistency-verified, no consolation)",
+  "walkLedger": {
+    "file": "data/studio/walk-v9-ledger.jsonl",
+    "chainOk": true,
+    "issues": 0,
+    "open": 0,
+    "parks": 0,
+    "findings": []
+  },
+  "note": "the walk bootstrapped through the runner (./organon.sh's launch gate) then walked every door through the UI/UX; catalog v14 (46 scenarios) traversed in full each cycle; the WHY panel read by the novice at every refusal; the seven explanation-aware themes rotated (ux-priming hunted the explanations hardest, injection fed the paraphraser poisoned facts, doc-lies audited register consistency + the runner status table); both noise walls green each cycle; four FULL-depth clean cycles (two-consecutive-clean satisfied from cycle 1) — CONVERGED-8 DERIVED."
+}

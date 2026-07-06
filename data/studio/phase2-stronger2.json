@@ -1,0 +1,40 @@
+{
+  "protocol": "phase2-stronger2",
+  "gate": "STRONGER-2",
+  "rule": "T-REJECT, T-SERVE, T-REAL, F-IDENTITY, F-ABSENT, C-PARK",
+  "at": "2026-07-04",
+  "sprint": "Warranty (v8) Phase 2",
+  "carriedFromV7_reverified": {
+    "note": "These five landed in V7 (the blueprint's premise that Phase 2 'never ran' is contradicted by V7's committed trail — see the V8 continuation marker). Warranty RE-VERIFIES them green; it does not re-manufacture them (claiming them as new would be its own overclaim).",
+    "rejection-boundary": { "status": "GREEN", "proof": "test/organon/rejection_boundary.test.ts — W1-04 payload verbatim refused before registration on every mutating surface; must-accept passes", "capability": "rejection-boundary-refusal" },
+    "served-persistence": { "status": "GREEN", "proof": "test/organon/served_persistence.test.ts — a served submission survives a restart via mountableStore(); W3-01 positive control (in-memory does NOT survive); memo docs/SERVED-PERSISTENCE-MEMO.md", "capability": "served-persistence-survival" },
+    "runbook": { "status": "REHEARSED", "proof": "data/studio/phase2-runbook-rehearsal.json + docs/FIRST-CONTACT-RUNBOOK.md — Tier-A rehearsal (not first contact)" },
+    "tense-scanner": { "status": "GREEN", "proof": "test/organon/tense_scan.test.ts — flags an unpaired present-tense claim (seeded overclaim caught), not a hedged/evidence-carrying one", "capability": "tense-scanner-discriminates" },
+    "real-returns": { "status": "PARKED (P2-1, pre-authorized)", "proof": "parks-register.json P2-1 — the REAL-PIT live path needs P1-1's data-plane; caller returns are ILLUSTRATIVE-labeled; forcing it would fake REAL-PIT (T-REAL). The absence real-returns-live-path is inventoried (F-ABSENT)." }
+  },
+  "new_identityWork": {
+    "identityMemo": {
+      "file": "docs/IDENTITY-MEMO.md",
+      "threeOptionsCosted": ["(a) data-plane-first — REJECTED as the publication path (architectural, owns its own sprint P1-1)", "(b) publish-slim-honest — CHOSEN (advertised == actual, immediately + truthfully)", "(c) hold — REJECTED (no honesty reason to hold once advertised == actual)"],
+      "decision": "(b) publish-slim-honest",
+      "reviewedParkLegitimacyStyle": true
+    },
+    "capabilityMatrix": {
+      "module": "src/studio/matrix.ts",
+      "rendered": ["README.md (between CAPABILITY-MATRIX markers)", "Trust Panel screen 7 (StudioScreens.trustPanel matrix field)"],
+      "content": "11 PRESENT capabilities (each mapped to a proven floor capability) + 4 deliberate ABSENCES (each parked): engine-backtest, rwa-own-data-reexecution, rwa-verdict-regeneration, real-returns-live-path",
+      "matrixVsReality": "GREEN (Matrix.verifyAgainstReality) — checked by the doc-lies theme; a seeded overclaim is caught",
+      "capability": "capability-matrix"
+    },
+    "publicationGate": {
+      "module": "src/studio/publication.ts",
+      "wall": "test/walls/publication_gate.test.ts",
+      "gates": "IDENTITY (matrix rendered + true) THEN CONSENT (Operator; L-2P, agent cannot self-consent)",
+      "state": "identity gate SATISFIED (matrix rendered + true this phase); consent gate PENDING the Operator",
+      "positiveControl": "a publish without consent is REFUSED even with identity satisfied; a publish with matrix+consent is ALLOWED",
+      "capability": "publication-gate"
+    }
+  },
+  "floor": "36 -> 38 (+capability-matrix, +publication-gate); battery 188 pass / 0 fail across 40 files; frozen seven byte-identical",
+  "walkBudgetProjection": "Phases 0-2 bounded + done; the walk (Phase 3) is the protected majority and is NOT displaced — proceeding to it (F-BUDGET: budget confirmed on the record)."
+}

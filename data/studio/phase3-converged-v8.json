@@ -1,0 +1,44 @@
+{
+  "protocol": "phase3-converged-2-v8",
+  "gate": "CONVERGED-2",
+  "rule": "C-USER, C-LOOP, C-PARK, T-ROTATE, F-BUDGET (the protected majority)",
+  "at": "2026-07-04",
+  "sprint": "Warranty (v8) Phase 3 — THE WALK",
+  "subject": "the STRENGTHENED standalone (V8 surfaces: capability matrix, publication gate, reproducibility contracts, terminal-marker wall, absences inventory)",
+  "walk": {
+    "cycles": 3,
+    "cap": 10,
+    "cleanFlags": ["F", "T", "T"],
+    "rotationComplete": true,
+    "themes": ["injection", "laundering", "tamper", "availability", "doc-lies", "ux-priming", "park-legitimacy"],
+    "converged2": "YES — rotation-complete (all 7 themes ≥1 cycle) AND two consecutive clean cycles (2 & 3)",
+    "priorCycleReplay": "cycle 3 replayed cycle 1 from its transcript (W3 stays refuted; W1/W2 stay fixed)",
+    "pollutionSpotAudit": "cycle 3 tamper theme — CLEAN over the live ledgers (0 pollution, 0 deletions, positive-control-verified)",
+    "docLies": "matrix-vs-reality green + README byte-match now LOCKED (W1-01 fix); tense scan flags only descriptive pointer prose (human-reckoned evidenced)"
+  },
+  "walkLedger": {
+    "file": "data/studio/walk-v3-ledger.jsonl",
+    "chained": true,
+    "issues": 2,
+    "registeredBeforeFix": true,
+    "openNonParked": 0
+  },
+  "findings": [
+    { "id": "W1-01", "cls": "DOC-DRIFT", "severity": "S2", "status": "FIXED", "fix": "README capability matrix drifted from Matrix.renderMarkdown() (abbreviated hand-written table); render-matrix-readme.ts renders it VERBATIM + a byte-match test locks README-block === generated so future drift FAILS the battery" },
+    { "id": "W2-01", "cls": "INTEGRITY", "severity": "S3", "status": "FIXED", "fix": "the publication gate had no enforcement chokepoint (nothing called Publication.gate); script/publish-preflight.ts is the chokepoint — exits 1 (REFUSED) unless identity+consent both hold; agent-run self-refuses (cannot self-consent, L-2P)" },
+    { "note": "cycle 1 surfaced 1 REFUTED candidate (A′#8): W3 alleged the matrix's MCP claim was an overclaim — REFUTED, src/studio/routes.ts MCP_TOOLS is genuinely present, so the claim is TRUE. A walk-check error, not a system defect." }
+  ],
+  "fixesInventoried": {
+    "W1-01": "render-matrix-readme.ts + a byte-match test (strengthens the existing capability-matrix capability; no new capability, floor stays 38)",
+    "W2-01": "publish-preflight.ts (strengthens the existing publication-gate capability)",
+    "battery": "189 pass / 0 fail across 40 files after the fixes; capability floor 38, 0 regressions; frozen seven byte-identical; absences ok"
+  },
+  "parksLegitimate": {
+    "register": "data/studio/parks-register.json",
+    "reviewed": "cycle 3 park-legitimacy theme re-reviewed every open park; all four-fielded; zero convenience parks",
+    "openParks": ["P1-1 (real-data engine layer)", "P2-1 (REAL-RETURNS)", "INHERITED: floor audit", "INHERITED: full sybil economics"],
+    "resolvedParks": ["P0-1 (RWA drift → RESOLVED ENVIRONMENTAL, Phase 1)", "W3-01 (served persistence → V7)", "T1-01 (slim requirements → V7/V8 locked)"]
+  },
+  "noScopeShrink": "F-ABSENT: the capability floor rose 33→38 across V8; the absences inventory is current (4 absences, each parked); scopeDiff shows zero uncovered losses. No capability left the floor.",
+  "terminal": "CONVERGED-2 (exactly one terminal claimed, truthfully) — NOT a NON-CONVERGENCE STOP and NOT a pre-walk STOP; the walk was the protected majority and ran (F-BUDGET)."
+}

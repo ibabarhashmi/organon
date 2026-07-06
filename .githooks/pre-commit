@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# ORGΛNON — the PREVENTION pre-commit hook (End-User Phase 0; Rule E-PREVENT). Wired via `git config core.hooksPath
+# .githooks`. Refuses a commit that stages an oversized blob, an inline raw-data array (the W4-01 class), or a literal
+# credential (the FRED class) — BEFORE it becomes permanent, because this constitution forbids rewriting history.
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+if command -v bun >/dev/null 2>&1; then
+  bun run script/precommit-prevent.ts
+else
+  echo "⚠ pre-commit: bun not found on PATH — the prevention walls could not run (install bun to enforce E-PREVENT)" >&2
+  exit 0
+fi

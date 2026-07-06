@@ -1,0 +1,113 @@
+{
+  "$schema": "ORGANON-forced-flow-domain/v1",
+  "sprint": "ORGΛNON — Sentinel-Driven Hypothesis Generation (Comprehensive)",
+  "authored": "ORGΛNON",
+  "committedBeforeGeneration": true,
+  "statement": "This file pre-registers the STRUCTURALLY-CONSTRAINED generative space (forced flows only) AND the machine-checkable grounding schema, committed BEFORE any hypothesis is generated (Rule XXIII / XXXVI). The AI generator may ONLY propose hypotheses whose (counterparty, trigger, direction, timing) resolve inside this domain. A hypothesis over an unconstrained space — a Category-C technical/momentum signal, or a narrative 'flow' with no compelled counterparty — is REJECTED before the validator (this is the moat vs. the failed blind GVL loop, which searched an economically-blind space → efficient markets → nothing). Editing this file after seeing a generation result to admit a hypothesis it would have rejected is a Halt (Rule IX/XXXIII).",
+
+  "whyForcedFlows": "A forced flow is a trade some named counterparty is STRUCTURALLY COMPELLED to make by a MECHANICAL trigger — not a trade someone CHOOSES because a signal looks good. Perp longs MUST pay funding at the stamp; a position past its maintenance margin MUST be liquidated at the threshold; unlocked tokens MUST hit supply on the vesting date. The compulsion is the economic prior a language model supplies that the blind loop lacked. The compelled flow is what a non-compelled counterparty could, in principle, be paid to absorb — the only place a structural (not informational) edge can live.",
+
+  "flows": [
+    {
+      "id": "funding-mechanics",
+      "name": "Perpetual funding mechanics",
+      "compelledCounterparty": "perp longs (net) — the side of the perp order book on the paying side of the funding rate",
+      "mechanicalTrigger": "the periodic funding payment (e.g. every 8h on Binance USD-M): longs pay shorts when the mark trades above the index (positive funding), mechanically, regardless of anyone's view",
+      "direction": "pay-side pressure concentrated at the funding stamp; the compelled cash flow is deterministic given the rate and open interest",
+      "timing": "at each funding settlement timestamp (fixed schedule, known in advance)",
+      "whyMechanical": "the funding payment is a protocol rule, not a discretionary trade — the paying side is compelled by holding the position across the stamp. Note (Rule XIII): raw funding CARRY is beta + a tail/insurance premium; the settled ORGΛNON anchor is NO-GO (c9049ac1). Admitted here as a FLOW the generator may reason about (e.g. cross-venue funding dislocations), NOT as a claim that carry is edge — the frozen discriminator neutralizes carry to beta.",
+      "dataTier": "T1/T2 (funding rates + klines are checksum-anchored / admissible free-PIT)"
+    },
+    {
+      "id": "liquidation",
+      "name": "Forced liquidations / maintenance-margin cascades",
+      "compelledCounterparty": "positions crossing their maintenance-margin threshold (over-leveraged longs in a drawdown, shorts in a rally)",
+      "mechanicalTrigger": "the maintenance-margin threshold: when equity/notional falls below the venue's maintenance ratio, the liquidation engine MUST close the position at market, mechanically",
+      "direction": "forced sell (long liquidations) or forced buy (short liquidations) at the threshold → transient price dislocation the liquidation engine does not care about",
+      "timing": "when price reaches the aggregate liquidation band; clustered where open interest is leveraged",
+      "whyMechanical": "the liquidation is executed by the exchange engine on a rule, not by the trader's choice — the counterparty is compelled by the margin system the instant the threshold is crossed",
+      "dataTier": "T1/T2 (liquidation prints / open-interest / price are admissible free-PIT where captured)"
+    },
+    {
+      "id": "token-unlock",
+      "name": "Token unlock / vesting supply",
+      "compelledCounterparty": "unlock recipients (team, investors, ecosystem funds) whose vested tokens become transferable on a scheduled date",
+      "mechanicalTrigger": "the vesting/unlock date in the token's emission schedule — supply that was contractually locked becomes liquid on a KNOWN calendar date",
+      "direction": "supply pressure (net-sell tendency) concentrated around the unlock date; the newly-liquid float is a mechanical increase in sellable supply",
+      "timing": "on the published unlock date (known far in advance from the vesting contract)",
+      "whyMechanical": "the unlock is a smart-contract / vesting-schedule event on a fixed date — the supply hits the market mechanically whether or not recipients want to sell; the compelled event is the SUPPLY becoming liquid, not any single actor's decision",
+      "dataTier": "T2/T3 (unlock schedules are public but the price/flow around them must be admissibly tiered)"
+    },
+    {
+      "id": "amm-arbitrage",
+      "name": "AMM arbitrage flow",
+      "compelledCounterparty": "AMM liquidity providers vs. arbitrageurs — the pool price diverging from the reference price compels an arbitrage trade",
+      "mechanicalTrigger": "price divergence between the AMM pool (x*y=k or a concentrated-liquidity curve) and the external reference price beyond fees/gas — the arbitrage is compelled by the deterministic pool pricing function",
+      "direction": "flow that mechanically corrects the pool price toward the reference (LPs are adversely selected; arbitrageurs capture the divergence)",
+      "timing": "whenever divergence exceeds the fee+gas threshold; continuous",
+      "whyMechanical": "the pool price is a deterministic function of reserves; a divergence beyond cost is a mechanical, riskless-ish arbitrage that WILL be taken — the LP's loss-versus-rebalancing is compelled by the invariant, not chosen",
+      "dataTier": "T2/T3 (on-chain pool state + reference price; admissibility depends on capture)"
+    },
+    {
+      "id": "peg-defense",
+      "name": "Stablecoin peg-defense flow",
+      "compelledCounterparty": "the stablecoin's peg-stability mechanism (mint/redeem arbitrage desk, collateral vault, or algorithmic controller)",
+      "mechanicalTrigger": "peg deviation beyond the redemption/mint band — the mechanism is compelled to defend the peg (redeem at $1, mint/burn, or deploy collateral) by its design",
+      "direction": "defense flow directed toward the peg (buy below, sell above) up to the mechanism's capacity",
+      "timing": "when the deviation exceeds the mechanism's band; acute during depeg stress",
+      "whyMechanical": "a collateralized/redeemable stablecoin's arbitrage (redeem $0.99 → $1.00) is a compelled, near-riskless trade the mechanism guarantees; the peg-defense flow is structural, not sentiment (its FAILURE, when the mechanism is exhausted, is itself a mechanical event)",
+      "dataTier": "T2/T3 (peg price + reserve/mechanism state; admissibly tiered)"
+    },
+    {
+      "id": "index-reconstitution",
+      "name": "Index / basket reconstitution",
+      "compelledCounterparty": "index and basket funds tracking a rules-based index (a DeFi index token, or a CEX index product)",
+      "mechanicalTrigger": "the index rebalance rule — on the reconstitution date the fund MUST buy the adds and sell the drops to track the index, mechanically, at (or near) the reference close",
+      "direction": "forced buy of additions / forced sell of deletions concentrated at the rebalance, regardless of price",
+      "timing": "on the scheduled reconstitution date (known from the index methodology)",
+      "whyMechanical": "a passive/rules-based fund is contractually compelled to track — it trades the reconstitution to minimize tracking error, not because it has a view; the flow is mechanical and pre-announced by the methodology",
+      "dataTier": "T2/T3 (index methodology + constituent prices; admissibly tiered)"
+    }
+  ],
+
+  "groundingSchema": {
+    "note": "Machine-checkable (Rule XXXVI). Phase 1 (src/organon/grounding.ts) validates every generated hypothesis against THIS schema. A hypothesis missing any required field, naming a vague counterparty, naming a narrative (non-mechanical) trigger, or resolving outside the flows above is REJECTED before the frozen validator ever sees it. The check is on STRUCTURE, not eloquence — a fluent story with no compelled counterparty + mechanical trigger fails.",
+    "requiredFields": ["flow", "counterparty", "trigger", "direction", "timing"],
+    "fieldRules": {
+      "flow": "MUST be one of the flow ids above (funding-mechanics | liquidation | token-unlock | amm-arbitrage | peg-defense | index-reconstitution). Out-of-domain → REJECT.",
+      "counterparty": "MUST name a SPECIFIC compelled actor class (an entity structurally forced to trade). Not 'the market', not a discretionary chooser.",
+      "trigger": "MUST name a MECHANICAL event (a funding payment / liquidation threshold / unlock date / rebalance rule / peg-deviation band / AMM divergence). Not a narrative or a technical pattern.",
+      "direction": "MUST state the compelled flow direction (buy/sell pressure) implied by the trigger.",
+      "timing": "MUST state WHEN the compelled flow occurs (a stamp, a threshold-crossing, a known date)."
+    },
+    "allowedCounterpartyClasses": [
+      "perp longs (net)", "perp shorts (net)", "liquidated positions", "over-leveraged longs", "over-leveraged shorts",
+      "unlock recipients", "vesting recipients", "AMM liquidity providers", "arbitrageurs",
+      "stablecoin peg mechanism", "collateral vault", "index funds", "basket funds", "passive trackers"
+    ],
+    "allowedTriggerTypes": [
+      "funding-payment", "funding-settlement", "liquidation-threshold", "maintenance-margin", "liquidation-cascade",
+      "unlock-date", "vesting-date", "rebalance-rule", "reconstitution-date", "peg-deviation", "redemption-band", "amm-divergence"
+    ],
+    "rejectedCounterparties": [
+      "the market", "the markets", "traders", "the crowd", "investors", "participants", "sentiment",
+      "whales", "smart money", "retail", "everyone", "buyers", "sellers", "the trend"
+    ],
+    "rejectedTriggers": [
+      "momentum", "trend", "sentiment", "technical pattern", "chart pattern", "breakout", "support", "resistance",
+      "news", "hype", "narrative", "accumulation", "distribution", "fear", "greed", "oversold", "overbought"
+    ]
+  },
+
+  "exclusions": {
+    "categoryC": "Category-C signals — momentum, mean-reversion, technical/chart patterns, price-only predictors — are EXCLUDED from the generative domain: they name NO structurally-compelled counterparty (nobody is FORCED to trade because RSI is low). NOTE: cross-sectional momentum still appears in this sprint, but ONLY as the Phase 0.1 BAR-CALIBRATION probe (a documented edge used to prove the validator's yes-path on real signal) — it is NOT a member of the forced-flow generative domain and the generator may not propose it.",
+    "narrative": "Narrative 'flows' — 'whales are accumulating', 'smart money is rotating', 'the market is fearful' — are REJECTED: they name no MECHANICAL trigger (no protocol rule, no threshold, no scheduled date compels the trade). Eloquence is not evidence (Rule XXXVI).",
+    "why": "Admitting either would repeat the GVL failure (an economically-blind space) at AI scale and would break the confabulation firewall's first layer (a fluent Category-C or narrative story would pass a gate that checks persuasion instead of structure)."
+  },
+
+  "antiTuning": {
+    "frozenEngine": "The 6 computational-core .py + the loop wall stay byte-identical (Rule VII). This domain constrains WHICH hypotheses are tried; it never alters the bar that judges them.",
+    "committedBeforeGeneration": "This file is git-committed BEFORE Phase 4 generation. Its sha is recorded in the BuildLog. No flow is added after seeing a result to admit a hypothesis it would have rejected (Rule IX/XXXIII).",
+    "onePerDomain": "Every flow here has a NAMED compelled counterparty AND a MECHANICAL trigger — the two-part test. A candidate that satisfies only one (a counterparty with no mechanical trigger, or a mechanism with no compelled counterparty) is not a forced flow and is out of domain."
+  }
+}

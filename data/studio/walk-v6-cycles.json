@@ -1,0 +1,106 @@
+{
+  "protocol": "walk-v6-cycles",
+  "at": "2026-07-05",
+  "gate": "CONVERGED-5",
+  "outcome": "CONVERGED-5",
+  "cycles": [
+    {
+      "cycle": 1,
+      "cleanTraverse": false,
+      "newFindings": [
+        "W6-01",
+        "W6-02",
+        "W6-03"
+      ],
+      "scenarios": 23,
+      "depth": "FULL (all 23 scenarios × the console door; UNWIRED baseline)",
+      "note": "3 genuine findings (W6-01 panels-not-surfaced [product], W6-02 framing-not-refusal-aware [product], W6-03 S3-check-over-specified [harness]) — root-caused, fixed, re-tested"
+    },
+    {
+      "cycle": 2,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 23,
+      "depth": "FULL (three personas × all acts, through the UI first)",
+      "replay": "cycle 1 replayed from its transcript — registers stable",
+      "fails": [],
+      "note": "CLEAN — the full catalog v11 traversed, every scenario matched its expected honest behavior"
+    },
+    {
+      "cycle": 3,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 23,
+      "depth": "FULL (three personas × all acts, through the UI first)",
+      "replay": "cycle 2 replayed from its transcript — registers stable",
+      "fails": [],
+      "note": "CLEAN — the full catalog v11 traversed, every scenario matched its expected honest behavior"
+    },
+    {
+      "cycle": 4,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 23,
+      "depth": "FULL (three personas × all acts, through the UI first)",
+      "replay": "cycle 3 replayed from its transcript — registers stable",
+      "fails": [],
+      "note": "CLEAN — the full catalog v11 traversed, every scenario matched its expected honest behavior"
+    }
+  ],
+  "cleanFlags": [
+    false,
+    true,
+    true,
+    true
+  ],
+  "catalogComplete": true,
+  "rotationComplete": true,
+  "twoConsecutiveClean": true,
+  "cycleCount": 4,
+  "converged5": true,
+  "catalog": {
+    "count": 23,
+    "byClass": {
+      "realistic": 11,
+      "adversarial": 4,
+      "edge": 8
+    },
+    "contentSha": "b8dc21d230f78976bf3bff7cec2401573c07d0cc28b6c0cba4c3dfb9a686eb6d",
+    "traversedInFull": true,
+    "judgedAgainstExpected": true
+  },
+  "themes": [
+    "injection",
+    "laundering",
+    "tamper",
+    "availability",
+    "doc-lies",
+    "ux-priming",
+    "park-legitimacy"
+  ],
+  "walkLedger": {
+    "file": "data/studio/walk-v6-ledger.jsonl",
+    "chainOk": true,
+    "issues": 6,
+    "open": 0,
+    "parks": 0,
+    "findings": [
+      {
+        "id": "W6-01",
+        "status": "fixed",
+        "title": "the spine surfaces (breadth 'why not yet', the hedged ETA, the pro-disclosure) were built as modules but NOT surfaced to the user through the Goal Console report"
+      },
+      {
+        "id": "W6-02",
+        "status": "fixed",
+        "title": "the 'WHY NOT YET' framing was shown for every verdict, including a (hypothetical) unconditional GO — a GO that says 'why not yet' is priming/contradictory (the ux-priming theme's crosshairs)"
+      },
+      {
+        "id": "W6-03",
+        "status": "fixed",
+        "title": "the walk's own S3 check over-specified a PBO≥0.4 threshold not part of the scenario's expected honest behavior (the CPCV product is correct)"
+      }
+    ]
+  },
+  "note": "the walk ran through the UI/UX (the console the user's door); catalog v11 (23 scenarios) traversed in full each cycle, every scenario judged against its expected honest behavior; two genuine findings (W6-01, W6-02) root-caused → fixed → re-tested; two consecutive FULL-depth clean cycles across four total."
+}

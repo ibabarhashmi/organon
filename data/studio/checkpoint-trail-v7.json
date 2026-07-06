@@ -1,0 +1,213 @@
+{
+  "protocol": "checkpoint-trail-v7",
+  "criteriaSetSha": "08971784a739d9c66e20de4b731886bb6ec8f24bae341d3844fc73e5f1cb1fec",
+  "chainOk": true,
+  "independence": "pending-non-author",
+  "records": [
+    {
+      "seq": 0,
+      "phase": "phase-0",
+      "decision": "ADVANCE",
+      "stamp": "v7-phase0-debt-clear-2",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "DEBT-CLEAR-2",
+          "text": "every V6 audit item closed with evidence; zero deletions anywhere; counts' before/after published (T-POLLUTION, T-SUPERSEDE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-debt-clear-2.json (b95e718fce3d…)",
+          "weakened": false
+        },
+        {
+          "id": "pollution-audit",
+          "text": "every historical ledger entry re-validated against the current schema; invalid entries quarantined by appended annotation (never deleted); family/root counts recomputed with the exclusions; a positive control catches a seeded invalid entry; before/after published",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/ledger-pollution-audit.json (eba19a48b7d1…)",
+          "weakened": false
+        },
+        {
+          "id": "phase2-correction",
+          "text": "V6's doc-truth criterion (invalidated by W1-01, evidenced in the parent env) corrected append-only per V6's own V5-correction precedent; the phase headline re-stated at its true value",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/supersede-trail.json (bda6afb6eacc…)",
+          "weakened": false
+        },
+        {
+          "id": "trail-immutability",
+          "text": "T-SUPERSEDE adopted; the trail_immutability wall green with its positive control (a seeded re-point fails); the V6 §0.7 re-pointing named as the counterexample and re-expressed as a proper superseding entry",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/supersede-trail.json (bda6afb6eacc…)",
+          "weakened": false
+        },
+        {
+          "id": "regeneration-demonstrated",
+          "text": "the regeneration scripts run then the engine-data legacy suites: green converts the waivers to proofs, failure converts them to honest blockers with the true error pasted — either outcome exit-worthy, asserting is not",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-regeneration.json (c25f3a7898da…)",
+          "weakened": false
+        },
+        {
+          "id": "trial-2-labeled",
+          "text": "the ILLUSTRATIVE label appended to the V6 live-run-2 artifact and anywhere its numbers are quoted (T-REAL, retroactive)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/live-run-2-artifact.json (50e2d71128b3…)",
+          "weakened": false
+        },
+        {
+          "id": "criteria-printed-floor-reanchored",
+          "text": "criteria printed VERBATIM beside this blueprint's pin; the capability floor re-anchored via a superseding (not re-pointed) entry",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-debt-clear-2.json (b95e718fce3d…)",
+          "weakened": false
+        }
+      ],
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "d3565185e19ab86df4d605db77939e22eb3100c417dffa480314be989306918b"
+    },
+    {
+      "seq": 1,
+      "phase": "phase-1",
+      "decision": "ADVANCE",
+      "stamp": "v7-phase1-split-whole",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "SPLIT-WHOLE",
+          "text": "fresh clone of the NEW repo: frozen byte-identity vs the ORIGINAL manifest; full in-scope battery green; capability floor intact; walls 12+/12+; the old tree frozen behind a pointer, nothing deleted — OR a designed, honorable STOP with V6's system intact (T-TRANSPLANT)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase1-splitwhole.json (41990f9a5757…)",
+          "weakened": false
+        },
+        {
+          "id": "byte-first",
+          "text": "the frozen seven + validator + pinned sha values byte-verified against the ORIGINAL manifest BEFORE anything else moves (the frozen-verify timestamp precedes all other moves)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase1-splitwhole.json (41990f9a5757…)",
+          "weakened": false
+        },
+        {
+          "id": "transplant-manifest",
+          "text": "a machine-generated transplant manifest (every file: source path → destination path → sha256), complete, the new repo's first exhibit",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase1-splitwhole.json (41990f9a5757…)",
+          "weakened": false
+        },
+        {
+          "id": "pointer-committed",
+          "text": "the old tree's final Organon commit is the pointer (new location, transplant HEAD hash, 'development continues at…'); the old tree takes no further Organon commits; nothing deleted",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase1-splitwhole.json (41990f9a5757…)",
+          "weakened": false
+        },
+        {
+          "id": "logs-lineage",
+          "text": "the four+1 BuildLogs present in the new tree with the append-only wall over their fresh history plus a recorded lineage note to the old tree",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase1-splitwhole.json (41990f9a5757…)",
+          "weakened": false
+        }
+      ],
+      "prev": "d3565185e19ab86df4d605db77939e22eb3100c417dffa480314be989306918b",
+      "hash": "d2d32fe3c8c8e53a473db915cfeee49b48a92cd63943302b837fb06df59040ac"
+    },
+    {
+      "seq": 2,
+      "phase": "phase-2",
+      "decision": "ADVANCE",
+      "stamp": "v7-phase2-stronger",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "STRONGER",
+          "text": "each of the five strengthenings carries a positive-controlled proof or a legitimate four-field park; W1-04's class (wrongful acceptance behind a clean envelope) mechanically unreintroducible",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-stronger.json (9cf96ffa778a…)",
+          "weakened": false
+        },
+        {
+          "id": "rejection-boundary",
+          "text": "a must-reject corpus (invalid enums incl. the W1-04 payload verbatim, hostile weights, malformed/orphaned lineage, oversize legs, boundary values) refused BEFORE registration (the ledger count unchanged — the assertion) on every mutating surface; a must-accept corpus still passes (no over-tightening); both in the battery",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-stronger.json (9cf96ffa778a…)",
+          "weakened": false
+        },
+        {
+          "id": "real-returns",
+          "text": "the REAL-RETURNS live path built through the existing PIT domain pipelines (REAL-PIT-labeled, one end-to-end proof) OR four-field PARKED as pre-authorized — exactly one, never forced, never faked (T-REAL, C-PARK)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/parks-register.json (ae1fcaf866b5…)",
+          "weakened": false
+        },
+        {
+          "id": "served-persistence",
+          "text": "the served-persistence DECISION made with a written due-diligence memo (both options costed); the winner implemented; first contact preservable (restart-survival wall, or out-of-band capture made mandatory) BEFORE DOORS-OPEN; bounded served-abuse hardening with the sybil residual restated (T-SERVE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-runbook-rehearsal.json (e7350efdc1d4…)",
+          "weakened": false
+        },
+        {
+          "id": "runbook",
+          "text": "the ten-minute first-contact RUNBOOK (tunnel → stranger script → evidence capture) rehearsed once by the author as a labeled Tier-A rehearsal (not first contact); the W3-01↔DOORS-OPEN intersection named in the lane",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-runbook-rehearsal.json (e7350efdc1d4…)",
+          "weakened": false
+        },
+        {
+          "id": "tense-scanner",
+          "text": "the claim-vs-evidence scanner live (present-tense claims extracted from logs/docs/screens, each paired with its evidence artifact or flagged); the human table still produced; at least one seeded overclaim caught (positive control)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-stronger.json (9cf96ffa778a…)",
+          "weakened": false
+        }
+      ],
+      "prev": "d2d32fe3c8c8e53a473db915cfeee49b48a92cd63943302b837fb06df59040ac",
+      "hash": "e3d2f91fe77b08f9144f29de4774c48931f0243e258e6bdeb9f335dee916ac37"
+    },
+    {
+      "seq": 3,
+      "phase": "phase-3",
+      "decision": "ADVANCE",
+      "stamp": "v7-phase3-converged-2",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "CONVERGED-2",
+          "text": "rotation-complete (all seven themes ≥1 cycle) AND two consecutive CLEAN cycles (zero new, zero open non-parked) — OR the honest NON-CONVERGENCE STOP at cap=10 with the register + transcripts + depth manifests published; both valid terminals, exactly one claimed truthfully (T-ROTATE, C-LOOP)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v2-cycles.json (4aa63f8873c3…)",
+          "weakened": false
+        },
+        {
+          "id": "walk-ledger-chained",
+          "text": "the WALK LEDGER hash-chained, complete, committed; every issue registered BEFORE any fix",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v2-ledger.jsonl (20d6eff50e35…)",
+          "weakened": false
+        },
+        {
+          "id": "fixes-inventoried",
+          "text": "every fix inventoried and battery-plus-rejection-corpora-plus-floor-plus-walls-green; frozen byte-identity re-proven each cycle",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase3-converged.json (fad5ff9fd97a…)",
+          "weakened": false
+        },
+        {
+          "id": "parks-legitimate",
+          "text": "every architectural finding four-fielded (context+repro, rationale, impact, recommended next steps+sprint) and legitimacy-reviewed each cycle; a convenience park is reclassified open (C-PARK)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/parks-register.json (ae1fcaf866b5…)",
+          "weakened": false
+        },
+        {
+          "id": "rotation-depth",
+          "text": "all seven themes rotated; every cycle publishes a depth manifest (personas × acts × full/abbreviated, a full three-persona pass at least every second cycle); a prior cycle replayed from its transcript; the pollution spot-audit run in the tamper cycle (T-ROTATE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v2-cycles.json (4aa63f8873c3…)",
+          "weakened": false
+        }
+      ],
+      "prev": "e3d2f91fe77b08f9144f29de4774c48931f0243e258e6bdeb9f335dee916ac37",
+      "hash": "c85996d533928793e0310080857d4fa84c34207cd09a268baf58abe213b5f21d"
+    }
+  ]
+}

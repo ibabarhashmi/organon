@@ -1,0 +1,89 @@
+{
+  "protocol": "basis-capture-v11",
+  "at": "2026-07-05",
+  "note": "LIVE T2-forward evidence (non-deterministic: capture-time nonces + live data). The deterministic gate proofs are in phase4-basis-v11.json.",
+  "hyperliquid": {
+    "endpoint": "https://api.hyperliquid.xyz/info",
+    "reachable": true,
+    "tier": "T2",
+    "intervalHours": 1,
+    "captures": [
+      {
+        "coin": "BTC",
+        "run": 1,
+        "key": "funding-basis:hyperliquid:BTC",
+        "contentSha": "9f761fff7ec5eedc",
+        "nonce": "e30dacf896b7",
+        "chainPos": 0,
+        "tier": "T2",
+        "nPoints": 500,
+        "window": {
+          "start": 1779350400055,
+          "end": 1781146800013
+        }
+      },
+      {
+        "coin": "ETH",
+        "run": 1,
+        "key": "funding-basis:hyperliquid:ETH",
+        "contentSha": "99dbc496bbf9ff9b",
+        "nonce": "ffbe16248b52",
+        "chainPos": 0,
+        "tier": "T2",
+        "nPoints": 500,
+        "window": {
+          "start": 1779350400055,
+          "end": 1781146800013
+        }
+      },
+      {
+        "coin": "SOL",
+        "run": 1,
+        "key": "funding-basis:hyperliquid:SOL",
+        "contentSha": "21830f2865aa6aef",
+        "nonce": "a6946c1a85a6",
+        "chainPos": 0,
+        "tier": "T2",
+        "nPoints": 500,
+        "window": {
+          "start": 1779350400055,
+          "end": 1781146800013
+        }
+      },
+      {
+        "coin": "BTC",
+        "run": 2,
+        "key": "funding-basis:hyperliquid:BTC",
+        "contentSha": "9f761fff7ec5eedc",
+        "nonce": "8d43df589fd4",
+        "chainPos": 1,
+        "tier": "T2",
+        "nPoints": 500,
+        "window": {
+          "start": 1779350400055,
+          "end": 1781146800013
+        }
+      }
+    ],
+    "chainedRuns": 2,
+    "provenanceChain": {
+      "ok": true,
+      "total": 16
+    }
+  },
+  "liveBasis": {
+    "disposition": "DELIVERED",
+    "detail": {
+      "nAlignedPoints": 63,
+      "basisTier": "T2",
+      "perLegTiers": {
+        "cex": "T2",
+        "dex": "T2"
+      },
+      "verdict": "INSUFFICIENT-EVIDENCE",
+      "dsr": null,
+      "divergence": "basis divergence: mean -0.06%/yr · vol 8.47% · max |basis| 26.82% · 10 sign-flips (the spread's own instability — it renders its danger, not just its carry)",
+      "render": "BASIS (Binance vs Hyperliquid) — 63 pts · tier = MIN(legs) = T2  [Binance T2 · Hyperliquid T2]\n  basis divergence: mean -0.06%/yr · vol 8.47% · max |basis| 26.82% · 10 sign-flips (the spread's own instability — it renders its danger, not just its carry)\n  NB the basis is only as strong as its weakest leg — it can NEVER be labeled T1 (R-BASIS)"
+    }
+  }
+}

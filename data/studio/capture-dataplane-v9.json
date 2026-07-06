@@ -1,0 +1,116 @@
+{
+  "protocol": "capture-dataplane-v9",
+  "at": "2026-07-04",
+  "gate": "STORE-TRUE (the capture limb)",
+  "rule": "D-SEAM + D-LABEL — standalone-native PIT store, hash-chained nonce-anchored snapshot provenance, gap-honest, RWA BLOCKED-on-credential (A′#5)",
+  "runs": 2,
+  "domain": "lending",
+  "poolsCaptured": 5,
+  "poolsTotal": 5,
+  "captures": [
+    {
+      "key": "lending:aave-v3:USDT:ethereum",
+      "run": 0,
+      "points": 1238,
+      "contentSha": "7824f19f7264f8b2b28b8fe2b88b39e5ac5f32ee2b2f32e9786a2f433a6fe659",
+      "chainPos": 0
+    },
+    {
+      "key": "lending:aave-v3:USDC:ethereum",
+      "run": 0,
+      "points": 1245,
+      "contentSha": "3c7641eb6db9537ce6b0f695186263f6b9041ee4c353dda38d6eb0fdd2fc54cd",
+      "chainPos": 0
+    },
+    {
+      "key": "lending:fluid-lending:USDC:ethereum",
+      "run": 0,
+      "points": 766,
+      "contentSha": "0c3e752c64c2545618d32a56b5f6a5b1ababa82a73553fabc70c894402d1e096",
+      "chainPos": 0
+    },
+    {
+      "key": "lending:fluid-lending:USDT:ethereum",
+      "run": 0,
+      "points": 766,
+      "contentSha": "3f829ec6330c56714746c5d68de0a509448a1053595745af12e9d3f767985277",
+      "chainPos": 0
+    },
+    {
+      "key": "lending:sparklend:DAI:ethereum",
+      "run": 0,
+      "points": 757,
+      "contentSha": "1254a3d2fea6ffab1334cc491e563c5a36c75821c6fcfc5e8d40874f783c6f5f",
+      "chainPos": 0
+    },
+    {
+      "key": "lending:aave-v3:USDT:ethereum",
+      "run": 1,
+      "points": 1238,
+      "contentSha": "7824f19f7264f8b2b28b8fe2b88b39e5ac5f32ee2b2f32e9786a2f433a6fe659",
+      "chainPos": 1
+    },
+    {
+      "key": "lending:aave-v3:USDC:ethereum",
+      "run": 1,
+      "points": 1245,
+      "contentSha": "3c7641eb6db9537ce6b0f695186263f6b9041ee4c353dda38d6eb0fdd2fc54cd",
+      "chainPos": 1
+    },
+    {
+      "key": "lending:fluid-lending:USDC:ethereum",
+      "run": 1,
+      "points": 766,
+      "contentSha": "0c3e752c64c2545618d32a56b5f6a5b1ababa82a73553fabc70c894402d1e096",
+      "chainPos": 1
+    },
+    {
+      "key": "lending:fluid-lending:USDT:ethereum",
+      "run": 1,
+      "points": 766,
+      "contentSha": "3f829ec6330c56714746c5d68de0a509448a1053595745af12e9d3f767985277",
+      "chainPos": 1
+    },
+    {
+      "key": "lending:sparklend:DAI:ethereum",
+      "run": 1,
+      "points": 757,
+      "contentSha": "1254a3d2fea6ffab1334cc491e563c5a36c75821c6fcfc5e8d40874f783c6f5f",
+      "chainPos": 1
+    }
+  ],
+  "status": [
+    {
+      "key": "lending:aave-v3:USDT:ethereum",
+      "present": true,
+      "render": "lending:aave-v3:USDT:ethereum: PRESENT — 1238 pts [2023-02-13..2026-07-04], provenance 7824f19f7264… (nonce-anchored, chain pos 1)"
+    },
+    {
+      "key": "lending:aave-v3:USDC:ethereum",
+      "present": true,
+      "render": "lending:aave-v3:USDC:ethereum: PRESENT — 1245 pts [2023-02-06..2026-07-04], provenance 3c7641eb6db9… (nonce-anchored, chain pos 1)"
+    },
+    {
+      "key": "lending:fluid-lending:USDC:ethereum",
+      "present": true,
+      "render": "lending:fluid-lending:USDC:ethereum: PRESENT — 766 pts [2024-05-30..2026-07-04], provenance 0c3e752c64c2… (nonce-anchored, chain pos 1)"
+    },
+    {
+      "key": "lending:fluid-lending:USDT:ethereum",
+      "present": true,
+      "render": "lending:fluid-lending:USDT:ethereum: PRESENT — 766 pts [2024-05-30..2026-07-04], provenance 3f829ec6330c… (nonce-anchored, chain pos 1)"
+    },
+    {
+      "key": "lending:sparklend:DAI:ethereum",
+      "present": true,
+      "render": "lending:sparklend:DAI:ethereum: PRESENT — 757 pts [2023-05-09..2026-07-04], provenance 1254a3d2fea6… (nonce-anchored, chain pos 1)"
+    }
+  ],
+  "rwa": {
+    "ready": false,
+    "reality": "BLOCKED",
+    "reason": "RWA BLOCKED-on-credential — missing: FRED_API_KEY (Operator env var, never committed) + data/snapshot/MANIFEST.json (the pinned discovery snapshot, gitignored). The pin STAYS NOT-YET (zero re-pins). Never a stale or fabricated payload.",
+    "unblock": "Operator: export FRED_API_KEY=<free key from fredaccount.stlouisfed.org>, then run the snapshot regeneration + the two-way-door byte-regen (Phase 3)."
+  },
+  "storeTrue": true
+}

@@ -1,0 +1,5 @@
+{
+  "protocol": "backup-restore-drill",
+  "positiveControl": "test/organon/restore_drill.test.ts — (a) snapshot→corrupt→restore remembers + chain verifies + anchor matches; (b) a TORN backup restores every whole entry, quarantines the torn tail; (c) a ROLLBACK to an older backup is caught by the anchor",
+  "result": "3/3 green"
+}

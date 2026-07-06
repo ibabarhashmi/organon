@@ -1,0 +1,53 @@
+# ORGΛNON — the trust battery, wired to REAL CI on every commit + PR (Rule H-MOD).
+# The frozen-core byte-identity wall, the full wall set, the ledger/surface batteries, and the reckoning protocol
+# execute per push and per pull request. Fixture-only (S-FREE): zero live inference.
+name: studio-battery
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  # Fast gate — the frozen-core byte-identity + no-signing + governance walls (no Python sidecar needed). Runs first so
+  # a moved core byte or a signing primitive fails the build in seconds.
+  walls-fast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.11"
+      - run: bun install
+      - name: frozen-core + governance walls (no sidecar)
+        run: |
+          NO_COLOR=1 XDG_DATA_HOME="$(mktemp -d)" bun test --timeout 30000 \
+            test/walls/core_byte_identity.test.ts \
+            test/walls/no_signing_grep.test.ts \
+            test/walls/checkpoint_gate.test.ts \
+            test/walls/tiers_earned.test.ts \
+            test/walls/ux_honesty_studio.test.ts \
+            test/walls/fixture_leak.test.ts \
+            test/walls/trail_immutability.test.ts
+
+  # Full gate — the whole trust battery (walls + ledger + surfaces + agents + laundering + rejection corpora +
+  # served-persistence) on the Python sidecar. Deterministic, fixture-only.
+  studio-full:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.11"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: bun install
+      - name: build the studio-slim Python sidecar venv (numpy + scipy)
+        run: |
+          python -m venv src/backtest/py/.venv
+          ./src/backtest/py/.venv/bin/pip install -r src/backtest/py/requirements-studio.txt
+      - name: the full trust battery (walls + in-scope capability floor)
+        run: ./organon-studio-test.sh
+      - name: the reckoning protocol (author-run in CI)
+        run: NO_COLOR=1 XDG_DATA_HOME="$(mktemp -d)" bun run script/verify-v3.ts

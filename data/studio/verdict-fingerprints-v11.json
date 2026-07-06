@@ -1,0 +1,43 @@
+{
+  "protocol": "verdict-fingerprints-v11",
+  "at": "2026-07-05",
+  "note": "the invariant set: fixed submissions adjudicated through the frozen write-then-invoke path; every advisory panel is proven not to move a verdict by re-deriving this set byte-identical (R-ADVISORY)",
+  "fingerprintSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+  "fingerprints": [
+    {
+      "seed": 1,
+      "verdict": "NO-GO",
+      "dsr": "0.858039518146729",
+      "reproHash": "e5860d9da14299a377ddf975ce958c50fc760c647c2bffd013d941bd7f89ec82",
+      "fp": "caf20ff898d6c766cb986d18b0091ff5b765b1de1313eb3e90e330e50489a149"
+    },
+    {
+      "seed": 2,
+      "verdict": "CONDITIONAL",
+      "dsr": "0.985351038172943",
+      "reproHash": "4dd33c7a3fad110a92af99493bb692e1afd1a821eefe4a0edfb0005f257f5299",
+      "fp": "b4479a810d975cbc2ebe23a5aee26f972187267cb81b769991d974bfbcaf4b07"
+    },
+    {
+      "seed": 3,
+      "verdict": "NO-GO",
+      "dsr": "0.9493071250245543",
+      "reproHash": "6998003c2bfb093f969763f69863e26177f5f6b96bcbdb89122a5bda01cb534a",
+      "fp": "84ce2cdbeda750c30c97f0d74618fd5a24e419b807c827928156848f070c5474"
+    },
+    {
+      "seed": 4,
+      "verdict": "CONDITIONAL",
+      "dsr": "0.9532855991956374",
+      "reproHash": "3c69a2a32a2db5d85bd4fbd3ca378af3445cb7db048ec157853db53464ad2261",
+      "fp": "451a0ce7b991108f149f0af511fc0874aa45033c3757278f3c25e844a26adc9f"
+    },
+    {
+      "seed": 5,
+      "verdict": "NO-GO",
+      "dsr": "0.8193519218173626",
+      "reproHash": "b464d9c32d684172d35b05af32781deb7156620bd9690c3134f2d9ed323361ae",
+      "fp": "f6873c8b7c0c0d829aa6f7bfb55196c6179c934b55253e78d5979c668d4ca70b"
+    }
+  ]
+}

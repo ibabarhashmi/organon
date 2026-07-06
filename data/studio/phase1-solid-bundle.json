@@ -1,0 +1,11 @@
+{
+  "protocol": "solid-bundle",
+  "strengtheningsPositiveControlled": {
+    "unattended-cadence": "phase1-cadence.json — scheduler-originated stamps + killed-scheduler GAP",
+    "backup-restore-drill": "phase1-restore.json — 3/3 incl. torn backup + rollback",
+    "served-surface-hardened": "phase1-fuzz.json — 9/9 + authn/size/rate/malformed controls + no-signing re-grep",
+    "reachability": "phase1-reachability.json — reached from a second process (reachable≠independent)",
+    "trust-panel": "phase1-trust-panel.json — screen 7, cannot flatter, cross-checked live"
+  },
+  "panelDisagreesWithRawSources": false
+}

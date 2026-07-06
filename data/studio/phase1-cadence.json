@@ -1,0 +1,12 @@
+{
+  "protocol": "unattended-cadence",
+  "positiveControl": "test/organon/scheduler_cadence.test.ts — origin is hashed (relabel breaks the chain); a killed scheduler renders a GAP with missed intervals",
+  "schedulerStampsPerDomain": {
+    "lending": 5,
+    "funding": 5,
+    "fee-yield": 5
+  },
+  "chainVerifies": true,
+  "killedSchedulerGapDemo": "lending: TICKING but STALE — GAP of 30s (~7 missed intervals); 5 stamps, scheduler-originated ×5 — the gap is shown, never smoothed",
+  "tenseNote": "scheduler-originated via a DETACHED local daemon (script/scheduler.ts, run-nonce distinct from any session) — 'TICKING' earned at true tense NOW; the fully-unattended cross-machine GHA cron is push-gated (MIXED). Install: script/scheduler.plist."
+}

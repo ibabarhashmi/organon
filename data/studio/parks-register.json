@@ -1,0 +1,202 @@
+{
+  "protocol": "parks-register",
+  "rule": "C-PARK (four fields: context+repro, rationale, impact, recommended next steps+sprint) — never a convenience park",
+  "at": "2026-07-04",
+  "parks": [
+    {
+      "id": "V12-ENSEMBLE — DISPOSED (YES → future-sprint ADOPT)",
+      "opened": "Spine Phase 0 (V11)",
+      "status": "DISPOSED by experiment (Reachability Phase 2, U-EXPERIMENT) — the ensemble question is ANSWERED",
+      "context": "The V11 ensemble park's designed experiment ran under criteria hash-checked unchanged (1bb0dfd1…). Result: the noise pool FAILS (positive control), the correlation-adjusted genuine diversified pool passes at n=K, the naive laundering is detectable → pooling is LEGITIMATE with the correlation-adjusted K_eff charge.",
+      "rationale": "the pre-registered criterion decided YES-with-adjustment; U-EXPERIMENT forbids building the feature this sprint.",
+      "impact": "the park converts to a FUTURE-SPRINT ADOPT (a park-disposing SUPERSEDE value in research-ratification-v12.json); ZERO product built this sprint.",
+      "nextSteps": "a future sprint builds the pooling surface ONLY with the correlation-adjusted K_eff charge (flip-criteria attached: if the noise pool ever passes at the adjusted charge, revert to reject). Owner: a dedicated ensemble sprint."
+    },
+    {
+      "id": "V12-SHARED-LEDGER COHERENCE — DISPOSED (NO → stays parked)",
+      "opened": "Spine Phase 0 (V11)",
+      "status": "DISPOSED by experiment (Reachability Phase 2, U-EXPERIMENT) — the coherence question is ANSWERED (stays parked)",
+      "context": "The V11 shared-ledger park's coherence experiment ran under criteria hash-checked unchanged (6d49e6b6…). Result: a laundered cross-author search (20 sybils, per-author n=1 → dsr 0.928) earns a WEAKER bar than the unified (n=20 → dsr 0.310) — incoherent under the deployable per-author×domain scoping; the coherent global scoping has a fairness cost (it stiffens a stranger's bar for work they did not do).",
+      "rationale": "coherence + fairness cannot both hold under a simple scoping; the criterion decided NO.",
+      "impact": "the shared ledger STAYS PARKED with the evidence attached (a park-disposing SUPERSEDE value); the single-tenant family-honest ledger remains the only aggregation.",
+      "nextSteps": "reverses only if a scoping is found that is BOTH coherent AND fair (an open research question) AND a genuine stranger has acted (L-2P). Owner: a dedicated tournament/coherence sprint."
+    },
+    {
+      "id": "V12-CPCV-PROMOTION — tracker accruing",
+      "opened": "Spine Phase 2 (V11)",
+      "status": "PARKED, now INSTRUMENTED (Reachability Phase 2) — the ≥30-adjudication agreement count auto-accrues",
+      "context": "CPCV stays ADVISORY; the promotion-to-gating decision is parked. The tracker (cpcv_tracker.ts + cpcv-promotion-tracker-v12.jsonl) now records CPCV-vs-frozen-gate agreement on every real adjudication and renders on the pro disclosure.",
+      "rationale": "advisory-first; promotion is a future owner decision earned on evidence, never asserted.",
+      "impact": "the counter accrues toward ≥30 at ≥80%; the frozen gate stays the only gate.",
+      "nextSteps": "at ≥30 adjudications and ≥80% agreement, an owner decides promotion. Owner: the Operator + a follow-up sprint."
+    },
+    {
+      "id": "V12-BUILDER-SCHEMA-EDGES",
+      "opened": "Reachability Phase 3",
+      "status": "PARKED (documented, not a defect) — what the Guided Builder cannot express routes elsewhere, stated on-screen",
+      "context": "The Guided Builder composes over the EXISTING lending primitive only. A legitimately complex composition the schema cannot express (funding/basis multi-leg, custom lineage trees) routes to the goal door or is stated as a known edge — never silently truncated.",
+      "rationale": "one screen, existing primitives only (A′#5); expanding the schema is a deliberate future decision.",
+      "impact": "the builder is honest about its edges; the goal door + the parks cover what it cannot.",
+      "nextSteps": "a future sprint may extend the builder schema to funding/basis primitives (a deliberate amendment, not scope creep). Owner: a UX sprint."
+    },
+    {
+      "id": "V11-ENSEMBLE (portfolio-of-strategies)",
+      "opened": "Spine Phase 0 (V11)",
+      "status": "PARKED-WITH-EXPERIMENT (research-ratification-v11.json)",
+      "context": "Combining N INSUFFICIENT strategies into one 'powered' portfolio — possibly legitimate evidence-pooling, possibly deflation-laundering. No ensemble surface exists; building it before the experiment answers is a Halt (A′#7).",
+      "rationale": "the legitimacy is an empirical question with a knowable answer; it must be answered by a designed experiment, not asserted.",
+      "impact": "until answered, no pooling surface ships; the family-honest ledger stays the only aggregation.",
+      "nextSteps": "run the designed experiment (synthetic strategies with known correlation ρ; pre-registered: pooling is legitimate IFF the correlation-adjusted pool passes while a pure-noise pool at the same ρ does not). Owner: a dedicated ensemble sprint."
+    },
+    {
+      "id": "V11-SHARED-LEDGER (multi-user tournament)",
+      "opened": "Spine Phase 0 (V11)",
+      "status": "PARKED-WITH-EXPERIMENT (research-ratification-v11.json)",
+      "context": "The moat's endgame — a family ledger / tournament shared across users. It cannot skip two prerequisites: the statistical-coherence experiment AND a genuine non-author stranger (L-2P).",
+      "rationale": "cross-user deflation coherence is unproven and Tier-A independence still waits for a stranger; shipping the endgame before either manufactures the moat.",
+      "impact": "the ledger stays single-tenant; independence renders PENDING wherever no stranger acted.",
+      "nextSteps": "run the coherence experiment (a laundered search split across identities must earn the SAME deflated verdict as the unified one); hold DOORS-OPEN for a stranger. Owner: the Operator + a tournament sprint."
+    },
+    {
+      "id": "V11-HRP (portfolio construction) — DISPOSED (NO → stays parked)",
+      "opened": "Spine Phase 0 (V11)",
+      "status": "DISPOSED by experiment (Ensemble Phase 1, U-EXPERIMENT) — the HRP question is ANSWERED (stays parked)",
+      "context": "Hierarchical Risk Parity — the research flagged its crypto evidence as MIXED. The fixture test ran under the park's filed criterion hash-checked unchanged (row bf6764cd…): HRP vs equal-weight vs min-variance out-of-sample across 20 rolling windows on multi-asset fixtures.",
+      "rationale": "HRP's benefit had to be shown on OUR data out-of-sample; it was not.",
+      "impact": "portfolio construction stays out of scope; NO HRP weight renders anywhere (the park-disposing SUPERSEDE is in research-ratification-v13.json). Result: HRP beat BOTH baselines in only 1/20 windows; mean OOS Sharpe HRP 1.03 sits BETWEEN equal-weight 1.07 and min-variance 0.93 — it dominates neither.",
+      "nextSteps": "reverses only if HRP dominates BOTH equal-weight and min-variance out-of-sample across a MAJORITY of windows on a future fixture or real captured-data test. Owner: a portfolio-construction sprint."
+    },
+    {
+      "id": "V11-ZKML (verdict proofs)",
+      "opened": "Spine Phase 0 (V11)",
+      "status": "PARKED-WITH-EXPERIMENT + RE-CHECK 2027-01-01 (research-ratification-v11.json)",
+      "context": "Zero-knowledge proofs of the verdict path (portable attestation without revealing the strategy) — the research flagged ZKML as IMMATURE. Adopting immature cryptography by citation is the exact anti-pattern.",
+      "rationale": "a dated maturity re-check with a feasibility spike is the honest gate.",
+      "impact": "portable attestation stays hash-based (the ledger + verify-v3); no ZKML claim is made.",
+      "nextSteps": "at 2027-01-01 run a feasibility spike proving one real verdict under the no-core-change constraint; adopt only on a passing spike at acceptable prover cost. Owner: a dedicated attestation sprint."
+    },
+    {
+      "id": "V11-CPCV-PROMOTION (advisory → gating)",
+      "opened": "Spine Phase 2 (V11)",
+      "status": "PARKED (cpcv-promotion-park-v11.json) — promoting CPCV to gating now is REJECTED (advisory-first is the point, A′#10)",
+      "context": "CPCV renders ADVISORY beside the frozen gates and alters no verdict (the differential proves it). Promoting it to a gating panel would create a second authority.",
+      "rationale": "promotion must be earned on evidence, not asserted; a panel that can gate becomes a lever.",
+      "impact": "CPCV informs but never decides; the frozen gate remains the only gate.",
+      "nextSteps": "over the next ≥30 REAL adjudications, log CPCV's lean vs the frozen gate; promote to a co-gate ONLY IF agreement ≥80% AND right-on-disagreements ≥half AND an explicit owner sign-off. Owner: a CPCV-promotion decision (Operator + a follow-up sprint)."
+    },
+    {
+      "id": "V11-GUIDED-BUILDER (the ninth screen question)",
+      "opened": "Spine Phase 5 (V11)",
+      "status": "PARKED (the closed screen set stays at 8; a guided strategy-builder screen is a deliberate future decision, not a convenience add)",
+      "context": "A guided builder that walks a non-expert from goal to spec could be a ninth screen. The set is closed at 8 (E-CONSOLE); 'just one more' cannot slip in.",
+      "rationale": "the pro-disclosure toggle already gave the two-audience answer WITHOUT a ninth screen; a builder screen is a real product decision needing its own scope.",
+      "impact": "the console (screen 8) remains the single door; progressive disclosure serves both audiences over one representation.",
+      "nextSteps": "an owner decision on whether a guided-builder screen is worth amending the closed set once more. Owner: a dedicated UX sprint."
+    },
+    {
+      "id": "P2-1 (REAL-RETURNS)",
+      "opened": "Phase 2 (V7)",
+      "status": "RESOLVED (Data-Plane Phase 3 — CONVERTED: the REAL-PIT live path landed for the credential-free lending domain → capability `real-returns-realpit`)",
+      "context": "The REAL-RETURNS live path routes a live-submitted spec through a PIT domain pipeline so its series is REAL-PIT-labeled. This sprint built the standalone-native PIT store (Phase 1) + the differential-proven lending engine (Phase 2), so a lending goal → spec → the ported engine on REAL captured snapshots → a REAL-PIT adjudication now runs end-to-end (real-returns-v9.json: reality=REAL-PIT, verdict=NO-GO, provenance traceable to 3 chained snapshots).",
+      "rationale": "The blueprint pre-authorized the park so cycle pressure could not manufacture a speculative hack; this sprint delivered the real thing instead of a hack, and only for the credential-free lending domain that could be genuinely proven against the oracle. The D-LABEL guarantee (a REAL-PIT label requires verifying provenance) makes an unprovenanced REAL-PIT impossible by construction.",
+      "impact": "Lending submissions can now earn a REAL-PIT-labeled series with traceable provenance; the family-size deflation re-runs on REAL returns (a labeled successor to the ILLUSTRATIVE trial-2, never conflated). The verdict is the core's, relayed verbatim — a REAL-PIT NO-GO is the product working. RWA/funding/fee-yield REAL-PIT remains behind their P1-1 engine ports (BLOCKED, stated).",
+      "nextSteps": "Extend the REAL-PIT path to funding + fee-yield when their engine ports land (P1-1), and to RWA when the credential arrives (the two-way door). Owner: the data-plane follow-up sprint."
+    },
+    {
+      "id": "P1-1 (real-data engine layer)",
+      "opened": "Phase 1 (V7)",
+      "status": "FURTHER PARTIALLY CLOSED (End-User V10 — FUNDING landed via freepit T1, differential-proven; fee-yield's Py3.11/pandas env runs the panel end-to-end but is BLOCKED-on-data; the RWA engine path + risk/universe remain). Prior: Data-Plane V9 landed LENDING (differential-proven).",
+      "context": "This sprint brought the LENDING body home: commonWindow + a standalone-native lending buildJob + the differential-proven lending accrual (byte-equivalent to the frozen oracle) onto a standalone-native PIT store — capability `engine-port-differential`. What REMAINS absent: the RWA accrualEquity / execRwa path, the funding (freepit T1) + fee-yield (pandas) engine paths, and the risk-scoring / full universe registry the monorepo runner carries. Repro: a fresh clone has `src/dataplane` (lending) but no `src/marketdata`, `src/risk`, `src/universe`.",
+      "rationale": "The remaining paths import the OpenCode storage/schema tangle + sibling packages, or need the FRED credential (RWA) / a heavier T1 reconstruction (funding) / a pandas env (fee-yield); porting them cleanly is architectural, done per-domain as proofs land — never forced.",
+      "impact": "Lending REAL-PIT backtesting works end-to-end and is oracle-proven. Own-data RWA re-execution still caps at V0/CANNOT-VERIFY-DATA (fail-safe). The floor rose 33→43 across V8+V9; no capability left it.",
+      "nextSteps": "Port funding (freepit T1) + fee-yield (pandas env) + RWA (credential) engine paths per-domain against the oracle, each with its own differential. Owner: the data-plane follow-up sprint."
+    },
+    {
+      "id": "P0-1 (RWA verdict generator↔pin drift)",
+      "opened": "Phase 0 (V7)",
+      "status": "RESOLVED (Warranty Phase 1 — classified ENVIRONMENTAL; forensics-rwa.json); residual data-dependency folds into P1-1",
+      "context": "Regenerating RWA-VERDICT.md yielded Decision=DISQUALIFIED while frozen.ts pins NOT-YET. Phase-1 forensics (candidate matrix over 4 environments) DERIVED the cause: Decision=DISQUALIFIED IFF the golden-noise self-test is not green (verdict.ts:332, a fail-safe). The self-test fails in the studio-slim Python-3.9 env because purgedcv (Python-3.11-only) cannot import, and separately because the pinned FRED-gated data/snapshot is absent. Under the reconstructed validated Py3.11 env the golden-noise KEYSTONE reproduces byte-identically (DSR=0.478421, matches purgedcv). The numpy 2.0.2-vs-1.26.4 suspect was ELIMINATED (identical keystone).",
+      "rationale": "ENVIRONMENTAL, not LOGIC: the RWA finding did not change; the DISQUALIFIED is the fail-safe correctly refusing to certify a verdict computed outside its reproducibility contract. Re-pinning DISQUALIFIED would be the exact F-ENV trap (freezing an unregenerable, environment-broken output) — Halt refused. The pin STAYS NOT-YET; zero re-pins.",
+      "impact": "The pin is unchanged and correct. The RWA reproducibility environment is now pinned (requirements-rwa-engine.lock: Py3.11 + purgedcv 0.1.2 + scipy 1.17.1 + numpy 1.26.4 + engine stack). Full byte-regeneration of the NOT-YET token is BLOCKED on the absent pinned data/snapshot — a named F-ENV data-absence, not a mystery.",
+      "nextSteps": "RESIDUAL (folds into P1-1 / the data-plane sprint): with the pinned data/snapshot restored + the full engine venv, regenerate RWA-VERDICT.md end-to-end under requirements-rwa-engine.lock and confirm the NOT-YET token byte-reproduces (the golden-noise keystone already does). Owner: the data-plane follow-up sprint."
+    },
+    {
+      "id": "T1-01 (slim studio requirements.txt)",
+      "opened": "Phase 1 (fresh-clone)",
+      "status": "PARKED (folded into the Phase-3 walk — the documented setup is the walk's own subject)",
+      "context": "A fresh clone's `pip install -r src/backtest/py/requirements.txt` fails on python3.9 (the file pins the engine's 3.11 stack: scipy==1.17.1, quantstats, cvxpy, riskfolio-lib). The studio rigor sidecar needs only numpy+scipy.",
+      "rationale": "The heavy solver stack belongs to the (parked) engine layer; a slim studio-requirements is the honest fix but is DOC/setup surgery best done as the walk's documented-setup subject.",
+      "impact": "The documented setup path errors; the battery runs after `pip install numpy scipy` directly (as this sprint did).",
+      "nextSteps": "Add `src/backtest/py/requirements-studio.txt` (numpy, scipy) and point organon-setup.sh at it. Owner: the Phase-3 walk (doc-drift theme)."
+    },
+    {
+      "id": "INHERITED — floor audit",
+      "opened": "pre-V7 (XXXVIII)",
+      "status": "PARKED (owner retained)",
+      "context": "The power floor remains unaudited (Rule XXXVIII); preflight reports, never auto-refuses.",
+      "rationale": "Out of this sprint's scope (A′#12 — scope is the moat).",
+      "impact": "Reachability stays hedged; no verdict claims a floor it hasn't audited.",
+      "nextSteps": "A dedicated floor-audit sprint. Owner: retained from prior sprints."
+    },
+    {
+      "id": "INHERITED — full sybil economics",
+      "opened": "pre-V7",
+      "status": "PARKED (owner retained); partially mitigated; impact UPGRADED with measured numbers (Ensemble Phase 0)",
+      "context": "A determined sybil can mint fresh authorIds to reset per-author root-counting / the served quota.",
+      "rationale": "Out of scope (A′#12); this sprint added the served per-author quota + restated the residual as NAMED (SERVED-PERSISTENCE-MEMO).",
+      "impact": "Deflation + the served quota are mitigations, not eliminations; the residual is displayed, never hidden. UPGRADED (Ensemble Phase 0, K-SCOPE debt — the number the coherence experiment measured now flows into this park's impact field): the V12 coherence experiment QUANTIFIED this exposure — a 20-sybil laundered search earns a per-author bar of dsr 0.928, where the SAME search honestly counted (unified n=20) earns dsr 0.310. A determined sybil buys a materially weaker bar (0.928 vs 0.310, a ~0.62 DSR gap) under the deployable per-author×domain scoping, which is FAIR but INCOHERENT; the coherent global scoping is unfair (it stiffens a genuine stranger's bar for work they did not do). The live sybil economics, now measured rather than described qualitatively.",
+      "measuredExposure": {
+        "unifiedN": 20,
+        "unifiedDsr": 0.31,
+        "launderedPerAuthorN": 1,
+        "launderedPerAuthorDsr": 0.928,
+        "gap": 0.618,
+        "source": "research-ratification-v12.json #15 (coherence experiment, criteria 6d49e6b6…)"
+      },
+      "nextSteps": "A key-scoped identity with a cost-to-mint (raising the cost of minting the fresh authorId that resets the 0.928 bar). Owner: a dedicated sybil-economics sprint; cross-referenced with the shared-ledger coherence park (a coherent-AND-fair scoping is the same open research question)."
+    },
+    {
+      "id": "V14-IDENTITY-PROVENANCE — filed (self-declared, rotation-free; the ratchet-bypass vector named)",
+      "opened": "Explanation Phase 0 (V14)",
+      "status": "FILED (the provenance truth stated plainly; owner: the sybil park, unchanged)",
+      "context": "caller identity is load-bearing in TWO directions and was unspecified: the member-swap RATCHET keys per-declared-author (Pool.composeAndAdjudicate authorId), the rate LIMITER keys per-connection (x-forwarded-for) — and authorId is SELF-DECLARED and rotation-free. A caller who rotates authorId defeats the ratchet (each rotation resets the family of compositions); a caller who rotates connection defeats the limiter. This is the sybil exposure's cheapest form yet (the ratchet-bypass vector).",
+      "rationale": "the sybil park owns identity ECONOMICS; this sprint STATES the truth plainly (self-declared, rotation-free), keys the ratchet and limiter coherently, and files the bypass vector — building accounts/auth would be prevention theater without the economics, worse than disclosure (A′#11, rejected).",
+      "impact": "the K-LEGIBLE note gains a provenance sentence rendered where users read (Phase 2); the measured coherence numbers (0.928 laundered vs 0.310 unified) quantify what rotation buys; nothing is hidden.",
+      "nextSteps": "a future identity/economics sprint prices identity (a cost to declare an author / a connection) so rotation is no longer free; until then the truth is disclosed and the keys documented. Owner: a dedicated sybil-economics sprint."
+    }
+  ],
+  "resolvedThisSprint": [
+    {
+      "id": "P1-1 (funding) — DELIVERED [V10]",
+      "resolution": "FUNDING landed via credential-free freepit T1 (Binance data.vision immutable dumps, sha256-verified against the published CHECKSUM): reconstruction byte-identical to the monorepo's exact FreePitFunding.reconstruct, funding_accrual.py byte-identical cross-tree, a REAL-PIT funding adjudication (relayed verbatim) → capability `funding-port-differential`. The `engine-backtest` absence narrowed (funding removed). [V10]"
+    },
+    {
+      "id": "fee-yield (attempt) — BLOCKED-with-evidence [V10]",
+      "resolution": "GENUINELY ATTEMPTED (not V9's silent DEFER): the Py3.11/pandas panel env stood up under a hashed lockfile and runs feeyield_panel → feeyield_discovery end-to-end on synthetic data; BLOCKED-on-data (the feeyield-pull capture pipeline un-transplanted). Second-attempted; reviewed like a park (feeyield-attempt-v10.json). Unblock named. [V10]"
+    },
+    {
+      "id": "transform asterisk (V9 finding 1) — RETIRED [V10]",
+      "resolution": "the sandbox transform differential MATCHED (transform-differential-v10.json): the standalone rewrite byte-identical to the monorepo's exact Runner.legSeries + commonWindow on real data → capability `transform-differential-proven`; the D-DIFF asterisk retired at the letter (transform-supersede-v10.json). [V10]"
+    },
+    {
+      "id": "P2-1 (REAL-RETURNS)",
+      "resolution": "CONVERTED (Data-Plane Phase 3): the REAL-PIT live path landed for the credential-free lending domain → capability `real-returns-realpit` (real-returns-v9.json: reality=REAL-PIT, verdict=NO-GO, provenance traceable to 3 chained snapshots; the family-size deflation re-run on REAL returns). The `real-returns-live-path` absence was removed from the inventory (proof-backed). [V9]"
+    },
+    {
+      "id": "P1-1 (real-data engine layer) — PARTIAL",
+      "resolution": "PARTIALLY CLOSED (Data-Plane Phase 2): the LENDING PIT backtest landed, byte-equivalent to the frozen oracle (differential-proven) → capability `engine-port-differential`. The `engine-backtest` absence was NARROWED to the RWA/funding/fee-yield paths + risk/universe (still absent, still parked P1-1). [V9]"
+    },
+    {
+      "id": "W3-01 (served submits in RAM)",
+      "resolution": "DECIDED + implemented (SERVED-PERSISTENCE-MEMO): served submits persist to an isolated durable file and survive a restart; the restart-survival wall is green. No longer a park. [V7]"
+    },
+    {
+      "id": "P0-1 (RWA verdict generator↔pin drift)",
+      "resolution": "CLASSIFIED ENVIRONMENTAL (Warranty Phase 1, forensics-rwa.json): the DISQUALIFIED is a golden-noise self-test fail-safe from running outside the reproducibility contract (Py3.9-slim without purgedcv + absent pinned data/snapshot); the keystone reproduces under the validated Py3.11 env; numpy suspect eliminated. Pin STAYS NOT-YET (zero re-pins); RWA env pinned; residual byte-regen folds into P1-1. [V8]"
+    },
+    {
+      "id": "T1-01 (slim studio requirements.txt)",
+      "resolution": "FIXED in V7 + LOCKED in V8 (requirements-studio.lock, hashed). [V7/V8]"
+    }
+  ]
+}

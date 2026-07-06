@@ -1,0 +1,33 @@
+{
+  "protocol": "scope-amendments",
+  "rule": "K-SCOPE",
+  "chainOk": true,
+  "entries": [
+    {
+      "seq": 0,
+      "feature": "guided-builder",
+      "blueprintScope": "the ratified three domains — lending · funding · basis (the Guided Builder composes over every delivered primitive)",
+      "deliveredScope": "lending only (V12 Phase 3 shipped the builder over the lending primitive alone)",
+      "reason": "V12 delivered a walking-skeleton builder (one domain, born under U-SURFACE) and did not widen it to the three-domain scope, silently — a narrower delivery is honorable, the SILENCE about it is the violation this law retires (K-SCOPE). The narrowing is named now, retro-filed, dated, append-only.",
+      "ownerPhase": "Ensemble Phase 0 (retro-file); cure in Ensemble Phase 2",
+      "cure": "Ensemble Phase 2 (BUILDER-WHOLE) completes the builder to funding + basis under the identical discipline",
+      "retroFiled": true,
+      "stamp": "v13-phase0-scope-builder-narrowing",
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "5be2d50e4ab11576619c3c717b072762b4ee73c7db9b4fe02ac205074d0e3569"
+    },
+    {
+      "seq": 1,
+      "feature": "builder-funding-and-pool-illustrative",
+      "blueprintScope": "adjudicate the REAL data that exists: REAL captured T1 funding snapshots (Binance freepit, nonce-anchored + hash-chained) captured since V10 and byte-differential-proven",
+      "deliveredScope": "adjudicates ILLUSTRATIVE: Console.runComposedFunding and the pool composer adjudicate ILLUSTRATIVE labeled return series",
+      "reason": "data-reality PARITY narrowing (K-SCOPE parity extension): the real data existed but the surface wired illustrative — a schema adjudicating ILLUSTRATIVE where REAL exists is a narrowing (delivered reality ⊊ available reality); the narrowing is honorable, the SILENCE is the violation",
+      "ownerPhase": "Explanation Phase 0 (dated retro-file)",
+      "cure": "Explanation Phase 2 (wire the funding builder to the real T1 snapshots → a REAL-PIT verdict with provenance)",
+      "retroFiled": true,
+      "stamp": "explanation-phase0-parity",
+      "prev": "5be2d50e4ab11576619c3c717b072762b4ee73c7db9b4fe02ac205074d0e3569",
+      "hash": "5f7d25d7a87cc7c548255a4b48aa4878c807ea0560fd065b556d91de9940dca0"
+    }
+  ]
+}

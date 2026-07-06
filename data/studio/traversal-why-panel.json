@@ -1,0 +1,30 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "why-panel-both-registers",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "POST /builder/funding",
+      "interaction": "read the WHY of a real NO-GO in both registers (pro toggle on)",
+      "expected": "the NO-GO explained in both registers from one fact table — plain (two-sided: what failed · what held · what would change it) and quantitative (exact values/thresholds/deciding rule), consistency-checked",
+      "met": true,
+      "evidence": "WHY (plain): This strategy was refused. Its evidence, after paying for its 1 counted attempt, is weaker than the bar: the deflated significa"
+    },
+    {
+      "route": "(kill-switch WHY)",
+      "interaction": "read the WHY of a kill-switch firing",
+      "expected": "the kill-switch state explained in both registers — what it caught, why the surface is disabled",
+      "met": true,
+      "evidence": "A safety wall tripped and the surface is disabled: 1 pooled-noise survivor passed the deflation at its K_eff charge — th"
+    }
+  ],
+  "failureState": {
+    "route": "(MALFORMED WHY)",
+    "interaction": "read the WHY of a refused-before-adjudication input",
+    "expected": "MALFORMED explained — the rule it broke, nothing registered",
+    "met": true,
+    "evidence": "Refused before adjudication: the policy enum was not one of static/carry-tilt/carry-rotation. What held: nothing was reg"
+  },
+  "allMet": true,
+  "at": "2026-07-06"
+}

@@ -1,0 +1,48 @@
+{
+  "protocol": "phase0-ratified-true-v11",
+  "at": "2026-07-05",
+  "gate": "RATIFIED-TRUE",
+  "ratification": {
+    "table": "data/studio/research-ratification-v11.json",
+    "chainOk": true,
+    "counts": {
+      "ADOPT": 5,
+      "PARK-WITH-EXPERIMENT": 4,
+      "REJECT": 4
+    },
+    "reloadChainOk": true,
+    "unratifiedArtifacts": [],
+    "dofMappingHash": "d79fc6550ae4a3be492c2df927743b7675ad23d6d5bf27a97b5535c3f871edf3"
+  },
+  "ratificationWall": {
+    "proven_by": "test/walls/research_ratified.test.ts"
+  },
+  "catalog": {
+    "pinned": true,
+    "contentSha": "b8dc21d230f78976bf3bff7cec2401573c07d0cc28b6c0cba4c3dfb9a686eb6d",
+    "count": 23,
+    "byClass": {
+      "realistic": 11,
+      "adversarial": 4,
+      "edge": 8
+    },
+    "verifyOk": true
+  },
+  "criteria": {
+    "pin": "blueprint sha matches the pin (5e975656f858…)",
+    "criteriaSetSha": "c110f83592c4f7efbc97d8cc7773a334070891b00ecb100ca36966a76ae31337"
+  },
+  "baseline": {
+    "floor": 52,
+    "absencesOk": true
+  },
+  "preventionWalls": {
+    "proven_by": "test/walls/precommit_prevent.test.ts",
+    "hook": ".githooks/pre-commit (core.hooksPath)",
+    "walls": [
+      "blob-size",
+      "raw-data",
+      "credential"
+    ]
+  }
+}

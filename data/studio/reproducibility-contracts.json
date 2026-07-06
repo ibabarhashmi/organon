@@ -1,0 +1,47 @@
+{
+  "protocol": "reproducibility-contracts",
+  "rule": "F-ENV — every generated artifact gets a contract: pinned inputs (or their honest absence named), a hashed environment lockfile, a pinned generator, and a regen test that runs where data permits and states BLOCKED where it does not.",
+  "at": "2026-07-04",
+  "sprint": "Warranty (v8) Phase 1",
+  "lockfiles": {
+    "requirements-studio.lock": { "path": "src/backtest/py/requirements-studio.lock", "sha256": "bcc76bcea0da5837f230fc39f06efde66c1f352867e91525a2767b4952dd8cf6", "env": "Python 3.9.x · numpy 2.0.2 · scipy 1.13.1", "role": "the go-forward STUDIO sidecar env (battery-green)" },
+    "requirements-rwa-engine.lock": { "path": "src/backtest/py/requirements-rwa-engine.lock", "sha256": "a56a2dad1fad199c01a05553e1d3fb16bb5a96b88b5157be31e390366d1c4696", "env": "Python 3.11.x · numpy 1.26.4 · scipy 1.17.1 · purgedcv 0.1.2 · + engine stack", "role": "the RWA-verdict reproducibility env (golden-noise keystone reproduces here)" }
+  },
+  "contracts": [
+    {
+      "artifact": "RWA-VERDICT.md",
+      "generator": "script/rwa-verdict.ts (MONOREPO — absent from the standalone; inventory absence rwa-verdict-regeneration)",
+      "environment": "requirements-rwa-engine.lock (Python 3.11 + purgedcv 0.1.2 + scipy 1.17.1 + numpy 1.26.4 + engine stack)",
+      "inputs": { "data/snapshot (pinned FRED-gated discovery snapshot)": "ABSENT (gitignored local data; frozen.ts IMMUTABLE_DATA data/snapshot/MANIFEST.json)" },
+      "pin": "frozen.ts RWA_VERDICT_SHA 9cf94c8a… (full) + RWA_VERDICT_CONTENT_SHA c2959846… + RWA_VERDICT_INVARIANTS (NO-GO/NOT-YET/CONCLUSIVE/NO-DISCRIMINATING-SIGNAL/ASSET-BOUND)",
+      "regenStatus": "BLOCKED — the generator + engine + pinned data/snapshot are absent from the standalone (P1-1); under the reconstructed Py3.11 env the golden-noise KEYSTONE reproduces byte-identically (DSR=0.478421), the partial proof. The four structural INVARIANTS are the standalone's checkable RWA contract (classifyRwaDrift over the H1).",
+      "classification": "the drift is ENVIRONMENTAL (forensics-rwa.json); the pin STAYS NOT-YET; zero re-pins"
+    },
+    {
+      "artifact": "studio verdict artifacts (live-run-artifact.json, presets.json, verify-v3 outputs)",
+      "generator": "the studio verdict path (src/organon + src/studio) — PRESENT",
+      "environment": "requirements-studio.lock (Python 3.9 · numpy 2.0.2 · scipy 1.13.1)",
+      "inputs": { "fixtures": "PRESENT (S-FREE fixture corpus; no live inference, no FRED-gated data)" },
+      "pin": "the trust battery (test/*) is the regen test — deterministic, fixture-only",
+      "regenStatus": "RUNS-GREEN — the full battery reproduces these artifacts deterministically on a fresh clone (organon-studio-test.sh); this is the where-data-permits regen"
+    },
+    {
+      "artifact": "frozen seven (6 .py + src/loop/loop.ts)",
+      "generator": "hand-authored, frozen (S-CORE); not generated",
+      "environment": "n/a (byte-pinned, not regenerated)",
+      "inputs": { "n/a": "the bytes ARE the artifact" },
+      "pin": "frozen.ts FROZEN_PY + FROZEN_TS sha256 (byte-identity)",
+      "regenStatus": "N/A-BYTE-PINNED — core_byte_identity wall proves byte-identity; nothing to regenerate"
+    }
+  ],
+  "goldenNoiseKeystoneEvidence": {
+    "env": "Python 3.11.15 · numpy 1.26.4 · scipy 1.17.1 · purgedcv 0.1.2",
+    "dsr": "mine=0.478421 vs purgedcv=0.479638 (independent impl match)",
+    "monotonic": "DSR(10)=0.9405 > DSR(100)=0.7394 > DSR(1000)=0.4784",
+    "deflationGap": "PSR(0)=0.9989 − DSR=0.4784 = 0.5205 (> 0.3)",
+    "meanBestDsr": 0.5568,
+    "meanPbo": 0.4571,
+    "numpyInvariance": "IDENTICAL keystone under numpy 1.26.4 and 2.0.2 — the numpy suspect eliminated",
+    "note": "the golden-noise self-test (goldenNoiseGreen input) reproduces; only the data-gated lookahead_test is BLOCKED (data/snapshot absent)"
+  }
+}

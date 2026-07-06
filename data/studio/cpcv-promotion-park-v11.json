@@ -1,0 +1,11 @@
+{
+  "protocol": "cpcv-promotion-park-v11",
+  "at": "2026-07-05",
+  "decision": "PARKED (advisory-first; promotion is a future owner decision, never this sprint)",
+  "context": "CPCV is added ADVISORY — beside the frozen gates, never above them. Promoting it to a GATING panel would create a second authority. Repro: CPCV renders beside every adjudication but alters no verdict (the verdict differential proves it).",
+  "rationale": "advisory-first is the point (A′#10); a panel that can gate becomes a lever; promotion must be earned on evidence, not asserted.",
+  "impact": "until promoted, CPCV informs but never decides; the frozen gate remains the only gate.",
+  "nextSteps": "collect agreement/disagreement rates vs the frozen gates over the next N real adjudications; take the owner decision.",
+  "preRegisteredPromotionCriteria": "over the next N >= 30 REAL adjudications, log CPCV's lean (overfit-likely/unlikely) vs the frozen gate's pass/refuse; PROMOTE to a co-gate ONLY IF (a) CPCV agrees with the frozen gate on >= 80% of adjudications AND (b) on the disagreements CPCV is shown (by later out-of-sample outcome) to be right >= half the time AND (c) an explicit owner sign-off; otherwise keep advisory. A single tuned-per-run config voids the record.",
+  "owner": "a dedicated CPCV-promotion decision (Operator + a follow-up sprint)"
+}

@@ -1,0 +1,15 @@
+node_modules/
+src/backtest/py/.venv/
+**/__pycache__/
+RWA-VERDICT.md
+data/snapshot/
+data/feeyield/
+data/lending/
+*.log
+.DS_Store
+
+# sprint planning blueprints — not part of the published product
+sprint/sprint-result/ORGANON_*Blueprint.md
+
+# data-plane captured snapshots — gitignored (A′#12); the nonce-anchored provenance.jsonl chain is the committed guarantee
+data/dataplane/snapshots/

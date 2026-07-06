@@ -1,0 +1,110 @@
+{
+  "protocol": "phase1-breadth-v11",
+  "at": "2026-07-05",
+  "gate": "BREADTH-TRUE",
+  "cheapTest": {
+    "ranFirst": true,
+    "ok": true,
+    "tolerances": {
+      "IC_TOL": 0.025,
+      "BR_TOL": 0.05,
+      "IR_TOL": 0.04
+    },
+    "recoveries": [
+      {
+        "icTruePearson": 0.05,
+        "icSpearmanPop": 0.0479,
+        "icEst": 0.0475,
+        "icErr": 0.0004,
+        "brTrue": 252,
+        "brEst": 252,
+        "brErr": 0,
+        "icPearson": 0.0507,
+        "irPearson": 0.8051,
+        "realizedSharpe": 0.801,
+        "irErr": 0.0052,
+        "ok": true
+      },
+      {
+        "icTruePearson": 0.1,
+        "icSpearmanPop": 0.0921,
+        "icEst": 0.1009,
+        "icErr": 0.0088,
+        "brTrue": 252,
+        "brEst": 250.5,
+        "brErr": 0.0061,
+        "icPearson": 0.1024,
+        "irPearson": 1.6212,
+        "realizedSharpe": 1.6169,
+        "irErr": 0.0026,
+        "ok": true
+      },
+      {
+        "icTruePearson": 0.15,
+        "icSpearmanPop": 0.1433,
+        "icEst": 0.1455,
+        "icErr": 0.0022,
+        "brTrue": 252,
+        "brEst": 252,
+        "brErr": 0,
+        "icPearson": 0.1515,
+        "irPearson": 2.4048,
+        "realizedSharpe": 2.3867,
+        "irErr": 0.0076,
+        "ok": true
+      }
+    ]
+  },
+  "etaHandVerify": {
+    "statement": "IR = IC*sqrt(BR); t-stat after Y years ~ IR*sqrt(Y); reaches t* when Y = (t*/IR)^2",
+    "worked": "IC=0.1, BR=252 -> IR = 0.1*sqrt(252) = 0.1*15.8745 = 1.5875; t*=2 -> Y = (2/1.5875)^2 = 1.2599^2 = 1.5873 years",
+    "irComputed": 1.5875,
+    "yearsComputed": 1.5873,
+    "moduleMidYears": 1.929,
+    "moduleIrBand": [
+      1.393,
+      1.492
+    ]
+  },
+  "mayNeverExample": {
+    "ic": -0.143,
+    "br": 4,
+    "ir": -0.286,
+    "seIc": 0.404,
+    "mayNeverReach": true,
+    "range": "Forward time to power: 12.7 years … never — the skill estimate is not yet distinguishable from zero, so this class of strategy MAY NEVER reach power at this cadence.",
+    "canProduceHonestSentence": true
+  },
+  "realStrategy": {
+    "ic": 0.0546,
+    "betsPerYear": 334.5,
+    "lag1Autocorr": 0.0436,
+    "tc": 1,
+    "ir": 0.9994,
+    "whyNotYet": "Your strategy makes about 335 independent bets per year at an information coefficient of 0.055 (skill), for an information ratio of 1.00. At this skill and this breadth the evidence accrues slowly — which is why the verdict is not yet.",
+    "eta": {
+      "range": "Forward time to power: about 1 months … effectively never (>100 yr at this cadence) (a range, not a promise).",
+      "mayNeverReach": false,
+      "forwardYearsLo": 0.0434704307594449,
+      "forwardYearsHi": 2400.1265680788815,
+      "assumptions": [
+        "target significance bar t* = 2 (a proxy for 'reaches power'; the frozen gate remains the only gate — this is advisory)",
+        "cadence: 365 bars/year → BR 335 independent bets/year (bets treated independent after an AR(1) autocorrelation adjustment (lag-1 rho=0.044, clamped to 0.044): N_eff = N*(1-rho)/(1+rho) = 365*(1-0.044)/(1+0.044) = 335. Overlapping/serially-correlated observations are NOT independent bets; a positive serial correlation lowers BR.)",
+        "IR band from the IC estimation uncertainty: SE(IC)=0.0524 over 365 obs → IC∈[0.002, 0.107] → IR∈[0.04, 1.96]",
+        "stationarity: the observed IC is assumed to persist forward (a strong assumption — a decaying edge lengthens the time)",
+        "this ETA IGNORES deflation growth: the frozen bar RISES as the search family grows, so the true time is >= this estimate — the ETA is a FLOOR on time, never a ceiling (it can only be later, never sooner)"
+      ],
+      "hedge": "pending floor audit (the power floor remains unaudited, Rule XXXVIII; reachability stays hedged and this ETA carries that hedge)"
+    },
+    "independenceAssumptionStated": true
+  },
+  "proDisclosure": {
+    "derivesNothing": true,
+    "sample": "── PRO DISCLOSURE (raw panels — display-only, derives nothing) ──\nbreadth: IC=0.055 · BR=335/yr (N=365, eff=335, rho=0.044) · TC=1.00 (assumed frictionless) · IR=1.00\nETA (hedged range): Forward time to power: about 1 months … effectively never (>100 yr at this cadence) (a range, not a promise).  [pending floor audit (the power floor remains unaudited, Rule XXXVIII; reachability stays hedged and this ETA carries that hedge)]\nrigor: annualized Sharpe=0.883 · DSR=n/a · PSR0=n/a · nObs=365.000\nCPCV: (not present for this adjudication)"
+  },
+  "verdictDifferential": {
+    "byteIdentical": true,
+    "fingerprintSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+    "submissions": 5
+  }
+}

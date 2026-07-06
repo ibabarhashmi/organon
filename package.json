@@ -1,0 +1,15 @@
+{
+  "name": "organon",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ORGΛNON — a strategy builder whose engine is honest by construction: a frozen verdict core (6 .py + loop.ts, byte-identical) wrapped by an append-only, hash-chained trial ledger that makes iteration DEFLATE the bar (anti-PBO). Standalone; zero powered verdicts, displayed with pride.",
+  "scripts": {
+    "test:studio": "./organon-studio-test.sh",
+    "serve": "bun run script/serve-studio.ts"
+  },
+  "dependencies": {
+    "hono": "^4.10.7",
+    "zod": "^4.1.8"
+  }
+}

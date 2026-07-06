@@ -1,0 +1,8 @@
+{
+  "protocol": "oracle-session-v9",
+  "oracleRoot": "/Users/babar/Projects/organon/packages/solidity-sentinel",
+  "gitStatusBefore": "",
+  "gitStatusAfter": "",
+  "unchanged": true,
+  "note": "the differential oracle session — the old tree took zero writes (A′#9)"
+}

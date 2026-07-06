@@ -1,0 +1,7 @@
+# ORGΛNON STUDIO — the SLIM sidecar requirements (Transplant Phase 3, walk fix T1-01).
+# The studio verdict path runs ONLY the rigor/attest/lending_accrual sidecars (rigor.py), which need numpy + scipy.
+# The heavy engine stack (quantstats, cvxpy, riskfolio-lib, PyPortfolioOpt, scipy==1.17.1 on py3.11) lives in
+# requirements.txt and belongs to the PARKED real-data engine layer (P1-1) — a fresh studio clone does NOT need it.
+# Install:  python3 -m venv .venv && .venv/bin/pip install -r requirements-studio.txt
+numpy
+scipy

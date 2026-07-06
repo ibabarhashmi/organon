@@ -1,0 +1,18 @@
+{
+  "protocol": "debt-clear-bundle",
+  "auditItemsClosed": {
+    "commit-the-world": "CLOSED (AGENT) — e5bfa774dcbf",
+    "criteria-printed-verbatim": "CLOSED — beside the pin; reconciles (C-RECON2)",
+    "legacy-dispositioned": "CLOSED — line-by-line; in-scope floor 119/24 green; data-absence class named",
+    "second-live-trial": "CLOSED — CONDITIONAL@1 → NO-GO@8 (live model search deflated its own score)",
+    "attribution-complete": "CLOSED — AGENT/OPERATOR/MIXED; operator lane at zero agent residue (C-ATTRIB)",
+    "ratifications": "CLOSED — C-ARMS + V5 headline corrections + screen set→7 + C-ATTRIB",
+    "capability-inventory": "CLOSED — snapshotted + hash-anchored bee1a152c330…"
+  },
+  "zeroAgentResidueOnOperatorLane": true,
+  "criteriaPrintReconciles": {
+    "ok": true,
+    "present": true,
+    "detail": "blueprint sha matches the pin (fcd434090b83…)"
+  }
+}

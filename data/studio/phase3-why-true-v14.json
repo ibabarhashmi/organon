@@ -1,0 +1,126 @@
+{
+  "protocol": "phase3-why-true-v14",
+  "at": "2026-07-06",
+  "gate": "WHY-TRUE",
+  "factTableCensus": {
+    "allStatesCensusGreen": true,
+    "seededOmissionCaught": true
+  },
+  "dualRegisters": {
+    "everyTerminalStateExplainable": true,
+    "states": [
+      {
+        "state": "GO",
+        "consistencyOk": true
+      },
+      {
+        "state": "NO-GO",
+        "consistencyOk": true
+      },
+      {
+        "state": "CONDITIONAL",
+        "consistencyOk": true
+      },
+      {
+        "state": "INSUFFICIENT",
+        "consistencyOk": true
+      },
+      {
+        "state": "BLOCKED",
+        "consistencyOk": true
+      },
+      {
+        "state": "MALFORMED",
+        "consistencyOk": true
+      },
+      {
+        "state": "kill-switch",
+        "consistencyOk": true
+      }
+    ]
+  },
+  "groundednessVerifier": {
+    "faithfulPasses": true,
+    "embellishmentRejected": true,
+    "causalRejected": true
+  },
+  "traversal": {
+    "admissible": true,
+    "nogoBothRegisters": true
+  },
+  "screensUnchanged": "the report/verdict-card/pro-disclosure gained WHY sections — the screen set stays 10 (extensions, not a new screen)",
+  "ratified": true,
+  "verdictDifferential": "byte-identical (the WHY panel READS the verdict; it never moves it — computed after adjudication, display-only)",
+  "golden": [
+    {
+      "state": "GO",
+      "verdict": "GO",
+      "censusOk": true,
+      "seededOmissionCaught": true,
+      "consistencyOk": true,
+      "consistencyViolations": [],
+      "plain": "This strategy passed. Its deflated significance is 0.972, at or above the 0.95 bar even after paying for its 38 counted attempts. What is still uncertain: past significance is not a promise of future return; the point-in-time data and undeclared search are risks the engine cannot see. A GO is a floor on doubt, not a guarantee.",
+      "quantLines": 6
+    },
+    {
+      "state": "NO-GO",
+      "verdict": "NO-GO",
+      "censusOk": true,
+      "seededOmissionCaught": true,
+      "consistencyOk": true,
+      "consistencyViolations": [],
+      "plain": "This strategy was refused. Its evidence, after paying for its 38 counted attempts, is weaker than the bar: the deflated significance is 0.420, below the 0.95 threshold. What held: the engine adjudicated it honestly on REAL-PIT data and counted every attempt. What would change it: more independent evidence — a stronger effect, or more observations, so the significance clears 0.95 even after the search is charged.",
+      "quantLines": 6
+    },
+    {
+      "state": "CONDITIONAL",
+      "verdict": "CONDITIONAL",
+      "censusOk": true,
+      "seededOmissionCaught": true,
+      "consistencyOk": true,
+      "consistencyViolations": [],
+      "plain": "This strategy is conditionally supported. The evidence survives the statistics given what could be verified (deflated significance 0.960 vs 0.95, over 38 counted attempts), but a stronger claim is fenced off because the data or the search could not be independently confirmed. What would change it: independent verification of the data and an anchored pre-registration.",
+      "quantLines": 6
+    },
+    {
+      "state": "INSUFFICIENT",
+      "verdict": "INSUFFICIENT-EVIDENCE",
+      "censusOk": true,
+      "seededOmissionCaught": true,
+      "consistencyOk": true,
+      "consistencyViolations": [],
+      "plain": "Not enough evidence yet — this is a forward clock, not a failure. The engine cannot yet distinguish this strategy's skill from chance. What held: it was adjudicated honestly and nothing was fabricated. What would change it: more observations at the strategy's cadence; the engine tells you how much more it needs (pending the floor audit, which stays hedged).",
+      "quantLines": 5
+    },
+    {
+      "state": "BLOCKED",
+      "verdict": "BLOCKED",
+      "censusOk": true,
+      "seededOmissionCaught": true,
+      "consistencyOk": true,
+      "consistencyViolations": [],
+      "plain": "Refused before a verdict: the data this needs does not exist here yet (the RWA data this needs is credential-gated and absent here). What held: the engine renders BLOCKED rather than fabricating a payload. What would change it: the unblock named in the reason (a credential, a captured snapshot, or a provenance chain).",
+      "quantLines": 6
+    },
+    {
+      "state": "MALFORMED",
+      "verdict": "MALFORMED",
+      "censusOk": true,
+      "seededOmissionCaught": true,
+      "consistencyOk": true,
+      "consistencyViolations": [],
+      "plain": "Refused before adjudication: the policy enum was not one of static/carry-tilt/carry-rotation. What held: nothing was registered (the ledger count is unchanged). What would change it: a well-formed input that satisfies the rule.",
+      "quantLines": 6
+    },
+    {
+      "state": "kill-switch",
+      "verdict": "NO-GO",
+      "censusOk": true,
+      "seededOmissionCaught": true,
+      "consistencyOk": true,
+      "consistencyViolations": [],
+      "plain": "A safety wall tripped and the surface is disabled: 1 pooled-noise survivor passed the deflation at its K_eff charge — the pool composer is disabled pending an owner decision. What it caught: a survivor that must never pass (a pooled-noise or proposer survivor). Why the surface is disabled: pending an owner decision — a first-class finding, never hidden. What would change it: an owner reviews the finding and re-admits or retires the surface.",
+      "quantLines": 6
+    }
+  ]
+}

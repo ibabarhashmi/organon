@@ -1,0 +1,42 @@
+{
+  "protocol": "phase4-one-command-true-v14",
+  "at": "2026-07-06",
+  "gate": "ONE-COMMAND-TRUE",
+  "runner": "organon.sh (POSIX, repo-root): prerequisite CHECK → setup from the pinned lockfile (idempotent) → the pinned verify set → offline-honest refresh → the bounded TUI (status · launch-web [requirements-gated] · quit)",
+  "pinnedVerifySet": [
+    "walls",
+    "why-panel",
+    "selection-door",
+    "core-differentials"
+  ],
+  "transcripts": {
+    "happy": {
+      "command": "./organon.sh status",
+      "prereqAllPresent": true,
+      "verifyAllGreen": true,
+      "launchEnabled": true,
+      "note": "clone → one command → prerequisites present → the pinned verify set green → LAUNCH WEB enabled → the web door reachable at http://localhost:8787"
+    },
+    "missingPrereq": {
+      "command": "ORGANON_FORCE_MISSING=python3 ./organon.sh check",
+      "missingRequired": [
+        "python3"
+      ],
+      "launchEnabled": false,
+      "exitNonzero": true,
+      "note": "the honest enumerated prerequisite failure prints, exits nonzero, installs NOTHING systemic (the runner CHECKs, never installs)"
+    },
+    "gateUnmet": {
+      "command": "ORGANON_FORCE_REDWALL=1 ./organon.sh status",
+      "launchEnabled": false,
+      "unmet": [
+        "verify FAILED: the prevention/integrity walls (frozen byte-identity · gatekeeper v2 · U-SURFACE · leak · determinism · append-only) (a deliberately red wall (a failing verify item))"
+      ],
+      "note": "a deliberately red wall → LAUNCH WEB DISABLED with the unmet requirement rendered beside it (never a dead button, never a launch over red)"
+    }
+  },
+  "traversalAdmissible": true,
+  "noSystemInstalls": "the runner CHECKs prerequisites (command -v) and NEVER installs a system item; setup builds only the sidecar venv from the pinned lockfile, idempotent + offline-honest (a gap renders, never a fabrication)",
+  "noSoftLaunch": "the LAUNCH-WEB gate is DERIVED from the prereq + verify results (Launcher.launchGate takes no override flag) — a launch over red is impossible by construction",
+  "pristineCompatible": "the pristine harness (script/pristine-clone.ts) can adopt ./organon.sh as its entry point; the runner is its own test bed"
+}

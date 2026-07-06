@@ -1,0 +1,108 @@
+{
+  "protocol": "walk-cycles",
+  "cap": 8,
+  "cyclesRun": 5,
+  "cleanFlags": [
+    false,
+    true,
+    false,
+    true,
+    true
+  ],
+  "converged": true,
+  "walkLedgerHead": "0461faaa250f4fbac5696a72da3c46ff98e6ea64c4e67e475f4bc4806fa97b21",
+  "walkLedgerChainOk": true,
+  "openNonParked": 0,
+  "parks": [
+    "W3-01"
+  ],
+  "issuesByStatus": {
+    "fixed": 4,
+    "parked": 1,
+    "open": 0
+  },
+  "cycles": [
+    {
+      "cycle": 1,
+      "redTeamTheme": "injection",
+      "newIssues": [
+        "W1-01",
+        "W1-02",
+        "W1-03",
+        "W1-04"
+      ],
+      "arms": {
+        "RUN": "ADVANCE",
+        "IDENTIFY": "ADVANCE",
+        "FIX": "ADVANCE",
+        "QA": "ADVANCE",
+        "RED-TEAM": "ADVANCE",
+        "RE-EVALUATE": "REPEAT"
+      },
+      "headline": "REPEAT",
+      "clean": false
+    },
+    {
+      "cycle": 2,
+      "redTeamTheme": "laundering",
+      "newIssues": [],
+      "arms": {
+        "RUN": "ADVANCE",
+        "IDENTIFY": "ADVANCE",
+        "FIX": "ADVANCE",
+        "QA": "ADVANCE",
+        "RED-TEAM": "ADVANCE",
+        "RE-EVALUATE": "ADVANCE"
+      },
+      "headline": "ADVANCE",
+      "clean": true
+    },
+    {
+      "cycle": 3,
+      "redTeamTheme": "tamper/rollback",
+      "newIssues": [
+        "W3-01"
+      ],
+      "arms": {
+        "RUN": "ADVANCE",
+        "IDENTIFY": "ADVANCE",
+        "FIX": "ADVANCE",
+        "QA": "ADVANCE",
+        "RED-TEAM": "ADVANCE",
+        "RE-EVALUATE": "REPEAT"
+      },
+      "headline": "REPEAT",
+      "clean": false
+    },
+    {
+      "cycle": 4,
+      "redTeamTheme": "availability",
+      "newIssues": [],
+      "arms": {
+        "RUN": "ADVANCE",
+        "IDENTIFY": "ADVANCE",
+        "FIX": "ADVANCE",
+        "QA": "ADVANCE",
+        "RED-TEAM": "ADVANCE",
+        "RE-EVALUATE": "ADVANCE"
+      },
+      "headline": "ADVANCE",
+      "clean": true
+    },
+    {
+      "cycle": 5,
+      "redTeamTheme": "UX-priming + park-legitimacy",
+      "newIssues": [],
+      "arms": {
+        "RUN": "ADVANCE",
+        "IDENTIFY": "ADVANCE",
+        "FIX": "ADVANCE",
+        "QA": "ADVANCE",
+        "RED-TEAM": "ADVANCE",
+        "RE-EVALUATE": "ADVANCE"
+      },
+      "headline": "ADVANCE",
+      "clean": true
+    }
+  ]
+}

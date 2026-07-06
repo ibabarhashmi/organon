@@ -1,0 +1,35 @@
+{
+  "protocol": "feeyield-attempt-v10",
+  "at": "2026-07-05",
+  "domain": "fee-yield",
+  "disposition": "BLOCKED-with-evidence",
+  "env": {
+    "python": "3.11.15",
+    "deps": [
+      "numpy==2.4.6",
+      "pandas==3.0.3",
+      "scipy==1.17.1"
+    ],
+    "lockfile": "src/backtest/py/requirements-feeyield.lock",
+    "lockfileSha": "c226e01469547576aa98995a4d873a0acd0219453fc88b4de29d93173cf38029"
+  },
+  "evidence": {
+    "steps": [
+      "stood up a Python 3.11.15 venv with the panel's deps (numpy 2.4.6, pandas 3.0.3, scipy 1.17.1) and froze a hashed lockfile (src/backtest/py/requirements-feeyield.lock)",
+      "confirmed the standalone carries all 11 feeyield_*.py sidecars + the frozen funding_discriminate.py the panel reuses",
+      "ran `python3.11 -m backtest.py.feeyield_discovery 2026-07-03` in the standalone (attempt 1)",
+      "staged a synthetic minimal snapshot (2 protocols × 130 daily points) and re-ran the discovery (attempt 2, differently-shaped)"
+    ],
+    "artifacts": [
+      "src/backtest/py/requirements-feeyield.lock",
+      "data/studio/feeyield-attempt-v10.json"
+    ],
+    "exactFailure": "attempt 1 → FileNotFoundError: data/feeyield/raw/2026-07-03/universe.json — the panel reads a captured DeFiLlama fees/revenue/tvl/prices snapshot that is ABSENT (the feeyield-pull capture pipeline was not transplanted into the standalone). The blocker is DATA, not the env: attempt 2 (synthetic snapshot) ran the loader → panel_matrices → the discovery statistics (bhy_hurdle) end-to-end under the Py3.11 env, failing only at a ZeroDivisionError from n=0 synthetic factors — proving the env AND the panel/discovery code work; only a genuine ≥120-day multi-protocol snapshot is missing.",
+    "unblock": "transplant scripts/feeyield-pull.ts (the DeFiLlama per-protocol dailyFees/dailyRevenue + TVL + CoinGecko prices capture, credential-free) and capture a ≥120-day multi-protocol universe into data/feeyield/raw/<stamp>/, then run feeyield_panel → feeyield_discovery. Note: fee-yield is inherently T3 (REVISED snapshot) → DISCOVERY-ONLY, barred from a powered verdict by design — a delivery yields a discovery result, never a REAL-PIT GO.",
+    "secondAttempt": {
+      "route": "a synthetic minimal snapshot staged directly into data/feeyield/raw/synthtest/ (bypassing the un-transplanted capture pipeline) to isolate env-vs-data",
+      "exactFailure": "ZeroDivisionError in feeyield_discovery.bhy_hurdle (n·c = 0 with n=0 valid tests) — the Py3.11 env + feeyield_panel.load_snapshot + panel_matrices + the discovery hurdles ALL execute; the failure is downstream of the loader, from insufficient synthetic factor coverage, confirming the blocker is a genuine captured snapshot, not the environment or the code."
+    }
+  },
+  "tier": "T3 (REVISED snapshot) → DISCOVERY-ONLY — barred from a powered verdict by design"
+}

@@ -1,0 +1,20 @@
+{
+  "protocol": "scope-amendments",
+  "rule": "K-SCOPE",
+  "chainOk": true,
+  "entries": [
+    {
+      "seq": 0,
+      "feature": "guided-builder",
+      "blueprintScope": "the ratified three domains — lending · funding · basis (the Guided Builder composes over every delivered primitive)",
+      "deliveredScope": "lending only (V12 Phase 3 shipped the builder over the lending primitive alone)",
+      "reason": "V12 delivered a walking-skeleton builder (one domain, born under U-SURFACE) and did not widen it to the three-domain scope, silently — a narrower delivery is honorable, the SILENCE about it is the violation this law retires (K-SCOPE). The narrowing is named now, retro-filed, dated, append-only.",
+      "ownerPhase": "Ensemble Phase 0 (retro-file); cure in Ensemble Phase 2",
+      "cure": "Ensemble Phase 2 (BUILDER-WHOLE) completes the builder to funding + basis under the identical discipline",
+      "retroFiled": true,
+      "stamp": "v13-phase0-scope-builder-narrowing",
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "5be2d50e4ab11576619c3c717b072762b4ee73c7db9b4fe02ac205074d0e3569"
+    }
+  ]
+}

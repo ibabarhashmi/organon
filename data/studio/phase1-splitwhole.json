@@ -1,0 +1,41 @@
+{
+  "protocol": "phase1-split-whole",
+  "gate": "SPLIT-WHOLE",
+  "rule": "T-TRANSPLANT",
+  "at": "2026-07-04",
+  "newRepo": "/Users/babar/Projects/organon-standalone",
+  "newRepoHead": "a959db8f5d02efda1310b9a50d9b702f4e669af8",
+  "manifestSha256": "46a6217a52c6a410b8ecce57b6c4e03f5eef61a45f3ee534d0ec48a2dc742d4b",
+  "byteFirst": {
+    "order": "the frozen seven (6 .py + loop.ts) were copied + verified against the ORIGINAL manifest BEFORE any other file moved (script/transplant.ts STEP 1); the transplant HALTS if any frozen artifact fails to verify",
+    "frozenSevenByteIdentical": true,
+    "verifiedAgainst": "the ORIGINAL src/organon/frozen.ts FROZEN_PY + FROZEN_TS pins (not a re-derived manifest — T-SUPERSEDE applies to manifests too)"
+  },
+  "transplantManifest": {
+    "machineGenerated": true,
+    "fileCount": 217,
+    "kinds": "7 frozen (byte-identical + verified) · 2 override (fix-forward) · 1 path-fix · 207 byte-identical",
+    "fixForward": ["src/backtest/runner.ts (sidecar-only; severs the marketdata/risk/storage/global/@solidity-sentinel tangle)", "src/attest/reexec.ts (data-plane-free; execRwa→null, no PIT Universe)", "src/organon/frozen.ts (REPO_ROOT path only; pinned sha literals unchanged)"],
+    "cleanCutRationale": "the Organon CORE (organon/attest/ledger/studio/strategy/loop) is alias-free and relative-only; the entire OpenCode/@solidity-sentinel engine-infra tangle entered via runner.ts's `import {Database}` + adjudicate's reexec real-data path. Slimming those two files severs it with ZERO inventoried-capability loss (the studio verdict path uses only Runner.sidecar). The real-data engine layer (marketdata/risk/universe PIT backtest) is PARKED, not faked."
+  },
+  "freshCloneProof": {
+    "clonedFrom": "/Users/babar/Projects/organon-standalone",
+    "cloneMethod": "git clone (genuine fresh clone, gitignored node_modules/.venv absent)",
+    "trackedFiles": 206,
+    "setup": "bun install (hono, zod) + python venv (numpy/scipy for the rigor sidecar)",
+    "frozenByteIdentityVsOriginalManifest": "YES — all 7 frozen artifacts byte-identical (checkFrozenSet in the clone)",
+    "inScopeBattery": "158 pass / 0 fail across 32 files (walls 58 across 13 files + organon 100 across 19 files) — IDENTICAL to the monorepo",
+    "capabilityFloor": "intact (capability_inventory wall green, 30 capabilities, anchor unchanged)",
+    "walls": "13/13 green"
+  },
+  "setupFinding": {
+    "id": "T1-01 (fresh-clone)",
+    "class": "DOC-DRIFT",
+    "detail": "src/backtest/py/requirements.txt is the ENGINE's heavy Python-3.11 stack (quantstats, cvxpy, riskfolio-lib, PyPortfolioOpt, scipy==1.17.1) — version-incompatible with a plain python3.9 fresh clone and unnecessary for the studio sidecar, which needs only numpy + scipy for rigor.py. A fresh clone must install numpy/scipy directly (or a slim studio-requirements). Folded forward to the Phase-3 walk (the documented setup is the walk's own subject) + parked."
+  },
+  "oldTree": {
+    "frozenBytesUnchanged": "YES — the frozen seven in the old tree are byte-identical + git-clean throughout the transplant (nothing moved a byte in EITHER tree)",
+    "nothingDeleted": "YES — the transplant only READS the old tree; the old tree keeps its whole history",
+    "pointer": "the old tree's final Organon commit is the pointer (see sprint/sprint-result/ORGANON-TRANSPLANT-POINTER.md)"
+  }
+}

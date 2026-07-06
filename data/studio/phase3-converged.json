@@ -1,0 +1,38 @@
+{
+  "protocol": "phase3-converged-2",
+  "gate": "CONVERGED-2",
+  "rule": "C-USER, C-LOOP, C-PARK, T-ROTATE",
+  "at": "2026-07-04",
+  "walk": {
+    "cycles": 3,
+    "cap": 10,
+    "cleanFlags": ["F", "T", "T"],
+    "rotationComplete": true,
+    "themes": ["injection", "laundering", "tamper", "availability", "doc-lies", "ux-priming", "park-legitimacy"],
+    "converged2": "YES — rotation-complete (all 7 themes ≥1 cycle) AND two consecutive clean cycles (2 & 3)",
+    "priorCycleReplay": "cycle 3 replayed cycle 1 from its transcript (refuted candidates stay refuted; T1-01 stays fixed)",
+    "pollutionSpotAudit": "cycle 3 tamper theme — CLEAN over the live ledgers (0 deletions, positive-control-verified)",
+    "depthManifests": "per cycle in walk-v2-cycles.json (personas × acts × full/abbreviated; full 3-persona pass on cycles 1 & 3)"
+  },
+  "walkLedger": {
+    "file": "data/studio/walk-v2-ledger.jsonl",
+    "chained": true,
+    "issues": 1,
+    "registeredBeforeFix": true,
+    "openNonParked": 0
+  },
+  "findings": [
+    { "id": "T1-01", "class": "DOC-DRIFT", "severity": "S2", "status": "FIXED", "fix": "requirements-studio.txt (numpy, scipy) + organon-setup.sh points at it; the heavy engine stack stays for the parked P1-1 layer" },
+    { "note": "cycle 1 surfaced 2 additional candidates that were REFUTED on adversarial verification (walk-check bugs, not system defects): (a) an exact-duplicate spec mistaken for lineage evasion — the real same-structure-diff-number evasion IS refused (LineageEvasionError); (b) a missing content-length header masking the 413 size cap — the served surface enforces it correctly with a real header. Both walk-driver corrections. Refuting before counting is the point (A′#8)." }
+  ],
+  "fixesInventoried": {
+    "T1-01": "a DOC/setup fix (not a test capability); locked by walk-v2 doc-lies theme (checks requirements-studio.txt is slim) + the Phase-4 fresh-clone proof following the fixed setup",
+    "battery": "170 pass / 0 fail across 35 files after the fix; capability floor 33, 0 regressions; frozen seven byte-identical"
+  },
+  "parksLegitimate": {
+    "register": "data/studio/parks-register.json",
+    "reviewed": "cycle 3 park-legitimacy theme re-reviewed every open park (P2-1, P1-1, P0-1, T1-01→resolved, + 2 inherited); all four-fielded; zero convenience parks",
+    "openParks": ["P2-1 (REAL-RETURNS)", "P1-1 (real-data engine layer)", "P0-1 (RWA generator↔pin drift)", "INHERITED: floor audit", "INHERITED: full sybil economics"]
+  },
+  "terminal": "CONVERGED-2 (exactly one terminal claimed, truthfully) — NOT a NON-CONVERGENCE STOP"
+}

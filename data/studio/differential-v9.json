@@ -1,0 +1,44 @@
+{
+  "protocol": "differential-v9",
+  "at": "2026-07-04",
+  "gate": "DIFF-PROVEN",
+  "rule": "D-DIFF — a domain claims DONE only when byte-identical to the frozen oracle on a hash-pinned shared fixture; a blocked differential is stated, a skipped one is a Halt",
+  "domainsClaimed": [
+    "lending",
+    "lending:seeded-divergence",
+    "lending:sidecar-lock"
+  ],
+  "domainsBlocked": [
+    "RWA"
+  ],
+  "results": [
+    {
+      "domain": "lending",
+      "blocked": false,
+      "ok": true,
+      "fixtureSha": "a4695df35f56d4742ea74193dd07aa9642ec702b0556ec4eea1f447c274db633",
+      "oracleSha": "564ea7216f4961e5c710168c4522fac3005023b51f9280e9d9212bf8d3f50298",
+      "portSha": "564ea7216f4961e5c710168c4522fac3005023b51f9280e9d9212bf8d3f50298",
+      "detail": "BYTE-IDENTICAL — the standalone port reproduces the frozen oracle on the shared Job (766 pts, 3 markets, carry-tilt); oracleSha==portSha; runtime-parity (.venv==python3) true; old tree UNCHANGED"
+    },
+    {
+      "domain": "lending:seeded-divergence",
+      "blocked": false,
+      "ok": true,
+      "detail": "CAUGHT — a flattering +1.0 apyBase bump makes the port diverge from the oracle at the byte level (direction-blind); byte-inequality is failure regardless of which side looks better"
+    },
+    {
+      "domain": "lending:sidecar-lock",
+      "blocked": false,
+      "ok": true,
+      "detail": "LOCKED — the ported lending_accrual.py is byte-identical to the oracle's (sha 957654b39049…) — the seam-faithful proof"
+    },
+    {
+      "domain": "RWA",
+      "blocked": true,
+      "ok": false,
+      "detail": "BLOCKED-on-credential — RWA BLOCKED-on-credential — missing: FRED_API_KEY (Operator env var, never committed) + data/snapshot/MANIFEST.json (the pinned discovery snapshot, gitignored). The pin STAYS NOT-YET (zero re-pins). Never a stale or fabricated payload. A blocked differential is honest; the pin STAYS NOT-YET (zero re-pins). unblock: Operator: export FRED_API_KEY=<free key from fredaccount.stlouisfed.org>, then run the snapshot regeneration + the two-way-door byte-regen (Phase 3)."
+    }
+  ],
+  "diffProven": true
+}

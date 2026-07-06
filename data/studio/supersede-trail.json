@@ -1,0 +1,409 @@
+{
+  "protocol": "supersede-trail",
+  "rule": "T-SUPERSEDE",
+  "chainOk": true,
+  "records": [
+    {
+      "id": "checkpoint-v6/phase-0/inventory-evidence",
+      "payload": {
+        "origin": "BUILDLOG-V6-CONVERGENCE.md §0.7 note",
+        "recorded": "phase-0 inventory evidence cited the live capability-inventory.json (anchor bee1a152)",
+        "v6Action": "RE-POINTED to the stable Phase-0 bundle so the trail re-derives while the floor rose (bee1a152→4888ef49)",
+        "classification": "the T-SUPERSEDE counterexample — a re-point of a recorded fact (disclosed in V6, but the anti-pattern)"
+      },
+      "supersedes": null,
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "63b4addf11a4ac9e2b59fd7dba95f313c4ac1eafe10cfccc14d30c536e4497a8"
+    },
+    {
+      "id": "checkpoint-v6/phase-0/inventory-evidence",
+      "payload": {
+        "correction": "The re-point is superseded, not repeated. The correct mechanism is THIS appended record: the phase-0 inventory evidence legitimately points at the live floor, and the floor's RISE (bee1a152→4888ef49→…→v7) is recorded as a chain of supersessions below — never by editing the original phase-0 record in place.",
+        "supersedesHash": "63b4addf11a4ac9e2b59fd7dba95f313c4ac1eafe10cfccc14d30c536e4497a8",
+        "rule": "T-SUPERSEDE"
+      },
+      "supersedes": "63b4addf11a4ac9e2b59fd7dba95f313c4ac1eafe10cfccc14d30c536e4497a8",
+      "prev": "63b4addf11a4ac9e2b59fd7dba95f313c4ac1eafe10cfccc14d30c536e4497a8",
+      "hash": "3a2377583853acf283201140dc0b83bb4556772b58fe87a55d4846cd5ff49a49"
+    },
+    {
+      "id": "checkpoint-v6/phase-2/doc-truth",
+      "payload": {
+        "recorded": "V6 Phase-2 recorded doc-truth as 'evidenced' and the phase headline ADVANCE",
+        "invalidatedBy": "W1-01 (Phase-3 Cycle-1 walk finding): the doc-truth session passed only because it ran in the PARENT env (which had the Python venv); a fresh clone's submit_spec 500'd (ENOENT .venv/bin/python) — the SKILL.md quickstart never said to set up the sidecar"
+      },
+      "supersedes": null,
+      "prev": "3a2377583853acf283201140dc0b83bb4556772b58fe87a55d4846cd5ff49a49",
+      "hash": "dd4b291896741f7bdf149df98c31eabac99477f720c78d1c60cf45a7185120f9"
+    },
+    {
+      "id": "checkpoint-v6/phase-2/doc-truth",
+      "payload": {
+        "correction": "Per V6's own V5-correction precedent (append-only re-statement), the Phase-2 doc-truth evidence is DOWNGRADED: at the Phase-2 checkpoint it was parent-env-only, so it did NOT hold on a fresh clone. The true Phase-2 doc-truth status at that moment was UNMET-ON-FRESH-CLONE (a REPEAT arm), not evidenced. It was restored to fresh-clone-true only by W1-01's fix (SKILL.md Quickstart gained the venv-setup step; organon-setup.sh referenced), committed in Phase-3 Cycle 1. The Phase-2 GATE was doc-truth-adjacent but the make-or-break gate (CONVERGED) came later and absorbed the fix, so no gate was falsely advanced; this record states the correction plainly.",
+        "supersedesHash": "dd4b291896741f7bdf149df98c31eabac99477f720c78d1c60cf45a7185120f9",
+        "trueValue": "doc-truth @ Phase-2 close = UNMET-ON-FRESH-CLONE; @ Phase-3 Cycle-1 (post-W1-01) = RE-EVIDENCED",
+        "rule": "T-SUPERSEDE (V6 correction precedent)"
+      },
+      "supersedes": "dd4b291896741f7bdf149df98c31eabac99477f720c78d1c60cf45a7185120f9",
+      "prev": "dd4b291896741f7bdf149df98c31eabac99477f720c78d1c60cf45a7185120f9",
+      "hash": "3ab928ba6233d4f1bd84acab1b7689d59d627f83e7eb7cb56139aa924c02db0e"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "anchor": "1f18fb90cb92c3800ee6f1bd2dd84adcf320eafd7af71e042c2263b6f7fabab1",
+        "count": 28,
+        "at": "v6"
+      },
+      "supersedes": null,
+      "prev": "3ab928ba6233d4f1bd84acab1b7689d59d627f83e7eb7cb56139aa924c02db0e",
+      "hash": "5fa81cb074c9db2833e68237e85e7b2fc6dde59e4585b2db55a5ffaa6b35fd67"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 1f18fb90cb92… (28 caps) → ae32058097e5… (30 caps): +ledger-pollution-audit, +trail-immutability-supersede. C-NOREGRESS: the floor only rises; nothing dropped (verify() green).",
+        "supersedesHash": "5fa81cb074c9db2833e68237e85e7b2fc6dde59e4585b2db55a5ffaa6b35fd67",
+        "newAnchor": "ae32058097e5b90a2c2c60d8eceb23c0b819d8e1352530cfaa84898db72f2897",
+        "newCount": 30,
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "5fa81cb074c9db2833e68237e85e7b2fc6dde59e4585b2db55a5ffaa6b35fd67",
+      "prev": "5fa81cb074c9db2833e68237e85e7b2fc6dde59e4585b2db55a5ffaa6b35fd67",
+      "hash": "29052df44c3217beadfd6394c6f61670c7fdfadad3283e5c88909382a32b0053"
+    },
+    {
+      "id": "checkpoint-v6/phase-2/doc-truth",
+      "payload": {
+        "headline": "V6 Phase-2 phase HEADLINE = REPEAT (filed as a value)",
+        "correction": "Warranty F-CONTINUE files corrections as VALUES, not arguments. V7's superseding record correctly DOWNGRADED the doc-truth arm to UNMET-ON-FRESH-CLONE (a REPEAT arm), but wrapped it in a consequence-argument ('the make-or-break gate came later and absorbed the fix, so no gate was falsely advanced'). That argument is RETIRED as reasoning-about-consequences. The number stands on its own: with headline = MIN(arms) (C-ARMS) and the doc-truth arm at REPEAT, the V6 Phase-2 phase headline at its checkpoint was REPEAT — not ADVANCE. The gate history is unchanged and already recorded; this record states only the headline value.",
+        "supersedesHash": "3ab928ba6233d4f1bd84acab1b7689d59d627f83e7eb7cb56139aa924c02db0e",
+        "trueHeadline": "REPEAT",
+        "rule": "T-SUPERSEDE (Warranty F-CONTINUE: corrections are values, not arguments)"
+      },
+      "supersedes": "3ab928ba6233d4f1bd84acab1b7689d59d627f83e7eb7cb56139aa924c02db0e",
+      "prev": "29052df44c3217beadfd6394c6f61670c7fdfadad3283e5c88909382a32b0053",
+      "hash": "b9987c331dd622360844e5b2571e7d5d9cdfb5c54a238fd37f39aa7c915df02f"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 33 -> 35 caps (Warranty v8 Phase 0): +log-terminal-marker (F-CONTINUE), +absences-inventoried (F-ABSENT). Lineage 28(v6) -> 30(v6 p0) -> 33(v7) -> 35(v8). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "29052df44c3217beadfd6394c6f61670c7fdfadad3283e5c88909382a32b0053",
+        "newAnchor": "5ffcca7f3acaff5ad318ed185002ae3f1221bb05a0b14a423f62a9745680c1e5",
+        "newCount": 35,
+        "at": "v8-phase0",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "29052df44c3217beadfd6394c6f61670c7fdfadad3283e5c88909382a32b0053",
+      "prev": "b9987c331dd622360844e5b2571e7d5d9cdfb5c54a238fd37f39aa7c915df02f",
+      "hash": "3e7cb682982c35c224a916b55cde64ad74e61dae65ab02f7f2ca828dc3fbb293"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 35 -> 36 caps (Warranty v8-phase1). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "3e7cb682982c35c224a916b55cde64ad74e61dae65ab02f7f2ca828dc3fbb293",
+        "newAnchor": "2f7016485b6285592b747b5996f67ee9bc00fb8f3820cc9666c9365a29b1c2f9",
+        "newCount": 36,
+        "at": "v8-phase1",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "3e7cb682982c35c224a916b55cde64ad74e61dae65ab02f7f2ca828dc3fbb293",
+      "prev": "3e7cb682982c35c224a916b55cde64ad74e61dae65ab02f7f2ca828dc3fbb293",
+      "hash": "b4b7ce46c3038db31b7420c5f6d8b43e48b71cfc6d6ab6212b0ff1f45f91da47"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 36 -> 38 caps (Warranty v8-phase2). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "b4b7ce46c3038db31b7420c5f6d8b43e48b71cfc6d6ab6212b0ff1f45f91da47",
+        "newAnchor": "20462511e1c7128014a5d9da35e6f1a96a66ccb3d8ae9459b8b8a3a9b512bdbc",
+        "newCount": 38,
+        "at": "v8-phase2",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "b4b7ce46c3038db31b7420c5f6d8b43e48b71cfc6d6ab6212b0ff1f45f91da47",
+      "prev": "b4b7ce46c3038db31b7420c5f6d8b43e48b71cfc6d6ab6212b0ff1f45f91da47",
+      "hash": "8371f0a0d0fd21cf4620f2d9e62be9084919fefd05880a87de1a4d5c52b26d0a"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 38 -> 40 caps (Warranty v9-phase0). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "8371f0a0d0fd21cf4620f2d9e62be9084919fefd05880a87de1a4d5c52b26d0a",
+        "newAnchor": "6c94761b41c76409829b6c6032dce2b710cb68254c847933a1e8744344686e08",
+        "newCount": 40,
+        "at": "v9-phase0",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "8371f0a0d0fd21cf4620f2d9e62be9084919fefd05880a87de1a4d5c52b26d0a",
+      "prev": "8371f0a0d0fd21cf4620f2d9e62be9084919fefd05880a87de1a4d5c52b26d0a",
+      "hash": "d65d846d51d70cf727bc1b3e294a9adac587ae25cf2be58eefd636da16a5e111"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 40 -> 42 caps (Warranty v9-phase1). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "d65d846d51d70cf727bc1b3e294a9adac587ae25cf2be58eefd636da16a5e111",
+        "newAnchor": "532d2f30c68544c640bc818c4320152479d798045a912d0c5535dcfb3beb8a2e",
+        "newCount": 42,
+        "at": "v9-phase1",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "d65d846d51d70cf727bc1b3e294a9adac587ae25cf2be58eefd636da16a5e111",
+      "prev": "d65d846d51d70cf727bc1b3e294a9adac587ae25cf2be58eefd636da16a5e111",
+      "hash": "12a4f321deda91444756d312f87ec59186bf6afb02c7d2a8b7ae628926b7a3ed"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 42 -> 43 caps (Warranty v9-phase2). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "12a4f321deda91444756d312f87ec59186bf6afb02c7d2a8b7ae628926b7a3ed",
+        "newAnchor": "ebce2166ce483ea50ba90b310baef7f10c180595892242189d62beb35f33ebb9",
+        "newCount": 43,
+        "at": "v9-phase2",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "12a4f321deda91444756d312f87ec59186bf6afb02c7d2a8b7ae628926b7a3ed",
+      "prev": "12a4f321deda91444756d312f87ec59186bf6afb02c7d2a8b7ae628926b7a3ed",
+      "hash": "6ec7a9291a34dccca9614efeaddde4212032f40eaf025af88bb10d4111b53141"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 43 -> 44 caps (Warranty v9-phase3). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "6ec7a9291a34dccca9614efeaddde4212032f40eaf025af88bb10d4111b53141",
+        "newAnchor": "3b4eccea49774952b3a4e0b8c45371698b2c74d8c1a95caf891059c214606f08",
+        "newCount": 44,
+        "at": "v9-phase3",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "6ec7a9291a34dccca9614efeaddde4212032f40eaf025af88bb10d4111b53141",
+      "prev": "6ec7a9291a34dccca9614efeaddde4212032f40eaf025af88bb10d4111b53141",
+      "hash": "3beff6317545e3e7a4eeb86c0e4b1e1b136fe2f1e359d0aaeb0a0f2dcafd6d38"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 44 -> 44 caps (Warranty v9-phase5). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "3beff6317545e3e7a4eeb86c0e4b1e1b136fe2f1e359d0aaeb0a0f2dcafd6d38",
+        "newAnchor": "bec741d89df1f1a3b711d383493c8484a0197a68d2f2470e0b465d646f552f79",
+        "newCount": 44,
+        "at": "v9-phase5",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "3beff6317545e3e7a4eeb86c0e4b1e1b136fe2f1e359d0aaeb0a0f2dcafd6d38",
+      "prev": "3beff6317545e3e7a4eeb86c0e4b1e1b136fe2f1e359d0aaeb0a0f2dcafd6d38",
+      "hash": "7299382757eb3206ff076777cb45661b70757dd847835b7f157fb8b924889d7b"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 44 -> 44 caps (Warranty v9-phase5-final). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "7299382757eb3206ff076777cb45661b70757dd847835b7f157fb8b924889d7b",
+        "newAnchor": "bce918124a03f79f20387c644133350200b8786d0e34b172be9e403627b77031",
+        "newCount": 44,
+        "at": "v9-phase5-final",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersedes": "7299382757eb3206ff076777cb45661b70757dd847835b7f157fb8b924889d7b",
+      "prev": "7299382757eb3206ff076777cb45661b70757dd847835b7f157fb8b924889d7b",
+      "hash": "aacda6ec48077b75716c67949163988295d36f776dc6c1be65031d98ce1e030e"
+    }
+  ],
+  "current": [
+    {
+      "id": "checkpoint-v6/phase-0/inventory-evidence",
+      "payload": {
+        "origin": "BUILDLOG-V6-CONVERGENCE.md §0.7 note",
+        "recorded": "phase-0 inventory evidence cited the live capability-inventory.json (anchor bee1a152)",
+        "v6Action": "RE-POINTED to the stable Phase-0 bundle so the trail re-derives while the floor rose (bee1a152→4888ef49)",
+        "classification": "the T-SUPERSEDE counterexample — a re-point of a recorded fact (disclosed in V6, but the anti-pattern)"
+      },
+      "supersededBy": "3a2377583853acf283201140dc0b83bb4556772b58fe87a55d4846cd5ff49a49",
+      "hash": "63b4addf11a4ac9e2b59fd7dba95f313c4ac1eafe10cfccc14d30c536e4497a8"
+    },
+    {
+      "id": "checkpoint-v6/phase-0/inventory-evidence",
+      "payload": {
+        "correction": "The re-point is superseded, not repeated. The correct mechanism is THIS appended record: the phase-0 inventory evidence legitimately points at the live floor, and the floor's RISE (bee1a152→4888ef49→…→v7) is recorded as a chain of supersessions below — never by editing the original phase-0 record in place.",
+        "supersedesHash": "63b4addf11a4ac9e2b59fd7dba95f313c4ac1eafe10cfccc14d30c536e4497a8",
+        "rule": "T-SUPERSEDE"
+      },
+      "supersededBy": null,
+      "hash": "3a2377583853acf283201140dc0b83bb4556772b58fe87a55d4846cd5ff49a49"
+    },
+    {
+      "id": "checkpoint-v6/phase-2/doc-truth",
+      "payload": {
+        "recorded": "V6 Phase-2 recorded doc-truth as 'evidenced' and the phase headline ADVANCE",
+        "invalidatedBy": "W1-01 (Phase-3 Cycle-1 walk finding): the doc-truth session passed only because it ran in the PARENT env (which had the Python venv); a fresh clone's submit_spec 500'd (ENOENT .venv/bin/python) — the SKILL.md quickstart never said to set up the sidecar"
+      },
+      "supersededBy": "3ab928ba6233d4f1bd84acab1b7689d59d627f83e7eb7cb56139aa924c02db0e",
+      "hash": "dd4b291896741f7bdf149df98c31eabac99477f720c78d1c60cf45a7185120f9"
+    },
+    {
+      "id": "checkpoint-v6/phase-2/doc-truth",
+      "payload": {
+        "correction": "Per V6's own V5-correction precedent (append-only re-statement), the Phase-2 doc-truth evidence is DOWNGRADED: at the Phase-2 checkpoint it was parent-env-only, so it did NOT hold on a fresh clone. The true Phase-2 doc-truth status at that moment was UNMET-ON-FRESH-CLONE (a REPEAT arm), not evidenced. It was restored to fresh-clone-true only by W1-01's fix (SKILL.md Quickstart gained the venv-setup step; organon-setup.sh referenced), committed in Phase-3 Cycle 1. The Phase-2 GATE was doc-truth-adjacent but the make-or-break gate (CONVERGED) came later and absorbed the fix, so no gate was falsely advanced; this record states the correction plainly.",
+        "supersedesHash": "dd4b291896741f7bdf149df98c31eabac99477f720c78d1c60cf45a7185120f9",
+        "trueValue": "doc-truth @ Phase-2 close = UNMET-ON-FRESH-CLONE; @ Phase-3 Cycle-1 (post-W1-01) = RE-EVIDENCED",
+        "rule": "T-SUPERSEDE (V6 correction precedent)"
+      },
+      "supersededBy": "b9987c331dd622360844e5b2571e7d5d9cdfb5c54a238fd37f39aa7c915df02f",
+      "hash": "3ab928ba6233d4f1bd84acab1b7689d59d627f83e7eb7cb56139aa924c02db0e"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "anchor": "1f18fb90cb92c3800ee6f1bd2dd84adcf320eafd7af71e042c2263b6f7fabab1",
+        "count": 28,
+        "at": "v6"
+      },
+      "supersededBy": "29052df44c3217beadfd6394c6f61670c7fdfadad3283e5c88909382a32b0053",
+      "hash": "5fa81cb074c9db2833e68237e85e7b2fc6dde59e4585b2db55a5ffaa6b35fd67"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 1f18fb90cb92… (28 caps) → ae32058097e5… (30 caps): +ledger-pollution-audit, +trail-immutability-supersede. C-NOREGRESS: the floor only rises; nothing dropped (verify() green).",
+        "supersedesHash": "5fa81cb074c9db2833e68237e85e7b2fc6dde59e4585b2db55a5ffaa6b35fd67",
+        "newAnchor": "ae32058097e5b90a2c2c60d8eceb23c0b819d8e1352530cfaa84898db72f2897",
+        "newCount": 30,
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "3e7cb682982c35c224a916b55cde64ad74e61dae65ab02f7f2ca828dc3fbb293",
+      "hash": "29052df44c3217beadfd6394c6f61670c7fdfadad3283e5c88909382a32b0053"
+    },
+    {
+      "id": "checkpoint-v6/phase-2/doc-truth",
+      "payload": {
+        "headline": "V6 Phase-2 phase HEADLINE = REPEAT (filed as a value)",
+        "correction": "Warranty F-CONTINUE files corrections as VALUES, not arguments. V7's superseding record correctly DOWNGRADED the doc-truth arm to UNMET-ON-FRESH-CLONE (a REPEAT arm), but wrapped it in a consequence-argument ('the make-or-break gate came later and absorbed the fix, so no gate was falsely advanced'). That argument is RETIRED as reasoning-about-consequences. The number stands on its own: with headline = MIN(arms) (C-ARMS) and the doc-truth arm at REPEAT, the V6 Phase-2 phase headline at its checkpoint was REPEAT — not ADVANCE. The gate history is unchanged and already recorded; this record states only the headline value.",
+        "supersedesHash": "3ab928ba6233d4f1bd84acab1b7689d59d627f83e7eb7cb56139aa924c02db0e",
+        "trueHeadline": "REPEAT",
+        "rule": "T-SUPERSEDE (Warranty F-CONTINUE: corrections are values, not arguments)"
+      },
+      "supersededBy": null,
+      "hash": "b9987c331dd622360844e5b2571e7d5d9cdfb5c54a238fd37f39aa7c915df02f"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 33 -> 35 caps (Warranty v8 Phase 0): +log-terminal-marker (F-CONTINUE), +absences-inventoried (F-ABSENT). Lineage 28(v6) -> 30(v6 p0) -> 33(v7) -> 35(v8). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "29052df44c3217beadfd6394c6f61670c7fdfadad3283e5c88909382a32b0053",
+        "newAnchor": "5ffcca7f3acaff5ad318ed185002ae3f1221bb05a0b14a423f62a9745680c1e5",
+        "newCount": 35,
+        "at": "v8-phase0",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "b4b7ce46c3038db31b7420c5f6d8b43e48b71cfc6d6ab6212b0ff1f45f91da47",
+      "hash": "3e7cb682982c35c224a916b55cde64ad74e61dae65ab02f7f2ca828dc3fbb293"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 35 -> 36 caps (Warranty v8-phase1). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "3e7cb682982c35c224a916b55cde64ad74e61dae65ab02f7f2ca828dc3fbb293",
+        "newAnchor": "2f7016485b6285592b747b5996f67ee9bc00fb8f3820cc9666c9365a29b1c2f9",
+        "newCount": 36,
+        "at": "v8-phase1",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "8371f0a0d0fd21cf4620f2d9e62be9084919fefd05880a87de1a4d5c52b26d0a",
+      "hash": "b4b7ce46c3038db31b7420c5f6d8b43e48b71cfc6d6ab6212b0ff1f45f91da47"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 36 -> 38 caps (Warranty v8-phase2). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "b4b7ce46c3038db31b7420c5f6d8b43e48b71cfc6d6ab6212b0ff1f45f91da47",
+        "newAnchor": "20462511e1c7128014a5d9da35e6f1a96a66ccb3d8ae9459b8b8a3a9b512bdbc",
+        "newCount": 38,
+        "at": "v8-phase2",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "d65d846d51d70cf727bc1b3e294a9adac587ae25cf2be58eefd636da16a5e111",
+      "hash": "8371f0a0d0fd21cf4620f2d9e62be9084919fefd05880a87de1a4d5c52b26d0a"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 38 -> 40 caps (Warranty v9-phase0). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "8371f0a0d0fd21cf4620f2d9e62be9084919fefd05880a87de1a4d5c52b26d0a",
+        "newAnchor": "6c94761b41c76409829b6c6032dce2b710cb68254c847933a1e8744344686e08",
+        "newCount": 40,
+        "at": "v9-phase0",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "12a4f321deda91444756d312f87ec59186bf6afb02c7d2a8b7ae628926b7a3ed",
+      "hash": "d65d846d51d70cf727bc1b3e294a9adac587ae25cf2be58eefd636da16a5e111"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 40 -> 42 caps (Warranty v9-phase1). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "d65d846d51d70cf727bc1b3e294a9adac587ae25cf2be58eefd636da16a5e111",
+        "newAnchor": "532d2f30c68544c640bc818c4320152479d798045a912d0c5535dcfb3beb8a2e",
+        "newCount": 42,
+        "at": "v9-phase1",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "6ec7a9291a34dccca9614efeaddde4212032f40eaf025af88bb10d4111b53141",
+      "hash": "12a4f321deda91444756d312f87ec59186bf6afb02c7d2a8b7ae628926b7a3ed"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 42 -> 43 caps (Warranty v9-phase2). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "12a4f321deda91444756d312f87ec59186bf6afb02c7d2a8b7ae628926b7a3ed",
+        "newAnchor": "ebce2166ce483ea50ba90b310baef7f10c180595892242189d62beb35f33ebb9",
+        "newCount": 43,
+        "at": "v9-phase2",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "3beff6317545e3e7a4eeb86c0e4b1e1b136fe2f1e359d0aaeb0a0f2dcafd6d38",
+      "hash": "6ec7a9291a34dccca9614efeaddde4212032f40eaf025af88bb10d4111b53141"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 43 -> 44 caps (Warranty v9-phase3). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "6ec7a9291a34dccca9614efeaddde4212032f40eaf025af88bb10d4111b53141",
+        "newAnchor": "3b4eccea49774952b3a4e0b8c45371698b2c74d8c1a95caf891059c214606f08",
+        "newCount": 44,
+        "at": "v9-phase3",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "7299382757eb3206ff076777cb45661b70757dd847835b7f157fb8b924889d7b",
+      "hash": "3beff6317545e3e7a4eeb86c0e4b1e1b136fe2f1e359d0aaeb0a0f2dcafd6d38"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 44 -> 44 caps (Warranty v9-phase5). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "3beff6317545e3e7a4eeb86c0e4b1e1b136fe2f1e359d0aaeb0a0f2dcafd6d38",
+        "newAnchor": "bec741d89df1f1a3b711d383493c8484a0197a68d2f2470e0b465d646f552f79",
+        "newCount": 44,
+        "at": "v9-phase5",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": "aacda6ec48077b75716c67949163988295d36f776dc6c1be65031d98ce1e030e",
+      "hash": "7299382757eb3206ff076777cb45661b70757dd847835b7f157fb8b924889d7b"
+    },
+    {
+      "id": "capability-floor/anchor",
+      "payload": {
+        "correction": "capability floor rises 44 -> 44 caps (Warranty v9-phase5-final). C-NOREGRESS: the floor only rises; the old floor verified green before this re-anchor; nothing dropped.",
+        "supersedesHash": "7299382757eb3206ff076777cb45661b70757dd847835b7f157fb8b924889d7b",
+        "newAnchor": "bce918124a03f79f20387c644133350200b8786d0e34b172be9e403627b77031",
+        "newCount": 44,
+        "at": "v9-phase5-final",
+        "rule": "T-SUPERSEDE (C-NOREGRESS floor re-anchor)"
+      },
+      "supersededBy": null,
+      "hash": "aacda6ec48077b75716c67949163988295d36f776dc6c1be65031d98ce1e030e"
+    }
+  ]
+}

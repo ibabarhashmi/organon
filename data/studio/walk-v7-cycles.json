@@ -1,0 +1,99 @@
+{
+  "protocol": "walk-v7-cycles",
+  "at": "2026-07-05",
+  "gate": "CONVERGED-6",
+  "outcome": "CONVERGED-6",
+  "cycles": [
+    {
+      "cycle": 1,
+      "cleanTraverse": false,
+      "newFindings": [
+        "W7-01"
+      ],
+      "scenarios": 29,
+      "depth": "FULL (all 29 scenarios × three doors; UNWIRED baseline)",
+      "note": "1 genuine finding (W7-01, the CPCV promotion tracker not surfaced) — root-caused, fixed, re-tested"
+    },
+    {
+      "cycle": 2,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 29,
+      "depth": "FULL (three doors — preset · goal · builder — × all acts, through the UI first)",
+      "replay": "cycle 1 replayed from its transcript — registers stable",
+      "fails": [],
+      "note": "CLEAN — catalog v12 traversed in full, every scenario matched its expected honest behavior"
+    },
+    {
+      "cycle": 3,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 29,
+      "depth": "FULL (three doors — preset · goal · builder — × all acts, through the UI first)",
+      "replay": "cycle 2 replayed from its transcript — registers stable",
+      "fails": [],
+      "note": "CLEAN — catalog v12 traversed in full, every scenario matched its expected honest behavior"
+    },
+    {
+      "cycle": 4,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 29,
+      "depth": "FULL (three doors — preset · goal · builder — × all acts, through the UI first)",
+      "replay": "cycle 3 replayed from its transcript — registers stable",
+      "fails": [],
+      "note": "CLEAN — catalog v12 traversed in full, every scenario matched its expected honest behavior"
+    }
+  ],
+  "cleanFlags": [
+    false,
+    true,
+    true,
+    true
+  ],
+  "catalogComplete": true,
+  "rotationComplete": true,
+  "twoConsecutiveClean": true,
+  "cycleCount": 4,
+  "converged6": true,
+  "catalog": {
+    "count": 29,
+    "byClass": {
+      "realistic": 14,
+      "adversarial": 6,
+      "edge": 9
+    },
+    "contentSha": "c913b709dc640a0d1e364a3b6f9382aa351cfbc0be73f665f0667e5d49d363c5",
+    "traversedInFull": true,
+    "judgedAgainstExpected": true
+  },
+  "doors": [
+    "preset",
+    "goal",
+    "builder"
+  ],
+  "themes": [
+    "injection",
+    "laundering",
+    "tamper",
+    "availability",
+    "doc-lies",
+    "ux-priming",
+    "park-legitimacy"
+  ],
+  "walkLedger": {
+    "file": "data/studio/walk-v7-ledger.jsonl",
+    "chainOk": true,
+    "issues": 2,
+    "open": 0,
+    "parks": 0,
+    "findings": [
+      {
+        "id": "W7-01",
+        "status": "fixed",
+        "title": "the CPCV promotion tracker was instrumented (Phase 2) but its counter was NOT surfaced on the pro disclosure — built, not reached the user's screen (the U-SURFACE disease in miniature)"
+      }
+    ]
+  },
+  "note": "the walk ran through the UI/UX across all three doors (preset · goal · builder); catalog v12 (29 scenarios) traversed in full each cycle; one genuine finding (W7-01) root-caused → fixed → re-tested; two consecutive FULL-depth clean cycles across four total."
+}

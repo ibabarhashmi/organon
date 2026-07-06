@@ -1,0 +1,35 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "guided-builder",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "GET /",
+      "interaction": "load the dashboard from a fresh serve",
+      "expected": "the Guided Builder (screen 9) renders with its field help",
+      "met": true,
+      "evidence": "status 200, contains 'Guided Builder' + the compose form"
+    },
+    {
+      "route": "POST /builder/compose",
+      "interaction": "compose a valid lending spec (two markets, equal weights, static policy) and submit",
+      "expected": "a verdict card + the plain-language report + 'WHY NOT YET' + the hedged 'WHEN, HONESTLY' render (the builder reaches the same engine)",
+      "met": true,
+      "evidence": "status 200, contains VERDICT + WHY NOT YET + WHEN"
+    }
+  ],
+  "failureState": {
+    "route": "POST /builder/compose",
+    "interaction": "compose an INVALID spec (a weight of 2.0 — leverage, out of range) and submit",
+    "expected": "the invalid composition is REFUSED before registration with an honest, non-priming message; no fabricated verdict",
+    "met": true,
+    "evidence": "status 200, contains INVALID COMPOSITION, no VERDICT"
+  },
+  "allMet": true,
+  "at": "2026-07-05",
+  "contentSha": "a765793da24ae543286bdb4faa2ec07be7c39d3019fdde414d3258897465361d",
+  "verify": {
+    "ok": true,
+    "issues": []
+  }
+}

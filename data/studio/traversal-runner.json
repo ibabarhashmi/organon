@@ -1,0 +1,23 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "runner-one-command-to-the-door",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "./organon.sh status",
+      "interaction": "a stranger runs one command from a fresh clone",
+      "expected": "prerequisites present, the pinned verify set green, LAUNCH WEB enabled — the web door reachable",
+      "met": true,
+      "evidence": "LAUNCH WEB: ENABLED (all 4 pinned verify items green)"
+    }
+  ],
+  "failureState": {
+    "route": "ORGANON_FORCE_REDWALL=1 ./organon.sh status",
+    "interaction": "the same command with a red wall",
+    "expected": "LAUNCH WEB DISABLED with the unmet requirement rendered beside it (the honest unmet-gate state)",
+    "met": true,
+    "evidence": "verify FAILED: the prevention/integrity walls (frozen byte-identity · gatekeeper v2 · U-SURFACE · le"
+  },
+  "allMet": true,
+  "at": "2026-07-06"
+}

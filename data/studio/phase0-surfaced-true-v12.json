@@ -1,0 +1,52 @@
+{
+  "protocol": "phase0-surfaced-true-v12",
+  "at": "2026-07-05",
+  "gate": "SURFACED-TRUE",
+  "supersession": {
+    "filed": true,
+    "chainOk": true,
+    "coherent": true,
+    "seq": 13,
+    "reloadChainOk": true
+  },
+  "debts": [
+    "D1-voc-supersession",
+    "D2-fresh-clone-scope-correction",
+    "D3-22-23-reconciliation",
+    "D4-summary-differential-mechanism"
+  ],
+  "census": {
+    "ok": true,
+    "seededCaught": true,
+    "surfaced": 3,
+    "dangling": 0,
+    "retroW601": true
+  },
+  "summaryDifferential": {
+    "live": true,
+    "derived": {
+      "floor": 58,
+      "matrixPresent": 23,
+      "matrixAbsent": 3,
+      "catalogCount": 29
+    }
+  },
+  "catalog": {
+    "pinned": true,
+    "count": 29,
+    "contentSha": "c913b709dc640a0d1e364a3b6f9382aa351cfbc0be73f665f0667e5d49d363c5",
+    "verifyOk": true
+  },
+  "criteria": {
+    "pin": "blueprint sha matches the pin (d57ba3674315…)",
+    "criteriaSetSha": "271167eada411594e5ea2f109f57ca8d978f2eff80c1230f2fb160cfe3684379"
+  },
+  "baseline": {
+    "floor": 58,
+    "absencesOk": true
+  },
+  "uSurfaceLaw": {
+    "proven_by": "test/walls/surface_law.test.ts",
+    "inGatekeeper": true
+  }
+}

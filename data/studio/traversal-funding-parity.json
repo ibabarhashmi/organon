@@ -1,0 +1,30 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "builder-funding-realpit-parity",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "POST /builder/funding",
+      "interaction": "compose binance funding 8h receive",
+      "expected": "a REAL-PIT verdict wired to the captured T1 funding snapshot, with resolving nonce-anchored provenance (the parity cure)",
+      "met": true,
+      "evidence": "data: REAL-PIT · provenance ddca321371…"
+    }
+  ],
+  "failureState": {
+    "route": "POST /builder/funding",
+    "interaction": "compose bybit funding (no captured snapshot)",
+    "expected": "ILLUSTRATIVE rendered honestly — never a mislabeled REAL-PIT (real where it exists, illustrative where it genuinely does not)",
+    "met": true,
+    "evidence": "data: ILLUSTRATIVE (no real-data provenance — a labeled fixture; a NO-GO here is still the product working)"
+  },
+  "allMet": true,
+  "at": "2026-07-06",
+  "mappings": [
+    {
+      "criterionId": "funding-parity-realpit-traversal",
+      "exerciseRef": "POST /builder/funding",
+      "expectedBehavior": "a REAL-PIT verdict wired to the captured T1 funding snapshot, with resolving nonce-anchored provenance (the parity cure)"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# Organon Python sidecar dependencies (blueprint Appendix D).
+# Target interpreter: Python 3.11.x  (built/verified on 3.11.15).
+# Versions below were resolved AND import-verified in Phase 0 — see
+# DISCOVERY.md ("Python environment") and BUILD_LOG.md (Phase 0 evidence).
+# Install:  python3.11 -m venv .venv && .venv/bin/pip install -r requirements.txt
+#
+# Direct deps (Appendix D):
+numpy==1.26.4
+pandas==2.3.3
+scipy==1.17.1
+quantstats==0.0.81
+PyPortfolioOpt==1.6.0
+riskfolio-lib==7.3.0
+purgedcv==0.1.2
+#
+# Key transitive deps pinned for byte-reproducibility (B.6) — solver/estimator
+# versions can affect weight computation; pinned to the Phase 0-resolved set:
+scikit-learn==1.9.0
+cvxpy==1.7.5
+clarabel==0.11.1
+matplotlib==3.11.0

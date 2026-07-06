@@ -1,0 +1,16 @@
+STEP 1 — BYTE-FIRST frozen transport + verification
+  ✓ rigor.py: 58c88843cbcb… == ORIGINAL pin
+  ✓ neutralize.py: 448c25cedf9d… == ORIGINAL pin
+  ✓ funding_discriminate.py: 6d97334eb724… == ORIGINAL pin
+  ✓ effective_n.py: 5fc0eaacb4e1… == ORIGINAL pin
+  ✓ funding_accrual.py: 03d3d6b1074b… == ORIGINAL pin
+  ✓ funding_crossvenue.py: 160fc5d2c248… == ORIGINAL pin
+  ✓ src/loop/loop.ts: 1518c8971114… == ORIGINAL pin
+  byte-first PASSED — the frozen seven arrived byte-identical; the rest may now move.
+
+STEP 2 — closure: 31 src files, 32 test files (0 engine-infra leaks)
+STEP 3 — sidecar + data + skill + docs
+STEP 4 — BuildLogs + blueprints
+STEP 5 — CI + hooks + scripts
+STEP 6 — path fix-forward (the V6 dir-reorg bug class, hunted)
+  ✓ frozen.ts REPO_ROOT fixed forward (pinned sha literals unchanged)

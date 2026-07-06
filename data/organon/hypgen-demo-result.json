@@ -1,0 +1,70 @@
+{
+  "note": "generate→ground→firewall-boundary demo; NO verdict (bar unproven, Phase 0.1 STOP)",
+  "perModel": 3,
+  "models": [
+    "opencode/big-pickle",
+    "ollama/qwen3-coder:480b-cloud"
+  ],
+  "rows": [
+    {
+      "n": 1,
+      "model": "opencode/big-pickle",
+      "parseOk": true,
+      "grounded": true,
+      "flow": "amm-arbitrage",
+      "counterparty": "AMM liquidity providers — the passive side of every concentr",
+      "trigger": "price divergence between the AMM pool price (derived determi",
+      "reject": null
+    },
+    {
+      "n": 2,
+      "model": "opencode/big-pickle",
+      "parseOk": true,
+      "grounded": true,
+      "flow": "funding-mechanics",
+      "counterparty": "net perp longs on the paying side of positive funding (mark ",
+      "trigger": "the 8-hourly funding payment on venues like Binance USD-M: w",
+      "reject": null
+    },
+    {
+      "n": 3,
+      "model": "opencode/big-pickle",
+      "parseOk": true,
+      "grounded": true,
+      "flow": "amm-arbitrage",
+      "counterparty": "AMM arbitrageurs",
+      "trigger": "price divergence between the AMM pool (x*y=k or concentrated",
+      "reject": null
+    },
+    {
+      "n": 4,
+      "model": "ollama/qwen3-coder:480b-cloud",
+      "parseOk": true,
+      "grounded": true,
+      "flow": "funding-mechanics",
+      "counterparty": "perp longs (net)",
+      "trigger": "the periodic funding payment (e.g. every 8h on Binance USD-M",
+      "reject": null
+    },
+    {
+      "n": 5,
+      "model": "ollama/qwen3-coder:480b-cloud",
+      "parseOk": true,
+      "grounded": true,
+      "flow": "funding-mechanics",
+      "counterparty": "perp longs (net)",
+      "trigger": "the periodic funding payment (e.g. every 8h on Binance USD-M",
+      "reject": null
+    },
+    {
+      "n": 6,
+      "model": "ollama/qwen3-coder:480b-cloud",
+      "parseOk": true,
+      "grounded": true,
+      "flow": "funding-mechanics",
+      "counterparty": "perp longs (net)",
+      "trigger": "the periodic funding payment (e.g. every 8h on Binance USD-M",
+      "reject": null
+    }
+  ]
+}

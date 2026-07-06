@@ -1,0 +1,8 @@
+RATIFICATIONS ON THE RECORD (Convergence Phase 0)
+(1) C-ARMS — arms pre-declared in the pinned criteria (CONVERGENCE_ARMS); each atomic; gate criteria never split;
+    phase headline = MIN(arms). Enforced by Checkpoint.headlineFromArms; proven by test/walls/arms_headline_min.test.ts.
+    V5 headline corrections (append-only): V5 #0 phase-0 ADVANCE → REPEAT; V5 #2 phase-2 ADVANCE(tick) → REPEAT.
+(2) Screen set amended six → SEVEN (once, here): + the Trust Panel (walls status, clock stamp-ages+gaps, ledger head
+    hash, battery state, parks count, independence state). The set is closed again at seven.
+(3) C-ATTRIB adopted — 'operator-gated' requires ZERO agent residue; the V5 'commit/push' conflation named as the
+    canonical counterexample (commit is AGENT-side; only push is the Operator's).

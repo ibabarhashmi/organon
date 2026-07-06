@@ -1,0 +1,63 @@
+{
+  "protocol": "phase0-complete-true-v13",
+  "at": "2026-07-05",
+  "gate": "COMPLETE-TRUE",
+  "blueprintPin": {
+    "ok": true,
+    "present": true,
+    "detail": "blueprint sha matches the pin (a9f75bf7e9aa…)"
+  },
+  "criteriaSetSha": "394849f8ff3abb37b0855c050ebdfe92705154915e1bb3d96348fb5a2cb1fabf",
+  "lexiconSha": "a8b330f67154ecc21dddfe6af0df41e45a13b1ad2e50be81e14dd7b856b9b514",
+  "autoFlag": {
+    "auditClean": true,
+    "silentUnflagCaught": true,
+    "deadReasonCaught": true,
+    "w701": {
+      "text": "the CPCV promotion tracker accrues on a test adjudication + renders on the pro disclosure",
+      "hits": [
+        "render"
+      ],
+      "wouldAutoFlag": true
+    }
+  },
+  "fullCensus": {
+    "surfaced": 16,
+    "infrastructure": 21,
+    "dangling": [],
+    "seededCaught": true,
+    "infraWithoutEvidence": [],
+    "ok": true
+  },
+  "censusDiff": {
+    "newCapabilities": 37,
+    "newlySurfaced": 16,
+    "newlyInfrastructure": 21,
+    "newlyDangling": [],
+    "ok": true
+  },
+  "debts": {
+    "builderNarrowing": true,
+    "sybilImpactUpgrade": true,
+    "pristinePrereq": true,
+    "lambdaSensitivity": true,
+    "keffFormulaPin": "5ee7730ad3c2eeeee0742053c1cdb2814fae6bbdf51abb25ace044906d4d6f0d"
+  },
+  "catalog": {
+    "version": "v13",
+    "count": 36,
+    "ok": true,
+    "contentSha": "c092e77b4abe6d46fd9e8443b65ed62a6e6551599098bcd8497a7093e24cfe1b",
+    "byClass": {
+      "realistic": 18,
+      "adversarial": 8,
+      "edge": 10
+    }
+  },
+  "baseline": {
+    "floor": 66,
+    "matrixPresent": 28,
+    "matrixReality": true
+  },
+  "pinsSha": "78f7a211f0b4c3e5573d2497c485e9aa7129e974339c7752aba2924bc25b389e"
+}

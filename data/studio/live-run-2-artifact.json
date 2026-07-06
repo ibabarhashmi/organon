@@ -1,0 +1,276 @@
+{
+  "protocol": "live-run-2 (second live trial — the demo's own search deflates its own score)",
+  "model": "ollama:qwen3-coder:480b-cloud",
+  "endpoint": "http://localhost:11434/api/generate",
+  "goal": "earn a stable, low-risk yield on USDC with limited exposure to any single issuer",
+  "liveSearch": {
+    "distinctProposals": 8,
+    "attempts": 8,
+    "specs": [
+      {
+        "family": "rwa-allocation",
+        "legs": [
+          {
+            "id": "usdc-treasury-bills",
+            "weight": 0.4
+          },
+          {
+            "id": "usdc-corporate-short-term",
+            "weight": 0.3
+          },
+          {
+            "id": "usdc-agency-securities",
+            "weight": 0.2
+          },
+          {
+            "id": "usdc-money-market",
+            "weight": 0.1
+          }
+        ],
+        "rebalance": {
+          "trigger": "monthly"
+        },
+        "policy": "static",
+        "constraints": {
+          "maxWeightPerLeg": 0.4,
+          "maxWeightPerIssuer": 0.25
+        }
+      },
+      {
+        "family": "rwa-allocation",
+        "legs": [
+          {
+            "id": "usdc-stablecoin-yield",
+            "weight": 0.35
+          },
+          {
+            "id": "usdc-treasury-bills",
+            "weight": 0.35
+          },
+          {
+            "id": "usdc-corporate-credit",
+            "weight": 0.2
+          },
+          {
+            "id": "usdc-money-market",
+            "weight": 0.1
+          }
+        ],
+        "rebalance": {
+          "trigger": "drift",
+          "driftBps": 50
+        },
+        "policy": "yield-rotation",
+        "constraints": {
+          "maxWeightPerLeg": 0.4,
+          "maxWeightPerIssuer": 0.25
+        }
+      },
+      {
+        "family": "rwa-allocation",
+        "legs": [
+          {
+            "id": "usdc-savings",
+            "weight": 0.3
+          },
+          {
+            "id": "usdc-treasury",
+            "weight": 0.3
+          },
+          {
+            "id": "usdc-corporate",
+            "weight": 0.25
+          },
+          {
+            "id": "usdc-stablecoin",
+            "weight": 0.15
+          }
+        ],
+        "rebalance": {
+          "trigger": "drift",
+          "driftBps": 50
+        },
+        "policy": "barbell",
+        "constraints": {
+          "maxWeightPerLeg": 0.35,
+          "maxWeightPerIssuer": 0.3
+        }
+      },
+      {
+        "family": "rwa-allocation",
+        "legs": [
+          {
+            "id": "usdc-stablecoin-yield",
+            "weight": 0.5
+          },
+          {
+            "id": "usdc-treasury-bills",
+            "weight": 0.3
+          },
+          {
+            "id": "usdc-corporate-credit",
+            "weight": 0.15
+          },
+          {
+            "id": "usdc-money-market",
+            "weight": 0.05
+          }
+        ],
+        "rebalance": {
+          "trigger": "monthly"
+        },
+        "policy": "peg-defensive",
+        "constraints": {
+          "maxWeightPerLeg": 0.5,
+          "maxWeightPerIssuer": 0.3
+        }
+      },
+      {
+        "family": "rwa-allocation",
+        "legs": [
+          {
+            "id": "usdc-us-treasury",
+            "weight": 0.35
+          },
+          {
+            "id": "usdc-corporate-aaa",
+            "weight": 0.3
+          },
+          {
+            "id": "usdc-agency-mbs",
+            "weight": 0.25
+          },
+          {
+            "id": "usdc-money-market",
+            "weight": 0.1
+          }
+        ],
+        "rebalance": {
+          "trigger": "monthly"
+        },
+        "policy": "constrained-carry",
+        "constraints": {
+          "maxWeightPerLeg": 0.4,
+          "maxWeightPerIssuer": 0.35
+        }
+      },
+      {
+        "family": "rwa-allocation",
+        "legs": [
+          {
+            "id": "usdc-earnings-1",
+            "weight": 0.25
+          },
+          {
+            "id": "usdc-earnings-2",
+            "weight": 0.25
+          },
+          {
+            "id": "usdc-earnings-3",
+            "weight": 0.25
+          },
+          {
+            "id": "usdc-earnings-4",
+            "weight": 0.25
+          }
+        ],
+        "rebalance": {
+          "trigger": "monthly"
+        },
+        "policy": "static",
+        "constraints": {
+          "maxWeightPerLeg": 0.25,
+          "maxWeightPerIssuer": 0.25
+        }
+      },
+      {
+        "family": "rwa-allocation",
+        "legs": [
+          {
+            "id": "yield-optimization",
+            "weight": 0.3
+          },
+          {
+            "id": "liquidity-provision",
+            "weight": 0.25
+          },
+          {
+            "id": "stablecoin-lending",
+            "weight": 0.25
+          },
+          {
+            "id": "treasury-bills",
+            "weight": 0.2
+          }
+        ],
+        "rebalance": {
+          "trigger": "monthly"
+        },
+        "policy": "yield-rotation",
+        "constraints": {
+          "maxWeightPerLeg": 0.35,
+          "maxWeightPerIssuer": 0.3
+        }
+      },
+      {
+        "family": "rwa-allocation",
+        "legs": [
+          {
+            "id": "usdc-us-treasury",
+            "weight": 0.45
+          },
+          {
+            "id": "usdc-corporate-aaa",
+            "weight": 0.3
+          },
+          {
+            "id": "usdc-agency-mbs",
+            "weight": 0.15
+          },
+          {
+            "id": "usdc-money-market",
+            "weight": 0.1
+          }
+        ],
+        "rebalance": {
+          "trigger": "monthly"
+        },
+        "policy": "yield-rotation",
+        "constraints": {
+          "maxWeightPerLeg": 0.5,
+          "maxWeightPerIssuer": 0.4
+        }
+      }
+    ],
+    "transcriptHashes": [
+      "0786b579a53e66855ef7deb192e480e27fc3683dcf4fdd4925da45830fad38e0",
+      "1b35ee5da00ec7091768a1e86597e4c5dab077f030fc5ecb371b557582c8b881",
+      "afd7215ade107ab713510937bf62f05f64de584037cfff596fee74b4670fe676",
+      "6b60753b6e834e9873cb39c53a83e55c58b3ea8424c60f1bc64fe3cd9230c429",
+      "21adf1b490b48ff6538ded7d4edefde80be6c1e0bff7251eecc55dd9386cb141",
+      "51555e4d96f61ac7fe1640b2e050800bfa3b393d13ee457295a28cf3e796e16c",
+      "687f4ee39be080f4b1d04ffa26cdb6773327ad95b236673d10eccc5a910be823",
+      "3b9ecc337a67b0bff0bf949684cabf4f63789c99079da0627b1ccf735ff6e899"
+    ]
+  },
+  "atSearchOfOne": {
+    "familySize": 1,
+    "declaredNTrials": 1,
+    "dsr": 0.99835427690911,
+    "verdict": "CONDITIONAL",
+    "reproHash": "2096a23be381becb29b77d06d5d05d9356d426df7d3d1fc9f17eb10bbb321567"
+  },
+  "atTrueSearch": {
+    "familySize": 8,
+    "declaredNTrials": 8,
+    "dsr": 0.9470804302081071,
+    "verdict": "NO-GO",
+    "reproHash": "d9e7a1b145128774358da3d101b63e19b4bbd8bed152a1aabcc3595fb7392cf2"
+  },
+  "flippedConditionalToNoGo": true,
+  "chainIntact": true,
+  "durableLatestHash": "b0e664de9ba2e612652bed6db4432b9d4ac28d6028f54686911ee245b992d614",
+  "returnsDisclosure": "returns are a FIXED illustrative backtest series (deterministic), NOT a real track record; the LIVE element is the model iterating a sentence into N registered, adjudicated specs, and the ledger counting that search.",
+  "dataReality": "ILLUSTRATIVE",
+  "dataRealityNote": "T-REAL (retroactive, Transplant Phase 0): the return series behind this trial's CONDITIONAL→NO-GO deflation were ILLUSTRATIVE (canned), NOT REAL-PIT. The FAMILY-SIZE deflation the trial demonstrates (the demo's own 8-spec search stiffening its own bar) is real and label-independent; the RETURNS were illustrative. Labeled here, append-only, so the numbers are never mistaken for live data."
+}

@@ -1,0 +1,15 @@
+{
+  "protocol": "capture-floor-v12",
+  "at": "2026-07-05",
+  "rule": "R-BASIS — a live venue is admissible as chained only at ≥3 chained stamps across ≥2 distinct runs",
+  "captureFloor": {
+    "minChainedStamps": 3,
+    "minRuns": 2
+  },
+  "venue": "hyperliquid",
+  "reachable": true,
+  "runsThisSession": 3,
+  "provenanceChainOk": true,
+  "meetsFloor": true,
+  "note": "the provenance CHAIN is committed (V9 precedent); the snapshots stay gitignored + re-capturable; exact stamp counts grow on re-capture, so this records only the meetsFloor boolean + the floor constant"
+}

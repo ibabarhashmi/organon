@@ -1,0 +1,114 @@
+{
+  "protocol": "explanation-phase0-pins",
+  "at": "2026-07-05",
+  "keff": {
+    "mappingSpec": "Pool K_eff charge mapping (pinned pre-first-run, K-PRECOND/K-EFF): K_eff = K / (1 + (K-1)·rhoBar) where K is the member count and rhoBar is the MEAN PAIRWISE Pearson correlation of the members' return series over the pinned window (clamped to [0,1] — a negative correlation is conservatively treated as zero, never rewarded); the pool's family charge = ceil(K_eff), a CEILING never a floor; the charge enters the frozen deflation via declaredNTrials = max(ceil(K_eff), familySize, rootCount). At rhoBar=0 → K_eff=K (fully diversified); at rhoBar=1 → K_eff=1 (one bet in disguise — the pool adds nothing beyond its strongest member). K_eff is RECOMPUTED as clocks accrue: a pool composed in a low-correlation window whose members later correlate sees its K_eff fall toward 1 (convenient windows cannot survive time). Selection rule: the correlation-adjusted charge is honest IFF a pure-noise pool never survives at it (the pooled-noise wall); if that wall cannot hold, the pooling surface does not ship (STOP, pre-authorised).",
+    "mappingHash": "5ee7730ad3c2eeeee0742053c1cdb2814fae6bbdf51abb25ace044906d4d6f0d"
+  },
+  "lambdaSensitivity": {
+    "construction": "target_t = signalCoef · base_t[signalDim] + N(0, targetNoise) — a weak-but-REAL linear edge the OOS ridge can partially recover through the random Fourier features; the sweep must DETECT it (a max-DSR distinguishable from the pure-noise ≈0.000, confirming the sweep HAS resolution) or state its limits plainly (the max-DSR-exactly-0.000 ambiguity resolved either way)",
+    "signalCoef": 0.35,
+    "signalDim": 0,
+    "baseDim": 3,
+    "nObs": 600,
+    "featureCount": 40,
+    "seeds": 12,
+    "targetNoise": 0.01,
+    "penalties": [
+      0.1,
+      1,
+      10
+    ],
+    "note": "pinned in Phase 0 (K-PRECOND/A′#8) BEFORE Phase 1 runs the control — the effect size cannot be tuned until the sweep sees it"
+  },
+  "poolCells": {
+    "K": 5,
+    "N": 400,
+    "rhos": [
+      0.3,
+      0.6
+    ],
+    "genuineEdgePerBar": 0.0016,
+    "marginalEdgePerBar": 0.0006,
+    "noiseSd": 0.01,
+    "stress": {
+      "preRho": 0.2,
+      "postRho": 0.95,
+      "jumpAtFrac": 0.5,
+      "note": "correlations jump toward 1 mid-series (the Oct/Nov-2025 lesson in synthetic form); recomputed K_eff must collapse toward 1 and pooled power evaporate honestly"
+    },
+    "note": "pre-pinned constructions (K-PRECOND); Phase 1 hash-checks this pin before running any cell; a post-hoc construction tweak is caught"
+  },
+  "selection": {
+    "spec": {
+      "rule": "X-SELECT — the pool's first-composition member selection (choose K of M) is search; measure whether best-of-M composition at the current ceil(K_eff) charge inflates survivors beyond planted truth, and price/restrict/prove-free by the derived outcome.",
+      "universes": {
+        "Ms": [
+          20,
+          30
+        ],
+        "K": 5,
+        "N": 400,
+        "seeds": 40
+      },
+      "candidateMix": {
+        "noiseUniverse": "M pure-noise candidates (mean 0), the survivor-inflation instrument's null world",
+        "plantedUniverse": "M candidates of which plantedFrac carry a weak REAL edge (mean=weakEdgePerBar), the rest pure noise — the planted-truth world",
+        "noiseSd": 0.01,
+        "weakEdgePerBar": 0.0012,
+        "plantedFrac": 0.2
+      },
+      "bestOfM": "select the K candidates with the highest IN-SAMPLE mean return (the cherry-pick, mechanized); pool them equal-weight; adjudicate the pooled series through the frozen core",
+      "currentCharge": "declaredNTrials = ceil(K_eff) over the SELECTED members (the V13 charge — breadth only, no selection term)",
+      "remedies": {
+        "TERM": "declaredNTrials = ceil(K_eff) + selectionSurcharge, selectionSurcharge = ceil(log2(C(M,K))) — the bits of search spent choosing K of M, charged as extra independent comparisons (a CEILING, never a floor; a pinned closed form, not a tuned constant)",
+        "RESTRICT": "first compositions admissible ONLY over a member universe DECLARED before composing; the composer's schema refuses an undeclared/post-hoc universe — best-of-M cherry-picking is bounded to the declared set, so the free search cannot happen",
+        "NO_INFLATION": "if best-of-M at the current ceil(K_eff) charge does NOT survive above the planted-truth false-positive tolerance, member selection adds no inflation the breadth charge misses — file the evidence, retire the caveat"
+      },
+      "outcomeCriteria": {
+        "falsePositiveTolerance": 0.05,
+        "inflationThreshold": "the pure-noise best-of-M survivor rate at the CURRENT charge EXCEEDS 2× the nominal 5% false-positive tolerance (>0.10) → inflation exists (the current charge does not absorb the pick)",
+        "positiveControl": "the pure-noise best-of-M at declaredNTrials=1 (uncharged for BOTH breadth and selection) MUST survive at a HIGH rate (≥0.50) — proving the instrument can SEE the cherry-pick; an instrument that cannot is void",
+        "derivation": "if NO inflation at the current charge → NO-INFLATION; else if the TERM surcharge restores the noise survivor rate to ≤ tolerance → TERM (the smallest remedy that prices it); else → RESTRICT (the structural bound, when no closed-form surcharge suffices)",
+        "robustness": "probe small M and large K/M and selection over ALREADY-DEFLATED survivors; if a fragile corner changes the remedy's shape, the outcome converts accordingly (the robustness clause)"
+      }
+    },
+    "specHash": "98495b8dddb3c44dcbbd6c6e3902161c04c90e63acc93301f14cf2311aae8ad9",
+    "note": "pinned in Phase 0 (X-SELECT) BEFORE Phase 1 runs the selection experiment — the constructions, the three remedy candidates, and the outcome criteria cannot be tuned until the instrument sees inflation"
+  },
+  "whyGroundRules": {
+    "rule": "X-ONE/X-FACTS/X-GROUND — the WHY panel's ground rules, pinned in Phase 0 so Phase 3 builds toward a fixed target.",
+    "factTableRowSchema": [
+      "id",
+      "name",
+      "value",
+      "threshold",
+      "comparator",
+      "outcome",
+      "contribution",
+      "provenanceRef"
+    ],
+    "materialityThreshold": "a fact row is MATERIAL (must-be-explained in the plain register) iff its outcome decided or bounded the verdict (the deciding rule, every gate that flipped, every threshold within the pinned materiality band of its value); an immaterial row renders on the pro disclosure only",
+    "templateRegistry": {
+      "NO-GO": "what failed (the deciding row) · what held · what would change it — two-sided",
+      "CONDITIONAL": "what passed · the condition still open · what closes it",
+      "INSUFFICIENT": "not enough evidence yet — the honest clock (how much more, at what cadence)",
+      "BLOCKED": "the data this needs does not exist here yet — the unblock",
+      "MALFORMED": "refused before adjudication — the rule it broke",
+      "kill-switch": "a safety wall tripped — what it caught and why the surface is disabled",
+      "GO": "what passed (the deciding rows) · the residual risks · the deflation basis it cleared"
+    },
+    "verifierRules": {
+      "numberExtraction": "extract every numeric token (incl. decimals, percentages, comparators) from the paraphrase; each must equal a fact-table value exactly (no rounding, no 'about')",
+      "claimMapping": "extract every declarative claim; each must map to a fact-table row (a value/threshold/outcome/label); a claim with no row is unmatched",
+      "rejectWholesale": "ANY unmatched number OR unmatched claim rejects the paraphrase WHOLESALE — the deterministic text renders instead; a partial-accept is forbidden (a single smuggled claim is one too many)"
+    }
+  },
+  "prevBaseline": {
+    "floor": 66,
+    "matrixPresent": 34,
+    "matrixAbsent": 3,
+    "catalogCount": 36
+  },
+  "pinsSha": "353fe7fbd74d8a6dc38393262c84c587667c6afe0dcde7c5dc8f856464e7ebe6"
+}

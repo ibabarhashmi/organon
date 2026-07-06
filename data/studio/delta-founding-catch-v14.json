@@ -1,0 +1,13 @@
+{
+  "protocol": "delta-differential-founding-catch",
+  "rule": "X-DEFAULT / U-DERIVED",
+  "at": "2026-07-05",
+  "claim": "the V13 terminal wrote 'floor 58→74'",
+  "trueBaseline": 66,
+  "trueEndpoint": 74,
+  "caught": true,
+  "mismatches": [
+    "floor delta: prose starts at 58, the last pinned baseline is 66 (the floor '58→74' arithmetic is wrong)"
+  ],
+  "note": "the absolute summary differential validated the endpoint (74) but was blind to the arithmetic — the true prior floor was 66, so '58' was wrong. The delta-aware differential catches it. Corrected append-only; the endpoint was never wrong, only the narrative delta."
+}

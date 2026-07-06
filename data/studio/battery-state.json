@@ -1,0 +1,15 @@
+{
+  "protocol": "battery-state",
+  "asOf": "2026-07-04 Phase 3 CONVERGED",
+  "scope": "in-scope (walls + studio + ledger/clocks/durable)",
+  "walls": {
+    "green": 12,
+    "total": 12
+  },
+  "battery": {
+    "pass": 149,
+    "fail": 0,
+    "files": 30
+  },
+  "green": true
+}

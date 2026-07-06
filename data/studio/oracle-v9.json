@@ -1,0 +1,93 @@
+{
+  "protocol": "oracle-v9",
+  "at": "2026-07-04",
+  "gate": "CENSUS-TRUE (the oracle limb)",
+  "rule": "D-DIFF — the frozen monorepo runs read-only as the differential oracle; it must prove it can JUDGE before the port trusts it (A′#9: zero old-tree writes)",
+  "oracleRoot": "/Users/babar/Projects/organon/packages/solidity-sentinel",
+  "fixture": {
+    "spec": {
+      "family": "lending-carry",
+      "policy": "static",
+      "rebalance": {
+        "trigger": "monthly"
+      },
+      "markets": [
+        {
+          "key": "aave-usdc",
+          "weight": 1
+        }
+      ]
+    },
+    "window": {
+      "start": 1728000000000,
+      "end": 1728172800000
+    },
+    "capitalUsd": 1,
+    "costs": {
+      "slippageK": 0.1,
+      "feeBps": 0,
+      "gasUsd": 0
+    },
+    "markets": [
+      {
+        "key": "aave-usdc",
+        "weight": 1,
+        "series": {
+          "apyBase": [
+            [
+              1728000000000,
+              3.65
+            ],
+            [
+              1728086400000,
+              3.65
+            ],
+            [
+              1728172800000,
+              3.65
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "handVerified": {
+    "mechanism": "constant 3.65% APY → daily factor exactly 1.0001; three-day compounding; static full weight; no rebalance",
+    "dailyFactor": 1.0001,
+    "expectedLast": 1.0003000300009999
+  },
+  "expected": [
+    [
+      1728000000000,
+      1.0001
+    ],
+    [
+      1728086400000,
+      1.00020001
+    ],
+    [
+      1728172800000,
+      1.0003000300009999
+    ]
+  ],
+  "got": [
+    [
+      1728000000000,
+      1.0001
+    ],
+    [
+      1728086400000,
+      1.00020001
+    ],
+    [
+      1728172800000,
+      1.0003000300009999
+    ]
+  ],
+  "oldTreeGitStatusBefore": "",
+  "oldTreeGitStatusAfter": "",
+  "oldTreeUnchanged": true,
+  "blocked": false,
+  "ok": true,
+  "detail": "oracle JUDGES CORRECTLY — the monorepo lending engine reproduces the hand-verified 1.0001-per-day compounding (3 points, last=1.0003000300009999); the old tree is UNCHANGED (git status identical before/after)"
+}

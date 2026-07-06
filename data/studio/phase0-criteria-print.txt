@@ -1,0 +1,31 @@
+blueprint: sprint/ORGANON_STUDIO_Convergence_Sprint_Blueprint.md
+blueprint-sha256 (pin): fcd434090b83b00cd8df6c3be4f5bc1de7fbb9a5e36e6a67c4695ebefda554a0
+criteria-set-sha256:    fdfee36615ce3ba47a2e5e6cd693b52b6bc199055c5daa76a59aa7af9f4d027b
+
+phase-0:
+  [GATE ] DEBT-CLEAR — every V5 audit item closed with evidence or honestly reclassified at ZERO agent residue; capability inventory snapshotted; the criteria print reconciles against the blueprint
+  [     ] committed-world — zero uncommitted output; the append-only wall runs over REAL git history with zero disclosed skips
+  [     ] criteria-printed — derived criteria + gate/arm flags printed VERBATIM beside the blueprint pin and reconciled clause-by-clause (C-RECON2)
+  [     ] legacy-dispositioned — every legacy suite line dispositioned green-or-waived through the pinned criteria; clock-adjacent lines run against the live stamps (no missing-data alibi)
+  [     ] second-live-trial — the second live free-model trial registered; the demo's own search visibly STIFFENS its own bar; the numbers pasted
+  [     ] attribution-complete — every pending item tagged AGENT/OPERATOR/MIXED with residues; the operator lane re-issued at true zero agent residue (C-ATTRIB)
+  [     ] ratifications — C-ARMS adopted (headline=MIN, V5 Phase-0/Phase-2 headlines re-recorded REPEAT append-only); screen set amended 6→7 (Trust Panel), closed; C-ATTRIB adopted with the V5 conflation named
+  [     ] inventory-snapshotted — every proven capability paired with its proving test, snapshotted and hash-anchored — the C-NOREGRESS floor
+phase-1:
+  [GATE ] SOLID — each of the five strengthenings carries a positive-controlled proof; a panel that disagrees with raw sources is an INTEGRITY issue
+  [     ] unattended-cadence — scheduler-originated stamps accruing (not session-originated); a killed scheduler renders a GAP on the panel (C-TENSE earns 'TICKING')
+  [     ] restore-drill — ledger+stamps backup/restore drill green including a deliberately torn backup; the restored ledger remembers, the chain verifies
+  [     ] surface-hardened — authn on mutating routes, rate limits, spec-size caps, a fuzz pass with zero crashes and honest error states; the no-signing grep re-run over the served surface
+  [     ] reachability — the app reached from a party other than the serving author-session (reachable ≠ independent; L-2P still owns independence)
+  [     ] trust-panel — screen 7: walls status, clock stamp-ages+gaps, ledger head hash, battery state, parks count, independence state (PENDING until a stranger acts) — truthful against raw sources
+phase-2:
+  [     ] doc-truth — a clean session follows README+SKILL.md literally from nothing to a registered submission; every divergence is DOC-DRIFT, fixed until the literal path succeeds
+  [     ] goal-presets — three worked example goals for non-experts, each ending in a real (refusal-shaped) verdict + report
+  [     ] error-honesty — every user-reachable failure renders a plain-language, two-sided, non-priming state
+  [     ] report-readability — the non-expert rubric re-run on current reports; wording fixed where the reader's next-step diverges from the verdict's epistemic state
+phase-3:
+  [GATE ] CONVERGED — two consecutive CLEAN cycles (zero new issues, zero open non-parked) — OR an honest NON-CONVERGENCE STOP at cap=8 with the register published; both valid terminals, exactly one claimed
+  [     ] walk-ledger-chained — the WALK LEDGER hash-chained, complete, committed; every issue registered BEFORE any fix
+  [     ] fixes-inventoried — every fix H-MOD-inventoried and battery-plus-inventory-green; frozen core byte-identity re-proven each cycle
+  [     ] parks-legitimate — every park four-fielded (context+repro, rationale, impact, recommended next steps+sprint) and legitimacy-reviewed each cycle; a convenience park is reclassified open
+  arms (headline=MIN): RUN · IDENTIFY · FIX · QA · RED-TEAM · RE-EVALUATE

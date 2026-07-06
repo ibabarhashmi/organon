@@ -1,0 +1,41 @@
+{
+  "protocol": "phase2-builder-whole-v13",
+  "at": "2026-07-05",
+  "gate": "BUILDER-WHOLE",
+  "traversals": {
+    "funding": {
+      "admissible": true,
+      "theater": false,
+      "issues": []
+    },
+    "basis": {
+      "admissible": true,
+      "theater": false,
+      "issues": []
+    }
+  },
+  "honesty": {
+    "funding": true,
+    "basis": true,
+    "seededPrimingCaught": true
+  },
+  "defaults": {
+    "fundingConservative": true,
+    "basisPresent": true,
+    "lendingConservative": true
+  },
+  "basisMinTierInline": true,
+  "verdictDifferential": {
+    "byteIdentical": true,
+    "pinned": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54"
+  },
+  "censusDiff": {
+    "newlySurfaced": [
+      "guided-builder-funding",
+      "guided-builder-basis"
+    ],
+    "newlyDangling": [],
+    "ok": true
+  },
+  "threeDomainsComposable": true
+}

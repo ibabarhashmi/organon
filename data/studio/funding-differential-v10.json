@@ -1,0 +1,65 @@
+{
+  "protocol": "funding-differential-v10",
+  "at": "2026-07-05",
+  "rule": "E-ATTEMPT, D-DOMAIN, D-DIFF, D-LABEL — funding delivered via freepit T1, differential-proven on real data",
+  "t1": {
+    "source": "data.binance.vision immutable monthly dumps + published CHECKSUM",
+    "allVerified": true,
+    "note": "a dump whose sha256 ≠ its published checksum is refused (never fabricated)"
+  },
+  "reconstructionDifferential": {
+    "rule": "monorepo FreePitFunding.reconstruct (sandbox, exact bytes) vs standalone DataPlaneFunding.reconstruct on identical CSVs",
+    "perSymbol": [
+      {
+        "symbol": "BTCUSDT",
+        "inputSha": "72965c8e4a7c61714319d085c8847656d941f0763092f6f0ca23b1fd77b1227c",
+        "points": 552,
+        "reconMatch": true,
+        "portSha": "e6f5a244dae15eb4",
+        "monoSha": "e6f5a244dae15eb4"
+      },
+      {
+        "symbol": "ETHUSDT",
+        "inputSha": "3ca03c6d8ca50a99338aaeeca621f5ea62e0a773d9147218a7f0db53a3c13ed2",
+        "points": 552,
+        "reconMatch": true,
+        "portSha": "906bb78abeedbf5a",
+        "monoSha": "906bb78abeedbf5a"
+      }
+    ],
+    "allMatch": true
+  },
+  "sidecarDifferential": {
+    "rule": "funding_accrual.py byte-identical between trees + the same Job run through BOTH trees' sidecar (system python3, stdlib)",
+    "pySha": {
+      "standalone": "03d3d6b1074b1756efbd397dca3ddb8b2dafb5fdf3377f1f7a471da9845c0d65",
+      "mono": "03d3d6b1074b1756efbd397dca3ddb8b2dafb5fdf3377f1f7a471da9845c0d65"
+    },
+    "byteIdentical": true,
+    "outputMatch": true,
+    "jobIntervals": 552
+  },
+  "realPitAdjudication": {
+    "domain": "funding",
+    "reality": "REAL-PIT",
+    "provenanceKey": "funding:binance:BTCUSDT",
+    "returns": 552,
+    "barsPerYear": 1095,
+    "verdict": "INSUFFICIENT-EVIDENCE",
+    "dsrAtDeclared": null,
+    "familyDeclaredNTrials": 1,
+    "note": "returns = per-interval funding carry on notional (gross, labeled); the verdict is the frozen core's, relayed verbatim — a REAL-PIT NO-GO is the product working"
+  },
+  "seededDivergence": {
+    "transform": "funding × 0.5 (a flattering halved series)",
+    "caught": true,
+    "directionBlind": true
+  },
+  "secondSource": {
+    "venue": "bybit (api.bybit.com/v5/market/funding/history) reachable HTTP 200 — a differently-shaped route, corroboration that the freepit approach is not venue-locked",
+    "used": "primary is Binance data.vision T1; Bybit noted as the second route"
+  },
+  "outcome": "DELIVERED",
+  "rePins": 0,
+  "frozenTreeWrites": 0
+}

@@ -1,0 +1,75 @@
+{
+  "protocol": "phase5-verification-v13",
+  "at": "2026-07-05",
+  "summaryDifferential": {
+    "prose": {
+      "floor": 74,
+      "matrixPresent": 34,
+      "matrixAbsent": 3,
+      "catalogCount": 36
+    },
+    "derived": {
+      "floor": 74,
+      "matrixPresent": 34,
+      "matrixAbsent": 3,
+      "catalogCount": 36
+    },
+    "ok": true,
+    "mismatches": []
+  },
+  "noiseWalls": {
+    "voc": {
+      "clean": true,
+      "survivors": 0,
+      "maxDsr": 0
+    },
+    "pooled": {
+      "clean": true,
+      "survivors": 0
+    }
+  },
+  "verdictDifferential": {
+    "byteIdentical": true
+  },
+  "newestDoorReRun": {
+    "door": "pool-composer (screen 10)",
+    "ok": true,
+    "verdict": "CONDITIONAL",
+    "kEff": 4.5239269310794095,
+    "charge": 5
+  },
+  "pristineHarness": {
+    "evidence": "pristine-clone-v13.json",
+    "pristineGreen": true,
+    "battery": {
+      "pass": 352,
+      "fail": 0,
+      "green": true
+    },
+    "conditionalPy311": "Python 3.11.15"
+  },
+  "parksForward": {
+    "ensemble": "DELIVERED (ADOPT activated — the pool ships with the correlation-adjusted K_eff charge)",
+    "tournament": "NO standing (incoherent per-author; the shared cross-author ledger stays parked; sybil impact upgraded 0.928/0.310)",
+    "hrp": "DISPOSED NO (does not dominate OOS; stays parked)",
+    "cpcvPromotion": "accruing toward ≥30 @ ≥80% agreement (advisory-first; not gating)",
+    "zkml": "re-check 2027-01-01 (parked; immature)",
+    "poolRecursion": "deferred by default (depth-1; a pool of pools is schema-refused)",
+    "signing": "ever-standing constitutional decision (Operator-only; nothing signs)"
+  },
+  "scopeOk": true,
+  "floor": 74,
+  "catalog": {
+    "version": "v13",
+    "count": 36,
+    "contentSha": "c092e77b4abe6d46fd9e8443b65ed62a6e6551599098bcd8497a7093e24cfe1b"
+  },
+  "frozenSeven": "byte-identical in both trees (test/walls/core_byte_identity.test.ts); no frozen byte changed",
+  "rwaPinUnchanged": true,
+  "ratification": {
+    "entries": 18,
+    "chainOk": true,
+    "coherent": true
+  },
+  "independence": "pending-non-author (DOORS-OPEN waits for a genuine stranger — now with the pool composer as a fourth door)"
+}

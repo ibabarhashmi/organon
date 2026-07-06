@@ -1,0 +1,44 @@
+{
+  "protocol": "phase6-verification-v11",
+  "at": "2026-07-05",
+  "freshClone": {
+    "proof": "a genuine fresh `git clone` → documented setup (bun install + the Python sidecar venv per requirements-studio.txt) → the full battery 285/0 across 59 files",
+    "finding": "W6-04 (Phase-6 verification, doc-drift): organon-common.sh hardcoded the stale monorepo path packages/solidity-sentinel (a transplant artifact) so a fresh clone's setup pointed the venv check at a non-existent directory; the 33 initial fresh-clone fails were all posix_spawn of the absent venv (environmental, not a code regression). FIX: PKG=$REPO_ROOT (the standalone IS the package root, mirroring frozen.ts). RE-TEST: setup finds the venv; the fresh-clone battery is 285/0.",
+    "batteryAfterSetup": "285 pass / 0 fail"
+  },
+  "freshCloneSafe": "the battery is fresh-clone-safe (synthetic data, no gitignored deps) once the documented setup venv is created",
+  "verdictDifferential": {
+    "byteIdentical": true,
+    "fingerprintSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54"
+  },
+  "noiseWall": {
+    "clean": true,
+    "survivors": 0,
+    "maxDsr": 0
+  },
+  "catalogScenario": {
+    "id": "R2-goalwriter-realpit + S1/S2",
+    "ok": true,
+    "verdict": "CONDITIONAL",
+    "panelsSurfaced": true,
+    "whyAndWhenRendered": true
+  },
+  "floor": {
+    "value": 58,
+    "rose": "52 → 58 (never lower; C-NOREGRESS)",
+    "anchor": "92878ee972cdbf79d028cdc6d8f83b5e503cab13412026c1bbb79e59c86e3d9b"
+  },
+  "catalog": {
+    "version": "v11",
+    "count": 23,
+    "byClass": {
+      "realistic": 11,
+      "adversarial": 4,
+      "edge": 8
+    },
+    "contentSha": "b8dc21d230f78976bf3bff7cec2401573c07d0cc28b6c0cba4c3dfb9a686eb6d"
+  },
+  "rwaPinUnchanged": true,
+  "independence": "pending-non-author (an author cannot certify their own claims; DOORS-OPEN waits for a genuine stranger — L-2P)",
+  "frozenSeven": "byte-identical in both trees (proven by test/walls/core_byte_identity.test.ts; no frozen byte changed this sprint)"
+}

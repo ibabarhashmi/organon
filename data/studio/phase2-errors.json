@@ -1,0 +1,16 @@
+{
+  "protocol": "error-state-honesty",
+  "codes": [
+    "malformed-json",
+    "bad-spec",
+    "payload-too-large",
+    "unauthorized",
+    "rate-limited",
+    "ledger-bypass",
+    "clock-not-ticking",
+    "model-endpoint-down",
+    "internal"
+  ],
+  "allTwoSidedAndNonPriming": true,
+  "wiredIntoServedRoutes": "401/413/429/400/500 envelopes carry the plain-language two-sided message (test/organon/error_honesty.test.ts)"
+}

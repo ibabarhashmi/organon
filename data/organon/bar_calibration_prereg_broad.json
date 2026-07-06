@@ -1,0 +1,84 @@
+{
+  "$schema": "ORGANON-bar-calibration-preregistration/v1",
+  "sprint": "ORGΛNON — Sentinel-Driven Hypothesis Generation (Comprehensive) · Phase 0.1 bar-calibration — REGRESS (broad universe)",
+  "authored": "ORGΛNON",
+  "committedBeforeAnyRun": true,
+  "statement": "REGRESS of Phase 0.1 (user-directed): the headline 20-perp test STOPPED the sprint (bar not proven) with TWO causes — weekly momentum absent/weak AND the bar structurally unprovable on a universe with effective breadth ≈ 2.43 (power floor 5899, even perfect-foresight INSUFFICIENT). This fresh pre-registration BROADENS the universe to give the bar its fairest power test: does higher effective breadth lower the derived floor enough for the yes-path (perfect-foresight) to clear it, and is a real momentum edge detectable across a broad cross-section? Same frozen engine, same construction, same threshold (Rule VII) — ONLY the universe changes. A GO here would REOPEN the sprint; a NO-GO/INSUFFICIENT with the floor still unreachable CONFIRMS the STOP with stronger evidence. No field changes after a result is seen (Rule IX).",
+
+  "regressFrom": {
+    "priorPrereg": "bar_calibration_prereg.json (sha 61e5c3f12adb8d72767ae764293cb39d886939a6ca65ef39bc31e838451fefd6)",
+    "priorResult": "momentum NO-GO (raw IC t=+1.21, resid≈0, portfolio negative, held-out negative); perfect-foresight INSUFFICIENT (effN 89 ≪ floor 5899); noise NO-GO; verdict hash 37c1ca43c926.",
+    "hypothesisUnderTest": "the STOP was driven by the 20-perp universe's tiny effective breadth (2.43). If crypto's effective breadth is fundamentally low (one dominant BTC factor), a broad universe will NOT rescue the floor (needs effBreadth ≈ 69) → STOP confirmed. If a broad, more idiosyncratic cross-section lifts effBreadth materially, the yes-path may fire → sprint reopens. Settled empirically."
+  },
+
+  "edge": {
+    "name": "weekly-horizon cross-sectional momentum in liquid crypto perpetuals (broad universe)",
+    "description": "Identical construction to the headline test, on a BROAD cross-section: assets with higher recent (skip-adjusted) multi-week trailing return earn higher forward WEEKLY return than assets with lower trailing return.",
+    "documentedBy": [
+      "Liu, Y. & Tsyvinski, A. (2021). Risks and Returns of Cryptocurrency. RFS 34(6):2689-2727. — crypto momentum at weekly-to-monthly horizons, documented on a BROAD universe (this REGRESS aligns the universe breadth with the literature).",
+      "Liu, Y., Tsyvinski, A. & Wu, X. (2022). Common Risk Factors in Cryptocurrency. JF 77(2):1133-1177.",
+      "Jegadeesh & Titman (1993); Jegadeesh (1990) & Lehmann (1990) short-term reversal (the 1-week skip)."
+    ],
+    "expectedSign": "positive",
+    "notFromData": "Construction unchanged from the headline (lookback 56d/skip 7d/holding 7d weekly). Only the universe is broadened, by an OBJECTIVE listing-date rule (below) — not chosen by inspecting momentum results. No parameter tuned to pass."
+  },
+
+  "construction": {
+    "cadence": "weekly (non-overlapping)",
+    "priceField": "close",
+    "lookbackDays": 56,
+    "skipDays": 7,
+    "forwardHorizonDays": 7,
+    "weeklyStep": true,
+    "samplingStrideDays": 7,
+    "samplingPhase": 0,
+    "signalDefinition": "signal(t) = close[t-7] / close[t-63] - 1 (56-day cumulative return ending one week before t; most-recent week skipped). Strictly causal. Frozen momentum.build_panels(closes, lookback=56, skip=7, horizon=7).",
+    "forwardDefinition": "forward(t) = close[t+7] / close[t] - 1 (next-week return, strictly after t).",
+    "nonOverlapSampling": "decision days sampled at stride 7 from phase 0 → non-overlapping weekly returns. Panel preparation in the runner; edits no frozen file.",
+    "crossSectional": "at each sampled t, the signal vector across the broad universe is ranked (Spearman IC) vs the forward vector by the frozen discriminator."
+  },
+
+  "universe": {
+    "rule": "Binance USD-M USDT-margined PERPETUAL contracts, status TRADING, ONBOARDED on/before 2023-01-01 (from fapi/v1/exchangeInfo onboardDate), EXCLUDING the synthetic index product BTCDOMUSDT. Chronological, objective, liquidity-agnostic. Survivorship caveat DISCLOSED: exchangeInfo lists currently-trading perps, so perps delisted before 2026 are absent (a mild survivorship filter, same in kind as the original 20 'still-liquid' set); the point of this REGRESS is the BREADTH (effN/effBreadth) test, for which currently-listed long-history perps are the right set. A late-2022-listed asset enters when its checksummed data begins (finite-pairs IC → survivorship-safe within the window).",
+    "symbols": ["BTCUSDT","ETHUSDT","BCHUSDT","XRPUSDT","LTCUSDT","TRXUSDT","ETCUSDT","LINKUSDT","XLMUSDT","ADAUSDT","XMRUSDT","DASHUSDT","ZECUSDT","XTZUSDT","ATOMUSDT","BNBUSDT","ONTUSDT","IOTAUSDT","BATUSDT","VETUSDT","NEOUSDT","QTUMUSDT","IOSTUSDT","THETAUSDT","ALGOUSDT","ZILUSDT","KNCUSDT","ZRXUSDT","COMPUSDT","DOGEUSDT","KAVAUSDT","BANDUSDT","RLCUSDT","SNXUSDT","DOTUSDT","SKLUSDT","YFIUSDT","CRVUSDT","TRBUSDT","SUSHIUSDT","RUNEUSDT","EGLDUSDT","SOLUSDT","ICXUSDT","STORJUSDT","UNIUSDT","AVAXUSDT","ENJUSDT","KSMUSDT","NEARUSDT","FILUSDT","AAVEUSDT","RSRUSDT","BELUSDT","AXSUSDT","ZENUSDT","GRTUSDT","1INCHUSDT","SANDUSDT","CHZUSDT","ANKRUSDT","RVNUSDT","SFPUSDT","COTIUSDT","CHRUSDT","MANAUSDT","ALICEUSDT","GTCUSDT","HBARUSDT","ONEUSDT","CELRUSDT","HOTUSDT","MTLUSDT","OGNUSDT","1000SHIBUSDT","MASKUSDT","ICPUSDT","IOTXUSDT","C98USDT","DYDXUSDT","1000XECUSDT","GALAUSDT","CELOUSDT","ARUSDT","ARPAUSDT","CTSIUSDT","LPTUSDT","ENSUSDT","PEOPLEUSDT","ROSEUSDT","DUSKUSDT","FLOWUSDT","IMXUSDT","API3USDT","GMTUSDT","APEUSDT","WOOUSDT","JASMYUSDT","OPUSDT","INJUSDT","STGUSDT","SPELLUSDT","1000LUNCUSDT","LUNA2USDT","LDOUSDT","APTUSDT","QNTUSDT"],
+    "count": 107,
+    "survivorship": "the PRE-REGISTERED set by the objective rule above, not a post-hoc survivor set. No asset added/dropped after seeing results."
+  },
+
+  "window": { "start": "2023-01", "end": "2025-12", "cadence": "daily dumps (weekly-sampled)",
+    "rationale": "36 monthly checksum-anchored 1d-kline dumps per symbol. Same window as the headline test so only the universe breadth differs. NOT extended after a result." },
+
+  "split": {
+    "discovery": { "start": "2023-01", "end": "2024-12" },
+    "heldOut": { "start": "2025-01", "end": "2025-12", "note": "held-out forward window the construction never saw; confirm a discovery GO here." },
+    "boundaryRule": "a sampled weekly decision day t is discovery iff its date < 2025-01-01, else held-out."
+  },
+
+  "neutralization": { "loadings": ["marketBeta", "realizedVol"],
+    "disclosure": "identical to the headline — full-sample static (M,K); neutralization only subtracts explanatory power (safe direction). A momentum GO that survives it is residual cross-sectional alpha." },
+
+  "threshold": { "note": "THE ENGINE'S OWN GATES, byte-identical (Rule XXXVIII).",
+    "tGate": 3.0, "icMin": 0.02, "portGate": 2.5, "targetIC": 0.05, "minPeriods": 30, "cadenceHours": 168.0,
+    "powerFloor": "the derived effective-N floor. The KEY quantity this REGRESS moves: floor = ((tGate+zPower)·se/targetIC)² with se=1/√(effBreadth−3). Broader universe → higher effBreadth → smaller se → lower floor. Whether it drops enough (needs effBreadth ≈ 69) is the empirical question.",
+    "verdictRule": "GO requires residual-IC NW-deflated t > 3.0 AND mean > 0.02 AND long-short portfolio t > 2.5 AND portfolio mean > 0 AND effective-N >= derived power floor." },
+
+  "grid": { "searched": false, "primaryIsSoleHeadline": true,
+    "note": "single pre-registered construction; no grid → no multiple-testing inflation. The 20-perp result is the PRIOR test (disclosed), this is a fresh universe, not a searched grid over universes." },
+
+  "controls": {
+    "positive": { "name": "perfect-foresight (forward + tiny noise, non-degenerate)", "expectation": "GO iff the broad universe's effN clears the (breadth-lowered) floor — THE decisive REGRESS check." },
+    "negative": { "name": "seeded noise (numpy default_rng 20260703)", "expectation": "MUST NO-GO." }
+  },
+
+  "passCondition": {
+    "barProven": "weekly momentum GOes at realistic strength in discovery, adequately powered (effN >= floor), AND survives held-out 2025 — while perfect-foresight GOes and noise NO-GOes. → REOPEN the sprint.",
+    "stopConfirmed": "the floor stays unreachable (perfect-foresight still INSUFFICIENT) OR momentum NO-GOes → STOP confirmed with broad-universe evidence; the bar's power floor vs. crypto's effective breadth is the thing to revisit before any generation."
+  },
+
+  "antiTuning": {
+    "frozenEngine": "ZERO engine changes; the 6 .py + loop wall byte-identical; existing verdicts unchanged.",
+    "noPostHocChange": "no field changes after a result. If this NO-GOes, the honest terminal is the confirmed STOP — not a third universe fished for a GO.",
+    "objectiveUniverse": "the universe is defined by an OBJECTIVE listing-date rule, not chosen by peeking at which assets show momentum.",
+    "admissibleDataOnly": "all-T1 checksum-anchored dumps or the run is void (A3). No paid data."
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "protocol": "checkpoint-trail-v12",
+  "criteriaSetSha": "271167eada411594e5ea2f109f57ca8d978f2eff80c1230f2fb160cfe3684379",
+  "chainOk": true,
+  "independence": "pending-non-author",
+  "records": [
+    {
+      "seq": 0,
+      "phase": "phase-0",
+      "decision": "ADVANCE",
+      "stamp": "v12-phase0-surfaced-true",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "SURFACED-TRUE",
+          "text": "reachability is LAW: the SURFACING CENSUS complete with its seeded unsurfaced capability CAUGHT (every user-facing capability mapped to console-path evidence; a dangling one fixed-smallest-change or four-field parked); the four V11 debts filed as append-only values (the VoC→OOS ratification SUPERSESSION referencing the original ADOPT row's hash; the V7–V10 fresh-clone scope correction; the 22/23 reconciliation; the summary-differential mechanism live); the U-SURFACE law in the gatekeeper's vocabulary refusing module-only evidence on a flagged criterion; the catalog v12 pinned BEFORE any new surface exists (U-SURFACE, U-RESUPERSEDE, U-DERIVED, E-CATALOG, A′#2/#4)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-surfaced-true-v12.json (63c235eb6a80…)",
+          "weakened": false
+        },
+        {
+          "id": "voc-supersession-filed",
+          "text": "the VoC→OOS regime change filed as a SUPERSEDE in the ratification chain (append-only, referencing the original ADOPT row's hash 537e0647…; stating that what shipped is out-of-sample validation with a pinned effective-DoF surcharge, the in-sample regime permanently banned; the Phase-3 root cause as evidence) — U-RESUPERSEDE's founding instance; the chain re-verifies + is coherent (no dangling supersession) (U-RESUPERSEDE, T-SUPERSEDE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/research-ratification-v12.json (56161e02205b…)",
+          "weakened": false
+        },
+        {
+          "id": "backward-scope-correction",
+          "text": "the V7–V10 fresh-clone scope correction filed as a precise, adjective-free value: those proofs verified the battery under environments where an inherited venv satisfied the stale organon-common.sh path; they did not verify pristine-environment setup (W6-04 closed the defect; this note closes the claim) (U-PRISTINE, A′#9)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/reachability-debts-v12.json (8cd84349c81e…)",
+          "weakened": false
+        },
+        {
+          "id": "summary-differential-live",
+          "text": "the 22/23 reconciliation closed by a summary-differential mechanism (script/summary-differential.ts) that regenerates every terminal figure (floor, matrix PRESENT/ABSENT, battery totals, cycle counts) from its source artifact and diffs against the prose; a hand-typed number disagreeing with its artifact is a finding, not a typo (U-DERIVED)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/reachability-debts-v12.json (8cd84349c81e…)",
+          "weakened": false
+        },
+        {
+          "id": "surfacing-census-seeded",
+          "text": "the census enumerates every user-facing capability and demands each map to an admissible console-path traversal (fresh serve → real screen → real interaction → rendered result → a failure state); a seeded unsurfaced capability (a real capability deliberately given no traversal) MUST be caught or the census fails its own gate; dangling capabilities become findings (A′#2, U-SURFACE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/surfacing-census-v12.json (5a33761269b2…)",
+          "weakened": false
+        },
+        {
+          "id": "usurface-law-live",
+          "text": "the U-SURFACE law lives in the gatekeeper's criteria vocabulary (a `surface` flag; a flagged criterion refuses module-only evidence); a seeded module-only artifact on a flagged criterion is REFUSED; retroactively, had U-SURFACE existed, V11's W6-01 would have been caught at BREADTH-TRUE (demonstrated) (U-SURFACE, A′#1)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/surfacing-census-v12.json (5a33761269b2…)",
+          "weakened": false
+        },
+        {
+          "id": "catalog-v12-pinned-baseline",
+          "text": "catalog v12 (v11's 23 carried + S9-builder-compose-happy · S10-builder-invalid-refused · S11-builder-defaults-conservative · S12-experiment-outcomes-rendered · S13-pristine-setup · S14-traversal-audit) pinned with content-sha BEFORE any new surface exists; criteria printed verbatim; floor/absences baseline; prevention walls green (E-CATALOG, C-RECON2, C-NOREGRESS)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/e2e-catalog-pin-v12.json (7bad06c51bdc…)",
+          "weakened": false
+        }
+      ],
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "0a78ea0fff42e3d7160986610ddacc057ccde6d2c60f2179c041f2ec02f98bd1"
+    },
+    {
+      "seq": 1,
+      "phase": "phase-1",
+      "decision": "ADVANCE",
+      "stamp": "v12-phase1-walls-deeper",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "WALLS-DEEPER",
+          "text": "the walls at their own written specs: the noise battery λ-SWEEP complete under pre-pinned parameters (a weak · λ=1.0 · a strong penalty × feature counts × the seed battery, the full OOS path each; survivor-yielding settings banned by a mapping SUPERSESSION with the seed evidence; a clean sweep leaves the mapping unchanged, files its evidence anyway); every live venue at the FORMALIZED capture floor (≥3 chained stamps across ≥2 runs) with Hyperliquid brought up to it; the PRISTINE fresh-clone harness (isolated HOME, enumerated prerequisites, no inherited venvs) green from nothing with a positive control catching an inherited environment (R-DOF, R-BASIS, U-PRISTINE, A′#7/#8)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase1-walls-deeper-v12.json (91774238ab8d…)",
+          "weakened": false
+        },
+        {
+          "id": "noise-sweep-pinned",
+          "text": "the λ-sweep pinned parameters (penalty set · feature counts · seed count · thresholds) fixed in the criteria BEFORE running; the outcome table (per-setting survivor counts) pasted, all zero OR banned-with-evidence via a mapping supersession; a seeded survivor at the weak penalty fires the ban path with its evidence; the sweep's granularity is itself evidence-driven (A′#8)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase1-walls-deeper-v12.json (91774238ab8d…)",
+          "weakened": false
+        },
+        {
+          "id": "capture-floor-formalized",
+          "text": "the capture floor formalized as a named constant (≥3 chained stamps across ≥2 distinct runs per venue) and asserted by a wall; Hyperliquid brought up to the floor with additional live captures (gap-honest, T2-forward, chain-verified); a seeded fourth capture claiming a chain it doesn't extend breaks the chain (R-BASIS)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/capture-floor-v12.json (4481c9041d47…)",
+          "weakened": false
+        },
+        {
+          "id": "pristine-harness-green",
+          "text": "the pristine fresh-clone harness (script/pristine-clone.ts): isolated temp HOME, no inherited venvs, no parent-dir fallbacks; the prerequisite enumeration (system-provided: bun · python3 · git, doc-truth-tested; repo-provided: everything else) pasted; setup-to-battery green from nothing; a deliberately-inherited environment is CAUGHT by the isolation check (positive control) (U-PRISTINE, A′#7)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/pristine-clone-v12.json (ada6058ef3ea…)",
+          "weakened": false
+        },
+        {
+          "id": "walls-verdict-differential",
+          "text": "the frozen seven byte-identical; the verdict differential byte-identical after the walls deepened (R-ADVISORY)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/verdict-fingerprints-v11.json (710ef8772bf2…)",
+          "weakened": false
+        }
+      ],
+      "prev": "0a78ea0fff42e3d7160986610ddacc057ccde6d2c60f2179c041f2ec02f98bd1",
+      "hash": "46cc98c95a48f9e3d67d9de45da36a7ad9b65784e0a7187f8f7b3a3aeed96544"
+    },
+    {
+      "seq": 2,
+      "phase": "phase-2",
+      "decision": "ADVANCE",
+      "stamp": "v12-phase2-experiments-answered",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "EXPERIMENTS-ANSWERED",
+          "text": "both V11-parked experiments answered under criteria hash-checked UNCHANGED against the ratification chain (a mismatch Halts before anything runs): the ENSEMBLE experiment (planted-correlation synthetic families, each member INSUFFICIENT; the near-duplicate pool MUST fail as its positive control; the pre-registered criterion decides legitimate-pooling vs laundering) and the SHARED-LEDGER COHERENCE experiment (synthetic multi-author families under candidate scopings; the pre-registered fairness/coherence criterion decides); exactly one DERIVED outcome per experiment, filed as a park-disposing value (NO closes with evidence; YES converts to a future-sprint ADOPT with flip-criteria); ZERO product built past either outcome; the CPCV promotion tracker instrumented (U-EXPERIMENT, A′#3/#4/#10)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-experiments-answered-v12.json (556a65fdfb7b…)",
+          "weakened": false
+        },
+        {
+          "id": "criteria-hash-checked",
+          "text": "both experiments' criteria loaded from V11's filed ratification values and hash-checked against the chain (ensemble 1bb0dfd1…, coherence 6d49e6b6…); a mismatch is a Halt before anything runs; a seeded criterion edit pre-run Halts (U-EXPERIMENT, A′#3)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-experiments-answered-v12.json (556a65fdfb7b…)",
+          "weakened": false
+        },
+        {
+          "id": "outcomes-derived-positive-controls",
+          "text": "each experiment's planted truths recovered as its own positive control (the near-duplicate ensemble pool fails as it must; a laundered coherence search is detected); outcomes derived MECHANICALLY (the value files the computed result beside the pre-registered threshold), never asserted; adversarial corners probed, fragility documented (A′#3)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-experiments-answered-v12.json (556a65fdfb7b…)",
+          "weakened": false
+        },
+        {
+          "id": "parks-disposed-zero-build",
+          "text": "each park disposed by its outcome (a SUPERSEDE of the PARK row: NO closes; YES → future-sprint ADOPT); ZERO product built past either outcome — a seeded 'scaffold the ensemble feature' commit is caught by the ratification wall as an unratified build artifact (U-EXPERIMENT, A′#4)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/research-ratification-v12.json (56161e02205b…)",
+          "weakened": false
+        },
+        {
+          "id": "experiments-verdict-differential",
+          "text": "the CPCV promotion tracker accrues on a test adjudication + renders on the pro disclosure; the verdict differential byte-identical (R-ADVISORY)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-experiments-answered-v12.json (556a65fdfb7b…)",
+          "weakened": false
+        }
+      ],
+      "prev": "46cc98c95a48f9e3d67d9de45da36a7ad9b65784e0a7187f8f7b3a3aeed96544",
+      "hash": "c60f55fbb655d3c39c2a547db896f6d6863e6e928ad9427758d1de929f10312a"
+    },
+    {
+      "seq": 3,
+      "phase": "phase-3",
+      "decision": "ADVANCE",
+      "stamp": "v12-phase3-builder-reachable",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "BUILDER-REACHABLE",
+          "text": "the GUIDED BUILDER (screen 9, the set amended 8→9 once and closed again) is BORN under U-SURFACE — its gate passes ONLY on a console-path traversal artifact (fresh serve → the builder screen → compose a spec over the existing typed primitives → submit → registered → verdict → the spine panels 'why not yet · when, honestly' → enroll, PLUS a failure state: an invalid composition refused with an honest non-priming message), hashed and filed; the form derives nothing (validation from the same schema the API enforces), submits through the identical write-then-invoke gate with declared family/lineage, ships conservative ratified defaults with honesty-checked plain-language help; the verdict differential byte-identical; SCREENS.length===9 closed (U-AMEND, U-SURFACE, S-PROPOSE, S-FAMILY, A′#5/#6)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/traversal-guided-builder.json (f165a52a7969…) · U-SURFACE traversal verified",
+          "weakened": false
+        },
+        {
+          "id": "builder-amendment-closed",
+          "text": "the screen set amended 8→9 explicitly (the Guided Builder) and closed again (SCREENS.length===9; a tenth refused by construction); one screen, schema-driven forms over EXISTING primitives only (lending · funding · basis), no new primitive types, no free-form code, no model calls from the form (U-AMEND, A′#5/#11)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase3-builder-reachable-v12.json (788fce495f7b…)",
+          "weakened": false
+        },
+        {
+          "id": "builder-defaults-honest",
+          "text": "conservative defaults ratified in the criteria (no leverage-forward, no GO-hunting presets); every field's plain-language help honesty-checked (a default or copy a red-team judge reads as risk-priming or GO-seeking is an S2); lineage-in-the-form explained in plain language ('editing and resubmitting counts as another attempt — the bar stiffens; this is the product working') (A′#6, S-FAMILY)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase3-builder-reachable-v12.json (788fce495f7b…)",
+          "weakened": false
+        },
+        {
+          "id": "builder-physics-traversal",
+          "text": "a composed spec submits through the identical write-then-invoke gate with declared family/lineage (a builder-composed resubmission visibly stiffens its family on the report); a form path that skips the ledger is absent by construction (the form posts to the documented endpoint only); the traversal artifact (happy + failure) is the gate's ONLY sufficient evidence; the walk budget confirmed (U-SURFACE, S-FAMILY, F-BUDGET)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase3-builder-reachable-v12.json (788fce495f7b…)",
+          "weakened": false
+        }
+      ],
+      "prev": "c60f55fbb655d3c39c2a547db896f6d6863e6e928ad9427758d1de929f10312a",
+      "hash": "d8049d5b7e1440dc119a6443710218a08c89a68c69c7f1043f166ae79d13b9d0"
+    },
+    {
+      "seq": 4,
+      "phase": "phase-4",
+      "decision": "ADVANCE",
+      "stamp": "v12-phase4-converged-6",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "CONVERGED-6",
+          "text": "catalog-complete AND rotation-complete (all seven reachability-aware themes ≥1 cycle) AND two consecutive FULL-depth clean cycles AND at least four cycles total — all THREE doors (preset · goal · builder) walked through the UI/UX first on a pristine clone — OR the cap's honest NON-CONVERGENCE STOP at cap=10 with the register + transcripts + depth manifests + catalog coverage published — OR a recorded pre-walk STOP; exactly one, truthfully, first line of the terminal (E-CATALOG, E-ROOTCAUSE, C-USER, C-LOOP, U-SURFACE, F-BUDGET)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v7-cycles.json (eca1b12abb0a…)",
+          "weakened": false
+        },
+        {
+          "id": "walk-ledger-chained",
+          "text": "the WALK LEDGER hash-chained, complete, committed; every issue registered BEFORE any fix (id · severity · class · repro · evidence)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v7-ledger.jsonl (9fba2ba46713…)",
+          "weakened": false
+        },
+        {
+          "id": "fixes-rootcaused",
+          "text": "every fix carries its root cause (symptom → mechanism → origin) + the smallest-change fix (inventoried) + the re-test artifact (the failing scenario re-run to confirmed resolution, hashed); a mechanism-free fix is symptom-patching — an open issue; battery + prevent walls + the SWEPT noise wall + the venue floor + a verdict-differential spot-check + the summary differential green each cycle; frozen byte-identity re-proven (E-ROOTCAUSE, F-ABSENT, C-NOREGRESS)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v7-cycles.json (eca1b12abb0a…)",
+          "weakened": false
+        },
+        {
+          "id": "catalog-traversed-three-doors",
+          "text": "a CLEAN cycle traverses the pinned catalog v12 in FULL (all three doors preset·goal·builder + the adversarial/edge/reachability scenarios incl. the traversal-theater audit S14 + the builder priming hunt), each judged against its pre-declared expected honest behavior (a scenario fails by succeeding wrongly); red-team may ADD, never remove; a CLEAN on a partial traverse is a Halt (E-CATALOG, U-SURFACE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v7-cycles.json (eca1b12abb0a…)",
+          "weakened": false
+        },
+        {
+          "id": "parks-legitimate",
+          "text": "every architectural/high-risk finding four-fielded and legitimacy-reviewed each cycle; a convenience park reclassified open; the park-legitimacy theme spot-audits the experiment dispositions + the flip-criteria parks for boilerplate (C-PARK, E-ROOTCAUSE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/parks-register.json (090ec41209d3…)",
+          "weakened": false
+        },
+        {
+          "id": "rotation-depth-reach",
+          "text": "all seven themes rotated, REACHABILITY-aware (ux-priming hunts the builder's defaults + help copy hardest; doc-lies audits traversal artifacts for happy-path theater; injection at the builder fields; laundering incl. builder-driven re-rooting/lineage-stripping; tamper incl. the PIT + basis chains + pollution spot-audit); every cycle a FULL-depth manifest (personas × acts, through the UI first); a prior cycle replayed from its transcript (T-ROTATE, D-WALK+, C-USER)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v7-cycles.json (eca1b12abb0a…)",
+          "weakened": false
+        }
+      ],
+      "prev": "d8049d5b7e1440dc119a6443710218a08c89a68c69c7f1043f166ae79d13b9d0",
+      "hash": "be05320e09473dce381581c6b4ebcf0008876084f563de1ee7d77a27a9099d35"
+    }
+  ]
+}

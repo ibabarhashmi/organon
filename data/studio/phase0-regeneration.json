@@ -1,0 +1,45 @@
+{
+  "protocol": "phase0-regeneration-demonstration",
+  "rule": "C-DEBT (\"regenerable\" DEMONSTRATED, not asserted) + Rule XXVIII (regeneration-vs-mutation)",
+  "at": "2026-07-04",
+  "summary": "V6 waived the engine-data legacy suites as a 'data-absence class' and ASSERTED they were regenerable. This sprint DEMONSTRATED regeneration by running the regenerators. Outcome: MIXED — one artifact regenerated (revealing a real generator↔pin drift), the rest blocked on operator-gated inputs. Either outcome is exit-worthy per the blueprint; asserting is not. The true errors are pasted below.",
+  "regenerators": [
+    {
+      "script": "scripts/snapshot.ts",
+      "produces": "data/snapshot/* + MANIFEST.json (RWA discovery snapshot; the feeyield/lending immutable-data chain roots here)",
+      "outcome": "BLOCKED",
+      "trueError": "HALT (Phase 0): FRED_API_KEY is not set. Add it to .env (see Appendix A.2).",
+      "class": "operator-gated credential + network (DefiLlama / CoinGecko / FRED). Not agent-self-satisfiable (L-ENV)."
+    },
+    {
+      "script": "script/rwa-verdict.ts",
+      "produces": "RWA-VERDICT.md (gitignored generated artifact; pinned by sha in src/organon/frozen.ts)",
+      "outcome": "REGENERATED (after a fixable venv blocker) → classified MUTATION",
+      "firstBlocker": "sidecar evaluate failed (exit 1): ModuleNotFoundError: No module named 'pandas' — the local venv (relocated from a parallel checkout /Users/babar/Projects/SENTINEL/organon; its script shebangs point there) had numpy+scipy but not pandas.",
+      "blockerFix": "installed pandas into the local (gitignored) venv via `src/backtest/py/.venv/bin/python -m pip install pandas` (pandas 2.3.3). A fresh-clone setup (organon-setup.sh) must therefore include pandas — a DOC-DRIFT finding folded into the transplant's setup.",
+      "afterFix": {
+        "regenerated": true,
+        "deterministic": "seed=1, n=24 candidates — self-contained (does NOT need the FRED snapshot)",
+        "h1": "# ORGΛNON — Downside-edge **NO-GO** · Significance **ASSET-BOUND** · Verdict: Decision **DISQUALIFIED** · Conclusiveness **CONCLUSIVE** · Signal **NO-DISCRIMINATING-SIGNAL**",
+        "regeneratedSha": "cdc05aabd02ee50cd4ed072524f65b86116eb60808d3d0d68bffa8cdddf77942",
+        "pinnedSha": "9cf94c8abf3570f08dc474cb47c4e37c5fbda9fd9fd190f7571ad713277465a5",
+        "classification": "MUTATION — the H1 verdict signature changed: missing [Decision **NOT-YET**] in the headline (the generator now emits `Decision **DISQUALIFIED**`).",
+        "invariantsStable": ["Downside-edge **NO-GO**", "Conclusiveness **CONCLUSIVE**", "**NO-DISCRIMINATING-SIGNAL**", "ASSET-BOUND"],
+        "invariantDrifted": "Decision **NOT-YET**  →  Decision **DISQUALIFIED**",
+        "reading": "The verdict is STILL emphatically not-a-GO (4/5 invariants byte-stable; NO-GO / ASSET-BOUND intact). Only the Decision sub-token evolved NOT-YET→DISQUALIFIED — a generator labeling change the pin + RWA_VERDICT_INVARIANTS never caught up to. This is a PRE-EXISTING drift between the committed generator (script/rwa-verdict.ts) and the committed pin (src/organon/frozen.ts): neither was modified this sprint. V6's ASSERTION of regenerability concealed it; DEMONSTRATION revealed it. Per Rule XVII/XXVIII: do NOT silently re-pin (that hides drift); INVESTIGATE whether DISQUALIFIED is the intended evolution of NOT-YET and re-baseline the pin+invariants consciously. PARKED (see parks) — an architectural/judgment call, not a mechanical Phase-0 fix under cycle pressure (C-PARK)."
+      }
+    }
+  ],
+  "engineDataSuites": {
+    "suite": "test/redteam/frozen_integrity.test.ts",
+    "withRwaPresentMutated": "8 pass / 4 fail — 2 fails on the RWA regeneration MUTATION (Decision NOT-YET→DISQUALIFIED), 2 fails ENOENT on the FRED-gated local-immutable data (data/feeyield/forward/2026-07-03/MANIFEST.json)",
+    "withRwaAbsent": "4 pass / 4 fail / 1 error — the fresh-clone state: RWA-VERDICT.md absent + feeyield/snapshot immutable data absent (all FRED-gated)",
+    "disposition": "NOT converted to green proofs; converted to HONEST BLOCKERS with the true errors pasted. The suite is data-gated and (per src/studio/inventory.ts) explicitly NOT part of the enforced C-NOREGRESS floor — the in-scope battery + capability floor stand green independently."
+  },
+  "inScopeImpact": {
+    "frozenSevenByteIdentical": true,
+    "note": "The frozen SEVEN (6 .py + loop.ts) are byte-identical and git-clean (core_byte_identity wall green). RWA-VERDICT.md is a gitignored generated artifact the in-scope wall explicitly EXCLUDES. The drift touches only the data-gated frozen_integrity suite, not the transplant's SPLIT-WHOLE frozen gate."
+  },
+  "treeDisposition": "the regenerated (MUTATION-classified) RWA-VERDICT.md was REMOVED after capturing this evidence — the correct fresh-clone state for a gitignored generated artifact is ABSENT. The demonstration is preserved here, reproducibly.",
+  "reproduce": "FRED_API_KEY=… bun run scripts/snapshot.ts ; src/backtest/py/.venv/bin/python -m pip install pandas ; bun run script/rwa-verdict.ts ; then compare head -1 RWA-VERDICT.md against RWA_VERDICT_INVARIANTS in src/organon/frozen.ts"
+}

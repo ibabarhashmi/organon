@@ -1,0 +1,203 @@
+{
+  "protocol": "surfacing-census",
+  "version": "v13",
+  "at": "2026-07-05",
+  "rule": "K-COMPLETE (the full re-census + the per-checkpoint diff)",
+  "full": {
+    "surfaced": [
+      "matrix:tier-caps-earned",
+      "matrix:family-deflation-anti-pbo",
+      "matrix:goal-console-8th-screen",
+      "matrix:joined-loop-realpit",
+      "matrix:breadth-panel-hedged-eta",
+      "matrix:reachability-surface-law",
+      "matrix:guided-builder-reachable",
+      "screen:verdictCard",
+      "screen:rigorPanel",
+      "screen:breadthMap",
+      "screen:forwardClocks",
+      "screen:leaderboard",
+      "screen:report",
+      "screen:trustPanel",
+      "screen:goalConsole",
+      "screen:guidedBuilder"
+    ],
+    "infrastructure": [
+      {
+        "capability": "matrix:ledger-core-hashchain",
+        "evidence": "ledger append-only + chain-verify tests (the user relies on it; does not operate it)"
+      },
+      {
+        "capability": "matrix:frozen-core-byte-identity",
+        "evidence": "test/walls/core_byte_identity.test.ts (byte-identity, not a screen)"
+      },
+      {
+        "capability": "matrix:determinism-at-surfaces",
+        "evidence": "determinism-across-surfaces tests (direct/HTTP/MCP byte-identical)"
+      },
+      {
+        "capability": "matrix:durable-write-then-invoke",
+        "evidence": "durable write-then-invoke + restart-survival tests"
+      },
+      {
+        "capability": "matrix:served-persistence-survival",
+        "evidence": "served-persistence restart-survival tests"
+      },
+      {
+        "capability": "matrix:clocks-restart-not-reconstruct",
+        "evidence": "the Forward Clocks display renders on the dashboard traversal (a restarted clock's discontinuity)"
+      },
+      {
+        "capability": "matrix:rejection-boundary-refusal",
+        "evidence": "the must-reject corpus (refused before registration; the failure states ARE traversal-shown in A2/S10)"
+      },
+      {
+        "capability": "matrix:no-signing-surface",
+        "evidence": "the no-signing grep-wall (an absence, proven by construction)"
+      },
+      {
+        "capability": "matrix:ci-fixture-only",
+        "evidence": "the fixture-only battery (no powered verdicts in the path)"
+      },
+      {
+        "capability": "matrix:pit-store-no-fabrication",
+        "evidence": "the PIT-store nonce/chain tests + leak wall"
+      },
+      {
+        "capability": "matrix:engine-port-differential",
+        "evidence": "the lending differential (byte-equivalent to the oracle)"
+      },
+      {
+        "capability": "matrix:real-returns-realpit",
+        "evidence": "REAL-PIT provenance renders on the goal traversal's report"
+      },
+      {
+        "capability": "matrix:transform-differential-proven",
+        "evidence": "the transform sandbox differential (byte-identical to the original)"
+      },
+      {
+        "capability": "matrix:funding-port-differential",
+        "evidence": "the funding freepit T1 differential"
+      },
+      {
+        "capability": "matrix:research-ratification-law",
+        "evidence": "the ratification wall (research enters by ratification; a governance law, not a screen)"
+      },
+      {
+        "capability": "matrix:cpcv-advisory-panel",
+        "evidence": "the CPCV golden-pair tests + the pro-disclosure (rendered on an audit toggle, catalog S3/S4)"
+      },
+      {
+        "capability": "matrix:voc-proposer-dof-priced",
+        "evidence": "the noise wall + the DoF charge on the VoC report (catalog S5/S6)"
+      },
+      {
+        "capability": "matrix:funding-basis-min-tier",
+        "evidence": "the MIN-tier wall + basis fixture (rendered on a basis goal, catalog S7)"
+      },
+      {
+        "capability": "matrix:experiments-answered",
+        "evidence": "the disposed experiment values (catalog S12; a governance record)"
+      },
+      {
+        "capability": "matrix:capture-floor-pristine",
+        "evidence": "the capture-floor wall + the pristine harness (catalog S13)"
+      },
+      {
+        "capability": "matrix:summary-differential",
+        "evidence": "the summary-differential mechanism (machine-derived terminal numbers)"
+      }
+    ],
+    "dangling": [],
+    "seededCaught": true,
+    "infraWithoutEvidence": [],
+    "ok": true
+  },
+  "diff": {
+    "since": 3,
+    "now": 37,
+    "newCapabilities": [
+      "matrix:ledger-core-hashchain",
+      "matrix:tier-caps-earned",
+      "matrix:family-deflation-anti-pbo",
+      "matrix:frozen-core-byte-identity",
+      "matrix:determinism-at-surfaces",
+      "matrix:durable-write-then-invoke",
+      "matrix:served-persistence-survival",
+      "matrix:clocks-restart-not-reconstruct",
+      "matrix:rejection-boundary-refusal",
+      "matrix:no-signing-surface",
+      "matrix:ci-fixture-only",
+      "matrix:pit-store-no-fabrication",
+      "matrix:engine-port-differential",
+      "matrix:real-returns-realpit",
+      "matrix:transform-differential-proven",
+      "matrix:funding-port-differential",
+      "matrix:goal-console-8th-screen",
+      "matrix:joined-loop-realpit",
+      "matrix:research-ratification-law",
+      "matrix:breadth-panel-hedged-eta",
+      "matrix:cpcv-advisory-panel",
+      "matrix:voc-proposer-dof-priced",
+      "matrix:funding-basis-min-tier",
+      "matrix:reachability-surface-law",
+      "matrix:guided-builder-reachable",
+      "matrix:experiments-answered",
+      "matrix:capture-floor-pristine",
+      "matrix:summary-differential",
+      "screen:verdictCard",
+      "screen:rigorPanel",
+      "screen:breadthMap",
+      "screen:forwardClocks",
+      "screen:leaderboard",
+      "screen:report",
+      "screen:trustPanel",
+      "screen:goalConsole",
+      "screen:guidedBuilder"
+    ],
+    "newlySurfaced": [
+      "matrix:tier-caps-earned",
+      "matrix:family-deflation-anti-pbo",
+      "matrix:goal-console-8th-screen",
+      "matrix:joined-loop-realpit",
+      "matrix:breadth-panel-hedged-eta",
+      "matrix:reachability-surface-law",
+      "matrix:guided-builder-reachable",
+      "screen:verdictCard",
+      "screen:rigorPanel",
+      "screen:breadthMap",
+      "screen:forwardClocks",
+      "screen:leaderboard",
+      "screen:report",
+      "screen:trustPanel",
+      "screen:goalConsole",
+      "screen:guidedBuilder"
+    ],
+    "newlyInfrastructure": [
+      "matrix:ledger-core-hashchain",
+      "matrix:frozen-core-byte-identity",
+      "matrix:determinism-at-surfaces",
+      "matrix:durable-write-then-invoke",
+      "matrix:served-persistence-survival",
+      "matrix:clocks-restart-not-reconstruct",
+      "matrix:rejection-boundary-refusal",
+      "matrix:no-signing-surface",
+      "matrix:ci-fixture-only",
+      "matrix:pit-store-no-fabrication",
+      "matrix:engine-port-differential",
+      "matrix:real-returns-realpit",
+      "matrix:transform-differential-proven",
+      "matrix:funding-port-differential",
+      "matrix:research-ratification-law",
+      "matrix:cpcv-advisory-panel",
+      "matrix:voc-proposer-dof-priced",
+      "matrix:funding-basis-min-tier",
+      "matrix:experiments-answered",
+      "matrix:capture-floor-pristine",
+      "matrix:summary-differential"
+    ],
+    "newlyDangling": [],
+    "ok": true
+  },
+  "dashboardTraversal": "traversal-dashboard-v13.json"
+}

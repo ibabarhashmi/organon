@@ -1,0 +1,46 @@
+{
+  "protocol": "phase5-verification-v12",
+  "at": "2026-07-05",
+  "summaryDifferential": {
+    "prose": {
+      "floor": 66,
+      "matrixPresent": 28,
+      "matrixAbsent": 3,
+      "catalogCount": 29
+    },
+    "derived": {
+      "floor": 66,
+      "matrixPresent": 28,
+      "matrixAbsent": 3,
+      "catalogCount": 29
+    },
+    "ok": true,
+    "mismatches": []
+  },
+  "noiseWall": {
+    "clean": true,
+    "survivors": 0,
+    "maxDsr": 0
+  },
+  "verdictDifferential": {
+    "byteIdentical": true
+  },
+  "catalogScenarioTwoDoors": {
+    "ok": true,
+    "goalVerdict": "CONDITIONAL",
+    "builderVerdict": "CONDITIONAL"
+  },
+  "pristineHarness": {
+    "evidence": "pristine-clone-v12.json",
+    "note": "the pristine fresh-clone proof — isolated HOME, enumerated prerequisites, positive control (no inherited venv), fresh-venv battery green"
+  },
+  "floor": 66,
+  "catalog": {
+    "version": "v12",
+    "count": 29,
+    "contentSha": "c913b709dc640a0d1e364a3b6f9382aa351cfbc0be73f665f0667e5d49d363c5"
+  },
+  "frozenSeven": "byte-identical in both trees (test/walls/core_byte_identity.test.ts); no frozen byte changed",
+  "rwaPinUnchanged": true,
+  "independence": "pending-non-author (DOORS-OPEN waits for a genuine stranger — now with THREE doors)"
+}

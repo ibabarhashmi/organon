@@ -1,0 +1,206 @@
+{
+  "protocol": "checkpoint-trail-v6",
+  "criteriaSetSha": "fdfee36615ce3ba47a2e5e6cd693b52b6bc199055c5daa76a59aa7af9f4d027b",
+  "chainOk": true,
+  "independence": "pending-non-author",
+  "records": [
+    {
+      "seq": 0,
+      "phase": "phase-0",
+      "decision": "ADVANCE",
+      "stamp": "v6-phase0-debt-clear",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "DEBT-CLEAR",
+          "text": "every V5 audit item closed with evidence or honestly reclassified at ZERO agent residue; capability inventory snapshotted; the criteria print reconciles against the blueprint",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase0-debt-evidence.json (b2a817f36c66…)",
+          "weakened": false
+        },
+        {
+          "id": "committed-world",
+          "text": "zero uncommitted output; the append-only wall runs over REAL git history with zero disclosed skips",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase0-committed-world.json (046deabe169c…)",
+          "weakened": false
+        },
+        {
+          "id": "criteria-printed",
+          "text": "derived criteria + gate/arm flags printed VERBATIM beside the blueprint pin and reconciled clause-by-clause (C-RECON2)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase0-criteria-print.txt (53a9f1045921…)",
+          "weakened": false
+        },
+        {
+          "id": "legacy-dispositioned",
+          "text": "every legacy suite line dispositioned green-or-waived through the pinned criteria; clock-adjacent lines run against the live stamps (no missing-data alibi)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase0-legacy-disposition.json (86b1c5cd9c24…)",
+          "weakened": false
+        },
+        {
+          "id": "second-live-trial",
+          "text": "the second live free-model trial registered; the demo's own search visibly STIFFENS its own bar; the numbers pasted",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/live-run-2-artifact.json (65ad55e01c17…)",
+          "weakened": false
+        },
+        {
+          "id": "attribution-complete",
+          "text": "every pending item tagged AGENT/OPERATOR/MIXED with residues; the operator lane re-issued at true zero agent residue (C-ATTRIB)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase0-attribution.json (cd682b87c6f9…)",
+          "weakened": false
+        },
+        {
+          "id": "ratifications",
+          "text": "C-ARMS adopted (headline=MIN, V5 Phase-0/Phase-2 headlines re-recorded REPEAT append-only); screen set amended 6→7 (Trust Panel), closed; C-ATTRIB adopted with the V5 conflation named",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase0-ratifications.txt (51439e17795e…)",
+          "weakened": false
+        },
+        {
+          "id": "inventory-snapshotted",
+          "text": "every proven capability paired with its proving test, snapshotted and hash-anchored — the C-NOREGRESS floor",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase0-debt-evidence.json (b2a817f36c66…)",
+          "weakened": false
+        }
+      ],
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "02d6ff383fddf510308c8ee8f5691fbea7540aefa8d8cdc10ff8aeac8d3c354b"
+    },
+    {
+      "seq": 1,
+      "phase": "phase-1",
+      "decision": "ADVANCE",
+      "stamp": "v6-phase1-solid",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "SOLID",
+          "text": "each of the five strengthenings carries a positive-controlled proof; a panel that disagrees with raw sources is an INTEGRITY issue",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase1-solid-bundle.json (cddd0802b0d3…)",
+          "weakened": false
+        },
+        {
+          "id": "unattended-cadence",
+          "text": "scheduler-originated stamps accruing (not session-originated); a killed scheduler renders a GAP on the panel (C-TENSE earns 'TICKING')",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase1-cadence.json (f1dc1e72c3cd…)",
+          "weakened": false
+        },
+        {
+          "id": "restore-drill",
+          "text": "ledger+stamps backup/restore drill green including a deliberately torn backup; the restored ledger remembers, the chain verifies",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase1-restore.json (b69a98b99198…)",
+          "weakened": false
+        },
+        {
+          "id": "surface-hardened",
+          "text": "authn on mutating routes, rate limits, spec-size caps, a fuzz pass with zero crashes and honest error states; the no-signing grep re-run over the served surface",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase1-fuzz.json (e23f1f3d16a7…)",
+          "weakened": false
+        },
+        {
+          "id": "reachability",
+          "text": "the app reached from a party other than the serving author-session (reachable ≠ independent; L-2P still owns independence)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase1-reachability.json (1631462fb1b0…)",
+          "weakened": false
+        },
+        {
+          "id": "trust-panel",
+          "text": "screen 7: walls status, clock stamp-ages+gaps, ledger head hash, battery state, parks count, independence state (PENDING until a stranger acts) — truthful against raw sources",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase1-trust-panel.json (aca60b3e20d4…)",
+          "weakened": false
+        }
+      ],
+      "prev": "02d6ff383fddf510308c8ee8f5691fbea7540aefa8d8cdc10ff8aeac8d3c354b",
+      "hash": "96536f5ef2c62d74dc04a9d5fdfbd6a63d154dc34bda4a53c5e974f00b036299"
+    },
+    {
+      "seq": 2,
+      "phase": "phase-2",
+      "decision": "ADVANCE",
+      "stamp": "v6-phase2-expand",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "doc-truth",
+          "text": "a clean session follows README+SKILL.md literally from nothing to a registered submission; every divergence is DOC-DRIFT, fixed until the literal path succeeds",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase2-doctruth.json (c4234827ff60…)",
+          "weakened": false
+        },
+        {
+          "id": "goal-presets",
+          "text": "three worked example goals for non-experts, each ending in a real (refusal-shaped) verdict + report",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/presets.json (5ea9247f57b8…)",
+          "weakened": false
+        },
+        {
+          "id": "error-honesty",
+          "text": "every user-reachable failure renders a plain-language, two-sided, non-priming state",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase2-errors.json (d401022870ac…)",
+          "weakened": false
+        },
+        {
+          "id": "report-readability",
+          "text": "the non-expert rubric re-run on current reports; wording fixed where the reader's next-step diverges from the verdict's epistemic state",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase2-readability.json (11a1c87ad4a9…)",
+          "weakened": false
+        }
+      ],
+      "prev": "96536f5ef2c62d74dc04a9d5fdfbd6a63d154dc34bda4a53c5e974f00b036299",
+      "hash": "8a77a81251d0dd3fcba6ef34cf9373cce4d274ff5d0e4e2c3359f114c8df5660"
+    },
+    {
+      "seq": 3,
+      "phase": "phase-3",
+      "decision": "ADVANCE",
+      "stamp": "v6-phase3-converged",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "CONVERGED",
+          "text": "two consecutive CLEAN cycles (zero new issues, zero open non-parked) — OR an honest NON-CONVERGENCE STOP at cap=8 with the register published; both valid terminals, exactly one claimed",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/walk-cycles.json (4076e0a97ee1…)",
+          "weakened": false
+        },
+        {
+          "id": "walk-ledger-chained",
+          "text": "the WALK LEDGER hash-chained, complete, committed; every issue registered BEFORE any fix",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/walk-ledger.jsonl (712af400a0dc…)",
+          "weakened": false
+        },
+        {
+          "id": "fixes-inventoried",
+          "text": "every fix H-MOD-inventoried and battery-plus-inventory-green; frozen core byte-identity re-proven each cycle",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/capability-inventory.json (cf530649e792…)",
+          "weakened": false
+        },
+        {
+          "id": "parks-legitimate",
+          "text": "every park four-fielded (context+repro, rationale, impact, recommended next steps+sprint) and legitimacy-reviewed each cycle; a convenience park is reclassified open",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon/packages/solidity-sentinel/data/studio/phase3-parks.json (33f164757b36…)",
+          "weakened": false
+        }
+      ],
+      "prev": "8a77a81251d0dd3fcba6ef34cf9373cce4d274ff5d0e4e2c3359f114c8df5660",
+      "hash": "2e1080c4e4eccaebc87a54726f9fdb858334a4ec27f3b909d98556be81bd9bbe"
+    }
+  ]
+}

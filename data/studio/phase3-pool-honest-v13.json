@@ -1,0 +1,50 @@
+{
+  "protocol": "phase3-pool-honest-v13",
+  "at": "2026-07-05",
+  "gate": "POOL-HONEST",
+  "doorState": "OPEN-WITH-CONDITIONS",
+  "amendmentClosed": true,
+  "screens": 10,
+  "traversal": {
+    "admissible": true,
+    "theater": false,
+    "issues": []
+  },
+  "unionChargeAndRatchet": {
+    "unionCharge": true,
+    "kEff": 5,
+    "charge": 5,
+    "familySizes": [
+      1,
+      2,
+      3
+    ],
+    "swapRatchets": true
+  },
+  "keffRecompute": {
+    "atComposition": 5,
+    "current": 2.687,
+    "divergence": 2.313,
+    "render": "K_eff at composition 5.00 → current 2.69 (fell 2.31 — the members have correlated since composition; the pool is LESS diversified than when composed)"
+  },
+  "pooledNoiseWall": {
+    "clean": true,
+    "survivors": 0,
+    "seededKillTripped": true,
+    "seededSurvivors": 6
+  },
+  "legibleNeutral": true,
+  "recursionRefused": true,
+  "verdictDifferential": {
+    "byteIdentical": true,
+    "pinned": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54"
+  },
+  "poolRatified": true,
+  "censusDiff": {
+    "newlySurfaced": [
+      "pool-composer"
+    ],
+    "ok": true
+  },
+  "stressCaveatMandatory": true
+}

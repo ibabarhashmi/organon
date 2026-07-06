@@ -1,0 +1,1057 @@
+{
+  "protocol": "capability-inventory",
+  "anchoredAt": "v13-phase4-converged-7",
+  "capabilities": [
+    {
+      "id": "frozen-core-byte-identity",
+      "description": "the frozen seven are byte-identical to the pinned baseline (S-CORE, VII/XVII)",
+      "files": [
+        {
+          "file": "test/walls/core_byte_identity.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 5
+        }
+      ]
+    },
+    {
+      "id": "ledger-bypass-refused",
+      "description": "adjudication of an unregistered spec is a Halt (register-then-invoke, S-FAMILY)",
+      "files": [
+        {
+          "file": "test/walls/ledger_bypass.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 5
+        }
+      ]
+    },
+    {
+      "id": "family-deflation-anti-pbo",
+      "description": "an iterating agent's family size deflates the DSR bar — iteration makes it HARDER (anti-PBO)",
+      "files": [
+        {
+          "file": "test/organon/ledger_laundering.test.ts",
+          "exists": true,
+          "tests": 2,
+          "expects": 8
+        }
+      ]
+    },
+    {
+      "id": "root-deflation-refragmentation",
+      "description": "author×domain root-counting closes re-rooting fragmentation (H-SCOPE)",
+      "files": [
+        {
+          "file": "test/organon/ledger_refragmentation.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 15
+        }
+      ]
+    },
+    {
+      "id": "ledger-core-hashchain",
+      "description": "the trial ledger is append-only, hash-chained, lineage-aware, structural-evasion-detecting",
+      "files": [
+        {
+          "file": "test/organon/ledger.test.ts",
+          "exists": true,
+          "tests": 8,
+          "expects": 16
+        }
+      ]
+    },
+    {
+      "id": "durable-write-then-invoke",
+      "description": "the ledger survives process death: fsync write-then-invoke; restart remembers; torn/rollback caught (L-PERSIST)",
+      "files": [
+        {
+          "file": "test/organon/durable_ledger.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 17
+        }
+      ]
+    },
+    {
+      "id": "nonce-anchored-capture",
+      "description": "clock stamps are nonce-anchored + chained; a retro-captured stamp cannot verify (L-TICK)",
+      "files": [
+        {
+          "file": "test/organon/studio_capture.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 7
+        }
+      ]
+    },
+    {
+      "id": "clocks-restart-not-reconstruct",
+      "description": "clocks RESTART, never reconstruct; a reconstruction attempt halts (H-CLOCK, L-RECON)",
+      "files": [
+        {
+          "file": "test/organon/studio_clocks.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 13
+        }
+      ]
+    },
+    {
+      "id": "relay-only-agents",
+      "description": "agents relay the core's verdict verbatim; capability absence proven (S-PROPOSE, XXI)",
+      "files": [
+        {
+          "file": "test/organon/studio_agents.test.ts",
+          "exists": true,
+          "tests": 8,
+          "expects": 13
+        }
+      ]
+    },
+    {
+      "id": "enrollment-permanence",
+      "description": "forward enrollment is permanent, un-deletable, OBSERVED-never-performing, un-cherry-pickable (L-LOOP)",
+      "files": [
+        {
+          "file": "test/organon/studio_enroll.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 14
+        }
+      ]
+    },
+    {
+      "id": "tier-caps-earned",
+      "description": "tiers are earned never declared; caller returns cannot reach V2 (S-TIERS, XIV)",
+      "files": [
+        {
+          "file": "test/walls/tiers_earned.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 7
+        }
+      ]
+    },
+    {
+      "id": "determinism-at-surfaces",
+      "description": "the verdict is byte-identical through the direct call, HTTP, and MCP (Rule VII at the wire)",
+      "files": [
+        {
+          "file": "test/walls/determinism_at_surfaces.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 5
+        }
+      ]
+    },
+    {
+      "id": "no-signing-surface",
+      "description": "no signing/settlement primitive exists anywhere in the studio surface (S-NO-SIGN)",
+      "files": [
+        {
+          "file": "test/walls/no_signing_grep.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 5
+        }
+      ]
+    },
+    {
+      "id": "gatekeeper-v2-unamendable",
+      "description": "make-or-break gate criteria are UNAMENDABLE; an amended gate records STOP/REPEAT never ADVANCE (L-GATE2)",
+      "files": [
+        {
+          "file": "test/walls/gatekeeper_v2.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 8
+        },
+        {
+          "file": "test/walls/checkpoint_gate.test.ts",
+          "exists": true,
+          "tests": 9,
+          "expects": 14
+        }
+      ]
+    },
+    {
+      "id": "arms-headline-min",
+      "description": "a phase headline is the MIN of its arms; a REPEAT arm is never outvoted (C-ARMS)",
+      "files": [
+        {
+          "file": "test/walls/arms_headline_min.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 9
+        }
+      ]
+    },
+    {
+      "id": "append-only-log",
+      "description": "each BuildLog's committed history is append-only (a middle edit is caught) (L-GIT, H-LOG)",
+      "files": [
+        {
+          "file": "test/walls/log_append_only.test.ts",
+          "exists": true,
+          "tests": 2,
+          "expects": 5
+        }
+      ]
+    },
+    {
+      "id": "ci-fixture-only",
+      "description": "CI is fixture-only; no live model or paid inference leaks into the battery (S-FREE)",
+      "files": [
+        {
+          "file": "test/walls/fixture_leak.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 7
+        }
+      ]
+    },
+    {
+      "id": "ux-honesty-studio",
+      "description": "the studio's plain-language reports are two-sided and non-priming; a flattering report is caught (S-HONEST-UX)",
+      "files": [
+        {
+          "file": "test/walls/ux_honesty_studio.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 11
+        }
+      ]
+    },
+    {
+      "id": "surfaces-byte-identical",
+      "description": "the six surfaces relay the core's verdict byte-identically; the leaderboard launches empty-of-GO (S-EMPTY-OK)",
+      "files": [
+        {
+          "file": "test/organon/studio_surfaces.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 10
+        }
+      ]
+    },
+    {
+      "id": "live-routes",
+      "description": "the Hono routes + MCP tools relay the surfaces at the wire (thin transport, no core bypass)",
+      "files": [
+        {
+          "file": "test/organon/studio_routes.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 9
+        }
+      ]
+    },
+    {
+      "id": "screens",
+      "description": "the display-only screens render API/ledger JSON and derive nothing",
+      "files": [
+        {
+          "file": "test/organon/studio_screens.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 28
+        }
+      ]
+    },
+    {
+      "id": "graph",
+      "description": "the agent graph is relay-only; no node holds verdict authority",
+      "files": [
+        {
+          "file": "test/organon/studio_graph.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 15
+        }
+      ]
+    },
+    {
+      "id": "unattended-cadence",
+      "description": "'TICKING' at true tense: scheduler-originated stamps (origin hashed); a killed scheduler renders a GAP, never smoothed (C-TENSE)",
+      "files": [
+        {
+          "file": "test/organon/scheduler_cadence.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 10
+        }
+      ]
+    },
+    {
+      "id": "backup-restore-drill",
+      "description": "snapshot→corrupt→restore remembers + chain verifies; a torn backup is quarantined, a rollback caught by the anchor (L-PERSIST)",
+      "files": [
+        {
+          "file": "test/organon/restore_drill.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 8
+        }
+      ]
+    },
+    {
+      "id": "served-surface-hardened",
+      "description": "the served surface survives fuzz crash-free with honest states; authn (401), size cap (413), rate limit (429), malformed-JSON (400) all fire",
+      "files": [
+        {
+          "file": "test/organon/surface_fuzz.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 10
+        }
+      ]
+    },
+    {
+      "id": "error-state-honesty",
+      "description": "every user-reachable failure renders a plain-language, two-sided, non-priming state; served routes surface the plain message (S-HONEST-UX)",
+      "files": [
+        {
+          "file": "test/organon/error_honesty.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 11
+        }
+      ]
+    },
+    {
+      "id": "walk-cycle1-fixes",
+      "description": "fresh-clone walk fixes: auditor ledger export over HTTP (W1-03); missing-sidecar → actionable sidecar-not-setup (W1-02); a malformed spec (bad enum/weight) is rejected bad-spec, never registered or adjudicated (W1-04)",
+      "files": [
+        {
+          "file": "test/organon/walk_fixes.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 15
+        }
+      ]
+    },
+    {
+      "id": "walk-ledger-integrity",
+      "description": "the walk's own loop is un-gameable: issues registered before fixing, an append-only chain surviving resolves, a park requiring four fields, convergence needing two consecutive clean cycles (C-LOOP/C-PARK)",
+      "files": [
+        {
+          "file": "test/organon/walk_ledger.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 14
+        }
+      ]
+    },
+    {
+      "id": "ledger-pollution-audit",
+      "description": "every historical ledger entry re-validated against the current schema; a seeded schema-invalid entry (W1-04 class) and a seeded chain-tamper are both caught; a valid spec passes clean; the auditor's chain recompute agrees with Ledger.Store byte-for-byte (T-POLLUTION)",
+      "files": [
+        {
+          "file": "test/organon/ledger_pollution.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 11
+        }
+      ]
+    },
+    {
+      "id": "trail-immutability-supersede",
+      "description": "records are immutable, truth is corrected by append: a re-pointed (in-place-edited) past record fails verify() loudly, a proper superseding entry referencing the old hash passes; the V6 §0.7 re-point is the positive control (T-SUPERSEDE)",
+      "files": [
+        {
+          "file": "test/walls/trail_immutability.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 11
+        }
+      ]
+    },
+    {
+      "id": "rejection-boundary-refusal",
+      "description": "every mutating surface asserts REFUSAL before registration: a must-reject corpus (bad enums incl. the W1-04 payload verbatim, hostile/NaN weights, empty & oversize legs, malformed lineage) is refused with the ledger count UNCHANGED, and a must-accept corpus still passes (no over-tightening) — W1-04's class is mechanically unreintroducible (T-REJECT)",
+      "files": [
+        {
+          "file": "test/organon/rejection_boundary.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 13
+        }
+      ]
+    },
+    {
+      "id": "served-persistence-survival",
+      "description": "a served submission through the durable mountableStore() view SURVIVES a restart (chain intact, head anchored); the old in-memory wiring provably does NOT (W3-01 positive control); a per-author root quota is registration friction with the sybil residual NAMED not eliminated (T-SERVE)",
+      "files": [
+        {
+          "file": "test/organon/served_persistence.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 8
+        }
+      ]
+    },
+    {
+      "id": "tense-scanner-discriminates",
+      "description": "the claim-vs-evidence scanner FLAGS an unpaired present-tense proven-state claim (seeded overclaim caught) but NOT a hedged (pending/would/parked) one NOR an evidence-carrying one (sha/test-path/NNN-0) — an automated C-TENSE candidate finder that is not a rubber stamp (A′#8)",
+      "files": [
+        {
+          "file": "test/organon/tense_scan.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 4
+        }
+      ]
+    },
+    {
+      "id": "log-terminal-marker",
+      "description": "a log may never simply stop: a marker-less (trailed-off) doc FAILS the predicate, a marker-terminated doc PASSES; every F-CONTINUE-era BuildLog's latest committed revision must end in a recognized state marker; legacy logs disclosed + grandfathered (adopted forward) (F-CONTINUE)",
+      "files": [
+        {
+          "file": "test/walls/log_terminal_marker.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 7
+        }
+      ]
+    },
+    {
+      "id": "absences-inventoried",
+      "description": "deliberate absences are first-class inventory entries: each must link to a four-field park (an unparked absence is an OPEN issue), the scope diff renders gains/losses/absences, and a pinned capability that vanishes without an absence entry is an uncovered LOSS (F-ABSENT)",
+      "files": [
+        {
+          "file": "test/organon/inventory_absences.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 14
+        }
+      ]
+    },
+    {
+      "id": "reproducibility-contracts",
+      "description": "every generated artifact carries a contract (pinned inputs OR their honest absence named, a hashed env lockfile, a pinned generator, a regen status): the lockfiles are content-sha tamper-anchored; a RUNS-GREEN contract must have its inputs present while a BLOCKED one must name the absent input; the RWA pin is UNCHANGED (the ENVIRONMENTAL finding forbids a re-pin); a false-green (RUNS-GREEN over an absent input) is caught (F-ENV)",
+      "files": [
+        {
+          "file": "test/organon/repro_contracts.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 12
+        }
+      ]
+    },
+    {
+      "id": "capability-matrix",
+      "description": "advertised scope == actual scope: the capability matrix (README markers + Trust Panel screen 7) lists PRESENT capabilities (each mapped to a proven floor capability) and deliberate ABSENCES (each parked); matrix-vs-reality is green and a seeded overclaim (a PRESENT whose proof is gone, or an ABSENT that is actually present) is caught by the doc-lies check (F-IDENTITY)",
+      "files": [
+        {
+          "file": "test/organon/capability_matrix.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 14
+        }
+      ]
+    },
+    {
+      "id": "publication-gate",
+      "description": "publication is doubly gated: the IDENTITY gate (the capability matrix rendered + true) then the CONSENT gate (Operator consent; the agent cannot self-consent, L-2P); a premature publish (matrix absent/false or no consent) is REFUSED, and the gate opens only when both hold — positive control both ways (F-IDENTITY, L-2P)",
+      "files": [
+        {
+          "file": "test/walls/publication_gate.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 7
+        }
+      ]
+    },
+    {
+      "id": "chokepoint-census",
+      "description": "every existing control maps to an enforcement point with a DEMONSTRATED refusal; a control whose proving file is gone or that carries no positive control is DANGLING; the census's own positive control catches a seeded decorative (assertion-free) control — a census that misses it is a rubber stamp (D-CHOKE, the recurring controls-without-chokepoints disease killed)",
+      "files": [
+        {
+          "file": "test/walls/chokepoint_census.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 10
+        }
+      ]
+    },
+    {
+      "id": "differential-oracle",
+      "description": "the frozen monorepo runs READ-ONLY as the differential oracle and proves it can JUDGE a known hand-verified lending fixture (constant 3.65% APY → 1.0001-per-day compounding) before the port trusts it, leaving the old tree byte-for-byte unchanged; a fresh clone renders the oracle BLOCKED, disclosed, never faked green (D-DIFF, A′#9)",
+      "files": [
+        {
+          "file": "test/walls/oracle_judges.test.ts",
+          "exists": true,
+          "tests": 1,
+          "expects": 3
+        }
+      ]
+    },
+    {
+      "id": "dataplane-leak-wall",
+      "description": "the data plane is standalone-native BY CONSTRUCTION: any import from src/dataplane reaching OpenCode / engine-infra / a sibling @solidity-sentinel package / a SQLite-or-ORM binding / out-of-repo FAILS the battery; a seeded leak (bun:sqlite, @solidity-sentinel/*) is caught; a clean relative/builtin import set is not over-flagged (D-SEAM, A′#3)",
+      "files": [
+        {
+          "file": "test/walls/dataplane_leak.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 6
+        }
+      ]
+    },
+    {
+      "id": "pit-store-no-fabrication",
+      "description": "the standalone-native PIT store cannot fabricate: asOf is strict point-in-time (no lookahead); a missing day is never interpolated (gap-honest); canonical serialization is byte-stable (content sha reproducible + tamper-evident); a retro-captured (nonce-less) provenance stamp cannot verify; the RWA path renders BLOCKED-on-credential, never a fabricated payload (D-SEAM, D-LABEL, L-TICK, H-CLOCK)",
+      "files": [
+        {
+          "file": "test/organon/dataplane_store.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 20
+        }
+      ]
+    },
+    {
+      "id": "engine-port-differential",
+      "description": "the ported lending engine is oracle-faithful and the differential bites: the engine body (lending_accrual/accrual/evaluate.py) is byte-identical to the monorepo oracle (pinned sha — the seam-faithful proof); the port reproduces the hand-verified 1.0001-per-day fixture; the differential is direction-blind (a flattering apyBase transform is detected by byte-inequality); the committed oracle differential records lending byte-identical (or BLOCKED on a fresh clone) and RWA BLOCKED-on-credential (never faked) (D-DIFF, D-SEAM, D-DOMAIN, A′#2)",
+      "files": [
+        {
+          "file": "test/organon/dataplane_differential.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 10
+        }
+      ]
+    },
+    {
+      "id": "real-returns-realpit",
+      "description": "the REAL-PIT live path lands for the credential-free lending domain: a goal → spec → the ported engine on REAL captured snapshots → an adjudication whose returns are REAL-PIT (not ILLUSTRATIVE), with provenance a skeptic can trace to a nonce-anchored chained snapshot; a REAL-PIT label REQUIRES verifying provenance (an unprovenanced series forces BLOCKED — positive control); the family-size deflation re-runs on REAL returns (a labeled, non-conflated successor to the ILLUSTRATIVE trial-2); the verdict is the frozen core's, relayed verbatim (a REAL-PIT NO-GO is the product working) (D-LABEL, T-REAL — CONVERTS the real-returns-live-path absence, park P2-1)",
+      "files": [
+        {
+          "file": "test/organon/real_returns.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 14
+        }
+      ]
+    },
+    {
+      "id": "prevention-walls-fail-closed",
+      "description": "history is permanent, so the medicine is a pre-commit gate: the three prevention walls (blob-size cap · raw-data patterns [the W4-01 inline-series class] · credential patterns [the FRED class]) each bite on a seeded violation and pass a clean file (no over-flagging); wired via .githooks/pre-commit (core.hooksPath). A history rewrite is a Halt; prevention is the only cure (E-PREVENT)",
+      "files": [
+        {
+          "file": "test/walls/precommit_prevent.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 16
+        }
+      ]
+    },
+    {
+      "id": "attempt-law-attempt-means-attempt",
+      "description": "a pre-declared ATTEMPT resolves to exactly one legible terminal: a BLOCKED without complete + second-attempted evidence is refused, an ATTEMPT→DEFER without a recorded amendment is refused (silence — the V9 renegotiation sin — impossible), a DELIVERED without a differential is refused; the scope-contract ledger is append-only + hash-chained; V9's renegotiation is retro-filed as a dated value (E-ATTEMPT)",
+      "files": [
+        {
+          "file": "test/walls/attempt_law.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 14
+        }
+      ]
+    },
+    {
+      "id": "e2e-catalog-pinned",
+      "description": "'clean' is measured against a pinned inventory: the E2E scenario catalog carries every mandated class (realistic/adversarial/edge), every scenario names its expected honest behavior, the content-sha is order-independent (provenance), and a REMOVED baseline scenario or an expected-less scenario is CAUGHT (red-team may ADD, never remove) (E-CATALOG)",
+      "files": [
+        {
+          "file": "test/walls/catalog_pinned.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 11
+        }
+      ]
+    },
+    {
+      "id": "transform-differential-proven",
+      "description": "the TRANSFORM V9 rewrote is byte-identical to its ORIGINAL: the monorepo's exact Runner.legSeries (yield branch) + Runner.commonWindow, run in a throwaway sandbox (deps installed only there; the frozen tree zero writes/installs; storage/db shimmed as an unreached seam, the transform bytes unedited), produces per-market series (apyBase·tvl·turnover) + a window BYTE-IDENTICAL to the standalone DataPlaneEngine rewrite on identical pinned captured snapshots; the differential is direction-blind (a seeded turnover×0.5 flattering divergence is caught); the input is pinned pre-run; the committed fixture carries no raw data (prevention wall + A′#12) — 'oracle-judged' now true of the port, not just the engine (E-SANDBOX, D-DIFF — V9 finding 1 answered)",
+      "files": [
+        {
+          "file": "test/organon/transform_differential.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 17
+        }
+      ]
+    },
+    {
+      "id": "funding-port-differential",
+      "description": "the FUNDING domain delivered via credential-free freepit T1: Binance's immutable monthly funding-rate dumps (data.binance.vision), each sha256-verified against its published CHECKSUM (a mismatch is refused, never fabricated), reconstructed into a PIT series BYTE-IDENTICAL to the monorepo's exact FreePitFunding.reconstruct (run in the sandbox on identical CSVs); funding_accrual.py byte-identical between trees + the same Job → byte-identical output run through BOTH trees' sidecar (system python3, stdlib); a REAL-PIT funding adjudication (returns = per-interval carry) with the verdict the frozen core's, relayed verbatim; the T1 checksum gate + annualize/reconstruct mechanism positive-controlled; a seeded flattering divergence caught (E-ATTEMPT, D-DOMAIN, D-DIFF, D-LABEL — V9 finding 2 answered for funding)",
+      "files": [
+        {
+          "file": "test/organon/funding_differential.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 18
+        }
+      ]
+    },
+    {
+      "id": "goal-console-8th-screen",
+      "description": "the Goal Console — the closed screen set amended 7→8 (Goal Console), later 8→9 (Guided Builder, U-AMEND); the set is closed at each step (a further screen refused by construction until an explicit amendment); one interactive flow (goal input → the free-model agent path → REAL-PIT adjudication → the verdict card + report + enroll); DISPLAY-ONLY (it frames the goal + a pre-rendered result, imports no core, derives nothing); the served /console/goal route is write-then-invoke (no privileged path), input-capped, with honest failure states (a dead endpoint, a malformed goal, a BLOCKED domain each render truthfully) (E-CONSOLE)",
+      "files": [
+        {
+          "file": "test/organon/studio_screens.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 28
+        },
+        {
+          "file": "test/organon/goal_console.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 21
+        }
+      ]
+    },
+    {
+      "id": "joined-loop-realpit",
+      "description": "the JOINED LOOP recorded end-to-end for the first time (V9 finding 4): a plain-English goal → the free-model agent path (a schema-valid spec, NO authority) → a REAL-PIT adjudication on a delivered domain → the plain-language report, with EVERY physics rule intact — the model CANNOT bless (an injection changes at most the spec, never the verdict; capability absence), the verdict is the frozen core's relayed VERBATIM (a NO-GO on real data is the product working), the artifact bundle (goal, model, transcript/spec/verdict-repro/report hashes, provenance) re-verifies byte-identically, the copy passes the honesty checker, CI stays fixture-only (S-FREE) (E-CONSOLE, S-PROPOSE, D-LABEL)",
+      "files": [
+        {
+          "file": "test/organon/goal_console.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 21
+        }
+      ]
+    },
+    {
+      "id": "walk-v5-catalog-converged",
+      "description": "the walk's 'clean' is measured against a PINNED inventory, not the walker's discretion: the committed walk-v5 record + hash-chained ledger show the full pinned catalog (15 scenarios × 3 mandated classes) traversed each cycle judged against expected honest behavior, the one genuine finding (W5-01, the console rate-limit gap) registered BEFORE its fix and resolved with a root cause (symptom→mechanism→origin) + a re-test, two consecutive FULL-depth clean cycles across ≥4 total, rotation-complete — CONVERGED-4 DERIVED from the register (a fixed finding does not make its cycle clean; a park needs four fields) (E-CATALOG, E-ROOTCAUSE, C-LOOP, C-USER)",
+      "files": [
+        {
+          "file": "test/organon/walk_v5.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 20
+        }
+      ]
+    },
+    {
+      "id": "research-ratification-law",
+      "description": "research enters the constitution ONLY by ratification, never by citation: an append-only hash-chained ratification ledger refuses an ADOPT without its cited research finding + cheap pre-build test + build artifacts, a PARK without the four fields + a designed experiment with a pre-registered outcome, and any disposition without pre-registered FLIP-CRITERIA; a build artifact whose item lacks an ADOPT row is refused (the ratification wall scans src/analytics, src/proposers, the dataplane files); the VoC DoF charge mapping is pinned inside the value (sha256) pre-first-run; positive controls (adoption-as-prose, a shrug park, a seeded unratified module) are caught (R-RATIFY, A′#4)",
+      "files": [
+        {
+          "file": "test/walls/research_ratified.test.ts",
+          "exists": true,
+          "tests": 12,
+          "expects": 23
+        }
+      ]
+    },
+    {
+      "id": "breadth-panel-hedged-eta",
+      "description": "refusals that EXPLAIN + DATE themselves: the Fundamental-Law breadth panel (IR = TC·IC·√BR) recovers known IC/BR within a pinned tolerance (IC = rank correlation; BR honest about autocorrelation — an AR(1) N_eff deflation with the independence assumption STATED; TC the transfer coefficient), and the forward-clock ETA is a DERIVED, HEDGED RANGE (never a point; assumptions listed; the floor-audit hedge verbatim; a FLOOR on time never a ceiling; a high-IC/tiny-BR strategy renders 'may never reach power'); the pro-disclosure toggle exposes the raw panels display-only (SCREENS stays 8, derives nothing); the panel MOVES no verdict (a verdict differential is byte-identical) (R-ETA, R-ADVISORY, A′#3)",
+      "files": [
+        {
+          "file": "test/organon/breadth_panel.test.ts",
+          "exists": true,
+          "tests": 9,
+          "expects": 28
+        }
+      ]
+    },
+    {
+      "id": "cpcv-advisory-panel",
+      "description": "overfitting measured a SECOND, independent way, advisory beside the frozen gates: CPCV (CSCV/PBO + the OOS-Sharpe distribution) proven on the GOLDEN PAIR both directions (a known-overfit fixture flags HIGH, a known-signal passes) under a PINNED configuration (groups·purge·embargo — no per-run knob, a tuned tweak impossible); SKIPPED is a first-class honest state (short series / single trial), never a silent absence; a CPCV-vs-frozen disagreement renders as INFORMATION not a vote; the promotion-to-gating decision is PARKED with pre-registered criteria; the panel moves no verdict (verdict differential byte-identical) (R-ADVISORY, A′#5/#10)",
+      "files": [
+        {
+          "file": "test/organon/cpcv_panel.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 21
+        }
+      ]
+    },
+    {
+      "id": "voc-proposer-dof-priced",
+      "description": "complexity pays its own bill: the EXPERIMENTAL VoC ridge/random-features proposer is admitted only behind the noise wall — pure noise through the full OOS path (feature generation → ridge fit at the pinned penalty → proposal → write-then-invoke at the effective-DoF charge → the frozen deflation) yields ZERO survivors, and a seeded (in-sample) survivor trips the KILL-SWITCH (the class disabled, a first-class finding); the DoF mapping (dofCharge = ceil(trace of the ridge hat matrix)) is pinned + hash-matched to the Phase-0 value (a post-hoc change refused); every exploration is charged through the identical write-then-invoke gate (no uncharged fit); the charge is load-bearing + visible, attribution two-sided; the proposer touches SPECS not verdicts (a poisoned spec cannot bless); the verdict differential is byte-identical (R-DOF, A′#2/#9/#12)",
+      "files": [
+        {
+          "file": "test/organon/voc_proposer.test.ts",
+          "exists": true,
+          "tests": 8,
+          "expects": 25
+        }
+      ]
+    },
+    {
+      "id": "funding-basis-min-tier",
+      "description": "the first CROSS-VENUE domain at its TRUE tier: the CeFi-DeFi funding basis (Binance T1 vs Hyperliquid T2-forward) is tiered at MIN(legs) on every point + render — a T1 label on a T2-legged basis is REFUSED, a gap is NOT bridged (an unmatched interval dropped, never fabricated), a retro Hyperliquid 'history' is refused by nonce physics; the pipeline is proven on a first-principles HAND-VERIFIED fixture reproduced byte-for-byte; the divergence view renders the spread's own instability; the Hyperliquid leg reconstructs byte-faithfully; a basis-carry goal adjudicates with per-leg tiers rendered; DELIVERED-with-fixture-proof under the ATTEMPT law (R-BASIS, E-ATTEMPT, D-DOMAIN, A′#6)",
+      "files": [
+        {
+          "file": "test/organon/basis_domain.test.ts",
+          "exists": true,
+          "tests": 8,
+          "expects": 28
+        }
+      ]
+    },
+    {
+      "id": "walk-v6-catalog-converged",
+      "description": "the spine validated as a human meets it — sentences beside a refusal: the committed walk-v6 record + hash-chained ledger show the pinned catalog v11 (23 scenarios, content-sha pinned) traversed in full each cycle judged against expected honest behavior, three genuine findings (W6-01 the spine panels not surfaced through the console, W6-02 the framing not refusal-aware, W6-03 the walk's own S3 check over-specified — the CPCV product correct) each registered BEFORE its fix and resolved with a root cause + a re-test, two consecutive FULL-depth clean cycles across ≥4 total, rotation-complete across the 7 spine-aware themes — CONVERGED-5 DERIVED from the register (E-CATALOG, E-ROOTCAUSE, C-LOOP, C-USER)",
+      "files": [
+        {
+          "file": "test/organon/walk_v6.test.ts",
+          "exists": true,
+          "tests": 2,
+          "expects": 17
+        }
+      ]
+    },
+    {
+      "id": "reachability-surface-law",
+      "description": "if the user can't reach it, it doesn't exist: the U-SURFACE law — a user-facing exit criterion is satisfiable ONLY by console-path traversal evidence (a real served request through the real route → real interaction → rendered result → a FAILURE STATE), never module evidence alone (the gatekeeper's `surface` flag REFUSES module-only evidence, proven); a happy-path-only or non-fresh-serve traversal is caught as THEATER; the SURFACING CENSUS maps every user-facing capability to its traversal and CATCHES its seeded unsurfaced capability (its own positive control); retroactively the law would have caught V11's W6-01 (R-ADVISORY's reachability, U-SURFACE, A′#1/#2)",
+      "files": [
+        {
+          "file": "test/walls/surface_law.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 11
+        }
+      ]
+    },
+    {
+      "id": "ratification-supersession",
+      "description": "a table built to hold changes of mind RECEIVES them: the ratification law gains a SUPERSEDE disposition (U-RESUPERSEDE) — when build evidence changes what a ratified item IS, an append-only entry references the ORIGINAL row's 64-hex hash and states the change + its evidence (the V11 VoC→OOS regime change filed as the founding instance; the two experiment outcomes disposing their parks); a SUPERSEDE without the original hash / regime change / evidence is refused; a dangling supersession (a hash not in the chain) is caught; the V11 chain's prior hashes reproduce (the `supersedes` field conditional in the payload) (U-RESUPERSEDE, T-SUPERSEDE)",
+      "files": [
+        {
+          "file": "test/walls/ratify_supersession.test.ts",
+          "exists": true,
+          "tests": 4,
+          "expects": 12
+        }
+      ]
+    },
+    {
+      "id": "summary-differential",
+      "description": "summary numbers are machine-derived: every terminal figure (floor, matrix PRESENT/ABSENT, catalog count) regenerates from its source artifact and a hand-typed number that disagrees is CAUGHT (a finding, not a typo) — the V11 22-vs-23 self-contradiction made structurally impossible (U-DERIVED)",
+      "files": [
+        {
+          "file": "test/organon/summary_differential.test.ts",
+          "exists": true,
+          "tests": 2,
+          "expects": 7
+        }
+      ]
+    },
+    {
+      "id": "noise-battery-lambda-swept",
+      "description": "the noise wall at its own written depth: the VoC noise battery is SWEPT across pre-pinned penalties {0.1, 1.0, 10.0} × feature counts × seeds — the OOS regime is clean across every cell (pure noise has no out-of-sample edge; the charge cannot rescue what never existed), the in-sample regime survives and is BANNED by the VoC→OOS supersession; a clean sweep leaves the pinned λ=1.0 mapping unchanged (the V11 audit finding — swept feature counts but not penalties — answered) (R-DOF, A′#8)",
+      "files": [
+        {
+          "file": "test/organon/walls_deeper.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 11
+        }
+      ]
+    },
+    {
+      "id": "capture-floor-pristine",
+      "description": "venues at a formalized floor + fresh-clone proofs pristine forever: the capture floor is a named constant (≥3 chained stamps across ≥2 runs) asserted per venue with Hyperliquid brought up to it (the provenance chain committed, the V9 precedent); the PRISTINE fresh-clone harness runs from an isolated HOME with no inherited venvs and enumerated prerequisites — a positive control proves the isolation is real (without the fresh venv a sidecar-dependent test FAILS; environmental luck can never again masquerade as verification) (R-BASIS, U-PRISTINE, A′#7)",
+      "files": [
+        {
+          "file": "test/organon/walls_deeper.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 11
+        }
+      ]
+    },
+    {
+      "id": "experiments-answered",
+      "description": "the park protocol's full circle: two V11-parked questions answered under criteria HASH-CHECKED UNCHANGED, outcomes DERIVED not asserted — the ENSEMBLE experiment (planted-correlation synthetic families, the noise pool FAILS as its positive control, the correlation-adjusted diversified pool passes, laundering detectable → legitimate WITH the adjustment, a future-sprint ADOPT) and the SHARED-LEDGER COHERENCE experiment (a laundered cross-author search earns a WEAKER bar than the unified → incoherent under per-author scoping → stays parked); each filed as a park-disposing SUPERSEDE value; ZERO product built past either outcome; the CPCV promotion tracker accrues (U-EXPERIMENT, A′#3/#4/#10)",
+      "files": [
+        {
+          "file": "test/organon/experiments_answered.test.ts",
+          "exists": true,
+          "tests": 5,
+          "expects": 14
+        }
+      ]
+    },
+    {
+      "id": "guided-builder-reachable",
+      "description": "the missing middle door, born reachable: the Guided Builder (screen 9, the set amended 8→9 once and closed again) — a schema-driven composer over the EXISTING lending primitive (no new types, no free-form code, no model calls), conservative ratified defaults (static/equal/monthly), plain-language help honesty-checked (a priming default/copy caught), DERIVES NOTHING (validation from the same schema the API enforces), every composed spec through the identical write-then-invoke gate with declared lineage (an edit stiffens its family), an invalid composition REFUSED before registration — and the gate passes ONLY on a console-path traversal (happy + a failure state), the first surface born under U-SURFACE (U-AMEND, U-SURFACE, S-PROPOSE, S-FAMILY, A′#5/#6)",
+      "files": [
+        {
+          "file": "test/organon/guided_builder.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 16
+        }
+      ]
+    },
+    {
+      "id": "walk-v7-catalog-converged",
+      "description": "reachability validated as a stranger would meet it, through THREE doors: the committed walk-v7 record + hash-chained ledger show the pinned catalog v12 (29 scenarios, content-sha pinned) traversed in full each cycle across the preset · goal · builder doors, the genuine finding (W7-01 the CPCV promotion tracker not surfaced on the pro disclosure) registered BEFORE its fix and resolved with a root cause + a re-test, two consecutive FULL-depth clean cycles across ≥4 total, rotation-complete across the 7 reachability-aware themes — CONVERGED-6 DERIVED from the register (E-CATALOG, E-ROOTCAUSE, C-LOOP, C-USER, U-SURFACE)",
+      "files": [
+        {
+          "file": "test/organon/walk_v7.test.ts",
+          "exists": true,
+          "tests": 2,
+          "expects": 18
+        }
+      ]
+    },
+    {
+      "id": "reachability-law-complete",
+      "description": "the reachability law's COMPLETENESS half: a pinned user-facing lexicon (render·display·screen·show·user·see·read·click·reach·panel·report) auto-flags a matching criterion surface:true, inflection-aware, false-positive-guarded; unflagging requires a filed reason naming the criterion's real consumer (a silent unflag + a dead reason CAUGHT); the law bites AT THE GATE (enforceAutoFlag); the census runs at every checkpoint over the capability diff (a new user-facing capability enters the law automatically — the W7-01 class extinct) + a one-time FULL re-census over the whole matrix + all screens; retroactively V12's W7-01 criterion auto-flags (K-COMPLETE)",
+      "files": [
+        {
+          "file": "test/organon/ensemble_law.test.ts",
+          "exists": true,
+          "tests": 16,
+          "expects": 37
+        }
+      ]
+    },
+    {
+      "id": "scope-law-amendments",
+      "description": "the SCOPE law: a delivery narrower than its blueprint scope files an append-only hash-chained amendment (feature · promised · shipped · why · owner · cure) in the same phase — the silence is the sin, never the narrowing; the V12 builder lending-only narrowing is the founding retro-filed instance; a narrowing without its reason is refused, a hand-edit caught (K-SCOPE)",
+      "files": [
+        {
+          "file": "test/organon/ensemble_law.test.ts",
+          "exists": true,
+          "tests": 16,
+          "expects": 37
+        }
+      ]
+    },
+    {
+      "id": "pool-preconditions-answered",
+      "description": "the pool preconditions answered BEFORE any pool code: the correlation-adjusted K_eff formula pinned + hash-checked (K_eff=K/(1+(K-1)ρ̄), charge=ceil); the middle cells (ρ 0.3/0.6, K_eff non-trivial) over a survivor-rate battery — the genuine diversified pool passes at the honest K_eff charge above a single member, the pure-noise pool NEVER survives (the hard REJECT firewall), laundering caught at ρ=0.3, the stress cell collapses both K_eff and diversification; the λ-sensitivity control has resolution; the HRP fixture test disposed NO (parked); a two-way door (OPEN-WITH-CONDITIONS) with zero pool code in existence either way (K-PRECOND, U-EXPERIMENT)",
+      "files": [
+        {
+          "file": "test/organon/ensemble_preconditions.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 24
+        }
+      ]
+    },
+    {
+      "id": "builder-funding-domain",
+      "description": "the Guided Builder's FUNDING door: a funding-carry spec composed field-by-field (venue/interval/side over the delivered funding primitives) under conservative ratified defaults (receive/8h), per-domain honesty-checked help (a seeded priming caught), lineage in the form, validation from the same schema the API enforces → the IDENTICAL write-then-invoke gate → the frozen verdict + spine panels; an invalid interval REFUSED before registration; born under U-SURFACE (its gate passes only on a console-path traversal, happy + failure) (K-SCOPE cure, U-SURFACE)",
+      "files": [
+        {
+          "file": "test/organon/ensemble_builder_whole.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 34
+        }
+      ]
+    },
+    {
+      "id": "builder-basis-domain",
+      "description": "the Guided Builder's BASIS door: the cross-venue pair composed with the weakest-leg tier MIN(legs) + EXPERIMENTAL surfaced INLINE BEFORE composing (R-BASIS — a T1 label on a T2-legged basis is impossible), the per-leg tiers carried on the verdict; a mismatched-venue pair REFUSED before registration; the same conservative-defaults, honesty-checked, lineage-declaring discipline; born under U-SURFACE (K-SCOPE cure, U-SURFACE, R-BASIS)",
+      "files": [
+        {
+          "file": "test/organon/ensemble_builder_whole.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 34
+        }
+      ]
+    },
+    {
+      "id": "pool-composer-union-charge",
+      "description": "THE POOL COMPOSER (screen 10, the set amended 9→10 once and closed again, U-AMEND-2) — the park protocol's first delivered capability, through the open door: a depth-1 pool of adjudicated member strategies registers as a trial charged the UNION's ceil(K_eff) under the pinned+hash-checked formula (K_eff=K/(1+(K-1)ρ̄) — the correlation-adjusted count of independent bets, NOT raw K); a member swap declares lineage and VISIBLY stiffens the family (n rises, never resets); K_eff RECOMPUTES on clock ticks (composition-time vs current, the divergence rendered); the STRESS CAVEAT is mandatory copy; the POOLED-NOISE WALL is permanent with a seeded kill-switch (a survivor disables the composer); members are strategy specs only (depth-1, recursion schema-refused); K_eff≈1 renders 'this pool adds nothing beyond its strongest member' plainly (not refused); born under U-SURFACE — the only way to look diversified is to be diversified (K-EFF, U-AMEND-2, U-SURFACE)",
+      "files": [
+        {
+          "file": "test/organon/ensemble_pool.test.ts",
+          "exists": true,
+          "tests": 9,
+          "expects": 38
+        }
+      ]
+    },
+    {
+      "id": "deflation-basis-legible",
+      "description": "K-LEGIBLE — every verdict, leaderboard row, and pool report renders its DEFLATION BASIS: the n it was tested against, the scoping that produced it, and a NEUTRAL ratified comparability note (a higher n is a harder bar — compare only at equal n); display-only, derives nothing, states-never-judges (no shaming, no rankings-by-virtue); a weakly-tested bar is legible to anyone reading it (K-LEGIBLE)",
+      "files": [
+        {
+          "file": "test/organon/ensemble_pool.test.ts",
+          "exists": true,
+          "tests": 9,
+          "expects": 38
+        }
+      ]
+    },
+    {
+      "id": "walk-v8-catalog-converged",
+      "description": "the whole system validated as a stranger would meet it, through ALL doors (preset · goal · builder×3 · the pool composer): the committed walk-v8 record + hash-chained ledger show the pinned catalog v13 (36 scenarios, content-sha pinned) traversed in full each cycle, laundering hunting the pool hardest — the genuine finding (W8-01, the member-swap ratchet built in the module but NOT reachable through the served door) registered BEFORE its fix and resolved with a root cause + a re-test (per-author edit-lineage threading), both noise walls green (single + pooled) each clean cycle, two consecutive FULL-depth clean cycles across ≥4 total, rotation-complete across the 7 ensemble-aware themes — CONVERGED-7 DERIVED from the register (E-CATALOG, E-ROOTCAUSE, C-LOOP, C-USER, U-SURFACE, K-COMPLETE)",
+      "files": [
+        {
+          "file": "test/organon/walk_v8.test.ts",
+          "exists": true,
+          "tests": 2,
+          "expects": 19
+        }
+      ]
+    },
+    {
+      "id": "autoflag-law-default-on",
+      "description": "X-DEFAULT — the K-COMPLETE auto-flag law DEFAULTS ON for every new gate (Checkpoint.Gate without an opt-in): a lexicon-hitting user-facing criterion gates on a traversal automatically; V6–V13's 190 gate ids are grandfathered by a pinned list (they predate the lexicon — explicit-only, never re-adjudicated, the A′#9 attack closed); opting out files a reason or the constructor refuses. The V13 hole (enforceAutoFlag off-by-default) closed at the root",
+      "files": [
+        {
+          "file": "test/organon/why_law.test.ts",
+          "exists": true,
+          "tests": 18,
+          "expects": 44
+        },
+        {
+          "file": "test/organon/ensemble_law.test.ts",
+          "exists": true,
+          "tests": 16,
+          "expects": 37
+        }
+      ]
+    },
+    {
+      "id": "exercise-assertions-w801-closed",
+      "description": "X-DEFAULT — per-criterion EXERCISE ASSERTIONS in traversal admissibility: a surface criterion's traversal must name the step whose recorded behavior matches the criterion's expected-behavior string; a vague ref (a mapping pointing at a step about something else) is caught. The W8-01 many-to-one loophole (a compose-and-refuse bundle standing as evidence for a ratchet it never ratcheted) dies at its mechanism",
+      "files": [
+        {
+          "file": "test/organon/why_law.test.ts",
+          "exists": true,
+          "tests": 18,
+          "expects": 44
+        }
+      ]
+    },
+    {
+      "id": "delta-aware-summary-differential",
+      "description": "X-DEFAULT/U-DERIVED — the summary differential extends to NARRATIVE DELTAS: a claimed A→B for a metric is checked against the derived endpoint AND the last pinned baseline; the V13 terminal's 'floor 58→74' (true 66→74) is the founding catch, corrected append-only. A hand-typed delta that disagrees with its arithmetic is a finding, not a typo",
+      "files": [
+        {
+          "file": "test/organon/why_law.test.ts",
+          "exists": true,
+          "tests": 18,
+          "expects": 44
+        }
+      ]
+    },
+    {
+      "id": "census-miscategorization-control",
+      "description": "X-DEFAULT — the surfacing census gains a MIS-CATEGORIZATION control: a known user-facing capability declared 'infrastructure' (a plausible way to hide a dangling surface behind a false label) is caught against a pinned user-facing registry; a seeded mis-categorization must fire the control or the census fails its own gate",
+      "files": [
+        {
+          "file": "test/organon/why_law.test.ts",
+          "exists": true,
+          "tests": 18,
+          "expects": 44
+        }
+      ]
+    },
+    {
+      "id": "scope-parity-law",
+      "description": "K-SCOPE parity extension — a schema adjudicating ILLUSTRATIVE where REAL data exists is a data-reality narrowing requiring an amendment (delivered reality ⊊ available reality); the builder-funding-on-ILLUSTRATIVE instance retro-filed append-only (cure: Phase 2 wired it to real T1). The scope law extended from feature breadth to data provenance",
+      "files": [
+        {
+          "file": "test/organon/why_law.test.ts",
+          "exists": true,
+          "tests": 18,
+          "expects": 44
+        }
+      ]
+    },
+    {
+      "id": "experiment-registry",
+      "description": "X-DEFAULT — the parked-experiment runner modules (hrp.ts · experiments.ts · preconditions.ts · selection.ts) are enumerated in an explicit EXPERIMENT registry (they escaped the ratification scan by living outside src/analytics); each maps to a PARK-WITH-EXPERIMENT or a disposing SUPERSEDE row. The discretionary scan bypass made explicit + coherent",
+      "files": [
+        {
+          "file": "test/organon/why_law.test.ts",
+          "exists": true,
+          "tests": 18,
+          "expects": 44
+        }
+      ]
+    },
+    {
+      "id": "selection-door-priced",
+      "description": "X-SELECT — the pool's first-composition member selection (choose-K-of-M) PRICED through a pre-registered experiment: best-of-M noise inflates survivors 18–40% at the current ceil(K_eff) charge, the pinned surcharge ceil(log2(C(M,K))) drives it to 0% without over-killing real edges (78–90% survive) → DERIVED TERM (the pick is search, now counted: declaredNTrials = ceil(K_eff) + surcharge); the door disposed by SUPERSEDE, zero verdicts moved (historical pools M=K)",
+      "files": [
+        {
+          "file": "test/organon/selection_door.test.ts",
+          "exists": true,
+          "tests": 7,
+          "expects": 27
+        }
+      ]
+    },
+    {
+      "id": "funding-realpit-parity",
+      "description": "PARITY (K-SCOPE cure) — the Guided Builder's FUNDING door adjudicates its REAL captured T1 funding snapshot (Binance freepit, 552 nonce-anchored intervals) → a REAL-PIT verdict with resolving provenance; ILLUSTRATIVE only where no captured snapshot exists (bybit/okx/1h), labeled truthfully; the data-reality label DERIVED from the artifact, never hardcoded (D-LABEL); the basis stays honestly ILLUSTRATIVE at MIN(legs)=T2, no tier quietly upgraded",
+      "files": [
+        {
+          "file": "test/organon/parity_identity.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 22
+        }
+      ]
+    },
+    {
+      "id": "identity-provenance-note",
+      "description": "K-LEGIBLE — the identity provenance truth rendered NEUTRAL where users read (the deflation basis on every verdict + pool report): author identity is self-declared and not verified; the edit-ratchet keyed per declared author, the rate limiter per connection — both keys documented, the exposure stated; a reassuring 'your work is safe' version is caught by the neutrality check",
+      "files": [
+        {
+          "file": "test/organon/parity_identity.test.ts",
+          "exists": true,
+          "tests": 6,
+          "expects": 22
+        }
+      ]
+    },
+    {
+      "id": "why-panel-dual-register",
+      "description": "THE WHY PANEL (X-ONE/X-FACTS/X-GROUND) — every terminal state (GO/NO-GO/CONDITIONAL/INSUFFICIENT/BLOCKED/MALFORMED/kill-switch) explained in BOTH registers from ONE machine-derived fact table (completeness-censused against the verdict artifact schema; a seeded omission caught), the plain + quantitative renderings mechanically consistency-checked (no orphan claim, no drift, a consoling template caught), the optional grounded-LLM paraphrase behind a groundedness verifier that rejects embellishment + added causal story WHOLESALE with deterministic fallback (fixture-only in CI, nowhere in the verdict path); the report/verdict-card/pro-disclosure gained WHY sections, the screen set stays 10",
+      "files": [
+        {
+          "file": "test/organon/why_panel.test.ts",
+          "exists": true,
+          "tests": 9,
+          "expects": 31
+        }
+      ]
+    },
+    {
+      "id": "runner-one-command",
+      "description": "THE RUNNER (X-RUN) — ./organon.sh takes a stranger from a fresh clone to the web door in ONE honest command: a prerequisite CHECK (never installs a system item) → setup from the pinned lockfile (idempotent) → the pinned verify set (status table) → offline-honest refresh → the bounded TUI whose LAUNCH-WEB option is requirements-gated (enabled only when every prerequisite present AND every verify item green — derived from the results, no override flag, so no soft-launch over red; disabled-with-reasons otherwise; exit-nonzero on a missing prereq)",
+      "files": [
+        {
+          "file": "test/organon/runner.test.ts",
+          "exists": true,
+          "tests": 10,
+          "expects": 28
+        }
+      ]
+    },
+    {
+      "id": "walk-v9-catalog-converged",
+      "description": "the whole system walked as a stranger would meet it, BOOTSTRAPPED THROUGH THE RUNNER, through every door (preset · goal · builder×3-real · pool · the WHY panel) against the pinned catalog v14 (46 scenarios): the novice read ONLY the plain WHY at every refusal and answered 'why did it fail?' in one correct sentence (checked against the fact table's deciding row); the seven explanation-aware themes rotated (ux-priming hunted the explanations hardest, injection fed the paraphraser poisoned facts, doc-lies audited register consistency + the runner status table); both noise walls green each cycle; four consecutive FULL-depth clean cycles; the WHY panel reachable through every served door — CONVERGED-8 DERIVED (zero genuine findings, disclosed: the W8-01 class was closed in Phase 0)",
+      "files": [
+        {
+          "file": "test/organon/walk_v9.test.ts",
+          "exists": true,
+          "tests": 3,
+          "expects": 17
+        }
+      ]
+    }
+  ],
+  "anchorHash": "2aa31f8e5f4f9eba5c9ba2a95cdd35d3aa7ab4e9270e1e0437267321d24e1518"
+}

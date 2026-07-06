@@ -1,0 +1,227 @@
+{
+  "protocol": "checkpoint-trail-v8",
+  "criteriaSetSha": "f0f6ff51471123c4b45b3e05bc2f193f5a0844a4d3b8ed23de0c3e23770f072a",
+  "chainOk": true,
+  "independence": "pending-non-author",
+  "records": [
+    {
+      "seq": 0,
+      "phase": "phase-0",
+      "decision": "ADVANCE",
+      "stamp": "v8-phase0-trail-true",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "TRAIL-TRUE",
+          "text": "V7's loop closed with the truth: a continuation/lineage marker appended to V7 as a VALUE (not an argument); the V6 Phase-2 headline filed as a value (REPEAT); the log_terminal_marker wall green with its positive control; the setup fixed + fresh-clone-demonstrated; absences seeded each linked to a park (F-CONTINUE, F-ABSENT, T1-01)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-trail-true.json (1509cf1ab5f2…)",
+          "weakened": false
+        },
+        {
+          "id": "continuation-marker",
+          "text": "the V7 terminal reconciled and continued by an appended, dated, chained VALUE marker (a log may never simply stop) — reconciled truthfully against what V7's committed trail actually says (F-CONTINUE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-trail-true.json (1509cf1ab5f2…)",
+          "weakened": false
+        },
+        {
+          "id": "headline-value",
+          "text": "the V6 Phase-2 headline re-stated as the value REPEAT per T-SUPERSEDE — the softening argument retired, the number filed (append-only)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/supersede-trail.json (831d32ad3dee…)",
+          "weakened": false
+        },
+        {
+          "id": "terminal-marker-wall",
+          "text": "the log_terminal_marker wall live: a marker-less (trailed-off) revision FAILS loudly (positive control); the F-CONTINUE-era logs' latest committed revision must end in a recognized state marker; pre-rule legacy logs disclosed + grandfathered (adopted forward, never by editing history)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-trail-true.json (1509cf1ab5f2…)",
+          "weakened": false
+        },
+        {
+          "id": "env-hygiene",
+          "text": "the stale parallel checkout marked retired (a pointer note; nothing deleted); the relocated-venv shebang hazard repaired/documented; requirements-studio.txt shipped + organon-setup.sh pointed at it + a fresh-clone setup demonstrated (T1-01)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-env-hygiene.json (1491b5ebf601…)",
+          "weakened": false
+        },
+        {
+          "id": "absences-seeded",
+          "text": "Inventory gains an ABSENCES section seeded from P1-1 (engine backtest, RWA own-data re-execution), each linked to its park + owner-sprint; verify() flags an absence without a park as an open issue; the checkpoint renders the full diff (gains/losses/absences) (F-ABSENT)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-trail-true.json (1509cf1ab5f2…)",
+          "weakened": false
+        },
+        {
+          "id": "criteria-printed",
+          "text": "criteria printed VERBATIM beside this blueprint's pin; the capability floor re-anchored via a superseding (not re-pointed) entry (C-RECON2)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-trail-true.json (1509cf1ab5f2…)",
+          "weakened": false
+        }
+      ],
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "abf6819dcbbbe839cd2bcd522f5f541f0a81487b6fd2c727b868fa188a12b3b2"
+    },
+    {
+      "seq": 1,
+      "phase": "phase-1",
+      "decision": "ADVANCE",
+      "stamp": "v8-phase1-roots-known",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "ROOTS-KNOWN",
+          "text": "the RWA drift adjudicated under F-ENV — exactly one classification (ENVIRONMENTAL/LOGIC/UNDETERMINED) DERIVED from a candidate matrix with per-environment sha evidence pasted; ZERO re-pins without established root cause; the reproducibility-contract scaffolding in the battery (this gate is where the series decides whether 'frozen' means reproducible or merely old)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/forensics-rwa.json (ef718b87191d…)",
+          "weakened": false
+        },
+        {
+          "id": "candidate-matrix",
+          "text": "candidate environments enumerated UP FRONT (current stack · pinned-original library versions · the relocated stale-checkout venv) and the RWA verdict regenerated under each; a sha/decision table per candidate (F-ENV)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/forensics-rwa.json (ef718b87191d…)",
+          "weakened": false
+        },
+        {
+          "id": "classification-derived",
+          "text": "exactly one of ENVIRONMENTAL · LOGIC · UNDETERMINED, DERIVED from the table, not asserted; a fourth outcome is a Halt",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/forensics-rwa.json (ef718b87191d…)",
+          "weakened": false
+        },
+        {
+          "id": "outcome-executed",
+          "text": "the outcome executed — root-cause closure with a reproducibility contract (pin stays, now regenerable) · an owner-level Rule-XVII re-baseline DECISION or its four-field park · invariants-as-contract + token UNPINNED + forensics-attached park — with zero pressure re-pins",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/forensics-rwa.json (ef718b87191d…)",
+          "weakened": false
+        },
+        {
+          "id": "lockfile-pinned",
+          "text": "the sidecar scientific stack pinned as a hashed lockfile (the go-forward environment regardless of outcome)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/reproducibility-contracts.json (9fe88ae4efaf…)",
+          "weakened": false
+        },
+        {
+          "id": "repro-contracts",
+          "text": "reproducibility contracts scaffolded for every generated artifact: inputs pinned OR their honest absence named (FRED-gated data named absent), a lockfile, a generator pin, a regen test that runs where data permits and states BLOCKED where it does not — each in the battery",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/reproducibility-contracts.json (9fe88ae4efaf…)",
+          "weakened": false
+        }
+      ],
+      "prev": "abf6819dcbbbe839cd2bcd522f5f541f0a81487b6fd2c727b868fa188a12b3b2",
+      "hash": "0042e224ff6348c0143b475ea30d2a42e82e0938d058b9cc5f56dfdf5410bd71"
+    },
+    {
+      "seq": 2,
+      "phase": "phase-2",
+      "decision": "ADVANCE",
+      "stamp": "v8-phase2-stronger-2",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "STRONGER-2",
+          "text": "each item a positive-controlled proof, a decided memo, or a legitimate four-field park — exactly one per item; W1-04's class mechanically unreintroducible; advertised == actual, rendered (F-IDENTITY)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-stronger2.json (97e73b0c5233…)",
+          "weakened": false
+        },
+        {
+          "id": "rejection-boundary",
+          "text": "a must-reject corpus (invalid enums incl. the W1-04 payload verbatim, hostile weights, malformed/orphaned lineage, oversize legs, boundary values) refused BEFORE registration (ledger count unchanged) on every mutating surface; a must-accept corpus still passes (T-REJECT) — carried from V7, re-verified",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-stronger2.json (97e73b0c5233…)",
+          "weakened": false
+        },
+        {
+          "id": "served-persistence",
+          "text": "the served-persistence DECISION with its memo; the winner implemented; a stranger-shaped submission demonstrably survives a restart (or is demonstrably captured) BEFORE DOORS-OPEN; bounded abuse hardening; the sybil residual restated (T-SERVE) — carried from V7, re-verified",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-runbook-rehearsal.json (e7350efdc1d4…)",
+          "weakened": false
+        },
+        {
+          "id": "runbook",
+          "text": "the ten-minute first-contact RUNBOOK rehearsed once as a labeled Tier-A rehearsal (not first contact) — carried from V7, re-verified",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-runbook-rehearsal.json (e7350efdc1d4…)",
+          "weakened": false
+        },
+        {
+          "id": "tense-scanner",
+          "text": "the claim-vs-evidence scanner live with a seeded overclaim caught (positive control) — carried from V7, re-verified",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-stronger2.json (97e73b0c5233…)",
+          "weakened": false
+        },
+        {
+          "id": "real-returns",
+          "text": "real-returns formalized as its pre-authorized park against the absent data plane (P1-1); ILLUSTRATIVE labels verified everywhere; a REAL-PIT path scheduled with the data-plane sprint — never a hybrid hack (T-REAL, C-PARK) — carried from V7, re-verified",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/parks-register.json (44111b75b4dd…)",
+          "weakened": false
+        },
+        {
+          "id": "identity-matrix",
+          "text": "the IDENTITY memo (three options costed: data-plane-first · publish-slim-honest · hold) DECIDED; the CAPABILITY MATRIX rendered (README + Trust Panel) — capabilities AND deliberate absences with park links; publication identity-gated (publish refused until the memo's winner is implemented) AND Operator-gated (F-IDENTITY, F-ABSENT) — NEW this sprint",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-stronger2.json (97e73b0c5233…)",
+          "weakened": false
+        }
+      ],
+      "prev": "0042e224ff6348c0143b475ea30d2a42e82e0938d058b9cc5f56dfdf5410bd71",
+      "hash": "ac97865db062e60a27f00e89900d52f9eff00dfe08e7e681c8b5195a2dbf9e35"
+    },
+    {
+      "seq": 3,
+      "phase": "phase-3",
+      "decision": "ADVANCE",
+      "stamp": "v8-phase3-converged-2",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "CONVERGED-2",
+          "text": "rotation-complete (all seven themes ≥1 cycle) AND two consecutive CLEAN cycles (zero new, zero open non-parked) — OR the honest NON-CONVERGENCE STOP at cap=10 with the register + transcripts + depth manifests published; both valid terminals, exactly one claimed truthfully; NOT-REACHED exists only behind a recorded pre-walk STOP (T-ROTATE, C-LOOP, F-BUDGET)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v3-cycles.json (8de2a83bc921…)",
+          "weakened": false
+        },
+        {
+          "id": "walk-ledger-chained",
+          "text": "the WALK LEDGER hash-chained, complete, committed; every issue registered BEFORE any fix",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v3-ledger.jsonl (45dd700f407b…)",
+          "weakened": false
+        },
+        {
+          "id": "fixes-inventoried",
+          "text": "every fix inventoried and battery-plus-rejection-corpora-plus-floor-plus-ABSENCES-plus-walls-green; frozen byte-identity re-proven each cycle; no scope shrank without an absence entry + park (F-ABSENT)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase3-converged-v8.json (f420f2cd1ea3…)",
+          "weakened": false
+        },
+        {
+          "id": "parks-legitimate",
+          "text": "every architectural finding four-fielded (context+repro, rationale, impact, recommended next steps+sprint) and legitimacy-reviewed each cycle; a convenience park is reclassified open (C-PARK)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/parks-register.json (44111b75b4dd…)",
+          "weakened": false
+        },
+        {
+          "id": "rotation-depth",
+          "text": "all seven themes rotated (doc-lies now includes matrix-vs-reality; tamper includes the pollution spot-audit); every cycle a depth manifest (personas × acts × full/abbreviated, a full three-persona pass at least every second cycle); a prior cycle replayed from its transcript (T-ROTATE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v3-cycles.json (8de2a83bc921…)",
+          "weakened": false
+        }
+      ],
+      "prev": "ac97865db062e60a27f00e89900d52f9eff00dfe08e7e681c8b5195a2dbf9e35",
+      "hash": "55c0e9ee79f5b4fcaa61e10640c0e411a336c99857d6f1b16afff6cc7238a1d9"
+    }
+  ]
+}

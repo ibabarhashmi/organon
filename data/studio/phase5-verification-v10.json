@@ -1,0 +1,55 @@
+{
+  "protocol": "phase5-verification-v10",
+  "at": "2026-07-05",
+  "sprint": "End-User (v10) Phase 5 — verification + handoff + honest state",
+  "freshCloneProof": {
+    "clone": "git clone /Users/babar/Projects/organon-standalone → /tmp/organon-v10-freshclone @ 2e15461",
+    "setup": "bun install; python venv (numpy scipy) built — the documented setup",
+    "battery": "242 pass / 0 fail across 53 files",
+    "catalogScenarioFromNothing": "re-captured 5/5 lending pools keyless → the joined loop (catalog R2) re-runs → NO-GO (REAL-PIT), reproduces true, model cannot bless true",
+    "consoleIncluded": "the Goal Console + the joined loop verified from the fresh clone",
+    "note": "the home works from nothing: a genuine fresh clone yields a green battery; the joined loop reproduces from re-captured real data; RWA stays BLOCKED-on-credential, disclosed."
+  },
+  "finalState": {
+    "floor": 52,
+    "frozenSeven": "byte-identical in both trees (7)",
+    "rwaPinUnchanged": true,
+    "rePins": 0,
+    "frozenTreeWrites": 0,
+    "matrixVsReality": true,
+    "matrixRows": "18 PRESENT / 3 ABSENT",
+    "absences": "3 (all parked)",
+    "catalog": "15 scenarios pinned ({\"realistic\":5,\"adversarial\":3,\"edge\":7})",
+    "checkpointTrail": "5 phases, all ADVANCE, chainOk true, independence pending-non-author",
+    "walkOutcome": "CONVERGED-4"
+  },
+  "fiveFindingsAnswered": {
+    "1 transform never differentially run": "ANSWERED — the sandbox transform differential MATCHED (transform-differential-proven); the asterisk retired at the letter",
+    "2 scope contract silently renegotiated": "ANSWERED — the ATTEMPT law is mechanical (funding DELIVERED, fee-yield BLOCKED-with-evidence, RWA BLOCKED-on-credential; V9's renegotiation retro-filed)",
+    "3 W4-01 blob permanent": "ANSWERED — three prevention walls (seeded-caught) + the disclosure audit (W4-01 named permanent, zero rewrites)",
+    "4 marquee demo unrun": "ANSWERED — the joined loop recorded end-to-end (a sentence → a real-data NO-GO through the Goal Console)",
+    "5 minimum-margin convergence": "ANSWERED structurally — 'clean' measured against the pinned E2E catalog; CONVERGED-4 with two consecutive FULL-depth clean"
+  },
+  "parksForwardWithOwners": {
+    "P1-1 (engine layer, PARTIALLY CLOSED further)": "fee-yield (transplant feeyield-pull + capture a ≥120-day snapshot; the Py3.11/pandas env already runs the panel) + RWA (credential + rigor) — the data-plane follow-up sprint",
+    "P0-1 (RWA byte-regen, BLOCKED-on-credential)": "the two-way door — the Operator's free FRED credential, then the byte-regen under the pinned engine lockfile",
+    "INHERITED floor audit (XXXVIII)": "a dedicated floor-audit sprint",
+    "INHERITED full sybil economics": "a dedicated sybil-economics sprint"
+  },
+  "operatorLaneZeroResidue": {
+    "publicationReRatification": "consent is to the NEW matrix (18 PRESENT / 3 ABSENT), NOT V8/V9. Chokepoint: script/publish-preflight.ts (identity gate SATISFIED, byte-match re-locked; consent gate PENDING — the agent self-refuses, L-2P). Memo: docs/IDENTITY-MEMO.md End-User addendum.",
+    "fredCredential": "OPERATOR — the free FRED registration enables the RWA snapshot + the two-way-door byte-regen; its absence leaves RWA honestly BLOCKED-on-credential. Never committed (grep-wall + the credential prevention wall).",
+    "v4BackupRestoration": "OPERATOR — the restoration drill is proven (restore_drill); the Operator owns any real window.",
+    "genuineSecondParty": "OPERATOR — the stranger remains DOORS-OPEN's only key; independence PENDING until a non-author acts (L-2P). Their ten minutes NOW START AT A TEXT BOX (the Goal Console)."
+  },
+  "tenseAudit": "the scanner flags only evidenced past-tense pointer prose in the legacy V7/transplant docs (human-reckoned); the V10 log's present-tense claims are each artifact-backed (phase0-prevent-true · transform-differential · funding-differential · feeyield-attempt · joined-loop · walk-v5-cycles). No unsupported overclaim.",
+  "honestState": {
+    "walkOutcome": "CONVERGED-4 (catalog-complete + rotation-complete + two consecutive FULL-depth clean + 4 cycles; the one finding root-caused + re-tested)",
+    "transform": "the asterisk RETIRED at the letter — the rewritten transform byte-identical to its original on real data (MATCH); 'oracle-judged' now true of the port",
+    "attempts": "ATTEMPT restored to meaning — funding DELIVERED (freepit T1, differential-proven), fee-yield BLOCKED-with-evidence (env runs, data absent), RWA BLOCKED-on-credential; the pin UNCHANGED",
+    "history": "walled + disclosed — three prevention walls (seeded-caught), W4-01's permanence named, ZERO rewrites",
+    "loop": "JOINED — a plain-English goal → the model → a REAL-PIT verdict with provenance → the report, the verdict relayed verbatim, through the one door a human can open",
+    "poweredVerdicts": "ZERO — expected, unchanged, displayed with pride, now refusable through a text box by anyone",
+    "remaining": "a re-ratified push, a free credential, a restoration window, and a stranger's ten minutes — starting at a text box"
+  }
+}

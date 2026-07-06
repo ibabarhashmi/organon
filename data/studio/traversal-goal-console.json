@@ -1,0 +1,35 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "goal-console",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "GET /",
+      "interaction": "load the dashboard from a fresh serve",
+      "expected": "the worked-examples + the Goal Console (screen 8) render",
+      "met": true,
+      "evidence": "status 200, contains 'Goal Console' + 'Worked examples'"
+    },
+    {
+      "route": "POST /console/goal",
+      "interaction": "type a plain-English lending-carry goal and run it",
+      "expected": "a verdict card + the plain-language report + 'WHY NOT YET' + the hedged 'WHEN, HONESTLY' render (the spine reaches the screen)",
+      "met": true,
+      "evidence": "status 200, contains VERDICT + WHY NOT YET + WHEN + the floor-audit hedge"
+    }
+  ],
+  "failureState": {
+    "route": "POST /console/goal",
+    "interaction": "submit an EMPTY goal",
+    "expected": "a MALFORMED-GOAL honest state renders; nothing is registered; no fabricated verdict",
+    "met": true,
+    "evidence": "status 200, contains MALFORMED-GOAL, no VERDICT"
+  },
+  "allMet": true,
+  "at": "2026-07-05",
+  "contentSha": "a4ee1d9077f974248db07bb6254edc81044c699efc1fd148b556affdfa4bb7f4",
+  "verify": {
+    "ok": true,
+    "issues": []
+  }
+}

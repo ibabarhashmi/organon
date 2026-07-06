@@ -1,0 +1,259 @@
+{
+  "protocol": "checkpoint-trail-v10",
+  "criteriaSetSha": "ae866514cb5a8e8c399c3075ac29c0f3c40ef5eb809677d48a69dda6f81a1c06",
+  "chainOk": true,
+  "independence": "pending-non-author",
+  "records": [
+    {
+      "seq": 0,
+      "phase": "phase-0",
+      "decision": "ADVANCE",
+      "stamp": "v10-phase0-prevent-true",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "PREVENT-TRUE",
+          "text": "the three prevention walls bite on seeded violations AND pass a clean commit; the E2E catalog pinned BEFORE any fixing with every scenario carrying its expected honest behavior; the ATTEMPT law live with V9's funding/fee-yield renegotiation retro-filed as a dated append-only value; the history-blob disclosure audit complete with W4-01's permanence disclosed and ZERO rewrites (E-PREVENT, E-CATALOG, E-ATTEMPT)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-prevent-true-v10.json (0abc92450d29…)",
+          "weakened": false
+        },
+        {
+          "id": "attempt-law-live",
+          "text": "the ATTEMPT law: the scope-contract vocabulary gains ATTEMPT/DELIVERED/DEFER/BLOCKED-with-evidence; a BLOCKED disposition REQUIRES attempt evidence (steps, artifacts, exact failure, unblock) reviewed like a park; an ATTEMPT→DEFER conversion requires a recorded gatekeeper amendment, never silence; V9's funding/fee-yield renegotiation retro-filed as a dated, append-only, hash-chained value (E-ATTEMPT)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/attempt-law-v10.json (2339daa5f68e…)",
+          "weakened": false
+        },
+        {
+          "id": "prevention-walls",
+          "text": "a pre-commit gate (blob-size cap · raw-data patterns [the W4-01 class] · credential patterns [the FRED class]) each proven fail-closed on a seeded violation (an oversized fixture, an embedded data array, a literal key) and passing a clean commit; the hook wired via core.hooksPath (E-PREVENT, A′#8)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-prevent-true-v10.json (0abc92450d29…)",
+          "weakened": false
+        },
+        {
+          "id": "history-disclosure",
+          "text": "script/history-blob-audit.ts inventories the large/suspicious blobs already permanent in history (W4-01's ~464KB differential fixture named + sized; the inherited transplant blobs named); the permanence DISCLOSED (this repository cannot un-commit; prevention is the only medicine); ZERO rewrites, by constitution — a history rewrite is a Halt (E-PREVENT, A′#8)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/history-blob-audit-v10.json (89fd68344c7f…)",
+          "weakened": false
+        },
+        {
+          "id": "catalog-pinned",
+          "text": "the E2E scenario catalog (data/studio/e2e-catalog-v10.json) pre-registered and hash-pinned BEFORE any fixing: personas × workflows × the mandated adversarial/edge classes (hostile/malformed console input · dead model endpoint mid-goal · stripped-provenance series · concurrent submissions · rate-limit storm via the UI · enrollment cap from the console · mid-flow restart · BLOCKED domains requested anyway · a replayed request); every scenario names its EXPECTED HONEST BEHAVIOR (so a scenario fails by succeeding wrongly, not only by erroring); red-team may ADD, never remove — a removal is caught (E-CATALOG, A′#5)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/e2e-catalog-pin-v10.json (e06b032dacee…)",
+          "weakened": false
+        },
+        {
+          "id": "criteria-printed-baseline",
+          "text": "criteria printed VERBATIM beside this blueprint's pin; the floor/absences baseline snapshotted (C-RECON2, C-NOREGRESS)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase0-baseline-v10.json (44748543cbad…)",
+          "weakened": false
+        }
+      ],
+      "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "3e15a448c1e42f6109e78967c043dad297fff71c1d44d96baf000d0fd1afddbf"
+    },
+    {
+      "seq": 1,
+      "phase": "phase-1",
+      "decision": "ADVANCE",
+      "stamp": "v10-phase1-transform-proven",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "TRANSFORM-PROVEN",
+          "text": "the ORIGINAL monorepo TS transform run in a sandbox that wrote NOTHING to the frozen tree, against the standalone rewrite on pre-pinned identical snapshots, to EXACTLY ONE derived outcome — MATCH retiring the D-DIFF asterisk at the letter, or MISMATCH root-caused to an honest disposition — never nudged quiet; fixtures pinned pre-run; zero frozen-tree writes/installs (git status pasted before/after); every adjustment root-caused (E-SANDBOX, A′#1)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/transform-differential-v10.json (18c6b12d2263…)",
+          "weakened": false
+        },
+        {
+          "id": "sandbox-discipline",
+          "text": "a throwaway sandbox copy of the monorepo at a DISTINCT path; dependencies installed IN THE COPY only; the frozen old tree takes ZERO writes and ZERO installs, its git status clean pasted BEFORE and AFTER every sandbox session; the copy's outputs are evidence, never merges (E-SANDBOX, A′#7)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/transform-differential-v10.json (18c6b12d2263…)",
+          "weakened": false
+        },
+        {
+          "id": "both-transforms-run",
+          "text": "the ORIGINAL monorepo transform (Runner.buildJob's per-leg series construction + commonWindow) AND the standalone rewrite (DataPlaneEngine.buildLendingJob's marketPayload + commonWindow) run on identical hash-pinned captured snapshots; the fixtures pinned BEFORE the first run (a re-derived fixture after a mismatch is exposed by the pre-run pin) (E-SANDBOX)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/transform-differential-v10.json (18c6b12d2263…)",
+          "weakened": false
+        },
+        {
+          "id": "one-outcome-derived",
+          "text": "exactly one outcome, DERIVED: MATCH (the per-leg series + window byte-identical → 'oracle-judged' now true of the port, the supersede entry filed) or MISMATCH (localized field-by-field, root-caused, disposed: port-fixed-to-match with the mechanism stated, or the ORIGINAL-was-wrong owner-level disposition, park-eligible, celebrated as the system working; the differential re-run post-disposition) (A′#1, D-TWOWAY's spirit)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/transform-differential-v10.json (18c6b12d2263…)",
+          "weakened": false
+        },
+        {
+          "id": "adjustments-rootcaused",
+          "text": "every port adjustment carries its root cause (symptom → mechanism → origin); NO silent port-adjustment to force a MATCH; the supersede entry (the asterisk retired or the classification annotated) filed append-only (E-ROOTCAUSE, T-SUPERSEDE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/transform-supersede-v10.json (b4b99371a240…)",
+          "weakened": false
+        }
+      ],
+      "prev": "3e15a448c1e42f6109e78967c043dad297fff71c1d44d96baf000d0fd1afddbf",
+      "hash": "98a603d3030f0e8121e08948e5d2b3077daec1f1fe3c251af0ddc13718707b04"
+    },
+    {
+      "seq": 2,
+      "phase": "phase-2",
+      "decision": "ADVANCE",
+      "stamp": "v10-phase2-domains-attempted",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "DOMAINS-ATTEMPTED",
+          "text": "funding and fee-yield each carried to DELIVERED with its differential OR BLOCKED with attempt evidence reviewed like a park AND second-attempted (a different endpoint / a different reconstruction route); a token attempt is reclassified an open issue; a delivery without its differential is a Halt; a third silent deferral is a Halt; conversions proof-backed; the pin unchanged (E-ATTEMPT, D-DOMAIN, A′#2/#11)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-domains-attempted-v10.json (573a7e888cd4…)",
+          "weakened": false
+        },
+        {
+          "id": "funding-attempted",
+          "text": "funding — a credential-free freepit T1 reconstruction (public venue endpoints) genuinely attempted with attempt evidence (steps, artifacts, exact failure if any, the unblock) → DELIVERED (≥3 chained snapshots · differential byte-identical · a REAL-PIT adjudication possible) or BLOCKED-with-evidence + a second differently-shaped attempt (E-ATTEMPT, D-DOMAIN)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/funding-differential-v10.json (b9dac43838ae…)",
+          "weakened": false
+        },
+        {
+          "id": "feeyield-attempted",
+          "text": "fee-yield — the Py3.11/pandas discovery-panel environment stood up under a hashed lockfile and genuinely attempted → the same DELIVERED-or-BLOCKED-with-evidence, second-attempted (E-ATTEMPT, D-DOMAIN)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/feeyield-attempt-v10.json (da3217afa395…)",
+          "weakened": false
+        },
+        {
+          "id": "deliveries-differential-proven",
+          "text": "any DELIVERED domain byte-equivalent to the frozen oracle on hash-pinned fixtures (the transform differential where the original had that domain's path); a delivery without its differential is refused by the DONE condition; absences converted with park-closure entries; the matrix re-rendered if scope grew; the inventory diff exact (D-DIFF, F-ABSENT)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/funding-differential-v10.json (b9dac43838ae…)",
+          "weakened": false
+        },
+        {
+          "id": "pin-unchanged",
+          "text": "RWA stays credential-gated and is absorbed mid-sprint if the key arrives (D-TWOWAY unchanged); the RWA pin untouched either way; no re-pin through any door — a re-pin is a Halt (S-CORE, D-TWOWAY)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase2-domains-attempted-v10.json (573a7e888cd4…)",
+          "weakened": false
+        }
+      ],
+      "prev": "98a603d3030f0e8121e08948e5d2b3077daec1f1fe3c251af0ddc13718707b04",
+      "hash": "f37b44d1080d6355fbc8eca833abc0b2f6242897e898210e19e39f2f0f9326ae"
+    },
+    {
+      "seq": 3,
+      "phase": "phase-3",
+      "decision": "ADVANCE",
+      "stamp": "v10-phase3-joined-loop",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "JOINED-LOOP",
+          "text": "the end-to-end joined artifact exists (goal text, model id, transcript hash, spec hash, ledger ids, verdict reproHash, provenance chain refs, report hash) with EVERY physics rule intact inside it; the console live — one flow, derives nothing, skips nothing — and the joined demo end-to-end (model present, data REAL-PIT); a ledger-skipping console path, a softened verdict, or a joined demo that isn't end-to-end is a Halt (E-CONSOLE, S-PROPOSE, D-LABEL, A′#4/#12)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/joined-loop-v10.json (2eff3b90be05…)",
+          "weakened": false
+        },
+        {
+          "id": "console-live",
+          "text": "the Goal Console — the 8th screen, the closed set amended 7→8 ONCE and closed again (SCREENS.length === 8); one flow (goal input → honest live progress states including the dead-endpoint failure state → the verdict card + the plain-language report + the enroll action); derives nothing (input collection + verbatim rendering of API responses); every mutation through write-then-invoke identical to the API path (the console holds no privileged route); rate limits + input caps apply to the form as to the API (E-CONSOLE, A′#3)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/joined-loop-v10.json (2eff3b90be05…)",
+          "weakened": false
+        },
+        {
+          "id": "console-copy-honest",
+          "text": "the console copy passes the honesty checker (no priming; the NO-GO framed as the product working; no summary that editorializes the verdict); the verbatim-relay wall catches a console reply that softens; a hidden console route skipping the ledger is hunted and absent (E-CONSOLE, A′#4)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/joined-loop-v10.json (2eff3b90be05…)",
+          "weakened": false
+        },
+        {
+          "id": "joined-artifact",
+          "text": "the joined loop recorded — a plain-English goal typed into the console → the free-model agent path (schema-walled, registered, family-counted) → a REAL-PIT adjudication on a DELIVERED domain → provenance + report; the artifact bundle committed and re-verifying (the verdict re-adjudicates byte-identically from the pinned snapshots); the family count includes the console's own submissions (the demo deflates itself); CI stays fixture-only (the live run is an artifact, never a dependency) (D-LABEL, S-PROPOSE, S-FREE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/joined-loop-v10.json (2eff3b90be05…)",
+          "weakened": false
+        },
+        {
+          "id": "identity-retold-console",
+          "text": "the matrix re-told (+console, +joined-loop capabilities), the memo addendum filed, the publication gate re-armed for re-ratification against the NEW matrix; consent re-issued as re-ratification (the agent cannot self-consent, L-2P) (F-IDENTITY, growth direction)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase3-joined-loop-v10.json (655f7caedd81…)",
+          "weakened": false
+        },
+        {
+          "id": "walk-budget-confirmed",
+          "text": "the F-BUDGET projection recorded; the walk budget (the protected majority) confirmed explicitly before the micro-loop closes (F-BUDGET)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/phase3-joined-loop-v10.json (655f7caedd81…)",
+          "weakened": false
+        }
+      ],
+      "prev": "f37b44d1080d6355fbc8eca833abc0b2f6242897e898210e19e39f2f0f9326ae",
+      "hash": "45c77ee774ad246cbed75e775555ee3f4804061fa3e519097ffefddc8ab39036"
+    },
+    {
+      "seq": 4,
+      "phase": "phase-4",
+      "decision": "ADVANCE",
+      "stamp": "v10-phase4-converged-4",
+      "author": "author-run",
+      "criteria": [
+        {
+          "id": "CONVERGED-4",
+          "text": "catalog-complete AND rotation-complete (all seven console-aware themes ≥1 cycle) AND two consecutive FULL-depth clean cycles AND at least four cycles total — OR the cap's honest NON-CONVERGENCE STOP at cap=10 with the register + transcripts + depth manifests + catalog coverage published — OR a recorded pre-walk STOP; exactly one, truthfully, first line of the terminal; NOT-REACHED exists only behind a recorded pre-walk STOP (E-CATALOG, E-ROOTCAUSE, C-USER, C-LOOP, F-BUDGET)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v5-cycles.json (b6140b8d949d…)",
+          "weakened": false
+        },
+        {
+          "id": "walk-ledger-chained",
+          "text": "the WALK LEDGER hash-chained, complete, committed; every issue registered BEFORE any fix",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v5-ledger.jsonl (b0eb2b0cfe9f…)",
+          "weakened": false
+        },
+        {
+          "id": "fixes-rootcaused",
+          "text": "every fix carries its root cause (symptom → mechanism → origin) + the smallest-change fix (inventoried) + the re-test artifact (the failing scenario re-run to confirmed resolution, hashed); a mechanism-free fix is symptom-patching — an open issue, not a resolution; battery-plus-prevent-walls-plus-leak-wall-plus-floor-plus-ABSENCES-green each cycle; frozen byte-identity re-proven; no scope shrank without an absence entry + park (E-ROOTCAUSE, F-ABSENT, C-NOREGRESS)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v5-cycles.json (b6140b8d949d…)",
+          "weakened": false
+        },
+        {
+          "id": "catalog-traversed",
+          "text": "a CLEAN cycle traverses the pinned catalog in FULL (realistic personas × workflows AND the adversarial/edge scenarios), each judged against its pre-declared expected honest behavior (a scenario fails by succeeding wrongly, not only by erroring); red-team may ADD scenarios mid-walk, never remove; a CLEAN claimed on a partial traverse is a Halt (E-CATALOG)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v5-cycles.json (b6140b8d949d…)",
+          "weakened": false
+        },
+        {
+          "id": "parks-legitimate",
+          "text": "every architectural/high-risk finding four-fielded (context+repro, rationale, impact, recommended next steps+sprint) and legitimacy-reviewed each cycle; a convenience park reclassified open; the park-legitimacy theme spot-audits root-cause AND attempt entries for boilerplate (C-PARK, E-ROOTCAUSE)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/parks-register.json (10496ad8d25a…)",
+          "weakened": false
+        },
+        {
+          "id": "rotation-depth-console",
+          "text": "all seven themes rotated, CONSOLE-AWARE (ux-priming + injection aimed at the console's every state; tamper incl. the PIT-snapshot chains + the store spot-audit; doc-lies incl. REAL/ILLUSTRATIVE labels + the matrix + the console copy); every cycle a FULL-depth manifest (three personas × all acts, through the UI first); a prior cycle replayed from its transcript (T-ROTATE, D-WALK+, C-USER)",
+          "status": "evidenced",
+          "detail": "evidence resolves: /Users/babar/Projects/organon-standalone/data/studio/walk-v5-cycles.json (b6140b8d949d…)",
+          "weakened": false
+        }
+      ],
+      "prev": "45c77ee774ad246cbed75e775555ee3f4804061fa3e519097ffefddc8ab39036",
+      "hash": "55b2814d62e0fa3613099a04e2d1e9d9935f97ef08a662f7240f9b07a0605a9e"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "protocol": "forensics-rwa",
+  "rule": "F-ENV (freeze inputs/environments, never an output you cannot regenerate); ROOTS-KNOWN gate",
+  "at": "2026-07-04",
+  "sprint": "Warranty (v8) Phase 1",
+  "question": "Why does regenerating RWA-VERDICT.md yield Decision=DISQUALIFIED while frozen.ts pins NOT-YET (9cf94c8a…)? (P0-1)",
+  "decisionMechanism": {
+    "source": "src/orchestrate/verdict.ts (monorepo)",
+    "rule": "verdict = DISQUALIFIED IFF opts.goldenNoiseGreen === false (verdict.ts:332-333). Otherwise the v6-identical Decision path yields NOT-YET (verdict.ts:382).",
+    "goldenNoiseGreen": "= (script/rwa-verdict.ts pyOk('selftest') exit code === 0), i.e. the sidecar's golden-noise self-test passing. DISQUALIFIED is a FAIL-SAFE: the engine refuses to certify a verdict when the self-test that proves the evaluation layer is trustworthy cannot pass."
+  },
+  "candidateMatrix": [
+    {
+      "id": 1,
+      "env": "studio-slim Python 3.9.6, numpy 1.26.4, scipy 1.13.1, NO purgedcv",
+      "location": "old-tree venv (/Users/babar/Projects/organon/packages/solidity-sentinel/src/backtest/py/.venv) — as-found",
+      "selftestExit": 1,
+      "reason": "ModuleNotFoundError: No module named 'purgedcv' (import fails at selftest.py:21)",
+      "goldenNoiseKeystone": "cannot run (import fails before any check)",
+      "goldenNoiseGreen": false,
+      "impliedDecision": "DISQUALIFIED"
+    },
+    {
+      "id": 2,
+      "env": "studio-slim Python 3.9.6, numpy 2.0.2, scipy 1.13.1, NO purgedcv",
+      "location": "standalone venv (/Users/babar/Projects/organon-standalone/src/backtest/py/.venv) — the V7 fresh-install env",
+      "selftestExit": 1,
+      "reason": "ModuleNotFoundError: No module named 'purgedcv' — purgedcv==0.1.2 has NO Python-3.9 distribution ('from versions: none'); it is a Python-3.11-only engine dep",
+      "goldenNoiseKeystone": "cannot run",
+      "goldenNoiseGreen": false,
+      "impliedDecision": "DISQUALIFIED — this is the environment V7 regenerated in; the observed drift"
+    },
+    {
+      "id": 3,
+      "env": "engine Python 3.11.15, numpy 1.26.4, scipy 1.17.1, purgedcv 0.1.2 (reconstructed from requirements.txt)",
+      "location": "reconstructed /tmp/fx-eng-np1 — the VALIDATED interpreter + the golden-noise cross-check dep",
+      "selftestExit": 1,
+      "reason": "RuntimeError: data/snapshot not found (lookahead_test, selftest.py:52) — the pinned FRED-gated discovery snapshot is ABSENT (gitignored local data, frozen.ts IMMUTABLE_DATA)",
+      "goldenNoiseKeystone": "PASS — trap-visible ann_sharpe=2.65, naive PSR(0)=0.9989, deflation gap=0.5205, DSR monotonic 0.9405>0.7394>0.4784, DSR matches purgedcv (mine=0.478421 vs purgedcv=0.479638), mean best-DSR=0.5568, mean PBO=0.4571, CPCV 15 paths, purge+embargo split — ALL PASS",
+      "goldenNoiseGreen": "would be TRUE if data/snapshot were present (the keystone is green; only the data-gated lookahead check fails)",
+      "impliedDecision": "NOT-YET (blocked from full demonstration only by the absent pinned data)"
+    },
+    {
+      "id": 4,
+      "env": "engine Python 3.11.15, numpy 2.0.2, scipy 1.17.1, purgedcv 0.1.2 (isolate the numpy variable)",
+      "location": "reconstructed /tmp/fx-eng-np2",
+      "selftestExit": 1,
+      "reason": "RuntimeError: data/snapshot not found (same data absence)",
+      "goldenNoiseKeystone": "PASS — BYTE-IDENTICAL keystone values to candidate 3: DSR=0.478421, monotonic 0.9405>0.7394>0.4784, PBO=0.4571, best-DSR=0.5568. numpy 1.26.4 vs 2.0.2 makes NO difference to the keystone.",
+      "goldenNoiseGreen": "would be TRUE if data/snapshot present",
+      "impliedDecision": "NOT-YET"
+    }
+  ],
+  "classification": "ENVIRONMENTAL",
+  "classificationDerivation": {
+    "notLogic": "The RWA finding did NOT evolve and the numerics did NOT change: the golden-noise KEYSTONE (the numerical trustworthiness core — DSR, deflation, monotonicity, PBO, purgedcv cross-check) reproduces byte-identically under the validated Py3.11 environment. A LOGIC drift would show a changed keystone / a genuine verdict-class movement; none exists.",
+    "notUndetermined": "The root cause IS determined and the mechanism is proven + deterministic: DISQUALIFIED = the golden-noise self-test failing, which fails for two purely ENVIRONMENTAL reasons — (a) the studio-slim Py3.9 env cannot import purgedcv (Py3.11-only), and (b) the pinned FRED-gated data/snapshot is absent. This is not archaeology; it is repeatable.",
+    "isEnvironmental": "The DISQUALIFIED is a deterministic FAIL-SAFE triggered by running the generator OUTSIDE its reproducibility contract (Python 3.11 + the engine stack incl. purgedcv 0.1.2 + scipy 1.17.1 + the pinned data/snapshot), not a change in the settled RWA verdict.",
+    "numpySuspectEliminated": "Phase-0 hygiene flagged numpy 2.0.2 vs 1.26.4 as the prime suspect. The candidate matrix ELIMINATES it: candidates 3 & 4 (same Py3.11 env, differing only in numpy) produce an IDENTICAL keystone. The evidence corrected the hypothesis — derived, not asserted."
+  },
+  "outcomeExecuted": {
+    "rePins": 0,
+    "pinDisposition": "The pin STAYS NOT-YET. frozen.ts RWA_VERDICT_SHA / RWA_VERDICT_INVARIANTS are UNCHANGED. The DISQUALIFIED is an environment artifact (fail-safe), not a verdict change — re-pinning it would be the exact F-ENV trap (freezing an unregenerable, environment-broken output). Halt refused.",
+    "environmentPinned": "src/backtest/py/requirements-studio.lock (go-forward STUDIO env) + src/backtest/py/requirements-rwa-engine.lock (the RWA reproducibility environment: Py3.11 + engine stack incl. purgedcv 0.1.2, scipy 1.17.1, numpy 1.26.4) — both hashed.",
+    "inputDataAbsenceNamed": "data/snapshot (the pinned FRED-gated discovery snapshot) is ABSENT — gitignored local data. Full byte-reproduction of NOT-YET is BLOCKED on it (owner: the data-plane sprint / P1-1). Named, not hidden.",
+    "generatorPin": "script/rwa-verdict.ts lives in the MONOREPO, not the standalone (inventory absence rwa-verdict-regeneration). The standalone carries only the frozen.ts pin + the four structural invariants.",
+    "keystoneReproduced": "The golden-noise keystone reproduces byte-identically under the validated Py3.11 env — the partial, honest proof that the numerical core is intact; the token-level regen is BLOCKED on absent data, stated plainly."
+  },
+  "reproducibility": "deterministic: script/forensics-rwa.ts re-derives this matrix (rebuild mode reconstructs the Py3.11 env + runs the selftest across candidates; verify mode checks this committed evidence). On a fresh clone the old-tree generator + Py3.11 purgedcv are absent → the harness reports BLOCKED honestly."
+}

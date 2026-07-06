@@ -1,0 +1,42 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "pool-composer",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "GET /",
+      "interaction": "load the dashboard from a fresh serve",
+      "expected": "the Pool Composer (screen 10) renders with its members/regime form",
+      "met": true,
+      "evidence": "status 200; contains the Pool Composer screen"
+    },
+    {
+      "route": "POST /pool/compose",
+      "interaction": "compose a diversified 5-member pool and submit",
+      "expected": "a pool verdict renders with K_eff, the union charge (ceil K_eff), the union family, the MANDATORY stress caveat, and the legible deflation basis (n · scoping · a neutral note)",
+      "met": true,
+      "evidence": "status 200; POOL VERDICT + union charge + Stress caveat + Deflation basis"
+    },
+    {
+      "route": "POST /pool/compose",
+      "interaction": "compose an OVER-CORRELATED (near-duplicate) pool",
+      "expected": "'THIS POOL ADDS NOTHING BEYOND ITS STRONGEST MEMBER' renders plainly (K_eff≈1) — WITHOUT refusing composition (the honest degenerate read)",
+      "met": true,
+      "evidence": "status 200; ADDS NOTHING, K_eff shown, not refused"
+    }
+  ],
+  "failureState": {
+    "route": "POST /pool/compose",
+    "interaction": "compose a pool with fewer than 2 members (count=1)",
+    "expected": "the pool is REFUSED before registration with an honest message (a pool needs ≥2 members to diversify); no fabricated verdict",
+    "met": true,
+    "evidence": "status 200; INVALID POOL, no verdict"
+  },
+  "allMet": true,
+  "at": "2026-07-05",
+  "contentSha": "0277ff17c58d870d1708c9a23fae8e94f8169694f9a569cfbd8358f6b0e7705c",
+  "verify": {
+    "ok": true,
+    "issues": []
+  }
+}

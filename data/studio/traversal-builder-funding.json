@@ -1,0 +1,35 @@
+{
+  "kind": "console-path-traversal",
+  "capability": "guided-builder-funding",
+  "freshServe": true,
+  "steps": [
+    {
+      "route": "GET /",
+      "interaction": "load the dashboard — the FUNDING builder form renders",
+      "expected": "the Guided Builder — FUNDING form renders with venue/interval/side",
+      "met": true,
+      "evidence": "status 200; contains the FUNDING form"
+    },
+    {
+      "route": "POST /builder/funding",
+      "interaction": "compose a funding-carry spec (binance, 8h, receive) and submit",
+      "expected": "a verdict card + the plain-language report + WHY NOT YET render (ILLUSTRATIVE data, labeled); the funding composition reaches the same engine",
+      "met": true,
+      "evidence": "status 200; VERDICT + WHY NOT YET + ILLUSTRATIVE"
+    }
+  ],
+  "failureState": {
+    "route": "POST /builder/funding",
+    "interaction": "compose a funding spec with an INVALID interval (3h — funding settles 1h/8h)",
+    "expected": "the invalid composition is REFUSED before registration with an honest message; no fabricated verdict",
+    "met": true,
+    "evidence": "status 200; INVALID COMPOSITION, no VERDICT"
+  },
+  "allMet": true,
+  "at": "2026-07-05",
+  "contentSha": "678f4dd5a9eaabb2fe29fb1526394fb3bac82458751e0ffc7b467c01d9c32ffd",
+  "verify": {
+    "ok": true,
+    "issues": []
+  }
+}

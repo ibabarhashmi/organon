@@ -1,0 +1,117 @@
+{
+  "protocol": "phase3-voc-v11",
+  "at": "2026-07-05",
+  "gate": "COMPLEXITY-PAYS",
+  "rootCauseFinding": "a d-parameter ridge fit has in-sample t-stat ~sqrt(d); NO best-of-n deflation neutralises it (would need n_trials=exp(d/2)). The honest fix is OUT-OF-SAMPLE evaluation; the in-sample regime is BANNED (it is what the kill-switch catches). OOS measures the edge; the pinned DoF charge prices the search on top.",
+  "mapping": {
+    "pinnedPreFirstRun": true,
+    "hash": "d79fc6550ae4a3be492c2df927743b7675ad23d6d5bf27a97b5535c3f871edf3",
+    "spec": "VoC effective-DoF charge mapping (pinned pre-first-run, R-DOF): dofCharge = ceil( Σ_i s_i^2 / (s_i^2 + lambda) ) where s_i are the singular values of the COLUMN-STANDARDISED random-feature matrix X ∈ R^{n×p}; ridge penalty lambda = 1.0 on standardised features; the charge enters the frozen deflation via declaredNTrials = max(dofCharge, familySize, rootCount); conservative — a CEILING, never a floor. Selection rule: the noise wall must hold (ZERO deflation survivors across the seed battery) at the pinned lambda AND its neighbours; any penalty that yields a noise survivor is BANNED. If the wall cannot hold, the proposer does not ship (STOP, pre-authorised).",
+    "penalty": 1
+  },
+  "noiseWall": {
+    "ranFirst": true,
+    "clean": true,
+    "runs": [
+      {
+        "p": 40,
+        "n": 500,
+        "survivors": 0,
+        "allClean": true,
+        "maxDsr": 0
+      },
+      {
+        "p": 30,
+        "n": 500,
+        "survivors": 0,
+        "allClean": true,
+        "maxDsr": 0
+      },
+      {
+        "p": 50,
+        "n": 600,
+        "survivors": 0,
+        "allClean": true,
+        "maxDsr": 0.1851
+      },
+      {
+        "p": 80,
+        "n": 800,
+        "survivors": 0,
+        "allClean": true,
+        "maxDsr": 0.447
+      }
+    ]
+  },
+  "killSwitch": {
+    "proven": true,
+    "inSampleSurvivors": "39/40",
+    "inSampleMaxDsr": 1,
+    "tripped": {
+      "tripped": true,
+      "proposerDisabled": true,
+      "reason": "39 noise survivor(s) passed the deflation at their charge — the VoC proposer class is DISABLED pending an owner decision; this event is a first-class finding, never hidden (R-DOF)"
+    },
+    "cleanState": {
+      "tripped": false,
+      "proposerDisabled": false,
+      "reason": "noise wall green — zero survivors; the proposer class stays admitted (advisory, EXPERIMENTAL)"
+    }
+  },
+  "chargeLoadBearing": {
+    "flip": true,
+    "dsrAt1": 0.9702391036475347,
+    "dsrAtCharge38": 0.3275669922783033,
+    "monotoneStiffening": true,
+    "stiffeningCurve": [
+      {
+        "nTrials": 1,
+        "dsr": 0.9702391036475347
+      },
+      {
+        "nTrials": 5,
+        "dsr": 0.8247040465396316
+      },
+      {
+        "nTrials": 20,
+        "dsr": 0.47317623980133366
+      },
+      {
+        "nTrials": 38,
+        "dsr": 0.3275669922783033
+      },
+      {
+        "nTrials": 100,
+        "dsr": 0.1691635220342424
+      }
+    ]
+  },
+  "realProposal": {
+    "dofCharge": 38,
+    "effectiveDoF": 37.89,
+    "familyDeclaredNTrials": 38,
+    "verdict": "CONDITIONAL",
+    "dsr": 0.9920985535739697,
+    "chargeVisibleReport": "this EXPERIMENTAL VoC proposal cost the family 38 trials (effective DoF 37.9; declared-n 38)",
+    "experimental": "EXPERIMENTAL — the VoC proposer is admitted behind a noise wall + a live kill-switch; its verdicts are the frozen core's, its charge is its effective degrees of freedom (R-DOF)",
+    "attribution": {
+      "twoSided": true,
+      "leanedOn": "40 random Fourier features of the base signals fit by ridge (λ=1) on a 60% train split; effective DoF ≈ 37.9 → charged 38 trials",
+      "wouldBreak": "the edge is measured OUT-OF-SAMPLE (held-out 40%); a noise fit has no out-of-sample edge and dies on measurement, and even a genuine weak edge must then clear the 38-trial deflation — complexity pays its bill"
+    },
+    "chargeIsApplied": true
+  },
+  "specCannotBless": {
+    "proven": true,
+    "cleanVerdict": "CONDITIONAL",
+    "poisonedVerdict": "CONDITIONAL"
+  },
+  "everyExplorationCharged": {
+    "proposeYieldsNoVerdict": true,
+    "note": "the only proposal→verdict path is chargeAndAdjudicate (write-then-invoke at dofCharge); there is no uncharged fit"
+  },
+  "verdictDifferential": {
+    "byteIdentical": true,
+    "fingerprintSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54"
+  }
+}

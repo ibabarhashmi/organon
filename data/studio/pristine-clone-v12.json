@@ -1,0 +1,26 @@
+{
+  "protocol": "pristine-clone-v12",
+  "at": "2026-07-05",
+  "rule": "U-PRISTINE — isolated HOME, no inherited venvs, enumerated prerequisites; environmental luck cannot masquerade as verification",
+  "isolatedHome": true,
+  "prerequisites": {
+    "systemProvided": {
+      "bun": "1.3.11",
+      "python3": "Python 3.9.6",
+      "git": "git version 2.39.5 (Apple Git-154)"
+    },
+    "repoProvided": "everything else (the frozen core, the studio, the Python sidecars' source, package.json, the lockfile) — cloned, never inherited"
+  },
+  "installOk": true,
+  "positiveControl": {
+    "withoutVenvSidecarFails": true,
+    "note": "WITHOUT the fresh venv a sidecar-dependent test FAILS — the isolation is real, no inherited venv is used (the exact environmental luck W6-04's predecessors relied on)"
+  },
+  "venvCreatedFresh": true,
+  "battery": {
+    "pass": 311,
+    "fail": 0,
+    "green": true
+  },
+  "pristineGreen": true
+}

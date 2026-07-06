@@ -1,0 +1,35 @@
+{
+  "protocol": "phase1-store-true-v9",
+  "at": "2026-07-04",
+  "gate": "STORE-TRUE",
+  "leakWall": {
+    "dataplaneFiles": 3,
+    "leaks": [],
+    "clean": true
+  },
+  "provenanceChain": {
+    "present": true,
+    "verified": true,
+    "lendingKeys": 5,
+    "keys": {
+      "lending:aave-v3:USDT:ethereum": 2,
+      "lending:aave-v3:USDC:ethereum": 2,
+      "lending:fluid-lending:USDC:ethereum": 2,
+      "lending:fluid-lending:USDT:ethereum": 2,
+      "lending:sparklend:DAI:ethereum": 2
+    }
+  },
+  "gapHonest": "asOf carries the prior real observation across a missing day; no interpolation code path (proven in test/organon/dataplane_store.test.ts)",
+  "rwa": {
+    "ready": false,
+    "reality": "BLOCKED",
+    "reason": "RWA BLOCKED-on-credential — missing: FRED_API_KEY (Operator env var, never committed) + data/snapshot/MANIFEST.json (the pinned discovery snapshot, gitignored). The pin STAYS NOT-YET (zero re-pins). Never a stale or fabricated payload.",
+    "unblock": "Operator: export FRED_API_KEY=<free key from fredaccount.stlouisfed.org>, then run the snapshot regeneration + the two-way-door byte-regen (Phase 3)."
+  },
+  "credentialGrepWall": {
+    "pattern": "FRED_API_KEY = \"<literal>\"",
+    "matchesInCommittedTree": 0,
+    "clean": true
+  },
+  "storeTrue": true
+}

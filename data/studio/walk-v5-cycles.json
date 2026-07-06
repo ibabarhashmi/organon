@@ -1,0 +1,126 @@
+{
+  "protocol": "walk-v5-cycles",
+  "at": "2026-07-05",
+  "gate": "CONVERGED-4",
+  "outcome": "CONVERGED-4",
+  "cycles": [
+    {
+      "cycle": 1,
+      "cleanTraverse": true,
+      "newFindings": [
+        "W5-01"
+      ],
+      "scenarios": 15,
+      "themesCovered": [
+        "injection",
+        "laundering",
+        "tamper",
+        "availability",
+        "doc-lies",
+        "ux-priming",
+        "park-legitimacy"
+      ],
+      "depth": "FULL (all 15 scenarios × the console door)",
+      "note": "1 genuine finding (W5-01, rate-limit gap) — root-caused, fixed, re-tested"
+    },
+    {
+      "cycle": 2,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 15,
+      "themesCovered": [
+        "injection",
+        "laundering",
+        "tamper",
+        "availability",
+        "doc-lies",
+        "ux-priming",
+        "park-legitimacy"
+      ],
+      "depth": "FULL (three personas × all acts, through the UI first)",
+      "replay": "cycle 1 replayed from its transcript — registers stable",
+      "note": "CLEAN — the full catalog traversed, every scenario matched its expected honest behavior"
+    },
+    {
+      "cycle": 3,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 15,
+      "themesCovered": [
+        "injection",
+        "laundering",
+        "tamper",
+        "availability",
+        "doc-lies",
+        "ux-priming",
+        "park-legitimacy"
+      ],
+      "depth": "FULL (three personas × all acts, through the UI first)",
+      "replay": "cycle 2 replayed from its transcript — registers stable",
+      "note": "CLEAN — the full catalog traversed, every scenario matched its expected honest behavior"
+    },
+    {
+      "cycle": 4,
+      "cleanTraverse": true,
+      "newFindings": [],
+      "scenarios": 15,
+      "themesCovered": [
+        "injection",
+        "laundering",
+        "tamper",
+        "availability",
+        "doc-lies",
+        "ux-priming",
+        "park-legitimacy"
+      ],
+      "depth": "FULL (three personas × all acts, through the UI first)",
+      "replay": "cycle 3 replayed from its transcript — registers stable",
+      "note": "CLEAN — the full catalog traversed, every scenario matched its expected honest behavior"
+    }
+  ],
+  "cleanFlags": [
+    false,
+    true,
+    true,
+    true
+  ],
+  "catalogComplete": true,
+  "rotationComplete": true,
+  "twoConsecutiveClean": true,
+  "cycleCount": 4,
+  "converged4": true,
+  "catalog": {
+    "count": 15,
+    "byClass": {
+      "realistic": 5,
+      "adversarial": 3,
+      "edge": 7
+    },
+    "traversedInFull": true,
+    "judgedAgainstExpected": true
+  },
+  "themes": [
+    "injection",
+    "laundering",
+    "tamper",
+    "availability",
+    "doc-lies",
+    "ux-priming",
+    "park-legitimacy"
+  ],
+  "walkLedger": {
+    "file": "data/studio/walk-v5-ledger.jsonl",
+    "chainOk": true,
+    "issues": 2,
+    "open": 0,
+    "parks": 0,
+    "findings": [
+      {
+        "id": "W5-01",
+        "status": "fixed",
+        "title": "the Goal Console form (/console/goal) had no rate limit, unlike the /studio API guard"
+      }
+    ]
+  },
+  "note": "the walk ran through the UI/UX (the console the user's door); the pinned catalog traversed in full each cycle, every scenario judged against its expected honest behavior; the one genuine finding (W5-01) root-caused → fixed → re-tested; two consecutive FULL-depth clean cycles across four total."
+}

@@ -1,0 +1,7 @@
+{
+  "protocol": "trust-panel",
+  "screen": "7 of 7 (set amended six→seven, re-closed)",
+  "positiveControl": "test/organon/studio_screens.test.ts — the panel surfaces a red battery, capability regressions, a clock GAP, and parks; it CANNOT render 'green' over bad state",
+  "liveCrossCheck": "GET /trust returned walls 12/12, clocks scheduler-originated ×5 TICKING, battery 135/0/27, inventory anchor bee1a152→4888ef49, independence PENDING — matching the raw artifacts",
+  "independence": "PENDING — displayed as such until a genuine non-author acts (L-2P)"
+}

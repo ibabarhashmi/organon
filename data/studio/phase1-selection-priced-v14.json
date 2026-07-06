@@ -1,0 +1,65 @@
+{
+  "protocol": "phase1-selection-priced-v14",
+  "at": "2026-07-06",
+  "gate": "SELECTION-PRICED",
+  "pinsHashChecked": true,
+  "instrumentValid": true,
+  "outcome": "TERM",
+  "cells": [
+    {
+      "M": 20,
+      "K": 5,
+      "seeds": 40,
+      "kEffAtSelected": 4.881267325184912,
+      "noiseSurvivorRateUncharged": 0.6,
+      "noiseSurvivorRateCurrent": 0.175,
+      "noiseSurvivorRateTerm": 0,
+      "plantedSurvivorRateCurrent": 0.95,
+      "plantedSurvivorRateTerm": 0.775,
+      "surcharge": 14,
+      "inflationExists": true,
+      "instrumentSees": true,
+      "termRestoresHonesty": true,
+      "outcome": "TERM"
+    },
+    {
+      "M": 30,
+      "K": 5,
+      "seeds": 40,
+      "kEffAtSelected": 4.855907680625348,
+      "noiseSurvivorRateUncharged": 0.825,
+      "noiseSurvivorRateCurrent": 0.4,
+      "noiseSurvivorRateTerm": 0,
+      "plantedSurvivorRateCurrent": 1,
+      "plantedSurvivorRateTerm": 0.9,
+      "surcharge": 18,
+      "inflationExists": true,
+      "instrumentSees": true,
+      "termRestoresHonesty": true,
+      "outcome": "TERM"
+    }
+  ],
+  "robustness": [
+    {
+      "M": 20,
+      "plantedSurvivesTerm": 0.775,
+      "note": "real edges survive the surcharge (the pick is priced, not the signal)"
+    },
+    {
+      "M": 30,
+      "plantedSurvivesTerm": 0.9,
+      "note": "real edges survive the surcharge (the pick is priced, not the signal)"
+    }
+  ],
+  "restatement": {
+    "rule": "T-POLLUTION (append-only re-statement of existing pool verdicts under the adopted TERM)",
+    "existingPoolsUniverse": "M=K (the illustrative pools were composed over their given members — no declared best-of-M candidate universe)",
+    "surchargeForHistorical": 0,
+    "verdictsMoved": 0,
+    "note": "no existing pool verdict moves (all were M=K, surcharge 0); the verdict differential stays byte-identical. The TERM rule now REQUIRES a declared selection universe M for any pool whose members were SELECTED from a larger candidate set — the pick is priced going forward; the historical M=K pools are re-stated as surcharge-0 (unchanged), the supersession filed, none edited."
+  },
+  "remedy": "TERM — src/analytics/pool.ts: declaredNTrials = ceil(K_eff) + selectionSurcharge(M,K), selectionSurcharge = ceil(log2(C(M,K))) (the pinned closed form, one source shared with src/studio/selection.ts)",
+  "caveatLifecycle": "interim (Phase 0, rendered on pool reports) → TERM (Phase 1, the pick priced; Pool.selectionCaveat('term'))",
+  "supersedeFiled": true,
+  "verdictDifferentialNote": "byte-identical (the frozen core untouched; existing pools M=K → no move)"
+}

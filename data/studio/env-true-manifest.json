@@ -1,0 +1,51 @@
+{
+  "protocol": "env-true",
+  "probes": [
+    {
+      "id": "NET-EGRESS",
+      "precondition": "network egress to the free data adapters",
+      "status": "TRUE",
+      "evidence": "HEAD api.llama.fi → HTTP 200",
+      "machineCheckable": true
+    },
+    {
+      "id": "FREE-MODEL",
+      "precondition": "a working free-model endpoint (1-token probe)",
+      "status": "TRUE",
+      "evidence": "ollama qwen3-coder:480b-cloud → response=\"ok\"",
+      "machineCheckable": true
+    },
+    {
+      "id": "GIT-REMOTE",
+      "precondition": "a pushable git remote exists",
+      "status": "TRUE",
+      "evidence": "origin → https://github.com/ibabarhashmi/organon.git",
+      "machineCheckable": true
+    },
+    {
+      "id": "SECOND-PARTY",
+      "precondition": "an attested non-author second party (loads URL, runs verify-v3, submits)",
+      "status": "REQUESTED-FROM-OPERATOR",
+      "evidence": "the author cannot be the second party (L-2P); Operator must name a role",
+      "machineCheckable": false
+    },
+    {
+      "id": "PUSH-CONSENT",
+      "precondition": "Operator consent to push to origin (observed CI run)",
+      "status": "REQUESTED-FROM-OPERATOR",
+      "evidence": "pushing is outward-facing; requires explicit user authorization",
+      "machineCheckable": false
+    },
+    {
+      "id": "RESTORE-WINDOW",
+      "precondition": "Operator restoration attempt for forward-capture backups (L-FINAL)",
+      "status": "REQUESTED-FROM-OPERATOR",
+      "evidence": "forward-capture data lives on Operator machines/backups, if anywhere",
+      "machineCheckable": false
+    }
+  ],
+  "summary": {
+    "machineCheckable": "3/3 TRUE",
+    "operatorPending": 3
+  }
+}

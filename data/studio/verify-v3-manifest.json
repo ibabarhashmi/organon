@@ -1,0 +1,89 @@
+{
+  "protocol": "verify-v3",
+  "author": "non-author-run",
+  "resultsHash": "2adf7bafad14a03cae89a13731fd9ec97ccdac5003b72821230233202dc5909e",
+  "rows": [
+    {
+      "id": "V3-PINS",
+      "claim": "the 7 frozen artifacts byte-identical to their pins",
+      "kind": "factual-reexecution",
+      "disposition": "UPGRADED",
+      "evidence": "7/7 ok"
+    },
+    {
+      "id": "V3-GITCLEAN",
+      "claim": "frozen core git-clean (zero core bytes moved)",
+      "kind": "factual-reexecution",
+      "disposition": "UPGRADED",
+      "evidence": "git-clean"
+    },
+    {
+      "id": "V3-LAUNDER",
+      "claim": "25-round laundering: CONDITIONAL@1 → NO-GO@25, DSR falls (iteration stiffens)",
+      "kind": "factual-reexecution",
+      "disposition": "UPGRADED",
+      "evidence": "DSR@1=0.998(CONDITIONAL) → DSR@25=0.805(NO-GO); family=25"
+    },
+    {
+      "id": "V3-BYTEID",
+      "claim": "verdict byte-identical through the surface (reproHash equality)",
+      "kind": "factual-reexecution",
+      "disposition": "UPGRADED",
+      "evidence": "surface 7e89eba7bd84… == direct 7e89eba7bd84…"
+    },
+    {
+      "id": "V3-NODEPS",
+      "claim": "zero new dependencies (bun.lock unchanged)",
+      "kind": "factual-reexecution",
+      "disposition": "UPGRADED",
+      "evidence": "bun.lock clean"
+    },
+    {
+      "id": "V3-WALLS-STATED",
+      "claim": "the 5 STUDIO wall files shipped in V3 exist and are green",
+      "kind": "factual-reexecution",
+      "disposition": "UPGRADED",
+      "evidence": "5/5 present"
+    },
+    {
+      "id": "AUDIT-WALLS-FIRST",
+      "claim": "WALLS-FIRST mandated 6 walls; V3 shipped 5 (determinism wall absent) without logging the gap",
+      "kind": "governance-finding",
+      "disposition": "DOWNGRADED",
+      "evidence": "V3 shipped 5/6; the 6th (determinism) is ADDED this sprint (Phase 2)"
+    },
+    {
+      "id": "AUDIT-EXTERNAL",
+      "claim": "V3 satisfied 'an external framework's run' with an IN-PROCESS simulation, not a network submission",
+      "kind": "governance-finding",
+      "disposition": "DOWNGRADED",
+      "evidence": "the external path was proven in-process (authorClass:'external'); a real network run is a Phase-6 deliverable of THIS sprint"
+    },
+    {
+      "id": "AUDIT-CLOCKS",
+      "claim": "V3 never VERIFIED the forward clocks (the product's only path to a powered verdict)",
+      "kind": "governance-finding",
+      "disposition": "DOWNGRADED",
+      "evidence": "forward-capture data absent in-tree; V3 verification designed around an evidence-absent tree — Phase 1 dispositions it (restart-with-discontinuity)"
+    },
+    {
+      "id": "AUDIT-LABEL",
+      "claim": "V3 demo labeled 'PBO-KILL' but shows DSR-deflation, not PBO moving (H-LABEL)",
+      "kind": "governance-finding",
+      "disposition": "DOWNGRADED",
+      "evidence": "renamed to 'DSR-deflation kill' this sprint (Phase 7)"
+    },
+    {
+      "id": "AUDIT-TERMINAL",
+      "claim": "V3 terminal state 'COMPLETE' overstates; honestly it was a clean STOP after the center, wiring scheduled",
+      "kind": "governance-finding",
+      "disposition": "DOWNGRADED",
+      "evidence": "retitled in the append-only V3 correction (Phase 0)"
+    }
+  ],
+  "summary": {
+    "total": 11,
+    "upgraded": 6,
+    "downgraded": 5
+  }
+}

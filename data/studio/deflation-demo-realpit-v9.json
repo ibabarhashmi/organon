@@ -1,0 +1,15 @@
+{
+  "protocol": "deflation-demo-realpit-v9",
+  "at": "2026-07-04",
+  "reality": "REAL-PIT",
+  "successorTo": "V6 live-run-2 (ILLUSTRATIVE, canned returns) — NEVER conflated: this artifact carries REAL-PIT returns + its own hash",
+  "returnsSha": "77be986ed09d96f5369a574baa4cb7d6a9a31b126ee173319470a5d575737b2d",
+  "returnsSource": "the ported lending engine on REAL captured DefiLlama snapshots (provenance in real-returns-v9.json)",
+  "familySize": 25,
+  "dsrAtFamily1": 0.14696946925772575,
+  "dsrAtFamily25": 0.0005711332512784886,
+  "verdictAtFamily1": "NO-GO",
+  "verdictAtFamily25": "NO-GO",
+  "deflated": true,
+  "note": "the family-size mechanism (anti-PBO): iterating a REAL-PIT lending spec STIFFENS the DSR bar (dsr25 < dsr1) — iteration cannot launder acceptance, now proven on real data. Whatever the verdict, a REAL-PIT NO-GO is the product working (zero powered verdicts)."
+}

@@ -1,0 +1,167 @@
+{
+  "protocol": "transform-differential-v10",
+  "at": "2026-07-05",
+  "rule": "E-SANDBOX, D-DIFF — the ORIGINAL monorepo transform vs the standalone rewrite on identical pinned snapshots; exactly one derived outcome",
+  "sandbox": {
+    "root": "/tmp/organon-sandbox-v10",
+    "disclosure": "a throwaway copy of the monorepo package + @solidity-sentinel/util; deps installed IN THE COPY only (bun install); storage/db.ts SHIMMED (an unreached seam — the transform never touches the DB, Series is injected); `export` added to legSeries/buildJob (visibility only — the FUNCTION BODIES are the monorepo's exact bytes, unedited). The frozen tree took zero writes and zero installs.",
+    "transformRun": "Runner.legSeries (yield branch) + Runner.commonWindow — the monorepo's exact bytes",
+    "scope": "the load-bearing PER-MARKET SERIES the accrual consumes (apyBase · tvl · turnover) + the common window; the full monorepo Job's RWA scaffolding (pegMark, benchmarks, redemption/issuer/assetClass metadata, seed/nTrials) is out-of-scope-by-construction (the slim lending sidecar does not consume it) — named, not hidden"
+  },
+  "inputPin": {
+    "inputSha": "e8851baf7840c1386b79f0513bfccf0b8b8366b71c802c15eaee18577c809d49",
+    "markets": 5,
+    "note": "pinned BEFORE either transform ran; the raw points are gitignored (passed via a tmpdir file), never committed (prevention wall + A′#12)"
+  },
+  "window": {
+    "port": {
+      "start": 1717110111264,
+      "end": 1783180882096
+    },
+    "mono": {
+      "start": 1717110111264,
+      "end": 1783180882096
+    },
+    "match": true
+  },
+  "perMarket": [
+    {
+      "key": "lending:aave-v3:USDC:ethereum",
+      "portSeriesSha": "0af1e68325c18aaf19ea668ff557b9fe5a177663caedc18d86e6c836b0097c56",
+      "monoSeriesSha": "0af1e68325c18aaf19ea668ff557b9fe5a177663caedc18d86e6c836b0097c56",
+      "match": true,
+      "perField": [
+        {
+          "field": "apyBase",
+          "match": true,
+          "portSha": "94c11f83022f",
+          "monoSha": "94c11f83022f"
+        },
+        {
+          "field": "tvl",
+          "match": true,
+          "portSha": "48d8fec3fc53",
+          "monoSha": "48d8fec3fc53"
+        },
+        {
+          "field": "turnover",
+          "match": true,
+          "portSha": "79a99a1334c9",
+          "monoSha": "79a99a1334c9"
+        }
+      ]
+    },
+    {
+      "key": "lending:aave-v3:USDT:ethereum",
+      "portSeriesSha": "f81ce7f1aefd85dc73fbbd2011e5a28d131a2ffa8be584b21b6e701cb93c2bb3",
+      "monoSeriesSha": "f81ce7f1aefd85dc73fbbd2011e5a28d131a2ffa8be584b21b6e701cb93c2bb3",
+      "match": true,
+      "perField": [
+        {
+          "field": "apyBase",
+          "match": true,
+          "portSha": "24d17ee04b10",
+          "monoSha": "24d17ee04b10"
+        },
+        {
+          "field": "tvl",
+          "match": true,
+          "portSha": "82edd63e8375",
+          "monoSha": "82edd63e8375"
+        },
+        {
+          "field": "turnover",
+          "match": true,
+          "portSha": "d21a4b21e060",
+          "monoSha": "d21a4b21e060"
+        }
+      ]
+    },
+    {
+      "key": "lending:fluid-lending:USDC:ethereum",
+      "portSeriesSha": "b5f7eae6cfb7cc0ea19747c197e968aac2a0f23644cdfab83aac98801c9d789c",
+      "monoSeriesSha": "b5f7eae6cfb7cc0ea19747c197e968aac2a0f23644cdfab83aac98801c9d789c",
+      "match": true,
+      "perField": [
+        {
+          "field": "apyBase",
+          "match": true,
+          "portSha": "ebb138b3d9ab",
+          "monoSha": "ebb138b3d9ab"
+        },
+        {
+          "field": "tvl",
+          "match": true,
+          "portSha": "b0573294bd38",
+          "monoSha": "b0573294bd38"
+        },
+        {
+          "field": "turnover",
+          "match": true,
+          "portSha": "24f28ea38b22",
+          "monoSha": "24f28ea38b22"
+        }
+      ]
+    },
+    {
+      "key": "lending:fluid-lending:USDT:ethereum",
+      "portSeriesSha": "40fd26b59dbda1df295c6696697532047ac1c59e6a567de0b76787a6468230fa",
+      "monoSeriesSha": "40fd26b59dbda1df295c6696697532047ac1c59e6a567de0b76787a6468230fa",
+      "match": true,
+      "perField": [
+        {
+          "field": "apyBase",
+          "match": true,
+          "portSha": "362e3312b303",
+          "monoSha": "362e3312b303"
+        },
+        {
+          "field": "tvl",
+          "match": true,
+          "portSha": "db806736359a",
+          "monoSha": "db806736359a"
+        },
+        {
+          "field": "turnover",
+          "match": true,
+          "portSha": "844f2276f8aa",
+          "monoSha": "844f2276f8aa"
+        }
+      ]
+    },
+    {
+      "key": "lending:sparklend:DAI:ethereum",
+      "portSeriesSha": "2de8cdd3eee7833677adf1ad13dfe91d6014b93a018f0e46e1f747df7704740d",
+      "monoSeriesSha": "2de8cdd3eee7833677adf1ad13dfe91d6014b93a018f0e46e1f747df7704740d",
+      "match": true,
+      "perField": [
+        {
+          "field": "apyBase",
+          "match": true,
+          "portSha": "fd16ff315fbf",
+          "monoSha": "fd16ff315fbf"
+        },
+        {
+          "field": "tvl",
+          "match": true,
+          "portSha": "0bcc020b72ca",
+          "monoSha": "0bcc020b72ca"
+        },
+        {
+          "field": "turnover",
+          "match": true,
+          "portSha": "0ed2d411674e",
+          "monoSha": "0ed2d411674e"
+        }
+      ]
+    }
+  ],
+  "outcome": "MATCH",
+  "seededDivergence": {
+    "market": "lending:aave-v3:USDC:ethereum",
+    "transform": "turnover × 0.5 (dropped the MIN_TURNOVER_FRACTION/1 floor — a flattering lower-cost port)",
+    "caught": true,
+    "directionBlind": true
+  },
+  "allMatch": true
+}
