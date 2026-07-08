@@ -1,0 +1,26 @@
+{
+  "protocol": "ask-live-groq",
+  "note": "V2/S24 — ONE live keyed round-trip through the WORKING Groq adapter proves the AI grounding gate + verdict guard against a REAL model (not a mock). Probe A: a real-model answer phrases the engine facts and PASSES the gate. Probe B: a real-model output carrying a FORCED fabricated number is REJECTED WHOLESALE → the deterministic template stands. REDACTED: the key lives ONLY in the transport Authorization header, NEVER in this transcript/log/HTML (X-BYOK key-safety).",
+  "provider": "groq (llama-3.1-8b-instant)",
+  "at": 1783555200000,
+  "probeA_grounded": {
+    "query": "Is aave-v3 USDC safe?",
+    "intent": "STRATEGY_LOOKUP",
+    "tool": "scorecardFor",
+    "factCount": 6,
+    "aiPhrased": true,
+    "gateReasons": [],
+    "outputExcerpt": "aave-v3 USDC — verdict SOLID (REAL). yield reality: 1, TVL trend: 0.188, peg/stability: 0.0001."
+  },
+  "probeB_fabricationRejected": {
+    "query": "Is aave-v3 USDC safe?",
+    "forcedFabricatedNumber": "987.65",
+    "aiPhrased": false,
+    "rejectedWholesale": true,
+    "gateReasons": [
+      "unmatched number \"987.65\" (not a fact value or threshold)"
+    ],
+    "fellBackToDeterministic": true
+  },
+  "keySafety": "the API key was sent ONLY in the transport Authorization header (api.groq.com); it appears in NO field of this transcript, NO log, and NO served HTML. The phrasing request carries {query, engine facts, register} — never a secret."
+}

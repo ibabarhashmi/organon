@@ -30,6 +30,27 @@
       "whatWasDone": "DISCOVERED mid-sprint: DeFiLlama's unlocks/emissions endpoints (api.llama.fi/emissions, /emission/{protocol}) now return HTTP 402 'Upgrade to the paid API plan' — no longer keyless. The unlock-overhang axis is BUILT + positive-controlled (the pure nextUnlockFraction extractor + the pinned thresholds), and the client probe degrades to SAMPLE on 402, but on live keyless data with no schedule resolvable the axis renders not-applicable / UNVERIFIED — NEVER scraped, NEVER faked. The axis is ARMED for a keyless schedule source (e.g. the deferred on-chain vesting path via Alchemy/The Graph).",
       "why": "The firewall forbids faking an axis or citing a number with no honest source. A real-world data source going keyless→paid mid-sprint is surfaced as an honest UNVERIFIED, not papered over with a scrape or a fabricated fraction (X-HONEST / A'#5 — an axis that cannot be made trustworthy is a NAMED gap, never tuned to look right).",
       "lawAuthority": "X-HONEST + A'#5 (Deepening Phase 3)"
+    },
+    {
+      "id": "D6",
+      "blueprintLine": "Crown-Jewel Phase 2: 'UNLOCK-LIVE (X-UNLOCK-LIVE, D4): V-LIVE keyless; wire or signed cut (D6)'",
+      "whatWasDone": "TAKEN — the Operator-signed SCOPE-CUT. The keyless unlock source stays unavailable: DeFiLlama's emissions feed is paywalled (probed live: api.llama.fi/emission/{protocol} and /emissions → HTTP 402 'Upgrade to the paid API plan'; coins.llama.fi/emissions → 400), and on-chain vesting (an RPC + per-token ABIs) and published-schedule scraping are both out of the keyless zero-setup mass-tool scope (the latter refused outright by the firewall). The unlock-overhang axis stays BUILT + positive-controlled + ARMED for a keyless schedule source; on live keyless data it renders not-applicable/UNVERIFIED, NEVER scraped/faked. The paywall is EVIDENCED, not asserted: data/honesty/evidence/vlive-unlock-probe.json records the live 402 probe and is covered by the capture-manifest (verify recomputes its content-hash).",
+      "why": "The blueprint's X-UNLOCK-LIVE explicitly sanctions a signed scope-cut (D6) over a fabricated/scraped fetch when no honest keyless live path exists. The keyless firewall + the paywall leave no honest live path this sprint, so the cut is the honest resolution — the axis is armed for the day a keyless source returns, and the cut is surfaced verbatim, never silent.",
+      "lawAuthority": "X-UNLOCK-LIVE (live-or-cut) + X-HONEST (Crown-Jewel Phase 2)"
+    },
+    {
+      "id": "D5",
+      "blueprintLine": "Crown-Jewel Phase 3: 'DEPENDENCY-TRUE (X-DEP, D5): score dependency; counterparty whole'",
+      "whatWasDone": "RESOLVED — dependency is SCORED, no longer a non-scoring note. The counterparty screen's third signal (depProtocols = the # of distinct protocols the strategy's yield depends on) folds into the tier: a single, transparent dependency (dep ≤ 1, CP_DEP_SINGLE) is the clean direct-deposit baseline (never a flag); a STACKED strategy (dep ≥ 3, CP_DEP_STACKED) adds hidden counterparty/attack surface → a hard flag (a stacked dependency withholds a clean pass; a stacked + young/dust → fail). Derived deterministically (feed defaults a direct DeFiLlama pool to dep=1; a registry entry may declare a stacked dependency). The screen restates its inputs as age · size · dependency, and STILL never over-claims 'audited/safe/guaranteed' (the deep Sentinel IR stays PARKED).",
+      "why": "The validation report's F3 (dependency demoted, not laddered) is closed: the pinned dependency signal is now scored, defaulting to the clean baseline so no existing pool's verdict moves, and only biting when a strategy genuinely stacks protocol surface.",
+      "lawAuthority": "X-DEP (Crown-Jewel Phase 3)"
+    },
+    {
+      "id": "D8",
+      "blueprintLine": "Crown-Jewel validation report V3: 'the dep=1 default is a derived modeling assumption, not laddered'",
+      "whatWasDone": "LADDERED as a pinned modeling assumption: a direct DeFiLlama single-protocol pool defaults to depProtocols=1 (a single, transparent counterparty dependency — the clean baseline, never a flag). The feed sets this default (feed.ts poolFacts: depProtocols = ref.depProtocols ?? 1); a shelf-registry entry MAY declare a higher (stacked) dependency, and only then does the counterparty screen's dependency signal bite. The default only ever biases toward the transparent case, so no existing pool's verdict moves.",
+      "why": "A raw DeFiLlama pool IS one protocol's deposit — one counterparty surface. Defaulting to 1 is the honest, conservative baseline (it never fabricates a stacked flag). V3 asked for the derived default to be laddered rather than left implicit: it is now recorded + evidenced here, hash-locked in persistence-pins.json (deviationD8), and surfaced verbatim in the handoff — not silent.",
+      "lawAuthority": "X-DEP + X-DEVLEDGER (Crown-Jewel report V3, Persistence Phase 1)"
     }
   ]
 }

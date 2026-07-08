@@ -81,4 +81,42 @@ export namespace Evidence {
     if (!existsSync(p)) return null
     try { return JSON.parse(readFileSync(p, "utf8")) as T } catch { return null }
   }
+
+  // ── THE CAPTURE-MANIFEST (Crown-Jewel Phase 1; Rule X-LIVE, F4, S18) — every cited LIVE number resolves to a committed
+  // content-hash `verify` recomputes. Each V-LIVE capture (defillama/gecko/hyperliquid/gemini) is content-hashed; a live
+  // number that changes without a re-pin, or a manifest whose hash no longer reproduces its capture, fails verify. The
+  // committed capture + its hash is the DURABLE record — environment-independent (the re-fetch is network-gated). ──
+  export const CAPTURE_BACKS: Record<string, string> = {
+    "vlive-defillama.json": "the DeFiLlama /pools keyless HTTP-200 live number (poolCount)",
+    "vlive-geckoterminal.json": "the GeckoTerminal reserve_in_usd keyless HTTP-200 live number (deepest-pool reserve)",
+    "vlive-hyperliquid.json": "the Hyperliquid funding keyless HTTP-200 live number (points)",
+    "vlive-unlock-probe.json": "the DeFiLlama /emission keyless probe status (HTTP 402 paywalled) — the EVIDENCE for the unlock D6 signed scope-cut (X-UNLOCK-LIVE)",
+    "vlive-gemini.json": "the Google AI Studio (Gemini) endpoint V-LIVE reachability (status; NO key committed — X-BYOK key-safety)",
+    "ask-live-groq.json": "the LIVE Groq round-trip — a real-model grounded PASS + a forced-fabrication REJECT (V2/S24; REDACTED, NO key committed — X-BYOK key-safety)",
+  }
+  // the sha256 of a committed capture's bytes (null if absent — a capture not yet built, e.g. gemini before Phase 7)
+  export function captureSha(file: string): string | null {
+    const p = path.join(Evidence.DIR, file)
+    if (!existsSync(p)) return null
+    return sha256(readFileSync(p, "utf8"))
+  }
+  export interface CaptureEntry { capture: string; sha256: string; backs: string }
+  // the manifest entries over the PRESENT captures (a capture absent at build time — gemini pre-Phase-7 — is simply not listed)
+  export function captureManifestEntries(): CaptureEntry[] {
+    const out: CaptureEntry[] = []
+    for (const f of Object.keys(CAPTURE_BACKS)) { const h = captureSha(f); if (h) out.push({ capture: f, sha256: h, backs: CAPTURE_BACKS[f] }) }
+    return out
+  }
+  // verify the committed manifest against the committed captures — each entry's hash must reproduce its capture (S18)
+  export function verifyCaptureManifest(): { ok: boolean; problems: string[] } {
+    const m = readArtifact<{ entries: CaptureEntry[] }>("capture-manifest.json")
+    if (!m) return { ok: false, problems: ["capture-manifest.json is ABSENT — the live-number manifest is missing (run: bun run script/build-evidence.ts)"] }
+    const problems: string[] = []
+    for (const e of m.entries) {
+      const h = captureSha(e.capture)
+      if (h === null) problems.push(`capture ${e.capture} is ABSENT but the manifest cites it (a cited live number lost its backing artifact)`)
+      else if (h !== e.sha256) problems.push(`capture ${e.capture} content-hash ${h.slice(0, 12)}… ≠ manifest ${e.sha256.slice(0, 12)}… (a cited live number changed without a re-pin — X-LIVE)`)
+    }
+    return { ok: problems.length === 0, problems }
+  }
 }

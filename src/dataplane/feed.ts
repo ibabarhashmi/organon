@@ -23,7 +23,7 @@ export namespace Feed {
     return { name, apyBase: null, apyReward: null, tvlSlope30d: null, pegDev: null, isStablecoin: false, reality: s ? "REAL" : "SAMPLE", provenanceRef: s ? s.provenance.contentSha : null, deltaNeutral: true, fundingBand: band }
   }
 
-  export interface PoolRef { name: string; poolKey: string; chartKey: string; isStablecoin: boolean; vertical?: Scorecard.Vertical; gtKey?: string }
+  export interface PoolRef { name: string; poolKey: string; chartKey: string; isStablecoin: boolean; vertical?: Scorecard.Vertical; gtKey?: string; depProtocols?: number }
 
   // resolve the DEX-pool liquidity depth (reserve_in_usd) from a recorded GeckoTerminal series (the liquidity-depth axis's
   // input for a stablecoin-yield strategy); null where the gecko payload is absent (→ the axis renders UNVERIFIED).
@@ -82,6 +82,9 @@ export namespace Feed {
       ageDays: ageDays(ref.chartKey, ts, adapter), // pool age = recorded /chart span (the counterparty maturity signal)
       sizeUsd: sizeV.value, // recorded pool TVL (the counterparty size signal)
       liqUsd: ref.gtKey ? liqUsd(ref.gtKey, ts, adapter) : null, // DEX-pool reserve (the liquidity-depth axis; stablecoin-yield)
+      // dependency (Crown-Jewel Phase 3, X-DEP): a direct DeFiLlama pool is a SINGLE-protocol deposit (dep=1, the clean,
+      // transparent baseline); a registry entry may declare a stacked (≥3) dependency for a looping/wrapper strategy.
+      depProtocols: ref.depProtocols ?? 1,
     }
   }
 }

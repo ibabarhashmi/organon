@@ -1,7 +1,9 @@
 /**
- * ORGΛNON — THE REALITY CHECK, the two-screen consumer tool (Honesty Layer Phase 4; Rules X-LEAN, X-HONEST). The screen
- * set is FROZEN AT 2 (a third consumer screen is a Halt): THE SHELF (Reality Cards — triage) and THE REALITY CHECK (the
- * x-ray of one strategy). Server-rendered HTML (the repo idiom; PART CLEAN — no Vite/SPA/bundler, no heavy dependency,
+ * ORGΛNON — THE REALITY CHECK (Honesty Layer Phase 4; Rules X-LEAN, X-HONEST). THE SCREEN SET IS THE CONSCIOUS 3 (V1,
+ * reconciled once): TWO MASS SCREENS every depositor uses — THE SHELF (Reality Cards — triage) + THE REALITY CHECK (the
+ * x-ray of one strategy) — plus THE ASK CONSOLE (the deliberate 3rd screen, D7). The opt-in Stamp is a Pro SUB-ROUTE of
+ * the Reality Check (/stamp/:key, lazily imported — a drawer of screen 2, NOT a screen); a FOURTH screen is a Halt.
+ * Server-rendered HTML (the repo idiom; PART CLEAN — no Vite/SPA/bundler, no heavy dependency,
  * the cheapest correct thing a stranger can run AND read), with minimal inline JS for the Simple/Pro toggle only. Every
  * value carries a REAL/SAMPLE badge; UNVERIFIED renders as an honest gap; the outcome is a confidence BAND, never a hero
  * APY. The cards + registers render from the deterministic scorecard over the provenance record (REAL where recorded,
@@ -15,19 +17,21 @@ import { Feed } from "../dataplane/feed"
 import { DefiLlama } from "../dataplane/providers/defillama"
 import { ProvRecord } from "../dataplane/record"
 import { DataPlane } from "../dataplane/store"
+import type { Stamp } from "./stamp" // TYPE-ONLY — the Stamp's runtime (the attest core) is lazily imported by the /stamp route; the mass tool stays Stamp-free (X-OPTIN, PART CLEAN)
 
 export namespace Reality {
-  // THE SCREEN SET — frozen at 2. A third consumer screen is a Halt (X-LEAN; screens_frozen wall).
-  export const SCREENS = ["shelf", "reality-check"] as const
+  // THE SCREEN SET — consciously amended 2→3 (Crown-Jewel D7): the Shelf · the Reality Check · the Ask Console (the
+  // Operator-mandated grounded NL front door). A FOURTH screen remains a Halt (PART CLEAN; the screens_frozen wall).
+  export const SCREENS = ["shelf", "reality-check", "ask"] as const
 
   // the shelf registry (poolKey → label + stablecoin symbol), written at capture time — the SnapshotFile points are
   // numeric-only, so the symbol (needed for the peg axis + a human label) lives here. Absent → the record still renders.
-  interface RegEntry { name: string; symbol: string; isStablecoin: boolean; kind: "yield" | "delta-neutral"; vertical: Scorecard.Vertical; gtKey?: string }
+  interface RegEntry { name: string; symbol: string; isStablecoin: boolean; kind: "yield" | "delta-neutral"; vertical: Scorecard.Vertical; gtKey?: string; depProtocols?: number }
   function registry(): Map<string, RegEntry> {
     const m = new Map<string, RegEntry>()
     const p = path.join(PKG_ROOT, "data", "honesty", "shelf-registry.json")
     if (!existsSync(p)) return m
-    try { const j = JSON.parse(readFileSync(p, "utf8")) as { pools: { poolKey: string; name: string; symbol: string; isStablecoin: boolean; kind?: "yield" | "delta-neutral"; vertical?: Scorecard.Vertical; gtKey?: string }[] }; for (const e of j.pools) m.set(e.poolKey, { name: e.name, symbol: e.symbol, isStablecoin: e.isStablecoin, kind: e.kind ?? "yield", vertical: e.vertical ?? (e.kind === "delta-neutral" ? "delta-neutral" : "lending"), gtKey: e.gtKey }) } catch { /* a malformed registry → labels fall back to the key; never a crash */ }
+    try { const j = JSON.parse(readFileSync(p, "utf8")) as { pools: { poolKey: string; name: string; symbol: string; isStablecoin: boolean; kind?: "yield" | "delta-neutral"; vertical?: Scorecard.Vertical; gtKey?: string; depProtocols?: number }[] }; for (const e of j.pools) m.set(e.poolKey, { name: e.name, symbol: e.symbol, isStablecoin: e.isStablecoin, kind: e.kind ?? "yield", vertical: e.vertical ?? (e.kind === "delta-neutral" ? "delta-neutral" : "lending"), gtKey: e.gtKey, depProtocols: e.depProtocols }) } catch { /* a malformed registry → labels fall back to the key; never a crash */ }
     return m
   }
   function meta(reg: Map<string, RegEntry>, poolKey: string): RegEntry { return reg.get(poolKey) ?? { name: poolKey.replace(/^defillama:pool:|^funding-basis:hyperliquid:/, ""), symbol: "", isStablecoin: false, kind: poolKey.startsWith("funding-basis:") ? "delta-neutral" : "yield", vertical: poolKey.startsWith("funding-basis:") ? "delta-neutral" : "lending" } }
@@ -49,7 +53,7 @@ export namespace Reality {
         cards.push(toCard(m.name, poolKey, Feed.fundingFacts(m.name, poolKey, ts, adapter)))
       } else {
         const pd = m.isStablecoin ? Feed.pegDev(m.symbol, ts, adapter) : null
-        cards.push(toCard(m.name, poolKey, Feed.poolFacts({ name: m.name, poolKey, chartKey: poolKey.replace(":pool:", ":chart:"), isStablecoin: m.isStablecoin, vertical: m.vertical, gtKey: m.gtKey }, ts, pd, adapter)))
+        cards.push(toCard(m.name, poolKey, Feed.poolFacts({ name: m.name, poolKey, chartKey: poolKey.replace(":pool:", ":chart:"), isStablecoin: m.isStablecoin, vertical: m.vertical, gtKey: m.gtKey, depProtocols: m.depProtocols }, ts, pd, adapter)))
       }
     }
     return cards
@@ -136,12 +140,12 @@ ${c.kind === "delta-neutral"
       ? `<div class="muted">delta-neutral · funding carry ${fundingBandText(c.scored)}</div><div class="band"><span class="rng"></span></div><div class="muted">a carry BAND, never a single hero APY.</div>`
       : `<div class="muted">risk: ${c.risk} · headline APY ${pct(c.apyTotal)}</div>${splitBar(c.apyBase, c.apyReward)}`}</div>`).join("")
     return page("The Shelf — which yields are real?", `<h1>The Shelf</h1><div class="muted">The strategies that hold DeFi's money — is the yield real, and what's the catch? Open one for its Reality Check.</div>
-<div class="filters">filter: <a href="/">all</a> <a href="/?verdict=SOLID">SOLID</a> <a href="/?verdict=CAUTION">CAUTION</a> <a href="/?verdict=AVOID">AVOID</a> <a href="/?verdict=UNVERIFIED">UNVERIFIED</a> · <a href="/refresh">↻ refresh (live)</a></div>
+<div class="filters">filter: <a href="/">all</a> <a href="/?verdict=SOLID">SOLID</a> <a href="/?verdict=CAUTION">CAUTION</a> <a href="/?verdict=AVOID">AVOID</a> <a href="/?verdict=UNVERIFIED">UNVERIFIED</a> · <a href="/refresh">↻ refresh (live)</a> · <a href="/ask">💬 Ask ORGΛNON</a></div>
 ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${trust(sampleFallback)}`)
   }
 
   // ── SCREEN 2 — THE REALITY CHECK ──
-  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[]): string {
+  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string): string {
     const c = scored
     const oneLiner = c.summary.replace(/^(SOLID|CAUTION|AVOID|UNVERIFIED)\s*—\s*/, "")
     const axes = c.rows.map((r) => `<div class="axis"><b>${esc(r.name)}</b> ${r.tier === "pass" ? "✓" : r.tier === "caution" ? "!" : r.tier === "fail" ? "✗" : "?"}
@@ -149,14 +153,102 @@ ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${t
     const prov = history.length
       ? `<div class="muted"><b>Provenance — what was real, and when we captured it</b> (${history.length} capture${history.length > 1 ? "s" : ""}, the moat made visible; a competitor can copy the lens but not this timestamped record):<ul>${history.map((h) => `<li>${new Date(h.asOf).toISOString().slice(0, 16).replace("T", " ")}Z · contentHash ${esc(h.contentHash.slice(0, 12))}… (chain pos ${h.chainPos})</li>`).join("")}</ul></div>`
       : `<div class="muted">provenance: this value is SAMPLE — not in the record (re-capture keyless for a REAL, recorded reading).</div>`
-    return page(`Reality Check — ${name}`, `<a href="/">← the Shelf</a>
+    // THE STAMP DRAWER (opt-in, Pro-only — X-OPTIN). A LINK, never inline: the Stamp is NOT run on this page (it is off
+    // the mass path); the user opts in by navigating to /stamp/:key. The two-verdict distinction is stated up front.
+    const stampDrawer = poolKey
+      ? `<div class="pro"><h3>The overfit Stamp — opt-in, a SEPARATE verdict</h3><div class="muted">The Reality Check above answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers a DIFFERENT question with the frozen anti-PBO adjudicator — "does this pool's recorded track record survive the overfit deflation?" (GO/NO-GO/INSUFFICIENT). The two verdicts are never conflated — a GO is not "safe", an INSUFFICIENT is not "bad".</div><a href="/stamp/${encodeURIComponent(poolKey)}">▶ Run the overfit Stamp (opt-in)</a></div>`
+      : ""
+    const askLink = poolKey ? ` · <a href="/ask?${qs({ q: `is ${name} safe?`, pool: poolKey })}">💬 ask about this</a>` : ""
+    return page(`Reality Check — ${name}`, `<a href="/">← the Shelf</a>${askLink}
 <h1>${esc(name)} ${verdictPill(c.verdict)} ${realityBadge(c.facts.reality)}</h1>
 <div class="card"><b>${esc(oneLiner)}</b></div>
 <button onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
 ${confidenceBand(c)}
 <h3>The honesty scorecard</h3>${axes}
 <div class="pro"><h3>Quantitative</h3><pre class="muted">${esc(c.quant)}</pre></div>
+${stampDrawer}
 ${prov}${trust(c.facts.reality === "SAMPLE")}`)
+  }
+
+  // ── THE STAMP PANEL (Crown-Jewel Phase 5; X-OPTIN) — a DISTINCT verdict surface, reached only by opting in (/stamp/:key).
+  // Pure: takes a resolved StampResult (the runtime is lazily imported by the route). The verdict pill is a DIFFERENT
+  // colour/word-space from the scorecard's (never conflated); the two-verdict distinction is stated; "unavailable" is honest.
+  export function renderStamp(name: string, poolKey: string, r: Stamp.StampResult): string {
+    const color = r.verdict === "GO" ? "#1a7f37" : r.verdict === "NO-GO" ? "#b62324" : r.verdict === "INSUFFICIENT" ? "#9e6a03" : "#484f58"
+    const basis = r.available && r.verdict !== "UNAVAILABLE"
+      ? `<div class="muted">observations: ${r.nObs} recorded return points · deflated significance ${esc(String(r.dsr ?? "n/a"))} · n counted attempts ${r.familyN}${r.reproHash ? ` · reproHash ${esc(r.reproHash.slice(0, 12))}…` : ""}</div>`
+      : ""
+    // TRACK-RECORD DEPTH (Persistence; X-DECAY / X-ICIR) — the two opt-in sub-scores shown BESIDE the deflated-Sharpe basis
+    // (off the mass path; a reason/basis refinement, never a scorecard verdict). The half-life is serial persistence (NOT
+    // the carry); the ICIR is WITHIN-STRATEGY temporal consistency (NOT a cross-sectional factor rank). A clean GO needs both.
+    const decayTxt = r.decay ? (r.decay.tier === "INSUFFICIENT" ? "insufficient history" : r.decay.atLeast ? `≥ ${r.decay.floor} periods` : `≈ ${r.decay.halfLife} periods`) : null
+    const icirTxt = r.icir ? (r.icir.tier === "INSUFFICIENT" ? "insufficient history" : String(r.icir.icir)) : null
+    const depth = r.available && (r.decay || r.icir)
+      ? `<div class="muted"><b>Track-record depth (opt-in):</b> edge half-life ${esc(String(decayTxt))} <span class="pill" style="background:${r.decay?.tier === "TRACEABLE" ? "#1a7f37" : r.decay?.tier === "SHORT_LIVED" ? "#9e6a03" : "#484f58"};color:#fff">${esc(String(r.decay?.tier ?? "n/a"))}</span> (serial persistence of the recorded signal — not the carry) · temporal consistency (ICIR) ${esc(String(icirTxt))} <span class="pill" style="background:${r.icir?.tier === "CONSISTENT" ? "#1a7f37" : r.icir?.tier === "LUMPY" ? "#9e6a03" : "#484f58"};color:#fff">${esc(String(r.icir?.tier ?? "n/a"))}</span> (within-strategy — NOT a cross-sectional factor rank)${r.verdict === "GO" ? (r.cleanGo ? " · <b>a CLEAN GO</b> — both depth hurdles cleared" : " · the GO is <b>FENCED</b> — a depth hurdle not cleared (the GO stands on the deflation alone)") : ""}</div>`
+      : ""
+    return page(`The Stamp — ${name}`, `<a href="/check/${encodeURIComponent(poolKey)}">← the Reality Check</a>
+<h1>The Stamp <span class="pill" style="background:${color};color:#fff">${esc(r.verdict)}</span> <span class="muted">${esc(name)}</span></h1>
+<div class="card"><b>The opt-in overfit stress test — a SEPARATE verdict from the Reality Check.</b>
+<div class="muted">This is NOT the scorecard's verdict. The Reality Check answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers "does this pool's recorded track record survive the anti-PBO overfit deflation?" (GO/NO-GO/INSUFFICIENT). A GO is a floor on doubt about the track record's statistical robustness — NOT "safe". An INSUFFICIENT is a forward clock — NOT "bad". The two are never conflated.</div></div>
+<div class="card"><div>${esc(r.reason)}</div>${basis}${depth}</div>
+<div class="trust">the frozen, byte-pinned anti-PBO adjudicator — INVOKED, never edited (zero frozen bytes moved) · deflation armed only here · off the mass path · this is not financial advice.</div>`)
+  }
+
+  // ── SCREEN 3 — THE ASK CONSOLE (Crown-Jewel Phase 8; X-ASK, D7). The grounded NL front door, Simple/Pro, context-aware,
+  // AI-optional. This renderer is DECOUPLED from the ask module (a structural view — the serve route runs the grounded
+  // path and hands the result here). Honest states: "AI phrasing off" (no key), "unverified" (engine gap), the raw toggle. ──
+  export interface AskView {
+    query?: string
+    register: "simple" | "pro"
+    raw: boolean
+    intentKind?: string
+    tool?: string
+    reality?: string
+    text?: string // the rendered answer (deterministic, or AI-phrased if grounded)
+    rawFacts?: string // the pure engine fact rows (the Pro raw toggle — byte-reproducible)
+    aiPhrased?: boolean
+    aiStatus: { keyed: boolean; provider: string | null } // the honest "AI on/off" label — never the key
+    contextPool?: string // the current pool passed from a Reality Check ("ask about this")
+  }
+  const STARTERS = [
+    { q: "Is aave-v3 USDC safe?", label: "Is this yield real?" },
+    { q: "What is the peg of aave USDC?", label: "Check one metric" },
+    { q: "aave USDC vs compound USDC", label: "Compare two" },
+    { q: "What can you check?", label: "What can you check?" },
+  ]
+  export function renderAsk(v: AskView): string {
+    const reg = v.register === "pro" ? "pro" : "simple"
+    const toggle = (r: "simple" | "pro") => `<a href="/ask?${qs({ q: v.query, register: r, pool: v.contextPool })}"${reg === r ? ' style="font-weight:700"' : ""}>${r === "simple" ? "Simple" : "Pro"}</a>`
+    const rawToggle = v.query ? `<a href="/ask?${qs({ q: v.query, register: "pro", raw: v.raw ? "" : "1", pool: v.contextPool })}">${v.raw ? "▾ show the phrased answer" : "▸ raw engine facts (deterministic)"}</a>` : ""
+    const aiBadge = v.aiStatus.keyed
+      ? `<span class="badge REAL">AI: ${esc(v.aiStatus.provider ?? "")}${v.query ? (v.aiPhrased ? " · phrased" : " · deterministic (ungrounded phrasing rejected)") : ""}</span>`
+      : `<span class="badge SAMPLE">AI phrasing off — deterministic mode (set GOOGLE_AI_STUDIO_KEY or any BYOK key)</span>`
+    const starters = `<div class="muted">try: ${STARTERS.map((s) => `<a href="/ask?${qs({ q: s.q, register: reg })}">${esc(s.label)}</a>`).join(" · ")}</div>`
+    const ctx = v.contextPool ? `<div class="muted">context: answering about the strategy you were viewing (follow-ups like "what about its peg?" resolve to it).</div>` : ""
+    const answer = v.query
+      ? `<div class="card">
+${reg === "pro" ? `<div class="muted">[ intent <b>${esc(v.intentKind ?? "")}</b> → engine tool <b>${esc(v.tool ?? "")}</b>${v.reality && v.reality !== "n/a" ? ` · ${esc(v.reality)}` : ""} ]</div>` : ""}
+<div style="margin-top:6px">${v.raw ? `<pre class="muted">${esc(v.rawFacts ?? "")}</pre>` : esc(v.text ?? "").replace(/\n/g, "<br>")}</div>
+${reg === "pro" ? `<div class="muted" style="margin-top:8px">${rawToggle}</div>` : `<div class="muted" style="margin-top:8px"><a href="/ask?${qs({ q: v.query, register: "pro", pool: v.contextPool })}">show me the numbers →</a></div>`}
+</div>`
+      : `<div class="card muted">Ask about any recorded strategy — is the yield real, what's the catch, run the overfit Stamp, compare two, or explain a term. Every number and verdict comes from the deterministic engine — I phrase, I never invent.</div>`
+    return page("Ask — ORGΛNON", `<div class="filters"><a href="/">the Shelf</a> · <a href="/ask">Ask</a></div>
+<h1>Ask ORGΛNON</h1>
+<div class="muted">A grounded front door: ask in your own words; every fact comes from the engine, never a model. ${aiBadge}</div>
+<form method="get" action="/ask" style="margin:14px 0">
+<input type="text" name="q" value="${esc(v.query ?? "")}" placeholder="Ask about any strategy…" style="width:70%;padding:10px;border-radius:8px;border:1px solid #30363d;background:#0d1117;color:#e6edf3;font-size:15px">
+<input type="hidden" name="register" value="${reg}">
+${v.contextPool ? `<input type="hidden" name="pool" value="${esc(v.contextPool)}">` : ""}
+<button style="padding:10px 16px;border-radius:8px;border:1px solid #30363d;background:#238636;color:#fff;font-weight:600">Ask</button>
+<span style="margin-left:12px">register: ${toggle("simple")} / ${toggle("pro")}</span>
+</form>
+${starters}${ctx}
+${answer}
+<div class="trust">every answer traces to a deterministic engine fact — the AI only phrases, and a claim the engine didn't produce is rejected · an unverified gap stays unverified · this is not financial advice.</div>`)
+  }
+  // a tiny query-string builder (drops empty values) — keeps the toggles readable
+  function qs(o: Record<string, string | undefined>): string {
+    return Object.entries(o).filter(([, v]) => v !== undefined && v !== "").map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join("&")
   }
 
   function trust(sample: boolean): string {
@@ -181,7 +273,7 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
     const ts = series ? series.points[series.points.length - 1].ts : now
     const facts = m.kind === "delta-neutral"
       ? Feed.fundingFacts(m.name, poolKey, ts, adapter)
-      : Feed.poolFacts({ name: m.name, poolKey, chartKey: poolKey.replace(":pool:", ":chart:"), isStablecoin: m.isStablecoin, vertical: m.vertical, gtKey: m.gtKey }, ts, m.isStablecoin ? Feed.pegDev(m.symbol, ts, adapter) : null, adapter)
+      : Feed.poolFacts({ name: m.name, poolKey, chartKey: poolKey.replace(":pool:", ":chart:"), isStablecoin: m.isStablecoin, vertical: m.vertical, gtKey: m.gtKey, depProtocols: m.depProtocols }, ts, m.isStablecoin ? Feed.pegDev(m.symbol, ts, adapter) : null, adapter)
     return { name: m.name, scored: Scorecard.score(facts), history: ProvRecord.fullHistory(poolKey) }
   }
 }

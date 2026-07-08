@@ -8,9 +8,15 @@ data/lending/
 *.log
 .DS_Store
 
+# secrets — API keys are server-side env-only, NEVER committed (X-BYOK key-safety). .env is local + gitignored.
+.env
+.env.*
+!.env.example
+
 # sprint planning blueprints — not part of the published product
 sprint/sprint-result/ORGANON_*Blueprint.md
 sprint/sprint-result/ORGANON-*Blueprint.md
+sprint/sprint-result/ORGΛNON_*SPRINT.md
 
 # data-plane captured snapshots — gitignored (A′#12); the nonce-anchored provenance.jsonl chain is the committed guarantee
 data/dataplane/snapshots/

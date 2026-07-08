@@ -5,16 +5,18 @@
 <p align="center">
   <b>An honest-by-construction DeFi Reality Check — and the strategy engine underneath it.</b><br>
   Is this yield real, and what's the catch? Answered as a machine-derived scorecard from real,<br>
-  point-in-time data — moated by an append-only record of what was real, and when.
+  point-in-time data — moated by an append-only record of what was real, and when.<br>
+  Ask it in plain language; opt in to an overfit stress test on the track record — every number the engine's, never a model's.
 </p>
 
 <p align="center">
   <a href="#quick-start">Quick start</a> ·
   <a href="#the-reality-check">Reality Check</a> ·
+  <a href="#the-opt-in-stamp">The Stamp</a> ·
+  <a href="#the-ask-console">Ask Console</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#capability-matrix">Capabilities</a> ·
-  <a href="#usage">Usage</a> ·
-  <a href="#project-structure">Structure</a>
+  <a href="#usage">Usage</a>
 </p>
 
 <p align="center">
@@ -23,6 +25,7 @@
   <img alt="sidecar" src="https://img.shields.io/badge/sidecar-Python%203-yellow">
   <img alt="verdicts" src="https://img.shields.io/badge/manufactured%20verdicts-zero%20(by%20design)-brightgreen">
   <img alt="evidence" src="https://img.shields.io/badge/numbers-reproducible%20(./organon.sh%20verify)-blue">
+  <img alt="ai" src="https://img.shields.io/badge/AI-optional%20%C2%B7%20BYOK%20%C2%B7%20grounded-purple">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-lightgrey">
 </p>
 
@@ -32,10 +35,13 @@
 
 Organon answers one question about a real DeFi strategy — **is this yield real, and what could kill it?** — as a **machine-derived scorecard**, not an opinion. It is built so the honest answer is the *only* answer the machine can produce, and so a stranger can **regenerate every number it claims with one command**.
 
-It is two things that share one spine:
+It presents as three deliberate surfaces over one spine:
 
-- **The Reality Check** — a two-screen, before-you-click consumer tool. Each strategy gets a verdict (`SOLID` · `CAUTION` · `AVOID` · `UNVERIFIED`) derived from deterministic risk axes over real data — never hand-written, never a hero APY. `UNVERIFIED` renders as an honest "we can't confirm this," never a disguised pass.
-- **The strategy engine** — the honest-by-construction core the scorecard rests on: a byte-frozen verdict core, a tamper-evident hash-chained trial ledger, and a point-in-time data store that *cannot* fabricate or retro-capture a value.
+- **The Reality Check** — a before-you-click consumer tool. Each strategy gets a verdict (`SOLID` · `CAUTION` · `AVOID` · `UNVERIFIED`) derived from deterministic risk axes over real data — never hand-written, never a hero APY. `UNVERIFIED` renders as an honest "we can't confirm this," never a disguised pass.
+- **The Ask Console** — a grounded natural-language front door: ask in plain words, get an engine-sourced answer whose every number and verdict traces to a fact. The AI only routes to a closed intent set and *phrases* in register behind a groundedness gate — it is AI-optional (keyless → deterministic) and BYOK.
+- **The opt-in Stamp** — a Pro sub-route: an overfit stress test that runs a pool's recorded track record through the frozen anti-PBO adjudicator → a distinct `GO` · `NO-GO` · `INSUFFICIENT` verdict, now refined by a **decay half-life** gate and a **within-strategy ICIR** consistency score. Off the mass path, orthogonal to the scorecard, never conflated.
+
+Under all three sits **the strategy engine** — the honest-by-construction core: a byte-frozen verdict core, a tamper-evident hash-chained trial ledger, and a point-in-time data store that *cannot* fabricate or retro-capture a value.
 
 Four properties make the honesty structural rather than aspirational:
 
@@ -48,10 +54,11 @@ The result: **zero verdicts are manufactured.** An `AVOID` on real data is the p
 
 ## The Reality Check
 
-Two screens, frozen at two — the user *checks*, they do not build.
+The screen set is a conscious **3** — two mass screens every user meets, plus the Ask Console. The user *checks*, they do not build (a fourth screen is a deliberate stop).
 
 - **The Shelf** — Reality Cards across all three money verticals: a real-yield split bar (durable base vs reward emissions), a verdict pill, a `REAL`/`SAMPLE` badge, a risk word.
-- **The Reality Check** — the x-ray of one strategy: the verdict banner + a one-line plain reason, the scorecard rows, a Simple/Pro toggle, a confidence **band** (never a single hero APY), and a link into the provenance history — the moat made visible.
+- **The Reality Check** — the x-ray of one strategy: the verdict banner + a one-line plain reason, the scorecard rows, a Simple/Pro toggle, a confidence **band** (never a single hero APY), and a link into the provenance history — the moat made visible. The opt-in **Stamp** is a Pro sub-route of this screen (a drawer, not a screen).
+- **The Ask Console** — the grounded natural-language front door (below).
 
 ### The scorecard axes
 
@@ -81,6 +88,32 @@ Each axis is a pure `(facts) → row` on hash-locked thresholds. An axis that do
 | funding-regime | n/a | n/a | ✓ |
 
 Data is keyless-first — **DeFiLlama** (yield · TVL · peg), **Hyperliquid** (funding), **GeckoTerminal** (liquidity depth) — so the tool demos with zero setup. A dead endpoint / rate limit / malformed body degrades to last-good or `SAMPLE`, never a crash, never a fabricated value.
+
+## The opt-in Stamp
+
+The Reality Check answers *"is this yield real?"* The **Stamp** answers a different, orthogonal question with the frozen anti-PBO adjudicator — *"does this pool's recorded track record survive an overfit stress test?"* — as a **distinct** verdict (`GO` · `NO-GO` · `INSUFFICIENT` · `UNAVAILABLE`), never conflated with `SOLID`/`CAUTION`/`AVOID`. It is **opt-in and off the mass path** (a scorecard render invokes it zero times), it **invokes the byte-frozen core** (never edits it), and it is honest on short history (`INSUFFICIENT`, never a fabricated `GO`). A `GO` is a floor on doubt about statistical robustness — **not** a safety verdict.
+
+Two deterministic, off-path sub-scores refine the Stamp's reason (never a scorecard axis, never a new verdict word) and make a *clean* `GO` **harder** to earn:
+
+| Sub-score | What it measures | Tiers |
+|---|---|---|
+| **Decay half-life** | serial persistence of the recorded return signal (the lag-`k` autocorrelation fit to `ρ₀·e^(−k/τ)`, `t½ = τ·ln2`) — a traceable time-structure vs. fee-chasing noise, **not** the average carry | `≥ 5` periods **traceable** · `< 5` **short-lived** (a clean `GO` is fenced) · short/degenerate/`SAMPLE` **insufficient** |
+| **ICIR consistency** | how *steadily* the edge holds across the strategy's own periods (`mean/std` of the recorded periodic edges) — a **within-strategy temporal** measure, **explicitly not** the cross-sectional factor-ranking IC of the literature | `≥ 0.1` **consistent** · `< 0.1` **lumpy** (a clean `GO` is tempered) · degenerate/`SAMPLE` **insufficient** |
+
+A clean `GO` now needs the track record to survive deflation **and** show a traceable half-life **and** hold acceptable consistency — three independent hurdles. Both sub-scores are pure functions over the recorded series (no model, no random), scored only on `REAL` data.
+
+## The Ask Console
+
+A grounded front door: ask about any recorded strategy in your own words and get a register-tailored answer whose **every number, verdict, and fact is engine-sourced**. The AI is the dumbest component — it maps the query to a **closed intent set** and *phrases* the deterministic engine's facts; it never computes a metric, decides a verdict, or fills an `UNVERIFIED` gap. The output runs a **groundedness gate** (every number/claim must match a returned fact) plus a verdict guard; any miss rejects the answer **wholesale** → the deterministic template stands.
+
+- **AI-optional.** No key → deterministic mode, honestly labeled ("AI phrasing off"). The console is fully usable keyless.
+- **BYOK.** Google AI Studio (Gemini) · OpenAI · Anthropic · any OpenAI-compatible base URL · Groq (`llama-3.1-8b-instant`), selected from env. A dedicated rate-limit queue + retry/backoff keeps a free tier from ever surfacing a 429.
+- **Key-safe.** Keys are server-side env-only (a gitignored `.env`; see `.env.example`), sent only in the transport header — never in the client bundle, a log, the prompt, or a served page.
+
+```bash
+./organon.sh ask "is aave-v3 USDC safe?"          # or open /ask in the browser
+./organon.sh stamp <poolKey>                       # opt into the overfit Stamp (GO/NO-GO/INSUFFICIENT + decay + ICIR)
+```
 
 ## How it works
 
@@ -175,8 +208,8 @@ src/backtest/py/.venv/bin/pip install numpy scipy
 # 3. run the test battery (walls + capability floor)
 ./organon-studio-test.sh
 
-# 4. launch the Reality Check (2 screens: the Shelf + the Reality Check)
-./organon.sh launch                # → http://localhost:4444
+# 4. launch (the Shelf + the Reality Check + the Ask Console)
+./organon.sh launch                # → http://localhost:4444  (/ · /check/:key · /ask · opt-in /stamp/:key)
 ```
 
 `./organon.sh` refuses to open the door until the house is provably in order, and when it refuses it says exactly why. Optional — capture real, credential-free data to seed and compound the moat (no API key):
@@ -185,11 +218,23 @@ src/backtest/py/.venv/bin/pip install numpy scipy
 bun run script/capture-cadence.ts     # refresh all three verticals into the PIT record (REAL-only, never backfills)
 ```
 
+Optional — the Ask Console phrases with an LLM if you supply a key (**BYOK, never required**). Copy `.env.example` → `.env` (gitignored) and set any one of `GROQ_API_KEY` · `GOOGLE_AI_STUDIO_KEY` · `OPENAI_API_KEY` · `ANTHROPIC_API_KEY`. With no key the console runs in deterministic mode. Keys are read server-side only and never leave the transport.
+
 ## Usage
 
 ### The Reality Check (interactive)
 
 `./organon.sh launch` and open `http://localhost:4444`. Browse the Shelf, open a card for its Reality Check, toggle Simple/Pro, and follow the provenance link to see what was real and when. The verdict is derived from the rows on real recorded data — a `SAMPLE` reading renders `UNVERIFIED`, never a mislabeled `REAL`.
+
+### Ask in plain language · opt into the Stamp
+
+```bash
+./organon.sh ask "is aave-v3 USDC safe?"     # grounded NL answer; every number/verdict engine-sourced (/ask in the browser)
+./organon.sh ask "aave USDC vs compound USDC" # compare · "what is deflation?" (define) · "what can you check?" (coverage)
+./organon.sh stamp <poolKey>                  # the opt-in overfit Stamp: GO/NO-GO/INSUFFICIENT + the decay half-life + the ICIR
+```
+
+In the browser, the Ask screen shows an honest "AI on/off" badge; a Pro **raw toggle** renders the pure engine facts with zero phrasing (fully reproducible). The Stamp is a Pro drawer of the Reality Check (`/stamp/:key`) — a separate verdict, never conflated with the scorecard's.
 
 ### Verify the numbers
 
@@ -216,10 +261,12 @@ src/
   backtest/      the TS↔Python bridge + the frozen Python sidecars
   dataplane/     the PIT store, the provenance record (the moat), the feed bridge
     providers/   keyless clients — DeFiLlama, GeckoTerminal (one small pure fn per endpoint)
-  analytics/     scorecard.ts (the deterministic risk axes + verdict), explain.ts (the WHY engine)
+  analytics/     scorecard.ts (the deterministic risk axes + verdict), explain.ts (the WHY engine + groundedness verifier)
+  ask/           the grounded Ask Console — router (closed intents) · tools · answer · phrase · provider (BYOK)
   strategy/      the StrategySpec schema
   attest/        external-claim attestation + tiering
-  studio/        surfaces, routes, screens, reality.ts (the 2 screens), evidence.ts, walls machinery
+  studio/        reality.ts (the 3 screens), stamp.ts (the opt-in Stamp), decay.ts + icir.ts (the depth sub-scores),
+                 evidence.ts, surfaces, routes, walls machinery
 test/
   walls/         the integrity walls (frozen bytes, ledger bypass, no-signing, gates, …)
   organon/       capability-floor + behavior tests (incl. the honesty_* + evidence_bundle walls)
@@ -241,6 +288,9 @@ Organon rests on a short list of non-negotiables enforced by tests, not conventi
 | A `REAL` label requires provenance; a shown-but-unrecorded value halts | `honesty_record` / `dataplane_store` tests |
 | The moat appends `REAL` only; a backfill/retro cannot verify | `Capture.Service` chain (nonce-anchored) |
 | No model in a verdict, an axis, or the record | `honesty_scorecard` paraphrase guard |
+| The Ask AI phrases, never exceeds — a fabricated number/verdict rejects the answer wholesale | `ask_grounded` groundedness gate + verdict guard |
+| The Stamp is off the mass path; decay + ICIR are reason-only, never a scorecard axis or a new verdict word | `honesty_stamp` / `persistence_redteam` (S16/S22/S23) |
+| API keys are server-side env-only — never in the bundle, a log, the prompt, or a served page | `ask_grounded` key-safety (S20) + gitignored `.env` |
 | Advertised scope == actual scope | `capability_matrix` wall |
 | Nothing signs, is paid, or is closed | `no_signing_grep` wall |
 | History is permanent; prevention is the medicine | `precommit_prevent` wall + `.githooks/pre-commit` |

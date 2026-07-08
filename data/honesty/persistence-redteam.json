@@ -1,0 +1,73 @@
+{
+  "protocol": "persistence-redteam",
+  "at": "2026-07-09",
+  "continues": "crownjewel-redteam (S1-S21) — this is the Persistence sprint's first-class S1-S24 catalog (adds S22 decay-gate honesty, S23 ICIR determinism/scope, S24 live-AI grounding)",
+  "rule": "PART E (X-STRESS) — the BUILT system driven as intended (depositor · quant · skeptic · clumsy; three verticals; the opt-in Stamp now with a decay half-life + an ICIR consistency; the grounded Ask console), then broken across the full catalog; each RUN -> OBSERVE -> ROOT-CAUSE -> FIX-ON-GO -> RE-TEST -> LOG; converge only across two consecutive clean runs. S22 decay honesty; S23 ICIR determinism/scope; S24 the live-AI grounding proof.",
+  "personas": [
+    "depositor (Simple only; three verticals AND the Ask console in plain language; NEVER sees the Stamp, the decay gate, or ICIR — all opt-in Pro depth; honest 'unverified' where the engine can't confirm)",
+    "skeptic quant (Pro; runs the enriched Stamp; reads the deflated-Sharpe + the edge half-life + the ICIR with their honest scopes + INSUFFICIENT states; confirms a short-lived signal is fenced and a lumpy edge tempered; asks the Ask a VALIDATION question and traces the decay/ICIR lines to engine facts; confirms an injection cannot fabricate a half-life)",
+    "skeptic (hunts a fabricated half-life, an ICIR dressed as cross-sectional alpha, a Stamp/decay/ICIR leak onto the mass path, an ungrounded AI sub-score, a moved verdict, a leaked key, an unmanifested number)",
+    "clumsy (click-storms, kills the network, removes the sidecar, removes the AI key, feeds a short/flat/degenerate/serially-random series)"
+  ],
+  "catalog": [
+    { "id": "S1", "name": "dead endpoint", "outcome": "PASS (carried) — the provider degrades to SAMPLE; the served UI renders (no crash/spin)" },
+    { "id": "S2", "name": "429 storm", "outcome": "PASS (carried) — the Shelf reads the record; the cache absorbs it; the AI path has a rate-limit queue + retry so a 429 never surfaces" },
+    { "id": "S3", "name": "stale cache (OWN LINE)", "outcome": "PASS (carried) — the shown asOf is the capture time, visibly stale, never 'now'" },
+    { "id": "S4", "name": "no-history pool", "outcome": "PASS (carried) — history-dependent rows UNVERIFIED; point-in-time rows still compute; the Stamp UNAVAILABLE; never a fabricated SOLID/GO" },
+    { "id": "S5", "name": "mid-session depeg", "outcome": "PASS (carried) — the peg row fires -> AVOID; both registers agree" },
+    { "id": "S6", "name": "emissions-inflated trap", "outcome": "PASS (carried) — the yield-reality split flags it temporary; the verdict is not SOLID" },
+    { "id": "S7", "name": "SAMPLE-heavy state (OWN LINE)", "outcome": "PASS (carried) — every SAMPLE verdict is UNVERIFIED (W-E01 holds); a SAMPLE-fed decay/ICIR is INSUFFICIENT, never scored" },
+    { "id": "S8", "name": "malformed / adversarial data", "outcome": "PASS (carried) — boundary-validated to missing/UNVERIFIED; never a crash or nonsense verdict" },
+    { "id": "S9", "name": "provenance tamper", "outcome": "PASS (carried) — a shown-but-unrecorded REAL Halts; a broken chain refused on construct" },
+    { "id": "S10", "name": "determinism / no-LLM-in-verdict", "outcome": "PASS (carried) — identical inputs -> byte-identical scorecard + Stamp (incl. decay + ICIR); a model-in-verdict rejected wholesale" },
+    { "id": "S11", "name": "thin-liquidity trap", "outcome": "PASS (carried) — a deep-APY pool with dust liquidity -> liquidity FAIL -> AVOID" },
+    { "id": "S12", "name": "imminent-unlock trap", "outcome": "PASS (carried) — a large near-term unlock -> unlock FAIL -> AVOID (ARMED; D6 on live keyless data)" },
+    { "id": "S13", "name": "dust/new/STACKED-dependency trap", "outcome": "PASS (carried) — a young/tiny OR dependency-stacked pool -> counterparty flag, honestly coarse (D5/D8)" },
+    { "id": "S14", "name": "verifiability", "outcome": "PASS (carried) — ./organon.sh verify regenerates the bundle + a tampered number changes the sha" },
+    { "id": "S15", "name": "coverage/applicability", "outcome": "PASS (carried) — an inapplicable axis renders not-applicable, never a pass; all three verticals present" },
+    { "id": "S16", "name": "stamp isolation", "outcome": "PASS — the scorecard imports no Stamp/decay/ICIR; a mass Shelf render produces ZERO GO/NO-GO/half-life/ICIR; the verdict spaces stay disjoint" },
+    { "id": "S17", "name": "stamp honesty", "outcome": "PASS — short history -> INSUFFICIENT; a flat/degenerate series -> INSUFFICIENT; a history-absent pool -> UNAVAILABLE; the goldens reproduce; never a fabricated GO" },
+    { "id": "S18", "name": "live-number provenance", "outcome": "PASS — ./organon.sh verify recomputes every cited live number's capture-manifest content-hash (defillama · gecko · hyperliquid · unlock-probe · gemini · ask-live-groq); a tampered capture fails" },
+    { "id": "S19", "name": "ask groundedness", "outcome": "PASS — a fabricated number OR a filled UNVERIFIED gap is rejected WHOLESALE -> deterministic; a Simple answer carries no raw decimals (incl. the new decay/ICIR)" },
+    { "id": "S20", "name": "provider/BYOK/key-safety", "outcome": "PASS — no key -> deterministic mode; BYOK selects the env provider (incl. Groq); NO key string in the served HTML / any log / the live transcript" },
+    { "id": "S21", "name": "ask determinism/injection", "outcome": "PASS — same query -> identical FACTS; a prompt-injection cannot move a verdict OR fabricate a half-life/ICIR (the engine facts win)" },
+    { "id": "S22", "name": "decay-gate honesty (NEW)", "outcome": "PASS — a short/flat/SAMPLE series -> INSUFFICIENT, a serially-random series -> SHORT_LIVED (never a fabricated long fit); a persistent series -> TRACEABLE; a SHORT_LIVED GO is FENCED (a clean GO withheld, the GO word stands); deterministic; off the mass path" },
+    { "id": "S23", "name": "ICIR determinism/scope (NEW)", "outcome": "PASS — identical inputs -> byte-identical ICIR; a degenerate series -> INSUFFICIENT (no div-by-zero); the WITHIN-STRATEGY scope label present + explicitly NOT cross-sectional (a cross-sectional claim fails); a lumpy GO tempered; off the mass path" },
+    { "id": "S24", "name": "live-AI grounding (NEW)", "outcome": "PASS — the committed Groq round-trip proves a real-model grounded answer PASSES the gate AND a forced fabricated number is REJECTED wholesale -> deterministic; the redacted transcript reproduces its manifest hash; no key leaks" }
+  ],
+  "findings": [
+    {
+      "id": "W-P01",
+      "scenario": "S22 (decay-gate honesty) — the DECAY-TRUE positive control",
+      "observed": "a serially-random (i.i.d., phi=0) series fabricated a TRACEABLE half-life, and a flat constant series slipped past the degenerate guard to TRACEABLE",
+      "rootCause": "(a) a fixed EPS=1e-4 floor alone let i.i.d. noise autocorrelations (~N(0, 1/n), std ~0.05 at n=400) creep above it, so the log-linear fit read noise as a persistent edge; (b) a flat constant series had a tiny floating-point positive variance (Sum(r-mu)^2 not exactly 0), so the autocorrelation denominator produced O(1) garbage that the fit consumed",
+      "fix": "(a) only an autocorrelation ABOVE the ~95% Bartlett white-noise band (Z/sqrt(n), Z=2) counts as a real edge -> a serially-random series has < 2 significant lags -> SHORT_LIVED (no persistence); (b) a scale-relative degenerate guard std > |mu|*1e-6 + 1e-15 (the Stamp's shape) -> INSUFFICIENT. DECAY_SIGNIF_Z pinned (conscious re-pin 46e40760... -> f157da69...).",
+      "retest": "phi=0 -> SHORT_LIVED; a flat series -> INSUFFICIENT; phi=0.95 -> TRACEABLE (~9.9); phi=0.5 -> SHORT_LIVED (~1.1); deterministic; two consecutive clean runs identical"
+    },
+    {
+      "id": "W-P02",
+      "scenario": "S22 (the enriched Stamp reason) — the DECAY-TRUE integration",
+      "observed": "a CONDITIONAL GO's base reason already says 'a clean GO is fenced off' (the POST-HOC fence); the decay clause re-used 'clean GO ... WITHHELD/fenced', conflating two distinct fences",
+      "rootCause": "the post-hoc (pre-registration) fence and the depth (persistence/consistency) hurdle are orthogonal, but shared the word 'fenced'/'clean GO'",
+      "fix": "the depth clause uses the distinct 'persistence/consistency hurdle for a clean GO is (NOT) cleared' framing; cleanGo is the DEPTH flag (a CONDITIONAL GO can be depth-clean yet post-hoc-fenced — both disclosed, never conflated). The verdict WORD is never minted/moved.",
+      "retest": "a persistent GO -> both depth hurdles cleared; an i.i.d. GO -> the persistence hurdle NOT cleared (GO word stands, discloses it survived); a lumpy GO -> the consistency hurdle NOT cleared; two consecutive clean runs identical"
+    },
+    {
+      "id": "W-P03",
+      "scenario": "S24 (build-evidence count) — a skipped test broke the battery-count parser",
+      "observed": "the Operator-gated live-AI test (ask_live) is SKIPPED offline, printing a ' N skip' line BETWEEN 'pass' and 'fail'; build-evidence's (\\d+)\\s+pass\\s+(\\d+)\\s+fail regex assumed pass immediately precedes fail -> parsed -1/-1 -> verify failed on the count",
+      "rootCause": "the count regex was brittle to a skip/todo line between pass and fail",
+      "fix": "match pass and fail INDEPENDENTLY (the bun summary lines are the anchors) — robust to a skip line",
+      "retest": "build-evidence writes the true count (601/0 ... 617/0 ...); verify GREEN; two consecutive clean runs identical"
+    }
+  ],
+  "convergence": { "cleanRuns": 2, "battery": "625 pass / 1 skip / 0 fail across 102 files (626 tests), byte-identical across two consecutive runs; deterministic (the offline battery forces the AI keys empty, so the Operator-gated live-AI test skips)", "verdictDifferentialZero": true, "verifyGreen": true, "coreByteIdentity": true },
+  "postSprint": "the two sub-scores are deterministic, off the mass path, honest on short/degenerate/SAMPLE history; the decay measures serial persistence (NOT the carry), the ICIR is within-strategy temporal consistency (NOT cross-sectional factor IC); both refine the Stamp reason (a clean GO now needs deflation-survival AND a traceable half-life AND acceptable consistency — the GO bar is HARDER, never easier), never a scorecard axis, never a new verdict word; the parked LLM strategy-proposer / iterate-to-generate loop stays PARKED.",
+  "probe": { "status": "ARMED + BUILT-BUT-UNPROVEN", "note": "the X-PROBE metrics + KILL CRITERION remain armed (14-day window, >=30 genuine sessions); whether provable honesty is what the depositor came for is not yet evaluable — an honest not-yet, never a fabricated pass" },
+  "parkedForward": [
+    "the LLM strategy-PROPOSER / iterate-to-generate loop (a different product for a non-wedge user — PARKED with rationale; the research's other ideas deliberately NOT built)",
+    "the DEEP Sentinel contract-level risk IR (the counterparty axis stays a coarse structural screen)",
+    "a KEYLESS unlock-schedule source (DeFiLlama emissions paywalled, HTTP 402; the axis ARMED, D6 scope-cut)",
+    "the public strategy library + all execution rails (out of scope); B2B removed"
+  ]
+}

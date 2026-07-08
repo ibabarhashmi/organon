@@ -37,13 +37,16 @@ const venvCreated = existsSync(venvPath)
 
 // the PRISTINE battery: setup-to-battery green FROM NOTHING (honesty layer clone-robust — SAMPLE where payloads absent)
 const battery = run(["bash", "organon-studio-test.sh"], { cwd: clone, env: isoEnv })
-const m = battery.out.match(/(\d+)\s+pass\s+(\d+)\s+fail/)
-const pass = m ? Number(m[1]) : -1
-const fail = m ? Number(m[2]) : -1
+// match pass / fail INDEPENDENTLY — a skipped test (the Operator-gated live-AI test, skipped offline) prints a " N skip"
+// line BETWEEN pass and fail, so a `pass\s+fail` regex would misparse (W-P03, the build-evidence fix, in this 2nd site)
+const pm = battery.out.match(/(\d+)\s+pass\b/)
+const fm = battery.out.match(/(\d+)\s+fail\b/)
+const pass = pm ? Number(pm[1]) : -1
+const fail = fm ? Number(fm[1]) : -1
 const green = fail === 0 && pass > 0
 
 const out = {
-  protocol: "pristine-honesty", at: "2026-07-08",
+  protocol: "pristine-honesty", at: "2026-07-09",
   rule: "U-PRISTINE — isolated HOME, no inherited venv, fresh clone; the honesty layer is clone-robust (SAMPLE where the gitignored payloads are absent)",
   installOk: install.code === 0,
   positiveControl: { withoutVenvSidecarFails: controlFailedAsExpected },

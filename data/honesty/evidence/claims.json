@@ -1,11 +1,11 @@
 {
   "protocol": "honesty-evidence-claims",
   "note": "every headline number the handoff cites resolves to a backing artifact + value; `./organon.sh verify` reproduces the deterministic bundle (X-PROVE). A number with no artifact is a Halt.",
-  "bundleSha": "6049ba06661934e76a56c5f05d4d86f08a96680af9016ad607b548b50fb6722c",
+  "bundleSha": "9c1e7bd88825d7a5f872316e1f9cd9faf644dc4e5a382dbd6e911ac361332e21",
   "claims": [
     {
       "number": "battery-pass",
-      "value": 511,
+      "value": 625,
       "artifact": "evidence/battery-summary.json",
       "field": "canonical.pass"
     },
@@ -17,7 +17,7 @@
     },
     {
       "number": "battery-files",
-      "value": 91,
+      "value": 102,
       "artifact": "evidence/battery-summary.json",
       "field": "canonical.files"
     },
@@ -29,7 +29,7 @@
     },
     {
       "number": "scorecard-output-sha",
-      "value": "2de7834350a53953ae978ad77201cfcb94221c338b5c2e961281804e5806c3d3",
+      "value": "30ebc5152d1940abccc45237b51752c05c3ac3577796c0879de82ee49cfae954",
       "artifact": "evidence/determinism.json",
       "field": "canonical.outputSha"
     },
@@ -61,6 +61,12 @@
       "number": "deepening-pins-sha",
       "value": "d66f4613e0a4055eb7a1fbc2b3b9b47b58a0eb63b743f4d0b787e531470558b1",
       "artifact": "deepening-pins.json",
+      "field": "pinsSha"
+    },
+    {
+      "number": "crownjewel-pins-sha",
+      "value": "405ce972320d8f2d630498d8f24175e0e877058b26cd69da802f8e5dc28239d6",
+      "artifact": "crownjewel-pins.json",
       "field": "pinsSha"
     }
   ],

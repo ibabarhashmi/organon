@@ -36,6 +36,8 @@ export namespace Scorecard {
   export const CP_AGE_YOUNG_DAYS = 90 // < 90d → young (a hard flag)
   export const CP_SIZE_ESTABLISHED_USD = 10_000_000 // TVL ≥ $10M → established
   export const CP_SIZE_DUST_USD = 1_000_000 // < $1M → dust (a hard flag)
+  export const CP_DEP_SINGLE = 1 // depends on ≤ 1 protocol → a single, transparent dependency (the clean baseline, never a flag)
+  export const CP_DEP_STACKED = 3 // depends on ≥ 3 protocols → stacked counterparty/attack surface (a hard flag)
 
   export interface AxisRow {
     axis: Axis
@@ -67,6 +69,7 @@ export namespace Scorecard {
     unlockPct30d?: number | null // next-30d token unlock as a fraction of mcap (DeFiLlama unlocks) — the unlock-overhang axis
     ageDays?: number | null // pool age = recorded /chart history span in days — the counterparty screen's maturity signal
     sizeUsd?: number | null // pool size (TVL, USD) — the counterparty screen's size signal
+    depProtocols?: number | null // the # of distinct protocols the strategy's yield depends on — the counterparty screen's dependency signal (Crown-Jewel; 1 = a direct single-protocol deposit)
   }
 
   // the money vertical this pool is scored as — delta-neutral is intrinsic; else the declared vertical (default lending).
@@ -163,24 +166,32 @@ export namespace Scorecard {
     return { ...c, value: v4, tier: "caution", plainReason: "A moderate token unlock lands in the next 30 days — some near-term dilution overhang." }
   }
 
-  // ── AXIS 7 — COUNTERPARTY / MATURITY SCREEN (Deepening Phase 4): a COARSE STRUCTURAL screen — pool AGE (recorded
-  // history span) + SIZE (TVL) — NOT a contract audit (deep contract analysis is PARKED, the Sentinel IR). Dependency is
-  // an honest NON-SCORING note. Applies to a yield pool (lending / stablecoin-yield); for a delta-neutral perp venue the
-  // structural age/size screen is PARKED (not-applicable, honestly). It never over-claims 'audited' / 'safe'. ──
+  // ── AXIS 7 — COUNTERPARTY / MATURITY SCREEN (Deepening Phase 4 + Crown-Jewel Phase 3 dependency): a COARSE STRUCTURAL
+  // screen — pool AGE (recorded history span) · SIZE (TVL) · DEPENDENCY (# of protocols the yield relies on) — NOT a
+  // contract audit (deep contract analysis is PARKED, the Sentinel IR). Dependency is now SCORED (X-DEP, D5), no longer a
+  // non-scoring note: a single, transparent dependency (dep ≤ 1) is the clean baseline; a STACKED strategy (dep ≥ 3) adds
+  // hidden counterparty/attack surface → a hard flag folded into the tier. Applies to a yield pool; for a delta-neutral
+  // perp venue the structural screen is PARKED (not-applicable). It never over-claims 'audited' / 'safe'. ──
   export function counterpartyScreenRow(f: PoolFacts): AxisRow {
-    const c = { axis: "counterparty" as const, name: "counterparty / maturity (structural screen — NOT a contract audit)", threshold: `age ≥ ${CP_AGE_MATURE_DAYS}d · size ≥ $${CP_SIZE_ESTABLISHED_USD / 1e6}M`, comparator: null, flagship: false, material: true, provenanceRef: f.provenanceRef }
+    const c = { axis: "counterparty" as const, name: "counterparty / maturity (structural screen — NOT a contract audit)", threshold: `age ≥ ${CP_AGE_MATURE_DAYS}d · size ≥ $${CP_SIZE_ESTABLISHED_USD / 1e6}M · deps ≤ ${CP_DEP_SINGLE}`, comparator: null, flagship: false, material: true, provenanceRef: f.provenanceRef }
     if (verticalOf(f) === "delta-neutral") return notApplicable("counterparty", c.name, "A perp venue's structural age/size screen is not built this sprint (parked) — not a contract audit either way.", f.provenanceRef)
-    const age = f.ageDays ?? null, size = f.sizeUsd ?? null
-    const caveat = "This is a coarse structural screen (age · size), NOT a contract audit — it says nothing about the code; deep contract analysis is parked."
+    const age = f.ageDays ?? null, size = f.sizeUsd ?? null, dep = f.depProtocols ?? null
+    const caveat = "This is a coarse structural screen (age · size · dependency), NOT a contract audit — it says nothing about the code; deep contract analysis is parked."
     if (age === null || size === null) return { ...c, value: "n/a", tier: "unverified", plainReason: `We can't confirm the pool's age or size yet. ${caveat}` }
-    // the plain (Simple) register stays QUALITATIVE — a depositor reads words; the age/size numbers live in the row VALUE
-    // (the Pro register). (A PART-E depositor finding: raw age/size had leaked into the plain register.)
-    const v = `age ${Math.round(age)}d · size $${(size / 1e6).toFixed(1)}M`
+    // the plain (Simple) register stays QUALITATIVE — a depositor reads words; the age/size/deps numbers live in the row
+    // VALUE (the Pro register). (A PART-E depositor finding: raw age/size had leaked into the plain register.)
+    const v = `age ${Math.round(age)}d · size $${(size / 1e6).toFixed(1)}M${dep !== null ? ` · deps ${dep}` : ""}`
     const mature = age >= CP_AGE_MATURE_DAYS, young = age < CP_AGE_YOUNG_DAYS
     const established = size >= CP_SIZE_ESTABLISHED_USD, dust = size < CP_SIZE_DUST_USD
-    if (mature && established) return { ...c, value: v, tier: "pass", plainReason: `Structural screen: this pool is mature and well-sized. ${caveat}` }
-    if (young && dust) return { ...c, value: v, tier: "fail", plainReason: `Structural screen: this pool is BOTH young and dust-sized — a young, tiny counterparty is a real structural risk. ${caveat}` }
-    return { ...c, value: v, tier: "caution", plainReason: `Structural screen: this pool is ${young ? "young" : mature ? "mature" : "middling in age"} and ${dust ? "dust-sized" : established ? "well-sized" : "mid-sized"} — some structural risk. ${caveat}` }
+    const stacked = dep !== null && dep >= CP_DEP_STACKED // a stacked-dependency hard flag (extra counterparty surface)
+    const hardFlags = [young, dust, stacked].filter(Boolean).length // young · dust · stacked-deps are the three hard flags
+    const depNote = stacked ? ", and it stacks several protocol dependencies (extra counterparty surface)" : dep !== null && dep <= CP_DEP_SINGLE ? ", with a single, transparent protocol dependency" : ""
+    // pass ONLY when mature AND established AND not stacked (a stacked dependency withholds a clean pass)
+    if (mature && established && !stacked) return { ...c, value: v, tier: "pass", plainReason: `Structural screen: this pool is mature and well-sized${depNote}. ${caveat}` }
+    // two or more hard flags → a real structural risk (young+dust, or either + stacked dependencies)
+    if (hardFlags >= 2) { const flags = [young ? "young" : "", dust ? "dust-sized" : "", stacked ? "stacked across several protocol dependencies" : ""].filter(Boolean).join(" + "); return { ...c, value: v, tier: "fail", plainReason: `Structural screen: this pool has multiple structural flags (${flags}) — a real structural risk. ${caveat}` } }
+    // exactly one hard flag, or a middling band → some structural risk
+    return { ...c, value: v, tier: "caution", plainReason: `Structural screen: this pool is ${young ? "young" : mature ? "mature" : "middling in age"} and ${dust ? "dust-sized" : established ? "well-sized" : "mid-sized"}${stacked ? ", and stacks several protocol dependencies" : ""} — some structural risk. ${caveat}` }
   }
 
   export function rows(f: PoolFacts): AxisRow[] {
@@ -237,7 +248,7 @@ export namespace Scorecard {
     if (claimedVerdict !== d.verdict) violations.push(`claimed verdict ${claimedVerdict} ≠ the derived verdict ${d.verdict} (the verdict must fall out of the rows, never be hand-written)`)
     // 2. every failing/cautioning material axis must be NAMED in the plain register (no hidden failure — AVOID/CAUTION names its rows)
     for (const r of rs.filter((r) => r.material && (r.tier === "fail" || r.tier === "caution"))) {
-      const key = r.axis === "yield-reality" ? /reward|yield|emission/i : r.axis === "tvl-trend" ? /deposit|tvl|money/i : r.axis === "funding-regime" ? /funding|carry/i : r.axis === "liquidity-depth" ? /liquid|slippage|exit|thin|shallow|depth/i : r.axis === "unlock-overhang" ? /unlock|emission|dilut|overhang|supply/i : r.axis === "counterparty" ? /young|dust|new|counterpart|age|size|structural|small/i : /peg|depeg|\$1/i
+      const key = r.axis === "yield-reality" ? /reward|yield|emission/i : r.axis === "tvl-trend" ? /deposit|tvl|money/i : r.axis === "funding-regime" ? /funding|carry/i : r.axis === "liquidity-depth" ? /liquid|slippage|exit|thin|shallow|depth/i : r.axis === "unlock-overhang" ? /unlock|emission|dilut|overhang|supply/i : r.axis === "counterparty" ? /young|dust|new|counterpart|age|size|structural|small|depend|stacked/i : /peg|depeg|\$1/i
       if (!key.test(plain)) violations.push(`the ${r.tier} on "${r.axis}" is not named in the plain register (a failing axis must be surfaced, not hidden)`)
     }
     // 3. UNVERIFIED must render as a gap, never dressed as a pass (the firewall)

@@ -155,3 +155,206 @@ test("DEEPENING — the evidence-bundle contract lists the regenerable artifacts
   for (const f of ["battery-summary.json", "determinism.json", "frozen-git-status.json", "verdict-differential.json", "claims.json"]) expect(files).toContain(f)
   expect(files.some((f: string) => f.includes("geckoterminal"))).toBe(true)
 })
+
+// ── THE CROWN-JEWEL SPRINT — the additional pins (data/honesty/crownjewel-pins.json), carried forward from d66f4613… ──
+const cj = JSON.parse(readFileSync(path.join(H, "crownjewel-pins.json"), "utf8"))
+const CROWNJEWEL_PINS_SHA_GOLDEN = "405ce972320d8f2d630498d8f24175e0e877058b26cd69da802f8e5dc28239d6"
+
+test("CROWN-JEWEL — the pins hash-lock: PINS_SHA is the golden, self-consistent, and carries forward from the Deepening sha", () => {
+  expect(cj.pinsSha).toBe(CROWNJEWEL_PINS_SHA_GOLDEN)
+  expect(cj.carriedFromPinsSha).toBe(DEEPENING_PINS_SHA_GOLDEN) // a conscious extension of d66f4613…, never a silent drift
+  const { pinsSha, ...rest } = cj
+  expect(sha256(JSON.stringify(rest))).toBe(cj.pinsSha)
+  // POSITIVE CONTROL: mutating a pinned threshold changes the sha (the lock bites)
+  const mutated = JSON.parse(JSON.stringify(rest))
+  mutated.dependency.CP_DEP_STACKED = 4
+  expect(sha256(JSON.stringify(mutated))).not.toBe(cj.pinsSha)
+})
+
+test("CROWN-JEWEL — THE STAMP opt-in contract: off-path · deflation-armed-only-here · reactivation-not-modification · two orthogonal verdicts · honest INSUFFICIENT", () => {
+  const s = cj.stamp
+  expect(s.verdicts).toEqual(["GO", "NO-GO", "INSUFFICIENT"]) // orthogonal to SOLID/CAUTION/AVOID/UNVERIFIED
+  expect(s.offPath).toMatch(/ZERO|zero/) // the mass render invokes it zero times (S16)
+  expect(s.reactivationNotModification).toMatch(/byte-untouched|zero frozen bytes/i) // X-KEEP
+  expect(s.honestOnShortHistory).toMatch(/INSUFFICIENT/) // never a fabricated GO (S17)
+  expect(s.sidecarOptional).toMatch(/unavailable/i) // history/sidecar absent → 'unavailable', never a crash
+  expect(s.minObservations).toBe(60)
+})
+
+test("CROWN-JEWEL — the capture-manifest contract lists every live-number capture + the verify verb (X-LIVE, S18)", () => {
+  const m = cj.captureManifest
+  expect(m.verb).toMatch(/organon\.sh verify/)
+  expect(m.file).toBe("data/honesty/evidence/capture-manifest.json")
+  const caps = m.entries.map((e: { capture: string }) => e.capture)
+  for (const c of ["vlive-defillama.json", "vlive-geckoterminal.json", "vlive-hyperliquid.json", "vlive-gemini.json"]) expect(caps).toContain(c)
+})
+
+test("CROWN-JEWEL — the dependency thresholds are exact + unambiguous (X-DEP, D5)", () => {
+  const d = cj.dependency
+  expect(d.CP_DEP_SINGLE).toBe(1) // a single transparent dependency — the clean baseline, never a flag
+  expect(d.CP_DEP_STACKED).toBe(3) // ≥ 3 protocol dependencies — a structural flag (stacked surface)
+  expect(d.label).toMatch(/not a contract audit/i) // never over-claimed as an audit
+})
+
+test("CROWN-JEWEL — the UNLOCK axis is resolved as D6 (signed scope-cut); the keyless source is paywalled, never scraped/faked (X-UNLOCK-LIVE)", () => {
+  const u = cj.unlockLive
+  expect(u.resolution).toMatch(/D6/) // the Operator-signed scope-cut
+  expect(u.candidatesConsidered.every((c: { keyless: boolean }) => c.keyless === false)).toBe(true) // no clean keyless source
+  expect(u.thresholds.UNLOCK_HEAVY).toBe(0.05) // the thresholds carried unchanged
+  const d6 = cj.deviationsSeed.find((x: { id: string }) => x.id === "D6")
+  expect(d6.whatWasDone).toMatch(/scope-cut|SCOPE-CUT/i)
+})
+
+test("CROWN-JEWEL — THE ASK intent enum is CLOSED + TOTAL: every intent maps to exactly one engine tool (an open-ended intent is refused)", () => {
+  const a = cj.ask
+  expect(a.intentEnum).toContain("UNSUPPORTED") // the safe fallback for an unmappable query (never an invented branch)
+  expect(a.intentEnum).toHaveLength(8)
+  // TOTAL: every intent has a tool mapping; no undefined branch
+  for (const intent of a.intentEnum) {
+    expect(typeof a.intentToTool[intent]).toBe("string")
+    expect(a.intentToTool[intent].length).toBeGreaterThan(0)
+  }
+  // the load-bearing mappings: VALIDATION → the Stamp; DATA_QUERY → a metric; COVERAGE → the matrix; UNSUPPORTED → a fallback
+  expect(a.intentToTool.VALIDATION).toBe("stampFor")
+  expect(a.intentToTool.DATA_QUERY).toBe("metric")
+  expect(a.intentToTool.COVERAGE).toBe("coverageMatrix")
+  expect(a.intentToTool.UNSUPPORTED).toBe("fallback")
+})
+
+test("CROWN-JEWEL — the groundedness rule is testable: every AI claim ↔ a returned fact; an ungrounded claim rejects WHOLESALE (X-ASK, S19)", () => {
+  const a = cj.ask
+  expect(a.groundednessRule).toMatch(/explain\.ts|groundedness verifier/i) // reuses the existing verifier
+  expect(a.groundednessRule).toMatch(/WHOLESALE|deterministic template/i) // rejected wholesale, not partially
+  expect(a.honestGaps).toMatch(/UNVERIFIED|never fill/i) // an UNVERIFIED gap is never filled
+  expect(a.noAiInVerdictPath).toMatch(/deterministic|read-only/i) // the AI never touches the verdict path
+  // the determinism reconciliation: FACTS deterministic, PROSE grounded (not byte-deterministic), a Pro raw toggle
+  expect(a.determinism).toMatch(/raw toggle/i)
+})
+
+test("CROWN-JEWEL — the provider/BYOK matrix + key-safety: Google AI Studio default, BYOK across providers, no-key → deterministic mode, keys server-side (X-BYOK, S20)", () => {
+  const p = cj.provider
+  expect(p.default.provider).toBe("gemini")
+  expect(p.default.envKey).toBe("GOOGLE_AI_STUDIO_KEY")
+  const providers = p.byok.map((b: { provider: string }) => b.provider)
+  for (const prov of ["openai", "anthropic", "openai-compatible"]) expect(providers).toContain(prov)
+  expect(p.aiOptional).toMatch(/deterministic templated mode/i) // no key → deterministic, no crash
+  expect(p.keySafety.rule).toMatch(/env-only|server-side/i)
+  expect(p.keySafety.rule).toMatch(/NEVER.*(bundle|log)/i) // never in the bundle or a log
+})
+
+test("CROWN-JEWEL — the screen set is a CONSCIOUS 3 (D7); a fourth is a Halt (PART CLEAN amendment)", () => {
+  expect(cj.screens.count).toBe(3)
+  expect(cj.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(cj.screens.amendment).toMatch(/D7/)
+  const d7 = cj.deviationsSeed.find((x: { id: string }) => x.id === "D7")
+  expect(d7.whatWasDone).toMatch(/2→3|2->3|third|Ask/i)
+})
+
+test("CROWN-JEWEL — the stress catalog is S1–S21 (21 lines; S16–S21 new)", () => {
+  expect(cj.stressCatalog).toHaveLength(21)
+  const ids = cj.stressCatalog.map((s: { id: string }) => s.id)
+  expect(ids).toEqual(["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19", "S20", "S21"])
+  expect(cj.stressCatalog.find((s: { id: string }) => s.id === "S16").name).toMatch(/stamp isolation/i)
+  expect(cj.stressCatalog.find((s: { id: string }) => s.id === "S19").name).toMatch(/ask groundedness/i)
+  expect(cj.stressCatalog.find((s: { id: string }) => s.id === "S20").name).toMatch(/key-safety/i)
+  expect(cj.stressCatalog.find((s: { id: string }) => s.id === "S21").name).toMatch(/injection/i)
+})
+
+test("CROWN-JEWEL — the deviations ledger carries D1–D7, each with the four fields (a silent deviation is a Halt)", () => {
+  const ds = cj.deviationsSeed
+  expect(ds.map((d: { id: string }) => d.id)).toEqual(["D1", "D2", "D3", "D4", "D5", "D6", "D7"])
+  for (const d of ds) {
+    expect(d.blueprintLine.trim().length).toBeGreaterThan(0)
+    expect(d.whatWasDone.trim().length).toBeGreaterThan(0)
+    expect(d.why.trim().length).toBeGreaterThan(0)
+    expect(d.lawAuthority.trim().length).toBeGreaterThan(0)
+  }
+  expect(ds.find((d: { id: string }) => d.id === "D5").whatWasDone).toMatch(/SCORED|scored/)
+  expect(ds.find((d: { id: string }) => d.id === "D6").status).toMatch(/scope-cut/i)
+})
+
+// ── THE PERSISTENCE SPRINT — the additional pins (data/honesty/persistence-pins.json), carried forward from 405ce972… ──
+const ps = JSON.parse(readFileSync(path.join(H, "persistence-pins.json"), "utf8"))
+// re-pinned in Phase 3 (DECAY-TRUE): added DECAY_SIGNIF_Z (the Bartlett white-noise band) after the positive control
+// proved a fixed EPS alone let noise autocorrelations fabricate a fit — a conscious re-pin (46e40760… → f157da69…)
+const PERSISTENCE_PINS_SHA_GOLDEN = "f157da698895ce89d945334b3bac814bcf27538047050b25d78f2df3662d36fe"
+
+test("PERSISTENCE — the pins hash-lock is the pinned golden + self-consistent + carried from the crownjewel sha (the lock bites)", () => {
+  expect(ps.pinsSha).toBe(PERSISTENCE_PINS_SHA_GOLDEN)
+  const { pinsSha, ...rest } = ps
+  expect(sha256(JSON.stringify(rest))).toBe(ps.pinsSha) // self-consistent
+  expect(ps.carriedFromPinsSha).toBe(CROWNJEWEL_PINS_SHA_GOLDEN) // carried forward, never rebuilt
+  // POSITIVE CONTROL: mutating a pinned decay/ICIR threshold changes the sha
+  const mutated = JSON.parse(JSON.stringify(rest))
+  mutated.decay.DECAY_HALFLIFE_FLOOR = 6
+  expect(sha256(JSON.stringify(mutated))).not.toBe(ps.pinsSha)
+})
+
+test("PERSISTENCE — the decay-gate thresholds are exact + unambiguous, and the edge measure + honest scope are pinned (X-DECAY)", () => {
+  const d = ps.decay
+  expect(d.lagSet).toEqual([1, 2, 3, 5, 10]) // the pinned lag set
+  expect(d.DECAY_HALFLIFE_FLOOR).toBe(5) // ≥ 5 periods → TRACEABLE; < 5 → SHORT_LIVED
+  expect(d.MIN_DECAY_OBSERVATIONS).toBe(30) // < 30 → INSUFFICIENT (never a fabricated half-life)
+  expect(d.DECAY_EPS).toBe(1e-4)
+  expect(d.DECAY_SIGNIF_Z).toBe(2) // the Bartlett white-noise band (Z/√n) — noise is not read as a persistent edge
+  expect(d.tiers).toEqual(["TRACEABLE", "SHORT_LIVED", "INSUFFICIENT"])
+  // the edge measure is pinned (autocorrelation → the exp fit) — a vague decay floor is refused
+  expect(d.edgeMeasure).toMatch(/autocorrelation/i)
+  expect(d.edgeMeasure).toMatch(/exp\(-k\/τ\)|AR\(1\)/)
+  // off-path + deterministic + honest-on-short-history + from-record-only + refines-not-mints
+  expect(d.offPath).toMatch(/ZERO times|never the mass/i)
+  expect(d.deterministic).toMatch(/no model|byte-identical/i)
+  expect(d.honestOnShortHistory).toMatch(/INSUFFICIENT/)
+  expect(d.fromRecordOnly).toMatch(/SAMPLE/)
+  expect(d.refinesNotMints).toMatch(/HARDER, never easier|never mints/i)
+})
+
+test("PERSISTENCE — the ICIR thresholds are exact, and the WITHIN-STRATEGY scope is pinned + NOT cross-sectional (X-ICIR, A′#2)", () => {
+  const i = ps.icir
+  expect(i.MIN_ICIR_PERIODS).toBe(20)
+  expect(i.ICIR_STEADY_FLOOR).toBe(0.1)
+  expect(i.tiers).toEqual(["CONSISTENT", "LUMPY", "INSUFFICIENT"])
+  expect(i.scope).toBe("within-strategy-temporal")
+  expect(i.degenerateGuard).toMatch(/std.*0|divide-by-zero/i) // std→0 guarded, never a fabricated ratio
+  // the honest-scope label is PRESENT + explicitly NOT cross-sectional (pinning ICIR without the scope label is refused)
+  expect(i.scopeStatement).toMatch(/within-strategy/i)
+  expect(i.scopeStatement).toMatch(/NOT the cross-sectional|not a 200-token|EXPLICITLY NOT/i)
+  expect(i.formula).toMatch(/mean.*std/i)
+})
+
+test("PERSISTENCE — the honest scope + the PARKED generate-loop are pinned (the generate-loop is NOT in-scope — THE FIREWALL)", () => {
+  expect(ps.honestScope.isNot).toMatch(/cross-sectional factor/i)
+  expect(ps.honestScope.surfaced).toMatch(/drawer|Ask|PINS/i)
+  // the generate-to-iterate loop is PARKED with rationale — pinning it as in-scope is refused
+  expect(ps.parkedGenerateLoop.status).toMatch(/PARKED/)
+  expect(ps.parkedGenerateLoop.rationale).toMatch(/different product|non-wedge|Halt/i)
+})
+
+test("PERSISTENCE — the finding-resolutions V1–V6 are pinned, each with a resolution, and D8 carries its four fields (V3)", () => {
+  const ids = ps.findings.map((f: { id: string }) => f.id)
+  expect(ids).toEqual(["V1", "V2", "V3", "V4", "V5", "V6"])
+  for (const f of ps.findings) { expect(f.finding.trim().length).toBeGreaterThan(0); expect(f.resolution.trim().length).toBeGreaterThan(0); expect(f.status).toMatch(/RESOLVED/) }
+  expect(ps.findings.find((f: { id: string }) => f.id === "V1").resolution).toMatch(/conscious 3|sub-route/i) // the screen-count reconciled
+  expect(ps.findings.find((f: { id: string }) => f.id === "V2").resolution).toMatch(/Groq|live/i) // AI proven live
+  // D8 — the dep=1 modeling assumption, the four ledger fields
+  const d8 = ps.deviationD8
+  expect(d8.id).toBe("D8")
+  for (const k of ["blueprintLine", "whatWasDone", "why", "lawAuthority"]) expect(String(d8[k]).trim().length).toBeGreaterThan(0)
+  expect(d8.whatWasDone).toMatch(/depProtocols=1|dependency=1|default/i)
+})
+
+test("PERSISTENCE — the screen set stays the conscious 3 (the Stamp is a SUB-ROUTE, not a screen — V1); a fourth is a Halt", () => {
+  expect(ps.screens.count).toBe(3)
+  expect(ps.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(ps.screens.massScreens).toEqual(["shelf", "reality-check"])
+  expect(ps.screens.stampIsASubRoute).toMatch(/sub-route|NOT a screen/i)
+})
+
+test("PERSISTENCE — the stress catalog is S1–S24 (24 lines; S22–S24 new: decay · ICIR · live-AI)", () => {
+  expect(ps.stressCatalog).toHaveLength(24)
+  const ids = ps.stressCatalog.map((s: { id: string }) => s.id)
+  expect(ids).toEqual(Array.from({ length: 24 }, (_, k) => `S${k + 1}`))
+  expect(ps.stressCatalog.find((s: { id: string }) => s.id === "S22").name).toMatch(/decay/i)
+  expect(ps.stressCatalog.find((s: { id: string }) => s.id === "S23").name).toMatch(/ICIR/i)
+  expect(ps.stressCatalog.find((s: { id: string }) => s.id === "S24").name).toMatch(/live-AI/i)
+})

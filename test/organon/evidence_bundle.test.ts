@@ -42,7 +42,21 @@ test("EVIDENCE-TRUE — every claimed number resolves to its backing artifact (t
   }
   // the load-bearing numbers are present in the manifest
   const numbers = claims.claims.map((c) => c.number)
-  for (const n of ["battery-pass", "battery-fail", "frozen-seven-clean", "lending-fpset-sha", "funding-verdict", "deepening-pins-sha"]) expect(numbers).toContain(n)
+  for (const n of ["battery-pass", "battery-fail", "frozen-seven-clean", "lending-fpset-sha", "funding-verdict", "deepening-pins-sha", "crownjewel-pins-sha"]) expect(numbers).toContain(n)
+})
+
+test("LIVE-PROVE (Crown-Jewel S18) — every cited LIVE number resolves to a capture-manifest content-hash that reproduces", () => {
+  const m = Evidence.readArtifact<{ entries: { capture: string; sha256: string; backs: string }[] }>("capture-manifest.json")
+  if (!m) { console.log("  (evidence_bundle) capture-manifest.json absent — run `bun run script/build-evidence.ts`"); return }
+  expect(m.entries.length).toBeGreaterThanOrEqual(3) // defillama · gecko · hyperliquid (gemini added in Phase 7)
+  // each committed capture's content-hash reproduces the manifest hash (a tampered live number is caught)
+  const v = Evidence.verifyCaptureManifest()
+  expect(v.ok, v.problems.join("; ")).toBe(true)
+  // POSITIVE CONTROL: mutating a manifest hash breaks the reproduction (the lock bites)
+  for (const e of m.entries) expect(e.sha256).toBe(Evidence.captureSha(e.capture)) // the committed capture reproduces its hash
+  // the load-bearing keyless captures are manifested
+  const caps = m.entries.map((e) => e.capture)
+  for (const c of ["vlive-defillama.json", "vlive-geckoterminal.json", "vlive-hyperliquid.json"]) expect(caps).toContain(c)
 })
 
 test("POSITIVE CONTROL — a fabricated claim (a number with no backing artifact) is CAUGHT", () => {

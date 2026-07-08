@@ -1,0 +1,37 @@
+{
+  "protocol": "honesty-capture-manifest",
+  "note": "every cited LIVE number resolves to a committed content-hash; `./organon.sh verify` recomputes each capture's hash and diffs it (S18). A live number that changed without a re-pin fails. The re-fetch is network-gated; the committed capture + hash is the durable record. LIVE-VALUE CEILING (V6): the HASH reproduces, not the underlying live value — the value is re-capturable, not frozen.",
+  "entries": [
+    {
+      "capture": "vlive-defillama.json",
+      "sha256": "c5f158ccb2acdd8e954cafc5f408f9b41998b00d2a7a6728d9f8befdbd25936d",
+      "backs": "the DeFiLlama /pools keyless HTTP-200 live number (poolCount)"
+    },
+    {
+      "capture": "vlive-geckoterminal.json",
+      "sha256": "1b27c458119b76618fd5258bcacb0ffd2927669f39bce8d383927a9c1f08ba91",
+      "backs": "the GeckoTerminal reserve_in_usd keyless HTTP-200 live number (deepest-pool reserve)"
+    },
+    {
+      "capture": "vlive-hyperliquid.json",
+      "sha256": "a4a60514bb5a309efbb88f4638f520d7c20b378866b20dc6cca50377e4c2c25e",
+      "backs": "the Hyperliquid funding keyless HTTP-200 live number (points)"
+    },
+    {
+      "capture": "vlive-unlock-probe.json",
+      "sha256": "cfdd017a3d6d5cdd42d4212fc34b250954dd862d938ece31fd91f57f0ff3758c",
+      "backs": "the DeFiLlama /emission keyless probe status (HTTP 402 paywalled) — the EVIDENCE for the unlock D6 signed scope-cut (X-UNLOCK-LIVE)"
+    },
+    {
+      "capture": "vlive-gemini.json",
+      "sha256": "5496c4f2cff2520ace1f0a6c85d69203130cc174e322a6b74d55a6be35945296",
+      "backs": "the Google AI Studio (Gemini) endpoint V-LIVE reachability (status; NO key committed — X-BYOK key-safety)"
+    },
+    {
+      "capture": "ask-live-groq.json",
+      "sha256": "2012682bf60d0499d3428a6600067c11df903eca914207932075bb07758c56a0",
+      "backs": "the LIVE Groq round-trip — a real-model grounded PASS + a forced-fabrication REJECT (V2/S24; REDACTED, NO key committed — X-BYOK key-safety)"
+    }
+  ],
+  "at": 1783468800000
+}

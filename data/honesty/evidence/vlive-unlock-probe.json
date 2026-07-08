@@ -1,0 +1,10 @@
+{
+  "provider": "defillama-emissions",
+  "url": "https://api.llama.fi/emission/aave",
+  "status": 402,
+  "keyless": false,
+  "paywalled": true,
+  "resolution": "D6 — Operator-signed scope-cut: no clean keyless zero-setup unlock source; the axis stays ARMED + honest (not-applicable/UNVERIFIED), never scraped/faked",
+  "note": "HTTP 402 — 'Upgrade to the paid API plan' (the keyless source is paywalled; D6)",
+  "at": 1783468800000
+}

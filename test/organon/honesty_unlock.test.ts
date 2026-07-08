@@ -7,8 +7,12 @@
  * client probe DEGRADES to SAMPLE, never scraping or faking a fraction.
  */
 import { test, expect } from "bun:test"
+import { readFileSync } from "node:fs"
+import path from "node:path"
 import { Scorecard } from "../../src/analytics/scorecard"
 import { DefiLlama } from "../../src/dataplane/providers/defillama"
+import { PKG_ROOT } from "../../src/organon/frozen"
+import { Evidence } from "../../src/studio/evidence"
 
 const DAY = 86_400_000
 const withUnlock = (o: Partial<Scorecard.PoolFacts> = {}): Scorecard.PoolFacts => ({ name: "rewarded-pool", vertical: "lending", apyBase: 8, apyReward: 2, tvlSlope30d: 0.05, pegDev: 0.001, isStablecoin: true, reality: "REAL", provenanceRef: "c", hasUnlockSchedule: true, unlockPct30d: 0.2, ageDays: 900, sizeUsd: 240_000_000, ...o })
@@ -64,4 +68,38 @@ test("X-HONEST (D4) — the DeFiLlama unlocks probe DEGRADES on the 402 paywall 
   // a network error → SAMPLE, never a throw to the caller
   const threw: DefiLlama.FetchImpl = async () => { throw new Error("no network") }
   expect((await DefiLlama.unlocks("aave", 0, threw)).reality).toBe("SAMPLE")
+})
+
+// ── THE CROWN-JEWEL SPRINT — Phase 2 (UNLOCK-LIVE): the D6 signed scope-cut, evidenced (X-UNLOCK-LIVE) ──
+test("UNLOCK-LIVE (Crown-Jewel Phase 2, D6) — the signed scope-cut is in the live ledger, with the four fields + the resolution", () => {
+  const led = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "deviations.json"), "utf8")) as { deviations: { id: string; blueprintLine: string; whatWasDone: string; why: string; lawAuthority: string }[] }
+  const d6 = led.deviations.find((d) => d.id === "D6")
+  expect(d6, "D6 must be recorded in the live deviations ledger (a silent scope-cut is a Halt)").toBeTruthy()
+  for (const f of ["blueprintLine", "whatWasDone", "why", "lawAuthority"] as const) expect(d6![f].trim().length).toBeGreaterThan(0)
+  expect(d6!.whatWasDone).toMatch(/scope-cut|SCOPE-CUT/i)
+  expect(d6!.whatWasDone).toMatch(/402|paywall/i) // the paywall is the reason, evidenced
+  expect(d6!.whatWasDone).toMatch(/ARMED|never scraped|never faked/i) // the axis stays honest + armed
+  expect(d6!.lawAuthority).toMatch(/X-UNLOCK-LIVE/)
+})
+
+test("UNLOCK-LIVE (Crown-Jewel Phase 2, D6) — the paywall is EVIDENCED, not asserted: the committed probe capture is manifested + reproduces (clone-robust)", () => {
+  const probe = Evidence.readArtifact<{ status: number | null; paywalled: boolean | null; keyless: boolean; resolution: string }>("vlive-unlock-probe.json")
+  if (!probe) { console.log("  (honesty_unlock) vlive-unlock-probe.json absent — run `bun run script/build-evidence.ts`"); return }
+  expect(probe.keyless).toBe(false) // the source is not keyless (paid)
+  expect(probe.resolution).toMatch(/D6/) // the artifact names the signed scope-cut
+  // when the probe reached the network, it is the honest 402 (never a fabricated 200/schedule); offline → status null, disclosed
+  if (probe.status !== null) expect(probe.status).not.toBe(200) // a keyless 200 would REOPEN the source (then D6 would be wrong) — honest either way
+  // the probe capture is covered by the capture-manifest — its committed content-hash reproduces (S18)
+  const v = Evidence.verifyCaptureManifest()
+  expect(v.ok, v.problems.join("; ")).toBe(true)
+  const m = Evidence.readArtifact<{ entries: { capture: string }[] }>("capture-manifest.json")
+  if (m) expect(m.entries.some((e) => e.capture === "vlive-unlock-probe.json")).toBe(true)
+})
+
+test("UNLOCK-LIVE (Crown-Jewel Phase 2, D6) — the axis stays ARMED: a REAL keyless schedule would still score (the cut is scope, not capability)", () => {
+  // the pure extractor + the row are UNCHANGED — the moment a keyless source returns a schedule, the axis scores it
+  expect(Scorecard.unlockOverhangRow(withUnlock({ unlockPct30d: 0.2 })).tier).toBe("fail") // ARMED: a heavy overhang still fails
+  expect(Scorecard.unlockOverhangRow(withUnlock({ unlockPct30d: 0.005 })).tier).toBe("pass") // ARMED: a benign one still passes
+  // on live keyless data with no resolvable schedule → not-applicable/UNVERIFIED, never a fabricated fraction (the D6 honesty)
+  expect(Scorecard.unlockOverhangRow(withUnlock({ hasUnlockSchedule: false })).tier).toBe("not-applicable")
 })

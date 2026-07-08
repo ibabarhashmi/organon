@@ -1,0 +1,9 @@
+{
+  "provider": "gemini",
+  "url": "https://generativelanguage.googleapis.com/v1beta/models",
+  "status": 403,
+  "keyRequired": true,
+  "keyCommitted": false,
+  "note": "Google AI Studio reachable (HTTP 403); a key is required to generate (BYOK) — NONE committed (X-BYOK key-safety)",
+  "at": 1783468800000
+}

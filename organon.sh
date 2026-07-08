@@ -5,18 +5,22 @@
 # The first command a stranger ever runs is the most honest thing in the repo: it refuses to open the door until the
 # house is provably in order, and when it refuses it says exactly why.
 #
-# Usage:  ./organon.sh [menu|status|check|launch|verify|--full]
+# Usage:  ./organon.sh [menu|status|check|launch|verify|stamp <poolKey>|--full]
 #   menu    (default) check → setup → verify → the bounded TUI (interactive)
 #   status  check → setup → verify → the status table (non-interactive; the happy transcript)
 #   check   the prerequisite enumeration only (honest per-item; exit nonzero if a required item is missing)
 #   launch  verify → launch the web app ONLY if the pinned gate list is green (else refuse with reasons)
 #   verify  regenerate the EVIDENCE BUNDLE + diff it against the committed copy — the numbers reproduce themselves (X-PROVE)
+#   stamp   <poolKey> — the OPT-IN overfit stress test: a DISTINCT GO/NO-GO/INSUFFICIENT verdict on a pool's recorded
+#           track record (the frozen anti-PBO adjudicator, off the mass path — orthogonal to the Reality Check; X-OPTIN)
+#   ask     "<query>" — the grounded Ask console (deterministic mode, no AI key): every number/verdict is engine-sourced;
+#           an unmappable query → an honest "here's what I can help with" (X-ASK)
 #   --full  run the FULL in-scope battery as the verify set (default is the fast pinned subset)
 set -euo pipefail
 cd "$(dirname "$0")"
 
-MODE="menu"; FULL=""
-for a in "$@"; do case "$a" in menu|status|check|launch|verify) MODE="$a";; --full) FULL="--full";; esac; done
+MODE="menu"; FULL=""; STAMP_ARG=""; ASK_ARGS=()
+for a in "$@"; do case "$a" in menu|status|check|launch|verify|stamp|ask) MODE="$a";; --full) FULL="--full";; *) if [ "$MODE" = "stamp" ] && [ -z "$STAMP_ARG" ]; then STAMP_ARG="$a"; elif [ "$MODE" = "ask" ]; then ASK_ARGS+=("$a"); fi;; esac; done
 
 need_bun() { if ! command -v bun >/dev/null 2>&1; then echo "✗ bun is required and is not on PATH — install it yourself (https://bun.sh). The runner NEVER installs system packages."; exit 1; fi; }
 
@@ -50,8 +54,8 @@ do_launch() {
   local enabled; enabled="$(bun run script/organon-status.ts $FULL | tee /dev/stderr | tail -1 | sed 's/.*ORGANON_LAUNCH_ENABLED=//')"
   if [ "$enabled" = "1" ]; then
     echo "✓ LAUNCH WEB: the pinned gate list is green — starting the Reality Check…"
-    echo "  the Reality Check (2 screens: the Shelf + the Reality Check) serves at http://localhost:4444  (Ctrl-C to stop; nothing signs)"
-    echo "  is this yield real, and what's the catch? — REAL where recorded, the honest SAMPLE fallback where not."
+    echo "  ORGΛNON (3 screens: the Shelf · the Reality Check · the Ask console) serves at http://localhost:4444  (Ctrl-C to stop; nothing signs)"
+    echo "  is this yield real, and what's the catch? — REAL where recorded, the honest SAMPLE fallback where not · ask in your own words (AI-optional, BYOK)."
     exec bun run script/serve-reality.ts
   else
     echo "✗ LAUNCH WEB refused: the requirements above are not met. The door stays shut until the house is in order (no soft-launch path exists — the gate is derived from the verify results, not a flag)."
@@ -74,9 +78,9 @@ do_verify() {
   want="$(bun -e 'const a=require("./data/honesty/evidence/battery-summary.json");console.log(a.canonical.pass+"/"+a.canonical.fail)' 2>/dev/null || echo "?/?")"
   echo "    battery ${pass}/${fail} · committed ${want}"
   if [ "${pass}/${fail}" != "$want" ]; then echo "✗ battery count ${pass}/${fail} ≠ the committed evidence ${want} — regenerate + re-pin (bun run script/build-evidence.ts)"; exit 1; fi
-  echo "  (2) the deterministic bundle (determinism · frozen-seven · verdict differential) + every claim…"
+  echo "  (2) the deterministic bundle (determinism · frozen-seven · verdict differential) + every claim + every LIVE number's capture-manifest hash…"
   bun run script/build-evidence.ts --check || exit 1
-  echo "✓ VERIFY GREEN: the evidence bundle reproduces — the battery count, the frozen-seven git-clean, the verdict differential, and every claimed number diff clean against the committed copy."
+  echo "✓ VERIFY GREEN: the evidence bundle reproduces — the battery count, the frozen-seven git-clean, the verdict differential, every claimed number, and every cited LIVE number (capture-manifest content-hash) diff clean against the committed copy."
 }
 
 tui() {
@@ -96,10 +100,18 @@ tui() {
   esac
 }
 
+# ── the STAMP verb — the opt-in overfit stress test (Crown-Jewel; X-OPTIN) — a DISTINCT GO/NO-GO/INSUFFICIENT verdict ──
+do_stamp() { need_bun; bun run script/stamp.ts $STAMP_ARG; }
+
+# ── the ASK verb — the grounded Ask console (Crown-Jewel; X-ASK), deterministic mode from the CLI (no AI key needed) ──
+do_ask() { need_bun; bun run script/ask.ts "${ASK_ARGS[@]}"; }
+
 case "$MODE" in
   check)  prereq_check;;
   status) do_status;;
   launch) do_launch;;
   verify) do_verify;;
+  stamp)  do_stamp;;
+  ask)    do_ask;;
   menu|*) tui;;
 esac

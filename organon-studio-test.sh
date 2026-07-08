@@ -3,6 +3,10 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 export NO_COLOR=1 XDG_DATA_HOME="$(mktemp -d)"
+# DETERMINISTIC + OFFLINE (S20): force the Ask console into deterministic mode so the battery NEVER hits a live AI API,
+# regardless of a developer's local .env (an empty shell var takes precedence over .env in Bun). The grounded-phrasing
+# path is proven separately with injected mock providers/transports.
+export GROQ_API_KEY= GOOGLE_AI_STUDIO_KEY= GEMINI_API_KEY= OPENAI_API_KEY= ANTHROPIC_API_KEY= OPENAI_COMPATIBLE_API_KEY= OPENAI_COMPATIBLE_BASE_URL=
 bun test --timeout 30000 test/walls/ \
   test/organon/ledger.test.ts \
   test/organon/ledger_laundering.test.ts \
@@ -70,4 +74,15 @@ bun test --timeout 30000 test/walls/ \
   test/organon/honesty_liquidity.test.ts \
   test/organon/honesty_unlock.test.ts \
   test/organon/honesty_counterparty.test.ts \
-  test/organon/honesty_coverage.test.ts
+  test/organon/honesty_coverage.test.ts \
+  test/organon/honesty_stamp.test.ts \
+  test/organon/ask_router.test.ts \
+  test/organon/ask_tools.test.ts \
+  test/organon/ask_grounded.test.ts \
+  test/organon/ask_ui.test.ts \
+  test/organon/crownjewel_redteam.test.ts \
+  test/organon/findings_closed.test.ts \
+  test/organon/ask_live.test.ts \
+  test/organon/decay.test.ts \
+  test/organon/icir.test.ts \
+  test/organon/persistence_redteam.test.ts

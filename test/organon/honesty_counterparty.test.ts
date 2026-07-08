@@ -6,10 +6,13 @@
  * (a doc-lie Halt). It resolves through the record (age = recorded /chart span, size = recorded TVL), clone-robust.
  */
 import { test, expect } from "bun:test"
+import { readFileSync } from "node:fs"
+import path from "node:path"
 import { Scorecard } from "../../src/analytics/scorecard"
 import { Feed } from "../../src/dataplane/feed"
 import { ProvRecord } from "../../src/dataplane/record"
 import { DataPlane } from "../../src/dataplane/store"
+import { PKG_ROOT } from "../../src/organon/frozen"
 
 const cp = (o: Partial<Scorecard.PoolFacts> = {}): Scorecard.PoolFacts => ({ name: "pool", vertical: "lending", apyBase: 3.1, apyReward: null, tvlSlope30d: 0.05, pegDev: 0.001, isStablecoin: true, reality: "REAL", provenanceRef: "c", ageDays: 900, sizeUsd: 500_000_000, ...o })
 
@@ -48,6 +51,49 @@ test("X-COVER — the counterparty screen is `not-applicable` (never a pass) for
 test("a mature, well-sized lending pool passes the counterparty screen → stays SOLID (no regression)", () => {
   expect(Scorecard.score(cp({})).verdict).toBe("SOLID")
   expect(JSON.stringify(Scorecard.score(cp({})))).toBe(JSON.stringify(Scorecard.score(cp({})))) // determinism (S10)
+})
+
+// ── THE CROWN-JEWEL SPRINT — Phase 3 (DEPENDENCY-TRUE): dependency is SCORED, folded into the screen (age·size·dependency) ──
+test("POSITIVE CONTROL (Crown-Jewel D5) — a STACKED dependency (≥3 protocols) is a hard flag folded into the tier", () => {
+  // a mature, well-sized pool with a SINGLE transparent dependency (dep=1) → clean pass (the common direct-deposit case)
+  expect(Scorecard.counterpartyScreenRow(cp({ ageDays: 1200, sizeUsd: 500_000_000, depProtocols: 1 })).tier).toBe("pass")
+  // the SAME pool that STACKS ≥3 protocol dependencies → the clean pass is withheld → caution (extra counterparty surface)
+  expect(Scorecard.counterpartyScreenRow(cp({ ageDays: 1200, sizeUsd: 500_000_000, depProtocols: 4 })).tier).toBe("caution")
+  // a young pool that ALSO stacks dependencies → two hard flags → fail
+  expect(Scorecard.counterpartyScreenRow(cp({ ageDays: 30, sizeUsd: 500_000_000, depProtocols: 4 })).tier).toBe("fail")
+  // dependency absent (null) → the screen falls back to age·size only, unchanged (never a fabricated dependency count)
+  expect(Scorecard.counterpartyScreenRow(cp({ ageDays: 1200, sizeUsd: 500_000_000, depProtocols: null })).tier).toBe("pass")
+})
+
+test("Crown-Jewel D5 — the screen RESTATES its inputs as age · size · dependency (the value carries deps; never over-claimed)", () => {
+  const row = Scorecard.counterpartyScreenRow(cp({ ageDays: 1200, sizeUsd: 500_000_000, depProtocols: 4 }))
+  expect(String(row.threshold)).toMatch(/deps/) // the threshold restates the third signal
+  expect(String(row.value)).toMatch(/deps 4/) // the Pro register carries the dependency count
+  expect(row.plainReason).toMatch(/depend|stacked/i) // the plain register names the stacked dependency (qualitative)
+  expect(row.plainReason).toMatch(/not a contract audit/i) // the honest caveat still present
+  expect(row.plainReason).not.toMatch(/\baudited\b|\bguaranteed\b|\bsafe\b/i) // never over-claimed
+})
+
+test("S13 (extended) — a stacked-dependency pool → counterparty flag → not SOLID, dependency NAMED in the summary", () => {
+  const s = Scorecard.score(cp({ ageDays: 30, sizeUsd: 500_000_000, depProtocols: 4 })) // young + stacked, everything else clean
+  expect(s.rows.find((r) => r.axis === "counterparty")!.tier).toBe("fail")
+  expect(s.verdict).toBe("AVOID")
+  expect(s.summary).toMatch(/depend|stacked|structural/i) // the flag is named
+  expect(Scorecard.consistency(s.verdict, s.plain, s.rows, s.facts.reality).ok).toBe(true)
+})
+
+test("Crown-Jewel D5 — a single-dependency pool scores exactly as a null-dependency pool would (the baseline is not a flag)", () => {
+  expect(Scorecard.score(cp({ depProtocols: 1 })).verdict).toBe(Scorecard.score(cp({ depProtocols: null })).verdict) // dep=1 never perturbs the verdict
+  expect(Scorecard.score(cp({ depProtocols: 1 })).verdict).toBe("SOLID")
+})
+
+test("Crown-Jewel D5 — the deviation is in the live ledger, with the four fields + the resolution (a silent scored-signal is a Halt)", () => {
+  const led = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "deviations.json"), "utf8")) as { deviations: { id: string; blueprintLine: string; whatWasDone: string; why: string; lawAuthority: string }[] }
+  const d5 = led.deviations.find((d) => d.id === "D5")
+  expect(d5, "D5 must be recorded (dependency scored, no longer a non-scoring note)").toBeTruthy()
+  for (const f of ["blueprintLine", "whatWasDone", "why", "lawAuthority"] as const) expect(d5![f].trim().length).toBeGreaterThan(0)
+  expect(d5!.whatWasDone).toMatch(/SCORED|scored/)
+  expect(d5!.lawAuthority).toMatch(/X-DEP/)
 })
 
 test("the record bridge resolves age (recorded /chart span) + size (recorded TVL), clone-robust", () => {
