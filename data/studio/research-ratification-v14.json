@@ -423,6 +423,43 @@
       "seq": 20,
       "prev": "7c40123de7bcbe2560c8fd807dac99881ddd3ef29470b8cf7d74dbd5b5e2c8c0",
       "hash": "29353bfe311f2168b408c4a964ae63638ef7b0566c6e112f7b3d20897f5f3a27"
+    },
+    {
+      "item": "honesty-scorecard",
+      "disposition": "ADOPT",
+      "researchFinding": "How DeFi money actually dies (the Reality Doctrine): (1) reward-emission-dominated APY is temporary — as emissions taper or TVL dilutes, mercenary capital leaves and the headline yield collapses to the base rate; (2) TVL flight (money fleeing) precedes and signals a pool's failure; (3) a stablecoin/delta-neutral leg's acute failure mode is a peg break. A single hero APY hides all three.",
+      "reason": "The honesty scorecard operationalizes these into deterministic pure-function axes over the WHY fact table — yield-reality (baseShare vs the pinned durability ratio, the flagship), TVL trend (30d slope vs the pinned floor), peg/stability (|price−1| vs the pinned band) — with a machine-derived verdict (SOLID/CAUTION/AVOID/UNVERIFIED) that names its failing rows and renders UNVERIFIED as an honest gap. No inference: the verdict and every axis are rules over structured facts; the LLM is confined to phrasing the plain register behind the groundedness verifier (X-DETERM).",
+      "cheapTest": "The seeded positive controls, before any live wiring: an emissions-inflated pool (baseShare < 0.2) → yield-reality FAIL → verdict not SOLID; a seeded depeg (|price−1| > 0.02) → peg FAIL → AVOID; a seeded TVL collapse (30d slope < −0.35) → TVL FAIL → AVOID. All three must be CAUGHT (honesty_scorecard.test.ts).",
+      "flipCriteria": "If a knowledgeable user consistently disagrees with the scorecard on real pools (the axes/thresholds do not track how money actually dies), the axis set or the pinned thresholds are revised — or, if the axis cannot be made trustworthy, the scorecard is recorded as a NAMED KILL SIGNAL, never tuned to look right (X-HONEST A′#5).",
+      "buildArtifacts": [
+        "src/analytics/scorecard.ts"
+      ],
+      "park": null,
+      "experiment": null,
+      "note": "Thresholds are the hash-locked phase0-pins constants (PINS_SHA ffeb78830d5b…). The verdict is a NEW consumer badge, orthogonal to the frozen GO/NO-GO adjudicator (which stays dormant, X-KEEP). The scorecard reads shown values through the provenance record under the shown-but-recorded guarantee.",
+      "stamp": "honesty-phase3-scorecard-adopt",
+      "seq": 21,
+      "prev": "29353bfe311f2168b408c4a964ae63638ef7b0566c6e112f7b3d20897f5f3a27",
+      "hash": "a0e10c790a023aeb19d7492961732fcfc1c35f14d712b6e0d2b10e9cf9a535cc"
+    },
+    {
+      "item": "deepening-risk-axes",
+      "disposition": "ADOPT",
+      "researchFinding": "Beyond a durable-vs-emissions yield split, three structured risks kill DeFi money: (1) THIN LIQUIDITY — a fat APY on a shallow pool cannot be exited without ruinous slippage (the exit is the trade); (2) UNLOCK OVERHANG — an imminent large token unlock dilutes a reward token, collapsing the emissions that fund a mercenary yield; (3) a YOUNG / DUST counterparty — a brand-new, tiny protocol is a structural (not code-audited) risk that a large, multi-year one is not.",
+      "reason": "Three new deterministic pure-function axes over hash-locked thresholds, each rendering `not-applicable` (a distinct honest state, never a pass) where it doesn't apply to the vertical: liquidity-depth (GeckoTerminal reserve_in_usd: >=500k deep / <50k thin), unlock-overhang (next-30d unlock / mcap: <=1% / >5%), and the counterparty screen (pool age from the recorded /chart span + size from TVL) — LABELED a coarse structural screen, NOT a contract audit (deep contract analysis stays parked; dependency is a non-scoring note). No inference: rules over structured facts (X-DETERM). The unlock feed went keyless->paid (HTTP 402, deviation D4) — the axis degrades to UNVERIFIED, never scraped/faked.",
+      "cheapTest": "The seeded positive controls: S11 a deep-APY pool with dust ($20k) liquidity -> liquidity FAIL -> not SOLID; S12 a 20%-of-mcap unlock in 30d -> unlock FAIL -> AVOID; S13 a 5-day $200k pool -> counterparty flag (fail), honestly labeled coarse, never 'audited/safe'. All CAUGHT (honesty_liquidity/unlock/counterparty.test.ts).",
+      "flipCriteria": "If a knowledgeable user consistently disagrees with an axis on real pools (the thresholds don't track how money dies), the thresholds or the axis are revised via a conscious re-pin — or, if an axis cannot be made trustworthy on the available keyless data (as the unlock axis is today), it is recorded as a NAMED gap (UNVERIFIED / a deviation), never tuned to look right (X-HONEST / A'#5).",
+      "buildArtifacts": [
+        "src/analytics/scorecard.ts",
+        "src/dataplane/providers/geckoterminal.ts"
+      ],
+      "park": null,
+      "experiment": null,
+      "note": "Thresholds are the hash-locked deepening-pins constants (DEEPENING PINS_SHA d66f4613...). The axes are new ROWS on the byte-untouched WHY engine + the existing consumer verdict; the frozen GO/NO-GO adjudicator stays dormant (X-KEEP); the verdict differential (lending 70c7912f + funding NO-GO) reproduces at every gate.",
+      "stamp": "deepening-risk-axes-adopt",
+      "seq": 22,
+      "prev": "a0e10c790a023aeb19d7492961732fcfc1c35f14d712b6e0d2b10e9cf9a535cc",
+      "hash": "59b83d4539dad52b7f0f23588cc3fbc89b265cec2fb11575dd01ff63ca8ef1a8"
     }
   ]
 }

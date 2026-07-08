@@ -1,0 +1,236 @@
+{
+  "protocol": "honesty-pins",
+  "sprint": "THE HONESTY LAYER",
+  "at": "2026-07-08",
+  "blueprint": {
+    "rel": "sprint/sprint-result/ORGANON-Honesty_Layer_Sprint_Blueprint.md",
+    "sha": "f8f5c3587d27b819effbbd65793156e26ef9e895bf8f287379b674a23416ea36"
+  },
+  "factRowSchema": [
+    "id",
+    "name",
+    "value",
+    "threshold",
+    "comparator",
+    "outcome",
+    "contribution",
+    "provenanceRef"
+  ],
+  "axes": {
+    "yieldReality": {
+      "flagship": true,
+      "input": "apyBase, apyReward (DeFiLlama /pools)",
+      "metric": "baseShare = apyBase / (apyBase + apyReward)",
+      "comparator": "≥",
+      "DURABLE_BASE_SHARE": 0.5,
+      "MERCENARY_BASE_SHARE": 0.2,
+      "uncomputableWhen": "apyBase+apyReward ≤ 0, or either is null/SAMPLE → row outcome n/a (UNVERIFIED contribution)"
+    },
+    "tvlTrend": {
+      "flagship": false,
+      "input": "tvlUsd history (DeFiLlama /chart/{pool})",
+      "metric": "tvlSlope30d = (tvl_now − tvl_30d_ago) / tvl_30d_ago",
+      "comparator": "≥",
+      "TVL_STABLE_FLOOR": -0.1,
+      "TVL_COLLAPSE_FLOOR": -0.35,
+      "uncomputableWhen": "< 30d of history (a no-history pool) or SAMPLE → row outcome n/a (UNVERIFIED contribution)"
+    },
+    "peg": {
+      "flagship": false,
+      "input": "stablecoin peg price (DeFiLlama /stablecoinprices)",
+      "metric": "pegDev = |price − 1.0|",
+      "comparator": "≤",
+      "PEG_ONPEG_BAND": 0.005,
+      "PEG_DEPEG_BAND": 0.02,
+      "nonStableRow": "info (n/a — a non-stablecoin pool has no peg to break; never a fail)",
+      "uncomputableWhen": "no peg price for the leg or SAMPLE → row outcome n/a (UNVERIFIED contribution)"
+    },
+    "fundingRegime": {
+      "flagship": false,
+      "input": "annualized funding rate history (Hyperliquid fundingHistory)",
+      "metric": "band = [p10, p90] of annualized funding; the row renders the BAND (research: swings ~ −6%..+75%)",
+      "rule": "p10>0 pass · p10≤0≤p90 caution · p90<0 fail",
+      "neverHeroApy": true,
+      "uncomputableWhen": "< the pinned minimum funding points or SAMPLE → row outcome n/a (UNVERIFIED contribution)"
+    }
+  },
+  "verdictDerivation": {
+    "order": [
+      "UNVERIFIED",
+      "AVOID",
+      "CAUTION",
+      "SOLID"
+    ],
+    "UNVERIFIED": "reality==SAMPLE OR flagship-axis uncomputable OR uncomputable > material/2 (DOMINATES — no definitive verdict on unverifiable data)",
+    "AVOID": "else any material axis outcome == fail (on REAL, verified data)",
+    "CAUTION": "else any material axis == caution OR any non-flagship material axis uncomputable",
+    "SOLID": "else all material axes pass AND reality==REAL",
+    "summary": "the one-line summary is GENERATED from the failing/cautioning/gap axis names — never hand-written",
+    "unverifiedIsNotAPass": true,
+    "unverifiedDominates": true
+  },
+  "realData": {
+    "defillama": {
+      "keyless": true,
+      "bases": [
+        "yields.llama.fi",
+        "api.llama.fi",
+        "stablecoins.llama.fi"
+      ],
+      "pulls": [
+        "/pools (apy, apyBase, apyReward, tvlUsd)",
+        "/chart/{pool} (TVL/APY history)",
+        "/stablecoinprices (peg)",
+        "unlocks"
+      ],
+      "feeds": [
+        "yield-reality",
+        "tvl-trend",
+        "peg",
+        "shelf"
+      ]
+    },
+    "hyperliquid": {
+      "keyless": true,
+      "base": "api.hyperliquid.xyz/info (POST)",
+      "pulls": [
+        "fundingHistory",
+        "candleSnapshot"
+      ],
+      "feeds": [
+        "funding-regime"
+      ]
+    },
+    "geckoterminal": {
+      "keyless": true,
+      "base": "api.geckoterminal.com/api/v2",
+      "pulls": [
+        "pool liquidity/volume",
+        "token price"
+      ],
+      "feeds": [
+        "liquidity-context"
+      ]
+    },
+    "labelRules": {
+      "REAL": "fetched this session AND appended to the provenance record with {source·asOf·contentHash} — a value shown but not recorded is a HALT",
+      "SAMPLE": "a labeled placeholder (keys/network absent, endpoint dead, or unwired) — never styled as REAL; every SAMPLE value drives its axis to UNVERIFIED",
+      "degrade": "a dead endpoint / 429 / malformed response degrades to last-good or SAMPLE — never a crash, never a fabricated value"
+    },
+    "wiringOrder": [
+      "defillama (backbone — most of the scorecard)",
+      "hyperliquid (funding axis, Phase 5)",
+      "geckoterminal (liquidity context)"
+    ]
+  },
+  "screens": {
+    "count": 2,
+    "frozenAt": 2,
+    "list": [
+      "THE SHELF — Reality Cards (name · headline APY with a REAL-yield split bar · risk word · verdict pill · REAL/SAMPLE badge); filters category/chain/risk; sortable",
+      "THE REALITY CHECK — verdict banner + plain one-liner · the honesty scorecard rows · Simple/Pro toggle · trust strip · a confidence band (never a hero APY) · a link into the provenance history"
+    ],
+    "frontEnd": "server-rendered HTML (Hono, the repo idiom) + minimal inline JS for the Simple/Pro toggle — NO Vite/SPA/bundler (PART CLEAN: no heavy dependency; the cheapest correct thing a stranger can run AND read). The Vite clause in Phase 4 is overridden by PART CLEAN's stated primacy; documented in the BuildLog.",
+    "notBuilt": "no builder · no composition canvas · no fork · no backtest-your-idea · no settings maze · no B2B/API/widget"
+  },
+  "banned": [
+    "a builder canvas / composition / fork / backtest-your-idea (the user CHECKS, they do not build)",
+    "a third consumer screen (the set is frozen at 2)",
+    "a B2B surface / public API / embeddable widget (out of scope this sprint, deferred on purpose)",
+    "a provider registry / generic axis framework / strategy plugin system (no abstraction without a 2nd real caller NOW)",
+    "an ORM / a database beyond the existing flat JSON/JSONL PIT store / a heavy front-end or state-management library",
+    "an LLM anywhere in a verdict, a risk fact, or an axis (X-DETERM — the LLM only phrases the plain register behind the groundedness verifier)",
+    "cleverness — metaprogramming / dynamic dispatch / a config-driven rule engine (a junior must read it top-to-bottom and predict the output)",
+    "dead / commented-out code kept 'just in case' (deleted the moment it is dead)",
+    "any 'for scale / future-proof / extensible / enterprise' — build for this tool, today"
+  ],
+  "probe": {
+    "metrics": [
+      "reality-check-open-rate (Shelf visitors who open a Reality Check)",
+      "why-expansion-rate (sessions that expand a scorecard row to its threshold OR flip to Pro)",
+      "seven-day-return-rate"
+    ],
+    "killCriterion": {
+      "window": "14 days",
+      "minGenuineSessions": 30,
+      "condition": "over a 14-day window with ≥ 30 genuine (non-team) Reality-Check sessions, if why-expansion-rate < 0.15 AND seven-day-return-rate < 0.10, the honesty thesis is FALSIFIED for this audience → STOP and pivot",
+      "falsifiable": true,
+      "status": "ARMED (instrumented + declared) — NOT yet evaluable (independence PENDING; no genuine traffic yet). Honestly stated, never pre-passed."
+    }
+  },
+  "stressCatalog": [
+    {
+      "id": "S1",
+      "name": "dead endpoint",
+      "expect": "kill DeFiLlama mid-session → degrade to last-good or SAMPLE, label stale/UNVERIFIED, never spin/crash"
+    },
+    {
+      "id": "S2",
+      "name": "429 storm",
+      "expect": "click-storm the Shelf → the short-TTL cache absorbs it; rate-limit at the door, never fan out N provider calls; no SAMPLE-dressed-as-REAL"
+    },
+    {
+      "id": "S3",
+      "name": "stale cache",
+      "expect": "freeze the clock past TTL → asOf goes visibly stale; the verdict does not silently rest on old data claiming freshness"
+    },
+    {
+      "id": "S4",
+      "name": "no-history pool",
+      "expect": "history-dependent rows render UNVERIFIED; point-in-time rows still compute; verdict UNVERIFIED/CAUTION, never a fabricated SOLID"
+    },
+    {
+      "id": "S5",
+      "name": "mid-session depeg",
+      "expect": "inject a peg break → the peg row fires, verdict moves to AVOID/CAUTION, both registers agree, the record captures the moment"
+    },
+    {
+      "id": "S6",
+      "name": "emissions-inflated trap",
+      "expect": "a pool 95% reward emissions → the yield-reality row flags temporary, the split bar shows it, the verdict is not SOLID"
+    },
+    {
+      "id": "S7",
+      "name": "SAMPLE-heavy state",
+      "expect": "boot with everything SAMPLE → the tool still runs, every value SAMPLE, every verdict UNVERIFIED, and it says so plainly"
+    },
+    {
+      "id": "S8",
+      "name": "malformed / adversarial data",
+      "expect": "negative APY, null TVL, a garbage pool id → validated at the boundary, degraded to SAMPLE/UNVERIFIED, never a crash or a nonsense verdict"
+    },
+    {
+      "id": "S9",
+      "name": "provenance tamper",
+      "expect": "attempt to show a value not in the record, or break the hash chain → the record rejects it; a shown-but-unrecorded value Halts"
+    },
+    {
+      "id": "S10",
+      "name": "determinism / no-LLM-in-verdict",
+      "expect": "attempt to route a scorecard row through the LLM → caught; identical inputs → byte-identical scorecard across two runs"
+    }
+  ],
+  "workedExample": {
+    "pool": {
+      "name": "aave-usdc (illustrative shape)",
+      "apyBase": 3.1,
+      "apyReward": 0.4,
+      "tvlSlope30d": 0.05,
+      "pegDev": 0.001,
+      "reality": "REAL"
+    },
+    "rows": {
+      "yieldReality": "baseShare = 3.1/(3.1+0.4) = 0.886 ≥ 0.5 → PASS (durable — base is the majority)",
+      "tvlTrend": "tvlSlope30d = +0.05 ≥ −0.10 → PASS (stable/growing)",
+      "peg": "pegDev = 0.001 ≤ 0.005 → PASS (on-peg)"
+    },
+    "derivedVerdict": "SOLID (all material axes pass, data REAL)",
+    "counterExample": {
+      "name": "a 95%-emissions pool",
+      "apyBase": 0.5,
+      "apyReward": 9.5,
+      "note": "baseShare = 0.5/10 = 0.05 < 0.2 → FAIL (mercenary) → verdict AVOID, naming yield-reality"
+    }
+  },
+  "pinsSha": "8a57e6f196ff7718a4bbfd9eb58c6ffa5f48e349a7ed837d54c853038910a1ce"
+}

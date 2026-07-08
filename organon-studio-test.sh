@@ -58,4 +58,16 @@ bun test --timeout 30000 test/walls/ \
   test/organon/why_panel.test.ts \
   test/organon/runner.test.ts \
   test/organon/walk_v9.test.ts \
-  test/organon/why_verification.test.ts
+  test/organon/why_verification.test.ts \
+  test/organon/honesty_pins.test.ts \
+  test/organon/honesty_record.test.ts \
+  test/organon/honesty_data.test.ts \
+  test/organon/honesty_scorecard.test.ts \
+  test/organon/honesty_ui.test.ts \
+  test/organon/honesty_funding.test.ts \
+  test/organon/honesty_redteam.test.ts \
+  test/organon/evidence_bundle.test.ts \
+  test/organon/honesty_liquidity.test.ts \
+  test/organon/honesty_unlock.test.ts \
+  test/organon/honesty_counterparty.test.ts \
+  test/organon/honesty_coverage.test.ts

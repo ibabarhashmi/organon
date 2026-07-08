@@ -1,0 +1,264 @@
+{
+  "protocol": "deepening-pins",
+  "sprint": "THE DEEPENING SPRINT",
+  "at": "2026-07-08",
+  "continues": "THE HONESTY LAYER (RED-TEAM-CLEAN, battery 468/0)",
+  "blueprint": {
+    "rel": "sprint/sprint-result/ORGANON_Deepening_Sprint_Blueprint.md",
+    "sha": "7489d5fce7e6c14e731d303170584592bbc11c212454a35c2292a5b30c99d40c"
+  },
+  "carriedFromPinsSha": "8a57e6f196ff7718a4bbfd9eb58c6ffa5f48e349a7ed837d54c853038910a1ce",
+  "newAxes": {
+    "liquidityDepth": {
+      "input": "pool reserve_in_usd (GeckoTerminal /networks/{net}/pools/{addr})",
+      "metric": "liqUsd (USD liquidity / reserve of the DEX pool backing the strategy)",
+      "comparator": "≥",
+      "LIQ_DEEP_USD": 500000,
+      "LIQ_THIN_USD": 50000,
+      "uncomputableWhen": "liqUsd null / SAMPLE (endpoint dead, uncaptured, unwired) → row outcome UNVERIFIED",
+      "notApplicableWhen": "the vertical has no DEX-pool depth to screen (a lending market's exit is the protocol's available liquidity; a pure perp leg) → not-applicable"
+    },
+    "unlockOverhang": {
+      "input": "next-30d token unlock as a fraction of circulating mcap (DeFiLlama unlocks/emissions)",
+      "metric": "unlockPct30d = (next-30d unlocked supply value) / mcap",
+      "comparator": "≤",
+      "UNLOCK_BENIGN": 0.01,
+      "UNLOCK_HEAVY": 0.05,
+      "appliesWhen": "the yield's reward token has a KNOWN unlock schedule",
+      "notApplicableWhen": "no reward token / no unlock schedule found (a blue-chip stable market with no token overhang) → not-applicable (never a fabricated pass)",
+      "uncomputableWhen": "a schedule exists but the pull is SAMPLE/absent → UNVERIFIED"
+    },
+    "counterparty": {
+      "input": "pool age (recorded /chart history span, days) + pool size (TVL, USD)",
+      "AGE_MATURE_DAYS": 365,
+      "AGE_YOUNG_DAYS": 90,
+      "SIZE_ESTABLISHED_USD": 10000000,
+      "SIZE_DUST_USD": 1000000,
+      "rule": "mature AND established → pass · both hard-flags (young AND dust) → fail · otherwise (a single hard-flag or a mid band) → caution",
+      "label": "structural screen (age · size · dependency) — NOT a contract audit; deep contract analysis is PARKED (the Sentinel IR)",
+      "dependencyNote": "an honest NON-SCORING note (the strategy's single-protocol reliance), never scored/over-claimed as a safety result",
+      "uncomputableWhen": "age (no recorded history) or size null / SAMPLE → UNVERIFIED",
+      "overClaimBanned": "the screen may NEVER render 'audited' / 'safe' / 'guaranteed' — a doc-lie wall failure (X-COVER / F-IDENTITY)"
+    }
+  },
+  "verticalApplicabilityMatrix": {
+    "verticals": [
+      "stablecoin-yield",
+      "lending",
+      "delta-neutral"
+    ],
+    "axes": [
+      "yield-reality",
+      "tvl-trend",
+      "peg",
+      "liquidity-depth",
+      "unlock-overhang",
+      "counterparty",
+      "funding-regime"
+    ],
+    "matrix": {
+      "stablecoin-yield": {
+        "yield-reality": "applies",
+        "tvl-trend": "applies",
+        "peg": "applies (the stablecoin leg's dollar peg)",
+        "liquidity-depth": "applies (central — the DEX/LP pool's reserve depth = exit risk)",
+        "unlock-overhang": "applies-if-reward-token-schedule (else not-applicable)",
+        "counterparty": "applies",
+        "funding-regime": "not-applicable (not a funding-carry strategy)"
+      },
+      "lending": {
+        "yield-reality": "applies",
+        "tvl-trend": "applies",
+        "peg": "applies-if-stablecoin-leg (a non-stable market → not-applicable)",
+        "liquidity-depth": "not-applicable (a lending market's exit liquidity is the protocol's available liquidity, not a DEX pool depth)",
+        "unlock-overhang": "applies-if-reward-token-schedule (else not-applicable)",
+        "counterparty": "applies",
+        "funding-regime": "not-applicable"
+      },
+      "delta-neutral": {
+        "yield-reality": "not-applicable (the yield is funding carry, scored by funding-regime)",
+        "tvl-trend": "not-applicable",
+        "peg": "not-applicable (no stablecoin peg leg)",
+        "liquidity-depth": "not-applicable (a perp leg's liquidity is the venue's, not a DEX pool — PARKED)",
+        "unlock-overhang": "not-applicable (no reward token)",
+        "counterparty": "not-applicable (a perp venue's structural age/size screen is PARKED this sprint — honestly noted)",
+        "funding-regime": "applies"
+      }
+    },
+    "rule": "n/a never counts toward SOLID, AVOID, CAUTION, or the UNVERIFIED-dominance count; it is shown as a distinct honest state (never a pass); a pair with no matrix entry is a Halt (the matrix must be total)"
+  },
+  "evidenceBundle": {
+    "dir": "data/honesty/evidence/",
+    "verb": "./organon.sh verify — regenerates the deterministic bundle and diffs it against the committed copy; a mismatch exits non-zero",
+    "artifacts": [
+      {
+        "file": "battery-summary.json",
+        "backs": "the battery pass/fail count (N pass / 0 fail across M files)"
+      },
+      {
+        "file": "determinism.json",
+        "backs": "'two identical runs' — the scorecard is deterministic (identical inputs → byte-identical output across two runs)"
+      },
+      {
+        "file": "frozen-git-status.json",
+        "backs": "'the frozen seven git-clean' — the 6 .py + loop.ts are byte-untouched on disk"
+      },
+      {
+        "file": "verdict-differential.json",
+        "backs": "'the verdict differential reproduces' — lending fp-set 70c7912f… + funding NO-GO/ILLUSTRATIVE"
+      },
+      {
+        "file": "vlive-defillama.json",
+        "backs": "the DeFiLlama V-LIVE HTTP-200 capture (keyless)"
+      },
+      {
+        "file": "vlive-geckoterminal.json",
+        "backs": "the GeckoTerminal V-LIVE HTTP-200 capture (keyless; wired this sprint)"
+      },
+      {
+        "file": "vlive-hyperliquid.json",
+        "backs": "the Hyperliquid V-LIVE HTTP-200 capture (keyless)"
+      },
+      {
+        "file": "claims.json",
+        "backs": "the manifest — every headline number the handoff cites → its backing artifact + value (evidence_bundle.test.ts asserts totality)"
+      }
+    ],
+    "freshCloneRule": "verify's diff-checked artifacts are environment-INDEPENDENT (the differential, the frozen git-status, the scorecard determinism, the battery count). The gitignored snapshot payloads are absent on a clone → the honest SAMPLE path; the live V-LIVE re-fetch is skipped offline (disclosed, not failed) — the committed capture stands. (A′#10.)",
+    "haltRule": "a headline number with no backing artifact, or a verify that does not reproduce the committed bundle, is a Halt (X-PROVE)."
+  },
+  "deviationsSeed": [
+    {
+      "id": "D1",
+      "blueprintLine": "Honesty-Layer Phase 1: 'remove the RWA verdict pin machinery'",
+      "whatWasDone": "the dead RWA runtime was removed, but the wall-guarded RWA verdict PIN (RWA_VERDICT_SHA / INVARIANTS) was RETAINED",
+      "why": "it is a live integrity anchor (repro_contracts / F-ENV), not dead code — ripping out a live wall to satisfy a cleanup parenthetical is the very 'edit the integrity machinery' the record forbids",
+      "lawAuthority": "X-KEEP + A′#7"
+    },
+    {
+      "id": "D2",
+      "blueprintLine": "Honesty-Layer Phase 4: the 'Vite' front-end clause",
+      "whatWasDone": "the front-end is server-rendered Hono HTML (no Vite/SPA/bundler)",
+      "why": "PART CLEAN's stated primacy — no heavy dependency; the cheapest correct thing a stranger can run AND read",
+      "lawAuthority": "PART CLEAN"
+    },
+    {
+      "id": "D3",
+      "blueprintLine": "Honesty-Layer: GeckoTerminal 'pinned but unwired' (parked forward)",
+      "whatWasDone": "GeckoTerminal is RESOLVED — wired this sprint (the liquidity-depth axis)",
+      "why": "the Deepening sprint closes the one unwired provider; the ledger records the closure",
+      "lawAuthority": "X-COVER (Deepening Phase 2)"
+    }
+  ],
+  "stressCatalog": [
+    {
+      "id": "S1",
+      "name": "dead endpoint",
+      "expect": "degrade to last-good or SAMPLE; the served UI renders; never a crash/spin"
+    },
+    {
+      "id": "S2",
+      "name": "429 storm",
+      "expect": "the short-TTL cache absorbs it; the Shelf reads the record (no per-load provider fan-out)"
+    },
+    {
+      "id": "S3",
+      "name": "stale cache",
+      "expect": "the shown asOf is the capture time, visibly stale, never 'now'; a verdict never rests on stale data while claiming freshness (OWN LINE)"
+    },
+    {
+      "id": "S4",
+      "name": "no-history pool",
+      "expect": "history-dependent rows (TVL slope · funding band · counterparty age) UNVERIFIED; point-in-time rows still compute; never a fabricated SOLID"
+    },
+    {
+      "id": "S5",
+      "name": "mid-session depeg",
+      "expect": "the peg row fires → AVOID; both registers agree; the moment captured"
+    },
+    {
+      "id": "S6",
+      "name": "emissions-inflated trap",
+      "expect": "the yield-reality row flags temporary → verdict not SOLID"
+    },
+    {
+      "id": "S7",
+      "name": "SAMPLE-heavy state",
+      "expect": "EVERY SAMPLE verdict is UNVERIFIED — the W-E01 invariant holds under the new axes too (a SAMPLE liquidity/unlock/counterparty value never yields AVOID) (OWN LINE)"
+    },
+    {
+      "id": "S8",
+      "name": "malformed / adversarial data",
+      "expect": "boundary-validated to missing/UNVERIFIED; never a crash or a nonsense verdict"
+    },
+    {
+      "id": "S9",
+      "name": "provenance tamper",
+      "expect": "a shown-but-unrecorded REAL Halts; a broken chain refused on construct"
+    },
+    {
+      "id": "S10",
+      "name": "determinism / no-LLM-in-verdict",
+      "expect": "identical inputs → byte-identical scorecard; a model-in-verdict rejected wholesale"
+    },
+    {
+      "id": "S11",
+      "name": "thin-liquidity trap (NEW)",
+      "expect": "a deep-APY pool with dust liquidity → liquidity FAIL → not SOLID; exit risk surfaced"
+    },
+    {
+      "id": "S12",
+      "name": "imminent-unlock trap (NEW)",
+      "expect": "a large near-term unlock → unlock FAIL → CAUTION/AVOID"
+    },
+    {
+      "id": "S13",
+      "name": "dust/new-protocol trap (NEW)",
+      "expect": "a young, tiny pool → counterparty flag, honestly labeled coarse (never 'audited/safe')"
+    },
+    {
+      "id": "S14",
+      "name": "verifiability (NEW)",
+      "expect": "./organon.sh verify regenerates every committed evidence artifact; a tampered count or an unbacked handoff number fails"
+    },
+    {
+      "id": "S15",
+      "name": "coverage/applicability (NEW)",
+      "expect": "an inapplicable axis (funding on lending; peg on non-stable) renders not-applicable, never a fabricated pass; a claimed-but-absent vertical fails the coverage test"
+    }
+  ],
+  "coverage": {
+    "verticals": [
+      "stablecoin-yield",
+      "lending",
+      "delta-neutral"
+    ],
+    "central": {
+      "stablecoin-yield": [
+        "peg",
+        "liquidity-depth",
+        "yield-reality"
+      ],
+      "lending": [
+        "yield-reality",
+        "tvl-trend",
+        "counterparty"
+      ],
+      "delta-neutral": [
+        "funding-regime"
+      ]
+    },
+    "rule": "each vertical is DISTINCTLY represented on the Shelf (stablecoin-yield is a stablecoin farming/stable-LP strategy, NOT a relabeled lending market) and scored with its applicable axes; a vertical named but absent is a Halt"
+  },
+  "carried": {
+    "frozenSeven": "the 6 computational-core .py + loop.ts byte-untouched (core_byte_identity green every gate)",
+    "verdictDifferential": "lending fp-set 70c7912f… + funding NO-GO/ILLUSTRATIVE reproduce at every gate — zero verdicts moved",
+    "screensFrozenAt": 2,
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "moatCadence": "the capture cadence appends ONLY REAL captures (content-addressed, hash-chained); a backfill/retro throws in Capture.Service; a capture that finds nothing records nothing"
+  },
+  "pinsSha": "d66f4613e0a4055eb7a1fbc2b3b9b47b58a0eb63b743f4d0b787e531470558b1"
+}

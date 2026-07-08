@@ -1,9 +1,0 @@
-{
-  "protocol": "committed-world",
-  "worldCommit": "e5bfa774dcbf7f749add7afa5a328f528db3b4fc",
-  "worldCommitSubject": "feat(organon-studio): Convergence Phase 0 — commit the world (V3–V6 auditable), pay the V5 debt",
-  "appendOnlyWall": "green over REAL git history; all four BuildLogs tracked; zero UNTRACKED skips (test/walls/log_append_only.test.ts)",
-  "frozenCoreByteIdentical": true,
-  "onlyTrackedModification": "packages/solidity-sentinel/src/server/server.ts (+3 lines, from V4)",
-  "note": "the evidence artifacts + the Phase-0 V6 appendix + the checkpoint trail are committed in the commit(s) immediately following this generation; 'zero uncommitted output' is asserted at Phase-0 close after that commit."
-}

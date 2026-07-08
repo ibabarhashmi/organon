@@ -14,9 +14,12 @@ import { readFileSync } from "node:fs"
 import path from "node:path"
 import { checkFrozenSet, sha256, FROZEN_PY, FROZEN_TS, PY_DIR, REPO_ROOT } from "../../src/organon/frozen"
 
+// STANDALONE-NATIVE paths (the monorepo `packages/solidity-sentinel/` prefix is stripped — the honesty layer). With
+// the real repo-relative paths the module-boundary `git status` check below is no longer vacuous: it truly asserts the
+// frozen .py + loop.ts are untouched on disk (a monorepo-prefixed path matched nothing here and passed trivially).
 const FROZEN_PATHS = [
-  ...Object.keys(FROZEN_PY).map((n) => `packages/solidity-sentinel/src/backtest/py/${n}`),
-  ...Object.keys(FROZEN_TS).map((rel) => `packages/solidity-sentinel/${rel}`),
+  ...Object.keys(FROZEN_PY).map((n) => `src/backtest/py/${n}`),
+  ...Object.keys(FROZEN_TS).map((rel) => rel),
 ]
 
 describe("WALL core_byte_identity — the frozen core is byte-identical through the pivot (S-CORE)", () => {

@@ -1,0 +1,35 @@
+{
+  "protocol": "honesty-redteam",
+  "at": "2026-07-08",
+  "rule": "PART E (X-STRESS) — the built system driven as intended, then broken across the full catalog; each RUN → OBSERVE → ROOT-CAUSE → FIX-ON-GO → RE-TEST → LOG; converge only across two consecutive clean runs.",
+  "personas": ["depositor (plain register only)", "quant (audits thresholds → fact rows → provenance)", "skeptic (hunts SAMPLE-as-REAL, hidden UNVERIFIED, a manufactured axis, a moved verdict)", "clumsy (click-storms, kills the network)"],
+  "catalog": [
+    { "id": "S1", "name": "dead endpoint", "outcome": "PASS — provider degrades to SAMPLE; the served Shelf still renders (no crash/spin)" },
+    { "id": "S2", "name": "429 storm", "outcome": "PASS — the Shelf reads the record (no per-load provider fan-out); the cache absorbs a real refresh storm to one call" },
+    { "id": "S3", "name": "stale cache", "outcome": "PASS — the shown asOf is the capture time, never 'now'; staleness is visible, never a false-fresh claim" },
+    { "id": "S4", "name": "no-history pool", "outcome": "PASS — the TVL row renders UNVERIFIED; the point-in-time rows compute; never a fabricated SOLID" },
+    { "id": "S5", "name": "mid-session depeg", "outcome": "PASS — the peg row fires → AVOID; both registers agree" },
+    { "id": "S6", "name": "emissions-inflated trap", "outcome": "PASS — the split flags it temporary; the verdict is not SOLID (AVOID)" },
+    { "id": "S7", "name": "SAMPLE-heavy state", "outcome": "FIXED (W-E01) — everything SAMPLE → every verdict UNVERIFIED, said plainly" },
+    { "id": "S8", "name": "malformed / adversarial data", "outcome": "PASS — validated at the boundary → missing/UNVERIFIED; never a crash or nonsense verdict" },
+    { "id": "S9", "name": "provenance tamper", "outcome": "PASS — a shown-but-unrecorded REAL Halts; a broken hash chain is refused on construct (never served)" },
+    { "id": "S10", "name": "determinism / no-LLM-in-verdict", "outcome": "PASS — identical inputs → byte-identical scorecard; a model-in-verdict is rejected wholesale" }
+  ],
+  "findings": [
+    {
+      "id": "W-E01",
+      "scenario": "S7 (SAMPLE-heavy)",
+      "observed": "a SAMPLE pool whose placeholder numbers happened to 'fail' (a mercenary split) rendered AVOID, not UNVERIFIED",
+      "rootCause": "the pinned verdict precedence ordered 'any fail → AVOID' BEFORE 'reality==SAMPLE → UNVERIFIED' — but a SAMPLE fail is not a verified fail; issuing AVOID on placeholder data dresses SAMPLE as a real judgment (the firewall / S7 explicitly requires every SAMPLE verdict to be UNVERIFIED)",
+      "fix": "UNVERIFIED now DOMINATES a definitive verdict — deriveVerdict checks reality==SAMPLE (and flagship-uncomputable / >half-uncomputable) BEFORE the fail check. A conscious re-pin (Rule XVII): PINS_SHA ffeb78830d5b… → 8a57e6f196ff…, logged.",
+      "retest": "S7 green; the emissions/depeg/collapse controls still AVOID on REAL data; battery green"
+    }
+  ],
+  "convergence": { "cleanRuns": 2, "battery": "468 pass / 0 fail across 86 files, identical both runs (deterministic)", "verdictDifferentialZero": true },
+  "parkedForward": [
+    "the counterparty / on-chain axis (delta-neutral) — deferred, honestly noted on the funding strategies (not speculatively built)",
+    "the B2B API / public widget — out of scope this sprint",
+    "GeckoTerminal liquidity-context axis — pinned in Phase 0, not wired this sprint (a 3rd data source; DeFiLlama + Hyperliquid cover the scored verticals)",
+    "the opt-in frozen-adjudicator overfit stress test — deferred"
+  ]
+}

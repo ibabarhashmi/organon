@@ -3,13 +3,14 @@
 </p>
 
 <p align="center">
-  <b>An honest-by-construction strategy engine.</b><br>
-  A frozen verdict core, a tamper-evident trial ledger, and real point-in-time data —<br>
-  so a strategy earns a verdict it cannot fake.
+  <b>An honest-by-construction DeFi Reality Check — and the strategy engine underneath it.</b><br>
+  Is this yield real, and what's the catch? Answered as a machine-derived scorecard from real,<br>
+  point-in-time data — moated by an append-only record of what was real, and when.
 </p>
 
 <p align="center">
   <a href="#quick-start">Quick start</a> ·
+  <a href="#the-reality-check">Reality Check</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#capability-matrix">Capabilities</a> ·
   <a href="#usage">Usage</a> ·
@@ -20,7 +21,8 @@
   <img alt="runtime" src="https://img.shields.io/badge/runtime-Bun%201.3-black">
   <img alt="language" src="https://img.shields.io/badge/TypeScript-strict-blue">
   <img alt="sidecar" src="https://img.shields.io/badge/sidecar-Python%203-yellow">
-  <img alt="verdicts" src="https://img.shields.io/badge/powered%20verdicts-zero%20(by%20design)-brightgreen">
+  <img alt="verdicts" src="https://img.shields.io/badge/manufactured%20verdicts-zero%20(by%20design)-brightgreen">
+  <img alt="evidence" src="https://img.shields.io/badge/numbers-reproducible%20(./organon.sh%20verify)-blue">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-lightgrey">
 </p>
 
@@ -28,55 +30,83 @@
 
 ## What is Organon?
 
-Organon adjudicates trading/allocation strategies the way a skeptic would: it assumes every strategy is noise until the statistics say otherwise, and it makes the bar **harder** the more you search. It is built so that the honest answer is the *only* answer the machine can produce.
+Organon answers one question about a real DeFi strategy — **is this yield real, and what could kill it?** — as a **machine-derived scorecard**, not an opinion. It is built so the honest answer is the *only* answer the machine can produce, and so a stranger can **regenerate every number it claims with one command**.
 
-Three properties make that structural rather than aspirational:
+It is two things that share one spine:
 
+- **The Reality Check** — a two-screen, before-you-click consumer tool. Each strategy gets a verdict (`SOLID` · `CAUTION` · `AVOID` · `UNVERIFIED`) derived from deterministic risk axes over real data — never hand-written, never a hero APY. `UNVERIFIED` renders as an honest "we can't confirm this," never a disguised pass.
+- **The strategy engine** — the honest-by-construction core the scorecard rests on: a byte-frozen verdict core, a tamper-evident hash-chained trial ledger, and a point-in-time data store that *cannot* fabricate or retro-capture a value.
+
+Four properties make the honesty structural rather than aspirational:
+
+- **The numbers prove themselves.** `./organon.sh verify` regenerates every headline number — the test count, the frozen-core git-clean proof, the verdict differential, the deterministic scorecard — and **diffs it against the committed evidence bundle** (`data/honesty/evidence/`). A claimed number with no backing artifact, or a `verify` that does not reproduce, is a hard failure. Credibility rests on a command, not on trust.
 - **A frozen verdict core.** The computational core (6 Python modules + one TypeScript loop) is byte-pinned and byte-identical to its origin. A verdict figure cannot silently drift; the integrity wall proves it on every run.
-- **A tamper-evident trial ledger.** Every proposal is registered as a trial in an append-only, hash-chained ledger *before* it is scored (write-then-invoke). The **family size** deflates the significance bar, so iterating a strategy makes acceptance harder, not easier (anti-[PBO](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2308659)).
-- **Real, point-in-time data — or an honest gap.** Market data is captured into a content-addressed, nonce-anchored PIT store that *cannot* fabricate or retro-capture a value. A missing day stays missing; it is never interpolated. Backtests are proven byte-equivalent to a read-only reference engine (a "differential" a flattering rewrite cannot pass).
+- **Real, point-in-time data — or an honest gap.** Data is captured into a content-addressed, nonce-anchored store that cannot fabricate or retro-capture. A missing day stays missing; every shown value is `REAL` (fetched and recorded) or `SAMPLE` (a labeled placeholder) — a value shown as `REAL` that isn't in the record is a halt.
+- **Determinism, no model in the verdict.** Every axis and verdict is a rule over structured facts. An LLM may only *phrase* the plain-language register behind a groundedness verifier — it never touches a verdict, an axis, or the record.
 
-The result: **zero powered verdicts are expected and displayed with pride.** A `NO-GO` on real data is the product working — and it is now refusable through a text box by anyone.
+The result: **zero verdicts are manufactured.** An `AVOID` on real data is the product working.
 
-## Highlights
+## The Reality Check
 
-- 🧊 **Frozen core** — the verdict math is pinned by sha256 and re-verified every run (`test/walls/core_byte_identity.test.ts`).
-- 🔗 **Hash-chained ledger** — append-only, durable across process death, refuses unregistered adjudication.
-- 📉 **Anti-PBO deflation** — the DSR bar tightens with family size; re-rooting fragmentation is closed.
-- 🛰️ **Credential-free PIT data** — real DefiLlama lending + Binance funding (T1, checksum-verified) captured into a store that cannot fabricate.
-- ⚖️ **Differential-proven engines** — the lending and funding backtests are byte-equivalent to a read-only reference; a seeded flattering divergence is caught direction-blind.
-- 🖥️ **The Goal Console** — one screen: type a plain-English goal, get an honest verdict card + a two-sided report. The model proposes; it can never bless.
-- 🚫 **Nothing signs** — no signing/settlement primitive exists anywhere in the surface.
+Two screens, frozen at two — the user *checks*, they do not build.
+
+- **The Shelf** — Reality Cards across all three money verticals: a real-yield split bar (durable base vs reward emissions), a verdict pill, a `REAL`/`SAMPLE` badge, a risk word.
+- **The Reality Check** — the x-ray of one strategy: the verdict banner + a one-line plain reason, the scorecard rows, a Simple/Pro toggle, a confidence **band** (never a single hero APY), and a link into the provenance history — the moat made visible.
+
+### The scorecard axes
+
+Each axis is a pure `(facts) → row` on hash-locked thresholds. An axis that doesn't apply to a vertical renders **`not-applicable`** — a distinct honest state, never a fabricated pass, never counted toward `SOLID`.
+
+| Axis | Signal | Reads |
+|---|---|---|
+| **Yield-reality** (flagship) | `apyBase / (apyBase + apyReward)` | durable base yield vs temporary reward emissions |
+| **TVL trend** | 30-day TVL slope | is money staying, or fleeing |
+| **Peg / stability** | \|price − 1\| | is the stablecoin holding its dollar |
+| **Funding regime** | `[p10, p90]` band of annualized funding | delta-neutral carry — shown as a band, never one number |
+| **Liquidity depth** | DEX pool `reserve_in_usd` | exit / slippage risk — thin liquidity is real risk |
+| **Unlock overhang** | next-30d token unlock / mcap | imminent dilution overhang |
+| **Counterparty screen** | pool age + size | a *coarse structural screen* — age · size, **not a contract audit** |
+
+`UNVERIFIED` dominates: on `SAMPLE` data or when the flagship axis is uncomputable, no definitive verdict is issued — a `SAMPLE` "fail" is not a verified fail.
+
+### Coverage — three money verticals, honestly
+
+| axis | stablecoin-yield | lending | delta-neutral |
+|---|---|---|---|
+| yield-reality · tvl-trend | ✓ | ✓ | n/a |
+| peg | ✓ (stable) | ✓ (stable) | n/a |
+| liquidity-depth | ✓ (central) | n/a | n/a |
+| unlock-overhang | ✓ (if reward schedule) | ✓ (if schedule) | n/a |
+| counterparty | ✓ | ✓ | n/a |
+| funding-regime | n/a | n/a | ✓ |
+
+Data is keyless-first — **DeFiLlama** (yield · TVL · peg), **Hyperliquid** (funding), **GeckoTerminal** (liquidity depth) — so the tool demos with zero setup. A dead endpoint / rate limit / malformed body degrades to last-good or `SAMPLE`, never a crash, never a fabricated value.
 
 ## How it works
 
 ```
-  plain-English goal
+  a real strategy (all three verticals)
           │
           ▼
-  ┌──────────────────┐   proposes a schema-valid spec (NO authority)
-  │   agent layer     │   free/fixture model — the model cannot bless
+  ┌──────────────────┐   keyless: DeFiLlama · Hyperliquid · GeckoTerminal
+  │  real PIT data    │   every value REAL (recorded) or SAMPLE (labeled)
   └────────┬─────────┘
-           │ write-then-invoke (register BEFORE adjudicate)
+           │ resolved through the append-only, hash-chained record
            ▼
-  ┌──────────────────┐   append-only, hash-chained, family-counted
-  │   trial ledger    │
+  ┌──────────────────┐   pure (facts)→row on hash-locked thresholds; NO inference
+  │  deterministic    │   yield-reality · TVL · peg · funding · liquidity ·
+  │  scorecard        │   unlock · counterparty — n/a where it doesn't apply
   └────────┬─────────┘
-           │ point-in-time series (no lookahead, gap-honest)
+           │ the verdict falls out of the material rows (never hand-written)
            ▼
-  ┌──────────────────┐   differential-proven byte-equivalent to a read-only
-  │  engine (sidecar) │   reference engine; driven by the frozen Python core
-  └────────┬─────────┘
-           │ returns
-           ▼
-  ┌──────────────────┐   the verdict is the frozen core's, relayed VERBATIM
-  │  verdict + report │   → verdict card + plain-language, two-sided report
+  ┌──────────────────┐   SOLID / CAUTION / AVOID / UNVERIFIED, both registers
+  │  verdict + x-ray  │   consistency-checked; the LLM may phrase, never reason
   └──────────────────┘
 ```
 
-- **Renderers display; they never derive.** Screens render API/ledger JSON; a screen that computed its own number could flatter, so none do.
-- **Tiers are earned, never declared.** A caller cannot claim a verifiability tier; the engine derives it.
-- **Provenance is the currency of "real."** A `REAL-PIT` label *requires* a nonce-anchored content hash for every series — an unprovenanced series is forced to `BLOCKED`, never a fabricated payload.
+- **The verdict is derived, never hand-written.** It is machine-derived from the rows; a flattering hand-written summary is caught by the consistency check.
+- **The moat compounds.** A repeatable capture cadence appends only `REAL`, content-addressed, hash-chained snapshots — a competitor can copy the risk lens overnight but cannot retroactively manufacture a timestamped record of *what was real, and when*. A backfill/retro cannot verify.
+- **Provenance is the currency of "real."** A `REAL` label requires a nonce-anchored content hash; an unprovenanced value is `SAMPLE`, never a fabricated payload.
 
 ## Capability matrix
 
@@ -125,8 +155,8 @@ Advertised scope equals actual scope. Every capability below is proven by the te
 | The Guided Builder's FUNDING door adjudicates REAL captured T1 funding data (Binance freepit) with traceable provenance — REAL-PIT where the data exists, ILLUSTRATIVE where it genuinely does not, never a mislabeled REAL-PIT and never a quietly-upgraded tier | ✅ PRESENT | proven-by-battery |
 | The identity truth is printed where users read the bar: author identity is self-declared and not verified (the family-ratchet is per declared author, the rate limiter per connection) — the exposure stated plainly, never reassured away | ✅ PRESENT | proven-by-battery |
 | The whole system walked as a stranger would meet it, BOOTSTRAPPED THROUGH THE RUNNER, across every door — and a novice, given only the plain WHY of a refusal, can say back in one correct sentence why it failed (CONVERGED-8, the WHY panel reachable through every served door) | ✅ PRESENT | proven-by-battery |
-| the RWA + fee-yield real-data PIT backtests + risk-scoring + the full universe registry | ❌ ABSENT | the RWA + fee-yield real-data PIT backtests + risk-scoring + the full universe registry — the monorepo runner's accrualEquity(RWA) / execRwa path + the fee-yield discovery panel's captured snapshot, still not transplanted (LENDING landed V9 differential-proven — engine-port-differential; FUNDING landed V10 via freepit T1, differential-proven — funding-port-differential; fee-yield's Py3.11/pandas env runs the panel end-to-end but is BLOCKED-on-data, the capture pipeline un-transplanted — feeyield-attempt-v10.json) (park P1-1 · the data-plane follow-up sprint (fee-yield: transplant feeyield-pull + capture a ≥120-day snapshot; RWA: the credential + rigor)) |
-| own-data RWA re-execution | ❌ ABSENT | own-data RWA re-execution — reexec.execRwa returns null; own-data verdicts cap at V0/CANNOT-VERIFY-DATA (fail-safe, never a false V2) instead of running the engine backtest (park P1-1 · the data-plane follow-up sprint) |
+| the RWA + fee-yield real-data PIT backtests + risk-scoring + the full universe registry | ❌ ABSENT | the RWA + fee-yield real-data PIT backtests + risk-scoring + the full universe registry — the monorepo runner's accrualEquity(RWA) / own-data RWA execution path + the fee-yield discovery panel, not carried in the standalone (LENDING landed V9 differential-proven — engine-port-differential; FUNDING landed V10 via freepit T1, differential-proven — funding-port-differential; the dead fee-yield discovery-panel runtime was REMOVED in the honesty layer, never wired to a captured snapshot — feeyield-attempt-v10.json records the prior attempt) (park P1-1 · the data-plane follow-up sprint (fee-yield: re-transplant the panel + pull + capture a ≥120-day snapshot; RWA: the credential + rigor)) |
+| own-data RWA re-execution | ❌ ABSENT | own-data RWA re-execution — the rwa-allocation family is un-executable in the standalone (the dead reexec.execRwa stub was removed in the honesty layer; the family falls through to null); own-data verdicts cap at V0/CANNOT-VERIFY-DATA (fail-safe, never a false V2) instead of running the engine backtest (park P1-1 · the data-plane follow-up sprint) |
 | regenerating the pinned RWA verdict | ❌ ABSENT | regenerating the pinned RWA verdict — script/rwa-verdict.ts + its engine (Loop/Verdict/DataAdapter/Universe) live in the full monorepo, NOT here; the standalone carries only the frozen.ts PIN. Phase-1 forensics classified the drift ENVIRONMENTAL (forensics-rwa.json): the pin STAYS NOT-YET, the RWA env is pinned (requirements-rwa-engine.lock), and full byte-regen is BLOCKED on the absent pinned data/snapshot + the absent FRED credential (the two-way door, D-TWOWAY) (park P0-1 · the integrity-reconciliation / data-plane follow-up) |
 <!-- CAPABILITY-MATRIX:END -->
 
@@ -145,39 +175,36 @@ src/backtest/py/.venv/bin/pip install numpy scipy
 # 3. run the test battery (walls + capability floor)
 ./organon-studio-test.sh
 
-# 4. serve the studio + the Goal Console
-bun run script/serve-studio.ts     # → http://localhost:4319
+# 4. launch the Reality Check (2 screens: the Shelf + the Reality Check)
+./organon.sh launch                # → http://localhost:4444
 ```
 
-Optional — capture real, credential-free market data (no API key required):
+`./organon.sh` refuses to open the door until the house is provably in order, and when it refuses it says exactly why. Optional — capture real, credential-free data to seed and compound the moat (no API key):
 
 ```bash
-bun run script/capture-dataplane.ts   # real DefiLlama lending pools → PIT store
-bun run script/capture-funding.ts     # Binance freepit T1 funding (checksum-verified)
+bun run script/capture-cadence.ts     # refresh all three verticals into the PIT record (REAL-only, never backfills)
 ```
 
 ## Usage
 
-### The Goal Console (interactive)
+### The Reality Check (interactive)
 
-Serve the studio and open `http://localhost:4319`. Type a plain-English goal (e.g. *"Earn steady stablecoin lending carry with honest costs"*) and submit. You get a verdict card and a two-sided, plain-language report on real data. The model proposes a strategy; the verdict is the frozen core's, relayed verbatim — an injection in the goal cannot change it.
+`./organon.sh launch` and open `http://localhost:4444`. Browse the Shelf, open a card for its Reality Check, toggle Simple/Pro, and follow the provenance link to see what was real and when. The verdict is derived from the rows on real recorded data — a `SAMPLE` reading renders `UNVERIFIED`, never a mislabeled `REAL`.
 
-### The HTTP API
-
-The same physics over the wire (write-then-invoke; byte-identical to the direct call and the MCP tool):
+### Verify the numbers
 
 ```bash
-curl -X POST http://localhost:4319/studio/submit_spec \
-  -H 'content-type: application/json' \
-  -d '{"spec": { ... }, "returns": [ ... ], "barsPerYear": 365}'
+./organon.sh verify        # regenerate the evidence bundle + diff it against the committed copy (non-zero on mismatch)
 ```
 
-Routes: `POST /studio/submit_spec`, `POST /studio/get_verdict`, `POST /studio/preflight`, `POST /studio/attest_claim`, `GET /studio/export`, `POST /console/goal`. Mutating routes accept an optional `Authorization: Bearer <STUDIO_TOKEN>` and are rate-limited + size-capped.
+Regenerates and reproduces the battery count, the frozen-core git-clean proof, the verdict differential, and the deterministic scorecard, and confirms every headline number resolves to a backing artifact under `data/honesty/evidence/`. On a fresh clone the environment-independent artifacts still reproduce; the live capture re-fetch is skipped offline (disclosed).
 
-### Verify the record
+### The strategy engine + Goal Console (the foundation)
+
+The honest engine underneath also serves directly — type a plain-English goal, get a verdict card + a two-sided report; the same physics over HTTP (write-then-invoke; byte-identical to the direct call and the MCP tool):
 
 ```bash
-bun run script/verify-v3.ts          # re-derive + verify the ledger and the frozen set
+bun run script/serve-studio.ts        # the internal engine + Goal Console → http://localhost:4319
 ```
 
 ## Project structure
@@ -187,16 +214,18 @@ src/
   organon/       frozen-set manifest + integrity primitives (the single source of truth)
   ledger/        the append-only, hash-chained trial ledger
   backtest/      the TS↔Python bridge + the frozen Python sidecars
-  dataplane/     the standalone-native PIT store, engine port, funding, adjudication
+  dataplane/     the PIT store, the provenance record (the moat), the feed bridge
+    providers/   keyless clients — DeFiLlama, GeckoTerminal (one small pure fn per endpoint)
+  analytics/     scorecard.ts (the deterministic risk axes + verdict), explain.ts (the WHY engine)
   strategy/      the StrategySpec schema
   attest/        external-claim attestation + tiering
-  studio/        surfaces, routes, screens, agents, console, reports, walls machinery
+  studio/        surfaces, routes, screens, reality.ts (the 2 screens), evidence.ts, walls machinery
 test/
   walls/         the integrity walls (frozen bytes, ledger bypass, no-signing, gates, …)
-  organon/       capability-floor + behavior tests
-script/          serve, capture, differential, verify, and tooling entry points
+  organon/       capability-floor + behavior tests (incl. the honesty_* + evidence_bundle walls)
+script/          serve, capture, verify, build-evidence, differential, and tooling entry points
 docs/            identity memo + assets
-data/            the committed provenance chains, capability inventory, and pins
+data/            the committed provenance chain, the evidence bundle, pins, and capability inventory
 ```
 
 ## Design principles
@@ -206,12 +235,14 @@ Organon rests on a short list of non-negotiables enforced by tests, not conventi
 | Principle | Enforced by |
 |---|---|
 | The verdict core is frozen and byte-identical | `core_byte_identity` wall |
-| Adjudication is register-then-invoke (no bypass) | `ledger_bypass` wall |
-| Iterating a strategy makes the bar harder (anti-PBO) | `ledger_laundering` test |
-| Nothing signs, is paid, or is closed | `no_signing_grep` wall |
+| Every headline number regenerates + diffs clean | `evidence_bundle` wall + `./organon.sh verify` |
+| The verdict is machine-derived, never hand-written | `honesty_scorecard` consistency check |
+| An inapplicable axis is `not-applicable`, never a fabricated pass | `honesty_coverage` wall |
+| A `REAL` label requires provenance; a shown-but-unrecorded value halts | `honesty_record` / `dataplane_store` tests |
+| The moat appends `REAL` only; a backfill/retro cannot verify | `Capture.Service` chain (nonce-anchored) |
+| No model in a verdict, an axis, or the record | `honesty_scorecard` paraphrase guard |
 | Advertised scope == actual scope | `capability_matrix` wall |
-| A REAL-PIT label requires provenance | `dataplane_store` / `real_returns` tests |
-| Backtests are proven against a reference, never asserted | `transform_differential` / `funding_differential` tests |
+| Nothing signs, is paid, or is closed | `no_signing_grep` wall |
 | History is permanent; prevention is the medicine | `precommit_prevent` wall + `.githooks/pre-commit` |
 
 Enable the pre-commit prevention hook (blocks oversized blobs, inline raw data, and committed credentials):
@@ -224,7 +255,7 @@ git config core.hooksPath .githooks
 
 ```bash
 ./organon-studio-test.sh                 # the studio trust battery (walls + capability floor)
-./organon-test.sh                        # the broader suite
+./organon.sh verify                      # regenerate + diff the evidence bundle
 bun run script/render-matrix-readme.ts   # regenerate the capability matrix block
 ```
 

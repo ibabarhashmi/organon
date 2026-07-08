@@ -1,0 +1,18 @@
+{
+  "protocol": "evidence-determinism",
+  "canonical": {
+    "inputSha": "79efc0275389c44699889c18f73ae8b39a8ed68660bab924b9db4cb4c863a47b",
+    "outputSha": "2de7834350a53953ae978ad77201cfcb94221c338b5c2e961281804e5806c3d3",
+    "identical": true,
+    "verdicts": [
+      "SOLID",
+      "AVOID",
+      "AVOID",
+      "SOLID",
+      "SOLID",
+      "UNVERIFIED"
+    ]
+  },
+  "note": "identical inputs → byte-identical scorecard; the committed outputSha, diffed by `verify` in a fresh process, proves cross-run determinism (S10)",
+  "at": 1783468800000
+}

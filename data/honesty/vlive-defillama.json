@@ -1,0 +1,98 @@
+{
+  "protocol": "vlive-defillama",
+  "at": "2026-07-08",
+  "vlive": {
+    "pools": "HTTP 200, keyless, 15702 pools, ~0.77s",
+    "chart": "HTTP 200, ~1249 daily points",
+    "stablecoinprices": "HTTP 200, prices keyed by DeFiLlama slug (usd-coin/tether/dai)"
+  },
+  "shelfReality": "REAL",
+  "capturedCount": 7,
+  "captured": [
+    {
+      "key": "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501",
+      "contentSha": "bbe0088618b5512f92485542748dff707536fb91c63925f25ad4a4bd98d70933",
+      "chainPos": 1,
+      "apyBase": 3.06574,
+      "apyReward": null,
+      "tvlUsd": 243387175
+    },
+    {
+      "key": "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
+      "contentSha": "dad55a3292063411a6a1c99cd231c1a05cf8554927fc37e0d18fa9e31fdc5cd3",
+      "chainPos": 1,
+      "apyBase": 3.00383,
+      "apyReward": null,
+      "tvlUsd": 310538621
+    },
+    {
+      "key": "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac",
+      "contentSha": "cfd355fc9c7e22879aa018d67ad2d605cfc86e4e3bee5937e693a9276448a2c9",
+      "chainPos": 1,
+      "apyBase": 2.80325,
+      "apyReward": null,
+      "tvlUsd": 20662541
+    },
+    {
+      "key": "defillama:pool:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb",
+      "contentSha": "3d29f26d33da86412589dbf29d89b47abaefc35ddd6ff68b62d378cf67c97dce",
+      "chainPos": 1,
+      "apyBase": 2.33919,
+      "apyReward": null,
+      "tvlUsd": 101911870
+    },
+    {
+      "key": "defillama:pool:4438dabc-7f0c-430b-8136-2722711ae663",
+      "contentSha": "ebb15b75d9ba2706533de5a0d1b17daeae4b72c51c2f26a61d6f91717e63e775",
+      "chainPos": 1,
+      "apyBase": 6.45,
+      "apyReward": null,
+      "tvlUsd": 131205327
+    },
+    {
+      "key": "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487",
+      "contentSha": "cf0ce6c1945803d4392549ba1924f103cc650a0d1ef05383495c51391b28c487",
+      "chainPos": 1,
+      "apyBase": 3.13366,
+      "apyReward": 0.10326,
+      "tvlUsd": 43517646
+    },
+    {
+      "key": "defillama:peg:usd",
+      "contentSha": "fec19bac9f478a1d73793912afb3e71836de40579e9fa26acc1578df02661525",
+      "chainPos": 1,
+      "apyBase": null,
+      "apyReward": null,
+      "tvlUsd": null
+    }
+  ],
+  "chain": {
+    "present": true,
+    "ok": true,
+    "total": 41,
+    "keys": {
+      "lending:aave-v3:USDT:ethereum": 2,
+      "lending:aave-v3:USDC:ethereum": 2,
+      "lending:fluid-lending:USDC:ethereum": 2,
+      "lending:fluid-lending:USDT:ethereum": 2,
+      "lending:sparklend:DAI:ethereum": 2,
+      "funding:binance:BTCUSDT": 1,
+      "funding:binance:ETHUSDT": 1,
+      "funding-basis:hyperliquid:BTC": 2,
+      "funding-basis:hyperliquid:ETH": 1,
+      "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501": 2,
+      "defillama:chart:aa70268e-4b52-42bf-a116-608b370f9501": 2,
+      "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a": 2,
+      "defillama:chart:f981a304-bb6c-45b8-b0c5-fd2f515ad23a": 2,
+      "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac": 2,
+      "defillama:chart:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac": 2,
+      "defillama:pool:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb": 2,
+      "defillama:chart:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb": 2,
+      "defillama:pool:4438dabc-7f0c-430b-8136-2722711ae663": 2,
+      "defillama:chart:4438dabc-7f0c-430b-8136-2722711ae663": 2,
+      "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487": 2,
+      "defillama:chart:7da72d09-56ca-4ec5-a45f-59114353e487": 2,
+      "defillama:peg:usd": 2
+    }
+  }
+}

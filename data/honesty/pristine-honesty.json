@@ -1,0 +1,16 @@
+{
+  "protocol": "pristine-honesty",
+  "at": "2026-07-08",
+  "rule": "U-PRISTINE — isolated HOME, no inherited venv, fresh clone; the honesty layer is clone-robust (SAMPLE where the gitignored payloads are absent)",
+  "installOk": true,
+  "positiveControl": {
+    "withoutVenvSidecarFails": true
+  },
+  "venvCreatedFresh": true,
+  "battery": {
+    "pass": 511,
+    "fail": 0,
+    "green": true
+  },
+  "pristineGreen": true
+}

@@ -1,0 +1,68 @@
+{
+  "protocol": "honesty-evidence-claims",
+  "note": "every headline number the handoff cites resolves to a backing artifact + value; `./organon.sh verify` reproduces the deterministic bundle (X-PROVE). A number with no artifact is a Halt.",
+  "bundleSha": "6049ba06661934e76a56c5f05d4d86f08a96680af9016ad607b548b50fb6722c",
+  "claims": [
+    {
+      "number": "battery-pass",
+      "value": 511,
+      "artifact": "evidence/battery-summary.json",
+      "field": "canonical.pass"
+    },
+    {
+      "number": "battery-fail",
+      "value": 0,
+      "artifact": "evidence/battery-summary.json",
+      "field": "canonical.fail"
+    },
+    {
+      "number": "battery-files",
+      "value": 91,
+      "artifact": "evidence/battery-summary.json",
+      "field": "canonical.files"
+    },
+    {
+      "number": "determinism-identical",
+      "value": true,
+      "artifact": "evidence/determinism.json",
+      "field": "canonical.identical"
+    },
+    {
+      "number": "scorecard-output-sha",
+      "value": "2de7834350a53953ae978ad77201cfcb94221c338b5c2e961281804e5806c3d3",
+      "artifact": "evidence/determinism.json",
+      "field": "canonical.outputSha"
+    },
+    {
+      "number": "frozen-seven-clean",
+      "value": true,
+      "artifact": "evidence/frozen-git-status.json",
+      "field": "canonical.clean"
+    },
+    {
+      "number": "lending-fpset-sha",
+      "value": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+      "artifact": "evidence/verdict-differential.json",
+      "field": "canonical.lendingFpSetSha"
+    },
+    {
+      "number": "funding-verdict",
+      "value": "NO-GO",
+      "artifact": "evidence/verdict-differential.json",
+      "field": "canonical.fundingVerdict"
+    },
+    {
+      "number": "funding-repro-hash",
+      "value": "0a63151b0c375d32822ace78a13ce158ef7dbef560f5f4cfdc8368ab54e2f80f",
+      "artifact": "evidence/verdict-differential.json",
+      "field": "canonical.fundingReproHash"
+    },
+    {
+      "number": "deepening-pins-sha",
+      "value": "d66f4613e0a4055eb7a1fbc2b3b9b47b58a0eb63b743f4d0b787e531470558b1",
+      "artifact": "deepening-pins.json",
+      "field": "pinsSha"
+    }
+  ],
+  "at": 1783468800000
+}

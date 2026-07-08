@@ -7,12 +7,11 @@ import { StrategySpec } from "../strategy/spec"
 //
 // A tier is EARNED by independent reproduction, never granted by declaration. This standalone build carries the
 // sidecar-driven executors (lending-carry on a supplied/on-disk panel, the labeled demo-genuine fixture, and the V1
-// claimant-data reproduction check) BYTE-FAITHFUL. The one path NOT transplanted is `execRwa` — the rwa-allocation
-// own-data re-execution — because it runs Runner.accrualEquity on the marketdata/universe PIT cache, the engine
-// data-plane that the standalone does not (yet) carry. Here it returns null ⇒ the adjudicator caps such a spec at V0
-// (CANNOT-VERIFY-DATA), NEVER a false V2. This is identical to the monorepo's behaviour for any spec whose legs are not
-// in a populated PIT Universe (which is every studio-path spec). PARKED: port the real-data engine layer + PIT Universe
-// to the standalone (see the parks register). The absence is honest, disclosed, and fail-safe — never faked.
+// claimant-data reproduction check) BYTE-FAITHFUL. The rwa-allocation own-data re-execution is NOT carried (the
+// marketdata/universe PIT engine data-plane lives only in the monorepo); the honesty layer removed the dead RWA
+// runtime path, so an rwa-allocation spec falls through to null ⇒ the adjudicator caps it at V0 (CANNOT-VERIFY-DATA),
+// NEVER a false V2 — identical to any spec whose legs are not in a populated PIT Universe (every studio-path spec). The
+// absence is honest, disclosed, and fail-safe (inventory absence rwa-own-data-reexecution).
 
 export namespace AttestReexec {
   export interface ReExec {
@@ -41,13 +40,6 @@ export namespace AttestReexec {
       if (parent === dir) break
       dir = parent
     }
-    return null
-  }
-
-  // ── rwa-allocation: STANDALONE returns null (the PIT Universe / marketdata data-plane is not transplanted). This is
-  //    the monorepo's own behaviour for any spec whose legs reference no populated Universe leg (⇒ un-executable ⇒ V0).
-  //    PARKED: port the real-data engine layer to the standalone. Fail-safe: null, never a fabricated re-execution. ──
-  async function execRwa(_spec: unknown): Promise<ReExec | null> {
     return null
   }
 
@@ -124,7 +116,7 @@ export namespace AttestReexec {
   // Execute a recognized spec family on the ENGINE's OWN data. Returns null for an un-executable spec (⇒ V0).
   export async function executeOwnData(spec: unknown): Promise<ReExec | null> {
     const family = (spec as { family?: string })?.family
-    if (family === "rwa-allocation") return execRwa(spec)
+    // rwa-allocation is un-executable in the standalone (no PIT Universe) ⇒ falls through to null ⇒ capped at V0 below.
     if (family === "lending-carry") return execLending(spec)
     if (family === "demo-genuine") return execDemoGenuine()
     return null // unknown / non-runnable ⇒ un-executable ⇒ capped at V0 (never a false V2)

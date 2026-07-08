@@ -1,12 +1,11 @@
 /**
  * ORGΛNON — the frozen-set manifest (the SINGLE SOURCE OF TRUTH) + integrity primitives (Rules VII, XXVIII).
  *
- * Every frozen artifact's pinned sha lives HERE and nowhere else — the 6 computational-core `.py`, and the
- * settled RWA verdict (`RWA-VERDICT.md`). Consumers (the red-team tests, the verdict scripts, the dashboard)
- * import from this module; a drift is reconciled in ONE place. The mechanism `test/redteam/frozen_integrity.test.ts`
- * hashes every frozen artifact against this manifest and distinguishes a legitimate deterministic REGENERATION
- * (rendering / provenance changed, the verdict CLASS intact) from an illegitimate MUTATION (a verdict token or
- * figure changed). Reconciliation forensics + the regeneration-vs-mutation rule: BUILDLOG-V2-INTEGRITY.md Phase 0/1.
+ * Every frozen artifact's pinned sha lives HERE and nowhere else — the 6 computational-core `.py` + the frozen loop
+ * type-wall (`loop.ts`), plus the settled RWA verdict pin (`RWA-VERDICT.md`, a monorepo-generated doc, absent on a
+ * standalone clone). Consumers (the wall tests, the runtime) import from this module; a drift is reconciled in ONE
+ * place. `test/walls/core_byte_identity.test.ts` hashes every present frozen artifact against this manifest — a drift
+ * in a tracked artifact is a Halt. The RWA verdict is a settled record checked by a byte-match against its pin.
  *
  * Re-baselining a pin here is a CONSCIOUS act (Rule XVII): update the literal + log the forensics in the BuildLog;
  * never silently bump a sha to turn a red test green (that hides drift — the anti-pattern the mechanism exists to stop).
@@ -15,9 +14,9 @@ import { createHash } from "node:crypto"
 import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 
-// src/organon/ → PKG_ROOT (…/solidity-sentinel) → REPO_ROOT (…/Sentinel Agent)
+// src/organon/ → PKG_ROOT (the repo root) → REPO_ROOT (identical; this standalone package IS the repo root)
 export const PKG_ROOT = path.join(import.meta.dir, "..", "..")
-export const REPO_ROOT = PKG_ROOT // STANDALONE: the package IS the repo root (was monorepo packages/solidity-sentinel/../..)
+export const REPO_ROOT = PKG_ROOT // STANDALONE-NATIVE: the package IS the repo root
 export const PY_DIR = path.join(PKG_ROOT, "src", "backtest", "py")
 
 export const sha256 = (buf: Buffer | string) => createHash("sha256").update(buf).digest("hex")
@@ -52,62 +51,17 @@ export const RWA_VERDICT_INVARIANTS: string[] = [
   "ASSET-BOUND",
 ]
 
-// Normalize the pure-PROVENANCE fields (calendar dates, the pipeline_run config hash) so the content-sha is stable
-// across a date/window/config regeneration but flips on any change to a verdict FIGURE (SR0, DSR, counts, returns).
-export function normalizeVerdictContent(md: string): string {
-  return md
-    .replace(/\d{4}-\d{2}-\d{2}/g, "<DATE>") // decision-window / conclusiveness calendar dates (snapshot-derived)
-    .replace(/config [0-9a-f]{6,}…?/g, "config <HASH>") // the pipeline_run config hash (provenance, not the verdict)
-}
-export const verdictContentSha = (md: string) => sha256(normalizeVerdictContent(md))
-// The pinned content-sha (dates/config normalized out). A finer signal than the full sha: it stays stable across a
-// date-only regeneration and flips on a verdict-figure change. Recompute + re-bake consciously if normalization changes.
-export const RWA_VERDICT_CONTENT_SHA = "c2959846169e304349db853f27549a2759e67a23ea741851606d0066ca0113a5"
-
-export type DriftKind = "identical" | "regeneration" | "mutation"
-export interface DriftReport {
-  kind: DriftKind
-  artifact: string
-  message: string
-  actual: string
-  pinned: string
-}
-
-// Classify a detected RWA drift into the regeneration-vs-mutation distinction the blueprint requires. Two robust
-// signals, in order of severity: (1) the AUTHORITATIVE H1 line (`md.split("\n")[0]`) must carry every verdict token —
-// a headline flip (NO-GO→GO, ASSET-BOUND→COHORT-BOUND, NOT-YET→GO, …) removes one → MUTATION, even though the token
-// still appears elsewhere in the body (so a whole-doc `includes()` would miss it — the trap this codifies against).
-// (2) the CONTENT-sha (dates/config normalized out) must match — if the headline is intact but a body FIGURE moved
-// (SR0, DSR, a count), the content-sha shifts → MUTATION/REVIEW. Only when BOTH hold (headline intact AND content-sha
-// stable) is the drift a pure date/config/provenance REGENERATION, safe to re-pin consciously (Rule XVII).
-export function classifyRwaDrift(md: string): DriftReport {
-  const actual = sha256(md)
-  const base = { artifact: "RWA-VERDICT.md", actual, pinned: RWA_VERDICT_SHA }
-  if (actual === RWA_VERDICT_SHA) return { ...base, kind: "identical", message: "byte-identical to the pinned baseline" }
-  const h1 = md.split("\n")[0] ?? ""
-  const missingInH1 = RWA_VERDICT_INVARIANTS.filter((s) => !h1.includes(s))
-  if (missingInH1.length > 0)
-    return {
-      ...base,
-      kind: "mutation",
-      message: `MUTATION — the H1 verdict signature changed: missing [${missingInH1.join(", ")}] in the headline. A settled NO-GO / ASSET-BOUND verdict must not silently flip. Do NOT re-pin; investigate.`,
-    }
-  if (verdictContentSha(md) !== RWA_VERDICT_CONTENT_SHA)
-    return {
-      ...base,
-      kind: "mutation",
-      message: `MUTATION/REVIEW — the H1 verdict class is intact but a body FIGURE or statement changed (content-sha moved after normalizing dates/config). Review the diff for a changed number/claim BEFORE any re-pin — do not assume prose-only.`,
-    }
-  return {
-    ...base,
-    kind: "regeneration",
-    message: `DRIFT, but only provenance changed (calendar dates / config hash; the verdict class + every figure are intact — content-sha stable). This is a legitimate REGENERATION — re-pin RWA_VERDICT_SHA in src/organon/frozen.ts if intended (a conscious re-baseline, Rule XVII).`,
-  }
-}
+// The standalone's RWA check is a plain byte-match against the pinned settled verdict (RWA_VERDICT_SHA). The monorepo's
+// regeneration-vs-mutation drift CLASSIFIER is not carried here — it was unreachable: the RWA verdict GENERATOR
+// (script/rwa-verdict.ts) lives only in the full monorepo, so RWA-VERDICT.md is never generated in the standalone and
+// is always ABSENT on a clone (the honesty layer removed the dead RWA/fee-yield runtime). The pinned sha + the four
+// structural INVARIANTS above ARE the standalone's checkable, immutable settled-verdict record (F-ENV; the ENVIRONMENTAL
+// finding forbids a re-pin — the settled NO-GO/NOT-YET verdict must never silently move). checkFrozenSet() below
+// classifies a (never-present-on-clone) RWA-VERDICT.md ok/drift by a byte-match against RWA_VERDICT_SHA.
 
 // ───────────────────── the frozen loop type-wall (Rule XXI/XXVI) — git-tracked, byte-identical ─────────────────────
-// The compile-time DiscoveryVerdict wall + runtime leak tripwire. Frozen everywhere; unfrozen ONLY for fee-yield via
-// a SEPARATE file (src/loop/feeyield-loop.ts imports the wall types from here — it never edits this file's bytes).
+// The compile-time DiscoveryVerdict wall + runtime leak tripwire. Frozen everywhere in the standalone (the monorepo's
+// fee-yield unfreeze path was a separate experiment and is NOT carried here — the honesty layer removed the dead paths).
 export const FROZEN_TS: Record<string, string> = {
   "src/loop/loop.ts": "1518c897111454a6f9b4441c62fa82eb6ebce5f5e56305b6abdbfda139efc13c",
 }
@@ -122,8 +76,9 @@ export interface ImmutableDatum {
   note: string
 }
 export const IMMUTABLE_DATA: ImmutableDatum[] = [
-  { rel: "data/feeyield/forward/2026-07-03/MANIFEST.json", sha: "e6dd5fb5fa0ca7a8de2ff5e79d5b4c6453a9813b0190c40d4cc4dca65d3f125a", note: "fee-yield T2 forward capture (stamped 2026-07-03, immutable)" },
-  { rel: "data/feeyield/forward/2026-07-03/prices.json", sha: "f6d9e0eef2c4f918a81114e54207f39cf09de1303a8a226779e478fe8a2ef96a", note: "fee-yield T2 forward prices (== the MANIFEST's pricesSha)" },
+  // The dead fee-yield forward-capture entries were removed with the fee-yield runtime (the honesty layer). The RWA
+  // pinned discovery-snapshot manifest stays — it is part of the settled-RWA integrity anchor (gitignored local data,
+  // absent on a clone; a present-but-CHANGED datum is a leak → fail).
   // Re-pinned 2026-07-03 (Discernment sprint end-to-end live run): re-running `scripts/snapshot.ts` stamped a fresh
   // `pinnedAt` (a latent non-idempotence bug in that script, now fixed to PRESERVE the prior value). ONLY `pinnedAt`
   // changed — every RWA series entry AND the settled RWA verdict (RWA-VERDICT.md) stayed byte-identical, so NO verdict
@@ -152,10 +107,10 @@ export function checkFrozenSet(): FrozenCheck[] {
   }
   for (const [name, want] of Object.entries(FROZEN_PY)) pin(name, "tracked-py", path.join(PY_DIR, name), want)
   for (const [rel, want] of Object.entries(FROZEN_TS)) pin(rel, "tracked-ts", path.join(PKG_ROOT, rel), want)
-  if (!existsSync(RWA_VERDICT_PATH)) out.push({ id: "RWA-VERDICT.md", kind: "generated-rwa", status: "absent", detail: "MISSING — run script/rwa-verdict.ts" })
+  if (!existsSync(RWA_VERDICT_PATH)) out.push({ id: "RWA-VERDICT.md", kind: "generated-rwa", status: "absent", detail: "absent — the RWA verdict generator lives in the monorepo, not the standalone (inventory absence rwa-verdict-regeneration); the pinned RWA_VERDICT_SHA + INVARIANTS are the checkable settled-verdict record" })
   else {
-    const r = classifyRwaDrift(readFileSync(RWA_VERDICT_PATH, "utf8"))
-    out.push({ id: "RWA-VERDICT.md", kind: "generated-rwa", status: r.kind === "identical" ? "ok" : "drift", detail: `${r.kind.toUpperCase()} — ${r.message}` })
+    const got = sha256File(RWA_VERDICT_PATH)
+    out.push({ id: "RWA-VERDICT.md", kind: "generated-rwa", status: got === RWA_VERDICT_SHA ? "ok" : "drift", detail: got === RWA_VERDICT_SHA ? "byte-identical to the pinned settled verdict" : `DRIFT ${got.slice(0, 12)}… ≠ pinned ${RWA_VERDICT_SHA.slice(0, 12)}… — the settled NO-GO/NOT-YET verdict must not silently move (F-ENV); investigate, do not re-pin` })
   }
   for (const d of IMMUTABLE_DATA) {
     const abs = path.join(REPO_ROOT, d.rel)

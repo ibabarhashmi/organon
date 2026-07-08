@@ -1,7 +1,0 @@
-# ORGΛNON fee-yield discovery panel — Py3.11 env lockfile (End-User Phase 2; E-ATTEMPT)
-# python 3.11.15 · frozen 2026-07-05 · the panel+discovery sidecars run end-to-end under this env
-numpy==2.4.6
-pandas==3.0.3
-python-dateutil==2.9.0.post0
-scipy==1.17.1
-six==1.17.0

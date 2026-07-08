@@ -13,8 +13,8 @@
       "generator": "script/rwa-verdict.ts (MONOREPO — absent from the standalone; inventory absence rwa-verdict-regeneration)",
       "environment": "requirements-rwa-engine.lock (Python 3.11 + purgedcv 0.1.2 + scipy 1.17.1 + numpy 1.26.4 + engine stack)",
       "inputs": { "data/snapshot (pinned FRED-gated discovery snapshot)": "ABSENT (gitignored local data; frozen.ts IMMUTABLE_DATA data/snapshot/MANIFEST.json)" },
-      "pin": "frozen.ts RWA_VERDICT_SHA 9cf94c8a… (full) + RWA_VERDICT_CONTENT_SHA c2959846… + RWA_VERDICT_INVARIANTS (NO-GO/NOT-YET/CONCLUSIVE/NO-DISCRIMINATING-SIGNAL/ASSET-BOUND)",
-      "regenStatus": "BLOCKED — the generator + engine + pinned data/snapshot are absent from the standalone (P1-1); under the reconstructed Py3.11 env the golden-noise KEYSTONE reproduces byte-identically (DSR=0.478421), the partial proof. The four structural INVARIANTS are the standalone's checkable RWA contract (classifyRwaDrift over the H1).",
+      "pin": "frozen.ts RWA_VERDICT_SHA 9cf94c8a… (full byte-match) + RWA_VERDICT_INVARIANTS (NO-GO/NOT-YET/CONCLUSIVE/NO-DISCRIMINATING-SIGNAL/ASSET-BOUND)",
+      "regenStatus": "BLOCKED — the generator + engine + pinned data/snapshot are absent from the standalone (P1-1); under the reconstructed Py3.11 env the golden-noise KEYSTONE reproduces byte-identically (DSR=0.478421), the partial proof. The pinned byte-sha + the four structural INVARIANTS are the standalone's checkable RWA contract (a byte-match against the pin; the monorepo's regeneration-vs-mutation classifier was removed in the honesty layer as unreachable — RWA-VERDICT.md is never generated here).",
       "classification": "the drift is ENVIRONMENTAL (forensics-rwa.json); the pin STAYS NOT-YET; zero re-pins"
     },
     {

@@ -1,8 +1,0 @@
-{
-  "protocol": "e2e-catalog-pin",
-  "version": "v14",
-  "pinnedAt": "2026-07-05",
-  "contentSha": "723424ff0044ac0439f6ea04352ecca97760f4c82b4c71360bc5d727203bdbb1",
-  "count": 46,
-  "note": "the content-sha pin over the canonical v14 scenario set (E-CATALOG provenance)"
-}

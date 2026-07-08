@@ -1,0 +1,10 @@
+{
+  "protocol": "evidence-battery",
+  "canonical": {
+    "pass": 511,
+    "fail": 0,
+    "files": 91
+  },
+  "note": "the full studio trust battery (walls + capability-floor tests) — the headline count",
+  "at": 1783468800000
+}

@@ -1,0 +1,18 @@
+{
+  "protocol": "evidence-frozen",
+  "canonical": {
+    "clean": true,
+    "paths": [
+      "src/backtest/py/effective_n.py",
+      "src/backtest/py/funding_accrual.py",
+      "src/backtest/py/funding_crossvenue.py",
+      "src/backtest/py/funding_discriminate.py",
+      "src/backtest/py/neutralize.py",
+      "src/backtest/py/rigor.py",
+      "src/loop/loop.ts"
+    ]
+  },
+  "dirty": [],
+  "note": "the 6 computational-core .py + loop.ts byte-untouched on disk (X-KEEP; module-boundary)",
+  "at": 1783468800000
+}

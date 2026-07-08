@@ -1,0 +1,35 @@
+{
+  "protocol": "honesty-deviations",
+  "at": "2026-07-08",
+  "rule": "X-DEVLEDGER — every departure from a blueprint's literal text lives here as a first-class committed entry {blueprintLine, whatWasDone, why, lawAuthority}, surfaced verbatim in the handoff. A silent deviation is a Halt.",
+  "deviations": [
+    {
+      "id": "D1",
+      "blueprintLine": "Honesty-Layer Phase 1: 'remove the RWA verdict pin machinery'",
+      "whatWasDone": "The dead RWA runtime (execRwa, the drift classifier, 11 fee-yield .py) was removed, but the wall-guarded RWA verdict PIN (RWA_VERDICT_SHA / RWA_VERDICT_INVARIANTS) was RETAINED.",
+      "why": "The pin is a live integrity anchor (repro_contracts / F-ENV), not dead code. Ripping out a live wall to satisfy a cleanup parenthetical is the very 'edit the integrity machinery to help' that the record forbids — the dead runtime was removed, the wall-guarded pin stays.",
+      "lawAuthority": "X-KEEP + A'#7"
+    },
+    {
+      "id": "D2",
+      "blueprintLine": "Honesty-Layer Phase 4: the 'Vite' front-end clause",
+      "whatWasDone": "The front-end is server-rendered Hono HTML with minimal inline JS (no Vite / SPA / bundler).",
+      "why": "PART CLEAN's stated primacy — no heavy dependency; the cheapest correct thing a stranger can run AND read. A Vite/SPA build is a heavy dependency the two-screen tool does not need.",
+      "lawAuthority": "PART CLEAN"
+    },
+    {
+      "id": "D3",
+      "blueprintLine": "Honesty-Layer: GeckoTerminal 'pinned but unwired' (parked forward)",
+      "whatWasDone": "GeckoTerminal is RESOLVED — wired this sprint as the keyless third provider feeding the liquidity-depth axis.",
+      "why": "The Deepening sprint's X-COVER closes the one unwired provider; the ledger records the closure so a reader sees the park was resolved, not silently dropped.",
+      "lawAuthority": "X-COVER (Deepening Phase 2)"
+    },
+    {
+      "id": "D4",
+      "blueprintLine": "Deepening Phase 3: 'the pinned DeFiLlama unlocks pull, now scored' (assumed keyless)",
+      "whatWasDone": "DISCOVERED mid-sprint: DeFiLlama's unlocks/emissions endpoints (api.llama.fi/emissions, /emission/{protocol}) now return HTTP 402 'Upgrade to the paid API plan' — no longer keyless. The unlock-overhang axis is BUILT + positive-controlled (the pure nextUnlockFraction extractor + the pinned thresholds), and the client probe degrades to SAMPLE on 402, but on live keyless data with no schedule resolvable the axis renders not-applicable / UNVERIFIED — NEVER scraped, NEVER faked. The axis is ARMED for a keyless schedule source (e.g. the deferred on-chain vesting path via Alchemy/The Graph).",
+      "why": "The firewall forbids faking an axis or citing a number with no honest source. A real-world data source going keyless→paid mid-sprint is surfaced as an honest UNVERIFIED, not papered over with a scrape or a fabricated fraction (X-HONEST / A'#5 — an axis that cannot be made trustworthy is a NAMED gap, never tuned to look right).",
+      "lawAuthority": "X-HONEST + A'#5 (Deepening Phase 3)"
+    }
+  ]
+}

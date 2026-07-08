@@ -1,0 +1,11 @@
+{
+  "provider": "geckoterminal",
+  "url": "https://api.geckoterminal.com/api/v2/networks/eth/pools",
+  "status": 200,
+  "ok": true,
+  "poolCount": 20,
+  "sampleName": "WETH / USDC 0.05%",
+  "sampleReserveUsd": 85725012.7014,
+  "keyless": true,
+  "at": 1783468800000
+}

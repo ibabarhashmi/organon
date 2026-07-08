@@ -1,0 +1,16 @@
+{
+  "protocol": "verdict-differential-baseline-honesty",
+  "at": "2026-07-08",
+  "note": "the frozen attest engine's verdicts BEFORE the honesty layer — every phase re-derives these and asserts byte-identity (no verdict moved). The scorecard is a NEW layer; the GO/NO-GO adjudicator stays frozen + dormant.",
+  "lending": {
+    "source": "VerdictDifferential.fingerprintSetSha()",
+    "fingerprintSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54"
+  },
+  "funding": {
+    "source": "Console.runComposedFunding(bybit,8h,receive) @ 2026-07-05",
+    "state": "verdict",
+    "verdict": "NO-GO",
+    "reality": "ILLUSTRATIVE",
+    "verdictReproHash": "0a63151b0c375d32822ace78a13ce158ef7dbef560f5f4cfdc8368ab54e2f80f"
+  }
+}

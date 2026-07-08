@@ -1,0 +1,12 @@
+{
+  "protocol": "evidence-differential",
+  "canonical": {
+    "lendingFpSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+    "fundingState": "verdict",
+    "fundingVerdict": "NO-GO",
+    "fundingReality": "ILLUSTRATIVE",
+    "fundingReproHash": "0a63151b0c375d32822ace78a13ce158ef7dbef560f5f4cfdc8368ab54e2f80f"
+  },
+  "note": "the frozen attest engine's verdicts — lending fp-set + funding NO-GO/ILLUSTRATIVE — reproduced; zero verdicts moved (X-KEEP)",
+  "at": 1783468800000
+}

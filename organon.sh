@@ -5,17 +5,18 @@
 # The first command a stranger ever runs is the most honest thing in the repo: it refuses to open the door until the
 # house is provably in order, and when it refuses it says exactly why.
 #
-# Usage:  ./organon.sh [menu|status|check|launch|--full]
+# Usage:  ./organon.sh [menu|status|check|launch|verify|--full]
 #   menu    (default) check → setup → verify → the bounded TUI (interactive)
 #   status  check → setup → verify → the status table (non-interactive; the happy transcript)
 #   check   the prerequisite enumeration only (honest per-item; exit nonzero if a required item is missing)
 #   launch  verify → launch the web app ONLY if the pinned gate list is green (else refuse with reasons)
+#   verify  regenerate the EVIDENCE BUNDLE + diff it against the committed copy — the numbers reproduce themselves (X-PROVE)
 #   --full  run the FULL in-scope battery as the verify set (default is the fast pinned subset)
 set -euo pipefail
 cd "$(dirname "$0")"
 
 MODE="menu"; FULL=""
-for a in "$@"; do case "$a" in menu|status|check|launch) MODE="$a";; --full) FULL="--full";; esac; done
+for a in "$@"; do case "$a" in menu|status|check|launch|verify) MODE="$a";; --full) FULL="--full";; esac; done
 
 need_bun() { if ! command -v bun >/dev/null 2>&1; then echo "✗ bun is required and is not on PATH — install it yourself (https://bun.sh). The runner NEVER installs system packages."; exit 1; fi; }
 
@@ -48,13 +49,34 @@ do_launch() {
   need_bun
   local enabled; enabled="$(bun run script/organon-status.ts $FULL | tee /dev/stderr | tail -1 | sed 's/.*ORGANON_LAUNCH_ENABLED=//')"
   if [ "$enabled" = "1" ]; then
-    echo "✓ LAUNCH WEB: the pinned gate list is green — starting the web app…"
-    echo "  the console will serve at http://localhost:8787  (Ctrl-C to stop; nothing signs)"
-    exec bun run script/serve-studio.ts
+    echo "✓ LAUNCH WEB: the pinned gate list is green — starting the Reality Check…"
+    echo "  the Reality Check (2 screens: the Shelf + the Reality Check) serves at http://localhost:4444  (Ctrl-C to stop; nothing signs)"
+    echo "  is this yield real, and what's the catch? — REAL where recorded, the honest SAMPLE fallback where not."
+    exec bun run script/serve-reality.ts
   else
     echo "✗ LAUNCH WEB refused: the requirements above are not met. The door stays shut until the house is in order (no soft-launch path exists — the gate is derived from the verify results, not a flag)."
     exit 1
   fi
+}
+
+# ── the VERIFY verb — the evidence bundle regenerates + diffs against the committed copy (X-PROVE) ─────────────────
+# A stranger runs this and the sprint's headline numbers reproduce themselves: the full battery + its count, the
+# deterministic scorecard bundle, the frozen-seven git-clean proof, and the verdict-differential reproduction — every
+# one diffed against the committed evidence. A mismatch exits non-zero (the numbers no longer rest on trust).
+do_verify() {
+  need_bun
+  echo "○ verify: regenerating the evidence bundle and diffing it against the committed copy (data/honesty/evidence/)…"
+  echo "  (1) the full battery + its count vs the committed battery-summary…"
+  local out pass fail want
+  out="$(bash organon-studio-test.sh 2>&1)" || { echo "✗ the battery is not green — verify refuses (the count cannot be attested)"; echo "$out" | tail -3; exit 1; }
+  pass="$(printf '%s' "$out" | grep -oE '[0-9]+ pass' | head -1 | grep -oE '[0-9]+')"
+  fail="$(printf '%s' "$out" | grep -oE '[0-9]+ fail' | head -1 | grep -oE '[0-9]+')"
+  want="$(bun -e 'const a=require("./data/honesty/evidence/battery-summary.json");console.log(a.canonical.pass+"/"+a.canonical.fail)' 2>/dev/null || echo "?/?")"
+  echo "    battery ${pass}/${fail} · committed ${want}"
+  if [ "${pass}/${fail}" != "$want" ]; then echo "✗ battery count ${pass}/${fail} ≠ the committed evidence ${want} — regenerate + re-pin (bun run script/build-evidence.ts)"; exit 1; fi
+  echo "  (2) the deterministic bundle (determinism · frozen-seven · verdict differential) + every claim…"
+  bun run script/build-evidence.ts --check || exit 1
+  echo "✓ VERIFY GREEN: the evidence bundle reproduces — the battery count, the frozen-seven git-clean, the verdict differential, and every claimed number diff clean against the committed copy."
 }
 
 tui() {
@@ -78,5 +100,6 @@ case "$MODE" in
   check)  prereq_check;;
   status) do_status;;
   launch) do_launch;;
+  verify) do_verify;;
   menu|*) tui;;
 esac

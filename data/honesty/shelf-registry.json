@@ -1,0 +1,88 @@
+{
+  "protocol": "shelf-registry",
+  "at": "2026-07-08",
+  "note": "poolKey -> label + stablecoin symbol + vertical (the SnapshotFile points are numeric-only). The three money verticals are DISTINCTLY represented: lending (aave/spark/fluid/compound), stablecoin-yield (a Curve stable-LP, scored with peg + liquidity central), delta-neutral (Hyperliquid funding). gtKey links a stablecoin-yield card to its GeckoTerminal liquidity depth.",
+  "pools": [
+    {
+      "poolKey": "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501",
+      "name": "aave-v3 USDC",
+      "project": "aave-v3",
+      "symbol": "USDC",
+      "chain": "Ethereum",
+      "isStablecoin": true,
+      "vertical": "lending"
+    },
+    {
+      "poolKey": "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
+      "name": "aave-v3 USDT",
+      "project": "aave-v3",
+      "symbol": "USDT",
+      "chain": "Ethereum",
+      "isStablecoin": true,
+      "vertical": "lending"
+    },
+    {
+      "poolKey": "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac",
+      "name": "aave-v3 DAI",
+      "project": "aave-v3",
+      "symbol": "DAI",
+      "chain": "Ethereum",
+      "isStablecoin": true,
+      "vertical": "lending"
+    },
+    {
+      "poolKey": "defillama:pool:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb",
+      "name": "sparklend DAI",
+      "project": "sparklend",
+      "symbol": "DAI",
+      "chain": "Ethereum",
+      "isStablecoin": true,
+      "vertical": "lending"
+    },
+    {
+      "poolKey": "defillama:pool:4438dabc-7f0c-430b-8136-2722711ae663",
+      "name": "fluid-lending USDC",
+      "project": "fluid-lending",
+      "symbol": "USDC",
+      "chain": "Ethereum",
+      "isStablecoin": true,
+      "vertical": "lending"
+    },
+    {
+      "poolKey": "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487",
+      "name": "compound-v3 USDC",
+      "project": "compound-v3",
+      "symbol": "USDC",
+      "chain": "Ethereum",
+      "isStablecoin": true,
+      "vertical": "lending"
+    },
+    {
+      "poolKey": "defillama:pool:e91e23af-9099-45d9-8ba5-ea5b4638e453",
+      "name": "Curve USDC-RLUSD (stablecoin LP)",
+      "project": "curve-dex",
+      "symbol": "USDC",
+      "chain": "Ethereum",
+      "isStablecoin": true,
+      "kind": "yield",
+      "vertical": "stablecoin-yield",
+      "gtKey": "geckoterminal:pool:eth:0xd001ae433f254283fece51d4acce8c53263aa186"
+    },
+    {
+      "poolKey": "funding-basis:hyperliquid:BTC",
+      "name": "Hyperliquid BTC delta-neutral",
+      "symbol": "BTC",
+      "isStablecoin": false,
+      "kind": "delta-neutral",
+      "vertical": "delta-neutral"
+    },
+    {
+      "poolKey": "funding-basis:hyperliquid:ETH",
+      "name": "Hyperliquid ETH delta-neutral",
+      "symbol": "ETH",
+      "isStablecoin": false,
+      "kind": "delta-neutral",
+      "vertical": "delta-neutral"
+    }
+  ]
+}

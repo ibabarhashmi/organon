@@ -10,6 +10,7 @@ data/lending/
 
 # sprint planning blueprints — not part of the published product
 sprint/sprint-result/ORGANON_*Blueprint.md
+sprint/sprint-result/ORGANON-*Blueprint.md
 
 # data-plane captured snapshots — gitignored (A′#12); the nonce-anchored provenance.jsonl chain is the committed guarantee
 data/dataplane/snapshots/

@@ -1,0 +1,130 @@
+{
+  "protocol": "moat-cadence",
+  "at": "2026-07-08",
+  "rule": "appends ONLY REAL captures (content-addressed, hash-chained); a backfill/retro is refused by the store's physics; a capture that finds nothing records nothing",
+  "appendedThisRun": 18,
+  "appended": [
+    {
+      "key": "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501",
+      "contentSha": "a3995465ff7e65484a159530708acb9b307b5bf831f2eba61700d89c24298723",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:chart:aa70268e-4b52-42bf-a116-608b370f9501",
+      "contentSha": "160b5973a98854f3bc03c94ea61ea1b5437b5c474a934967d2a46d3c1f89d757",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
+      "contentSha": "b0bdda72167ed39bc31c6275bd0121fcd57eabf9b156301dff714fd44494793c",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:chart:f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
+      "contentSha": "9d753443ce2079ce77bbe2625109c781df1d4547572a74f7197bbd15f01aa380",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac",
+      "contentSha": "a04a83ff0c5d746e04b7d39cc91a627cb1144bedc84a27d6759c988d8b274e4b",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:chart:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac",
+      "contentSha": "f3d647d4fa6c5c4304621382be7ff056243b13a0943b31c4734fca68847114ee",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:pool:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb",
+      "contentSha": "8bed40bf467b9f4369b529f16c80fe7c48fb6f06142cd44a535e92a3a33688e8",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:chart:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb",
+      "contentSha": "cf9da6bbd4efe5ac8d688b0f9adb01684ff6b9c5a8b4bf18b0b6fc17be0deac7",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:pool:4438dabc-7f0c-430b-8136-2722711ae663",
+      "contentSha": "8d14d441c37a927c2ddf91f05f618f1ae391c27827c7ebc68c12730603ed9e4e",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:chart:4438dabc-7f0c-430b-8136-2722711ae663",
+      "contentSha": "8c80e593462976097056f889e5c58bf83b8d5332b1f5dece0896ad209d940352",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487",
+      "contentSha": "693563645e7cc6d134877fa3f1a743659eddf6b9bc6a63c143dfa22626790a04",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:chart:7da72d09-56ca-4ec5-a45f-59114353e487",
+      "contentSha": "ef58515ec61900c58014079fce78dac0e5515f08e9c26df6e10b46ccd4f8e9c4",
+      "chainPos": 2
+    },
+    {
+      "key": "defillama:pool:e91e23af-9099-45d9-8ba5-ea5b4638e453",
+      "contentSha": "0f42f34758a209caab55a520c3692f5d5d537256a956b1e3994cfa039bdf3d50",
+      "chainPos": 0
+    },
+    {
+      "key": "defillama:chart:e91e23af-9099-45d9-8ba5-ea5b4638e453",
+      "contentSha": "60bdc9f94696fd0918fc0f4a2dcfddda794ad3142a751eaec03fb9bbd833983d",
+      "chainPos": 0
+    },
+    {
+      "key": "defillama:peg:usd",
+      "contentSha": "cdf59a57f204fbf52199c3f5874e5c3a13fabf91a2ed93c830eb1701c65ffd16",
+      "chainPos": 2
+    },
+    {
+      "key": "geckoterminal:pool:eth:0xd001ae433f254283fece51d4acce8c53263aa186",
+      "contentSha": "9260f5fac3088bcbab18ee61ac0123621ef62289c26af6960f8b5c58004fc7ec",
+      "chainPos": 0
+    },
+    {
+      "key": "funding-basis:hyperliquid:BTC",
+      "contentSha": "24a07eed466783a4ae06414e9b7cf53e1b3bb4e36ba82f8c6a8571a612ddf6f2",
+      "chainPos": 3
+    },
+    {
+      "key": "funding-basis:hyperliquid:ETH",
+      "contentSha": "c7d10d802c4283e70511c090d51039a1be53e3c8b7c517f7039ad8102d19cc36",
+      "chainPos": 2
+    }
+  ],
+  "chain": {
+    "present": true,
+    "ok": true,
+    "totalStamps": 61,
+    "keys": {
+      "lending:aave-v3:USDT:ethereum": 2,
+      "lending:aave-v3:USDC:ethereum": 2,
+      "lending:fluid-lending:USDC:ethereum": 2,
+      "lending:fluid-lending:USDT:ethereum": 2,
+      "lending:sparklend:DAI:ethereum": 2,
+      "funding:binance:BTCUSDT": 1,
+      "funding:binance:ETHUSDT": 1,
+      "funding-basis:hyperliquid:BTC": 4,
+      "funding-basis:hyperliquid:ETH": 3,
+      "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501": 3,
+      "defillama:chart:aa70268e-4b52-42bf-a116-608b370f9501": 3,
+      "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a": 3,
+      "defillama:chart:f981a304-bb6c-45b8-b0c5-fd2f515ad23a": 3,
+      "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac": 3,
+      "defillama:chart:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac": 3,
+      "defillama:pool:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb": 3,
+      "defillama:chart:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb": 3,
+      "defillama:pool:4438dabc-7f0c-430b-8136-2722711ae663": 3,
+      "defillama:chart:4438dabc-7f0c-430b-8136-2722711ae663": 3,
+      "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487": 3,
+      "defillama:chart:7da72d09-56ca-4ec5-a45f-59114353e487": 3,
+      "defillama:peg:usd": 3,
+      "defillama:pool:e91e23af-9099-45d9-8ba5-ea5b4638e453": 1,
+      "defillama:chart:e91e23af-9099-45d9-8ba5-ea5b4638e453": 1,
+      "geckoterminal:pool:eth:0xd001ae433f254283fece51d4acce8c53263aa186": 1
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "protocol": "deepening-redteam",
+  "at": "2026-07-08",
+  "continues": "honesty-redteam (V15, S1-S10) — this is the Deepening sprint's first-class S1-S15 catalog",
+  "rule": "PART E (X-STRESS) — the BUILT system driven as intended (both personas, all three verticals), then broken across the full catalog; each RUN -> OBSERVE -> ROOT-CAUSE -> FIX-ON-GO -> RE-TEST -> LOG; converge only across two consecutive clean runs. S3 stale-cache + S7 SAMPLE-heavy each its own line; S11-S15 stress the new axes / verifiability / coverage.",
+  "personas": ["depositor (plain register only, all three verticals)", "quant (audits thresholds -> fact rows -> provenance + the counterparty caveat + not-applicable)", "skeptic (hunts SAMPLE-as-REAL, a hidden UNVERIFIED, an over-claimed screen, a moved verdict, an UNBACKED number)", "clumsy (click-storms, kills the network)"],
+  "catalog": [
+    { "id": "S1", "name": "dead endpoint", "outcome": "PASS — the provider degrades to SAMPLE; the served Shelf still renders (no crash/spin)" },
+    { "id": "S2", "name": "429 storm", "outcome": "PASS — the Shelf reads the record (no per-load provider fan-out); the cache absorbs a refresh storm to one call" },
+    { "id": "S3", "name": "stale cache (OWN LINE)", "outcome": "PASS — the shown asOf is the capture time, visibly stale, never 'now'" },
+    { "id": "S4", "name": "no-history pool", "outcome": "PASS — the history-dependent rows (TVL slope · funding band · counterparty age) render UNVERIFIED; point-in-time rows still compute; never a fabricated SOLID" },
+    { "id": "S5", "name": "mid-session depeg", "outcome": "PASS — the peg row fires -> AVOID; both registers agree" },
+    { "id": "S6", "name": "emissions-inflated trap", "outcome": "PASS — the split flags it temporary; the verdict is not SOLID (AVOID)" },
+    { "id": "S7", "name": "SAMPLE-heavy state (OWN LINE)", "outcome": "PASS — every SAMPLE verdict is UNVERIFIED; the W-E01 invariant HOLDS under the new axes (a SAMPLE liquidity/unlock/counterparty value never yields AVOID)" },
+    { "id": "S8", "name": "malformed / adversarial data", "outcome": "PASS — boundary-validated to missing/UNVERIFIED; never a crash or nonsense verdict (GeckoTerminal + DeFiLlama)" },
+    { "id": "S9", "name": "provenance tamper", "outcome": "PASS — a shown-but-unrecorded REAL Halts; a broken chain refused on construct" },
+    { "id": "S10", "name": "determinism / no-LLM-in-verdict", "outcome": "PASS — identical inputs -> byte-identical scorecard; a model-in-verdict rejected wholesale" },
+    { "id": "S11", "name": "thin-liquidity trap (NEW)", "outcome": "PASS — a deep-APY stablecoin-yield pool with dust liquidity -> liquidity FAIL -> AVOID; exit risk surfaced" },
+    { "id": "S12", "name": "imminent-unlock trap (NEW)", "outcome": "PASS — a 20%-of-mcap unlock in 30d -> unlock FAIL -> AVOID" },
+    { "id": "S13", "name": "dust/new-protocol trap (NEW)", "outcome": "PASS — a 5-day $200k pool -> counterparty flag (fail), honestly labeled coarse, never 'audited/safe'" },
+    { "id": "S14", "name": "verifiability (NEW)", "outcome": "FIXED (W-D01) — ./organon.sh verify regenerates the bundle + a tampered number changes the sha; the reproducibility hash was order-fragile, now order-independent" },
+    { "id": "S15", "name": "coverage/applicability (NEW)", "outcome": "PASS — an inapplicable axis (funding on lending; peg on non-stable; liquidity on a lending market) renders not-applicable, never a pass; all three verticals present" }
+  ],
+  "findings": [
+    {
+      "id": "W-D01",
+      "scenario": "S14 (verifiability)",
+      "observed": "in the full battery (but not in isolation), the evidence-bundle reproduce test failed: Evidence.canonicalSha(regenerate()) != the committed claims.bundleSha",
+      "rootCause": "canonicalSha stringified the frozen-paths LIST order-sensitively; under the full-battery module-load path Object.keys(FROZEN_PY) surfaced a different (alphabetical vs declaration) order, so a semantically-identical bundle hashed differently — the `verify` reproducibility was test-order-fragile. No frozen byte moved; the ordering was incidental.",
+      "fix": "FROZEN_PATHS is now SORTED (the path order is a SET, semantically irrelevant) so the canonical sha is order-INDEPENDENT and `verify` reproduces regardless of module-load ordering. The bundle sha re-pinned to the stable value; PINS_SHA unchanged (the bundle is a regenerable artifact, not a pin).",
+      "retest": "S14 green in the full battery + in isolation; two consecutive clean runs 511/0 identical; ./organon.sh verify GREEN"
+    },
+    {
+      "id": "W-D02",
+      "scenario": "E.0 depositor (all three verticals)",
+      "observed": "the counterparty screen leaked raw age/size numbers ($240.0M, 900d) into the PLAIN (Simple) register — a depositor reads words, not stats",
+      "rootCause": "counterpartyScreenRow embedded the numeric age/size in its plainReason; the plain register is meant to be qualitative (the numbers belong in the row VALUE / the Pro register — X-ONE)",
+      "fix": "the counterparty plain reasons are now QUALITATIVE ('mature and well-sized', 'young and dust-sized'); the age/size numbers live only in the row value (the Pro register). The caveat + no-over-claim invariants are unchanged.",
+      "retest": "E.0 depositor green (no raw decimals in any plain register); honesty_counterparty green (caveat + no over-claim hold)"
+    }
+  ],
+  "convergence": { "cleanRuns": 2, "battery": "511 pass / 0 fail across 91 files, identical both runs (deterministic)", "verdictDifferentialZero": true, "verifyGreen": true },
+  "parkedForward": [
+    "the opt-in frozen-adjudicator overfit stress test (the crown-jewel power-user funnel — the clear next sprint)",
+    "the DEEP Sentinel contract-level risk IR (this sprint's counterparty axis is a coarse structural screen, honestly labeled — deep contract analysis needs on-chain reads via the deferred Alchemy/The Graph path)",
+    "a KEYLESS unlock-schedule source (DeFiLlama unlocks went keyless->paid, HTTP 402, deviation D4 — the unlock axis is ARMED but renders UNVERIFIED/n-a on live keyless data; an on-chain vesting read would re-arm it)",
+    "the public strategy library + all execution rails (out of scope)",
+    "GeckoTerminal search-by-symbol as a generic join (this sprint uses ONE curated stablecoin-yield pairing, not a join engine — PART CLEAN)"
+  ]
+}

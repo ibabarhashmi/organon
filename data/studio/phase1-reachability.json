@@ -1,6 +1,0 @@
-{
-  "protocol": "reachability-summary",
-  "reached": "GET /health, GET /trust, GET /, POST /studio/submit_spec (401 no-token, 200 with-token) — all from a SEPARATE curl process",
-  "tenseNote": "REACHABLE earned (reached by a party other than the serving author-session, C-TENSE); INDEPENDENCE not (still author-operated). Public tunnel + genuine second party remain OPERATOR-gated (script/tunnel.sh makes the public URL one command).",
-  "detail": "see data/studio/reachability-evidence.json"
-}

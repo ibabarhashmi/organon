@@ -25,6 +25,18 @@ export namespace Hyperliquid {
     return rate * (24 / intervalHours) * 365
   }
 
+  // ── the funding-regime BAND (Honesty Layer Phase 5) — the delta-neutral axis renders a volatility BAND, never a hero
+  // APY (the research: funding swings ~ −6% .. +75%). [p10, p90] of the annualized funding over the captured window +
+  // the median. Needs a minimum window of points; below it the band is UNVERIFIED (a no-history strategy), never faked.
+  export const MIN_FUNDING_POINTS = 100
+  export interface FundingBand { p10: number; median: number; p90: number; n: number } // percent, annualized
+  export function fundingBand(points: HlPoint[]): FundingBand | null {
+    if (points.length < MIN_FUNDING_POINTS) return null
+    const ann = points.map((p) => annualize(p.rate) * 100).sort((a, b) => a - b)
+    const q = (x: number) => ann[Math.min(ann.length - 1, Math.floor(x * ann.length))]
+    return { p10: +q(0.1).toFixed(1), median: +q(0.5).toFixed(1), p90: +q(0.9).toFixed(1), n: ann.length }
+  }
+
   // reconstruct BYTE-FAITHFULLY from the raw API payload: parse {coin,fundingRate,premium,time} → {ts,rate,premium},
   // drop non-finite, sort by ts. No smoothing, no interpolation — the venue's rows, verbatim.
   export function reconstruct(raw: unknown[]): HlPoint[] {
