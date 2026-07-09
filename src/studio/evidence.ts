@@ -107,15 +107,43 @@ export namespace Evidence {
     for (const f of Object.keys(CAPTURE_BACKS)) { const h = captureSha(f); if (h) out.push({ capture: f, sha256: h, backs: CAPTURE_BACKS[f] }) }
     return out
   }
-  // verify the committed manifest against the committed captures — each entry's hash must reproduce its capture (S18)
+
+  // ── THE CONTRACT-REGISTRY DIGEST (Voice B1) — the committed REAL contract registry (data/honesty/contract-registry.json)
+  // lives OUTSIDE the deterministic bundle (determinism + frozen + differential): it is per-entry content-addressed
+  // (contentSha == sha256(facts), proven by contract_registry_real), which is WHY landing it did not move the bundle sha
+  // 9c1e7bd8…. To make a future registry change VISIBLE to `verify`, a whole-file DIGEST is committed into the manifest;
+  // `verify` recomputes it and diffs it — the next registry edit IS caught. Absent (a clone before any capture) → null. ──
+  export interface RegistryDigest { file: string; sha256: string; captures: number; realCount: number; inBundle: false }
+  export function contractRegistryDigest(): RegistryDigest | null {
+    const p = path.join(PKG_ROOT, "data", "honesty", "contract-registry.json")
+    if (!existsSync(p)) return null
+    const bytes = readFileSync(p, "utf8")
+    let captures = 0, realCount = 0
+    try {
+      const j = JSON.parse(bytes) as { captures?: Record<string, { provenance?: string }> }
+      const caps = j.captures ?? {}
+      captures = Object.keys(caps).length
+      realCount = Object.values(caps).filter((c) => c.provenance === "REAL").length
+    } catch { /* a malformed registry still hashes — the digest catches the change regardless */ }
+    return { file: "data/honesty/contract-registry.json", sha256: sha256(bytes), captures, realCount, inBundle: false }
+  }
+
+  // verify the committed manifest against the committed captures — each entry's hash must reproduce its capture (S18);
+  // AND the committed registry digest must recompute (B1 — a registry change without a manifest rebuild is caught).
   export function verifyCaptureManifest(): { ok: boolean; problems: string[] } {
-    const m = readArtifact<{ entries: CaptureEntry[] }>("capture-manifest.json")
+    const m = readArtifact<{ entries: CaptureEntry[]; registryDigest?: RegistryDigest }>("capture-manifest.json")
     if (!m) return { ok: false, problems: ["capture-manifest.json is ABSENT — the live-number manifest is missing (run: bun run script/build-evidence.ts)"] }
     const problems: string[] = []
     for (const e of m.entries) {
       const h = captureSha(e.capture)
       if (h === null) problems.push(`capture ${e.capture} is ABSENT but the manifest cites it (a cited live number lost its backing artifact)`)
       else if (h !== e.sha256) problems.push(`capture ${e.capture} content-hash ${h.slice(0, 12)}… ≠ manifest ${e.sha256.slice(0, 12)}… (a cited live number changed without a re-pin — X-LIVE)`)
+    }
+    // B1 — the contract-registry digest: recompute + diff (the registry is OUTSIDE the bundle; this is its integrity line)
+    if (m.registryDigest) {
+      const d = contractRegistryDigest()
+      if (d === null) problems.push(`the manifest cites a contract-registry digest but the registry is ABSENT (the REAL tiers lost their backing file — B1)`)
+      else if (d.sha256 !== m.registryDigest.sha256) problems.push(`contract-registry digest ${d.sha256.slice(0, 12)}… ≠ manifest ${m.registryDigest.sha256.slice(0, 12)}… (the REAL registry changed without a re-pin — B1)`)
     }
     return { ok: problems.length === 0, problems }
   }

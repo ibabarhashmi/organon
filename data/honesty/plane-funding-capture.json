@@ -1,0 +1,37 @@
+{
+  "protocol": "sovereign-plane-funding-capture",
+  "note": "the LIVE Hyperliquid public-info funding extraction — the PROVENANCE of a REAL, gap-honest, content-hashed longer funding series (X-PLANE a,c,e). GAP-HONEST (normalize never interpolates; assertNoFabrication passed over the REAL series); the SAME frozen decay/ICIR/MinTRL math read it (nothing tuned). The raw payload (the numbers) is GITIGNORED at data/dataplane/snapshots/plane/ (A′#12, E-PREVENT — commit the provenance chain, not the numbers); plane_funding re-derives the content-hash from the payload when present (dev) and verifies this manifest's metadata always (pristine-safe, like dataplane_store). The shared moat provenance chain is left byte-stable this run (the full DataPlane.capture persist is the standard operator step; D17).",
+  "venue": "hyperliquid",
+  "coin": "BTC",
+  "source": "hyperliquid:api/info/fundingHistory",
+  "tier": "T2-FORWARD",
+  "intervalHours": 1,
+  "rawPayloadRel": "data/dataplane/snapshots/plane/plane-funding-BTC.json",
+  "capturedAt": 1783624362331,
+  "windowDays": 30,
+  "nPoints": 500,
+  "gaps": 0,
+  "gapDetail": [],
+  "window": {
+    "start": 1781035200045,
+    "end": 1782831600058
+  },
+  "contentSha": "deb4164cf6f620b98d966e0087e32725a4896b32c46685f84f1d836062ffa3a1",
+  "seriesSha": "ac012d237a650663c2d2149519f692ddb0f86b14fba99d8f895911c3b685348e",
+  "downstream": {
+    "fundingBand": {
+      "p10": -3.7,
+      "median": 6,
+      "p90": 11,
+      "n": 500
+    },
+    "decayTier": "TRACEABLE",
+    "decayNObs": 500,
+    "icirTier": "CONSISTENT",
+    "icirNPeriods": 500,
+    "minTrlT": 500,
+    "minTrlSuppress": false,
+    "minTrlNeedMore": 0
+  },
+  "at": "2026-07-09"
+}

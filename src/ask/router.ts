@@ -13,12 +13,15 @@ import path from "node:path"
 import { PKG_ROOT } from "../organon/frozen"
 
 export namespace AskRouter {
-  export type IntentKind = "STRATEGY_LOOKUP" | "DATA_QUERY" | "VALIDATION" | "COMPARE" | "EXPLAIN" | "WORKFLOW" | "COVERAGE" | "UNSUPPORTED"
-  export const INTENTS: IntentKind[] = ["STRATEGY_LOOKUP", "DATA_QUERY", "VALIDATION", "COMPARE", "EXPLAIN", "WORKFLOW", "COVERAGE", "UNSUPPORTED"]
-  // the CLOSED map — every intent → exactly one deterministic engine tool (mirrors the pinned crownjewel-pins.ask.intentToTool)
+  // the CLOSED enum — widened 8 → 13 (Voice X-VOICE d): the 8 carried + OUTLOOK · SCENARIO · ADVICE_BOUNDARY · GENERAL ·
+  // RECORD_HISTORY. COMPARE is upgraded in-place to n-strategies (not a new member). The enum stays CLOSED — a 14th is a Halt.
+  export type IntentKind = "STRATEGY_LOOKUP" | "DATA_QUERY" | "VALIDATION" | "COMPARE" | "EXPLAIN" | "WORKFLOW" | "COVERAGE" | "UNSUPPORTED" | "OUTLOOK" | "SCENARIO" | "ADVICE_BOUNDARY" | "GENERAL" | "RECORD_HISTORY"
+  export const INTENTS: IntentKind[] = ["STRATEGY_LOOKUP", "DATA_QUERY", "VALIDATION", "COMPARE", "EXPLAIN", "WORKFLOW", "COVERAGE", "UNSUPPORTED", "OUTLOOK", "SCENARIO", "ADVICE_BOUNDARY", "GENERAL", "RECORD_HISTORY"]
+  // the CLOSED map — every intent → exactly one deterministic engine tool (mirrors the pinned voice-pins.intents.intentToTool)
   export const INTENT_TOOL: Record<IntentKind, string> = {
     STRATEGY_LOOKUP: "scorecardFor", DATA_QUERY: "metric", VALIDATION: "stampFor", COMPARE: "compare",
     EXPLAIN: "glossary", WORKFLOW: "workflow", COVERAGE: "coverageMatrix", UNSUPPORTED: "fallback",
+    OUTLOOK: "outlook", SCENARIO: "scenario", ADVICE_BOUNDARY: "adviceBoundary", GENERAL: "general", RECORD_HISTORY: "recordHistory",
   }
 
   export interface Intent {
@@ -29,6 +32,7 @@ export namespace AskRouter {
     poolTerm?: string // the raw strategy fragment (carried when unresolved → the tool answers "not found")
     poolKeyB?: string // COMPARE — the second resolved poolKey
     poolTermB?: string
+    entries?: { poolKey?: string; term: string }[] // COMPARE (n-strategies) — the full resolved list (poolKey/poolKeyB mirror [0]/[1] for back-compat)
     field?: string // DATA_QUERY — the resolved axis/metric ("tvl-trend" · "funding-regime" · "peg" · "liquidity-depth" · "yield-reality" · "unlock-overhang" · "counterparty")
     term?: string // EXPLAIN — the glossary term
   }
@@ -100,20 +104,60 @@ export namespace AskRouter {
     if (/how (do|to|can|should) (i|you)|how to |walk me through|get started|getting started|where do i start|what.?s the (process|workflow)|steps to/i.test(q))
       return withCtx({ kind: "WORKFLOW" })
 
-    // COMPARE — "X vs Y", "compare X and Y", "X versus Y", "X or Y" (a comparison of two strategies)
-    const cmp = q.match(/(.+?)\s+(?:vs\.?|versus|compared? (?:to|with)|against)\s+(.+)/i)
-    if (cmp || /\bcompare\b/i.test(q)) {
-      let a = "", b = ""
-      if (cmp) { a = cmp[1]; b = cmp[2] }
-      else { const parts = q.replace(/\bcompare\b/i, "").split(/\s+and\s+|\s+vs\.?\s+|,/).map((s) => s.trim()).filter(Boolean); a = parts[0] ?? ""; b = parts[1] ?? "" }
-      const ra = resolvePool(fragmentOf(a)), rb = resolvePool(fragmentOf(b))
-      if ((ra.poolKey || ra.term) && (rb.poolKey || rb.term)) return withCtx({ kind: "COMPARE", poolKey: ra.poolKey, poolTerm: ra.poolKey ? undefined : ra.term, poolKeyB: rb.poolKey, poolTermB: rb.poolKey ? undefined : rb.term })
+    // COMPARE — "X vs Y", "compare X, Y and Z", "X versus Y" (a comparison of N ≥ 2 strategies; Voice: n-strategies upgrade).
+    // Split on the comparison connectives (vs / versus / compared to / against / and / comma) → resolve each fragment.
+    if (/\bcompare\b|\s+vs\.?\s+|\s+versus\s+|compared?\s+(?:to|with)|\s+against\s+/i.test(q)) {
+      const raw = q.replace(/\bcompare\b/i, " ")
+      const parts = raw.split(/\s+vs\.?\s+|\s+versus\s+|compared?\s+(?:to|with)|\s+against\s+|\s+and\s+|,/i).map((s) => s.trim()).filter(Boolean)
+      const resolved = parts.map((p) => resolvePool(fragmentOf(p))).filter((r) => r.poolKey || r.term)
+      if (resolved.length >= 2) {
+        const entries = resolved.map((r) => ({ poolKey: r.poolKey, term: r.term }))
+        return withCtx({ kind: "COMPARE", entries, poolKey: entries[0].poolKey, poolTerm: entries[0].poolKey ? undefined : entries[0].term, poolKeyB: entries[1].poolKey, poolTermB: entries[1].poolKey ? undefined : entries[1].term })
+      }
     }
 
     // VALIDATION — "run the stamp on X", "overfit test X", "validate X", "go/no-go on X"
     if (/\bstamp\b|overfit|\bvalidate\b|go\/no-go|go or no-go|stress[- ]test|does.*survive/i.test(q)) {
       const r = resolvePool(fragmentOf(q))
       return withCtx({ kind: "VALIDATION", poolKey: r.poolKey, poolTerm: r.poolKey ? undefined : (r.term || undefined) })
+    }
+
+    // ── the VOICE intents (widened 8 → 13; X-VOICE d) — placed BEFORE STRATEGY_LOOKUP so advice-seeking / outlook /
+    // scenario / general phrasings route to their own intent instead of the generic lookup. Each resolves its pool (or a
+    // context follow-up); an unresolved fragment is carried verbatim (the tool answers "name a strategy"), never guessed. ──
+
+    // ADVICE_BOUNDARY (X-ADVICE, law) — "should I invest in X?", "is it worth buying?", "good investment?" → the researcher-
+    // not-advisor resolution (facts + framing + boundary), NEVER a recommendation. Must precede STRATEGY_LOOKUP's "should i".
+    if (/should (i|we|you)\b[^?]*\b(invest|buy|sell|put|deposit|allocate|ape|get in|go in|stake|park|hold)|is it worth (invest|buy|it|the|putting|depositing)|worth (invest|buy|it|a (buy|position|punt))|good (investment|buy|idea)|shall i (invest|buy)|should i get in|do you recommend|would you (recommend|invest|buy)/i.test(q)) {
+      const r = resolvePool(fragmentOf(q))
+      return withCtx({ kind: "ADVICE_BOUNDARY", poolKey: r.poolKey, poolTerm: r.poolKey ? undefined : (r.term || undefined) })
+    }
+
+    // OUTLOOK — "what does next month look like?", "will it last?", "outlook", "going forward" → the persistence EVIDENCE,
+    // NEVER a forecast (the engine is not a forecaster — X-VOICE f).
+    if (/outlook|next (month|week|quarter|year|few)|going forward|what.?s next|what happens next|\bwill\b[^?]{0,40}\b(last|hold up|hold|continue|persist|keep (going|paying|up)|survive|sustain)\b|hold up over time|in the (future|coming)|\bforecast\b|prospects|down the (road|line)|sustainable|keep (paying|going)/i.test(q)) {
+      const r = resolvePool(fragmentOf(q))
+      return withCtx({ kind: "OUTLOOK", poolKey: r.poolKey, poolTerm: r.poolKey ? undefined : (r.term || undefined) })
+    }
+
+    // SCENARIO / WHAT-IF — "what if funding flips?", "what happens if the peg breaks?", "in a downturn" → labeled conditionals
+    // over engine facts, NEVER an invented number.
+    if (/what if|what happens if|what would happen|\bsuppose\b|\bscenario\b|in a (downturn|crash|bear|bull|selloff|sell-off)|stress (case|scenario)|if .{2,40}\b(drops?|falls?|flips?|rises?|crashes?|depegs?|doubles?|halves?|spikes?|dries? up|goes? (negative|to zero))/i.test(q)) {
+      const r = resolvePool(fragmentOf(q))
+      return withCtx({ kind: "SCENARIO", poolKey: r.poolKey, poolTerm: r.poolKey ? undefined : (r.term || undefined) })
+    }
+
+    // RECORD_HISTORY — "provenance of X", "capture history", "when was X recorded", "show the moat" → the timestamped record.
+    if (/provenance|capture history|record(ed)? history|when was .* (recorded|captured)|show (me )?the moat|capture(d)? when|recorded captures?|history of captures/i.test(q)) {
+      const r = resolvePool(fragmentOf(q))
+      return withCtx({ kind: "RECORD_HISTORY", poolKey: r.poolKey, poolTerm: r.poolKey ? undefined : (r.term || undefined) })
+    }
+
+    // GENERAL — "tell me everything about X", "overview of X", "the full picture", "what's the deal with X" → the full
+    // scorecard fact set for the reasoning layer to work over (can't-ground → BOUNDARY). An explicit "give me the whole thing".
+    if (/tell me everything|everything about|\boverview\b|full (picture|scorecard|rundown|breakdown|story)|the whole (thing|scorecard|picture|story)|give me the rundown|what.?s the deal with|break (it|this|that) down|complete picture|the full (deal|scoop)/i.test(q)) {
+      const r = resolvePool(fragmentOf(q))
+      return withCtx({ kind: "GENERAL", poolKey: r.poolKey, poolTerm: r.poolKey ? undefined : (r.term || undefined) })
     }
 
     // EXPLAIN — "what is/does X mean", "explain X", "what's a peg" — a definitional question about a TERM (not a pool)

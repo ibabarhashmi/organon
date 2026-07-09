@@ -1,0 +1,20 @@
+{
+  "protocol": "sovereign-plane-rpcstate-probe",
+  "note": "a LIVE current-state read over the PINNED free public RPC rotation (X-PLANE a,b). The ACTUAL RPC that answered is recorded (source-honest); a dead provider rotates honestly. A freshness signal stamped at read time — never a history claim, never a fabricated state. Committed as evidence that RPC-STATE is REAL, not a mock (the block number is a point-in-time probe).",
+  "method": "eth_blockNumber",
+  "source": "https://ethereum.publicnode.com",
+  "tried": [
+    "https://eth.llamarpc.com",
+    "https://rpc.ankr.com/eth",
+    "https://ethereum.publicnode.com"
+  ],
+  "rotation": [
+    "https://eth.llamarpc.com",
+    "https://rpc.ankr.com/eth",
+    "https://ethereum.publicnode.com",
+    "https://1rpc.io/eth"
+  ],
+  "resultHex": "0x1850d5a",
+  "blockNumber": 25496922,
+  "at": "2026-07-09"
+}

@@ -1,20 +1,20 @@
 {
   "protocol": "honesty-capture-manifest",
-  "note": "every cited LIVE number resolves to a committed content-hash; `./organon.sh verify` recomputes each capture's hash and diffs it (S18). A live number that changed without a re-pin fails. The re-fetch is network-gated; the committed capture + hash is the durable record. LIVE-VALUE CEILING (V6): the HASH reproduces, not the underlying live value — the value is re-capturable, not frozen.",
+  "note": "every cited LIVE number resolves to a committed content-hash; `./organon.sh verify` recomputes each capture's hash and diffs it (S18). A live number that changed without a re-pin fails. The re-fetch is network-gated; the committed capture + hash is the durable record. LIVE-VALUE CEILING (V6): the HASH reproduces, not the underlying live value — the value is re-capturable, not frozen. B1: the contract-registry (data/honesty/contract-registry.json) is OUTSIDE the deterministic bundle (9c1e7bd8…) — its integrity is the per-entry contentSha; its whole-file digest below makes a future registry change visible to verify.",
   "entries": [
     {
       "capture": "vlive-defillama.json",
-      "sha256": "c5f158ccb2acdd8e954cafc5f408f9b41998b00d2a7a6728d9f8befdbd25936d",
+      "sha256": "ae9a35d735a20d886f5257a05e3e3283d9ceb38cd772ae560ce87862f2884ee0",
       "backs": "the DeFiLlama /pools keyless HTTP-200 live number (poolCount)"
     },
     {
       "capture": "vlive-geckoterminal.json",
-      "sha256": "1b27c458119b76618fd5258bcacb0ffd2927669f39bce8d383927a9c1f08ba91",
+      "sha256": "349618d532c49252d7cb43a90d9ce2b1e0567d3a878be3ab49f06c6fe1ec014b",
       "backs": "the GeckoTerminal reserve_in_usd keyless HTTP-200 live number (deepest-pool reserve)"
     },
     {
       "capture": "vlive-hyperliquid.json",
-      "sha256": "a4a60514bb5a309efbb88f4638f520d7c20b378866b20dc6cca50377e4c2c25e",
+      "sha256": "cf9eb0608b2f98426988c09a519dbd3ff64df79fe46520017be3707c97529718",
       "backs": "the Hyperliquid funding keyless HTTP-200 live number (points)"
     },
     {
@@ -33,5 +33,12 @@
       "backs": "the LIVE Groq round-trip — a real-model grounded PASS + a forced-fabrication REJECT (V2/S24; REDACTED, NO key committed — X-BYOK key-safety)"
     }
   ],
+  "registryDigest": {
+    "file": "data/honesty/contract-registry.json",
+    "sha256": "28abaa4622588d8f5283777b8a6bce6eb6fa28751d793d94f37240e44d5903dc",
+    "captures": 4,
+    "realCount": 4,
+    "inBundle": false
+  },
   "at": 1783468800000
 }

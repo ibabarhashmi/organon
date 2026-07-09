@@ -30,6 +30,7 @@ import { DataPlane } from "../dataplane/store"
 import { Explain } from "../analytics/explain"
 import { Decay } from "./decay"
 import { Icir } from "./icir"
+import { MinTRL } from "./mintrl"
 
 export namespace Stamp {
   export const MIN_OBSERVATIONS = 60 // < 60 recorded return points → INSUFFICIENT (cannot stress-test a short series)
@@ -52,6 +53,9 @@ export namespace Stamp {
     decay: Decay.DecayResult | null // the signal-shelf-life sub-score (serial persistence of the recorded return signal)
     icir: Icir.IcirResult | null // the within-strategy temporal-consistency sub-score (mean/std of the recorded periodic edges)
     cleanGo: boolean // a GO that ALSO clears BOTH depth hurdles (a traceable half-life AND acceptable ICIR consistency) — else fenced
+    // ── the MinTRL rider (Voice; X-DECAY/X-ICIR extended). Computed FIRST; if T < MinTRL the DSR point estimate is SUPPRESSED
+    // (the verdict becomes INSUFFICIENT + "need N more observations"). null when the Stamp is UNAVAILABLE (no scored series). ──
+    minTRL: MinTRL.MinTrlResult | null
   }
 
   // map the frozen attest engine's verdict → the Stamp's 3-name enum, HONESTLY (never a factual mis-statement): a GO or a
@@ -81,13 +85,21 @@ export namespace Stamp {
     const nObs = returns.length
     const provenanceRef = opts?.provenanceRef ?? null
     if (nObs < MIN_OBSERVATIONS)
-      return { available: nObs > 0, verdict: "INSUFFICIENT", terminalState: "INSUFFICIENT", dsr: null, familyN: 1, nObs, reproHash: null, facts: null, decay: null, icir: null, cleanGo: false, reason: `INSUFFICIENT — not enough recorded history to stress-test (${nObs} observation${nObs === 1 ? "" : "s"}, below the ${MIN_OBSERVATIONS}-point floor). The overfit Stamp can't tell skill from chance on a series this short — an honest forward clock, never a fabricated GO. This is a statistics verdict on the track record, orthogonal to the Reality Check.` }
+      return { available: nObs > 0, verdict: "INSUFFICIENT", terminalState: "INSUFFICIENT", dsr: null, familyN: 1, nObs, reproHash: null, facts: null, decay: null, icir: null, cleanGo: false, minTRL: null, reason: `INSUFFICIENT — not enough recorded history to stress-test (${nObs} observation${nObs === 1 ? "" : "s"}, below the ${MIN_OBSERVATIONS}-point floor). The overfit Stamp can't tell skill from chance on a series this short — an honest forward clock, never a fabricated GO. This is a statistics verdict on the track record, orthogonal to the Reality Check.` }
     // a degenerate (flat / no measurable variation) series has no signal to stress-test → INSUFFICIENT (never a spurious
     // GO/NO-GO on a series whose std is negligible vs its mean — a relative guard, robust to floating-point mean rounding)
     const mean = returns.reduce((a, b) => a + b, 0) / nObs
     const std = Math.sqrt(returns.reduce((a, b) => a + (b - mean) ** 2, 0) / nObs)
     if (!(std > Math.abs(mean) * 1e-6 + 1e-15))
-      return { available: true, verdict: "INSUFFICIENT", terminalState: "INSUFFICIENT", dsr: null, familyN: 1, nObs, reproHash: null, facts: null, decay: null, icir: null, cleanGo: false, reason: `INSUFFICIENT — the recorded yield has no measurable day-to-day variation to stress-test. The overfit Stamp renders INSUFFICIENT (never a fabricated GO on a degenerate series).` }
+      return { available: true, verdict: "INSUFFICIENT", terminalState: "INSUFFICIENT", dsr: null, familyN: 1, nObs, reproHash: null, facts: null, decay: null, icir: null, cleanGo: false, minTRL: null, reason: `INSUFFICIENT — the recorded yield has no measurable day-to-day variation to stress-test. The overfit Stamp renders INSUFFICIENT (never a fabricated GO on a degenerate series).` }
+    // ── THE MinTRL RIDER (Voice; X-DECAY/X-ICIR extended) — computed FIRST. If the recorded track record is SHORTER than the
+    // Minimum Track Record Length its OWN Sharpe requires (moment-aware), the deflated-Sharpe point estimate is SUPPRESSED
+    // ENTIRELY (not caveated) → honest INSUFFICIENT + "need N more observations". No verdict-space change (INSUFFICIENT is
+    // already in the space). The frozen adjudicator is NOT invoked (the point estimate is never computed for display). Off
+    // the mass path; a genuine low-Sharpe reading on ample data (MinTRL undefined) is NOT suppressed — it proceeds to NO-GO. ──
+    const mtrl = MinTRL.minTRL(returns)
+    if (mtrl.suppress)
+      return { available: true, verdict: "INSUFFICIENT", terminalState: "INSUFFICIENT", dsr: null, familyN: 1, nObs, reproHash: null, facts: null, decay: null, icir: null, cleanGo: false, minTRL: mtrl, reason: `INSUFFICIENT — ${mtrl.reason} An honest not-yet, never a fabricated GO. This is a statistics verdict on the track record, orthogonal to the Reality Check.` }
     // register-then-invoke through the SAME frozen path outsiders use — the Stamp adds nothing to the verdict (X-KEEP)
     const store = new Ledger.Store()
     const spec = { family: "lending-carry", policy: "static", rebalance: { trigger: "monthly" }, markets: [{ key: opts?.label ?? "stamp", weight: 1 }] }
@@ -124,19 +136,21 @@ export namespace Stamp {
     const base =
       verdict === "GO"
         ? terminalState === "CONDITIONAL"
-          ? `GO (conditional) — the recorded track record SURVIVES the anti-PBO deflation (deflated significance ${dsr?.toFixed(3)} ≥ 0.95 over ${familyN} counted attempt${familyN === 1 ? "" : "s"}), but as a POST-HOC read it was not pre-registered, so a clean GO is fenced off — it is conditional on independent data verification. Survives the statistics; NOT a safety verdict, and NOT the scorecard's SOLID.`
+          ? `GO (conditional) — the recorded track record SURVIVES the anti-PBO deflation (deflated significance ${dsr?.toFixed(3)} ≥ 0.95 over ${familyN} counted attempt${familyN === 1 ? "" : "s"}), but as a POST-HOC read it was not pre-registered — a pre-registration fence, ORTHOGONAL to the depth hurdles below: the GO is conditional on independent data verification. Survives the statistics; NOT a safety verdict, and NOT the scorecard's SOLID.`
           : `GO — the recorded track record SURVIVES the anti-PBO deflation (deflated significance ${dsr?.toFixed(3)} ≥ 0.95 over ${familyN} counted attempt${familyN === 1 ? "" : "s"}). A GO is a floor on doubt about the track record's statistical robustness — NOT a safety verdict, and NOT the scorecard's SOLID.`
         : verdict === "NO-GO"
           ? `NO-GO — the recorded track record does NOT survive the anti-PBO deflation (its evidence is weaker than the bar once the search is charged). A statistics verdict on the track record, orthogonal to the scorecard.`
           : `INSUFFICIENT — the engine can't yet distinguish this track record's skill from chance (a forward clock, not a failure). Honest on short-history DeFi, never a fabricated GO.`
     // fold BOTH depth sub-scores into the GO/NO-GO reason (basis detail, beside the deflated-Sharpe). A clean GO needs a
     // traceable half-life AND steady consistency; any unmet hurdle FENCES the GO (the verdict word stands, the caveat disclosed).
+    // W-P02/P4 — the DEPTH hurdle (this cleanGo flag) is ORTHOGONAL to the CONDITIONAL GO's post-hoc pre-registration fence
+    // above: a CONDITIONAL GO can be depth-clean (both hurdles cleared) yet still post-hoc-fenced — the two are never conflated.
     const reason = verdict === "GO"
       ? `${base} Track-record depth (opt-in): ${decayDesc}; ${icirDesc}. ${cleanGo ? "Both depth hurdles for a clean GO — a traceable half-life and steady consistency — are cleared." : `A clean GO also needs ${unmet.join(" and ")} — ${unmet.length > 1 ? "these hurdles are" : "that hurdle is"} NOT cleared; the GO stands on the deflation alone, the caveat disclosed.`}`
       : verdict === "NO-GO"
         ? `${base} Track-record depth (opt-in): ${decayDesc}; ${icirDesc}.`
         : base
-    return { available: true, verdict, terminalState, dsr, familyN, nObs, reproHash: facts.reproHash || null, reason, facts, decay, icir: ic, cleanGo }
+    return { available: true, verdict, terminalState, dsr, familyN, nObs, reproHash: facts.reproHash || null, reason, facts, decay, icir: ic, cleanGo, minTRL: mtrl }
   }
 
   // resolve a pool's recorded chart series → the Stamp. Absent / SAMPLE (a fresh clone) → UNAVAILABLE — the Stamp is
@@ -147,7 +161,7 @@ export namespace Stamp {
     const provenanceRef = s?.provenance?.contentSha ?? null
     const returns = poolReturnsFromSeries(s)
     if (!returns.length)
-      return { available: false, verdict: "UNAVAILABLE", terminalState: "UNAVAILABLE", dsr: null, familyN: 0, nObs: 0, reproHash: null, facts: null, decay: null, icir: null, cleanGo: false, reason: `The Stamp is unavailable — no recorded return history for this pool to stress-test (a fresh clone, a SAMPLE pool, or an unrecorded pool). Re-capture keyless to enable the overfit Stamp. It is opt-in and off the mass path; the Reality Check verdict is unaffected.` }
+      return { available: false, verdict: "UNAVAILABLE", terminalState: "UNAVAILABLE", dsr: null, familyN: 0, nObs: 0, reproHash: null, facts: null, decay: null, icir: null, cleanGo: false, minTRL: null, reason: `The Stamp is unavailable — no recorded return history for this pool to stress-test (a fresh clone, a SAMPLE pool, or an unrecorded pool). Re-capture keyless to enable the overfit Stamp. It is opt-in and off the mass path; the Reality Check verdict is unaffected.` }
     return stampFromReturns(returns, { label: poolKey.slice(0, 24), provenanceRef })
   }
 }

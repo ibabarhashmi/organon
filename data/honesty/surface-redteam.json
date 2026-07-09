@@ -1,0 +1,287 @@
+{
+  "protocol": "surface-redteam",
+  "sprint": "THE SURFACE SPRINT",
+  "at": "2026-07-09",
+  "catalog": [
+    {
+      "id": "S1",
+      "name": "dead endpoint",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S2",
+      "name": "429 storm",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S3",
+      "name": "stale cache",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S4",
+      "name": "no-history pool",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S5",
+      "name": "mid-session depeg",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S6",
+      "name": "emissions-inflated trap",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S7",
+      "name": "SAMPLE-heavy state",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S8",
+      "name": "malformed / adversarial data",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S9",
+      "name": "provenance tamper",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S10",
+      "name": "determinism / no-LLM-in-verdict",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S11",
+      "name": "thin-liquidity trap",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S12",
+      "name": "imminent-unlock trap",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S13",
+      "name": "dust/new/STACKED-dependency trap",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S14",
+      "name": "verifiability",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S15",
+      "name": "coverage/applicability",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S16",
+      "name": "stamp isolation",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S17",
+      "name": "stamp honesty",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S18",
+      "name": "live-number provenance",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S19",
+      "name": "ask groundedness",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S20",
+      "name": "provider/BYOK/key-safety",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S21",
+      "name": "ask determinism/injection",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S22",
+      "name": "decay-gate honesty (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S23",
+      "name": "ICIR determinism/scope (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S24",
+      "name": "live-AI grounding (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S25",
+      "name": "contract-analysis honesty (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S26",
+      "name": "leak-wall / coupling-severance (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S27",
+      "name": "Foundry-absent degradation (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S28",
+      "name": "the REAL/SAMPLE wall (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S29",
+      "name": "capture-determinism / re-capture-hash (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S30",
+      "name": "ingestion-scope / keyless-no-scrape (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S31",
+      "name": "persona-injection resistance (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S32",
+      "name": "the advice wall (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S33",
+      "name": "numeric-smuggling / verdict-contradiction / comparison-direction / severity (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S34",
+      "name": "cross-provider degradation + deterministic parity (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S35",
+      "name": "calibration honesty (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S36",
+      "name": "honesty-preserving restyle (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S37",
+      "name": "a11y + honest degraded states (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    },
+    {
+      "id": "S38",
+      "name": "the impeccable detector wall (NEW)",
+      "outcome": "PASS — driven as intended (depositor + quant + skeptic + clumsy) and adversarially; the wall/gate held"
+    }
+  ],
+  "adversarialProofs": [
+    {
+      "id": "S38-bites",
+      "scenario": "seed a side-tab accent border + a purple gradient into the built stylesheet",
+      "observed": "the deterministic detector fires (finding: side-tab) → surface_detector fails",
+      "conclusion": "S38 is a real wall — a re-introduced AI-slop anti-pattern is caught, not waved through"
+    },
+    {
+      "id": "S36-bites",
+      "scenario": "silently move a rendered number in the Reality Check (a depeg threshold 0.005 → 0.009)",
+      "observed": "the content signature sha changes (6b69b40a… → 16fbddf2…) → surface_content_identity fails; the CLEAN render matches the golden",
+      "conclusion": "S36 is a real wall — a moved fact under a restyle breaks the content-identity wall (it is not vacuous)"
+    },
+    {
+      "id": "S37-greyscale",
+      "scenario": "strip color (colorblind / greyscale) from the surface",
+      "observed": "every verdict/Stamp keeps a distinct glyph, REAL vs SAMPLE keep solid-vs-dashed borders, the tiers keep weight/eyebrow/dashed cues",
+      "conclusion": "S37 holds — no distinction is color-alone"
+    },
+    {
+      "id": "dep-wall",
+      "scenario": "attempt to make impeccable / a CSS framework a runtime dependency",
+      "observed": "surface_system + surface_detector assert deps === {hono, zod}; the pristine clone is green with impeccable ABSENT",
+      "conclusion": "X-SURFACE(b) holds — the design tool is dev-time-only; only the OUTPUT (public/organon.css) ships"
+    }
+  ],
+  "findings": [
+    {
+      "id": "W-SU01",
+      "scenario": "the stamp-isolation wall (S16) after the single shared stylesheet — the mass Shelf render must show ZERO Stamp verdicts (GO/NO-GO/INSUFFICIENT).",
+      "observed": "S16 failed: the shelf HTML now matched /\\b(GO|INSUFFICIENT)\\b/ — the inlined single stylesheet DEFINES every pill class, including the stamp classes (.pill.GO/.pill.INSUFFICIENT/…), so the stamp WORDS appear in the <style> block (never shown to a user).",
+      "rootCause": "the token-built stylesheet is ONE shared artifact inlined on every page (X-SURFACE a,b); it registers all pill classes. S16 grepped the WHOLE HTML string, including the CSS class registry — but the isolation is about the rendered CONTENT the user SEES, not the stylesheet.",
+      "fix": "S16 strips the <style> block before the stamp-word check (mirroring contentSig — the honesty test looks at the visible content, not the shared class registry). The isolation intent is preserved exactly; the scorecard still imports no Stamp; the two verdict spaces stay disjoint — the wall is intent-preserved, not weakened.",
+      "retest": "crownjewel_redteam S16 green; the shelf render shows zero Stamp verdicts in its CONTENT; the full battery green."
+    },
+    {
+      "id": "W-SU02",
+      "scenario": "the blueprint names the Voice-findings closure test 'findings_closed_v.test.ts' (Phase 1).",
+      "observed": "that file already EXISTS — it is Build-Provenance's V1–V4 (contract-truth findings). Writing to it would have overwritten a shipped test (a numbering collision: two sprints both used 'V1–Vn').",
+      "rootCause": "a blueprint naming collision (like the V1 caught-arithmetic: the same label reused across sprints).",
+      "fix": "the Voice-findings (V1–V5) closure is 'findings_closed_voice.test.ts' — a caught naming correction, recorded in surface-pins.deviations.namingCorrection + the Phase 1 marker, never a silent overwrite.",
+      "retest": "findings_closed_v (Build-Provenance) + findings_closed_voice (this sprint) both green."
+    }
+  ],
+  "reasonedExceptions": [
+    {
+      "rule": "em-dash-overuse",
+      "reason": "ORGΛNON's honest prose + engine-produced data labels use the em-dash as a pinned house style (S36-frozen content); softening would change a rendered label. Per Attack-11 the constitution outranks the detector — committed in .impeccable/config.json with this reason, never silently.",
+      "authority": "X-SURFACE(e) + Attack-11"
+    }
+  ],
+  "convergence": {
+    "cleanRuns": 2,
+    "battery": "807 pass / 2 skip / 0 fail across 127 files / 809 tests",
+    "skipSet": [
+      "ask_live",
+      "eval_live"
+    ],
+    "skipSetPristine": [
+      "ask_live",
+      "eval_live",
+      "surface_detector"
+    ],
+    "reconciliationLine": "703 → 768 → 807 (Voice +65 pass/+9 files → Surface +39 pass/+6 files: the honesty_pins SURFACE section +9 · findings_closed_voice · surface_system · surface_content_identity · surface_a11y · surface_detector · surface_redteam); the named skip set {ask_live, eval_live} on the dev battery, +surface_detector on a pristine clone (the detector is dev-harness-only)",
+    "verdictDifferentialZero": true,
+    "differential": {
+      "lendingFpSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+      "fundingReproHash": "0a63151b0c375d32822ace78a13ce158ef7dbef560f5f4cfdc8368ab54e2f80f"
+    },
+    "verifyGreen": true,
+    "pristineGreen": true,
+    "frozenSevenClean": true,
+    "pinsSha": "b01799989edd2f1f15a9003035ca60cf0ed75457bfa1e2a268c3c8f231cf750f"
+  },
+  "probe": {
+    "status": "ARMED + BUILT-BUT-UNPROVEN",
+    "nextSprintRunsIt": true,
+    "unforgivablyOverdue": true,
+    "firstLine": "The tool now has a VOICE and a FACE — the pinned persona + typed contract, and a pinned accessible honesty-preserving design system. The demand probe is UNFORGIVABLY OVERDUE: this sprint's polish existed precisely to make it worth running on real users, and the NEXT sprint MUST run it. Deferring again is indefensible."
+  },
+  "postSprint": "THE SURFACE is live + honesty-preserving: a PINNED ORGΛNON design system (design-tokens.json + DESIGN.md, hash-locked) authored with impeccable as a DEV-TIME-ONLY seam (its 45-rule detector wired as the S38 wall, the interactive/browser flows not run — the objective detector is the gate, D15); the trust tiers given screenshot-durable visual semantics (the RENDERED ANALYSIS label — V4; REAL/SAMPLE + verdict/Stamp words each a color PLUS a non-color cue); the restyle content byte-identical per screen (S36); WCAG-AA computed from the token file + the degraded states designed as intentional (S37); zero runtime dependency added (deps still hono+zod). Every Voice finding V1–V5 closed.",
+  "parkedForward": [
+    "the LLM strategy-proposer / iterate-to-generate loop (a different product)",
+    "the implementation-level contract analysis; the four un-ported LLM-free tools; the Sentinel fuzzer/RAG",
+    "the semgrep / Sigstore / apyBase research queue",
+    "LIVE per-provider eval sampling (V3 — the other four providers are covered by shared-gate architecture; live sampling is a next-sprint item)",
+    "the calibration RESOLUTION + SCORING",
+    "the public library, execution rails",
+    "a marketing site / a logo-redesign spree / a motion showcase / a component framework / impeccable 'overdrive' — the hard scope fence (a 'while we're here' is a cut)"
+  ]
+}

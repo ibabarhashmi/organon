@@ -11,6 +11,7 @@
  * The thresholds are the pinned, hash-locked constants (data/honesty/phase0-pins.json). A change is a conscious re-pin.
  */
 import { Explain } from "./explain"
+import { contractSubAxis, type ContractSubAxis } from "../contract/subaxis"
 
 export namespace Scorecard {
   // `not-applicable` is a DISTINCT honest state (Deepening; X-COVER) — an axis that does not apply to the vertical (funding
@@ -70,6 +71,10 @@ export namespace Scorecard {
     ageDays?: number | null // pool age = recorded /chart history span in days — the counterparty screen's maturity signal
     sizeUsd?: number | null // pool size (TVL, USD) — the counterparty screen's size signal
     depProtocols?: number | null // the # of distinct protocols the strategy's yield depends on — the counterparty screen's dependency signal (Crown-Jewel; 1 = a direct single-protocol deposit)
+    // the DEEP counterparty DETAIL (Contract-Truth Phase 4, X-CONTRACT): a deterministic structural contract screen over
+    // VERIFIED SOURCE, resolved at capture-time from the content-hashed registry (UNVERIFIED where no build was analyzed).
+    // It is a Pro DETAIL BESIDE the coarse age·size·dependency screen — additive, NEVER a voting axis (the verdict is unchanged).
+    contractSubAxis?: ContractSubAxis | null
   }
 
   // the money vertical this pool is scored as — delta-neutral is intrinsic; else the declared vertical (default lending).
@@ -276,10 +281,14 @@ export namespace Scorecard {
   }
 
   // ── the top-level score ──
-  export interface Scored { facts: PoolFacts; rows: AxisRow[]; verdict: Verdict; summary: string; failing: string[]; plain: string; quant: string; factRows: Explain.FactRow[] }
+  // `contract` is the deep counterparty DETAIL (a screen over verified source), resolved from the record at feed time
+  // (UNVERIFIED where no build was analyzed). It is ADDITIVE detail — NOT in `rows`, NOT in the verdict math (the verdict
+  // is byte-identical whether or not a contract build exists — the differential stays zero). The Reality-Check Pro
+  // counterparty section + the Ask surface it; a FLAGGED surface never over-claims and never moves SOLID/CAUTION/AVOID.
+  export interface Scored { facts: PoolFacts; rows: AxisRow[]; verdict: Verdict; summary: string; failing: string[]; plain: string; quant: string; factRows: Explain.FactRow[]; contract: ContractSubAxis }
   export function score(f: PoolFacts): Scored {
     const rs = rows(f)
     const d = deriveVerdict(rs, f.reality)
-    return { facts: f, rows: rs, verdict: d.verdict, summary: d.summary, failing: d.failing, plain: plainRegister(rs, d), quant: quantRegister(rs), factRows: toFactRows(rs) }
+    return { facts: f, rows: rs, verdict: d.verdict, summary: d.summary, failing: d.failing, plain: plainRegister(rs, d), quant: quantRegister(rs), factRows: toFactRows(rs), contract: f.contractSubAxis ?? contractSubAxis(null) }
   }
 }

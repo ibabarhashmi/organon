@@ -59,10 +59,11 @@ app.get("/ask", async (c) => {
   const { AskPhrase } = await import("../src/ask/phrase")
   const { AskProvider } = await import("../src/ask/provider")
   const { Ask } = await import("../src/ask/answer")
+  const { VoiceContract } = await import("../src/ask/contract")
   const aiStatus = AskProvider.status() // server-side; reports keyed/provider, NEVER the key
   if (!q) return c.html(Reality.renderAsk({ register, raw, aiStatus, contextPool: pool }))
   const g = await AskPhrase.answerGrounded(q, { register, now: Date.now(), context: pool ? { poolKey: pool } : undefined })
-  return c.html(Reality.renderAsk({ query: q, register, raw, intentKind: g.intent.kind, tool: g.result.tool, reality: g.result.reality, text: g.text, rawFacts: Ask.rawFacts(g.result), aiPhrased: g.aiPhrased, aiStatus, contextPool: pool }))
+  return c.html(Reality.renderAsk({ query: q, register, raw, intentKind: g.intent.kind, tool: g.result.tool, reality: g.result.reality, text: g.text, rawFacts: Ask.rawFacts(g.result), aiPhrased: g.aiPhrased, aiStatus, contextPool: pool, blocks: g.blocks, residual: VoiceContract.RESIDUAL_DISCLOSURE }))
 })
 
 // the refresh — an explicit live keyless capture that grows the moat, then back to the Shelf (offline → nothing recorded)

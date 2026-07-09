@@ -23,11 +23,17 @@ export namespace Ask {
       case "STRATEGY_LOOKUP": return AskTools.scorecardFor(intent.poolKey, intent.poolTerm ?? intent.raw, now)
       case "DATA_QUERY": return AskTools.metric(intent.poolKey, intent.field ?? "yield-reality", intent.poolTerm ?? intent.raw, now)
       case "VALIDATION": return AskTools.stampFor(intent.poolKey, intent.poolTerm ?? intent.raw)
-      case "COMPARE": return AskTools.compare(intent.poolKey, intent.poolTerm ?? intent.raw, intent.poolKeyB, intent.poolTermB ?? intent.raw, now)
+      case "COMPARE": return intent.entries?.length ? AskTools.compareMany(intent.entries.map((e) => ({ poolKey: e.poolKey, term: e.term || intent.raw })), now) : AskTools.compare(intent.poolKey, intent.poolTerm ?? intent.raw, intent.poolKeyB, intent.poolTermB ?? intent.raw, now)
       case "EXPLAIN": return AskTools.glossary(intent.term)
       case "WORKFLOW": return AskTools.workflow()
       case "COVERAGE": return AskTools.coverageMatrix()
       case "UNSUPPORTED": return AskTools.fallback()
+      // the widened intents (Voice X-VOICE d) — each a deterministic engine tool; the closed enum stays closed
+      case "OUTLOOK": return AskTools.outlook(intent.poolKey, intent.poolTerm ?? intent.raw, now)
+      case "SCENARIO": return AskTools.scenario(intent.poolKey, intent.poolTerm ?? intent.raw, now)
+      case "ADVICE_BOUNDARY": return AskTools.adviceBoundary(intent.poolKey, intent.poolTerm ?? intent.raw, now)
+      case "GENERAL": return AskTools.general(intent.poolKey, intent.poolTerm ?? intent.raw, now)
+      case "RECORD_HISTORY": return AskTools.recordHistory(intent.poolKey, intent.poolTerm ?? intent.raw)
     }
   }
 
@@ -41,6 +47,7 @@ export namespace Ask {
     // ── SIMPLE — plain, decimal-free, verdict-first ──
     let s: string
     switch (intent.kind) {
+      case "GENERAL": // the full scorecard — the same verdict-first Simple treatment as a strategy lookup
       case "STRATEGY_LOOKUP":
         s = result.ok ? `${result.meta.name} looks ${verdictWord(result.meta.verdict)}. ${result.summary.replace(/^[^—]*—\s*/, "").replace(/^[^.]*\.\s*/, "")}`.trim() : result.summary
         break
@@ -50,9 +57,17 @@ export namespace Ask {
       case "VALIDATION":
         s = result.ok || result.meta.stampVerdict ? `The overfit Stamp: ${stampSimple(result.meta.stampVerdict)}` : result.summary
         break
-      case "COMPARE":
-        s = result.ok ? `${result.meta.aName ?? "the first"} looks ${verdictWord(result.meta.aVerdict)}; ${result.meta.bName ?? "the second"} looks ${verdictWord(result.meta.bVerdict)}. Both verdicts are the scorecard's — I only lay them side by side.` : result.summary
+      case "COMPARE": {
+        // ALL n entities, not just the first two (X-INTERPRET e — the pre-render COMPARE truncation: the old template
+        // showed aName/bName only, silently dropping a 3rd+ strategy). Every recorded verdict is laid side by side.
+        if (!result.ok) { s = result.summary; break }
+        const names = Array.isArray(result.meta.names) ? (result.meta.names as unknown[]).map(String) : []
+        const verds = Array.isArray(result.meta.verdicts) ? (result.meta.verdicts as unknown[]).map(String) : []
+        s = names.length >= 2 && names.length === verds.length
+          ? `${names.map((n, i) => `${n} looks ${verdictWord(verds[i])}`).join("; ")}. The verdicts are the scorecard's — I only lay them side by side.`
+          : `${result.meta.aName ?? "the first"} looks ${verdictWord(result.meta.aVerdict)}; ${result.meta.bName ?? "the second"} looks ${verdictWord(result.meta.bVerdict)}. The verdicts are the scorecard's — I only lay them side by side.`
         break
+      }
       default:
         s = result.summary // EXPLAIN / WORKFLOW / COVERAGE / UNSUPPORTED — already plain + decimal-free
     }

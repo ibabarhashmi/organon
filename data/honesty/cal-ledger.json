@@ -1,0 +1,107 @@
+{
+  "protocol": "honesty-calibration-ledger",
+  "since": "2026-07-09",
+  "note": "RECORD-ONLY (X-CAL): engine-derived, append-only, hash-chained predictions. NO score is computed or displayed until real resolutions exist; NO backfill path exists. The only surface is the honest count.",
+  "entries": [
+    {
+      "subject": "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501",
+      "predictionType": "decay-tier-persistence",
+      "prediction": "the recorded edge's TRACEABLE classification persists",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "47dbd6ee226bcff288a8021a015e25e4558143a6246c4093a24d0a5dc705e7b3"
+    },
+    {
+      "subject": "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
+      "predictionType": "decay-tier-persistence",
+      "prediction": "the recorded edge's TRACEABLE classification persists",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "47dbd6ee226bcff288a8021a015e25e4558143a6246c4093a24d0a5dc705e7b3",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "db3c17d7a8dbf232ae8dabb2c8ef80e06d20f1dd96969a665e715781773e7ac4"
+    },
+    {
+      "subject": "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac",
+      "predictionType": "decay-tier-persistence",
+      "prediction": "the recorded edge's TRACEABLE classification persists",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "db3c17d7a8dbf232ae8dabb2c8ef80e06d20f1dd96969a665e715781773e7ac4",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "1157a7dcd9117ed94df2b5a765a217acfc1edb6f50a789de3ddbde2842b3ded0"
+    },
+    {
+      "subject": "defillama:pool:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb",
+      "predictionType": "decay-tier-persistence",
+      "prediction": "the recorded edge's TRACEABLE classification persists",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "1157a7dcd9117ed94df2b5a765a217acfc1edb6f50a789de3ddbde2842b3ded0",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "8061d128e5a807c5c48b70d111c3a7a289f3643f973b6bb8cd0eaf9b19ffdd31"
+    },
+    {
+      "subject": "defillama:pool:4438dabc-7f0c-430b-8136-2722711ae663",
+      "predictionType": "decay-tier-persistence",
+      "prediction": "the recorded edge's TRACEABLE classification persists",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "8061d128e5a807c5c48b70d111c3a7a289f3643f973b6bb8cd0eaf9b19ffdd31",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "b6cbdad5a0e1d9ec385185fd1d7c965aa997c7782f36f72cd918616bb18558f7"
+    },
+    {
+      "subject": "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487",
+      "predictionType": "decay-tier-persistence",
+      "prediction": "the recorded edge's TRACEABLE classification persists",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "b6cbdad5a0e1d9ec385185fd1d7c965aa997c7782f36f72cd918616bb18558f7",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "36e4ee226411c00c58ee3c5b90fa1dbdcb6572b01dad390e5c57a3ee188c2595"
+    },
+    {
+      "subject": "defillama:pool:e91e23af-9099-45d9-8ba5-ea5b4638e453",
+      "predictionType": "decay-tier-persistence",
+      "prediction": "the recorded edge's TRACEABLE classification persists",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "36e4ee226411c00c58ee3c5b90fa1dbdcb6572b01dad390e5c57a3ee188c2595",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "f5d2c69d657184dbea57d113ac31b87ea0889e1be492ff8ec1623baefd31e31d"
+    },
+    {
+      "subject": "funding-basis:hyperliquid:BTC",
+      "predictionType": "funding-regime-state",
+      "prediction": "the carry-positive funding regime holds",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "f5d2c69d657184dbea57d113ac31b87ea0889e1be492ff8ec1623baefd31e31d",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "5c3d6563465ffa968be7c58b280e548b44c00038c66b088af98f118b21f12d6d"
+    },
+    {
+      "subject": "funding-basis:hyperliquid:ETH",
+      "predictionType": "funding-regime-state",
+      "prediction": "the carry-positive funding regime holds",
+      "statedAt": 1783555200000,
+      "horizon": "30d",
+      "prevHash": "5c3d6563465ffa968be7c58b280e548b44c00038c66b088af98f118b21f12d6d",
+      "resolutionStub": null,
+      "resolvedAt": null,
+      "entryHash": "6918b67aca25f8cfeb64435457649878cbbfda76d35576cb643b80e968b39db1"
+    }
+  ],
+  "headHash": "6918b67aca25f8cfeb64435457649878cbbfda76d35576cb643b80e968b39db1"
+}

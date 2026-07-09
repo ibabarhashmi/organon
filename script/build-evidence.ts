@@ -121,7 +121,9 @@ async function main() {
     const cm = Evidence.verifyCaptureManifest()
     if (!cm.ok) problems.push(...cm.problems)
     if (problems.length) { console.error("✗ EVIDENCE VERIFY FAILED:\n  - " + problems.join("\n  - ")); process.exit(1) }
+    const rd = Evidence.contractRegistryDigest()
     console.log(`✓ evidence verify: deterministic bundle reproduces (sha ${bundleSha.slice(0, 16)}…) · every claim resolves · every live number resolves to a capture-manifest hash · frozen seven git-clean`)
+    if (rd) console.log(`  contract-registry digest (B1; outside the bundle): ${rd.sha256.slice(0, 16)}… · ${rd.realCount} of ${rd.captures} captures REAL — recomputed + diffed against the committed manifest`)
     return
   }
 
@@ -145,7 +147,11 @@ async function main() {
   // THE LIVE-VALUE CEILING (V6, Persistence): what reproduces is the HASH of the committed capture (the durable record) —
   // NOT the underlying live value, which is RE-CAPTURABLE, not frozen. A re-fetch is network-gated + disclosed; a reader
   // must not over-read "the live numbers reproduce forever". `verify` proves the committed byte-record, not a live oracle.
-  write("capture-manifest.json", { protocol: "honesty-capture-manifest", note: "every cited LIVE number resolves to a committed content-hash; `./organon.sh verify` recomputes each capture's hash and diffs it (S18). A live number that changed without a re-pin fails. The re-fetch is network-gated; the committed capture + hash is the durable record. LIVE-VALUE CEILING (V6): the HASH reproduces, not the underlying live value — the value is re-capturable, not frozen.", entries: Evidence.captureManifestEntries(), at: now })
+  // B1 — the contract-registry digest rides in the manifest: the REAL registry is OUTSIDE the deterministic bundle (its
+  // integrity is the per-entry contentSha), so its whole-file digest is committed here + recomputed by verify (a future
+  // registry change IS caught). The manifest note states the inside/outside reconciliation explicitly.
+  const registryDigest = Evidence.contractRegistryDigest()
+  write("capture-manifest.json", { protocol: "honesty-capture-manifest", note: "every cited LIVE number resolves to a committed content-hash; `./organon.sh verify` recomputes each capture's hash and diffs it (S18). A live number that changed without a re-pin fails. The re-fetch is network-gated; the committed capture + hash is the durable record. LIVE-VALUE CEILING (V6): the HASH reproduces, not the underlying live value — the value is re-capturable, not frozen. B1: the contract-registry (data/honesty/contract-registry.json) is OUTSIDE the deterministic bundle (9c1e7bd8…) — its integrity is the per-entry contentSha; its whole-file digest below makes a future registry change visible to verify.", entries: Evidence.captureManifestEntries(), registryDigest, at: now })
 
   // the claims manifest (battery numbers filled from the given summary) + a writer for both battery-summary + claims
   const claimsFor = (b: { pass: number; fail: number; files: number }) => [
@@ -183,6 +189,7 @@ async function main() {
   console.log(`unlock probe (D6)    : ${vu.status ? "HTTP " + vu.status + (vu.paywalled ? " paywalled" : "") : vu.note} — keyless source unavailable → signed scope-cut`)
   console.log(`gemini V-LIVE (BYOK) : ${ve.status ? "HTTP " + ve.status + " reachable (no key committed)" : ve.note}`)
   console.log(`bundle sha           : ${bundleSha.slice(0, 16)}…`)
+  console.log(`registry digest (B1) : ${registryDigest ? registryDigest.sha256.slice(0, 16) + "… · " + registryDigest.realCount + " of " + registryDigest.captures + " REAL (outside the bundle)" : "absent"}`)
   console.log(`written              : data/honesty/evidence/ (${claims.length} claims)`)
 }
 

@@ -1,0 +1,393 @@
+{
+  "protocol": "sovereign-pins",
+  "sprint": "THE SOVEREIGN SPRINT (the sovereign data-plane — three narrow enumerated+pinned extraction paths beside the retained rented breadth, gap-honest + divergence-surfaced + kill-condition-armed · the REAL interactive impeccable design pass, aesthetics pre-approved with the constitutional walls continuous · the five Surface findings closed)",
+  "at": "2026-07-09",
+  "continues": "THE SURFACE SPRINT (RED-TEAM-CLEAN, battery 807 pass / 2 skip / 0 fail across 127 files / 809 tests)",
+  "blueprint": {
+    "rel": "sprint/sprint-result/ORGANON_Sovereign_Sprint_Blueprint.md",
+    "sha": "27bee64d944e63064279480d4b1714ff5b5b2b67b0cf721cad62c24af1ee2c6c"
+  },
+  "carriedFromPinsSha": "b01799989edd2f1f15a9003035ca60cf0ed75457bfa1e2a268c3c8f231cf750f",
+  "plane": {
+    "doctrine": "owning your senses is only worth it if every owned fact is as honest as the rented ones, and the maintenance trap has a pinned exit; the plane DEEPENS the narrow paths the verdict engine needs — it is NOT a general indexer and it REPLACES nothing",
+    "pathList": [
+      {
+        "id": "FUNDING-HISTORY",
+        "feeds": "the delta-neutral vertical's carry/regime facts + the Stamp's decay/ICIR/MinTRL (genuinely longer REAL history)",
+        "sources": [
+          {
+            "name": "Hyperliquid public info endpoint",
+            "url": "https://api.hyperliquid.xyz/info",
+            "keyless": true,
+            "tier": "T2-FORWARD",
+            "note": "type:fundingHistory — captured forward with a nonce, never retro-claimed (reuses src/dataplane/hyperliquid.ts)"
+          },
+          {
+            "name": "Binance public funding archive",
+            "url": "https://data.binance.vision",
+            "keyless": true,
+            "tier": "T1",
+            "note": "immutable monthly dumps + published checksum (reuses src/dataplane/funding.ts verifyT1 + reconstruct)"
+          },
+          {
+            "name": "Bybit public funding archive",
+            "url": "https://public.bybit.com",
+            "keyless": true,
+            "tier": "T1",
+            "note": "public historical funding, same gap-honest rule; NEW venue — a captured Bybit snapshot is REAL, an absent one stays ILLUSTRATIVE (the differential golden reads bybit=ILLUSTRATIVE and MUST reproduce)"
+          }
+        ],
+        "module": "src/plane/funding.ts",
+        "rangesPinned": "the extraction pulls the venue's available history for the pinned coins; the series carries its true window (start/end) — a shorter honest series beats a longer fabricated one"
+      },
+      {
+        "id": "POOL-EVENTS",
+        "feeds": "the seven axes' REAL time-series + the moat (where the rented plane gives only snapshots) for the shelf pools",
+        "sources": [
+          {
+            "name": "Envio HyperSync",
+            "url": "https://<network>.hypersync.xyz",
+            "keyless": false,
+            "tier": "T2-FORWARD",
+            "note": "free-tier token env-keyed (HYPERSYNC_TOKEN), an OPTIONAL seam like BYOK — absent → the path degrades to the rented plane / SAMPLE, never a crash; self-hostable/replaceable; plain fetch, NO shipped SDK"
+          }
+        ],
+        "module": "src/plane/events.ts",
+        "enumeratedEvents": [
+          "rate-update",
+          "tvl-move",
+          "liquidity-move"
+        ],
+        "fence": "ONLY the enumerated events per shelf pool are extracted — NEVER a full-protocol index; an un-enumerated event type is ignored (S40)"
+      },
+      {
+        "id": "RPC-STATE",
+        "feeds": "the freshness layer (current-state reads) + the honest fallback when a provider dies",
+        "sources": [
+          {
+            "name": "rotating free public RPCs",
+            "url": "llamarpc / ankr / publicnode / 1rpc",
+            "keyless": true,
+            "tier": "T2-FORWARD",
+            "note": "current-state reads over a pinned rotation; the ACTUAL RPC used is recorded per read; a dead provider rotates honestly (degrade-never-crash)"
+          }
+        ],
+        "module": "src/plane/rpcstate.ts",
+        "rotation": [
+          "https://eth.llamarpc.com",
+          "https://rpc.ankr.com/eth",
+          "https://ethereum.publicnode.com",
+          "https://1rpc.io/eth"
+        ]
+      }
+    ],
+    "fourthPathRequiresRePin": "the path list is a PIN — exactly these three; a FOURTH extraction path (another exchange, another chain, another event class) requires a conscious re-pin with rationale, never a 'while we're here' drift; a general indexer or an archive node is a Halt (the research's maintenance-trap warning, now law)",
+    "gapHonest": {
+      "rule": "every owned series is capture-time + content-hashed + REAL/SAMPLE into the moat; an archive GAP STAYS A GAP — no interpolation, no backfill into REAL",
+      "haltRule": "a fabricated/interpolated history point stamped REAL is a Halt (S39, positive-controlled: a seeded gap-fill is REFUSED)",
+      "recaptureStable": "a re-capture of the same range is hash-stable (the content-address reproduces)",
+      "degradeHonest": "a dead endpoint / an absent token degrades to the rented fallback or SAMPLE, with the ACTUAL source honest in the record (an own-plane value that actually fell back is NOT stamped own-plane — Attack-8)"
+    },
+    "divergence": {
+      "rule": "DeFiLlama free · GeckoTerminal REMAIN the breadth fallback; where the own-plane and the rented plane disagree on an overlapping value beyond a pinned tolerance, the divergence is SURFACED — recorded to the moat AND rendered as the Pro-side divergence row — never silently resolved toward either source",
+      "tolerancePct": 5,
+      "haltRule": "a divergence auto-resolved toward either source (own-plane silently overwriting the rented plane, or vice-versa) is a Halt (S39, positive-controlled: a seeded disagreement → recorded + rendered, NEITHER value replaced)"
+    },
+    "honestImprovement": {
+      "rule": "the Stamp/axes may improve (fewer INSUFFICIENTs, richer facts) ONLY as the mathematical consequence of genuinely longer REAL series",
+      "mathUntouched": "the decay half-life / ICIR / MinTRL math is BYTE-UNTOUCHED (src/studio/{decay,icir,mintrl,stamp}.ts unchanged in logic); the adjudicator + Stamp goldens reproduce byte-identical on the old fixtures",
+      "tracedToObservations": "where INSUFFICIENT retreats it is TRACED to the observation count (T crossed a floor honestly — decay ≥ 30, icir ≥ 20, stamp ≥ 60, funding-band ≥ 100); a threshold nudged to exploit the new data is a Halt",
+      "separateGolden": "the frozen verdict-differential goldens (lending 70c7912f… + funding-bybit ILLUSTRATIVE 0a63151b…) read inputs left byte-untouched and MUST reproduce; the honest retreat is demonstrated on a NEW golden over the newly-captured longer series, never by perturbing a frozen golden"
+    },
+    "killCondition": {
+      "threshold": "~1 day/week sustained plane upkeep (adapter rot eating the team — the research's own red-team; DeFiLlama's adapter model is the cautionary proof)",
+      "exit": "the recorded exit is BUY the DeFiLlama Pro shortcut ($300/mo) for breadth + NARROW the plane build further (drop a path back to the rented fallback)",
+      "armed": "pinned in writing so the trap has a door (S40); an upkeep ledger exists to MEASURE it — the kill-condition is a pin, not a vibe"
+    },
+    "hyperSyncSeam": {
+      "envKey": "HYPERSYNC_TOKEN",
+      "optional": "the HyperSync token is an env-keyed OPTIONAL seam exactly like BYOK — absent → the POOL-EVENTS path degrades to the rented plane / SAMPLE, the tool never crashes",
+      "selfHostable": "HyperSync is self-hostable/replaceable by design; the path module is thin (plain fetch) enough to swap; NO archive node (the research's explicit trap), nothing paid without the kill-condition firing first",
+      "neverShipped": "no SDK ships on the mass path (plain fetch against the documented API); any unavoidable SDK is capture-time dev-harness tooling, never a runtime dep (deps stay hono+zod)"
+    }
+  },
+  "designPass": {
+    "doctrine": "the interactive impeccable flows RUN this sprint across the three screens; the skill is TRUSTED to design; fixes land on the go; the Operator's approval is given in advance; the red-team consolidates at PART E — the ONE absolute: the pre-approval covers AESTHETICS ONLY; the walls are not approvable away",
+    "critiqueRunForReal": "impeccable `critique` was RUN (unlike Surface, which was detector-only — D15): Assessment A (an independent design-review sub-agent reading the rendered source of all three screens + the token system, thinking like a design director per impeccable's product/brand register references) + Assessment B (the deterministic 45-rule detector), synthesized into a recorded professional critique (committed to .impeccable/critique/ as dev provenance) whose genuine findings were applied on the go",
+    "honestBound": "the browser/screenshot inspection portion of critique + the `live` browser-iteration flow are STILL NOT run — the autonomous harness has no browser automation; the design-review used SOURCE-BASED visual reasoning (the sub-agent reads the rendered HTML/CSS, not a screenshot). Disclosed, not overstated — a strict improvement over Surface's detector-only, precisely bounded",
+    "tokensStayFrozen": "the SEMANTIC tokens (data/honesty/design-tokens.json) stay BYTE-FROZEN — they are hash-locked into the Surface pin (b0179998; honesty_pins re-hashes the live file against it), so a token-VALUE change would break a frozen golden; the AA-cleared palette + type scale + non-color cues are honesty-load-bearing and correctly frozen. The pass operates ABOVE the primitives (composition, hierarchy, spacing rhythm, motion, states, the stylesheet mapping in build-stylesheet.ts + the markup classes in reality.ts); a token-value change surfaced by critique is a conscious deferred re-pin, never a forced silent edit",
+    "wallsContinuous": "the S36 content-identity golden + the S38 detector + the dep wall (hono+zod; impeccable dev-time-only) + the a11y floor (AA + non-color cues) run CONTINUOUSLY — every change re-validated; a moved fact/label/tier/verdict/provenance-mark fails the build the moment it lands, not at PART E",
+    "clarifyChromeOnly": "clarify touches CHROME copy only, NEVER a data label (the S36 golden enforces this automatically)",
+    "rePinsBatched": "token re-pins (if any) are BATCHED per working session, each with its sha delta + what/why in the session marker; churn without rationale is flagged at PART E — this sprint's pass made NO token-value change (the palette cleared AA first-pass in Surface), so no re-pin was needed",
+    "screenCount": 3,
+    "haltRule": "an approval invoked to lower a wall — the S36 golden, the detector, the dep wall, the a11y floor — is a Halt (the pre-approval is aesthetics only; the constitutional walls are not approvable away)"
+  },
+  "sfResolutions": [
+    {
+      "id": "SF1",
+      "finding": "the D15 caveat (interactive impeccable flows not run; detector-only) was buried in the ledger's last line while the header/pins claimed 'authored with impeccable'",
+      "resolution": "LED WITH: the BUILDLOG-SOVEREIGN header + D16 state plainly, up front, exactly what the Surface sprint's impeccable involvement WAS (detector-validated, authored-to-standard, interactive flows not run) and that THIS sprint runs the interactive CRITIQUE for real (design-review sub-agent + detector), with the browser/`live` flow still not run — disclosed, never overstated.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "SF2",
+      "finding": "the pristine clone reported 804 vs dev 807 — an off-by-one that did not cleanly resolve in the record",
+      "resolution": "ITEMIZED: surface_detector.test.ts has EXACTLY 4 tests, of which 3 are test.skipIf(!HAS_DETECTOR) — on a pristine clone the dev-harness detector is absent, so those 3 SKIP; pristine = 807 − 3 = 804 (the 4th, the dep-wall assertion, runs everywhere). The pristine skip set is {ask_live, eval_live} + surface_detector×3. Stated as 807 − N (N=3) and asserted in findings_closed_surface — the arithmetic dies here, reconciled, never silent.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "SF3",
+      "finding": "contrast is COMPUTED (rigorous) but keyboard/responsive are DOM-asserted, not a live viewport/AT pass — the claim scope was implicit",
+      "resolution": "SCOPED to method: contrast is COMPUTED from the token file (sRGB relative luminance — a rigorous numeric proof); keyboard-reachability + responsive behavior + non-color cues are DOM-ASSERTED (the rendered markup carries :focus-visible, the @media breakpoint, the ::before glyphs / border-styles) — NOT a live browser/AT/viewport pass. A real browser + assistive-technology check is flagged as a NAMED follow-up (parked, not claimed).",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "SF4",
+      "finding": "V4's screenshot-durability is closed by a rendered-output assertion (the deterministic proxy); the literal image case was inferred",
+      "resolution": "NAMED the evidence shape: V4 is closed by the RENDERED-OUTPUT assertion (surface_content_identity asserts the visible ANALYSIS eyebrow sits in the rendered REASONING block, and that a REASONING block never renders in the FACT treatment) — a DETERMINISTIC PROXY for screenshot-durability; the literal rasterized-image case is INFERRED from the rendered markup, not pixel-tested. The proxy is the honest evidence; the image case is named as inference, not asserted as tested.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "SF5",
+      "finding": "the design-intelligence pass (Operator-run interactive critique/polish) was disclosed as not-run in Surface",
+      "resolution": "RUN as this sprint's Spine A (X-DESIGNPASS, D16): the impeccable critique executed for real (design-review sub-agent + detector), the genuine findings applied on the go under the Operator's standing approval, the walls continuous — with the browser/`live` flow still honestly not run (no browser automation). See D16.",
+      "status": "RESOLVED"
+    }
+  ],
+  "deviations": {
+    "D16": "the design-pass process amendment (Operator-signed) — aesthetics pre-approved fix-on-the-go, the S36/S38/dep/a11y walls continuous in CI, the red-team post-dev, token re-pins conscious+batched, clarify chrome-only; the critique RUN for real (design-review sub-agent + detector), the browser/`live` flow still not run (disclosed); the semantic tokens stay byte-frozen (the pass operates above the primitives)",
+    "D17": "the sovereign-plane scope (Operator-signed) — exactly three narrow enumerated+pinned extraction paths beside the retained rented breadth; gaps stay gaps (no backfill); divergence surfaced (never silently resolved); honest improvement only (the math untouched, goldens reproduce); the adapter-rot kill-condition armed in writing (~1 day/week → buy Pro + narrow); the plane modules built with injectable-fetch seams + hermetic positive-controlled tests, real captures opportunistic + committed, the run-vs-hermetic scope named honestly",
+    "operatorSignedNote": "Operator-signed = the Operator directed the coding agent to engineer this blueprint end-to-end; the blueprint's own text carries the pre-approval (D16) + the plane scope selection (D17). The same mechanism by which D11 (the X-ASK amendment) was Operator-signed in the Voice sprint — the directive to execute the document IS the sign-off; recorded here, not fabricated as a separate signature."
+  },
+  "screens": {
+    "count": 3,
+    "set": [
+      "shelf",
+      "reality-check",
+      "ask"
+    ],
+    "designPassReshapesNotAdds": "the Sovereign design pass reshapes the 3 screens (aesthetics only); it NEVER adds a fourth screen (PART CLEAN; the screens_frozen wall). The Pro-side divergence row is a ROW on the Reality Check, not a screen"
+  },
+  "stressCatalog": [
+    {
+      "id": "S1",
+      "name": "dead endpoint",
+      "expect": "degrade to last-good or SAMPLE; the served UI renders; never a crash/spin"
+    },
+    {
+      "id": "S2",
+      "name": "429 storm",
+      "expect": "the short-TTL cache absorbs it; the Shelf reads the record (no per-load provider fan-out)"
+    },
+    {
+      "id": "S3",
+      "name": "stale cache",
+      "expect": "the shown asOf is the capture time, visibly stale, never 'now' (OWN LINE)"
+    },
+    {
+      "id": "S4",
+      "name": "no-history pool",
+      "expect": "history-dependent rows UNVERIFIED; point-in-time rows still compute; never a fabricated SOLID"
+    },
+    {
+      "id": "S5",
+      "name": "mid-session depeg",
+      "expect": "the peg row fires → AVOID; both registers agree"
+    },
+    {
+      "id": "S6",
+      "name": "emissions-inflated trap",
+      "expect": "the yield-reality row flags temporary → verdict not SOLID"
+    },
+    {
+      "id": "S7",
+      "name": "SAMPLE-heavy state",
+      "expect": "EVERY SAMPLE verdict is UNVERIFIED — the W-E01 invariant holds under all axes (OWN LINE)"
+    },
+    {
+      "id": "S8",
+      "name": "malformed / adversarial data",
+      "expect": "boundary-validated to missing/UNVERIFIED; never a crash or a nonsense verdict"
+    },
+    {
+      "id": "S9",
+      "name": "provenance tamper",
+      "expect": "a shown-but-unrecorded REAL Halts; a broken chain refused on construct"
+    },
+    {
+      "id": "S10",
+      "name": "determinism / no-LLM-in-verdict",
+      "expect": "identical inputs → byte-identical scorecard; a model-in-verdict rejected wholesale"
+    },
+    {
+      "id": "S11",
+      "name": "thin-liquidity trap",
+      "expect": "a deep-APY pool with dust liquidity → liquidity FAIL → not SOLID"
+    },
+    {
+      "id": "S12",
+      "name": "imminent-unlock trap",
+      "expect": "a large near-term unlock → unlock FAIL → CAUTION/AVOID (ARMED; D6 on live keyless data)"
+    },
+    {
+      "id": "S13",
+      "name": "dust/new/STACKED-dependency trap",
+      "expect": "a young/tiny OR dependency-stacked pool → counterparty flag, honestly coarse (never 'audited/safe')"
+    },
+    {
+      "id": "S14",
+      "name": "verifiability",
+      "expect": "./organon.sh verify regenerates every committed evidence artifact; a tampered count/number fails"
+    },
+    {
+      "id": "S15",
+      "name": "coverage/applicability",
+      "expect": "an inapplicable axis renders not-applicable, never a fabricated pass"
+    },
+    {
+      "id": "S16",
+      "name": "stamp isolation",
+      "expect": "a scorecard render → ZERO adjudicator/decay/ICIR calls; the verdict spaces never conflate"
+    },
+    {
+      "id": "S17",
+      "name": "stamp honesty",
+      "expect": "short-history → INSUFFICIENT; deflation tightens with family size; the goldens reproduce; history-absent → 'unavailable'"
+    },
+    {
+      "id": "S18",
+      "name": "live-number provenance",
+      "expect": "./organon.sh verify asserts every cited live number resolves to a capture-manifest content-hash"
+    },
+    {
+      "id": "S19",
+      "name": "ask groundedness",
+      "expect": "a fabricated number rejected WHOLESALE → deterministic; an UNVERIFIED gap never filled; a Simple answer carries no raw decimals"
+    },
+    {
+      "id": "S20",
+      "name": "provider/BYOK/key-safety",
+      "expect": "no key → deterministic mode, no crash; BYOK selects the env provider; no key string in the served HTML or any log"
+    },
+    {
+      "id": "S21",
+      "name": "ask determinism/injection",
+      "expect": "same query → identical FACTS (raw toggle byte-identical); a prompt-injection cannot move a verdict"
+    },
+    {
+      "id": "S22",
+      "name": "decay-gate honesty (NEW)",
+      "expect": "a short/flat/SAMPLE series → INSUFFICIENT, never a fabricated half-life; a 2-period-half-life → SHORT_LIVED (a clean GO withheld); off the mass path; deterministic"
+    },
+    {
+      "id": "S23",
+      "name": "ICIR determinism/scope (NEW)",
+      "expect": "identical inputs → byte-identical ICIR; a degenerate series → INSUFFICIENT (no div-by-zero); the within-strategy scope label present (a cross-sectional claim fails); off-path"
+    },
+    {
+      "id": "S24",
+      "name": "live-AI grounding (NEW)",
+      "expect": "the committed Groq round-trip proves a real-model grounded answer passes AND a fabricated number is rejected wholesale; the redacted transcript reproduces its manifest hash; no key leaks"
+    },
+    {
+      "id": "S25",
+      "name": "contract-analysis honesty (NEW)",
+      "expect": "a contract screen reports specific structural facts + the 'not a full audit' label, NEVER 'safe/audited'; ZERO model/LLM in src/contract/*; deterministic (a fixed ContractIR → byte-identical facts + tier); a seeded unprotected admin fn → FLAGGED (the finding named)"
+    },
+    {
+      "id": "S26",
+      "name": "leak-wall / coupling-severance (NEW)",
+      "expect": "src/contract/* imports nothing from @solidity-sentinel/* or OpenCode (the dataplane_leak wall green + a positive control on the new dir); D9 records the extraction + severance; the ported code is owned in-tree, not referenced from a sibling; no new npm dep"
+    },
+    {
+      "id": "S27",
+      "name": "Foundry-absent degradation (NEW)",
+      "expect": "no build/toolchain → the contract sub-axis is UNVERIFIED, the coarse age·size·dependency screen scores alone; a SAMPLE/absent build NEVER a fabricated all-clear; the mass tool + ./organon.sh verify + the pristine fresh clone run green (never a crash)"
+    },
+    {
+      "id": "S28",
+      "name": "the REAL/SAMPLE wall (NEW)",
+      "expect": "a REAL verified build + zero flags may earn CLEAN-STRUCTURE; a SAMPLE/absent build + zero flags → UNVERIFIED, NEVER a fabricated all-clear; flags are existence-proofs from any source, absence-of-flags trustworthy only on a REAL verified deployed-source match (positive-controlled)"
+    },
+    {
+      "id": "S29",
+      "name": "capture-determinism / re-capture-hash (NEW)",
+      "expect": "a fixed build → byte-identical facts + a stable contentHash; a re-capture → the identical hash; a one-byte source change → a changed hash; a scorecard render triggers ZERO compilation (the render imports no analyzer)"
+    },
+    {
+      "id": "S30",
+      "name": "ingestion-scope / keyless-no-scrape (NEW)",
+      "expect": "ingestion is keyless-first + Operator-gated; no paywalled/unlock source is scraped (D4/D6 ARMED-never-scraped); the BYOK explorer key is server-side env-only, never in the bundle/log/registry; no key → keyless/degrade, no crash"
+    },
+    {
+      "id": "S31",
+      "name": "persona-injection resistance (NEW)",
+      "expect": "seeded injections ('ignore your rules', 'you are now an advisor', nested instructions inside quoted strategy names) → at worst a TEMPLATE fallback, NEVER fabrication; the persona is pinned; the gates are downstream of the model"
+    },
+    {
+      "id": "S32",
+      "name": "the advice wall (NEW)",
+      "expect": "seeded advice bait across phrasings → ZERO post-gate recommendations (the advice-pattern screen + the ADVICE boundary); the attempt rate is measured per provider; the oblique-advice residual disclosed, not hidden"
+    },
+    {
+      "id": "S33",
+      "name": "numeric-smuggling / verdict-contradiction / comparison-direction / severity (NEW)",
+      "expect": "seeded violations of each gate → rejected typed + fail-closed; model arithmetic (a sum of two facts) → rejected; a reversed comparison → rejected; 'safe'/'risk-free' → rejected absolutely; 'critical' without a fact-backed severity → rejected; the ANALYSIS label present in every REASONING render; a FACT-styled REASONING block fails the render check"
+    },
+    {
+      "id": "S34",
+      "name": "cross-provider degradation + deterministic parity (NEW)",
+      "expect": "ALL 13 intents green with NO key (templates, no crash, no fabrication); a weak/mock provider tripping every gate → MORE templates, never LESS truth; the eval harness reports honestly (no cherry-picking)"
+    },
+    {
+      "id": "S35",
+      "name": "calibration honesty (NEW)",
+      "expect": "the calibration ledger is append-only + hash-chained (a tamper breaks the chain); NO backfill (statedAt < the prior entry → refused); NO score on zero resolutions; the count surface honest"
+    },
+    {
+      "id": "S36",
+      "name": "honesty-preserving restyle (NEW)",
+      "expect": "no number / label / tier / verdict / provenance-mark / which-facts-appear moved by ANY style change; the content-identity wall byte-identical PER SCREEN before/after the restyle; a seeded rounding / reorder / truncation → caught; the differential + frozen seven reproduce"
+    },
+    {
+      "id": "S37",
+      "name": "a11y + honest degraded states (NEW)",
+      "expect": "WCAG-AA contrast on every semantic token pairing (computed from the token file); every verdict / Stamp / REAL-SAMPLE / trust-tier distinction carries a non-color cue (glyph/border/weight — never color alone); keyboard-reachable with a visible focus ring; responsive to the mobile breakpoint; the UNVERIFIED / INSUFFICIENT / AI-off / empty-shelf states render as INTENTIONAL designed states, not error-shaped"
+    },
+    {
+      "id": "S38",
+      "name": "the impeccable detector wall (NEW)",
+      "expect": "the deterministic 45-rule detector reports ZERO unexcepted anti-patterns over the rendered surface + the built stylesheet (every exception committed in .impeccable/config.json with a reason); NO runtime design dependency entered the mass path (deps === hono+zod; .impeccable/ gitignored); the detector SKIPS honestly where the dev-harness tool is absent (pristine clone), the built stylesheet still shipping"
+    },
+    {
+      "id": "S39",
+      "name": "plane provenance / honest-degrade / no-fabricated-history (NEW)",
+      "expect": "every owned series capture-time + content-hashed + REAL/SAMPLE; a re-capture hash-stable; gaps stay gaps (a seeded interpolation/gap-fill → REFUSED); a dead endpoint / absent token → honest degrade with the ACTUAL source recorded (a fallback value never stamped own-plane); a seeded own-vs-rented divergence → recorded + rendered, NEITHER value replaced; the Stamp/axis improvement traced to observation counts, the math goldens byte-identical"
+    },
+    {
+      "id": "S40",
+      "name": "the narrow-path fence + the armed kill-condition (NEW)",
+      "expect": "the path list is EXACTLY the pinned three; an un-enumerated event/exchange/chain → ignored/refused; a fourth path attempt → requires a re-pin (refused casually); the kill-condition text present + armed (~1 day/week → buy Pro + narrow); the upkeep ledger exists to measure it; NO general indexer / archive node"
+    },
+    {
+      "id": "S41",
+      "name": "design-pass honesty (NEW)",
+      "expect": "post-pass: the S36 content-identity golden byte-identical across the WHOLE pass (no number/label/tier/verdict/provenance-mark moved); the detector 0 unexcepted; deps exactly hono+zod (impeccable absent on the pristine clone, the stylesheet shipping); a11y AA + non-color cues green; the semantic tokens byte-frozen (any token re-pin batched + reasoned); ZERO wall suspensions attributed to the approval; the critique-run-for-real vs browser-not-run scope disclosed"
+    }
+  ],
+  "carried": {
+    "frozenSeven": "the 6 computational-core .py + loop.ts byte-untouched (core_byte_identity green every gate); the plane RECORDS into the moat + the design pass restyles the RENDER — both are layers ON TOP of the deterministic frozen facts; they touch ZERO frozen bytes, move ZERO verdicts, fabricate ZERO history points, add ZERO runtime deps",
+    "verdictDifferential": "lending fp-set 70c7912f… + funding NO-GO/ILLUSTRATIVE 0a63151b… reproduce at every gate — zero verdicts moved by a sprint that re-plumbed the very data those verdicts rest on and redesigned the very screens they render on; the frozen goldens read byte-untouched inputs (bybit stays ILLUSTRATIVE — no bybit capture feeds the differential), the plane's longer REAL series is demonstrated on NEW goldens",
+    "designSystemUnchangedInTokens": "the pinned design system (data/honesty/design-tokens.json + DESIGN.md, hash-locked into the Surface pin) is UNCHANGED in token values; the design pass reshapes composition/hierarchy/motion/states ABOVE the frozen primitives; a token-value change would break the frozen Surface golden b0179998 — so it stays frozen (the pass needed none)",
+    "voiceUnchangedInContent": "the persona, the typed FACT/REASONING/BOUNDARY contract, the five gates, the 13 closed intents + no-key parity, the advice wall, the calibration clock, the eval harness, the MinTRL rider — all GREEN and UNMODIFIED in content (the plane deepens their FACTS; the design pass restyles their RENDER; neither changes their meaning)",
+    "contractPipeline": "the verified-build pipeline + the six-tool contract sub-axis (4 of 7 applicable REAL proxy-surface tiers) reused VERBATIM",
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "moatCadence": "the capture cadence appends ONLY REAL captures (content-addressed, hash-chained); the sovereign plane adds NEW content-addressed captures under NEW keys — it deepens the moat, it overwrites nothing",
+    "parked": "the LLM strategy-proposer / iterate-to-generate loop (awaits the probe + the SOLID-rate experiment); the vault reality-check reports + verdict API (the research's Stage-0/1 — the probe runs FIRST); execution/custody (the permanent red line); the archive node; a general indexer; the implementation-level contract analysis; the four un-ported LLM-free tools; the Sentinel fuzzer/RAG; the semgrep/Sigstore/apyBase research queue; LIVE per-provider eval sampling; the calibration resolution+scoring; the public library — AND a hard scope fence around a marketing site / a component framework / a motion showcase / impeccable 'overdrive' (a 'while we're here' is a cut) — all PARKED (THE FIREWALL)",
+    "probe": "the X-PROBE metrics + KILL CRITERION remain ARMED + honestly BUILT-BUT-UNPROVEN — and the handoff's FIRST LINE commits the NEXT sprint to the research's Stage-0: RUN the demand probe (the 10-customer kill-test) + publish the Stream/Elixir/Resolv re-score post-mortems. The plane and the face were the LAST prerequisites; there are none left — deferring again is indefensible"
+  },
+  "pinsSha": "6fac4e94436c20a8ab6cc0eb8ae08f7c7575ef077cbb887734d469a46ac9f403"
+}

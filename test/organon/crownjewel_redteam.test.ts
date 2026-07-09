@@ -29,7 +29,10 @@ test("PART E — the catalog is TOTAL (S1–S21) and every finding carries its f
 })
 
 test("S16 (stamp isolation) — the mass Shelf render produces ZERO Stamp verdicts; the two verdict spaces are disjoint", () => {
-  const shelfHtml = Reality.renderShelf(Reality.shelfFromRecord(NOW), false).replace(/ORGΛNON/g, "")
+  // strip the <style> block: the single shared token-built stylesheet (Surface sprint) DEFINES every pill class incl. the
+  // stamp classes (.pill.GO/.INSUFFICIENT/…), but the shelf never USES them — the isolation is about the rendered CONTENT
+  // the user sees, not the shared stylesheet's class registry. (contentSig strips <style> for the same reason — S36.)
+  const shelfHtml = Reality.renderShelf(Reality.shelfFromRecord(NOW), false).replace(/<style[\s\S]*?<\/style>/gi, "").replace(/ORGΛNON/g, "")
   expect(/\b(GO|NO-GO|INSUFFICIENT)\b/.test(shelfHtml)).toBe(false) // the mass render never shows a Stamp verdict
   expect(/adjudicat/i.test(shelfHtml)).toBe(false)
   // the scorecard source imports no Stamp / no adjudicator (proven at the boundary)

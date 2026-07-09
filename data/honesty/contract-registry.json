@@ -1,0 +1,903 @@
+{
+  "protocol": "contract-analysis-registry",
+  "note": "The capture-time record of analyzed protocol builds (content-hashed, REAL/SAMPLE-labeled). The RENDER reads recorded facts from here — never a per-render compilation (X-CONTRACT e). Populated by script/honesty/capture-contracts.ts from keyless Sourcify EXACT-match verified deployed source + `forge build` (Operator-gated; D10). A pool without an entry resolves UNVERIFIED (the coarse age·size·dependency screen scores alone — never a fabricated all-clear, S27/S28). A REAL tier is still a deterministic structural screen over verified source — NOT a full audit, NEVER a 'safe' verdict.",
+  "capturedAt": 1783555200000,
+  "captures": {
+    "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501": {
+      "poolKey": "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501",
+      "facts": {
+        "contracts": [
+          "BaseImmutableAdminUpgradeabilityProxy",
+          "Proxy",
+          "InitializableUpgradeabilityProxy",
+          "Address",
+          "BaseUpgradeabilityProxy",
+          "InitializableImmutableAdminUpgradeabilityProxy"
+        ],
+        "functionsAnalyzed": 19,
+        "findings": [
+          {
+            "category": "unprotected-state-changing",
+            "detail": "constructor mutates state without an authorization gate",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "constructor",
+            "line": 23
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeToAndCall",
+            "line": 75
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "upgradeTo(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeTo",
+            "line": 56
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "upgradeToAndCall(address,bytes): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeToAndCall",
+            "line": 69
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "fallback",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "_delegate",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "_fallback",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "fallback delegatecall present — the implementation target executes in this contract's storage context",
+            "contract": "Proxy"
+          },
+          {
+            "category": "unprotected-state-changing",
+            "detail": "initialize(address,bytes) mutates state without an authorization gate",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "unprotected-state-changing",
+            "detail": "initialize(address,bytes) is an initializer-like function without an initializer signal",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 25
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "initialize(address,bytes) is initializer-like without an initializer/onlyInitializing signal",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "InitializableUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "InitializableUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "initialize(address,bytes): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "call — low-level external call (full callback surface)",
+            "contract": "Address",
+            "fn": "sendValue",
+            "line": 58
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "sendValue(address payable,uint256): transfers ETH through an external control handoff",
+            "contract": "Address",
+            "fn": "sendValue",
+            "line": 54
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "BaseUpgradeabilityProxy"
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_upgradeTo(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_upgradeTo",
+            "line": 44
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_setImplementation(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_setImplementation",
+            "line": 53
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "BaseUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_upgradeTo(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_upgradeTo",
+            "line": 44
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_setImplementation(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_setImplementation",
+            "line": 53
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "InitializableImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "InitializableImmutableAdminUpgradeabilityProxy"
+          }
+        ],
+        "flaggedCategories": [
+          "dangerous-edges",
+          "reentrancy-value-flow",
+          "storage-clash",
+          "unprotected-state-changing",
+          "upgrade-proxy-hazard"
+        ]
+      },
+      "provenance": "REAL",
+      "capturedAt": 1783555200000,
+      "contentSha": "c33007a8c166326ec4bd78d0be718c9727c935ae0a7ec0384b01a06742022312",
+      "chainId": 1,
+      "address": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "source": "sourcify:exact:1:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "sourceHash": "52a35d70a32f8851842d80c196746838c37fca5d909e68048e373b733f3d82c9",
+      "ruleset": "contract-facts@v1(auth-surface·call-graph·upgrade-check·storage-layout·value-flow·state-flow)"
+    },
+    "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a": {
+      "poolKey": "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
+      "facts": {
+        "contracts": [
+          "BaseImmutableAdminUpgradeabilityProxy",
+          "Proxy",
+          "InitializableUpgradeabilityProxy",
+          "Address",
+          "BaseUpgradeabilityProxy",
+          "InitializableImmutableAdminUpgradeabilityProxy"
+        ],
+        "functionsAnalyzed": 19,
+        "findings": [
+          {
+            "category": "unprotected-state-changing",
+            "detail": "constructor mutates state without an authorization gate",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "constructor",
+            "line": 23
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeToAndCall",
+            "line": 75
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "upgradeTo(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeTo",
+            "line": 56
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "upgradeToAndCall(address,bytes): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeToAndCall",
+            "line": 69
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "fallback",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "_delegate",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "_fallback",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "fallback delegatecall present — the implementation target executes in this contract's storage context",
+            "contract": "Proxy"
+          },
+          {
+            "category": "unprotected-state-changing",
+            "detail": "initialize(address,bytes) mutates state without an authorization gate",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "unprotected-state-changing",
+            "detail": "initialize(address,bytes) is an initializer-like function without an initializer signal",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 25
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "initialize(address,bytes) is initializer-like without an initializer/onlyInitializing signal",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "InitializableUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "InitializableUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "initialize(address,bytes): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "call — low-level external call (full callback surface)",
+            "contract": "Address",
+            "fn": "sendValue",
+            "line": 58
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "sendValue(address payable,uint256): transfers ETH through an external control handoff",
+            "contract": "Address",
+            "fn": "sendValue",
+            "line": 54
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "BaseUpgradeabilityProxy"
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_upgradeTo(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_upgradeTo",
+            "line": 44
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_setImplementation(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_setImplementation",
+            "line": 53
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "BaseUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_upgradeTo(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_upgradeTo",
+            "line": 44
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_setImplementation(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_setImplementation",
+            "line": 53
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "InitializableImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "InitializableImmutableAdminUpgradeabilityProxy"
+          }
+        ],
+        "flaggedCategories": [
+          "dangerous-edges",
+          "reentrancy-value-flow",
+          "storage-clash",
+          "unprotected-state-changing",
+          "upgrade-proxy-hazard"
+        ]
+      },
+      "provenance": "REAL",
+      "capturedAt": 1783555200000,
+      "contentSha": "c33007a8c166326ec4bd78d0be718c9727c935ae0a7ec0384b01a06742022312",
+      "chainId": 1,
+      "address": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "source": "sourcify:exact:1:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "sourceHash": "52a35d70a32f8851842d80c196746838c37fca5d909e68048e373b733f3d82c9",
+      "ruleset": "contract-facts@v1(auth-surface·call-graph·upgrade-check·storage-layout·value-flow·state-flow)"
+    },
+    "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac": {
+      "poolKey": "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac",
+      "facts": {
+        "contracts": [
+          "BaseImmutableAdminUpgradeabilityProxy",
+          "Proxy",
+          "InitializableUpgradeabilityProxy",
+          "Address",
+          "BaseUpgradeabilityProxy",
+          "InitializableImmutableAdminUpgradeabilityProxy"
+        ],
+        "functionsAnalyzed": 19,
+        "findings": [
+          {
+            "category": "unprotected-state-changing",
+            "detail": "constructor mutates state without an authorization gate",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "constructor",
+            "line": 23
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeToAndCall",
+            "line": 75
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "upgradeTo(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeTo",
+            "line": 56
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "upgradeToAndCall(address,bytes): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseImmutableAdminUpgradeabilityProxy",
+            "fn": "upgradeToAndCall",
+            "line": 69
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "fallback",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "_delegate",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "_fallback",
+            "line": 34
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "fallback delegatecall present — the implementation target executes in this contract's storage context",
+            "contract": "Proxy"
+          },
+          {
+            "category": "unprotected-state-changing",
+            "detail": "initialize(address,bytes) mutates state without an authorization gate",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "unprotected-state-changing",
+            "detail": "initialize(address,bytes) is an initializer-like function without an initializer signal",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 25
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "initialize(address,bytes) is initializer-like without an initializer/onlyInitializing signal",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "InitializableUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "InitializableUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "initialize(address,bytes): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "InitializableUpgradeabilityProxy",
+            "fn": "initialize",
+            "line": 20
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "call — low-level external call (full callback surface)",
+            "contract": "Address",
+            "fn": "sendValue",
+            "line": 58
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "sendValue(address payable,uint256): transfers ETH through an external control handoff",
+            "contract": "Address",
+            "fn": "sendValue",
+            "line": 54
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "BaseUpgradeabilityProxy"
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_upgradeTo(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_upgradeTo",
+            "line": 44
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_setImplementation(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_setImplementation",
+            "line": 53
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "BaseUpgradeabilityProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_upgradeTo(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_upgradeTo",
+            "line": 44
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_setImplementation(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "BaseUpgradeabilityProxy",
+            "fn": "_setImplementation",
+            "line": 53
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "InitializableImmutableAdminUpgradeabilityProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "InitializableImmutableAdminUpgradeabilityProxy"
+          }
+        ],
+        "flaggedCategories": [
+          "dangerous-edges",
+          "reentrancy-value-flow",
+          "storage-clash",
+          "unprotected-state-changing",
+          "upgrade-proxy-hazard"
+        ]
+      },
+      "provenance": "REAL",
+      "capturedAt": 1783555200000,
+      "contentSha": "c33007a8c166326ec4bd78d0be718c9727c935ae0a7ec0384b01a06742022312",
+      "chainId": 1,
+      "address": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "source": "sourcify:exact:1:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "sourceHash": "52a35d70a32f8851842d80c196746838c37fca5d909e68048e373b733f3d82c9",
+      "ruleset": "contract-facts@v1(auth-surface·call-graph·upgrade-check·storage-layout·value-flow·state-flow)"
+    },
+    "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487": {
+      "poolKey": "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487",
+      "facts": {
+        "contracts": [
+          "ERC1967Upgrade",
+          "ERC1967Proxy",
+          "Proxy",
+          "StorageSlot",
+          "Address",
+          "TransparentUpgradeableProxy"
+        ],
+        "functionsAnalyzed": 42,
+        "findings": [
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "ERC1967Upgrade"
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_setImplementation(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "ERC1967Upgrade",
+            "fn": "_setImplementation",
+            "line": 45
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_upgradeTo(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "ERC1967Upgrade",
+            "fn": "_upgradeTo",
+            "line": 55
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_upgradeToAndCall(address,bytes,bool) looks like an upgrade entrypoint without an auth signal",
+            "contract": "ERC1967Upgrade",
+            "fn": "_upgradeToAndCall",
+            "line": 65
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_upgradeToAndCallUUPS(address,bytes,bool) looks like an upgrade entrypoint without an auth signal",
+            "contract": "ERC1967Upgrade",
+            "fn": "_upgradeToAndCallUUPS",
+            "line": 81
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "_setBeacon(address) looks like an upgrade entrypoint without an auth signal",
+            "contract": "ERC1967Upgrade",
+            "fn": "_setBeacon",
+            "line": 159
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "ERC1967Upgrade"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_setImplementation(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "ERC1967Upgrade",
+            "fn": "_setImplementation",
+            "line": 45
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_upgradeTo(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "ERC1967Upgrade",
+            "fn": "_upgradeTo",
+            "line": 55
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_upgradeToAndCall(address,bytes,bool): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "ERC1967Upgrade",
+            "fn": "_upgradeToAndCall",
+            "line": 65
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_upgradeToAndCallUUPS(address,bytes,bool): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "ERC1967Upgrade",
+            "fn": "_upgradeToAndCallUUPS",
+            "line": 81
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_setBeacon(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "ERC1967Upgrade",
+            "fn": "_setBeacon",
+            "line": 159
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "_upgradeBeaconToAndCall(address,bytes,bool): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "ERC1967Upgrade",
+            "fn": "_upgradeBeaconToAndCall",
+            "line": 174
+          },
+          {
+            "category": "unprotected-state-changing",
+            "detail": "constructor mutates state without an authorization gate",
+            "contract": "ERC1967Proxy",
+            "fn": "constructor",
+            "line": 22
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "ERC1967Proxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "ERC1967Proxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "constructor: state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "ERC1967Proxy",
+            "fn": "constructor",
+            "line": 22
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "_delegate",
+            "line": 23
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "_fallback",
+            "line": 23
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "fallback",
+            "line": 23
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Proxy",
+            "fn": "receive",
+            "line": 23
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "fallback delegatecall present — the implementation target executes in this contract's storage context",
+            "contract": "Proxy"
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "call — low-level external call (full callback surface)",
+            "contract": "Address",
+            "fn": "sendValue",
+            "line": 63
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "call — low-level external call (full callback surface)",
+            "contract": "Address",
+            "fn": "functionCall",
+            "line": 137
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "call — low-level external call (full callback surface)",
+            "contract": "Address",
+            "fn": "functionCall",
+            "line": 137
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "call — low-level external call (full callback surface)",
+            "contract": "Address",
+            "fn": "functionCallWithValue",
+            "line": 137
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "call — low-level external call (full callback surface)",
+            "contract": "Address",
+            "fn": "functionCallWithValue",
+            "line": 137
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Address",
+            "fn": "functionDelegateCall",
+            "line": 191
+          },
+          {
+            "category": "dangerous-edges",
+            "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+            "contract": "Address",
+            "fn": "functionDelegateCall",
+            "line": 191
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "sendValue(address payable,uint256): transfers ETH through an external control handoff",
+            "contract": "Address",
+            "fn": "sendValue",
+            "line": 60
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "functionCall(address,bytes): transfers ETH through an external control handoff",
+            "contract": "Address",
+            "fn": "functionCall",
+            "line": 85
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "functionCall(address,bytes,string): transfers ETH through an external control handoff",
+            "contract": "Address",
+            "fn": "functionCall",
+            "line": 95
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "functionCallWithValue(address,bytes,uint256): transfers ETH through an external control handoff",
+            "contract": "Address",
+            "fn": "functionCallWithValue",
+            "line": 114
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "functionCallWithValue(address,bytes,uint256,string): transfers ETH through an external control handoff",
+            "contract": "Address",
+            "fn": "functionCallWithValue",
+            "line": 128
+          },
+          {
+            "category": "upgrade-proxy-hazard",
+            "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+            "contract": "TransparentUpgradeableProxy"
+          },
+          {
+            "category": "storage-clash",
+            "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+            "contract": "TransparentUpgradeableProxy"
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "changeAdmin(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "TransparentUpgradeableProxy",
+            "fn": "changeAdmin",
+            "line": 87
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "upgradeTo(address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "TransparentUpgradeableProxy",
+            "fn": "upgradeTo",
+            "line": 96
+          },
+          {
+            "category": "reentrancy-value-flow",
+            "detail": "upgradeToAndCall(address,bytes): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+            "contract": "TransparentUpgradeableProxy",
+            "fn": "upgradeToAndCall",
+            "line": 107
+          }
+        ],
+        "flaggedCategories": [
+          "dangerous-edges",
+          "reentrancy-value-flow",
+          "storage-clash",
+          "unprotected-state-changing",
+          "upgrade-proxy-hazard"
+        ]
+      },
+      "provenance": "REAL",
+      "capturedAt": 1783555200000,
+      "contentSha": "63376723c5a92e25d2f09d2b0c798e7ef15e02782732d31d32694054e8ac0be9",
+      "chainId": 1,
+      "address": "0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "source": "sourcify:exact:1:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "sourceHash": "add68ce902c2a77a108ed48f4a5cbe060d13118d2a7610ac01369ae1c8e46531",
+      "ruleset": "contract-facts@v1(auth-surface·call-graph·upgrade-check·storage-layout·value-flow·state-flow)"
+    }
+  }
+}

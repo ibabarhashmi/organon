@@ -1,0 +1,348 @@
+{
+  "protocol": "contract-pins",
+  "sprint": "THE CONTRACT-TRUTH SPRINT (the deep counterparty axis; Persistence findings closed)",
+  "at": "2026-07-09",
+  "continues": "THE PERSISTENCE SPRINT (RED-TEAM-CLEAN, battery 625 pass / 1 skip / 0 fail across 102 files)",
+  "blueprint": {
+    "rel": "sprint/sprint-result/ORGANON_Contract_Truth_Sprint_Blueprint.md",
+    "sha": "e450f03ad066b95e0d59d34993c4b3b01be58eb937e446c621fcd3d5dc9e66be"
+  },
+  "carriedFromPinsSha": "f157da698895ce89d945334b3bac814bcf27538047050b25d78f2df3662d36fe",
+  "contractRisk": {
+    "doctrine": "the counterparty axis gains a deterministic structural contract screen over verified source: the Sentinel IR yields structural facts (unprotected admin functions, dangerous delegatecall/low-level/eth-transfer edges, proxy/upgrade hazards, storage-clash surfaces, reentrancy/value-flow surfaces, oracle/external dependency reads); ORGΛNON's OWN pinned rules tier them — a structural screen over verified source, NEVER a safety verdict",
+    "subAxisName": "contract-risk",
+    "tiers": [
+      "CLEAN-STRUCTURE",
+      "FLAGGED",
+      "UNVERIFIED"
+    ],
+    "flagCategories": [
+      {
+        "id": "unprotected-state-changing",
+        "tool": "auth-surface",
+        "fact": "a public/external state-changing function (writes or value-transfers) with no auth gate"
+      },
+      {
+        "id": "dangerous-edges",
+        "tool": "call-graph",
+        "fact": "a delegatecall / low-level call / eth-transfer edge"
+      },
+      {
+        "id": "upgrade-proxy-hazard",
+        "tool": "upgrade-check",
+        "fact": "an initializer without _disableInitializers, an unguarded upgrade entry, a missing storage gap, or a fallback delegatecall"
+      },
+      {
+        "id": "storage-clash",
+        "tool": "storage-layout",
+        "fact": "an upgradeable-without-gap or a proxy/implementation slot·type·label mismatch"
+      },
+      {
+        "id": "reentrancy-value-flow",
+        "tool": "value-flow / state-flow",
+        "fact": "a state write after an external call (CEI violation), a callback surface, or a cross-tx value dependency"
+      },
+      {
+        "id": "oracle-dependency",
+        "tool": "protocols.isOracleRead / dimensional",
+        "fact": "an oracle read / external price dependency (latestRoundData, slot0, …)"
+      }
+    ],
+    "tierRule": "ANY flagged structural surface → FLAGGED (the specific finding NAMED, never 'unsafe'); zero flagged surfaces AND a REAL verified build → CLEAN-STRUCTURE ('no flagged structural surfaces in the verified source' — NEVER 'safe'); no build / an unverifiable or SAMPLE build → UNVERIFIED (the coarse screen scores alone)",
+    "cleanStructureRequiresRealBuild": true,
+    "material": false,
+    "honestScope": {
+      "label": "a deterministic structural screen over verified source — not a full audit, not a guarantee",
+      "is": "compiler-backed structural FACTS (the Foundry build-info IR) + ORGΛNON's OWN deterministic risk rules over them",
+      "isNot": "a full audit, a safety guarantee, a model's opinion, or a dynamic/economic-exploit analysis (fuzzing/symbolic execution stays PARKED)",
+      "surfaced": "the label is attached to every rendering — the Reality-Check Pro counterparty row + the Ask contract facts + PINS.md"
+    },
+    "overClaimBanned": "the sub-axis states specific structural facts; a claim of 'safe' / 'audited' / 'guaranteed' is a doc-lie Halt (S25)",
+    "noModel": "the facts are compiler-output (the Foundry build-info AST → the ContractIR); the risk rules over them are ORGΛNON's own deterministic functions; ZERO LLM in src/contract/* (X-DETERM, S25)",
+    "deterministic": "a fixed ContractIR → byte-identical facts + a byte-identical tier across runs (no model, no random)",
+    "offHotLoop": "contract analysis runs at CAPTURE/registration time into the provenance record (content-hashed, REAL/SAMPLE-labeled); the scorecard render reads the recorded facts — a render triggers ZERO compilation (X-CONTRACT e)",
+    "haltRule": "a contract screen that says 'safe/audited', a fabricated all-clear on an absent/SAMPLE build, a model in the analysis, a Sentinel sibling import, a per-render compilation, or a moved verdict is a Halt"
+  },
+  "extraction": {
+    "doctrine": "the deterministic Solidity analysis is EXTRACTED copy-into-tree from the Sentinel repo (the monorepo ORGΛNON was born in) into src/contract/*, owned + in-tree — never a sibling import; only the pure (ContractIR)→facts logic is ported, never the platform",
+    "source": "packages/solidity-sentinel/src/solidity (the ContractIR builder + protocols.ts) + the ~10 LLM-free tools (auth-surface · call-graph · contract-info · inheritance-resolver · storage-layout · value-flow · upgrade-check · state-flow · dimensional-analysis · mutation-map)",
+    "copied": [
+      "ir.ts (the ContractIR type definitions) — verbatim",
+      "protocols.ts (curated DeFi knowledge: callback signatures + oracle-read patterns + protocol specs) — verbatim",
+      "build.ts (the Foundry build-info loader) — coupling severed",
+      "project.ts (foundry.toml detection) — coupling severed",
+      "index.ts → analyze.ts (the IR builder: analyzeProject / collect / taintAnalysis / expand) — coupling severed",
+      "the SIX tools' pure (ContractIR)→facts logic feeding the flag categories (auth-surface · call-graph · upgrade-check · storage-layout · value-flow · state-flow) → src/contract/facts.ts — Tool.define/zod/formatting dropped"
+    ],
+    "toolsPorted": [
+      "auth-surface",
+      "call-graph",
+      "upgrade-check",
+      "storage-layout",
+      "value-flow",
+      "state-flow"
+    ],
+    "toolsNotPorted": {
+      "tools": [
+        "contract-info",
+        "inheritance-resolver",
+        "dimensional-analysis",
+        "mutation-map"
+      ],
+      "why": "their outputs (a multi-language IR dump · the inheritance MRO tree · the DA-01..15 arithmetic/precision warnings · the mutation-parity map) are NOT in the six pinned contract-risk fact categories the sub-axis tiers on. Porting them would add ~800 LOC of analysis with NO current caller — the speculative 'while we're here' surface PART CLEAN + THE FIREWALL forbid. They remain in the Sentinel repo, extractable later if a real caller emerges. This scope decision is surfaced (D9), not silent."
+    },
+    "severed": [
+      "@/util/{glob,filesystem,process} → a small owned src/contract/fs.ts shim over node:fs + node:child_process (a plain path, no platform)",
+      "@/project/instance (the Instance.state cache + the default-directory) → a required plain project-path parameter (no session/platform state)"
+    ],
+    "dropped": [
+      "the Tool.define agent wrappers (the OpenCode tool scaffolding)",
+      "the zod parameter schemas (validation moves to the caller where needed)",
+      "the ../lang multi-language fallback (Anchor/Sui/Solana — out of a DeFi-Solidity screen's scope; scope creep the firewall forbids)",
+      "the Sentinel LLM audit agent (a model in the analysis is a Halt — S25)",
+      "the fuzzer + the RAG (dynamic/economic analysis stays PARKED)",
+      "dep-analyze.ts (the Etherscan @solidity-parser/parser path — not one of the 10 tools; PARKED, keeps the extraction dependency-free)"
+    ],
+    "ownedInTree": "nothing in src/contract/* imports @solidity-sentinel/* or OpenCode; the code is OWNED, and the dataplane_leak wall (positive-controlled) stays green (S26)",
+    "noNewNpmDep": "the main pipeline reads the Foundry compiler JSON (build-info AST), not Solidity source — so NO @solidity-parser/parser and NO new npm dependency; the mass-tool deps stay hono+zod (PART CLEAN)",
+    "recordedAs": "D9 — the contract-engine extraction + coupling-severance (the four ledger fields, surfaced verbatim in the handoff)"
+  },
+  "foundryOptionalSeam": {
+    "toolchainOptional": true,
+    "absentBehavior": "no foundry.toml / no artifacts/build-info / no toolchain → the contract sub-axis renders UNVERIFIED; the coarse age·size·dependency screen scores alone (the floor beneath it)",
+    "massToolRunsWithout": true,
+    "verifyRunsWithout": true,
+    "pristineRunsWithout": true,
+    "neverFabricatesAllClear": "a SAMPLE/absent build NEVER yields CLEAN-STRUCTURE — a fabricated all-clear without a verified build is a Halt (S27)"
+  },
+  "persistenceResolutions": [
+    {
+      "id": "P1",
+      "finding": "the Persistence header cited 585/0 vs the Master-doc/Crown-Jewel 583/0 — a 2-test drift unexplained",
+      "resolution": "reconciled by naming the AUTHORITATIVE count: data/honesty/evidence/battery-summary.json (regenerated + diffed by ./organon.sh verify) is the single source of truth, not prose; the historic 585-vs-583 was a documentation lag (a post-red-team header count vs a pre-red-team master-doc snapshot), immaterial to correctness. This sprint carries the MEASURED 625 pass / 1 skip / 0 fail across 102 files forward — no silent drift.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "P2",
+      "finding": "the mid-sprint re-pin f157da69… was announced in Phase 3 but not surfaced in the final marker",
+      "resolution": "STANDING RULE established: the terminal PINS_SHA appears in EVERY final RED-TEAM-CLEAN marker (this sprint's marker states it; Persistence's terminal PINS_SHA f157da69… is retroactively noted here). A final marker without its terminal PINS_SHA is a fail.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "P3",
+      "finding": "the surviving 1 skip in 625/1/0 was unnamed",
+      "resolution": "NAMED: the surviving skip is test/organon/ask_live.test.ts — the Operator-gated LIVE Groq round-trip, skipped offline (the battery forces AI keys empty → hermetic). The skip is stated wherever the battery count is cited.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "P4",
+      "finding": "W-P02's 'fenced/clean GO' vs 'post-hoc fence' conflation was oddly framed",
+      "resolution": "the exact separation is stated: cleanGo is the DEPTH flag (a clean GO needs the deflation-survival AND a TRACEABLE decay half-life AND a CONSISTENT ICIR — the persistence/consistency hurdle); the POST-HOC fence is the pre-registration caveat (a GO is measured after the fact, not pre-registered). Two ORTHOGONAL fences — a CONDITIONAL GO can be depth-clean yet post-hoc-fenced — both disclosed, never conflated; the verdict WORD is never minted/moved.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "P5",
+      "finding": "the aave GO (conditional) half-life ≈ 9.9 / ICIR ≈ 0.6 read as if committed goldens",
+      "resolution": "NOTED under the X-LIVE ceiling: the rendered aave half-life ≈ 9.9 periods + ICIR ≈ 0.6 are CURRENT-CAPTURE values (computed from the live-captured record at render time), RE-CAPTURABLE and NOT committed goldens. What ./organon.sh verify reproduces is the content-hash of the committed capture, not the underlying live value.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "P6",
+      "finding": "the Phase-4 LUMPY-hurdle 'honest case' was hypothetical",
+      "resolution": "STATED honestly: the ICIR LUMPY hurdle is ARMED + DEMONSTRATED on a constructed positive-control record (a thin per-period edge over many periods — mean/std ≈ 0.09, n ≈ 900 — survives deflation yet is LUMPY, tempering the clean GO). It has NOT fired on a real scored strategy: the one real GO on the shelf (aave-v3 USDC) is CONSISTENT (ICIR ≈ 0.6). Armed-and-demonstrated, not-yet-fired-on-real-data — honest either way.",
+      "status": "RESOLVED"
+    }
+  ],
+  "deviationD9": {
+    "id": "D9",
+    "blueprintLine": "Contract-Truth Phase 2 (EXTRACT-CLEAN): 'copy src/solidity + the ~10 LLM-free tools into src/contract/*; sever the OpenCode coupling; drop Tool.define; the extraction + severance recorded in D9; the leak wall green; NO model ported'",
+    "whatWasDone": "EXTRACTED copy-into-tree: Sentinel's src/solidity engine (ir.ts + protocols.ts verbatim; build.ts + project.ts + index.ts→analyze.ts with coupling severed) and the SIX tools' pure (ContractIR)→facts logic feeding the pinned flag categories (auth-surface · call-graph · upgrade-check · storage-layout · value-flow · state-flow) → src/contract/facts.ts were COPIED into src/contract/*. The OpenCode coupling was SEVERED — @/util/{glob,filesystem,process} → a small owned src/contract/fs.ts shim over node built-ins + Bun.Glob/spawn, and @/project/instance (the session cache + default dir) → a required plain project-path parameter. The Tool.define wrappers, the zod schemas, the ../lang multi-language fallback, the LLM audit agent, the fuzzer, the RAG, and dep-analyze.ts were DROPPED. The four other LLM-free tools (contract-info · inheritance-resolver · dimensional-analysis · mutation-map) were NOT ported — their outputs are not in the sub-axis fact list, so porting them would be speculative surface with no current caller (PART CLEAN). The code is OWNED in-tree; nothing imports @solidity-sentinel/* or OpenCode (the dataplane_leak wall stays green); the main pipeline reads the Foundry compiler JSON (build-info AST), so no new npm dependency (deps stay hono+zod).",
+    "why": "The deep counterparty axis needs to SEE THE CODE deterministically. The single high-value extractable Sentinel asset is its LLM-free, compiler-backed src/solidity IR + tools (validated: zero provider/session hits) — the only way a contract-risk axis can exist without violating X-DETERM. Copy-into-tree (never a sibling import) keeps the dataplane_leak wall green and the tree owned; porting only the pure analysis (not the platform) respects PART CLEAN.",
+    "lawAuthority": "X-CONTRACT(a,b) + X-DETERM + X-DEVLEDGER + PART CLEAN (Contract-Truth Phase 2)"
+  },
+  "screens": {
+    "count": 3,
+    "set": [
+      "shelf",
+      "reality-check",
+      "ask"
+    ],
+    "massScreens": [
+      "shelf",
+      "reality-check"
+    ],
+    "contractDetailIsAProRow": "the contract-risk detail is a Pro row on the Reality Check counterparty section (not a screen); a fourth screen is a Halt (PART CLEAN)"
+  },
+  "stressCatalog": [
+    {
+      "id": "S1",
+      "name": "dead endpoint",
+      "expect": "degrade to last-good or SAMPLE; the served UI renders; never a crash/spin"
+    },
+    {
+      "id": "S2",
+      "name": "429 storm",
+      "expect": "the short-TTL cache absorbs it; the Shelf reads the record (no per-load provider fan-out)"
+    },
+    {
+      "id": "S3",
+      "name": "stale cache",
+      "expect": "the shown asOf is the capture time, visibly stale, never 'now' (OWN LINE)"
+    },
+    {
+      "id": "S4",
+      "name": "no-history pool",
+      "expect": "history-dependent rows UNVERIFIED; point-in-time rows still compute; never a fabricated SOLID"
+    },
+    {
+      "id": "S5",
+      "name": "mid-session depeg",
+      "expect": "the peg row fires → AVOID; both registers agree"
+    },
+    {
+      "id": "S6",
+      "name": "emissions-inflated trap",
+      "expect": "the yield-reality row flags temporary → verdict not SOLID"
+    },
+    {
+      "id": "S7",
+      "name": "SAMPLE-heavy state",
+      "expect": "EVERY SAMPLE verdict is UNVERIFIED — the W-E01 invariant holds under all axes (OWN LINE)"
+    },
+    {
+      "id": "S8",
+      "name": "malformed / adversarial data",
+      "expect": "boundary-validated to missing/UNVERIFIED; never a crash or a nonsense verdict"
+    },
+    {
+      "id": "S9",
+      "name": "provenance tamper",
+      "expect": "a shown-but-unrecorded REAL Halts; a broken chain refused on construct"
+    },
+    {
+      "id": "S10",
+      "name": "determinism / no-LLM-in-verdict",
+      "expect": "identical inputs → byte-identical scorecard; a model-in-verdict rejected wholesale"
+    },
+    {
+      "id": "S11",
+      "name": "thin-liquidity trap",
+      "expect": "a deep-APY pool with dust liquidity → liquidity FAIL → not SOLID"
+    },
+    {
+      "id": "S12",
+      "name": "imminent-unlock trap",
+      "expect": "a large near-term unlock → unlock FAIL → CAUTION/AVOID (ARMED; D6 on live keyless data)"
+    },
+    {
+      "id": "S13",
+      "name": "dust/new/STACKED-dependency trap",
+      "expect": "a young/tiny OR dependency-stacked pool → counterparty flag, honestly coarse (never 'audited/safe')"
+    },
+    {
+      "id": "S14",
+      "name": "verifiability",
+      "expect": "./organon.sh verify regenerates every committed evidence artifact; a tampered count/number fails"
+    },
+    {
+      "id": "S15",
+      "name": "coverage/applicability",
+      "expect": "an inapplicable axis renders not-applicable, never a fabricated pass"
+    },
+    {
+      "id": "S16",
+      "name": "stamp isolation",
+      "expect": "a scorecard render → ZERO adjudicator/decay/ICIR calls; the verdict spaces never conflate"
+    },
+    {
+      "id": "S17",
+      "name": "stamp honesty",
+      "expect": "short-history → INSUFFICIENT; deflation tightens with family size; the goldens reproduce; history-absent → 'unavailable'"
+    },
+    {
+      "id": "S18",
+      "name": "live-number provenance",
+      "expect": "./organon.sh verify asserts every cited live number resolves to a capture-manifest content-hash"
+    },
+    {
+      "id": "S19",
+      "name": "ask groundedness",
+      "expect": "a fabricated number rejected WHOLESALE → deterministic; an UNVERIFIED gap never filled; a Simple answer carries no raw decimals"
+    },
+    {
+      "id": "S20",
+      "name": "provider/BYOK/key-safety",
+      "expect": "no key → deterministic mode, no crash; BYOK selects the env provider; no key string in the served HTML or any log"
+    },
+    {
+      "id": "S21",
+      "name": "ask determinism/injection",
+      "expect": "same query → identical FACTS (raw toggle byte-identical); a prompt-injection cannot move a verdict"
+    },
+    {
+      "id": "S22",
+      "name": "decay-gate honesty (NEW)",
+      "expect": "a short/flat/SAMPLE series → INSUFFICIENT, never a fabricated half-life; a 2-period-half-life → SHORT_LIVED (a clean GO withheld); off the mass path; deterministic"
+    },
+    {
+      "id": "S23",
+      "name": "ICIR determinism/scope (NEW)",
+      "expect": "identical inputs → byte-identical ICIR; a degenerate series → INSUFFICIENT (no div-by-zero); the within-strategy scope label present (a cross-sectional claim fails); off-path"
+    },
+    {
+      "id": "S24",
+      "name": "live-AI grounding (NEW)",
+      "expect": "the committed Groq round-trip proves a real-model grounded answer passes AND a fabricated number is rejected wholesale; the redacted transcript reproduces its manifest hash; no key leaks"
+    },
+    {
+      "id": "S25",
+      "name": "contract-analysis honesty (NEW)",
+      "expect": "a contract screen reports specific structural facts + the 'not a full audit' label, NEVER 'safe/audited'; ZERO model/LLM in src/contract/*; deterministic (a fixed ContractIR → byte-identical facts + tier); a seeded unprotected admin fn → FLAGGED (the finding named)"
+    },
+    {
+      "id": "S26",
+      "name": "leak-wall / coupling-severance (NEW)",
+      "expect": "src/contract/* imports nothing from @solidity-sentinel/* or OpenCode (the dataplane_leak wall green + a positive control on the new dir); D9 records the extraction + severance; the ported code is owned in-tree, not referenced from a sibling; no new npm dep"
+    },
+    {
+      "id": "S27",
+      "name": "Foundry-absent degradation (NEW)",
+      "expect": "no build/toolchain → the contract sub-axis is UNVERIFIED, the coarse age·size·dependency screen scores alone; a SAMPLE/absent build NEVER a fabricated all-clear; the mass tool + ./organon.sh verify + the pristine fresh clone run green (never a crash)"
+    }
+  ],
+  "carried": {
+    "frozenSeven": "the 6 computational-core .py + loop.ts byte-untouched (core_byte_identity green every gate); the contract engine + sub-axis touch ZERO frozen bytes",
+    "verdictDifferential": "lending fp-set 70c7912f… + funding NO-GO/ILLUSTRATIVE reproduce at every gate — zero verdicts moved (the contract sub-axis is material:false — additive)",
+    "sevenAxes": [
+      "yield-reality",
+      "tvl-trend",
+      "peg",
+      "liquidity-depth",
+      "unlock-overhang",
+      "counterparty",
+      "funding-regime"
+    ],
+    "coarseCounterpartyFloor": "the coarse counterparty screen (age · size · dependency — NOT a contract audit) is UNCHANGED + material; the contract-risk sub-axis is BESIDE it (the depth), never replacing it",
+    "stampVerdicts": [
+      "GO",
+      "NO-GO",
+      "INSUFFICIENT",
+      "UNAVAILABLE"
+    ],
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "aiProviders": [
+      "gemini (Google AI Studio, default)",
+      "openai",
+      "anthropic",
+      "openai-compatible",
+      "groq (llama-3.1-8b-instant)"
+    ],
+    "moatCadence": "the capture cadence appends ONLY REAL captures (content-addressed, hash-chained) — now incl. contract-risk facts captured at registration; a backfill/retro throws",
+    "parkedGenerateLoop": "the LLM strategy-proposer / iterate-to-generate loop stays PARKED (a different product for a non-wedge user); the Sentinel fuzzer/RAG/dynamic analysis + the public library + execution stay PARKED (THE FIREWALL)",
+    "probe": "the X-PROBE metrics + KILL CRITERION remain ARMED + honestly BUILT-BUT-UNPROVEN"
+  },
+  "pinsSha": "4275f7396027e7dd016793a2085454c3c7db880c8386e16df7766cc5681f9489"
+}

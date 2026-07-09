@@ -358,3 +358,727 @@ test("PERSISTENCE — the stress catalog is S1–S24 (24 lines; S22–S24 new: d
   expect(ps.stressCatalog.find((s: { id: string }) => s.id === "S23").name).toMatch(/ICIR/i)
   expect(ps.stressCatalog.find((s: { id: string }) => s.id === "S24").name).toMatch(/live-AI/i)
 })
+
+// ── THE CONTRACT-TRUTH SPRINT — the additional pins (data/honesty/contract-pins.json), carried forward from f157da69… ──
+const ct = JSON.parse(readFileSync(path.join(H, "contract-pins.json"), "utf8"))
+// re-pinned in Phase 2 (EXTRACT-CLEAN): the extraction pin now states the ACTUAL scope — the SIX tools whose pure logic
+// feeds the flag categories are ported to src/contract/facts.ts; the four others are consciously NOT ported (cf620520… → 4275f739…)
+const CONTRACT_PINS_SHA_GOLDEN = "4275f7396027e7dd016793a2085454c3c7db880c8386e16df7766cc5681f9489"
+
+test("CONTRACT — the pins hash-lock is the pinned golden + self-consistent + carried from the persistence sha (the lock bites)", () => {
+  expect(ct.pinsSha).toBe(CONTRACT_PINS_SHA_GOLDEN)
+  const { pinsSha, ...rest } = ct
+  expect(sha256(JSON.stringify(rest))).toBe(ct.pinsSha) // self-consistent
+  expect(ct.carriedFromPinsSha).toBe(PERSISTENCE_PINS_SHA_GOLDEN) // carried forward, never rebuilt
+  // POSITIVE CONTROL: dropping the real-build requirement (the fabricated-all-clear risk) changes the sha — the lock bites
+  const mutated = JSON.parse(JSON.stringify(rest))
+  mutated.contractRisk.cleanStructureRequiresRealBuild = false
+  expect(sha256(JSON.stringify(mutated))).not.toBe(ct.pinsSha)
+})
+
+test("CONTRACT — the contract-risk sub-axis is deterministic, honestly scoped, additive, and NEVER over-claims 'safe' (X-CONTRACT, S25)", () => {
+  const c = ct.contractRisk
+  expect(c.subAxisName).toBe("contract-risk")
+  expect(c.tiers).toEqual(["CLEAN-STRUCTURE", "FLAGGED", "UNVERIFIED"])
+  expect(c.material).toBe(false) // ADDITIVE — the sub-axis is non-deciding; the differential is zero (X-KEEP)
+  expect(c.cleanStructureRequiresRealBuild).toBe(true) // SAMPLE/absent NEVER a fabricated all-clear (S27)
+  // the six structural fact categories, each mapped to the extracted tool that produces it
+  expect(c.flagCategories).toHaveLength(6)
+  const flagIds = c.flagCategories.map((f: { id: string }) => f.id)
+  for (const id of ["unprotected-state-changing", "dangerous-edges", "upgrade-proxy-hazard", "storage-clash", "reentrancy-value-flow", "oracle-dependency"]) expect(flagIds).toContain(id)
+  // the tier rule names all three tiers unambiguously
+  expect(c.tierRule).toMatch(/FLAGGED/)
+  expect(c.tierRule).toMatch(/CLEAN-STRUCTURE/)
+  expect(c.tierRule).toMatch(/UNVERIFIED/)
+  // the honest scope is a screen NOT a full audit; the over-claim ban is pinned; NO model; off the hot loop
+  expect(c.honestScope.label).toMatch(/not a full audit/i)
+  expect(c.honestScope.isNot).toMatch(/full audit|guarantee/i)
+  expect(c.overClaimBanned).toMatch(/safe|audited|guaranteed/i) // a 'safe'/'audited' claim is a doc-lie Halt
+  expect(c.noModel).toMatch(/ZERO LLM|no LLM|X-DETERM/i)
+  expect(c.offHotLoop).toMatch(/capture|ZERO compilation|recorded facts/i)
+})
+
+test("CONTRACT — the extraction/severance contract is exact: copy-into-tree, coupling severed, only the pure analysis kept, no new dep (D9, S26)", () => {
+  const e = ct.extraction
+  expect(e.copied).toHaveLength(6)
+  expect(e.severed).toHaveLength(2)
+  expect(e.dropped).toHaveLength(6)
+  // the severance replaces the platform coupling with a plain path — @/util/* and @/project/instance are gone
+  expect(e.severed.join(" ")).toMatch(/@\/util/)
+  expect(e.severed.join(" ")).toMatch(/@\/project\/instance|path param/i)
+  // the DROPPED list refuses the model/fuzzer/RAG + the Tool.define platform (a ported model is a Halt — S25)
+  expect(e.dropped.join(" ")).toMatch(/Tool\.define/)
+  expect(e.dropped.join(" ")).toMatch(/LLM audit agent|model/i)
+  expect(e.dropped.join(" ")).toMatch(/fuzzer|RAG/)
+  // owned in-tree, leak wall green, no new npm dep (deps stay hono+zod)
+  expect(e.ownedInTree).toMatch(/@solidity-sentinel|dataplane_leak|owned/i)
+  expect(e.noNewNpmDep).toMatch(/hono|zod|compiler JSON|no.*dep/i)
+  // the SIX tools whose pure logic is ported (they produce the pinned flag categories)
+  expect(e.toolsPorted).toEqual(["auth-surface", "call-graph", "upgrade-check", "storage-layout", "value-flow", "state-flow"])
+  // the FOUR LLM-free tools consciously NOT ported (their outputs aren't in the sub-axis fact list — PART CLEAN, no dead code)
+  expect(e.toolsNotPorted.tools).toEqual(["contract-info", "inheritance-resolver", "dimensional-analysis", "mutation-map"])
+  expect(e.toolsNotPorted.why).toMatch(/not in the six pinned|no current caller|speculative|PART CLEAN/i)
+})
+
+test("CONTRACT — the Foundry toolchain is an OPTIONAL seam: absent → UNVERIFIED, never a fabricated all-clear (S27)", () => {
+  const s = ct.foundryOptionalSeam
+  expect(s.toolchainOptional).toBe(true)
+  expect(s.massToolRunsWithout).toBe(true)
+  expect(s.verifyRunsWithout).toBe(true)
+  expect(s.pristineRunsWithout).toBe(true)
+  expect(s.absentBehavior).toMatch(/UNVERIFIED/)
+  expect(s.absentBehavior).toMatch(/coarse.*screen.*(alone|floor)/i) // the coarse screen still scores
+  expect(s.neverFabricatesAllClear).toMatch(/fabricated all-clear|CLEAN-STRUCTURE|Halt/i)
+})
+
+test("CONTRACT — the Persistence finding-resolutions P1–P6 are pinned, each with a resolution (continuity hygiene)", () => {
+  const ids = ct.persistenceResolutions.map((p: { id: string }) => p.id)
+  expect(ids).toEqual(["P1", "P2", "P3", "P4", "P5", "P6"])
+  for (const p of ct.persistenceResolutions) { expect(p.finding.trim().length).toBeGreaterThan(0); expect(p.resolution.trim().length).toBeGreaterThan(0); expect(p.status).toMatch(/RESOLVED/) }
+  const byId = (id: string) => ct.persistenceResolutions.find((p: { id: string }) => p.id === id).resolution
+  expect(byId("P1")).toMatch(/battery-summary|625/i) // the authoritative count named
+  expect(byId("P2")).toMatch(/terminal PINS_SHA|final.*marker/i) // the standing rule
+  expect(byId("P3")).toMatch(/ask_live/i) // the surviving skip named
+  expect(byId("P4")).toMatch(/orthogonal|post-hoc/i) // the two-fence separation
+  expect(byId("P5")).toMatch(/re-capturable|X-LIVE|9\.9/i) // the live-value character
+  expect(byId("P6")).toMatch(/ARMED|not.*fired|CONSISTENT/i) // the LUMPY firing status
+})
+
+test("CONTRACT — D9 (the extraction + coupling-severance) carries its four ledger fields (a silent deviation is a Halt)", () => {
+  const d9 = ct.deviationD9
+  expect(d9.id).toBe("D9")
+  for (const k of ["blueprintLine", "whatWasDone", "why", "lawAuthority"]) expect(String(d9[k]).trim().length).toBeGreaterThan(0)
+  expect(d9.whatWasDone).toMatch(/EXTRACTED|src\/contract|severed/i)
+  expect(d9.lawAuthority).toMatch(/X-CONTRACT/)
+})
+
+test("CONTRACT — the screen set stays the conscious 3 (the contract detail is a Pro row, not a screen); a fourth is a Halt", () => {
+  expect(ct.screens.count).toBe(3)
+  expect(ct.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(ct.screens.massScreens).toEqual(["shelf", "reality-check"])
+  expect(ct.screens.contractDetailIsAProRow).toMatch(/Pro row|NOT a screen/i)
+})
+
+test("CONTRACT — the stress catalog is S1–S27 (27 lines; S25 contract-honesty · S26 leak-wall/severance · S27 Foundry-absent)", () => {
+  expect(ct.stressCatalog).toHaveLength(27)
+  const ids = ct.stressCatalog.map((s: { id: string }) => s.id)
+  expect(ids).toEqual(Array.from({ length: 27 }, (_, k) => `S${k + 1}`))
+  expect(ct.stressCatalog.find((s: { id: string }) => s.id === "S25").name).toMatch(/contract/i)
+  expect(ct.stressCatalog.find((s: { id: string }) => s.id === "S26").name).toMatch(/leak|severance/i)
+  expect(ct.stressCatalog.find((s: { id: string }) => s.id === "S27").name).toMatch(/Foundry/i)
+})
+
+// ── THE BUILD-PROVENANCE SPRINT — the additional pins (data/honesty/verify-pins.json), carried forward from 4275f739… ──
+const vf = JSON.parse(readFileSync(path.join(H, "verify-pins.json"), "utf8"))
+const VERIFY_PINS_SHA_GOLDEN = "f4e5a4a8f233ec0b4a76775e3a0d1ec7400bcd8de6deb4c4d647b2da1e813177"
+
+test("VERIFY — the pins hash-lock is the pinned golden + self-consistent + carried from the contract sha (the lock bites)", () => {
+  expect(vf.pinsSha).toBe(VERIFY_PINS_SHA_GOLDEN)
+  const { pinsSha, ...rest } = vf
+  expect(sha256(JSON.stringify(rest))).toBe(vf.pinsSha) // self-consistent
+  expect(vf.carriedFromPinsSha).toBe(CONTRACT_PINS_SHA_GOLDEN) // carried forward, never rebuilt
+  // POSITIVE CONTROL: dropping the REAL/SAMPLE wall (the gravest new risk — a SAMPLE-earned clean tier) changes the sha
+  const mutated = JSON.parse(JSON.stringify(rest))
+  mutated.realSampleWall.cleanStructureRequiresRealBuild = false
+  expect(sha256(JSON.stringify(mutated))).not.toBe(vf.pinsSha)
+})
+
+test("VERIFY — the REAL/SAMPLE wall is absolute: SAMPLE never earns CLEAN-STRUCTURE; flags are existence-proofs, absence trustworthy only on REAL (S28)", () => {
+  const w = vf.realSampleWall
+  expect(w.cleanStructureRequiresRealBuild).toBe(true)
+  expect(w.sampleNeverClean).toMatch(/never|NEVER/)
+  expect(w.sampleNeverClean).toMatch(/CLEAN-STRUCTURE/)
+  expect(w.flagsAreExistenceProofs).toMatch(/existence|any analyzed source|REAL or SAMPLE/i)
+  expect(w.absenceTrustworthyOnlyOnReal).toMatch(/only on a REAL|verified deployed/i)
+  expect(w.haltRule).toMatch(/Halt/)
+})
+
+test("VERIFY — the ingestion contract is keyless-first + Operator-gated + no-scrape, BYOK optional + key-safe (X-VERIFY a, S30)", () => {
+  const i = vf.ingestion
+  expect(i.keylessFirst).toMatch(/keyless/i)
+  expect(i.doctrine).toMatch(/Operator-gated/)
+  expect(i.doctrine).toMatch(/NOT an automatic mass-path|discrete/i)
+  expect(i.noScrape).toMatch(/D4\/D6|ARMED-never-scraped/)
+  expect(i.byokOptional).toMatch(/env-only/)
+  expect(i.byokOptional).toMatch(/NEVER.*(bundle|log|registry)/)
+  expect(i.record).toMatch(/NEVER a fabricated REAL/)
+})
+
+test("VERIFY — the build-capture is deterministic + content-addressed + off the hot loop, reusing the analyzer verbatim (X-VERIFY b,c,e; S29)", () => {
+  const b = vf.buildCapture
+  expect(b.deterministic).toMatch(/byte-identical/)
+  expect(b.deterministic).toMatch(/no LLM|no model|X-DETERM/i)
+  expect(b.contentAddressed).toMatch(/a single byte.*changes the contentHash|changed byte/i)
+  expect(b.reusesAnalyzerVerbatim).toMatch(/UNCHANGED|no re-implementation|X-KEEP/)
+  expect(b.offHotLoop).toMatch(/ZERO per-render compilation|reads the content-hashed registry/)
+})
+
+test("VERIFY — the coverage-honesty rule + the REAL-tier ceiling are pinned (N of M; never a full audit / a 'safe' verdict — V3/S25)", () => {
+  const c = vf.coverageHonesty
+  expect(c.rule).toMatch(/N of M/)
+  expect(c.rule).toMatch(/NEVER implying more/i)
+  expect(c.successCriterion).toMatch(/at least one real protocol|honestly UNVERIFIED/i)
+  expect(c.ceiling).toMatch(/not a full audit/i)
+  expect(c.ceiling).toMatch(/NEVER a 'safe'|never.*safe/i)
+})
+
+test("VERIFY — the Foundry toolchain is an OPTIONAL seam: absent → UNVERIFIED; the clone + verify run without it", () => {
+  const s = vf.foundryOptionalSeam
+  expect(s.toolchainOptional).toBe(true)
+  expect(s.massToolRunsWithout).toBe(true)
+  expect(s.verifyRunsWithout).toBe(true)
+  expect(s.pristineRunsWithout).toBe(true)
+  expect(s.absentBehavior).toMatch(/UNVERIFIED/)
+})
+
+test("VERIFY — the Contract-Truth resolutions V1–V5 are pinned (V2 corrects 585→583 + names BUILDLOG-HONESTY; V5 is the spine)", () => {
+  expect(vf.contractTruthResolutions.map((v: { id: string }) => v.id)).toEqual(["V1", "V2", "V3", "V4", "V5"])
+  const byId = (id: string) => vf.contractTruthResolutions.find((v: { id: string }) => v.id === id)
+  expect(byId("V1").resolution).toMatch(/\(\+N|itemized|state every delta/i)
+  expect(byId("V2").resolution).toMatch(/583/) // the authoritative Crown-Jewel count
+  expect(byId("V2").resolution).not.toMatch(/is 585\/0|stays 585/) // the drift dropped
+  expect(byId("V2").resolution).toMatch(/BUILDLOG-HONESTY\.md/) // the Deepening record's real home
+  expect(byId("V3").resolution).toMatch(/DORMANT|EXERCISE/)
+  expect(byId("V4").resolution).toMatch(/SIX-tool subset/i)
+  expect(byId("V5").resolution).toMatch(/SPINE|real Foundry build|end-to-end/i)
+})
+
+test("VERIFY — the screen set stays the conscious 3 (the REAL tier is a Pro row); the stress catalog is S1–S30 (S28/S29/S30 new)", () => {
+  expect(vf.screens.count).toBe(3)
+  expect(vf.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(vf.screens.realTierIsAProRow).toMatch(/Pro row|NOT a screen/i)
+  expect(vf.stressCatalog).toHaveLength(30)
+  expect(vf.stressCatalog.map((s: { id: string }) => s.id)).toEqual(Array.from({ length: 30 }, (_, k) => `S${k + 1}`))
+  expect(vf.stressCatalog.find((s: { id: string }) => s.id === "S28").name).toMatch(/REAL\/SAMPLE wall/i)
+  expect(vf.stressCatalog.find((s: { id: string }) => s.id === "S29").name).toMatch(/determinism|re-capture/i)
+  expect(vf.stressCatalog.find((s: { id: string }) => s.id === "S30").name).toMatch(/ingestion-scope|keyless/i)
+})
+
+// ── THE VOICE SPRINT — the additional pins (data/honesty/voice-pins.json), carried forward from f4e5a4a8… ──
+const vo = JSON.parse(readFileSync(path.join(H, "voice-pins.json"), "utf8"))
+// re-pinned in Phase 6 (STAMP-TIGHT): the MinTRL rider LANDED (mintrlRider.status TO-BUILD → LANDED) — a conscious re-pin (da25beaf… → eb55ce43…)
+const VOICE_PINS_SHA_GOLDEN = "eb55ce43d9e053130872e3f75fd729ac33c383c9bd34465e821d18a49832f256"
+
+test("VOICE — the pins hash-lock is the pinned golden + self-consistent + carried from the verify sha (the lock bites)", () => {
+  expect(vo.pinsSha).toBe(VOICE_PINS_SHA_GOLDEN)
+  const { pinsSha, ...rest } = vo
+  expect(sha256(JSON.stringify(rest))).toBe(vo.pinsSha) // self-consistent
+  expect(vo.carriedFromPinsSha).toBe(VERIFY_PINS_SHA_GOLDEN) // carried forward, never rebuilt
+  // POSITIVE CONTROL: mutating a gate word list (the severity-lexicon ban) changes the sha (the lock bites)
+  const mutated = JSON.parse(JSON.stringify(rest))
+  mutated.gates.severityLexicon.banned = ["safe"]
+  expect(sha256(JSON.stringify(mutated))).not.toBe(vo.pinsSha)
+})
+
+test("VOICE — the persona is hash-locked: voice-pins holds the Voice-era record (superseded by the Interpreter re-pin D18); an edited record would move PINS_SHA (a re-pin, never a silent edit)", () => {
+  // the persona was CONSCIOUSLY re-pinned in the Interpreter sprint (D18): the LIVE hash-lock MOVED to interpret-pins
+  // (U-RESUPERSEDE — asserted in the INTERPRET section below); voice-pins.json retains its Voice-era record (a historical
+  // pin, superseded not rewritten), so the 8-sprint carry chain is untouched and the Voice pins sha does NOT move.
+  expect(vo.persona.sha).toBe("d0d7f18d5d03850fa0d3d1164b4819f1cf08b94ef647065828827e0e26b2fd89") // the Voice-era record, frozen
+  expect(vo.persona.rel).toBe("data/honesty/persona.md")
+  // the hard rules are present (a persona pinned WITHOUT the hard rules is refused — Phase 0 red-team)
+  const rules = vo.persona.hardRules.join(" ")
+  expect(rules).toMatch(/only engine facts/i)
+  expect(rules).toMatch(/NEVER 'safe'|never.*safe/i)
+  expect(rules).toMatch(/NEVER a recommendation|advice wall/i)
+  expect(rules).toMatch(/NEVER move a verdict/i)
+  expect(vo.persona.instructionNotLaw).toMatch(/DOWNSTREAM|fail-closed/i)
+  // POSITIVE CONTROL: an edited persona (a changed sha in the object) changes PINS_SHA — the lock bites on the artifact
+  const { pinsSha, ...rest } = vo
+  const mutated = JSON.parse(JSON.stringify(rest)); mutated.persona.sha = "0".repeat(64)
+  expect(sha256(JSON.stringify(mutated))).not.toBe(vo.pinsSha)
+})
+
+test("VOICE — the three-tier contract is typed FACT/REASONING/BOUNDARY; the tier lives in the data model AND the render; the ANALYSIS label is exact", () => {
+  expect(vo.contract.blocks).toEqual(["FACT", "REASONING", "BOUNDARY"])
+  expect(vo.contract.analysisLabel).toBe("ANALYSIS — not an engine fact")
+  expect(vo.contract.tierInDataModelAndRender).toMatch(/DATA MODEL and the RENDER|screenshot/i)
+  expect(vo.contract.reasoningBlock).toMatch(/VISIBLY LABELED/i)
+  expect(vo.contract.residualDisclosure).toMatch(/checkable|not a verdict/i)
+})
+
+test("VOICE — the five deterministic gates carry exact, testable word/shape lists (no vague pin; deterministic only, never model self-check)", () => {
+  const g = vo.gates
+  expect(g.doctrine).toMatch(/DOWNSTREAM of the model/i)
+  expect(g.doctrine).toMatch(/self-verify is refused|deterministic only/i)
+  expect(g.numericWhitelist.noModelArithmetic).toBe(true)
+  expect(g.verdictGuard.carriedFrom).toMatch(/phrase\.ts/)
+  expect(g.comparisonDirection.rule).toMatch(/match the fact ordering/i)
+  // the severity lexicon — the banned words are exact + absolute
+  for (const w of ["safe", "audited", "risk-free", "guaranteed"]) expect(g.severityLexicon.banned).toContain(w)
+  expect(g.severityLexicon.conditional).toEqual(["critical", "severe"])
+  // the advice-pattern shapes are exact
+  for (const s of ["you should", "we recommend", "buy", "sell", "allocate"]) expect(g.advicePattern.shapes).toContain(s)
+})
+
+test("VOICE — the intent enum is EXACTLY 13 + CLOSED (the 8 carried + OUTLOOK · SCENARIO · ADVICE_BOUNDARY · GENERAL · RECORD_HISTORY); a 14th fails the wall", () => {
+  expect(vo.intents.count).toBe(13)
+  expect(vo.intents.enum).toHaveLength(13)
+  expect(vo.intents.closed).toBe(true)
+  expect(vo.intents.new5).toEqual(["OUTLOOK", "SCENARIO", "ADVICE_BOUNDARY", "GENERAL", "RECORD_HISTORY"])
+  for (const i of ["STRATEGY_LOOKUP", "COMPARE", "OUTLOOK", "ADVICE_BOUNDARY", "GENERAL", "RECORD_HISTORY"]) expect(vo.intents.enum).toContain(i)
+  expect(vo.intents.deterministicParity).toMatch(/EVERY.*no-key template|the AI is garnish/i)
+  expect(vo.intents.compareUpgrade).toMatch(/n-strategies/i)
+  expect(vo.intents.recordHistoryInterpretation).toMatch(/RECORD_HISTORY/) // the interpretation is surfaced, not silent
+  // every enum member maps to exactly one tool (the closed map is complete)
+  for (const i of vo.intents.enum) expect(typeof vo.intents.intentToTool[i]).toBe("string")
+})
+
+test("VOICE — the X-ASK amendment (D11) is Operator-signed typed-rejection; the FACT groundedness gate is UNCHANGED; never a silent drift", () => {
+  const a = vo.xAskAmendment
+  expect(a.id).toBe("D11")
+  expect(a.operatorSigned).toBe(true)
+  expect(a.was).toMatch(/whole.answer rejection/i)
+  expect(a.now).toMatch(/typed PER-BLOCK rejection|per-block/i)
+  expect(a.factGroundednessGateUnchanged).toMatch(/UNCHANGED/)
+  expect(a.closedEnumRoutingUnchanged).toBe(true)
+})
+
+test("VOICE — the advice wall is law: NEVER a recommendation; 'should we invest?' → facts + framing + boundary; a regulated-activity posture (X-ADVICE)", () => {
+  const w = vo.adviceWall
+  expect(w.lawStatus).toBe(true)
+  expect(w.rule).toMatch(/NEVER recommends/i)
+  expect(w.rule).toMatch(/researcher-not-advisor/i)
+  expect(w.rationale).toMatch(/REGULATED ACTIVITY/i)
+  expect(w.haltRule).toMatch(/Halt/)
+})
+
+test("VOICE — the calibration clock is record-only: append-only + hash-chained + engine-derived; NO backfill, NO scoring; the count the only surface (X-CAL / D13)", () => {
+  const c = vo.calibration
+  expect(c.recordOnly).toBe(true)
+  expect(c.appendOnly).toBe(true)
+  expect(c.hashChained).toBe(true)
+  expect(c.schema).toContain("entryHash")
+  expect(c.schema).toContain("prevHash")
+  expect(c.engineDerived).toMatch(/NEVER a model/i)
+  expect(c.noBackfill).toMatch(/REFUSED|no backfill path/i)
+  expect(c.noScoring).toMatch(/no Brier|until real resolutions/i)
+  expect(c.recordedAs).toMatch(/D13/)
+})
+
+test("VOICE — the per-provider eval harness carries the five metrics + the Operator-gated live path (D12); post-gate leaks are ZERO by construction", () => {
+  const e = vo.evalHarness
+  expect(e.metrics).toEqual(["gateRejectionRate", "adviceLeakAttemptRate", "verdictContradictionAttemptRate", "numericSmugglingAttemptRate", "templateFallbackRate"])
+  expect(e.postGateLeakZero).toMatch(/ZERO by construction/i)
+  expect(e.operatorGatedLive).toMatch(/eval_live/)
+  expect(e.recordedAs).toMatch(/D12/)
+})
+
+test("VOICE — the MinTRL rider suppresses (never caveats) on short T + logs N; PARK-if-tight is an honest park, never a silent drop", () => {
+  const m = vo.mintrlRider
+  expect(m.rule).toMatch(/MinTRL.*FIRST/i)
+  expect(m.rule).toMatch(/SUPPRESSED/i)
+  expect(m.suppressionNotCaveat).toMatch(/caveated-but-displayed.*FAIL/i)
+  expect(m.verdictSpaceUnchanged).toMatch(/unchanged/i)
+  expect(m.parkIfTight).toMatch(/leads the NEXT sprint|never a silent drop/i)
+})
+
+test("VOICE — the Build-Provenance findings B1–B5 are pinned resolved (B1 registry inside/outside + digest; B2 denominator; B3 fixture-only; B4 proxy; B5 render)", () => {
+  expect(vo.findingResolutions.map((v: { id: string }) => v.id)).toEqual(["B1", "B2", "B3", "B4", "B5"])
+  const byId = (id: string) => vo.findingResolutions.find((v: { id: string }) => v.id === id)
+  expect(byId("B1").resolution).toMatch(/OUTSIDE the bundle/i)
+  expect(byId("B1").resolution).toMatch(/registry-DIGEST|digest line/i)
+  expect(byId("B2").resolution).toMatch(/7 applicable.*9 shown|N of M applicable/i)
+  expect(byId("B3").resolution).toMatch(/FIXTURE-PROVEN ONLY|zero real-world instances/i)
+  expect(byId("B4").resolution).toMatch(/deployed-proxy surface/i)
+  expect(byId("B5").resolution).toMatch(/severity-grouped|category-deduped|drawer/i)
+  expect(byId("B5").resolution).toMatch(/byte-identical/i)
+})
+
+test("VOICE — the screen set stays the conscious 3 (the voice deepens Ask); the stress catalog is S1–S35 (S31–S35 new)", () => {
+  expect(vo.screens.count).toBe(3)
+  expect(vo.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(vo.screens.theVoiceDeepensAsk).toMatch(/FOURTH screen is a Halt/i)
+  expect(vo.stressCatalog).toHaveLength(35)
+  expect(vo.stressCatalog.map((s: { id: string }) => s.id)).toEqual(Array.from({ length: 35 }, (_, k) => `S${k + 1}`))
+  expect(vo.stressCatalog.find((s: { id: string }) => s.id === "S31").name).toMatch(/persona-injection/i)
+  expect(vo.stressCatalog.find((s: { id: string }) => s.id === "S32").name).toMatch(/advice wall/i)
+  expect(vo.stressCatalog.find((s: { id: string }) => s.id === "S33").name).toMatch(/numeric-smuggling|verdict-contradiction/i)
+  expect(vo.stressCatalog.find((s: { id: string }) => s.id === "S34").name).toMatch(/cross-provider|parity/i)
+  expect(vo.stressCatalog.find((s: { id: string }) => s.id === "S35").name).toMatch(/calibration/i)
+})
+
+test("VOICE — the constitution carries: frozen seven untouched, deps still hono+zod (no prompt framework), the differential + probe carried", () => {
+  expect(vo.carried.deps).toEqual(["hono", "zod"]) // NO NLP library, NO prompt framework, NO new npm dep
+  expect(vo.carried.frozenSeven).toMatch(/byte-untouched/i)
+  expect(vo.carried.frozenSeven).toMatch(/ZERO model output become a fact/i)
+  expect(vo.carried.verdictDifferential).toMatch(/70c7912f/)
+  expect(vo.carried.verdictDifferential).toMatch(/0a63151b/)
+  expect(vo.carried.probe).toMatch(/NEXT sprint MUST run the demand probe/i)
+})
+
+// ── THE SURFACE SPRINT — the additional pins (data/honesty/surface-pins.json), carried forward from eb55ce43… ──
+const su = JSON.parse(readFileSync(path.join(H, "surface-pins.json"), "utf8"))
+const SURFACE_PINS_SHA_GOLDEN = "b01799989edd2f1f15a9003035ca60cf0ed75457bfa1e2a268c3c8f231cf750f"
+
+test("SURFACE — the pins hash-lock is the pinned golden + self-consistent + carried from the voice sha (the lock bites)", () => {
+  expect(su.pinsSha).toBe(SURFACE_PINS_SHA_GOLDEN)
+  const { pinsSha, ...rest } = su
+  expect(sha256(JSON.stringify(rest))).toBe(su.pinsSha) // self-consistent
+  expect(su.carriedFromPinsSha).toBe(VOICE_PINS_SHA_GOLDEN) // carried forward, never rebuilt
+  // POSITIVE CONTROL: mutating a semantic verdict-word list changes the sha (the lock bites)
+  const mutated = JSON.parse(JSON.stringify(rest))
+  mutated.semanticContract.verdictWords = ["SOLID"]
+  expect(sha256(JSON.stringify(mutated))).not.toBe(su.pinsSha)
+})
+
+test("SURFACE — the design tokens are hash-locked: the stored sha is sha256(design-tokens.json) AND an edited token would move PINS_SHA (a re-pin, never a silent restyle)", () => {
+  const tokensSha = sha256(readFileSync(path.join(PKG_ROOT, su.tokens.rel), "utf8"))
+  expect(su.tokens.sha).toBe(tokensSha) // the lock is over the actual artifact bytes
+  expect(su.tokens.rel).toBe("data/honesty/design-tokens.json")
+  const designMdSha = sha256(readFileSync(path.join(PKG_ROOT, su.tokens.designMd.rel), "utf8"))
+  expect(su.tokens.designMd.sha).toBe(designMdSha) // DESIGN.md pinned too
+  expect(su.tokens.builtNotHandEdited).toMatch(/BUILT from these tokens|never hand-edited/i)
+  expect(su.tokens.consciousRePin).toMatch(/conscious re-pin|never a silent/i)
+  // POSITIVE CONTROL: an edited token (a changed sha in the object) changes PINS_SHA — the lock bites on the artifact
+  const { pinsSha, ...rest } = su
+  const mutated = JSON.parse(JSON.stringify(rest)); mutated.tokens.sha = "0".repeat(64)
+  expect(sha256(JSON.stringify(mutated))).not.toBe(su.pinsSha)
+})
+
+test("SURFACE — the semantic contract: trust tiers, REAL/SAMPLE, verdict+Stamp words each a NON-COLOR cue never color-alone; the ANALYSIS label rendered; cues via CSS not content", () => {
+  const s = su.semanticContract
+  expect(s.verdictWords).toEqual(["SOLID", "CAUTION", "AVOID", "UNVERIFIED"])
+  expect(s.stampWords).toEqual(["GO", "NO-GO", "INSUFFICIENT", "UNAVAILABLE"])
+  expect(s.nonColorCueRule).toMatch(/NEVER color alone/i)
+  expect(s.realSampleCue).toMatch(/SOLID border|DASHED border/i)
+  expect(s.analysisLabelRendered).toMatch(/rendered adjacent|screenshot/i)
+  expect(s.analysisLabelRendered).toMatch(/FACT treatment is a Halt/i)
+  expect(s.wcagAA).toMatch(/4\.5:1|WCAG-AA/)
+  expect(s.cuesViaCssNotContent).toMatch(/HTML CONTENT is byte-untouched|S36/i) // the semantic upgrade cannot move a fact
+  expect(s.trustTiers.REASONING).toMatch(/ANALYSIS — not an engine fact/)
+})
+
+test("SURFACE — the detector gate (S38) is deterministic no-LLM/no-key, skips honestly when absent, and every exception is reasoned (the constitution outranks the detector)", () => {
+  const d = su.detectorGate
+  expect(d.tool).toMatch(/deterministic.*detector/i)
+  expect(d.tool).toMatch(/NO LLM.*NO API key|no key/i)
+  expect(d.wiredAs).toMatch(/S38.*surface_detector/i)
+  expect(d.skipWhenAbsent).toMatch(/pristine.*ABSENT|SKIPS honestly/i)
+  expect(d.skipWhenAbsent).toMatch(/ask_live.*eval_live.*surface_detector/i) // the named skip set grows
+  expect(d.constitutionOutranksDetector).toMatch(/REFUSED|Attack-11/i)
+  // every committed exception carries a reason (a silent suppression is refused)
+  expect(Array.isArray(d.committedExceptions)).toBe(true)
+  for (const ex of d.committedExceptions) { expect(typeof ex.rule).toBe("string"); expect(ex.reason.length).toBeGreaterThan(20) }
+  expect(d.committedExceptions.map((e: { rule: string }) => e.rule)).toContain("em-dash-overuse")
+})
+
+test("SURFACE — dev-time-only + honesty-preserving: impeccable never a runtime dep (deps hono+zod), a restyle never moves a fact (S36, checked per screen)", () => {
+  const dev = su.devTimeOnly
+  expect(dev.deps).toEqual(["hono", "zod"])
+  expect(dev.rule).toMatch(/DEV-TIME-ONLY/)
+  expect(dev.haltRule).toMatch(/CSS framework|CSS-in-JS/i)
+  expect(dev.haltRule).toMatch(/pristine.*GREEN.*ABSENT|entirely absent/i)
+  expect(dev.gitignore).toMatch(/gitignored EXCEPT.*config\.json/i)
+  const h = su.honestyPreserving
+  expect(h.rule).toMatch(/NEVER alter a number, a label, a tier, a verdict/i)
+  expect(h.mechanism).toMatch(/keyed on the existing semantic classes|byte-untouched/i)
+  expect(h.checkedPerScreen).toMatch(/byte-identical.*PER SCREEN|per screen/i)
+  expect(h.haltRule).toMatch(/hides a SAMPLE|drops the ANALYSIS label/i)
+})
+
+test("SURFACE — the Voice findings V1–V5 are pinned resolved (intent-lineage, reconciliation line, eval scope, ANALYSIS-render, denominators)", () => {
+  expect(su.findingResolutions.map((v: { id: string }) => v.id)).toEqual(["V1", "V2", "V3", "V4", "V5"])
+  const byId = (id: string) => su.findingResolutions.find((v: { id: string }) => v.id === id)
+  expect(byId("V1").resolution).toMatch(/COMPARE PRE-EXISTED|caught blueprint-arithmetic/i)
+  expect(byId("V1").resolution).toMatch(/RECORD_HISTORY/)
+  expect(byId("V2").resolution).toMatch(/703 → 768/)
+  expect(byId("V3").resolution).toMatch(/only Groq was measured LIVE/i)
+  expect(byId("V3").resolution).toMatch(/SHARED-GATE ARCHITECTURE/i)
+  expect(byId("V4").resolution).toMatch(/RENDERED.*adjacent|render assertion/i)
+  expect(byId("V5").resolution).toMatch(/denominator|attack-set size/i)
+})
+
+test("SURFACE — D14/D15 pinned + the findings_closed_v naming collision caught (not silently overwritten)", () => {
+  expect(su.deviations.D14).toMatch(/design system|design-tokens\.json/i)
+  expect(su.deviations.D15).toMatch(/DEV-TIME-ONLY|detector/i)
+  expect(su.deviations.namingCorrection).toMatch(/findings_closed_v.*already exists|findings_closed_voice/i)
+  // the collision is real: the existing findings_closed_v is Build-Provenance's, and the new closure is findings_closed_voice
+  expect(existsSync(path.join(PKG_ROOT, "test/organon/findings_closed_v.test.ts"))).toBe(true)
+})
+
+test("SURFACE — the screen set stays the conscious 3 (impeccable polishes, never adds); the stress catalog is S1–S38 (S36–S38 new)", () => {
+  expect(su.screens.count).toBe(3)
+  expect(su.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(su.screens.surfacePolishesNotAdds).toMatch(/NEVER adds a fourth|a fourth screen/i)
+  expect(su.stressCatalog).toHaveLength(38)
+  expect(su.stressCatalog.map((s: { id: string }) => s.id)).toEqual(Array.from({ length: 38 }, (_, k) => `S${k + 1}`))
+  expect(su.stressCatalog.find((s: { id: string }) => s.id === "S36").name).toMatch(/honesty-preserving/i)
+  expect(su.stressCatalog.find((s: { id: string }) => s.id === "S37").name).toMatch(/a11y|degraded/i)
+  expect(su.stressCatalog.find((s: { id: string }) => s.id === "S38").name).toMatch(/detector/i)
+})
+
+test("SURFACE — the constitution carries: frozen seven untouched, deps hono+zod, the differential carried, the probe unforgivably overdue", () => {
+  expect(su.carried.deps).toEqual(["hono", "zod"])
+  expect(su.carried.frozenSeven).toMatch(/byte-untouched/i)
+  expect(su.carried.frozenSeven).toMatch(/changes ZERO facts|moves ZERO verdicts/i)
+  expect(su.carried.verdictDifferential).toMatch(/70c7912f/)
+  expect(su.carried.verdictDifferential).toMatch(/0a63151b/)
+  expect(su.carried.probe).toMatch(/UNFORGIVABLY OVERDUE|NEXT sprint MUST run/i)
+})
+
+// ── THE SOVEREIGN SPRINT — the additional pins (data/honesty/sovereign-pins.json), carried forward from b0179998… ──
+const sv = JSON.parse(readFileSync(path.join(H, "sovereign-pins.json"), "utf8"))
+const SOVEREIGN_PINS_SHA_GOLDEN = "6fac4e94436c20a8ab6cc0eb8ae08f7c7575ef077cbb887734d469a46ac9f403"
+
+test("SOVEREIGN — the pins hash-lock is the pinned golden + self-consistent + carried from the surface sha (the lock bites)", () => {
+  expect(sv.pinsSha).toBe(SOVEREIGN_PINS_SHA_GOLDEN)
+  const { pinsSha, ...rest } = sv
+  expect(sha256(JSON.stringify(rest))).toBe(sv.pinsSha) // self-consistent: the stored sha covers exactly the rest
+  expect(sv.carriedFromPinsSha).toBe(SURFACE_PINS_SHA_GOLDEN) // carried forward, never rebuilt
+  const mutated = JSON.parse(JSON.stringify(rest)); mutated.plane.divergence.tolerancePct = 999
+  expect(sha256(JSON.stringify(mutated))).not.toBe(sv.pinsSha) // a moved pin moves the sha
+})
+
+test("SOVEREIGN — the blueprint is hash-locked (a changed planning doc moves the pinned sha; gitignored on a fresh clone → the pinned sha is the durable record)", () => {
+  const abs = path.join(PKG_ROOT, sv.blueprint.rel)
+  if (!existsSync(abs)) {
+    // the blueprint is gitignored (absent on a pristine clone) — the pinned sha is the durable record (the standing pattern)
+    expect(sv.blueprint.sha).toMatch(/^[0-9a-f]{64}$/)
+    return
+  }
+  expect(sha256(readFileSync(abs, "utf8"))).toBe(sv.blueprint.sha)
+})
+
+test("SOVEREIGN — X-PLANE(a): EXACTLY the three narrow pinned paths, each enumerated; a fourth requires a re-pin (the fence is a pin)", () => {
+  const p = sv.plane
+  expect(p.pathList.map((x: { id: string }) => x.id)).toEqual(["FUNDING-HISTORY", "POOL-EVENTS", "RPC-STATE"])
+  // FUNDING-HISTORY: keyless HL info + Binance/Bybit public archives
+  const fh = p.pathList.find((x: { id: string }) => x.id === "FUNDING-HISTORY")
+  expect(fh.module).toBe("src/plane/funding.ts")
+  expect(fh.sources.some((s: { name: string }) => /Hyperliquid/i.test(s.name))).toBe(true)
+  expect(fh.sources.some((s: { name: string }) => /Binance/i.test(s.name))).toBe(true)
+  expect(fh.sources.some((s: { name: string }) => /Bybit/i.test(s.name))).toBe(true)
+  // POOL-EVENTS: HyperSync, ONLY the enumerated events, token an OPTIONAL seam
+  const pe = p.pathList.find((x: { id: string }) => x.id === "POOL-EVENTS")
+  expect(pe.module).toBe("src/plane/events.ts")
+  expect(pe.enumeratedEvents).toEqual(["rate-update", "tvl-move", "liquidity-move"])
+  expect(pe.fence).toMatch(/NEVER a full-protocol index|un-enumerated.*ignored/i)
+  // RPC-STATE: rotating free RPCs, source recorded per read
+  const rs = p.pathList.find((x: { id: string }) => x.id === "RPC-STATE")
+  expect(rs.module).toBe("src/plane/rpcstate.ts")
+  expect(Array.isArray(rs.rotation)).toBe(true); expect(rs.rotation.length).toBeGreaterThanOrEqual(3)
+  expect(p.fourthPathRequiresRePin).toMatch(/conscious re-pin|general indexer.*Halt|archive node.*Halt/i)
+})
+
+test("SOVEREIGN — X-PLANE(c,d,e,f): gaps stay gaps · divergence surfaced · honest-improvement-only · the kill-condition armed", () => {
+  const p = sv.plane
+  // (c) gap-honest / no-fabrication
+  expect(p.gapHonest.rule).toMatch(/GAP STAYS A GAP|no interpolation|no backfill/i)
+  expect(p.gapHonest.haltRule).toMatch(/fabricated.*Halt|S39/i)
+  expect(p.gapHonest.recaptureStable).toMatch(/hash-stable/i)
+  expect(p.gapHonest.degradeHonest).toMatch(/NOT stamped own-plane|Attack-8/i)
+  // (d) divergence surfaced, never silently resolved
+  expect(p.divergence.rule).toMatch(/SURFACED|never silently resolved/i)
+  expect(typeof p.divergence.tolerancePct).toBe("number")
+  expect(p.divergence.haltRule).toMatch(/auto-resolved.*Halt|NEITHER value replaced/i)
+  // (e) honest improvement only — the math untouched, the frozen goldens read byte-untouched inputs
+  expect(p.honestImprovement.mathUntouched).toMatch(/BYTE-UNTOUCHED|goldens reproduce/i)
+  expect(p.honestImprovement.tracedToObservations).toMatch(/observation count|MinTRL|nudged.*Halt/i)
+  expect(p.honestImprovement.separateGolden).toMatch(/70c7912f/); expect(p.honestImprovement.separateGolden).toMatch(/0a63151b/)
+  // (f) the kill-condition armed in writing
+  expect(p.killCondition.threshold).toMatch(/1 day\/week|adapter rot/i)
+  expect(p.killCondition.exit).toMatch(/DeFiLlama Pro|\$300|narrow/i)
+  expect(p.killCondition.armed).toMatch(/pinned in writing|S40|upkeep ledger/i)
+  // (b) HyperSync optional seam
+  expect(sv.plane.hyperSyncSeam.envKey).toBe("HYPERSYNC_TOKEN")
+  expect(sv.plane.hyperSyncSeam.optional).toMatch(/OPTIONAL seam|absent.*degrade|never crash/i)
+  expect(sv.plane.hyperSyncSeam.neverShipped).toMatch(/NO SDK ships|plain fetch/i)
+})
+
+test("SOVEREIGN — X-DESIGNPASS (D16): critique RUN for real (design-review + detector), browser/live NOT run, tokens byte-frozen, walls continuous, clarify chrome-only", () => {
+  const d = sv.designPass
+  expect(d.critiqueRunForReal).toMatch(/design-review sub-agent|Assessment A/i)
+  expect(d.critiqueRunForReal).toMatch(/detector|Assessment B/i)
+  expect(d.honestBound).toMatch(/NOT run|no browser automation/i) // the browser/live flow honestly not run
+  expect(d.honestBound).toMatch(/SOURCE-BASED|disclosed/i)
+  expect(d.tokensStayFrozen).toMatch(/BYTE-FROZEN|hash-locked into the Surface pin|b0179998/i)
+  expect(d.wallsContinuous).toMatch(/S36.*detector.*dep.*a11y|CONTINUOUSLY/i)
+  expect(d.clarifyChromeOnly).toMatch(/CHROME copy only|NEVER a data label/i)
+  expect(d.screenCount).toBe(3)
+  expect(d.haltRule).toMatch(/aesthetics only|not approvable away|Halt/i)
+})
+
+test("SOVEREIGN — the Surface findings SF1–SF5 are pinned resolved (framing led-with · 804=807−3 · a11y method scope · V4 evidence shape · the pass RUN)", () => {
+  const ids = sv.sfResolutions.map((v: { id: string }) => v.id)
+  expect(ids).toEqual(["SF1", "SF2", "SF3", "SF4", "SF5"])
+  for (const v of sv.sfResolutions) { expect(v.finding.trim().length).toBeGreaterThan(0); expect(v.resolution.trim().length).toBeGreaterThan(0); expect(v.status).toBe("RESOLVED") }
+  const byId = (id: string) => sv.sfResolutions.find((v: { id: string }) => v.id === id).resolution
+  expect(byId("SF1")).toMatch(/LED WITH|interactive CRITIQUE for real/i)
+  expect(byId("SF2")).toMatch(/807 . 3|807.*3.*804|N=3/i) // the off-by-one dies: pristine = 807 − 3
+  expect(byId("SF3")).toMatch(/COMPUTED.*DOM-ASSERTED|browser.*AT.*follow-up/i)
+  expect(byId("SF4")).toMatch(/RENDERED-OUTPUT|deterministic proxy|inference/i)
+  expect(byId("SF5")).toMatch(/RUN as this sprint's Spine A|X-DESIGNPASS/i)
+})
+
+test("SOVEREIGN — D16/D17 are pinned + Operator-signed (the directive to execute IS the sign-off, recorded not fabricated)", () => {
+  expect(sv.deviations.D16).toMatch(/design-pass|aesthetics pre-approved/i)
+  expect(sv.deviations.D17).toMatch(/three narrow|plane scope|kill-condition armed/i)
+  expect(sv.deviations.operatorSignedNote).toMatch(/directed the coding agent|directive to execute.*sign-off/i)
+  // the full ledger entries exist in deviations.json (a silent deviation is a Halt)
+  const dev = JSON.parse(readFileSync(path.join(H, "deviations.json"), "utf8"))
+  const d16 = dev.deviations.find((x: { id: string }) => x.id === "D16")
+  const d17 = dev.deviations.find((x: { id: string }) => x.id === "D17")
+  for (const d of [d16, d17]) { expect(d).toBeDefined(); for (const k of ["blueprintLine", "whatWasDone", "why", "lawAuthority"]) expect(String(d[k]).trim().length).toBeGreaterThan(0) }
+  expect(d16.lawAuthority).toMatch(/X-DESIGNPASS/)
+  expect(d17.lawAuthority).toMatch(/X-PLANE/)
+})
+
+test("SOVEREIGN — the screen set stays the conscious 3 (the divergence row is a ROW, not a screen); the stress catalog is S1–S41 (S39–S41 new)", () => {
+  expect(sv.screens.count).toBe(3)
+  expect(sv.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(sv.screens.designPassReshapesNotAdds).toMatch(/NEVER adds a fourth|divergence row is a ROW/i)
+  expect(sv.stressCatalog).toHaveLength(41)
+  expect(sv.stressCatalog.map((s: { id: string }) => s.id)).toEqual(Array.from({ length: 41 }, (_, k) => `S${k + 1}`))
+  expect(sv.stressCatalog.find((s: { id: string }) => s.id === "S39").name).toMatch(/plane provenance|no-fabricated-history/i)
+  expect(sv.stressCatalog.find((s: { id: string }) => s.id === "S40").name).toMatch(/narrow-path fence|kill-condition/i)
+  expect(sv.stressCatalog.find((s: { id: string }) => s.id === "S41").name).toMatch(/design-pass honesty/i)
+})
+
+test("SOVEREIGN — the constitution carries: frozen seven + tokens byte-frozen, deps hono+zod, the differential carried (bybit ILLUSTRATIVE), the probe with no prerequisites left", () => {
+  expect(sv.carried.deps).toEqual(["hono", "zod"])
+  expect(sv.carried.frozenSeven).toMatch(/byte-untouched/i)
+  expect(sv.carried.frozenSeven).toMatch(/fabricate ZERO history points|move ZERO verdicts/i)
+  expect(sv.carried.designSystemUnchangedInTokens).toMatch(/UNCHANGED in token values|frozen Surface golden b0179998/i)
+  expect(sv.carried.verdictDifferential).toMatch(/70c7912f/)
+  expect(sv.carried.verdictDifferential).toMatch(/0a63151b/)
+  expect(sv.carried.verdictDifferential).toMatch(/bybit stays ILLUSTRATIVE/i)
+  expect(sv.carried.probe).toMatch(/no prerequisites left|UNFORGIVABLY|LAST prerequisites/i)
+})
+
+// ── THE INTERPRETER SPRINT — the additional pins (data/honesty/interpret-pins.json), carried forward from 6fac4e94… ──
+const iv = JSON.parse(readFileSync(path.join(H, "interpret-pins.json"), "utf8"))
+const INTERPRET_PINS_SHA_GOLDEN = "f09fd743847849a6cf9545887549edefbed8d2c687a9f8b1eb62fe772927d274"
+
+test("INTERPRET — the pins hash-lock is the pinned golden + self-consistent + carried from the sovereign sha (the lock bites)", () => {
+  expect(iv.pinsSha).toBe(INTERPRET_PINS_SHA_GOLDEN)
+  const { pinsSha, ...rest } = iv
+  expect(sha256(JSON.stringify(rest))).toBe(iv.pinsSha) // self-consistent: the stored sha covers exactly the rest
+  expect(iv.carriedFromPinsSha).toBe(SOVEREIGN_PINS_SHA_GOLDEN) // carried forward, never rebuilt
+  const mutated = JSON.parse(JSON.stringify(rest)); mutated.register.simpleBand.maxChars = 99999
+  expect(sha256(JSON.stringify(mutated))).not.toBe(iv.pinsSha) // a moved pin moves the sha
+})
+
+test("INTERPRET — the blueprint is hash-locked (a changed planning doc moves the pinned sha; gitignored on a fresh clone → the pinned sha is the durable record)", () => {
+  const abs = path.join(PKG_ROOT, iv.blueprint.rel)
+  if (!existsSync(abs)) { expect(iv.blueprint.sha).toMatch(/^[0-9a-f]{64}$/); return }
+  expect(sha256(readFileSync(abs, "utf8"))).toBe(iv.blueprint.sha)
+})
+
+test("INTERPRET — X-INTERPRET(a): the five gates listed UNCHANGED IN HEIGHT, re-run on the wider output; the FACT groundedness gate byte-untouched; a lowered wall is a Halt", () => {
+  const l = iv.lane
+  expect(l.doctrine).toMatch(/interpret FACTS|never.*assert non-facts|floor is the same height/i)
+  expect(l.interpretiveLatitude.length).toBeGreaterThanOrEqual(4)
+  // EXACTLY the five deterministic gates, named — none dropped, none loosened (the lock records their invariance)
+  expect(l.gatesUnchanged.map((g: { id: string }) => g.id)).toEqual(["numericWhitelist", "verdictGuard", "comparisonDirection", "severityLexicon", "advicePattern"])
+  expect(l.factGroundednessUntouched).toMatch(/BYTE-UNCHANGED|verifyGroundedness/i)
+  expect(l.haltRule).toMatch(/lowered to let an explanation through is a Halt|S44/i)
+  expect(l.haltRule).toMatch(/smuggled derived number|ADVICE boundary|moved verdict/i) // positive-controlled walls named
+})
+
+test("INTERPRET — X-INTERPRET(b): the register rubric is present + testable (Simple jargon-free ≤ band; Pro names axis + provenance ≥ band; identical → fail) — S42", () => {
+  const r = iv.register
+  expect(r.module).toBe("src/ask/register.ts")
+  expect(Array.isArray(r.jargonList) && r.jargonList.length).toBeGreaterThanOrEqual(10)
+  for (const t of ["ICIR", "deflated", "apyBase", "proxy-surface", "MinTRL"]) expect(r.jargonList).toContain(t) // the load-bearing jargon
+  expect(Array.isArray(r.axisTerms) && r.axisTerms.length).toBeGreaterThan(0)
+  expect(Array.isArray(r.provenanceTerms) && r.provenanceTerms.length).toBeGreaterThan(0)
+  expect(typeof r.simpleBand.maxChars).toBe("number")
+  expect(r.simpleBand.jargonForbidden).toBe(true)
+  expect(r.simpleBand.mustLeadWithCatch).toBe(true)
+  expect(typeof r.proBand.minChars).toBe("number")
+  expect(r.proBand.mustNameAxis).toBe(true); expect(r.proBand.mustCiteProvenance).toBe(true)
+  expect(r.mustDiffer).toMatch(/must DIFFER|identical . fail/i)
+  expect(r.haltRule).toMatch(/REJECTED to the correctly-registered|S42/i)
+})
+
+test("INTERPRET — X-INTERPRET(c): the persona is RE-PINNED (D18) — the live hash-lock lives HERE (supersedes the Voice-era record); the FACT groundedness gate untouched", () => {
+  const p = iv.personaRepin
+  expect(p.rel).toBe("data/honesty/persona.md")
+  // the LIVE persona.md now hashes to THIS pin (the live lock moved here — U-RESUPERSEDE)
+  expect(sha256(readFileSync(path.join(PKG_ROOT, p.rel), "utf8"))).toBe(p.sha)
+  expect(p.sha).not.toBe("d0d7f18d5d03850fa0d3d1164b4819f1cf08b94ef647065828827e0e26b2fd89") // the sha MOVED (a re-pin)
+  expect(p.supersedes).toBe("d0d7f18d5d03850fa0d3d1164b4819f1cf08b94ef647065828827e0e26b2fd89") // the Voice-era record it supersedes
+  expect(p.what).toMatch(/explain|say what it MEANS|exemplars/i)
+  expect(p.factGroundednessGateUntouched).toMatch(/BYTE-UNCHANGED|verifyGroundedness/i)
+  expect(p.note).toMatch(/no cascade|supersed|voice-pins.*unchanged/i)
+  // the re-pinned persona actually carries the explain-not-restate instruction + both register exemplars (not just a hash)
+  const persona = readFileSync(path.join(PKG_ROOT, p.rel), "utf8")
+  expect(persona).toMatch(/Explain . don't restate|say what it MEANS|never repeat it as/i)
+  expect(persona).toMatch(/Explain \(Simple\)/); expect(persona).toMatch(/Explain \(Pro\)/)
+  expect(persona).toMatch(/researcher/) // the advice-wall posture carried (voice_contract still green)
+})
+
+test("INTERPRET — X-INTERPRET(d): the three-layer truncation contract is present (CSS-flow + cap-scaler/detector + explicit fact-budget); CSS alone refused — S43", () => {
+  const t = iv.truncation
+  expect(t.doctrine).toMatch(/all THREE|CSS alone.*worse|subtly-incomplete/i)
+  expect(t.cssLayer.fix).toMatch(/flows\/scrolls|wraps|no fixed-height/i)
+  expect(t.cssLayer.s36).toMatch(/byte-identical|container change, not a content change/i)
+  expect(t.outputCapLayer.fix).toMatch(/SCALED to the fact-set size|truncated finish DETECTED|never a silent cut/i)
+  expect(t.factBudgetLayer.fix).toMatch(/EXPLICIT|NAMES which|never a silent drop/i)
+  expect(t.haltRule).toMatch(/CSS alone is REFUSED|clip.*silent cut.*silent drop|S43/i)
+})
+
+test("INTERPRET — X-INTERPRET(e): COMPARE = n FACT blocks + ONE comparative REASONING block (every number tracing, every direction matching, parity holding)", () => {
+  const c = iv.compare
+  expect(c.shape).toMatch(/n FACT blocks.*ONE comparative|never n restatements/i)
+  expect(c.everyNumberTraces).toBe(true)
+  expect(c.everyDirectionMatches).toMatch(/comparison-direction|reversed comparison rejects/i)
+  expect(c.parity).toMatch(/no key|template comparison|no crash/i)
+})
+
+test("INTERPRET — the Sovereign follow-ups SV1–SV5 are pinned resolved (coverage line · band surface · source-based qualifier · a11y follow-up · POOL-EVENTS attempt-or-gap)", () => {
+  const ids = iv.svResolutions.map((v: { id: string }) => v.id)
+  expect(ids).toEqual(["SV1", "SV3", "SV4", "SV5", "SV2"])
+  const byId = (id: string) => iv.svResolutions.find((v: { id: string }) => v.id === id)
+  expect(byId("SV1").resolution).toMatch(/FUNDING-HISTORY.*live|RPC-STATE.*single|POOL-EVENTS.*NOT live/i)
+  expect(byId("SV1").status).toBe("RESOLVED")
+  expect(byId("SV3").resolution).toMatch(/NOT.*moving a rendered.*verdict|Stamp\/facts/i)
+  expect(byId("SV4").resolution).toMatch(/SOURCE review|not a.*screenshot|no browser automation/i)
+  expect(byId("SV5").resolution).toMatch(/COMPUTED.*DOM-ASSERTED|browser.*assistive-technology.*follow-up/i)
+  // SV2 must NOT claim done — it is an explicit attempt-or-honest-gap
+  expect(byId("SV2").resolution).toMatch(/attempt-or-honest-gap|honest NAMED gap|never silently 'done'/i)
+  expect(byId("SV2").status).not.toBe("RESOLVED")
+})
+
+test("INTERPRET — D18/D19 are pinned + Operator-signed (the directive to execute IS the sign-off, recorded not fabricated); the ledger carries the full entries", () => {
+  expect(iv.deviations.D18).toMatch(/reasoning-lane amendment|interpretive latitude|walls unchanged/i)
+  expect(iv.deviations.D19).toMatch(/user-POV drive|fix.*on.*the.*fly|logged/i)
+  expect(iv.deviations.operatorSignedNote).toMatch(/directed the coding agent|directive to execute.*sign-off/i)
+  const dev = JSON.parse(readFileSync(path.join(H, "deviations.json"), "utf8"))
+  const d18 = dev.deviations.find((x: { id: string }) => x.id === "D18")
+  const d19 = dev.deviations.find((x: { id: string }) => x.id === "D19")
+  for (const d of [d18, d19]) { expect(d).toBeDefined(); for (const k of ["blueprintLine", "whatWasDone", "why", "lawAuthority"]) expect(String(d[k]).trim().length).toBeGreaterThan(0) }
+  expect(d18.lawAuthority).toMatch(/X-INTERPRET/)
+  expect(d19.lawAuthority).toMatch(/X-DOGFOOD/)
+})
+
+test("INTERPRET — X-DOGFOOD (D19): the user-POV drive covers the full matrix + fixes on the fly (a wall issue routed like a defect, never patched by lowering a wall)", () => {
+  const d = iv.dogfood
+  expect(d.doctrine).toMatch(/proved the WALLS|EXPERIENCE is poor|drive the whole system as a user/i)
+  expect(Array.isArray(d.matrix) && d.matrix.length).toBeGreaterThanOrEqual(5)
+  expect(d.fixOnTheFly).toMatch(/reproduce.*root-cause.*re-test.*log|cause . fix . result/i)
+  expect(d.haltRule).toMatch(/moves a fact\/verdict.*REFUSED|lowers a wall.*REFUSED|routed like/i)
+})
+
+test("INTERPRET — the screen set stays the conscious 3 (the Ask learns to explain, NO fourth screen/register); the stress catalog is S1–S44 (S42–S44 new)", () => {
+  expect(iv.screens.count).toBe(3)
+  expect(iv.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(iv.screens.askLearnsToExplain).toMatch(/NO fourth screen, NO fourth register|INTERPRET/i)
+  expect(iv.stressCatalog).toHaveLength(44)
+  expect(iv.stressCatalog.map((s: { id: string }) => s.id)).toEqual(Array.from({ length: 44 }, (_, k) => `S${k + 1}`))
+  expect(iv.stressCatalog.find((s: { id: string }) => s.id === "S42").name).toMatch(/register differentiation/i)
+  expect(iv.stressCatalog.find((s: { id: string }) => s.id === "S43").name).toMatch(/three-layer truncation/i)
+  expect(iv.stressCatalog.find((s: { id: string }) => s.id === "S44").name).toMatch(/interpretation-not-restatement|walls-hold/i)
+})
+
+test("INTERPRET — the constitution carries: frozen seven byte-untouched + zero verdicts moved, deps hono+zod, the differential carried, the probe with no prerequisites left", () => {
+  expect(iv.carried.deps).toEqual(["hono", "zod"])
+  expect(iv.carried.frozenSeven).toMatch(/byte-untouched/i)
+  expect(iv.carried.frozenSeven).toMatch(/moves ZERO verdicts|invents ZERO numbers|gives ZERO advice/i)
+  expect(iv.carried.verdictDifferential).toMatch(/70c7912f/)
+  expect(iv.carried.verdictDifferential).toMatch(/0a63151b/)
+  expect(iv.carried.designSystemUnchangedInTokens).toMatch(/UNCHANGED in token values|S36 content golden byte-identical/i)
+  expect(iv.carried.voiceUnchangedInContentExceptPersona).toMatch(/persona re-pin|five gates.*UNMODIFIED|advice wall/i)
+  expect(iv.carried.probe).toMatch(/no prerequisites left|Stage-0|10-customer/i)
+})

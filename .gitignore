@@ -20,3 +20,9 @@ sprint/sprint-result/ORGΛNON_*SPRINT.md
 
 # data-plane captured snapshots — gitignored (A′#12); the nonce-anchored provenance.jsonl chain is the committed guarantee
 data/dataplane/snapshots/
+
+# impeccable (the design dev-seam — Surface sprint, X-SURFACE b) — DEV-TIME-ONLY: the tool + its working/ephemera files
+# NEVER ship on the mass path; the whole dir is gitignored EXCEPT config.json (the committed reasoned detector-exception
+# record, kept as dev provenance). A runtime import of impeccable / any CSS framework is a Halt — deps stay hono+zod.
+.impeccable/*
+!.impeccable/config.json

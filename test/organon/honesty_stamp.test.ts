@@ -28,7 +28,9 @@ test("POSITIVE CONTROL (S17) — the Stamp renders all three verdicts: GO (survi
   expect(go.verdict).toBe("GO")
   expect(go.dsr).not.toBeNull()
   expect(go.reason).toMatch(/survive/i)
-  const nogo = await Stamp.stampFromReturns(gret(4, 800, 0.0), { label: "nogo" }) // powered but zero edge → does not survive
+  // powered but a NEGATIVE edge → does not survive (a genuine NO-GO on ample data; the MinTRL rider leaves it untouched —
+  // a negative Sharpe never clears the benchmark, so MinTRL is undefined and does NOT suppress: the adjudicator renders NO-GO).
+  const nogo = await Stamp.stampFromReturns(gret(4, 800, -0.002), { label: "nogo" })
   expect(nogo.verdict).toBe("NO-GO")
   const short = await Stamp.stampFromReturns(gret(1, 20, 0.006)) // < MIN_OBSERVATIONS → not enough to stress-test
   expect(short.verdict).toBe("INSUFFICIENT")

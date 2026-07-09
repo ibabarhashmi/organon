@@ -17,6 +17,9 @@ import { Feed } from "../dataplane/feed"
 import { DefiLlama } from "../dataplane/providers/defillama"
 import { ProvRecord } from "../dataplane/record"
 import { DataPlane } from "../dataplane/store"
+import { contractCoverage } from "../contract/registry" // the honest REAL-coverage count (a record read; no analyzer on the render path)
+import { PlaneDivergence } from "../plane/divergence" // the Pro-side own-plane-vs-rented divergence ROW (X-PLANE d; a ROW, not a screen)
+import type { ContractFinding } from "../contract/facts" // TYPE-ONLY — the B5 findings-render groups the recorded facts; no analyzer on the render path
 import type { Stamp } from "./stamp" // TYPE-ONLY — the Stamp's runtime (the attest core) is lazily imported by the /stamp route; the mass tool stays Stamp-free (X-OPTIN, PART CLEAN)
 
 export namespace Reality {
@@ -40,6 +43,32 @@ export namespace Reality {
 
   const esc = (s: unknown): string => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!))
   const pct = (x: number | null): string => (x === null ? "—" : `${x.toFixed(2)}%`)
+
+  // ── THE CONTRACT FINDINGS VIEW (Voice B5) — a REAL proxy tier can carry 27/39 findings; a flat list is unusable as a Pro
+  // row. Group by category (the structural class), DEDUPE identical details (a proxy repeats "delegatecall" across fns),
+  // order by a pinned severity rank, surface the top groups (the topline), and put the full deduped list behind a drawer.
+  // Pure + deterministic; a render change on a material:false DETAIL row — the scorecard verdict is byte-untouched (B5). ──
+  const CONTRACT_SEVERITY: Record<string, number> = {
+    "unprotected-state-changing": 1, "upgrade-proxy-hazard": 2, "reentrancy-value-flow": 3,
+    "dangerous-edges": 4, "storage-clash": 5, "oracle-dependency": 6,
+  }
+  export interface FindingItem { detail: string; contract: string; line?: number; count: number }
+  export interface FindingGroup { category: string; rank: number; count: number; items: FindingItem[] }
+  export function contractFindingsView(findings: ContractFinding[]): { total: number; groups: FindingGroup[]; topline: string } {
+    const byCat = new Map<string, Map<string, FindingItem>>()
+    for (const f of findings) {
+      if (!byCat.has(f.category)) byCat.set(f.category, new Map())
+      const m = byCat.get(f.category)!
+      const key = f.detail // dedupe identical structural facts within a category (the same detail repeated across fns/contracts)
+      const cur = m.get(key)
+      if (cur) cur.count++
+      else m.set(key, { detail: f.detail, contract: f.contract, line: f.line, count: 1 })
+    }
+    const groups: FindingGroup[] = [...byCat.entries()]
+      .map(([category, m]) => ({ category, rank: CONTRACT_SEVERITY[category] ?? 9, count: [...m.values()].reduce((a, b) => a + b.count, 0), items: [...m.values()].sort((a, b) => b.count - a.count) }))
+      .sort((a, b) => a.rank - b.rank || a.category.localeCompare(b.category))
+    return { total: findings.length, groups, topline: groups.map((g) => `${g.count} ${g.category}`).join(" · ") }
+  }
   export function riskWord(v: Scorecard.Verdict): string { return v === "SOLID" ? "Low" : v === "CAUTION" ? "Med" : v === "AVOID" ? "High" : "Unknown" }
 
   // ── the Shelf source: score each RECORDED pool (the moat) — REAL where the payload is present, SAMPLE where absent ──
@@ -98,23 +127,25 @@ export namespace Reality {
     return { reality: "REAL", recorded }
   }
 
-  // ── the HTML atoms (server-rendered; pure) ──
-  const CSS = `body{font:15px/1.5 -apple-system,system-ui,sans-serif;margin:0;background:#0e1116;color:#e6edf3}a{color:#58a6ff;text-decoration:none}.wrap{max-width:900px;margin:0 auto;padding:24px}
-.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;margin:12px 0}.card h3{margin:0 0 4px}
-.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:600;font-size:12px}
-.SOLID{background:#1a7f37;color:#fff}.CAUTION{background:#9e6a03;color:#fff}.AVOID{background:#b62324;color:#fff}.UNVERIFIED{background:#484f58;color:#fff}
-.badge{font-size:11px;padding:1px 7px;border-radius:6px;border:1px solid #30363d}.REAL{color:#3fb950;border-color:#238636}.SAMPLE{color:#d29922;border-color:#9e6a03}
-.bar{display:flex;height:16px;border-radius:6px;overflow:hidden;margin:8px 0;border:1px solid #30363d}.base{background:#238636}.reward{background:#9e6a03}
-.band{display:flex;align-items:center;gap:8px;margin:8px 0}.band .rng{flex:1;height:8px;background:linear-gradient(90deg,#238636,#9e6a03);border-radius:4px}
-.axis{padding:8px 0;border-top:1px solid #21262d}.pro{display:none}.pro-on .pro{display:block}.muted{color:#8b949e;font-size:13px}
-.filters a{margin-right:12px;font-size:13px}.trust{margin-top:24px;padding-top:12px;border-top:1px solid #21262d;color:#8b949e;font-size:12px}`
+  // ── the HTML atoms (server-rendered; pure) ── the SINGLE stylesheet is the pinned token-built public/organon.css
+  // (Surface sprint; X-SURFACE a,b) — read ONCE (module-cached), inlined server-rendered (the same single-request idiom,
+  // no runtime framework, no new dep). Absent → an empty style (degrade-never-crash); it is a committed artifact, present
+  // on a fresh clone. The semantic classes (.SOLID/.REAL/.blk.analysis/…) carry their non-color cues from the stylesheet,
+  // so this render layer restyles by class alone — the HTML CONTENT is byte-untouched (S36; surface_content_identity).
+  let _css: string | null = null
+  function stylesheet(): string {
+    if (_css !== null) return _css
+    const p = path.join(PKG_ROOT, "public", "organon.css")
+    _css = existsSync(p) ? readFileSync(p, "utf8") : ""
+    return _css
+  }
 
   export function splitBar(apyBase: number | null, apyReward: number | null): string {
     const base = apyBase ?? 0, reward = apyReward ?? 0, total = base + reward
     if (total <= 0) return `<div class="muted">no positive yield to split</div>`
     const b = Math.round((base / total) * 100), r = 100 - b
     return `<div class="bar"><div class="base" style="width:${b}%" title="durable base ${pct(apyBase)}"></div><div class="reward" style="width:${r}%" title="reward emissions ${pct(apyReward)}"></div></div>
-<div class="muted">durable base ${pct(apyBase)} (${b}%) · reward emissions ${pct(apyReward)} (${r}%)</div>`
+<div class="muted">durable base <span class="num">${pct(apyBase)}</span> (${b}%) · reward emissions <span class="num">${pct(apyReward)}</span> (${r}%)</div>`
   }
   export function verdictPill(v: Scorecard.Verdict): string { return `<span class="pill ${v}">${v}</span>` }
   export function realityBadge(r: Scorecard.Reality): string { return `<span class="badge ${r}">${r}</span>` }
@@ -122,12 +153,12 @@ export namespace Reality {
     const fr = scored.rows.find((r) => r.axis === "funding-regime")
     if (fr) { // delta-neutral — the funding carry BAND, never a hero APY
       if (fr.value === "n/a") return `<div class="muted">outcome: UNVERIFIED — not enough funding history to show a band.</div>`
-      return `<div class="band"><span class="muted">funding carry ${esc(fr.value)}</span><span class="rng"></span></div>
+      return `<div class="band"><span class="muted">funding carry <span class="num">${esc(fr.value)}</span></span><span class="rng"></span></div>
 <div class="muted">shown as a band, never a single hero APY — the research shows funding swings widely (roughly −6% to +75% annualized).</div>`
     }
     const apyBase = scored.facts.apyBase, apyTotal = apyBase === null ? null : apyBase + (scored.facts.apyReward ?? 0)
     if (apyBase === null || apyTotal === null) return `<div class="muted">outcome: UNVERIFIED — we can't show a reliable range yet.</div>`
-    return `<div class="band"><span class="muted">durable ${pct(apyBase)}</span><span class="rng"></span><span class="muted">advertised ${pct(apyTotal)}</span></div>
+    return `<div class="band"><span class="muted">durable <span class="num">${pct(apyBase)}</span></span><span class="rng"></span><span class="muted">advertised <span class="num">${pct(apyTotal)}</span></span></div>
 <div class="muted">shown as a range, never a single hero APY — the durable floor to the reward-inflated headline.</div>`
   }
 
@@ -137,35 +168,81 @@ export namespace Reality {
     const note = sampleFallback ? `<div class="card"><b>SAMPLE mode</b> — no live data recorded yet (offline, or run <code>bun run script/capture-defillama.ts</code>). Every card below is SAMPLE → UNVERIFIED, labeled honestly.</div>` : ""
     const rows = shown.map((c) => `<div class="card"><h3><a href="/check/${encodeURIComponent(c.poolKey)}">${esc(c.name)}</a> ${verdictPill(c.verdict)} ${realityBadge(c.reality)}</h3>
 ${c.kind === "delta-neutral"
-      ? `<div class="muted">delta-neutral · funding carry ${fundingBandText(c.scored)}</div><div class="band"><span class="rng"></span></div><div class="muted">a carry BAND, never a single hero APY.</div>`
-      : `<div class="muted">risk: ${c.risk} · headline APY ${pct(c.apyTotal)}</div>${splitBar(c.apyBase, c.apyReward)}`}</div>`).join("")
+      ? `<div class="muted">delta-neutral · funding carry <span class="num">${fundingBandText(c.scored)}</span></div><div class="band"><span class="rng"></span></div><div class="muted">a carry BAND, never a single hero APY.</div>`
+      : `<div class="muted">risk: ${c.risk} · headline APY <span class="num">${pct(c.apyTotal)}</span></div>${splitBar(c.apyBase, c.apyReward)}`}</div>`).join("")
+    // the honest REAL-coverage count (Build-Provenance V3, X-COVER; Voice B2/B3) — N of M APPLICABLE pools carry a REAL
+    // verified-build contract tier; never imply more than was captured. The denominator is standardized to "applicable"
+    // (the pools the contract screen applies to — yield/lending, not delta-neutral); BOTH denominators are stated (B2).
+    // Computed over the FULL shelf (not the verdict-filtered subset) — coverage is a shelf property, not a filter artifact.
+    const applicableCards = cards.filter((c) => c.kind !== "delta-neutral")
+    const applicable = applicableCards.length
+    const notApplicable = cards.length - applicable
+    // W-SO01 (Sovereign PART E — a red-team fix-on-the-go, surfaced by the design critique): the numerator counts REAL
+    // tiers AMONG THE SHOWN applicable pools (the intersection with the registry's REAL pool keys), NEVER the GLOBAL
+    // registry count — so it can never exceed its denominator. The old code showed contractCoverage().realCount (a global
+    // 4) over a 3-pool sample shelf → "4 of 3", an impossible ratio on a trust surface. Now: 0 of 3 on the sample shelf
+    // (no sample pool carries a REAL tier — honest), N of M on the live shelf (the real pools that are actually shown).
+    const realPoolKeys = new Set(contractCoverage().realPoolKeys)
+    const realTier = applicableCards.filter((c) => realPoolKeys.has(c.poolKey)).length
+    const coverage = applicable ? `<div class="muted">Contract screen: <b>${realTier} of ${applicable}</b> applicable pools carry a REAL verified-build tier (a deterministic structural screen over verified source — <i>not</i> an audit); the rest are honestly UNVERIFIED. <span class="muted">(${applicable} applicable; ${cards.length} shown incl. ${notApplicable} not-applicable delta-neutral.)</span> <span class="pro">See a strategy's counterparty row for the detail — every REAL tier so far is FLAGGED; the benign direction (a REAL build with zero flags → CLEAN-STRUCTURE) is fixture-proven only, with zero real-world instances yet (B3).</span></div>` : ""
     return page("The Shelf — which yields are real?", `<h1>The Shelf</h1><div class="muted">The strategies that hold DeFi's money — is the yield real, and what's the catch? Open one for its Reality Check.</div>
-<div class="filters">filter: <a href="/">all</a> <a href="/?verdict=SOLID">SOLID</a> <a href="/?verdict=CAUTION">CAUTION</a> <a href="/?verdict=AVOID">AVOID</a> <a href="/?verdict=UNVERIFIED">UNVERIFIED</a> · <a href="/refresh">↻ refresh (live)</a> · <a href="/ask">💬 Ask ORGΛNON</a></div>
+${coverage}<div class="filters">filter: <a href="/">all</a> <a href="/?verdict=SOLID">SOLID</a> <a href="/?verdict=CAUTION">CAUTION</a> <a href="/?verdict=AVOID">AVOID</a> <a href="/?verdict=UNVERIFIED">UNVERIFIED</a> · <a href="/refresh">↻ refresh (live)</a> · <a href="/ask">💬 Ask ORGΛNON</a></div>
 ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${trust(sampleFallback)}`)
   }
 
+  // THE PRO-SIDE DIVERGENCE ROW (X-PLANE d) — where the own-plane and the rented plane disagree on an overlapping value
+  // beyond the pinned tolerance, the disagreement is SURFACED as a fact (recorded + shown), NEVER silently resolved toward
+  // either source. "" when there is no divergence → the S36 golden screens (no plane data) render byte-identical. A ROW,
+  // not a screen. Reuses the design-pass .num (the figures loud) + .axis-tier cue.
+  export function divergenceRow(divs: PlaneDivergence.Divergence[]): string {
+    if (!divs.length) return ""
+    const lines = divs.map((d) => `<div class="muted">${esc(d.key)}: own-plane <span class="num">${esc(String(d.own))}</span> vs rented <span class="num">${esc(String(d.rented))}</span> (Δ ${esc(String(d.deltaPct))}%) — recorded as a fact; neither source silently chosen.</div>`).join("")
+    return `<div class="pro axis"><b>own-plane vs rented — divergence</b> <span class="axis-tier caution">!</span>
+<div>The sovereign plane and the rented breadth disagree here beyond the pinned tolerance. The disagreement is SURFACED, never silently resolved toward either source (X-PLANE d).</div>${lines}</div>`
+  }
+
   // ── SCREEN 2 — THE REALITY CHECK ──
-  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string): string {
+  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = []): string {
     const c = scored
     const oneLiner = c.summary.replace(/^(SOLID|CAUTION|AVOID|UNVERIFIED)\s*—\s*/, "")
-    const axes = c.rows.map((r) => `<div class="axis"><b>${esc(r.name)}</b> ${r.tier === "pass" ? "✓" : r.tier === "caution" ? "!" : r.tier === "fail" ? "✗" : "?"}
+    const axes = c.rows.map((r) => `<div class="axis"><b>${esc(r.name)}</b> <span class="axis-tier ${esc(r.tier)}">${r.tier === "pass" ? "✓" : r.tier === "caution" ? "!" : r.tier === "fail" ? "✗" : "?"}</span>
 <div>${esc(r.plainReason)}</div><div class="pro muted">metric ${esc(r.value)} ${esc(r.comparator ?? "")} ${esc(r.threshold ?? "")} → ${r.tier.toUpperCase()}${r.provenanceRef ? ` · provenance ${esc(String(r.provenanceRef).slice(0, 12))}…` : ""}</div></div>`).join("")
+    // THE DEEP COUNTERPARTY DETAIL (Contract-Truth Phase 4; X-CONTRACT) — a deterministic structural CONTRACT screen over
+    // verified source, BESIDE the coarse age·size·dependency counterparty axis (a yield pool only; the coarse row is the
+    // floor). Simple: the tier + an honest one-liner (the depositor gets "unverified" where no build was analyzed, and
+    // NEVER the raw findings — E.0). Pro: the "not a full audit" scope label + the specific structural findings. It NEVER
+    // says "safe"/"audited"; it is DETAIL, not a verdict-bearing row (the scorecard verdict is unchanged).
+    const cs = c.contract
+    const csClass = cs.tier === "FLAGGED" ? "FLAGGED" : cs.tier === "CLEAN-STRUCTURE" ? "CLEANSTRUCTURE" : "tier-UNVERIFIED"
+    // B5 — the findings-render: severity-grouped + category-deduped, the top groups surfaced (the topline), the full deduped
+    // list behind a drawer (a 27/39-finding proxy tier reads as a usable Pro row). B4 — the proxy-surface qualifier carried:
+    // a REAL tier scores the deployed verified-source surface (a proxy tier names its proxy contract; implementation-level
+    // analysis is parked — W-V03/D10). A material:false DETAIL render — the scorecard verdict is byte-untouched.
+    const fv = cs.findings.length ? contractFindingsView(cs.findings) : null
+    const proDetail = fv
+      ? ` · <b>${fv.total} structural surface${fv.total > 1 ? "s" : ""}</b> across ${fv.groups.length} categor${fv.groups.length > 1 ? "ies" : "y"}, at the deployed verified-source surface (a proxy tier names its proxy contract; implementation-level analysis parked — W-V03): ${esc(fv.topline)}.<details><summary>the full structural findings (category-grouped, deduped)</summary><ul>${fv.groups.map((g) => `<li><b>${esc(g.category)}</b> (${g.count})<ul>${g.items.map((it) => `<li>${esc(it.detail)}${it.count > 1 ? ` ×${it.count}` : ""} — <span class="muted">${esc(it.contract)}${it.line ? ` L${it.line}` : ""}</span></li>`).join("")}</ul></li>`).join("")}</ul></details>`
+      : ""
+    const contractScreen = c.rows.some((r) => r.axis === "counterparty")
+      ? `<div class="axis"><b>contract screen — deterministic structural analysis over verified source</b> <span class="pill ${csClass}">${esc(cs.tier)}</span>
+<div>${esc(cs.reason)}</div>
+<div class="pro muted">${esc(cs.scope)}${proDetail}${cs.contentSha ? ` · contentHash ${esc(cs.contentSha.slice(0, 12))}…` : ""}</div></div>`
+      : ""
     const prov = history.length
       ? `<div class="muted"><b>Provenance — what was real, and when we captured it</b> (${history.length} capture${history.length > 1 ? "s" : ""}, the moat made visible; a competitor can copy the lens but not this timestamped record):<ul>${history.map((h) => `<li>${new Date(h.asOf).toISOString().slice(0, 16).replace("T", " ")}Z · contentHash ${esc(h.contentHash.slice(0, 12))}… (chain pos ${h.chainPos})</li>`).join("")}</ul></div>`
       : `<div class="muted">provenance: this value is SAMPLE — not in the record (re-capture keyless for a REAL, recorded reading).</div>`
     // THE STAMP DRAWER (opt-in, Pro-only — X-OPTIN). A LINK, never inline: the Stamp is NOT run on this page (it is off
     // the mass path); the user opts in by navigating to /stamp/:key. The two-verdict distinction is stated up front.
     const stampDrawer = poolKey
-      ? `<div class="pro"><h3>The overfit Stamp — opt-in, a SEPARATE verdict</h3><div class="muted">The Reality Check above answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers a DIFFERENT question with the frozen anti-PBO adjudicator — "does this pool's recorded track record survive the overfit deflation?" (GO/NO-GO/INSUFFICIENT). The two verdicts are never conflated — a GO is not "safe", an INSUFFICIENT is not "bad".</div><a href="/stamp/${encodeURIComponent(poolKey)}">▶ Run the overfit Stamp (opt-in)</a></div>`
+      ? `<div class="pro"><h2>The overfit Stamp — opt-in, a SEPARATE verdict</h2><div class="muted">The Reality Check above answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers a DIFFERENT question with the frozen anti-PBO adjudicator — "does this pool's recorded track record survive the overfit deflation?" (GO/NO-GO/INSUFFICIENT). The two verdicts are never conflated — a GO is not "safe", an INSUFFICIENT is not "bad".</div><a href="/stamp/${encodeURIComponent(poolKey)}">▶ Run the overfit Stamp (opt-in)</a></div>`
       : ""
     const askLink = poolKey ? ` · <a href="/ask?${qs({ q: `is ${name} safe?`, pool: poolKey })}">💬 ask about this</a>` : ""
     return page(`Reality Check — ${name}`, `<a href="/">← the Shelf</a>${askLink}
 <h1>${esc(name)} ${verdictPill(c.verdict)} ${realityBadge(c.facts.reality)}</h1>
 <div class="card"><b>${esc(oneLiner)}</b></div>
-<button onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
+<button class="btn" onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
 ${confidenceBand(c)}
-<h3>The honesty scorecard</h3>${axes}
-<div class="pro"><h3>Quantitative</h3><pre class="muted">${esc(c.quant)}</pre></div>
+<h2>The honesty scorecard</h2>${axes}${contractScreen}${divergenceRow(divergences)}
+<div class="pro"><h2>Quantitative</h2><pre class="muted">${esc(c.quant)}</pre></div>
 ${stampDrawer}
 ${prov}${trust(c.facts.reality === "SAMPLE")}`)
   }
@@ -174,7 +251,7 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
   // Pure: takes a resolved StampResult (the runtime is lazily imported by the route). The verdict pill is a DIFFERENT
   // colour/word-space from the scorecard's (never conflated); the two-verdict distinction is stated; "unavailable" is honest.
   export function renderStamp(name: string, poolKey: string, r: Stamp.StampResult): string {
-    const color = r.verdict === "GO" ? "#1a7f37" : r.verdict === "NO-GO" ? "#b62324" : r.verdict === "INSUFFICIENT" ? "#9e6a03" : "#484f58"
+    const vClass = r.verdict === "GO" ? "GO" : r.verdict === "NO-GO" ? "NOGO" : r.verdict === "INSUFFICIENT" ? "INSUFFICIENT" : "UNAVAILABLE"
     const basis = r.available && r.verdict !== "UNAVAILABLE"
       ? `<div class="muted">observations: ${r.nObs} recorded return points · deflated significance ${esc(String(r.dsr ?? "n/a"))} · n counted attempts ${r.familyN}${r.reproHash ? ` · reproHash ${esc(r.reproHash.slice(0, 12))}…` : ""}</div>`
       : ""
@@ -183,14 +260,21 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
     // the carry); the ICIR is WITHIN-STRATEGY temporal consistency (NOT a cross-sectional factor rank). A clean GO needs both.
     const decayTxt = r.decay ? (r.decay.tier === "INSUFFICIENT" ? "insufficient history" : r.decay.atLeast ? `≥ ${r.decay.floor} periods` : `≈ ${r.decay.halfLife} periods`) : null
     const icirTxt = r.icir ? (r.icir.tier === "INSUFFICIENT" ? "insufficient history" : String(r.icir.icir)) : null
+    // THE MinTRL RIDER (Voice; X-DECAY/X-ICIR extended) — on short history the point estimate is SUPPRESSED, not caveated:
+    // the drawer states the needed-N explicitly (the number is ABSENT above, not footnoted). On sufficient history, a Pro note.
+    const mintrlTxt = r.minTRL && r.minTRL.suppress && r.minTRL.minTRL !== null
+      ? `<div class="muted"><b>Minimum Track Record Length:</b> the deflated-Sharpe point estimate is <b>SUPPRESSED</b> — ${r.nObs} recorded observations is below the ${Math.ceil(r.minTRL.minTRL)}-observation minimum this track record's own Sharpe requires; <b>need ${r.minTRL.needMore} more observations</b> before the estimate can be trusted (absent, not caveated).</div>`
+      : r.minTRL && r.minTRL.minTRL !== null
+        ? `<div class="pro muted">MinTRL: ${r.nObs} observations ≥ the ${Math.ceil(r.minTRL.minTRL)}-observation minimum — the track record clears its Minimum Track Record Length${r.minTRL.trialN ? ` (deflation basis: ${r.minTRL.trialN} evaluation${r.minTRL.trialN === 1 ? "" : "s"})` : ""}.</div>`
+        : ""
     const depth = r.available && (r.decay || r.icir)
-      ? `<div class="muted"><b>Track-record depth (opt-in):</b> edge half-life ${esc(String(decayTxt))} <span class="pill" style="background:${r.decay?.tier === "TRACEABLE" ? "#1a7f37" : r.decay?.tier === "SHORT_LIVED" ? "#9e6a03" : "#484f58"};color:#fff">${esc(String(r.decay?.tier ?? "n/a"))}</span> (serial persistence of the recorded signal — not the carry) · temporal consistency (ICIR) ${esc(String(icirTxt))} <span class="pill" style="background:${r.icir?.tier === "CONSISTENT" ? "#1a7f37" : r.icir?.tier === "LUMPY" ? "#9e6a03" : "#484f58"};color:#fff">${esc(String(r.icir?.tier ?? "n/a"))}</span> (within-strategy — NOT a cross-sectional factor rank)${r.verdict === "GO" ? (r.cleanGo ? " · <b>a CLEAN GO</b> — both depth hurdles cleared" : " · the GO is <b>FENCED</b> — a depth hurdle not cleared (the GO stands on the deflation alone)") : ""}</div>`
+      ? `<div class="muted"><b>Track-record depth (opt-in):</b> edge half-life ${esc(String(decayTxt))} <span class="pill ${r.decay?.tier === "TRACEABLE" ? "good" : r.decay?.tier === "SHORT_LIVED" ? "warn" : "neutral"}">${esc(String(r.decay?.tier ?? "n/a"))}</span> (serial persistence of the recorded signal — not the carry) · temporal consistency (ICIR) ${esc(String(icirTxt))} <span class="pill ${r.icir?.tier === "CONSISTENT" ? "good" : r.icir?.tier === "LUMPY" ? "warn" : "neutral"}">${esc(String(r.icir?.tier ?? "n/a"))}</span> (within-strategy — NOT a cross-sectional factor rank)${r.verdict === "GO" ? (r.cleanGo ? " · <b>a CLEAN GO</b> — both depth hurdles cleared" : " · the GO is <b>FENCED</b> — a depth hurdle not cleared (the GO stands on the deflation alone)") : ""}</div>`
       : ""
     return page(`The Stamp — ${name}`, `<a href="/check/${encodeURIComponent(poolKey)}">← the Reality Check</a>
-<h1>The Stamp <span class="pill" style="background:${color};color:#fff">${esc(r.verdict)}</span> <span class="muted">${esc(name)}</span></h1>
+<h1>The Stamp <span class="pill ${vClass}">${esc(r.verdict)}</span> <span class="muted">${esc(name)}</span></h1>
 <div class="card"><b>The opt-in overfit stress test — a SEPARATE verdict from the Reality Check.</b>
 <div class="muted">This is NOT the scorecard's verdict. The Reality Check answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers "does this pool's recorded track record survive the anti-PBO overfit deflation?" (GO/NO-GO/INSUFFICIENT). A GO is a floor on doubt about the track record's statistical robustness — NOT "safe". An INSUFFICIENT is a forward clock — NOT "bad". The two are never conflated.</div></div>
-<div class="card"><div>${esc(r.reason)}</div>${basis}${depth}</div>
+<div class="card"><div>${esc(r.reason)}</div>${basis}${mintrlTxt}${depth}</div>
 <div class="trust">the frozen, byte-pinned anti-PBO adjudicator — INVOKED, never edited (zero frozen bytes moved) · deflation armed only here · off the mass path · this is not financial advice.</div>`)
   }
 
@@ -204,11 +288,15 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
     intentKind?: string
     tool?: string
     reality?: string
-    text?: string // the rendered answer (deterministic, or AI-phrased if grounded)
+    text?: string // the rendered answer (deterministic, or AI-phrased if grounded) — the fallback when blocks are absent
     rawFacts?: string // the pure engine fact rows (the Pro raw toggle — byte-reproducible)
     aiPhrased?: boolean
     aiStatus: { keyed: boolean; provider: string | null } // the honest "AI on/off" label — never the key
     contextPool?: string // the current pool passed from a Reality Check ("ask about this")
+    // ── THE THREE-TIER ANSWER (Voice X-VOICE b) — a typed FACT/REASONING/BOUNDARY composition; the tier lives in the render
+    // (a REASONING block carries a visible ANALYSIS label that survives a screenshot). Structural (no ask-module coupling). ──
+    blocks?: { tier: "FACT" | "REASONING" | "BOUNDARY"; text: string; label?: string }[]
+    residual?: string // the standing residual disclosure (shown wherever a REASONING block appears — X-VOICE g)
   }
   const STARTERS = [
     { q: "Is aave-v3 USDC safe?", label: "Is this yield real?" },
@@ -218,7 +306,7 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
   ]
   export function renderAsk(v: AskView): string {
     const reg = v.register === "pro" ? "pro" : "simple"
-    const toggle = (r: "simple" | "pro") => `<a href="/ask?${qs({ q: v.query, register: r, pool: v.contextPool })}"${reg === r ? ' style="font-weight:700"' : ""}>${r === "simple" ? "Simple" : "Pro"}</a>`
+    const toggle = (r: "simple" | "pro") => `<a href="/ask?${qs({ q: v.query, register: r, pool: v.contextPool })}"${reg === r ? ' class="reg-active"' : ""}>${r === "simple" ? "Simple" : "Pro"}</a>`
     const rawToggle = v.query ? `<a href="/ask?${qs({ q: v.query, register: "pro", raw: v.raw ? "" : "1", pool: v.contextPool })}">${v.raw ? "▾ show the phrased answer" : "▸ raw engine facts (deterministic)"}</a>` : ""
     const aiBadge = v.aiStatus.keyed
       ? `<span class="badge REAL">AI: ${esc(v.aiStatus.provider ?? "")}${v.query ? (v.aiPhrased ? " · phrased" : " · deterministic (ungrounded phrasing rejected)") : ""}</span>`
@@ -228,24 +316,41 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
     const answer = v.query
       ? `<div class="card">
 ${reg === "pro" ? `<div class="muted">[ intent <b>${esc(v.intentKind ?? "")}</b> → engine tool <b>${esc(v.tool ?? "")}</b>${v.reality && v.reality !== "n/a" ? ` · ${esc(v.reality)}` : ""} ]</div>` : ""}
-<div style="margin-top:6px">${v.raw ? `<pre class="muted">${esc(v.rawFacts ?? "")}</pre>` : esc(v.text ?? "").replace(/\n/g, "<br>")}</div>
-${reg === "pro" ? `<div class="muted" style="margin-top:8px">${rawToggle}</div>` : `<div class="muted" style="margin-top:8px"><a href="/ask?${qs({ q: v.query, register: "pro", pool: v.contextPool })}">show me the numbers →</a></div>`}
+<div class="mt-sm">${v.raw ? `<pre class="muted">${esc(v.rawFacts ?? "")}</pre>` : renderAnswerBlocks(v)}</div>
+${reg === "pro" ? `<div class="muted mt-sm">${rawToggle}</div>` : `<div class="muted mt-sm"><a href="/ask?${qs({ q: v.query, register: "pro", pool: v.contextPool })}">show me the numbers →</a></div>`}
 </div>`
       : `<div class="card muted">Ask about any recorded strategy — is the yield real, what's the catch, run the overfit Stamp, compare two, or explain a term. Every number and verdict comes from the deterministic engine — I phrase, I never invent.</div>`
     return page("Ask — ORGΛNON", `<div class="filters"><a href="/">the Shelf</a> · <a href="/ask">Ask</a></div>
 <h1>Ask ORGΛNON</h1>
 <div class="muted">A grounded front door: ask in your own words; every fact comes from the engine, never a model. ${aiBadge}</div>
-<form method="get" action="/ask" style="margin:14px 0">
-<input type="text" name="q" value="${esc(v.query ?? "")}" placeholder="Ask about any strategy…" style="width:70%;padding:10px;border-radius:8px;border:1px solid #30363d;background:#0d1117;color:#e6edf3;font-size:15px">
+<form method="get" action="/ask" class="form">
+<input type="text" name="q" value="${esc(v.query ?? "")}" placeholder="Ask about any strategy…" class="field grow">
 <input type="hidden" name="register" value="${reg}">
 ${v.contextPool ? `<input type="hidden" name="pool" value="${esc(v.contextPool)}">` : ""}
-<button style="padding:10px 16px;border-radius:8px;border:1px solid #30363d;background:#238636;color:#fff;font-weight:600">Ask</button>
-<span style="margin-left:12px">register: ${toggle("simple")} / ${toggle("pro")}</span>
+<button class="btn primary">Ask</button>
+<span class="reg-wrap">register: ${toggle("simple")} / ${toggle("pro")}</span>
 </form>
 ${starters}${ctx}
 ${answer}
 <div class="trust">every answer traces to a deterministic engine fact — the AI only phrases, and a claim the engine didn't produce is rejected · an unverified gap stays unverified · this is not financial advice.</div>`)
   }
+  // ── THE THREE-TIER ANSWER RENDER (Voice X-VOICE b,g) — FACT (high-trust) / REASONING (a visible ANALYSIS label that
+  // survives a screenshot) / BOUNDARY (the honest edge). The residual disclosure is shown WHEREVER a REASONING block
+  // appears (Simple + Pro). PARITY: no key → a single FACT/BOUNDARY block renders the deterministic answer unchanged.
+  // Structural — the blocks are plain data (no ask-module coupling); a direct caller with only `text` falls back. ──
+  function renderAnswerBlocks(v: AskView): string {
+    const blocks = v.blocks
+    if (!blocks || !blocks.length) return esc(v.text ?? "").replace(/\n/g, "<br>")
+    const parts = blocks.map((b) => {
+      const body = esc(b.text).replace(/\n/g, "<br>")
+      if (b.tier === "REASONING") return `<div class="blk analysis"><div class="analysis-label">${esc(b.label ?? "ANALYSIS — not an engine fact")}</div><div>${body}</div></div>`
+      if (b.tier === "BOUNDARY") return `<div class="blk boundary">${body}</div>`
+      return `<div class="blk fact">${body}</div>` // FACT — the high-trust engine tier
+    })
+    if (blocks.some((b) => b.tier === "REASONING") && v.residual) parts.push(`<div class="muted residual">${esc(v.residual)}</div>`)
+    return parts.join("")
+  }
+
   // a tiny query-string builder (drops empty values) — keeps the toggles readable
   function qs(o: Record<string, string | undefined>): string {
     return Object.entries(o).filter(([, v]) => v !== undefined && v !== "").map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join("&")
@@ -255,7 +360,7 @@ ${answer}
     return `<div class="trust">as of the last capture · source: DeFiLlama (keyless, REAL) ${sample ? "— currently SAMPLE (unverified)" : ""} · this is not financial advice · the verdict is machine-derived from the fact rows, never hand-written.</div>`
   }
   function page(title: string, body: string): string {
-    return `<!doctype html><html><head><meta charset="utf8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>${CSS}</style></head><body><div class="wrap">${body}</div></body></html>`
+    return `<!doctype html><html lang="en"><head><meta charset="utf8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>${stylesheet()}</style></head><body><div class="wrap">${body}</div></body></html>`
   }
 
   // resolve one pool's Reality Check from the record (clone-robust). Returns null if the key is unknown (honest 404).

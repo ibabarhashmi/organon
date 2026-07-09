@@ -1,0 +1,13 @@
+{
+  "note": "The committed detector-exception record (Surface sprint, X-SURFACE c). impeccable is a DEV-TIME-ONLY seam; this is the ONLY tracked file under .impeccable/ (the rest is gitignored ephemera). Each waived rule carries a REASON. The constitution outranks the detector (Attack-11): a detector 'fix' that would change a rendered fact/label (S36) or add a runtime dep (X-SURFACE b) is REFUSED and recorded here, never silently suppressed. test/organon/surface_detector.test.ts (S38) reads this file and asserts every detector finding on the surface is one of these reasoned exceptions — an unexcepted anti-pattern fails the wall.",
+  "detector": {
+    "ignoreRules": ["em-dash-overuse"],
+    "designSystem": { "enabled": true }
+  },
+  "exceptions": [
+    {
+      "rule": "em-dash-overuse",
+      "reason": "ORGΛNON's honest prose AND its engine-produced data labels use the em-dash as a pinned house style — e.g. the scorecard verdict reasons, 'the Reality Check answers … — the Stamp answers …', 'a deterministic structural screen over verified source — not a full audit', 'GO/NO-GO — never conflated'. These strings are CONTENT, byte-frozen under S36; softening them would change a rendered label a depositor reads. Per Attack-11 the constitution (honesty-preservation) outranks the detector — this rule is waived with this reason, in the committed record, never as a silent suppression."
+    }
+  ]
+}

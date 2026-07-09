@@ -26,7 +26,7 @@
   <img alt="verdicts" src="https://img.shields.io/badge/manufactured%20verdicts-zero%20(by%20design)-brightgreen">
   <img alt="evidence" src="https://img.shields.io/badge/numbers-reproducible%20(./organon.sh%20verify)-blue">
   <img alt="ai" src="https://img.shields.io/badge/AI-optional%20%C2%B7%20BYOK%20%C2%B7%20grounded-purple">
-  <img alt="license" src="https://img.shields.io/badge/license-MIT-lightgrey">
+  <img alt="license" src="https://img.shields.io/badge/license-proprietary%20%C2%B7%20closed%20source-lightgrey">
 </p>
 
 ---
@@ -311,4 +311,8 @@ bun run script/render-matrix-readme.ts   # regenerate the capability matrix bloc
 
 ## License
 
-MIT
+**Proprietary — closed source.** © 2026 Babar Hashmi. All rights reserved.
+
+This repository and its contents are proprietary and confidential. No license is granted, whether express or implied, to
+use, copy, modify, merge, publish, distribute, sublicense, or sell any part of this code. It is published here for
+evaluation and reference only. For any other use, contact the author for written permission.

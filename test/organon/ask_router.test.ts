@@ -10,14 +10,37 @@ import { AskRouter } from "../../src/ask/router"
 
 const AAVE_USDC = "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501"
 
-test("ASK-ROUTED — the intent enum is CLOSED + TOTAL: every intent maps to exactly one engine tool", () => {
-  expect(AskRouter.INTENTS).toHaveLength(8)
+test("ASK-ROUTED — the intent enum is CLOSED + TOTAL: every intent maps to exactly one engine tool (widened 8 → 13)", () => {
+  expect(AskRouter.INTENTS).toHaveLength(13) // Voice: the 8 carried + OUTLOOK · SCENARIO · ADVICE_BOUNDARY · GENERAL · RECORD_HISTORY
   for (const i of AskRouter.INTENTS) {
     expect(typeof AskRouter.INTENT_TOOL[i]).toBe("string")
     expect(AskRouter.INTENT_TOOL[i].length).toBeGreaterThan(0)
   }
   expect(AskRouter.INTENT_TOOL.VALIDATION).toBe("stampFor")
   expect(AskRouter.INTENT_TOOL.UNSUPPORTED).toBe("fallback")
+  expect(AskRouter.INTENT_TOOL.OUTLOOK).toBe("outlook")
+  expect(AskRouter.INTENT_TOOL.ADVICE_BOUNDARY).toBe("adviceBoundary")
+  expect(AskRouter.INTENT_TOOL.RECORD_HISTORY).toBe("recordHistory")
+})
+
+test("ASK-ROUTED (Voice) — the five widened intents route deterministically (advice / outlook / scenario / general / history)", () => {
+  const cases: [string, AskRouter.IntentKind][] = [
+    ["should I invest in aave-v3 USDC?", "ADVICE_BOUNDARY"],
+    ["is it worth buying compound USDC?", "ADVICE_BOUNDARY"],
+    ["what does next month look like for aave USDC?", "OUTLOOK"],
+    ["will aave USDC's yield last?", "OUTLOOK"],
+    ["what if funding flips negative for hyperliquid BTC?", "SCENARIO"],
+    ["tell me everything about aave-v3 USDC", "GENERAL"],
+    ["show me the provenance of aave USDC", "RECORD_HISTORY"],
+  ]
+  for (const [q, kind] of cases) {
+    const i = AskRouter.classify(q)
+    expect(i.kind, `"${q}" → ${i.kind}, expected ${kind}`).toBe(kind)
+    expect(i.tool).toBe(AskRouter.INTENT_TOOL[kind])
+    expect(AskRouter.INTENTS).toContain(i.kind)
+  }
+  // the advice wall takes precedence over the generic "should i" lookup, but a non-advice "should i check" does NOT
+  expect(AskRouter.classify("is aave-v3 USDC safe?").kind).toBe("STRATEGY_LOOKUP") // a plain lookup is untouched
 })
 
 test("ASK-ROUTED — each intent routes to its tool (positive-controlled)", () => {

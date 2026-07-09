@@ -1,0 +1,81 @@
+{
+  "protocol": "verify-redteam",
+  "at": "2026-07-09",
+  "continues": "contract-redteam (S1-S27) — this is the Build-Provenance sprint's first-class S1-S30 catalog (adds S28 the REAL/SAMPLE wall, S29 capture-determinism/re-capture-hash, S30 ingestion-scope/keyless-no-scrape)",
+  "rule": "PART E (X-STRESS) — the BUILT system driven as intended (depositor · quant · skeptic · clumsy; three verticals; the enriched Stamp; the grounded Ask console; the now-REAL contract tier), then broken across the full catalog; each RUN -> OBSERVE -> ROOT-CAUSE -> FIX-ON-GO -> RE-TEST -> LOG; converge only across two consecutive clean runs, each delta itemized (+N file). S28 the wall; S29 capture-determinism; S30 ingestion-scope.",
+  "personas": [
+    "depositor (Simple; three verticals + the Ask; the counterparty risk word reflects a REAL tier where a verified build was captured, and honest UNVERIFIED where none was — with the coverage count honest (4 of 7 applicable pools); NEVER sees the Stamp/decay/ICIR or the RAW contract findings)",
+    "skeptic quant (Pro; reads the coarse screen + the REAL contract tier + the specific structural findings + the 'not a full audit' label + the provenance (REAL/SAMPLE, address, source) + the coverage count; confirms a SAMPLE build never earns CLEAN-STRUCTURE, a REAL CLEAN-STRUCTURE never reads 'safe', a re-capture is hash-stable, no render compiles, and the REAL FLAGGED never moved the SOLID verdict; confirms the captured source is the deployed PROXY (transparently labeled), not an impl-logic audit)",
+    "skeptic (hunts a SAMPLE-earned clean tier, a 'safe'/'audited' over-claim on a REAL tier, a scraped source, a model in the pipeline, a non-deterministic re-capture, a per-render compile, a moved verdict, an inflated coverage count, a leaked key)",
+    "clumsy (kills the network, removes the AI key/sidecar/Foundry toolchain, feeds an absent/partial build)"
+  ],
+  "catalog": [
+    { "id": "S1", "name": "dead endpoint", "outcome": "PASS (carried) — the provider degrades to SAMPLE; the served UI renders (no crash/spin)" },
+    { "id": "S2", "name": "429 storm", "outcome": "PASS (carried) — the Shelf reads the record; the cache absorbs it; the AI path has a rate-limit queue + retry" },
+    { "id": "S3", "name": "stale cache (OWN LINE)", "outcome": "PASS (carried) — the shown asOf is the capture time, visibly stale, never 'now'" },
+    { "id": "S4", "name": "no-history pool", "outcome": "PASS (carried) — history-dependent rows UNVERIFIED; the Stamp UNAVAILABLE; an unregistered contract UNVERIFIED; never a fabricated SOLID/GO/CLEAN-STRUCTURE" },
+    { "id": "S5", "name": "mid-session depeg", "outcome": "PASS (carried) — the peg row fires -> AVOID; both registers agree" },
+    { "id": "S6", "name": "emissions-inflated trap", "outcome": "PASS (carried) — the yield-reality split flags it temporary; the verdict is not SOLID" },
+    { "id": "S7", "name": "SAMPLE-heavy state (OWN LINE)", "outcome": "PASS (carried) — every SAMPLE verdict is UNVERIFIED; a SAMPLE build is UNVERIFIED, never CLEAN-STRUCTURE" },
+    { "id": "S8", "name": "malformed / adversarial data", "outcome": "PASS (carried) — boundary-validated to missing/UNVERIFIED; a malformed build -> null -> UNVERIFIED; never a crash" },
+    { "id": "S9", "name": "provenance tamper", "outcome": "PASS (carried) — a shown-but-unrecorded REAL Halts; a broken chain refused on construct" },
+    { "id": "S10", "name": "determinism / no-LLM-in-verdict", "outcome": "PASS (carried) — identical inputs -> byte-identical scorecard + Stamp + contract facts; a model-in-verdict rejected wholesale" },
+    { "id": "S11", "name": "thin-liquidity trap", "outcome": "PASS (carried) — a deep-APY pool with dust liquidity -> liquidity FAIL -> AVOID" },
+    { "id": "S12", "name": "imminent-unlock trap", "outcome": "PASS (carried) — a large near-term unlock -> unlock FAIL -> AVOID (ARMED; D6 on live keyless data)" },
+    { "id": "S13", "name": "dust/new/STACKED-dependency trap", "outcome": "PASS (carried) — a young/tiny OR dependency-stacked pool -> counterparty flag, honestly coarse" },
+    { "id": "S14", "name": "verifiability", "outcome": "PASS (carried) — ./organon.sh verify regenerates the bundle + a tampered number changes the sha; the REAL registry facts are content-hash self-consistent (contentSha == sha256(facts))" },
+    { "id": "S15", "name": "coverage/applicability", "outcome": "PASS (carried) — an inapplicable axis renders not-applicable; the REAL-tier coverage count is honest (4 of 7 applicable pools, the rest UNVERIFIED)" },
+    { "id": "S16", "name": "stamp isolation", "outcome": "PASS (carried) — the scorecard imports no Stamp/decay/ICIR; a mass Shelf render produces ZERO GO/NO-GO/half-life/ICIR" },
+    { "id": "S17", "name": "stamp honesty", "outcome": "PASS (carried) — short/flat -> INSUFFICIENT; history-absent -> UNAVAILABLE; the goldens reproduce; never a fabricated GO" },
+    { "id": "S18", "name": "live-number provenance", "outcome": "PASS (carried) — ./organon.sh verify recomputes every cited live number's capture-manifest content-hash" },
+    { "id": "S19", "name": "ask groundedness", "outcome": "PASS (carried) — a fabricated number OR a filled UNVERIFIED gap is rejected WHOLESALE -> deterministic" },
+    { "id": "S20", "name": "provider/BYOK/key-safety", "outcome": "PASS (carried + extended) — no key -> deterministic mode; the BYOK explorer key rides ONLY in the ingest transport header, NEVER in the source/record/log (S30)" },
+    { "id": "S21", "name": "ask determinism/injection", "outcome": "PASS (carried) — same query -> identical FACTS; a prompt-injection cannot move a verdict OR fabricate a contract finding" },
+    { "id": "S22", "name": "decay-gate honesty", "outcome": "PASS (carried) — short/flat/SAMPLE -> INSUFFICIENT; serially-random -> SHORT_LIVED; off the mass path; deterministic" },
+    { "id": "S23", "name": "ICIR determinism/scope", "outcome": "PASS (carried) — byte-identical ICIR; a degenerate series -> INSUFFICIENT; within-strategy scope, NOT cross-sectional; off the mass path" },
+    { "id": "S24", "name": "live-AI grounding", "outcome": "PASS (carried) — the committed Groq round-trip proves a grounded answer PASSES + a fabricated number is REJECTED; no key leaks" },
+    { "id": "S25", "name": "contract-analysis honesty", "outcome": "PASS (carried + extended to the REAL tier) — a REAL FLAGGED tier names specific structural facts + the 'not a full audit' label, NEVER 'safe/audited' (the render + the Ask safety guard refuse it); ZERO model in src/contract/*; deterministic (a fixed build -> byte-identical facts)" },
+    { "id": "S26", "name": "leak-wall / coupling-severance", "outcome": "PASS (carried) — src/contract/* (incl. ingest.ts/buildcapture.ts) imports nothing from @solidity-sentinel/*/OpenCode, no Tool.define/generateText; the dataplane_leak wall green; no new npm dep (the Foundry toolchain is a capture-time seam)" },
+    { "id": "S27", "name": "Foundry-absent degradation", "outcome": "PASS (carried) — no toolchain at capture -> null -> UNVERIFIED; the render reads the committed registry (no compile on clone); the mass tool + verify + pristine run green" },
+    { "id": "S28", "name": "the REAL/SAMPLE wall (NEW)", "outcome": "PASS — a REAL verified build + zero flags -> CLEAN-STRUCTURE; a SAMPLE/absent build + zero flags -> UNVERIFIED, NEVER a fabricated all-clear; flags are existence-proofs (a REAL FLAGGED from real deployed source); the capture script SKIPS any non-exact match (never a fabricated REAL); positive-controlled" },
+    { "id": "S29", "name": "capture-determinism / re-capture-hash (NEW)", "outcome": "PASS — a fixed build -> byte-identical facts + a stable contentSha (a re-capture with a different timestamp is byte-identical); a one-byte source change -> a changed sourceHash; the committed REAL entries are self-consistent (contentSha == sha256(facts)); a render triggers ZERO compilation (subaxis/registry import no analyzer)" },
+    { "id": "S30", "name": "ingestion-scope / keyless-no-scrape (NEW)", "outcome": "PASS — ingestion is keyless-first (Sourcify v2) + Operator-gated; the fetch only ever hits sourcify.dev (no scrape of paywalled/unlock sources — D4/D6 ARMED); the BYOK explorer key is server-side env-only, never in the source/record/log; no key -> keyless/degrade, no crash" }
+  ],
+  "findings": [
+    {
+      "id": "W-V01",
+      "scenario": "S30 (ingestion) — the live Sourcify fetch during the first REAL capture",
+      "observed": "the ingest endpoint (the deprecated Sourcify `files/any/{chain}/{addr}`) returned HTTP 503, so every live fetch resolved `unavailable` — the pipeline would have shipped 0 REAL tiers",
+      "rootCause": "Sourcify migrated its server API; the `files/any` endpoint is deprecated/overloaded",
+      "fix": "fromSourcify was pointed at the Sourcify v2 API (`GET /v2/contract/{chain}/{addr}?fields=sources,compilation`) with the v2 response shape (match=exact_match -> REAL; a non-exact match -> SAMPLE; a non-Solidity language -> unavailable); the hermetic mock was updated to the v2 shape",
+      "retest": "the live fetch of the aave-v3 Pool + compound-v3 cUSDCv3 -> exact_match REAL; contract_ingest green on the v2 shape; two consecutive clean runs identical"
+    },
+    {
+      "id": "W-V02",
+      "scenario": "S29 (the render path) — the coverage helper was not exported from the barrel",
+      "observed": "the battery reddened with 'Export named contractCoverage not found in module src/contract/index.ts' — the REAL-coverage count broke the whole contract_registry_real file load",
+      "rootCause": "contractCoverage was added to registry.ts but not re-exported from src/contract/index.ts (the test imports from the barrel)",
+      "fix": "contractCoverage added to the index.ts barrel re-export",
+      "retest": "contract_registry_real green; the Shelf coverage line renders; two consecutive clean runs identical"
+    },
+    {
+      "id": "W-V03",
+      "scenario": "S25 (the REAL tier ceiling) — proxy vs implementation honesty",
+      "observed": "the captured verified sources for the shelf incumbents are the deployed PROXY contracts (aave-v3 Pool, compound-v3 cUSDCv3), NOT the implementation logic; a naive reader could over-read a REAL FLAGGED proxy tier as a full-logic audit",
+      "rootCause": "Sourcify EXACT-match resolves the source at the deployed address (the proxy); the implementation is a separate address",
+      "fix": "the scope is SURFACED, not silent — each finding names its contract (proxy-level vs OZ-primitive) transparently; the ceiling ('a structural screen over verified source — not a full audit, never safe') holds harder on REAL; D10 records that the captured sources are the deployed proxies (an upgradeable admin proxy IS a real counterparty surface the analyzer correctly flags), not impl-logic audits; the coverage count is honest",
+      "retest": "the REAL FLAGGED tier names its findings by contract; the safety guard rejects a 'safe' claim; the ceiling label present in Simple + Pro; two consecutive clean runs identical"
+    }
+  ],
+  "convergence": { "cleanRuns": 2, "battery": "703 pass / 1 skip / 0 fail across 112 files (704 tests), byte-identical across two consecutive runs; deterministic (the offline battery forces the AI keys empty, so the Operator-gated live-AI test ask_live.test.ts skips — the surviving 1 skip, P3)", "verdictDifferentialZero": true, "verifyGreen": true, "coreByteIdentity": true, "pristineGreen": true },
+  "postSprint": "the contract axis is now EXERCISED on real data: the verified-build pipeline (keyless-first Sourcify v2 ingestion -> deterministic forge build-capture -> the content-hashed registry) scored the FIRST REAL tiers on the live shelf — 4 of the 7 applicable pools (aave-v3 USDC/USDT/DAI via the aave-v3 Pool; compound-v3 USDC via cUSDCv3), each REAL FLAGGED (the upgradeable-admin-proxy surface, honestly a screen not an audit), the other 3 applicable pools honestly UNVERIFIED. The REAL/SAMPLE wall holds (a SAMPLE/absent build never a clean tier); the tier is material:false (a REAL FLAGGED never moved a SOLID verdict); the pipeline is off the hot loop (capture-time; the render reads the committed content-hashed registry, zero compilation); no model, no scrape, no new npm dep. Every Contract-Truth finding (V1-V5) is closed (V5 CLOSED — the real integration).",
+  "probe": { "status": "ARMED + BUILT-BUT-UNPROVEN", "note": "the X-PROBE metrics + KILL CRITERION remain armed (14-day window, >=30 genuine sessions); whether provable honesty is what the depositor came for is not yet evaluable — an honest not-yet, never a fabricated pass" },
+  "parkedForward": [
+    "the IMPLEMENTATION-level analysis (this sprint scored the deployed PROXY contracts; resolving proxy -> impl and analyzing the lending logic is a future step)",
+    "the four un-ported LLM-free tools (contract-info · inheritance-resolver · dimensional-analysis · mutation-map — D9)",
+    "the DEEP dynamic/economic contract analysis — the Sentinel fuzzer + the RAG + symbolic/fuzz execution (the STATIC structural screen is delivered; the dynamic analysis stays PARKED)",
+    "the LLM strategy-PROPOSER / iterate-to-generate loop (a different product for a non-wedge user — PARKED)",
+    "a KEYLESS unlock-schedule source (DeFiLlama emissions paywalled, HTTP 402; the axis ARMED, D6 scope-cut)",
+    "the public strategy library + all execution rails (out of scope); B2B removed"
+  ]
+}

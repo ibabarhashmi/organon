@@ -9,6 +9,9 @@ import { DataPlane } from "./store"
 import { ProvRecord } from "./record"
 import { Hyperliquid } from "./hyperliquid"
 import { Scorecard } from "../analytics/scorecard"
+// the deep counterparty DETAIL — resolved from the content-hashed contract registry (a RECORD read, never a compilation:
+// the render path imports no analyzer — X-CONTRACT e). `../contract/registry` is owned in-tree (the leak wall stays green).
+import { resolveContractSubAxis } from "../contract/registry"
 
 export namespace Feed {
   const DAY = 86_400_000
@@ -85,6 +88,9 @@ export namespace Feed {
       // dependency (Crown-Jewel Phase 3, X-DEP): a direct DeFiLlama pool is a SINGLE-protocol deposit (dep=1, the clean,
       // transparent baseline); a registry entry may declare a stacked (≥3) dependency for a looping/wrapper strategy.
       depProtocols: ref.depProtocols ?? 1,
+      // the deep counterparty DETAIL (Contract-Truth): the recorded contract-risk sub-axis (UNVERIFIED where no verified
+      // build was analyzed — the current shelf). A record read, off the hot loop; additive (never moves the verdict).
+      contractSubAxis: resolveContractSubAxis(ref.poolKey),
     }
   }
 }

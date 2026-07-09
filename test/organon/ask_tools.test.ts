@@ -20,7 +20,13 @@ test("X-ASK b — a scorecard-via-Ask ≡ a scorecard-via-screen (BYTE-IDENTICAL
   if (!viaScreen) { console.log("  (ask_tools) aave USDC not in the record — skipped (clone)"); return }
   const viaAsk = AskTools.scorecardFor(AAVE_USDC, "aave usdc", NOW)
   expect(viaAsk.ok).toBe(true)
-  expect(JSON.stringify(viaAsk.facts)).toBe(JSON.stringify(viaScreen.scored.factRows)) // the SAME fact rows, byte-identical
+  // the SCORECARD-AXIS fact rows are BYTE-IDENTICAL whether via Ask or screen (the engine is the single source); the Ask
+  // then APPENDS the deep-counterparty contract-screen grounding rows (Contract-Truth Phase 4 — like stampFor's depth rows).
+  const n = viaScreen.scored.factRows.length
+  expect(JSON.stringify(viaAsk.facts.slice(0, n))).toBe(JSON.stringify(viaScreen.scored.factRows)) // the axis rows, byte-identical
+  const appended = viaAsk.facts.slice(n)
+  expect(appended[0].id).toBe("contract-screen") // the contract detail is appended as grounded facts
+  expect(appended[0].value).toBe(viaScreen.scored.contract.tier) // grounded in the engine's own contract tier
   expect(viaAsk.reality).toBe(viaScreen.scored.facts.reality) // the SAME REAL/SAMPLE label
   expect(viaAsk.meta.verdict).toBe(viaScreen.scored.verdict)
 })

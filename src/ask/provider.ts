@@ -10,11 +10,14 @@
  * injectable seam so the battery runs OFFLINE with a mock (CI never hits a live API, never needs a key).
  */
 export namespace AskProvider {
+  export interface PhraseOpts { maxTokens?: number } // the output cap, SCALED to the fact-set size (X-INTERPRET d, S43)
   export interface Provider {
     id: string
     provider: "gemini" | "openai" | "anthropic" | "openai-compatible"
-    // phrase(system, user) → the model's text. The prompt carries ONLY {system, user}; the key lives in the transport.
-    phrase(system: string, user: string): Promise<string>
+    // phrase(system, user, opts?) → the model's text. The prompt carries ONLY {system, user}; the key lives in the
+    // transport; opts.maxTokens (optional) scales the output cap so a big COMPARE is not cut mid-answer (default: the
+    // adapter's own cap — back-compat for a 2-arg mock).
+    phrase(system: string, user: string, opts?: PhraseOpts): Promise<string>
   }
 
   export interface TransportResult { ok: boolean; status: number; json(): Promise<unknown>; headers?: { get(name: string): string | null } }
@@ -66,9 +69,10 @@ export namespace AskProvider {
   export function geminiAdapter(key: string, model = "gemini-2.0-flash", transport: Transport = globalTransport): Provider {
     return {
       id: "google-ai-studio", provider: "gemini",
-      async phrase(system, user) {
+      async phrase(system, user, opts) {
         const url = `${GEMINI_BASE}/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`
-        const r = await transport(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: [{ parts: [{ text: user }] }] }) })
+        const generationConfig = opts?.maxTokens ? { maxOutputTokens: opts.maxTokens } : undefined
+        const r = await transport(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: [{ parts: [{ text: user }] }], ...(generationConfig ? { generationConfig } : {}) }) })
         if (!r.ok) throw new Error(`gemini HTTP ${r.status}`)
         const b = (await r.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] }
         return b.candidates?.[0]?.content?.parts?.[0]?.text ?? ""
@@ -78,8 +82,8 @@ export namespace AskProvider {
   export function openaiAdapter(key: string, baseUrl = OPENAI_BASE, model = "gpt-4o-mini", transport: Transport = globalTransport): Provider {
     return {
       id: baseUrl === OPENAI_BASE ? "openai" : "openai-compatible", provider: baseUrl === OPENAI_BASE ? "openai" : "openai-compatible",
-      async phrase(system, user) {
-        const r = await transport(`${baseUrl}/chat/completions`, { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${key}` }, body: JSON.stringify({ model, messages: [{ role: "system", content: system }, { role: "user", content: user }] }) })
+      async phrase(system, user, opts) {
+        const r = await transport(`${baseUrl}/chat/completions`, { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${key}` }, body: JSON.stringify({ model, ...(opts?.maxTokens ? { max_tokens: opts.maxTokens } : {}), messages: [{ role: "system", content: system }, { role: "user", content: user }] }) })
         if (!r.ok) throw new Error(`openai-compatible HTTP ${r.status}`)
         const b = (await r.json()) as { choices?: { message?: { content?: string } }[] }
         return b.choices?.[0]?.message?.content ?? ""
@@ -91,9 +95,9 @@ export namespace AskProvider {
   export function anthropicAdapter(key: string, model = "", transport: Transport = globalTransport): Provider {
     return {
       id: "anthropic", provider: "anthropic",
-      async phrase(system, user) {
+      async phrase(system, user, opts) {
         if (!model) throw new Error("Anthropic BYOK requires ANTHROPIC_MODEL (set it in .env)")
-        const r = await transport(`${ANTHROPIC_BASE}/v1/messages`, { method: "POST", headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" }, body: JSON.stringify({ model, max_tokens: 1024, system, messages: [{ role: "user", content: user }] }) })
+        const r = await transport(`${ANTHROPIC_BASE}/v1/messages`, { method: "POST", headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" }, body: JSON.stringify({ model, max_tokens: opts?.maxTokens ?? 1024, system, messages: [{ role: "user", content: user }] }) })
         if (!r.ok) throw new Error(`anthropic HTTP ${r.status}`)
         const b = (await r.json()) as { content?: { text?: string }[] }
         return b.content?.[0]?.text ?? ""
@@ -109,10 +113,11 @@ export namespace AskProvider {
   export function groqAdapter(key: string, model = GROQ_MODEL, transport: Transport = globalTransport): Provider {
     return {
       id: "groq", provider: "openai-compatible",
-      async phrase(system, user) {
+      async phrase(system, user, opts) {
         // temperature 0: our use case is FAITHFUL phrasing of fixed facts — minimize deviation (fewer gate rejections,
-        // fewer wasted tokens); top_p 1. The groundedness gate + verdict guard remain the guarantee regardless.
-        const r = await transport(`${GROQ_BASE}/chat/completions`, { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${key}` }, body: JSON.stringify({ model, max_tokens: GROQ_MAX_TOKENS, temperature: 0, top_p: 1, stream: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }) })
+        // fewer wasted tokens); top_p 1. The groundedness gate + verdict guard remain the guarantee regardless. The
+        // output cap is SCALED to the fact-set size (opts.maxTokens; default GROQ_MAX_TOKENS) so a big COMPARE is not cut.
+        const r = await transport(`${GROQ_BASE}/chat/completions`, { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${key}` }, body: JSON.stringify({ model, max_tokens: opts?.maxTokens ?? GROQ_MAX_TOKENS, temperature: 0, top_p: 1, stream: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }) })
         if (!r.ok) throw new Error(`groq HTTP ${r.status}`)
         const b = (await r.json()) as { choices?: { message?: { content?: string } }[] }
         return b.choices?.[0]?.message?.content ?? ""

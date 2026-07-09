@@ -1,0 +1,77 @@
+{
+  "protocol": "contract-redteam",
+  "at": "2026-07-09",
+  "continues": "persistence-redteam (S1-S24) — this is the Contract-Truth sprint's first-class S1-S27 catalog (adds S25 contract-analysis honesty, S26 leak-wall/coupling-severance, S27 Foundry-absent degradation)",
+  "rule": "PART E (X-STRESS) — the BUILT system driven as intended (depositor · quant · skeptic · clumsy; three verticals; the enriched Stamp; the grounded Ask console; the deep counterparty axis), then broken across the full catalog; each RUN -> OBSERVE -> ROOT-CAUSE -> FIX-ON-GO -> RE-TEST -> LOG; converge only across two consecutive clean runs. S25 contract honesty; S26 leak-wall/coupling-severance; S27 Foundry-absent degradation.",
+  "personas": [
+    "depositor (Simple; three verticals AND the Ask console; the counterparty risk word reflects the deeper screen where a build was analyzed; NEVER sees the Stamp/decay/ICIR or the RAW contract findings — Pro depth; gets honest 'unverified' where no build was analyzed)",
+    "skeptic quant (Pro; reads the counterparty coarse screen + the contract-risk findings — specific structural facts + the 'not a full audit' label + UNVERIFIED where no build; runs the Stamp (decay + ICIR); asks 'is this contract safe?' and confirms it reports findings + the caveat, never 'safe'; confirms a fabricated finding is rejected and no model touched the analysis)",
+    "skeptic (hunts a 'safe'/'audited' over-claim, a fabricated all-clear on an absent/SAMPLE build, a model in the analysis, a Sentinel sibling import, a per-render compilation, a Stamp/contract leak onto the mass path, an ungrounded AI finding, a moved verdict, a leaked key)",
+    "clumsy (kills the network, removes the AI key/sidecar/Foundry toolchain, feeds an unverifiable/absent build)"
+  ],
+  "catalog": [
+    { "id": "S1", "name": "dead endpoint", "outcome": "PASS (carried) — the provider degrades to SAMPLE; the served UI renders (no crash/spin)" },
+    { "id": "S2", "name": "429 storm", "outcome": "PASS (carried) — the Shelf reads the record; the cache absorbs it; the AI path has a rate-limit queue + retry" },
+    { "id": "S3", "name": "stale cache (OWN LINE)", "outcome": "PASS (carried) — the shown asOf is the capture time, visibly stale, never 'now'" },
+    { "id": "S4", "name": "no-history pool", "outcome": "PASS (carried) — history-dependent rows UNVERIFIED; point-in-time rows still compute; the Stamp UNAVAILABLE; the contract sub-axis UNVERIFIED; never a fabricated SOLID/GO/CLEAN-STRUCTURE" },
+    { "id": "S5", "name": "mid-session depeg", "outcome": "PASS (carried) — the peg row fires -> AVOID; both registers agree" },
+    { "id": "S6", "name": "emissions-inflated trap", "outcome": "PASS (carried) — the yield-reality split flags it temporary; the verdict is not SOLID" },
+    { "id": "S7", "name": "SAMPLE-heavy state (OWN LINE)", "outcome": "PASS (carried) — every SAMPLE verdict is UNVERIFIED (W-E01 holds); a SAMPLE-fed decay/ICIR is INSUFFICIENT; a SAMPLE build is UNVERIFIED, never CLEAN-STRUCTURE" },
+    { "id": "S8", "name": "malformed / adversarial data", "outcome": "PASS (carried) — boundary-validated to missing/UNVERIFIED; never a crash or nonsense verdict" },
+    { "id": "S9", "name": "provenance tamper", "outcome": "PASS (carried) — a shown-but-unrecorded REAL Halts; a broken chain refused on construct" },
+    { "id": "S10", "name": "determinism / no-LLM-in-verdict", "outcome": "PASS (carried) — identical inputs -> byte-identical scorecard + Stamp + contract facts; a model-in-verdict rejected wholesale" },
+    { "id": "S11", "name": "thin-liquidity trap", "outcome": "PASS (carried) — a deep-APY pool with dust liquidity -> liquidity FAIL -> AVOID" },
+    { "id": "S12", "name": "imminent-unlock trap", "outcome": "PASS (carried) — a large near-term unlock -> unlock FAIL -> AVOID (ARMED; D6 on live keyless data)" },
+    { "id": "S13", "name": "dust/new/STACKED-dependency trap", "outcome": "PASS (carried) — a young/tiny OR dependency-stacked pool -> counterparty flag, honestly coarse (D5/D8)" },
+    { "id": "S14", "name": "verifiability", "outcome": "PASS (carried) — ./organon.sh verify regenerates the bundle + a tampered number changes the sha" },
+    { "id": "S15", "name": "coverage/applicability", "outcome": "PASS (carried) — an inapplicable axis renders not-applicable, never a pass; all three verticals present" },
+    { "id": "S16", "name": "stamp isolation", "outcome": "PASS (carried) — the scorecard imports no Stamp/decay/ICIR; a mass Shelf render produces ZERO GO/NO-GO/half-life/ICIR" },
+    { "id": "S17", "name": "stamp honesty", "outcome": "PASS (carried) — short/flat -> INSUFFICIENT; history-absent -> UNAVAILABLE; the goldens reproduce; never a fabricated GO" },
+    { "id": "S18", "name": "live-number provenance", "outcome": "PASS (carried) — ./organon.sh verify recomputes every cited live number's capture-manifest content-hash" },
+    { "id": "S19", "name": "ask groundedness", "outcome": "PASS (carried) — a fabricated number OR a filled UNVERIFIED gap is rejected WHOLESALE -> deterministic; a Simple answer carries no raw decimals" },
+    { "id": "S20", "name": "provider/BYOK/key-safety", "outcome": "PASS (carried) — no key -> deterministic mode; BYOK selects the env provider; NO key string in the served HTML / any log" },
+    { "id": "S21", "name": "ask determinism/injection", "outcome": "PASS (carried) — same query -> identical FACTS; a prompt-injection cannot move a verdict OR fabricate a contract finding" },
+    { "id": "S22", "name": "decay-gate honesty", "outcome": "PASS (carried) — short/flat/SAMPLE -> INSUFFICIENT; serially-random -> SHORT_LIVED; a SHORT_LIVED GO is FENCED; deterministic; off the mass path" },
+    { "id": "S23", "name": "ICIR determinism/scope", "outcome": "PASS (carried) — byte-identical ICIR; a degenerate series -> INSUFFICIENT; the WITHIN-STRATEGY scope label present + explicitly NOT cross-sectional; off the mass path" },
+    { "id": "S24", "name": "live-AI grounding", "outcome": "PASS (carried) — the committed Groq round-trip proves a grounded answer PASSES + a fabricated number is REJECTED; the redacted transcript reproduces its manifest hash; no key leaks" },
+    { "id": "S25", "name": "contract-analysis honesty (NEW)", "outcome": "PASS — the contract screen reports specific structural facts + the 'not a full audit' label, NEVER 'safe/audited' (the Reality-Check render + the Ask safety guard both refuse the over-claim); ZERO model/LLM in src/contract/* (an import-specifier + no-Tool.define scan); deterministic (a fixed ContractIR -> byte-identical facts + tier); a seeded unprotected admin fn -> FLAGGED (the finding NAMED)" },
+    { "id": "S26", "name": "leak-wall / coupling-severance (NEW)", "outcome": "PASS — src/contract/* imports nothing from @solidity-sentinel/* or OpenCode (@/…, ../project, ../util, ../lang), no Tool.define/generateText call (a positive-controlled scan: a seeded sibling/@/ /bun:sqlite import IS flagged); the dataplane_leak wall stays green after feed imports the owned ../contract/registry; D9 records the extraction + severance; no new npm dep (the main pipeline reads compiler JSON; deps stay hono+zod)" },
+    { "id": "S27", "name": "Foundry-absent degradation (NEW)", "outcome": "PASS — no build/toolchain -> the contract sub-axis is UNVERIFIED, the coarse age·size·dependency screen scores alone (the empty registry -> every pool UNVERIFIED); a SAMPLE/absent build NEVER a fabricated all-clear (no-flags+SAMPLE -> UNVERIFIED, not CLEAN-STRUCTURE); captureContractAnalysis on an absent build -> null (never a crash); the mass tool + ./organon.sh verify + the pristine fresh clone run green without forge" }
+  ],
+  "findings": [
+    {
+      "id": "W-C01",
+      "scenario": "S26 (extraction scope) — the Phase-2 EXTRACT-CLEAN discipline vs the Phase-0 pin",
+      "observed": "the Phase-0 extraction pin said 'the ~10 tools' pure logic -> src/contract/analysis'; the disciplined extraction ports only the SIX tools whose facts are the pinned sub-axis categories (auth-surface · call-graph · upgrade-check · storage-layout · value-flow · state-flow) into src/contract/facts.ts, and consciously skips four (contract-info · inheritance-resolver · dimensional-analysis · mutation-map)",
+      "rootCause": "porting all ten tools' logic would add ~800 LOC with NO current caller (their outputs aren't in the sub-axis fact list) — the speculative 'while we're here' surface PART CLEAN + THE FIREWALL forbid",
+      "fix": "the extraction pin was TIGHTENED to state the actual scope (toolsPorted [6] + toolsNotPorted [4] + rationale) — a conscious re-pin cf620520... -> 4275f739..., surfaced in the Phase-2 marker (E.3 / P2). The four remain in the Sentinel source, extractable later if a real caller emerges.",
+      "retest": "honesty_pins asserts the 6/4 scope + the re-pinned golden; contract_extract asserts zero model/sibling import in src/contract/*; two consecutive clean runs identical"
+    },
+    {
+      "id": "W-C02",
+      "scenario": "S25 (the scorecard-via-Ask invariant) — appending the contract grounding rows",
+      "observed": "ask_tools asserted scorecardFor(...).facts is BYTE-IDENTICAL to the screen's factRows; appending the contract-screen grounding rows (so the Ask can phrase the contract facts) broke the strict equality",
+      "rootCause": "the invariant predated the deep counterparty axis; the Ask legitimately surfaces MORE than the bare seven axis rows (as stampFor already does with its depth rows)",
+      "fix": "the invariant was refined, not weakened: the scorecard-AXIS fact rows stay byte-identical as a PREFIX of the Ask facts; the contract detail is APPENDED (and asserted — id 'contract-screen', value = the engine's own tier). The engine is still the single source.",
+      "retest": "ask_tools: the prefix is byte-identical + the appended rows are the contract facts; two consecutive clean runs identical"
+    },
+    {
+      "id": "W-C03",
+      "scenario": "S25 (the Ask verdict guard) — the contract tier word colliding with a scorecard verdict",
+      "observed": "the contract tier UNVERIFIED is ALSO a scorecard verdict word; a SOLID pool with an UNVERIFIED contract screen would false-trip the verdict guard when the AI honestly said 'the contract screen is UNVERIFIED' (UNVERIFIED not in the allowed set {SOLID})",
+      "rootCause": "the verdict guard grounded only the scorecard/stamp verdicts; the contract tier is a distinct engine fact that shares the UNVERIFIED word",
+      "fix": "meta.contractTier is set in scorecardFor and added to the verdict guard's allowed keys — the engine's OWN contract tier is grounded, so an honest 'the contract screen is UNVERIFIED' passes while a gap-filled scorecard 'UNVERIFIED' on a SOLID pool would still be caught by the deterministic summary leading with the real verdict",
+      "retest": "ask_grounded + honesty_counterparty_contract green; the safety guard still rejects a fabricated 'safe'; two consecutive clean runs identical"
+    }
+  ],
+  "convergence": { "cleanRuns": 2, "battery": "665 pass / 1 skip / 0 fail across 107 files (666 tests), byte-identical across two consecutive runs; deterministic (the offline battery forces the AI keys empty, so the Operator-gated live-AI test ask_live.test.ts skips — the surviving 1 skip, P3)", "verdictDifferentialZero": true, "verifyGreen": true, "coreByteIdentity": true, "pristineGreen": true },
+  "postSprint": "the counterparty axis now SEES THE CODE — a deterministic contract-risk sub-axis built from the extracted Sentinel src/solidity IR + six LLM-free tools, honestly scoped a structural screen over verified source (NEVER a full audit or a 'safe' verdict), operationally honest (UNVERIFIED without a verified build — the current shelf has no build, so every pool is UNVERIFIED, the coarse screen the floor), off the mass hot loop (capture-time into a content-hashed registry; the render reads recorded facts, zero compilation), additive (material:false detail — the verdict is byte-identical, a FLAGGED surface never moves it). No model, no sibling import, no new npm dep. Every Persistence finding (P1-P6) is closed.",
+  "probe": { "status": "ARMED + BUILT-BUT-UNPROVEN", "note": "the X-PROBE metrics + KILL CRITERION remain armed (14-day window, >=30 genuine sessions); whether provable honesty is what the depositor came for is not yet evaluable — an honest not-yet, never a fabricated pass" },
+  "parkedForward": [
+    "the LLM strategy-PROPOSER / iterate-to-generate loop (a different product for a non-wedge user — PARKED with rationale)",
+    "the DEEP dynamic/economic contract analysis — the Sentinel fuzzer + the RAG + symbolic/fuzz execution (the STATIC structural screen is delivered; the dynamic analysis stays PARKED)",
+    "the four un-ported LLM-free tools (contract-info · inheritance-resolver · dimensional-analysis · mutation-map) — extractable later if a real caller emerges (D9)",
+    "a KEYLESS unlock-schedule source (DeFiLlama emissions paywalled, HTTP 402; the axis ARMED, D6 scope-cut)",
+    "the public strategy library + all execution rails (out of scope); B2B removed"
+  ]
+}

@@ -1,0 +1,272 @@
+{
+  "protocol": "verify-pins",
+  "sprint": "THE BUILD-PROVENANCE SPRINT (the verified-build pipeline; the first REAL contract tiers; Contract-Truth findings closed)",
+  "at": "2026-07-09",
+  "continues": "THE CONTRACT-TRUTH SPRINT (RED-TEAM-CLEAN, battery 665 pass / 1 skip / 0 fail across 107 files / 666 tests)",
+  "blueprint": {
+    "rel": "sprint/sprint-result/ORGANON_Build_Provenance_Sprint_Blueprint.md",
+    "sha": "a505862409a872e9c07442e9446921ef61f0117d8f9690b3bfd41b8ea36e3e06"
+  },
+  "carriedFromPinsSha": "4275f7396027e7dd016793a2085454c3c7db880c8386e16df7766cc5681f9489",
+  "ingestion": {
+    "doctrine": "verified source enters ONLY via a keyless Sourcify / explorer-verified fetch or an Operator-supplied contracts/ build directory; ingestion is a discrete Operator-gated step, NOT an automatic mass-path fetch; a scrape of a paywalled/unlock source is refused (the D4/D6 signed-scope-cut discipline carried, ARMED-never-scraped)",
+    "keylessFirst": "the default path is keyless (Sourcify verified-source or an Operator-supplied build); no key is required to ingest a verified source",
+    "byokOptional": "an OPTIONAL BYOK explorer key widens verified-source coverage — server-side env-only, NEVER in the bundle / a log / the registry; no key → the keyless path / an honest degrade, never a crash (S20/S30 carried)",
+    "noScrape": "paywalled/unlock sources (DeFiLlama emissions, etc.) stay ARMED-never-scraped; ingestion refuses to scrape a source the firewall forbids (D4/D6)",
+    "record": "each ingested source is recorded {value: sourceRef, source, asOf, contentHash, provenance: REAL|SAMPLE, verified: bool}; an unverified/absent source → SAMPLE / unavailable, NEVER a fabricated REAL",
+    "recordedAs": "D10 — the verified-build ingestion scope (which shelf protocols carry a REAL tier · keyless-first/no-scrape · an Operator-signed statement), surfaced verbatim in the handoff"
+  },
+  "realSampleWall": {
+    "cleanStructureRequiresRealBuild": true,
+    "sampleNeverClean": "a SAMPLE/partial/unverified/fixture build with zero flags stays UNVERIFIED, NEVER CLEAN-STRUCTURE (a fabricated all-clear is a Halt — S28)",
+    "flagsAreExistenceProofs": "a flagged structural surface is reportable from ANY analyzed source (REAL or SAMPLE) — a real bug in real code is a real flag; so FLAGGED does not require REAL provenance",
+    "absenceTrustworthyOnlyOnReal": "absence-of-flags is trustworthy ONLY on a REAL verified deployed-source match; this asymmetry is the wall — pinned + positive-controlled (S28)",
+    "haltRule": "a SAMPLE-earned CLEAN-STRUCTURE, or any fabricated all-clear on an absent/unverified build, is a Halt"
+  },
+  "buildCapture": {
+    "pipeline": "source → forge build (the OPTIONAL Foundry seam) → the build-info AST → the existing analyzeProject/ContractIR → the six pure facts.ts tools → the pinned subaxis rule → a tier",
+    "deterministic": "a fixed build → byte-identical facts AND a byte-identical contentHash across runs; no LLM, no network, no randomness INSIDE the analyzer (the fetch is the separate provenanced ingestion step) — X-DETERM",
+    "contentAddressed": "each captured build is recorded {value: buildRef, source, asOf, contentHash, provenance}; a re-capture that changes a single byte of build-info changes the contentHash (positive-controlled — S29); the registry stores hashes + facts, never re-derivable secrets",
+    "reusesAnalyzerVerbatim": "buildcapture reuses analyzeProject + facts.ts UNCHANGED (no re-implementation — X-KEEP); the six-tool analyzer is not re-touched",
+    "rulesetStamped": "the tool-set/ruleset version is stamped on each capture (so a future tool-set change is legible in the provenance)",
+    "offHotLoop": "ingestion + forge build + IR + tool analysis run at CAPTURE/registration time; the render reads the content-hashed registry and imports NO analyzer → ZERO per-render compilation (X-VERIFY e, S29)"
+  },
+  "coverageHonesty": {
+    "rule": "the header + the render surface the HONEST REAL-coverage count ('N of M pools carry a REAL tier; the rest honestly UNVERIFIED'), NEVER implying more than was captured",
+    "successCriterion": "success is NOT 'every pool now has a REAL tier' — it is 'at least one real protocol scored end-to-end, and every gap is honestly UNVERIFIED' (V5)",
+    "ceiling": "a REAL tier is STILL a deterministic structural screen over verified source — NOT a full audit, NOT a guarantee, NEVER a 'safe' verdict; the ceiling holds harder on REAL than on SAMPLE; a novel exploit outside the six-tool catalog is a stated blind spot (S25 extended to the REAL tier)"
+  },
+  "foundryOptionalSeam": {
+    "toolchainOptional": true,
+    "absentBehavior": "no forge/toolchain at capture → no new REAL capture (existing REAL entries read from committed content-hashes); at render an unregistered pool is UNVERIFIED, the coarse age·size·dependency screen scores alone",
+    "massToolRunsWithout": true,
+    "verifyRunsWithout": true,
+    "pristineRunsWithout": true
+  },
+  "contractTruthResolutions": [
+    {
+      "id": "V1",
+      "finding": "the terminal count 658/106 → 665/107 carried an un-itemized +7/+1 (the contract_redteam file), lapsing the 'state every delta' rule",
+      "resolution": "STANDING RULE established + practiced: EVERY battery-count change is itemized (+N <file>) at its gate and the terminal count reconciles explicitly to the last phase count. The Contract-Truth 658/106 → 665/107 is retroactively annotated (+7 contract_redteam / +1 file). Every marker this sprint carries its (+N file) delta.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "V2",
+      "finding": "the referenced-log chain reprinted the stale 585/0 for Crown-Jewel (authoritative 583/0) and a blank Deepening filename",
+      "resolution": "CORRECTED at the source: Crown-Jewel is 583/0 across 97 files (its own BUILDLOG-CROWNJEWEL.md header); the '585' drift is dropped. The Deepening sprint (511/0 across 91 files) has NO standalone file — its record lives INSIDE BUILDLOG-HONESTY.md ('THE DEEPENING SPRINT' section); the blank filename is filled with BUILDLOG-HONESTY.md (never a fabricated BUILDLOG-DEEPENING.md). The new log's reference chain is correct at authoring.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "V3",
+      "finding": "the header did not foreground that the contract axis ships capability-complete but DORMANT (every live pool UNVERIFIED)",
+      "resolution": "STATED plainly in the BUILDLOG-VERIFY header + the coverage restatement: the contract axis shipped capability-complete-but-DORMANT (the registry was empty → every live pool UNVERIFIED); THIS sprint EXERCISES it on real builds; the honest REAL-coverage count (N of M pools carry a REAL tier) is surfaced, never implying more.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "V4",
+      "finding": "the blueprint's '~10 tools' language overstated the shipped six",
+      "resolution": "a CONTINUITY note records that the deep contract axis is a SIX-tool subset (auth-surface · call-graph · upgrade-check · storage-layout · value-flow · state-flow), with four tools (contract-info · inheritance-resolver · dimensional-analysis · mutation-map) laddered-parked in D9 — so no future sprint inherits an overstated '~10 tools' baseline.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "V5",
+      "finding": "the deep axis was proven only on seeded fixtures, never on a real Foundry build end-to-end",
+      "resolution": "THIS SPRINT'S SPINE: the ingest → build-capture → registry pipeline carries a real protocol from verified source → forge build → REAL ContractIR → the first genuine FLAGGED/CLEAN-STRUCTURE tier(s) on the live shelf, with the REAL/SAMPLE wall holding and the coverage count honest.",
+      "status": "IN-PROGRESS (Phases 2–4)"
+    }
+  ],
+  "screens": {
+    "count": 3,
+    "set": [
+      "shelf",
+      "reality-check",
+      "ask"
+    ],
+    "massScreens": [
+      "shelf",
+      "reality-check"
+    ],
+    "realTierIsAProRow": "the REAL contract tier is a Pro row on the Reality Check counterparty section (not a screen); a fourth screen is a Halt (PART CLEAN)"
+  },
+  "stressCatalog": [
+    {
+      "id": "S1",
+      "name": "dead endpoint",
+      "expect": "degrade to last-good or SAMPLE; the served UI renders; never a crash/spin"
+    },
+    {
+      "id": "S2",
+      "name": "429 storm",
+      "expect": "the short-TTL cache absorbs it; the Shelf reads the record (no per-load provider fan-out)"
+    },
+    {
+      "id": "S3",
+      "name": "stale cache",
+      "expect": "the shown asOf is the capture time, visibly stale, never 'now' (OWN LINE)"
+    },
+    {
+      "id": "S4",
+      "name": "no-history pool",
+      "expect": "history-dependent rows UNVERIFIED; point-in-time rows still compute; never a fabricated SOLID"
+    },
+    {
+      "id": "S5",
+      "name": "mid-session depeg",
+      "expect": "the peg row fires → AVOID; both registers agree"
+    },
+    {
+      "id": "S6",
+      "name": "emissions-inflated trap",
+      "expect": "the yield-reality row flags temporary → verdict not SOLID"
+    },
+    {
+      "id": "S7",
+      "name": "SAMPLE-heavy state",
+      "expect": "EVERY SAMPLE verdict is UNVERIFIED — the W-E01 invariant holds under all axes (OWN LINE)"
+    },
+    {
+      "id": "S8",
+      "name": "malformed / adversarial data",
+      "expect": "boundary-validated to missing/UNVERIFIED; never a crash or a nonsense verdict"
+    },
+    {
+      "id": "S9",
+      "name": "provenance tamper",
+      "expect": "a shown-but-unrecorded REAL Halts; a broken chain refused on construct"
+    },
+    {
+      "id": "S10",
+      "name": "determinism / no-LLM-in-verdict",
+      "expect": "identical inputs → byte-identical scorecard; a model-in-verdict rejected wholesale"
+    },
+    {
+      "id": "S11",
+      "name": "thin-liquidity trap",
+      "expect": "a deep-APY pool with dust liquidity → liquidity FAIL → not SOLID"
+    },
+    {
+      "id": "S12",
+      "name": "imminent-unlock trap",
+      "expect": "a large near-term unlock → unlock FAIL → CAUTION/AVOID (ARMED; D6 on live keyless data)"
+    },
+    {
+      "id": "S13",
+      "name": "dust/new/STACKED-dependency trap",
+      "expect": "a young/tiny OR dependency-stacked pool → counterparty flag, honestly coarse (never 'audited/safe')"
+    },
+    {
+      "id": "S14",
+      "name": "verifiability",
+      "expect": "./organon.sh verify regenerates every committed evidence artifact; a tampered count/number fails"
+    },
+    {
+      "id": "S15",
+      "name": "coverage/applicability",
+      "expect": "an inapplicable axis renders not-applicable, never a fabricated pass"
+    },
+    {
+      "id": "S16",
+      "name": "stamp isolation",
+      "expect": "a scorecard render → ZERO adjudicator/decay/ICIR calls; the verdict spaces never conflate"
+    },
+    {
+      "id": "S17",
+      "name": "stamp honesty",
+      "expect": "short-history → INSUFFICIENT; deflation tightens with family size; the goldens reproduce; history-absent → 'unavailable'"
+    },
+    {
+      "id": "S18",
+      "name": "live-number provenance",
+      "expect": "./organon.sh verify asserts every cited live number resolves to a capture-manifest content-hash"
+    },
+    {
+      "id": "S19",
+      "name": "ask groundedness",
+      "expect": "a fabricated number rejected WHOLESALE → deterministic; an UNVERIFIED gap never filled; a Simple answer carries no raw decimals"
+    },
+    {
+      "id": "S20",
+      "name": "provider/BYOK/key-safety",
+      "expect": "no key → deterministic mode, no crash; BYOK selects the env provider; no key string in the served HTML or any log"
+    },
+    {
+      "id": "S21",
+      "name": "ask determinism/injection",
+      "expect": "same query → identical FACTS (raw toggle byte-identical); a prompt-injection cannot move a verdict"
+    },
+    {
+      "id": "S22",
+      "name": "decay-gate honesty (NEW)",
+      "expect": "a short/flat/SAMPLE series → INSUFFICIENT, never a fabricated half-life; a 2-period-half-life → SHORT_LIVED (a clean GO withheld); off the mass path; deterministic"
+    },
+    {
+      "id": "S23",
+      "name": "ICIR determinism/scope (NEW)",
+      "expect": "identical inputs → byte-identical ICIR; a degenerate series → INSUFFICIENT (no div-by-zero); the within-strategy scope label present (a cross-sectional claim fails); off-path"
+    },
+    {
+      "id": "S24",
+      "name": "live-AI grounding (NEW)",
+      "expect": "the committed Groq round-trip proves a real-model grounded answer passes AND a fabricated number is rejected wholesale; the redacted transcript reproduces its manifest hash; no key leaks"
+    },
+    {
+      "id": "S25",
+      "name": "contract-analysis honesty (NEW)",
+      "expect": "a contract screen reports specific structural facts + the 'not a full audit' label, NEVER 'safe/audited'; ZERO model/LLM in src/contract/*; deterministic (a fixed ContractIR → byte-identical facts + tier); a seeded unprotected admin fn → FLAGGED (the finding named)"
+    },
+    {
+      "id": "S26",
+      "name": "leak-wall / coupling-severance (NEW)",
+      "expect": "src/contract/* imports nothing from @solidity-sentinel/* or OpenCode (the dataplane_leak wall green + a positive control on the new dir); D9 records the extraction + severance; the ported code is owned in-tree, not referenced from a sibling; no new npm dep"
+    },
+    {
+      "id": "S27",
+      "name": "Foundry-absent degradation (NEW)",
+      "expect": "no build/toolchain → the contract sub-axis is UNVERIFIED, the coarse age·size·dependency screen scores alone; a SAMPLE/absent build NEVER a fabricated all-clear; the mass tool + ./organon.sh verify + the pristine fresh clone run green (never a crash)"
+    },
+    {
+      "id": "S28",
+      "name": "the REAL/SAMPLE wall (NEW)",
+      "expect": "a REAL verified build + zero flags may earn CLEAN-STRUCTURE; a SAMPLE/absent build + zero flags → UNVERIFIED, NEVER a fabricated all-clear; flags are existence-proofs from any source, absence-of-flags trustworthy only on a REAL verified deployed-source match (positive-controlled)"
+    },
+    {
+      "id": "S29",
+      "name": "capture-determinism / re-capture-hash (NEW)",
+      "expect": "a fixed build → byte-identical facts + a stable contentHash; a re-capture → the identical hash; a one-byte source change → a changed hash; a scorecard render triggers ZERO compilation (the render imports no analyzer)"
+    },
+    {
+      "id": "S30",
+      "name": "ingestion-scope / keyless-no-scrape (NEW)",
+      "expect": "ingestion is keyless-first + Operator-gated; no paywalled/unlock source is scraped (D4/D6 ARMED-never-scraped); the BYOK explorer key is server-side env-only, never in the bundle/log/registry; no key → keyless/degrade, no crash"
+    }
+  ],
+  "carried": {
+    "frozenSeven": "the 6 computational-core .py + loop.ts byte-untouched (core_byte_identity green every gate); the pipeline is a capture-time layer invoking the same byte-pinned six-tool analyzer, touching ZERO frozen bytes",
+    "verdictDifferential": "lending fp-set 70c7912f… + funding NO-GO/ILLUSTRATIVE reproduce at every gate — zero verdicts moved (the REAL tier is material:false — a REAL FLAGGED on a SOLID pool leaves it SOLID)",
+    "sevenAxes": [
+      "yield-reality",
+      "tvl-trend",
+      "peg",
+      "liquidity-depth",
+      "unlock-overhang",
+      "counterparty",
+      "funding-regime"
+    ],
+    "contractSubAxis": "the six-tool contract-risk sub-axis (auth-surface · call-graph · upgrade-check · storage-layout · value-flow · state-flow) + the subaxis rule (FLAGGED/CLEAN-STRUCTURE/UNVERIFIED, material:false, cleanStructureRequiresRealBuild=true) reused VERBATIM — not re-touched",
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "aiProviders": [
+      "gemini (Google AI Studio, default)",
+      "openai",
+      "anthropic",
+      "openai-compatible",
+      "groq (llama-3.1-8b-instant)"
+    ],
+    "moatCadence": "the capture cadence appends ONLY REAL captures (content-addressed, hash-chained) — now incl. captured build provenance; a backfill/retro throws",
+    "parked": "the four un-ported LLM-free tools (contract-info · inheritance-resolver · dimensional-analysis · mutation-map — D9); the LLM strategy-proposer / iterate-to-generate loop; the Sentinel fuzzer/RAG/dynamic analysis; the public library; execution rails — all PARKED (THE FIREWALL)",
+    "probe": "the X-PROBE metrics + KILL CRITERION remain ARMED + honestly BUILT-BUT-UNPROVEN"
+  },
+  "pinsSha": "f4e5a4a8f233ec0b4a76775e3a0d1ec7400bcd8de6deb4c4d647b2da1e813177"
+}

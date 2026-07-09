@@ -74,15 +74,52 @@ bun test --timeout 30000 test/walls/ \
   test/organon/honesty_liquidity.test.ts \
   test/organon/honesty_unlock.test.ts \
   test/organon/honesty_counterparty.test.ts \
+  test/organon/honesty_counterparty_contract.test.ts \
   test/organon/honesty_coverage.test.ts \
   test/organon/honesty_stamp.test.ts \
   test/organon/ask_router.test.ts \
   test/organon/ask_tools.test.ts \
   test/organon/ask_grounded.test.ts \
   test/organon/ask_ui.test.ts \
+  test/organon/ask_interpret.test.ts \
+  test/organon/ask_register.test.ts \
+  test/organon/ask_truncation.test.ts \
+  test/organon/ask_compare.test.ts \
   test/organon/crownjewel_redteam.test.ts \
   test/organon/findings_closed.test.ts \
+  test/organon/findings_closed_p.test.ts \
+  test/organon/findings_closed_v.test.ts \
+  test/organon/findings_closed_voice.test.ts \
+  test/organon/findings_closed_surface.test.ts \
+  test/organon/findings_closed_sovereign.test.ts \
+  test/organon/findings_closed_b.test.ts \
+  test/organon/voice_gates.test.ts \
+  test/organon/voice_contract.test.ts \
+  test/organon/voice_intents.test.ts \
+  test/organon/cal_ledger.test.ts \
+  test/organon/voice_eval.test.ts \
+  test/organon/eval_live.test.ts \
+  test/organon/stamp_mintrl.test.ts \
+  test/organon/voice_redteam.test.ts \
+  test/organon/contract_extract.test.ts \
+  test/organon/contract_subaxis.test.ts \
+  test/organon/contract_ingest.test.ts \
+  test/organon/contract_buildcapture.test.ts \
+  test/organon/contract_registry_real.test.ts \
+  test/organon/contract_redteam.test.ts \
+  test/organon/contract_verify_redteam.test.ts \
   test/organon/ask_live.test.ts \
   test/organon/decay.test.ts \
   test/organon/icir.test.ts \
-  test/organon/persistence_redteam.test.ts
+  test/organon/persistence_redteam.test.ts \
+  test/organon/surface_system.test.ts \
+  test/organon/surface_content_identity.test.ts \
+  test/organon/surface_a11y.test.ts \
+  test/organon/surface_detector.test.ts \
+  test/organon/surface_redteam.test.ts \
+  test/organon/surface_designpass.test.ts \
+  test/organon/plane_funding.test.ts \
+  test/organon/plane_events.test.ts \
+  test/organon/plane_rpcstate.test.ts \
+  test/organon/sovereign_redteam.test.ts \
+  test/organon/interpret_redteam.test.ts

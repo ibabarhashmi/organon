@@ -1,0 +1,27 @@
+{
+  "protocol": "surface-content-golden",
+  "note": "the S36 content-identity golden — the PRE-restyle visible text signature (tag+style stripped) of each screen; the restyle must reproduce these exactly (surface_content_identity). Content byte-identical; only presentation changes.",
+  "at": "2026-07-09",
+  "golden": {
+    "shelf-sample": {
+      "sha": "fa4e9d656efaa18e79582e2f60a5416ad5a625dad99bff55f19df5678b9048e8",
+      "len": 1426
+    },
+    "shelf-filter-solid": {
+      "sha": "a5fa5ac002f6809a7bb9f7db1a550c005a557d410c8bd5a2377312981e5cd190",
+      "len": 1078
+    },
+    "reality-sample": {
+      "sha": "6b69b40a1e11d54d644952d8cf5fca3abf832de4fd266da67c44209d3ff20938",
+      "len": 3237
+    },
+    "ask-empty": {
+      "sha": "8151334ff54e7219402d84e5ee0739cb4c3655661bafaaf6499a6c1fb7a45301",
+      "len": 731
+    },
+    "ask-pro-blocks": {
+      "sha": "b30de994f65a27dc96889beb55f0e247a29e05b5735cbd7c34629cbfa1ff45a3",
+      "len": 933
+    }
+  }
+}

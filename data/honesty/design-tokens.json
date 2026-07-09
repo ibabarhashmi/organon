@@ -1,0 +1,86 @@
+{
+  "protocol": "organon-design-tokens",
+  "note": "THE PINNED ORGΛNON DESIGN SYSTEM (Surface sprint; X-SURFACE a). The single source of truth for the surface: the stylesheet (public/organon.css) is BUILT from this file deterministically (script/build-stylesheet.ts); a changed token ⇒ a changed file ⇒ a changed surface-pins sha ⇒ a conscious re-pin, never a silent restyle. Colors are authored in OKLCH design-intent and expressed as sRGB hex for universal support AND deterministic WCAG-AA verification (surface_a11y). The SEMANTIC tokens each carry a non-color cue (glyph/border/weight — never color alone; a11y + honesty). The FACTS are the loudest thing on the screen; everything else recedes. Serious, precise, quiet — an instrument of reason, not a casino.",
+  "meta": {
+    "name": "ORGΛNON",
+    "version": "surface-1",
+    "mode": "dark",
+    "register": "product — a professional analytical tool (design SERVES the facts; it is never the product)",
+    "antiReferences": ["no purple→blue gradients", "no neon 'number-go-up' crypto tropes", "no Inter-for-everything", "no cards-nested-in-cards", "no side-tab accent borders", "no bounce/elastic motion", "no dark glows"],
+    "colorSpaceNote": "authored in OKLCH, expressed as sRGB hex — hex is universal AND lets surface_a11y compute WCAG contrast deterministically from the token file"
+  },
+  "color": {
+    "bg": "#0d1117",
+    "surface": "#161b22",
+    "surface2": "#1b2029",
+    "border": "#2a313c",
+    "borderStrong": "#3b434f",
+    "ink": "#e6edf3",
+    "inkMuted": "#9aa5b1",
+    "inkFaint": "#7e8894",
+    "accent": "#6cb6ff",
+    "accentInk": "#0d1117"
+  },
+  "semantic": {
+    "note": "each entry: {color (text/mark on the dark ground), tint (a subtle same-hue fill), cue (the NON-COLOR distinction — a glyph, border-style, or weight — so the meaning survives greyscale + colorblindness)}. The pill/badge text is the WORD itself (a text cue); the glyph + border-style reinforce it. Cues render via CSS keyed on the existing semantic class — the HTML content is byte-untouched (S36).",
+    "trustTier": {
+      "FACT": { "color": "#e6edf3", "tint": "#1b2029", "border": "solid", "cue": "the high-trust tier — heaviest weight, a solid full border, a '✓' eyebrow; the engine-fact treatment" },
+      "REASONING": { "color": "#d8b45a", "tint": "#221c10", "border": "solid", "cue": "the visible 'ANALYSIS — not an engine fact' eyebrow label rendered adjacent (a screenshot carries it — V4); visibly secondary weight" },
+      "BOUNDARY": { "color": "#9aa5b1", "tint": "#161b22", "border": "dashed", "cue": "the honest edge — a DASHED full border (a non-color pattern cue) + muted weight" }
+    },
+    "reality": {
+      "REAL": { "color": "#3fb950", "tint": "#10251a", "border": "solid", "cue": "a '●' filled mark + a SOLID border + the word REAL" },
+      "SAMPLE": { "color": "#d29922", "tint": "#221c10", "border": "dashed", "cue": "a '○' hollow mark + a DASHED border + the word SAMPLE" }
+    },
+    "verdict": {
+      "SOLID": { "color": "#3fb950", "tint": "#10251a", "glyph": "●", "cue": "a filled '●' + the word SOLID" },
+      "CAUTION": { "color": "#d29922", "tint": "#221c10", "glyph": "◐", "cue": "a half '◐' + the word CAUTION" },
+      "AVOID": { "color": "#f85149", "tint": "#2a1416", "glyph": "▲", "cue": "a warning triangle '▲' + the word AVOID" },
+      "UNVERIFIED": { "color": "#9aa5b1", "tint": "#1a1f27", "glyph": "○", "cue": "a hollow '○' + the word UNVERIFIED" }
+    },
+    "stamp": {
+      "GO": { "color": "#3fb950", "tint": "#10251a", "glyph": "▲", "cue": "an up '▲' + the word GO" },
+      "NO-GO": { "color": "#f85149", "tint": "#2a1416", "glyph": "▼", "cue": "a down '▼' + the word NO-GO" },
+      "INSUFFICIENT": { "color": "#d29922", "tint": "#221c10", "glyph": "◔", "cue": "a partial '◔' + the word INSUFFICIENT" },
+      "UNAVAILABLE": { "color": "#9aa5b1", "tint": "#1a1f27", "glyph": "—", "cue": "a dash '—' + the word UNAVAILABLE" }
+    },
+    "axisTier": {
+      "pass": { "color": "#3fb950", "glyph": "✓" },
+      "caution": { "color": "#d29922", "glyph": "!" },
+      "fail": { "color": "#f85149", "glyph": "✗" },
+      "unknown": { "color": "#9aa5b1", "glyph": "?" }
+    }
+  },
+  "type": {
+    "fontStack": "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
+    "monoStack": "ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace",
+    "pairingNote": "one system sans in multiple weights for prose + a mono for metrics/numbers — a legitimate contrast-axis pairing (geometric-sans ⊕ mono), never two near-identical sans",
+    "scale": {
+      "h1": { "size": "1.75rem", "weight": 650, "lineHeight": 1.2, "letterSpacing": "-0.02em", "balance": true },
+      "h2": { "size": "1.3rem", "weight": 620, "lineHeight": 1.3, "letterSpacing": "-0.01em", "balance": true },
+      "h3": { "size": "1.05rem", "weight": 620, "lineHeight": 1.35 },
+      "body": { "size": "0.95rem", "weight": 400, "lineHeight": 1.55 },
+      "small": { "size": "0.8rem", "weight": 400, "lineHeight": 1.5 },
+      "micro": { "size": "0.72rem", "weight": 600, "lineHeight": 1.4, "letterSpacing": "0.02em" },
+      "eyebrow": { "size": "0.68rem", "weight": 700, "lineHeight": 1.3, "letterSpacing": "0.06em", "transform": "uppercase" }
+    },
+    "maxLineLength": "72ch"
+  },
+  "space": { "1": "4px", "2": "8px", "3": "12px", "4": "16px", "5": "24px", "6": "32px", "7": "48px" },
+  "radius": { "sm": "6px", "md": "8px", "lg": "12px", "pill": "999px" },
+  "layout": { "wrapMax": "900px", "wrapPad": "24px", "wrapPadMobile": "16px", "mobileBreakpoint": "560px" },
+  "motion": {
+    "durationFast": "120ms",
+    "durationBase": "200ms",
+    "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "easingNote": "ease-out (quint-like); NO bounce, NO elastic (the detector enforces it)",
+    "reducedMotion": "every transition collapses to an instant/crossfade under @media (prefers-reduced-motion: reduce)",
+    "principle": "motion is purposeful + minimal — a state change, never decoration; no reveal gates content visibility"
+  },
+  "a11y": {
+    "contrastTarget": "WCAG-AA (body ≥ 4.5:1, large/bold ≥ 3:1)",
+    "nonColorCueRequired": "every verdict / Stamp / REAL-SAMPLE / trust-tier distinction carries a non-color cue (glyph, border-style, or weight) — NEVER color alone (verified by surface_a11y)",
+    "keyboard": "every interactive element (links, the Simple/Pro toggle, the form) is keyboard-reachable with a visible :focus-visible ring",
+    "responsive": "the single-column layout is fluid to the mobile breakpoint; touch targets ≥ 40px; no horizontal scroll"
+  }
+}

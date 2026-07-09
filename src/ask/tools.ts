@@ -5,11 +5,16 @@
  * the existing scorecard (via the record), the record, the coverage matrix, and the opt-in Stamp. Read-only — the tools
  * touch no engine state, move no verdict. These facts are the ONLY ground truth the AI phrasing (Phase 7) may speak.
  */
+import { existsSync, readFileSync } from "node:fs"
+import path from "node:path"
+import { PKG_ROOT } from "../organon/frozen"
 import { Scorecard } from "../analytics/scorecard"
 import { Explain } from "../analytics/explain"
 import { Reality } from "../studio/reality"
 import { ProvRecord } from "../dataplane/record"
 import { Stamp } from "../studio/stamp"
+import { Cal } from "../cal/ledger"
+import type { ContractSubAxis } from "../contract/subaxis"
 
 export namespace AskTools {
   export interface ToolResult {
@@ -22,13 +27,23 @@ export namespace AskTools {
   }
   const notFound = (tool: string, term: string): ToolResult => ({ tool, ok: false, reality: "n/a", facts: [], summary: `I don't have a strategy matching "${term}" in the record. I can only speak about the recorded strategies on the Shelf — I won't guess or fabricate one. Ask "what can you check?" for the list.`, meta: { term } })
 
+  // the deep counterparty DETAIL as GROUNDING facts (Contract-Truth Phase 4) — the contract-risk tier + each named
+  // structural finding, so the AI may phrase the ENGINE's OWN contract facts (never invent one) + a fabricated "safe" is
+  // rejected wholesale (the safety guard). It is a structural screen over verified source — NEVER "safe"/"audited".
+  export function contractFactRows(cs: ContractSubAxis): Explain.FactRow[] {
+    const rows: Explain.FactRow[] = [{ id: "contract-screen", name: "contract screen (deterministic structural screen over verified source — not a full audit)", value: cs.tier, threshold: null, comparator: null, outcome: "info", contribution: "context", provenanceRef: cs.contentSha }]
+    cs.findings.forEach((f, i) => rows.push({ id: `contract-finding-${i}`, name: `structural finding [${f.category}]`, value: f.detail, threshold: null, comparator: null, outcome: "info", contribution: "context", provenanceRef: cs.contentSha }))
+    return rows
+  }
+
   // ── scorecardFor — the whole Reality Check for one strategy (the same rows the screen renders) ──
   export function scorecardFor(poolKey: string | undefined, term: string, now: number): ToolResult {
     if (!poolKey) return notFound("scorecardFor", term)
     const rc = Reality.realityCheck(poolKey, now)
     if (!rc) return notFound("scorecardFor", term)
     const oneLiner = rc.scored.summary.replace(/^(SOLID|CAUTION|AVOID|UNVERIFIED)\s*—\s*/, "")
-    return { tool: "scorecardFor", ok: true, reality: rc.scored.facts.reality, facts: rc.scored.factRows, summary: `${rc.name} — verdict ${rc.scored.verdict} (${rc.scored.facts.reality}). ${oneLiner}`, meta: { poolKey, name: rc.name, verdict: rc.scored.verdict, reality: rc.scored.facts.reality } }
+    const facts = [...rc.scored.factRows, ...contractFactRows(rc.scored.contract)]
+    return { tool: "scorecardFor", ok: true, reality: rc.scored.facts.reality, facts, summary: `${rc.name} — verdict ${rc.scored.verdict} (${rc.scored.facts.reality}). ${oneLiner}`, meta: { poolKey, name: rc.name, verdict: rc.scored.verdict, reality: rc.scored.facts.reality, contractTier: rc.scored.contract.tier } }
   }
 
   // ── metric — one axis/metric of a strategy (a single fact row) ──
@@ -65,12 +80,103 @@ export namespace AskTools {
     return { tool: "stampFor", ok: r.available, reality: r.available && r.verdict !== "UNAVAILABLE" ? "REAL" : "n/a", facts, summary: r.reason, meta: { poolKey, stampVerdict: r.verdict, nObs: r.nObs, cleanGo: r.cleanGo, decayTier: r.decay?.tier ?? null, icirTier: r.icir?.tier ?? null } }
   }
 
-  // ── compare — two strategies, side by side (both scorecards; the AI phrases, never re-judges) ──
+  // ── compare — N strategies, side by side (n FACT sets; the AI phrases + a gated comparison, never re-judges). Voice: the
+  // n-strategies upgrade. The 2-way `compare` delegates to `compareMany` (back-compat: aName/bName/aVerdict/bVerdict kept). ──
+  export function compareMany(entries: { poolKey?: string; term: string }[], now: number): ToolResult {
+    const scored = entries.map((e) => ({ e, r: scorecardFor(e.poolKey, e.term, now) }))
+    const found = scored.filter((s) => s.r.ok)
+    if (found.length < 2) {
+      const missing = scored.filter((s) => !s.r.ok).map((s) => `"${s.e.term}"`)
+      return { tool: "compare", ok: false, reality: "n/a", facts: scored.flatMap((s) => s.r.facts), summary: `I can only compare recorded strategies. Couldn't find ${missing.join(", ")}.`.trim(), meta: { count: found.length } }
+    }
+    const reality: ToolResult["reality"] = found.every((s) => s.r.reality === "REAL") ? "REAL" : "SAMPLE"
+    const facts = found.flatMap((s) => s.r.facts)
+    const names = found.map((s) => String(s.r.meta.name))
+    const verdicts = found.map((s) => String(s.r.meta.verdict))
+    const line = found.map((s) => `${s.r.meta.name} → ${s.r.meta.verdict} (${s.r.reality})`).join(" vs ")
+    const meta: Record<string, unknown> = { count: found.length, names, verdicts }
+    if (found[0]) { meta.aName = found[0].r.meta.name; meta.aVerdict = found[0].r.meta.verdict; meta.aKey = found[0].e.poolKey }
+    if (found[1]) { meta.bName = found[1].r.meta.name; meta.bVerdict = found[1].r.meta.verdict; meta.bKey = found[1].e.poolKey }
+    return { tool: "compare", ok: true, reality, facts, summary: `${line}. The verdicts are the scorecard's, machine-derived; compare their axes above — I don't re-judge, I only lay them side by side.`, meta }
+  }
   export function compare(aKey: string | undefined, aTerm: string, bKey: string | undefined, bTerm: string, now: number): ToolResult {
-    const a = scorecardFor(aKey, aTerm, now), b = scorecardFor(bKey, bTerm, now)
-    if (!a.ok || !b.ok) return { tool: "compare", ok: false, reality: "n/a", facts: [...a.facts, ...b.facts], summary: `I can only compare recorded strategies. ${!a.ok ? `Couldn't find "${aTerm}". ` : ""}${!b.ok ? `Couldn't find "${bTerm}". ` : ""}`.trim(), meta: { aKey, bKey } }
-    const reality: ToolResult["reality"] = a.reality === "REAL" && b.reality === "REAL" ? "REAL" : "SAMPLE"
-    return { tool: "compare", ok: true, reality, facts: [...a.facts, ...b.facts], summary: `${a.meta.name} → ${a.meta.verdict} (${a.reality}) vs ${b.meta.name} → ${b.meta.verdict} (${b.reality}). The verdicts are the scorecard's, machine-derived; compare their axes above — I don't re-judge, I only lay them side by side.`, meta: { aKey, bKey, aName: a.meta.name, bName: b.meta.name, aVerdict: a.meta.verdict, bVerdict: b.meta.verdict } }
+    return compareMany([{ poolKey: aKey, term: aTerm }, { poolKey: bKey, term: bTerm }], now)
+  }
+
+  // ── the calibration status line (X-CAL; record-only) — reads the committed hash-chained ledger if present, else the
+  // honest "not started". NEVER a score — the only surface is the count until real resolutions exist (Phase 4 populates it). ──
+  export function calibrationStatusLine(): string {
+    try {
+      const p = path.join(PKG_ROOT, "data", "honesty", "cal-ledger.json")
+      if (!existsSync(p)) return "Calibration: the prediction clock has not started recording yet — no score is shown, and none will be until real resolutions exist."
+      return Cal.status(JSON.parse(readFileSync(p, "utf8"))).line // single source — the honest count, never a score
+    } catch { return "Calibration: the prediction clock has not started recording yet." }
+  }
+
+  // ── outlook — the persistence EVIDENCE, NEVER a forecast (X-VOICE f). "the engine is not a forecaster" first; then the
+  // decay half-life + within-strategy ICIR + funding-regime FACTs; then the calibration status. No invented number. ──
+  export async function outlook(poolKey: string | undefined, term: string, now: number): Promise<ToolResult> {
+    if (!poolKey) return notFound("outlook", term)
+    const rc = Reality.realityCheck(poolKey, now)
+    if (!rc) return notFound("outlook", term)
+    const stamp = await Stamp.stampFor(poolKey)
+    const facts: Explain.FactRow[] = []
+    const fr = rc.scored.rows.find((r) => r.axis === "funding-regime")
+    const fundingApplicable = fr && fr.tier !== "not-applicable"
+    if (fundingApplicable) facts.push(...Scorecard.toFactRows([fr!]))
+    const evidence: string[] = []
+    if (stamp.decay && stamp.decay.halfLife !== null) {
+      facts.push({ id: "decay-halflife", name: "edge half-life (serial persistence of the recorded signal — not the carry)", value: stamp.decay.halfLife, threshold: stamp.decay.floor, comparator: "≥", outcome: stamp.decay.tier === "TRACEABLE" ? "pass" : "fail", contribution: "context", provenanceRef: stamp.reproHash })
+      evidence.push(stamp.decay.tier === "TRACEABLE" ? "its recorded edge shows a traceable, persistent time-structure" : "its recorded edge is short-lived (a fee-chase rather than a persistent structure)")
+    }
+    if (stamp.icir && stamp.icir.icir !== null) {
+      facts.push({ id: "icir", name: "temporal consistency (within-strategy — not a cross-sectional rank)", value: stamp.icir.icir, threshold: stamp.icir.floor, comparator: "≥", outcome: stamp.icir.tier === "CONSISTENT" ? "pass" : "fail", contribution: "context", provenanceRef: stamp.reproHash })
+      evidence.push(stamp.icir.tier === "CONSISTENT" ? "its recorded edge holds steadily across periods" : "its recorded edge is lumpy across periods")
+    }
+    if (fundingApplicable) evidence.push("its funding carry is shown as a band, never a single hero number — the research shows funding swings widely")
+    if (!evidence.length) evidence.push("there isn't enough recorded history yet to read a persistence signal — an honest gap, not a forecast")
+    const summary = `The engine is NOT a forecaster — it can't tell you ${rc.name}'s next-month yield, and it won't invent one. What it CAN show is the persistence EVIDENCE from the record: ${evidence.join("; ")}. ${calibrationStatusLine()}`
+    return { tool: "outlook", ok: true, reality: rc.scored.facts.reality, facts, summary, meta: { poolKey, name: rc.name, notForecaster: true, decayTier: stamp.decay?.tier ?? null, icirTier: stamp.icir?.tier ?? null } }
+  }
+
+  // ── scenario — labeled CONDITIONALS over the recorded facts, NEVER an invented number (X-VOICE, SCENARIO). ──
+  export function scenario(poolKey: string | undefined, term: string, now: number): ToolResult {
+    // no strategy named (e.g. a bare "what if ETH drops 20%?") — the engine runs no price scenarios; guide the reader to
+    // name a recorded strategy rather than echoing the whole query back as a missing "strategy" (a DOGFOOD-drive fix, DF1).
+    if (!poolKey) return { tool: "scenario", ok: false, reality: "n/a", facts: [], summary: `The engine doesn't run price scenarios or invent a number — it can't tell you what a market move would do to a price. What it CAN give you is the CONDITIONAL STRUCTURE from a recorded strategy's own facts (e.g. "IF the reward emissions fade, only the durable base remains"). Name a recorded strategy — like "what if aave-v3 USDC's rewards fade?" — and I'll show you its conditionals; I won't fabricate a figure.`, meta: { scenario: true } }
+    const rc = Reality.realityCheck(poolKey, now)
+    if (!rc) return notFound("scenario", term)
+    const cond: Record<string, string> = {
+      "funding-regime": "IF funding flips negative, the carry axis (shown as a band) turns adverse and the delta-neutral edge compresses",
+      "peg": "IF the stablecoin breaks its peg band, the peg axis moves from pass to fail",
+      "yield-reality": "IF the reward emissions fade, only the durable base remains — the yield-reality axis already measures that floor",
+      "tvl-trend": "IF deposits start fleeing, the TVL-trend axis slope turns down toward its collapse floor",
+      "liquidity-depth": "IF the pool's reserve thins, the liquidity-depth axis flags real exit / slippage risk",
+      "counterparty": "IF the strategy stacks more protocol dependencies, the counterparty screen adds hidden surface",
+      "unlock-overhang": "IF a large token unlock lands, the unlock-overhang axis flags structured supply risk",
+    }
+    const conds = rc.scored.rows.filter((r) => r.material && cond[r.axis]).map((r) => cond[r.axis])
+    const facts = Scorecard.toFactRows(rc.scored.rows.filter((r) => r.material))
+    const summary = `The engine doesn't run price scenarios or invent a number — it gives you the CONDITIONAL STRUCTURE from ${rc.name}'s own recorded facts: ${conds.join("; ")}. These are qualitative conditionals over the engine's axes, never a fabricated figure.`
+    return { tool: "scenario", ok: true, reality: rc.scored.facts.reality, facts, summary, meta: { poolKey, name: rc.name } }
+  }
+
+  // ── adviceBoundary — the X-ADVICE resolution (law): the FACTs + labeled risk framing + the researcher-not-advisor
+  // boundary. NEVER a recommendation. Done well, the boundary is the most valuable answer in the product. ──
+  export function adviceBoundary(poolKey: string | undefined, term: string, now: number): ToolResult {
+    if (!poolKey) return { tool: "adviceBoundary", ok: true, reality: "n/a", facts: [], summary: `I can't tell you whether to invest — that's personalized financial advice, and ORGΛNON is a researcher, not an advisor (a regulated-activity boundary, not a brand choice). Name a recorded strategy and I'll give you its facts, the risk framing, and the honest boundary — the decision stays yours.`, meta: { adviceBoundary: true } }
+    const rc = Reality.realityCheck(poolKey, now)
+    if (!rc) return notFound("adviceBoundary", term)
+    const oneLiner = rc.scored.summary.replace(/^(SOLID|CAUTION|AVOID|UNVERIFIED)\s*—\s*/, "")
+    const framing = rc.scored.failing.length ? `The risk framing: the engine flags ${rc.scored.failing.join(", ")}.` : "The risk framing: no material axis is failing, but a past reading is never a promise of a future one."
+    const facts = [...rc.scored.factRows, ...contractFactRows(rc.scored.contract)]
+    const summary = `I can't tell you whether to invest in ${rc.name} — that would be personalized financial advice, and ORGΛNON is a researcher, not an advisor (a regulated-activity boundary, not a brand choice). What the engine gives you instead: ${rc.name} reads ${rc.scored.verdict} — ${oneLiner} ${framing} What you do with these facts is your decision.`
+    return { tool: "adviceBoundary", ok: true, reality: rc.scored.facts.reality, facts, summary, meta: { poolKey, name: rc.name, verdict: rc.scored.verdict, contractTier: rc.scored.contract.tier, adviceBoundary: true } }
+  }
+
+  // ── general — the FULL scorecard fact set for the reasoning layer to work over (can't-ground → the honest boundary). ──
+  export function general(poolKey: string | undefined, term: string, now: number): ToolResult {
+    return { ...scorecardFor(poolKey, term, now), tool: "general" }
   }
 
   // ── coverageMatrix — what the tool can check (the total 3×7 applicability matrix) ──

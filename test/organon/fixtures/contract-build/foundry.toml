@@ -1,0 +1,5 @@
+[profile.default]
+src = "src"
+out = "artifacts"
+build_info = true
+ast = true
