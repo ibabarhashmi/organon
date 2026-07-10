@@ -1,0 +1,139 @@
+{
+  "protocol": "stamp-variance-audit",
+  "at": "2026-07-11",
+  "fetchedAt": 1783728000,
+  "rule": "RE2/S57 — a READ-ONLY audit of whether the frozen Stamp estimator assumes i.i.d. over autocorrelated series (which would make verdicts too generous). No product diff lands in the audit (the Lineage D20 discipline). The finding follows the evidence.",
+  "readOnly": "this script reads rigor.py + the shelf series + spawns the frozen effective_n.py sidecar + fetches representative DeFiLlama yield charts; it writes ONLY this artifact. `git diff -- src/` is empty through the audit.",
+  "iidEvidence": {
+    "file": "src/backtest/py/rigor.py (FROZEN, pinned 5fc0eaac…)",
+    "formula": "PSR = NormCDF( (SR_hat - SR*)·√(n-1) / √(1 - g3·SR_hat + ((g4-1)/4)·SR_hat²) )",
+    "assumesIid": true,
+    "why": "the √(n-1) factor treats the n observations as INDEPENDENT draws; the denominator corrects for skew (g3) and kurtosis (g4) but NOT for serial autocorrelation. The DSR (deflated_sharpe → psr(returns, sr0_deflated)) inherits this i.i.d. variance.",
+    "quotedLines": [
+      "def psr(returns, sr_star: float) -> float:",
+      "r = np.asarray(returns, dtype=float)",
+      "n = r.size",
+      "return float(\"nan\")"
+    ]
+  },
+  "measurementMethod": "each series (the Stamp's exact input kind: (apyBase+apyReward)/100/365) → the FROZEN effective_n.py (integrated_autocorr_time τ_int, effective_n_serial = N/τ_int, iid t-stat vs Newey–West HAC t-stat). effective_n.py is proven + frozen but wired ONLY on the funding path — NEVER the Stamp's DSR path (that is the gap this audit exposes).",
+  "localShelf": {
+    "measured": 0,
+    "note": "the shelf snapshots are gitignored (A′#12) → UNAVAILABLE on this clone; the representative REAL series below carry the measurement",
+    "perPool": [
+      {
+        "pool": "aave-v3 USDC",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      },
+      {
+        "pool": "aave-v3 USDT",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      },
+      {
+        "pool": "aave-v3 DAI",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      },
+      {
+        "pool": "sparklend DAI",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      },
+      {
+        "pool": "fluid-lending USDC",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      },
+      {
+        "pool": "compound-v3 USDC",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      },
+      {
+        "pool": "Curve USDC-RLUSD (stablecoin LP)",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      },
+      {
+        "pool": "Hyperliquid BTC delta-neutral",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      },
+      {
+        "pool": "Hyperliquid ETH delta-neutral",
+        "nObs": 0,
+        "measurable": false,
+        "note": "no recorded series on this clone (snapshots gitignored — UNAVAILABLE)"
+      }
+    ]
+  },
+  "representativeReal": {
+    "source": "https://yields.llama.fi/chart/{poolId}",
+    "fetchedAt": 1783728000,
+    "reFetchInstruction": "GET the chart per poolId; build returns=(apyBase+apyReward)/100/365; run through src/backtest/py effective_n integrated_autocorr_time. Values drift with time; the direction (τ_int ≫ 1) is structural to sticky DeFi yields.",
+    "perPool": [
+      {
+        "name": "aave-v3 USDT (Ethereum)",
+        "poolId": "f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
+        "nObs": 1244,
+        "tauInt": 26.86,
+        "effN": 46.3,
+        "naiveT": 39.89,
+        "deflT": 28.87,
+        "shrink": 26.9
+      },
+      {
+        "name": "aave-v3 USDC (Ethereum)",
+        "poolId": "aa70268e-4b52-42bf-a116-6e2ac8bcb1b2",
+        "measurable": false,
+        "note": "chart fetch failed/rate-limited at capture time"
+      },
+      {
+        "name": "compound-v3 USDC (Ethereum)",
+        "poolId": "7da72d09-56ca-4ec5-a45f-59114353e487",
+        "nObs": 1370,
+        "tauInt": 124.27,
+        "effN": 11,
+        "naiveT": 59.5,
+        "deflT": 8.75,
+        "shrink": 124.5
+      },
+      {
+        "name": "aave-v3 DAI (Ethereum)",
+        "poolId": "a349fea4-d780-4e16-973e-70ca9b606db2",
+        "nObs": 1551,
+        "tauInt": 165.26,
+        "effN": 9.4,
+        "naiveT": 36.19,
+        "deflT": 4.65,
+        "shrink": 165
+      },
+      {
+        "name": "fluid-lending USDT (Ethereum)",
+        "poolId": "6ce69f37-fc7f-4a99-a67c-e8f4c2f2f0cc",
+        "measurable": false,
+        "note": "chart fetch failed/rate-limited at capture time"
+      }
+    ],
+    "medianTauInt": 124.27
+  },
+  "finding": "CONFIRMED — the Stamp's DSR/PSR variance assumes i.i.d. (rigor.py::psr, the √(n-1) factor), while 3/3 representative REAL stablecoin-lending yield series are heavily autocorrelated (τ_int measured 26.86–165.26, median 124.27, via the FROZEN effective_n.py). Effective N ≪ nominal N (a ~124× shrink), so the i.i.d. variance is grossly UNDERSTATED and the DSR is OPTIMISTIC — the Stamp's GO bar is far easier than an autocorrelation-aware bar. Direction of the bias: GENEROUS (the firewall's feared direction).",
+  "biasDirection": "GENEROUS — an i.i.d. variance is understated over autocorrelated returns → the DSR is overstated → a GO is easier to earn than it should be. The exact direction the FIREWALL exists to fear.",
+  "d27": {
+    "decisionOwner": "Operator (Phase 4's math decision is Operator-owned + Operator-signed)",
+    "amendmentPath": "the deterministic EFFECTIVE-N FLOOR (moat-pins varianceAuditProtocol.d27Paths.amendment): compute n_eff = N/τ_int from the recorded series via the ALREADY-FROZEN effective_n.py; if n_eff < the floor the Stamp becomes INSUFFICIENT (the MinTRL suppression pattern). ZERO frozen-byte edits (an off-path rider); direction CONSERVATIVE (a GO may become INSUFFICIENT; a net-generous outcome HALTS); every affected verdict disclosed pool-by-pool. SPECIFIED + PARKED pending the Operator's signature.",
+    "caveatPath": "the i.i.d.-optimism rendered PROMINENTLY at the Stamp strength line (reality.ts renderStamp — the render layer, verdict-path hashes frozen): 'This significance assumes each recorded observation is independent. DeFi yields are autocorrelated, so the true statistical evidence is weaker than the number suggests — read the pass as an optimistic ceiling, not a floor.'",
+    "interimHonestDefault": "the CAVEAT is rendered NOW (disclosure of a KNOWN optimism needs no signature — the RE3 pattern; silence would be the dishonest act). The AMENDMENT is specified + PARKED pending D27. No verdict moves without the signature."
+  },
+  "frozenSeven": "byte-untouched — this audit reads rigor.py/effective_n.py, it does not edit them; the module hashes are asserted unchanged at the gate."
+}

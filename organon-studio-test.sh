@@ -146,4 +146,5 @@ bun test --timeout 30000 test/walls/ \
   test/organon/dual_repo_divergence.test.ts \
   test/organon/findings_closed_probe.test.ts \
   test/organon/capture_truth.test.ts \
-  test/organon/postmortem_real.test.ts
+  test/organon/postmortem_real.test.ts \
+  test/organon/variance_audit.test.ts
