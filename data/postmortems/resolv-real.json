@@ -1,0 +1,104 @@
+{
+  "subject": "resolv",
+  "name": "Resolv USR",
+  "layer": "REAL current-state (PIT-honest: REAL-AS-FETCHED-NOW, never REAL-AS-OF-COLLAPSE)",
+  "provenancePosture": "REAL — the values below are a genuine content-hashed fetch of the CURRENT/aftermath state (DeFiLlama). They confirm the collapse; they are NOT a point-in-time capture made at the collapse (that is impossible from a current API). The collapse-time facts stay SAMPLE in data/postmortems/resolv.json.",
+  "fetchedAt": 1783728000,
+  "sources": [
+    "https://api.llama.fi/protocol/resolv",
+    "https://coins.llama.fi/prices/current/ethereum:0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110"
+  ],
+  "contentSha": "dae90fc5db971bd9d47a55abed4ec95a4f852b1e6d5a3b46dcbe29e53ea726ff",
+  "reFetchInstruction": "GET https://api.llama.fi/protocol/resolv and https://coins.llama.fi/prices/current/ethereum:0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110 ; recompute currentTvlUsd/peakTvlUsd/tvl30dAgoUsd from protocol.tvl[] and price from coins[token]; sha256(JSON.stringify(capture)) must reproduce contentSha at the same fetch (values drift with time — the hash proves THIS snapshot was not tampered, the URL lets you fetch the current one).",
+  "realCapture": {
+    "fetchedAt": 1783728000,
+    "sources": [
+      "https://api.llama.fi/protocol/resolv",
+      "https://coins.llama.fi/prices/current/ethereum:0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110"
+    ],
+    "tvlSeries": {
+      "firstDate": 1726531200,
+      "lastDate": 1783705715,
+      "nPoints": 663,
+      "currentTvlUsd": 14001357,
+      "peakTvlUsd": 684738011,
+      "tvl30dAgoUsd": 21056369
+    },
+    "price": {
+      "value": 0.15368376499406008,
+      "confidence": 0.99,
+      "timestamp": 1783709942
+    }
+  },
+  "peakToNowDrawdown": -0.98,
+  "realFacts": {
+    "name": "Resolv USR",
+    "apyBase": null,
+    "apyReward": null,
+    "tvlSlope30d": -0.335,
+    "pegDev": 0.8463,
+    "isStablecoin": true,
+    "reality": "REAL",
+    "provenanceRef": "dae90fc5db971bd9d47a55abed4ec95a4f852b1e6d5a3b46dcbe29e53ea726ff",
+    "vertical": "stablecoin-yield",
+    "depProtocols": null,
+    "ageDays": null,
+    "sizeUsd": 14001357,
+    "liqUsd": null
+  },
+  "realCells": {
+    "sizeUsd": {
+      "value": 14001357,
+      "reality": "REAL",
+      "asOf": "REAL — fetched 1783728000 (DeFiLlama current copy), the CURRENT TVL; not a collapse-time capture",
+      "source": "https://api.llama.fi/protocol/resolv"
+    },
+    "tvlSlope30d": {
+      "value": -0.335,
+      "reality": "REAL",
+      "asOf": "REAL — the CURRENT 30-day TVL slope as of the fetch; the pool may have been at ~0 for months (the 30d window can't see an older drawdown — see peakToNowDrawdown)",
+      "source": "https://api.llama.fi/protocol/resolv"
+    },
+    "pegDev": {
+      "value": 0.8463,
+      "reality": "REAL",
+      "asOf": "REAL — |price-1| from DeFiLlama current price 0.15368376499406008 (confidence 0.99); the CURRENT peg, not the collapse-time peg",
+      "source": "https://coins.llama.fi/prices/current/ethereum:0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110"
+    }
+  },
+  "engineOutput": {
+    "verdict": "UNVERIFIED",
+    "summary": "UNVERIFIED — we can't confirm this yet: We can't confirm the yield split — the base/reward data is missing. We can't confirm the pool's exit liquidity — the depth data is missing. We can't confirm the pool's age or size yet. This is a coarse structural screen (age · size · dependency), NOT a contract audit — it says nothing about the code; deep contract analysis is parked.",
+    "rows": [
+      {
+        "axis": "yield-reality",
+        "tier": "unverified"
+      },
+      {
+        "axis": "tvl-trend",
+        "tier": "caution"
+      },
+      {
+        "axis": "peg",
+        "tier": "fail"
+      },
+      {
+        "axis": "liquidity-depth",
+        "tier": "unverified"
+      },
+      {
+        "axis": "unlock-overhang",
+        "tier": "not-applicable"
+      },
+      {
+        "axis": "counterparty",
+        "tier": "unverified"
+      }
+    ],
+    "adverseFlags": [
+      "tvl-trend: caution",
+      "peg: fail"
+    ]
+  },
+  "honestNote": "The engine, fed the REAL current facts, renders UNVERIFIED — the current yield mix is not re-fetchable for a delisted pool, so the flagship yield-reality axis is honestly unverified. REAL adverse structural flags: tvl-trend: caution · peg: fail. The damning REAL cell is the peak→now TVL drawdown of -98.0% (peak $684.7M → now $14,001,357), content-hashed and re-fetchable."
+}

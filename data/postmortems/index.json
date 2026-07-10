@@ -38,5 +38,33 @@
     }
   ],
   "allSample": true,
-  "note": "allSample=true: no cell claims REAL provenance (we did not re-fetch the delisted pools). The verdicts are UNVERIFIED (honest) with the adverse structural flags the engine actually computes — 'here is what we would have flagged, deterministically'."
+  "note": "allSample=true: no cell claims REAL provenance (we did not re-fetch the delisted pools). The verdicts are UNVERIFIED (honest) with the adverse structural flags the engine actually computes — 'here is what we would have flagged, deterministically'.",
+  "realLayer": {
+    "at": "2026-07-11",
+    "rule": "S56 — REAL current-state cells earned by genuine content-hashed DeFiLlama fetches; PIT-honest (REAL-AS-FETCHED-NOW, never as-of-collapse); the engine's actual recomputed output on REAL facts; cells not fetchable STAY SAMPLE.",
+    "census": {
+      "before": "all-SAMPLE (0 REAL cells)",
+      "after": [
+        {
+          "subject": "stream",
+          "realCells": 2,
+          "verdict": "UNVERIFIED",
+          "peakToNowDrawdown": -1
+        },
+        {
+          "subject": "elixir",
+          "realCells": 2,
+          "verdict": "UNVERIFIED",
+          "peakToNowDrawdown": -1
+        },
+        {
+          "subject": "resolv",
+          "realCells": 3,
+          "verdict": "UNVERIFIED",
+          "peakToNowDrawdown": -0.98
+        }
+      ]
+    },
+    "pitFence": "no cell claims REAL-AS-OF-COLLAPSE; the collapse-time reconstruction stays SAMPLE. The REAL layer is the current/aftermath state, content-hashed + re-fetchable."
+  }
 }
