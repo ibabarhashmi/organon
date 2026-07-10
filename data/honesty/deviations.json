@@ -176,6 +176,15 @@
    "lawAuthority": "X-PROBE + X-HONEST + A'#2/#3/#11",
    "operatorSigned": false,
    "note": "AWAITING the Operator's ratification of the kill-criterion thresholds (adjusting them before invites is a disclosed re-pin, not a moved goalpost) -- surfaced in the BUILDLOG-PROBE handoff."
+  },
+  {
+   "id": "D26",
+   "blueprintLine": "Moat Phase 2 / RE1: 'D26 (the capture-time dependency exception -- viem/whatsabi ADOPT-OR-RECORD on measured evidence, Operator-signed)'",
+   "whatWasDone": "The viem@2.55.0 + @shazow/whatsabi@0.26.0 prototype (script/capture/proxy-truth.ts, node/tsx, capture-time-only) was RUN against a pinned adversarial set on mainnet at a pinned block (data/honesty/capture-truth.json). Measured result: 3 demonstrated correctness gaps -- the naive hand-rolled EIP-1967 slot reader returns NONE for USDC (a custom non-standard-slot proxy), an EIP-1167 minimal-proxy clone (impl in bytecode), and an EIP-2535 Diamond (no single impl), while whatsabi/the loupe resolve/detect all three; aave-v3 (standard 1967) MATCHES; USDT/Seaport (non-proxies) AGREE with no false resolution. The S55 determinism wall holds: the full resolution ran twice at the same pinned block, batching OFF vs ON, and the canonical result hashes are EQUAL (the batching prohibition is safe -- proven, not asserted). No signing/wallet symbol is imported. DECISION recorded: ADOPT-RECOMMENDED (capture-time only), with a recorded adoption COST -- viem@2.55.0 does NOT run under Bun 1.3.11 (a transitive @noble/hashes@1.8.0 self-referential subpath import fails Bun's cache resolver), so the capture step runs under node.",
+   "why": "The evaluation's adopt-or-record gate, executed on evidence not taste: hand-rolling 1167/custom-slot/diamond proxy resolution correctly is a REAL fragility source (demonstrated 3x). The exception is justified ON THE MERITS -- but it stays CAPTURE-TIME ONLY (allowlisted to script/capture/*, grep-walled off the mass/verdict paths; the mass path stays hono+zod) and the RPC-STATE mass path stays hand-rolled (RE6 flip unchanged).",
+   "lawAuthority": "X-MOATDEEP(a) + PART CLEAN + A'#1/#2/#3 (viem-creep / batching-flip / adopted-on-elegance all fenced)",
+   "operatorSigned": false,
+   "note": "AWAITING the Operator's signature. Until signed, viem/whatsabi do NOT land as committed dependencies -- package.json stays {hono, zod}; the measurement + recommendation are recorded and the trees stay allowlist-clean. The Operator's decision also accepts (or resolves) the node-vs-bun capture-runtime split. If declined, the finding stands recorded and the contract stays pinned for the RE6 future flip."
   }
  ]
 }
