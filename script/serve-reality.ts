@@ -61,8 +61,15 @@ app.get("/postmortems", async (c) => {
   const idxP = path.join(dir, "index.json")
   if (!existsSync(idxP)) return c.json({ ok: true, postmortems: [], note: "no re-score artifacts recorded on this clone (run: bun run script/honesty/rescore-postmortems.ts)" })
   const index = JSON.parse(readFileSync(idxP, "utf8"))
-  const subjects = (index.subjects as { subject: string }[]).map((s) => JSON.parse(readFileSync(path.join(dir, `${s.subject}.json`), "utf8")))
-  return c.json({ ok: true, rule: index.rule, allSample: index.allSample, subjects })
+  // each subject: the SAMPLE collapse RECONSTRUCTION + (Moat Phase 3; S56) the REAL current-state layer if captured —
+  // per-cell REAL/SAMPLE provenance visible cell-by-cell (PIT-honest: REAL-AS-FETCHED-NOW, never as-of-collapse).
+  const subjects = (index.subjects as { subject: string }[]).map((s) => {
+    const sample = JSON.parse(readFileSync(path.join(dir, `${s.subject}.json`), "utf8"))
+    const realP = path.join(dir, `${s.subject}-real.json`)
+    const realLayer = existsSync(realP) ? JSON.parse(readFileSync(realP, "utf8")) : null
+    return { ...sample, realLayer }
+  })
+  return c.json({ ok: true, rule: index.rule, allSample: index.allSample, realLayer: index.realLayer ?? null, subjects })
 })
 
 // ── the /feedback door (Probe Phase 2; X-TELEMETRY) — a DISPOSITIONED door (not a fourth screen): a tester's structured
