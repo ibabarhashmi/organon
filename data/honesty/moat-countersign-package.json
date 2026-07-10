@@ -1,0 +1,44 @@
+{
+  "protocol": "moat-countersign-package",
+  "at": "2026-07-11",
+  "rule": "PR2 — the countersign package: D23/D24/D25 (prepared at Probe, unsigned) + D26/D27 (this sprint) assembled into ONE document, presented to the Operator for signing in ONE sitting at Phase 5. An agent must NOT sign as the Operator (operatorSigned stays false until the Operator's own hand). Each deviation rests on a proof already green in both repos.",
+  "presentedWhole": "Phase 5 — alongside IN2 (the real-screen session), IN4 (the browser/AT a11y pass), AF4 (the first live paid-key parity diff), and the push decision; discharged whole or an honest STOP with exactly what remains quoted.",
+  "deviations": [
+    {
+      "id": "D23",
+      "title": "the capability split law (paid DATA deepens facts; paid MODELS never touch a verdict) + the green parity proof",
+      "restsOn": "capability-parity.json — the hermetic differential (byte-identical zero/free/paid) green in BOTH repos; assertMayConsume guards the 7 verdict-path modules",
+      "prepared": true,
+      "operatorSigned": false
+    },
+    {
+      "id": "D24",
+      "title": "the telemetry/feedback privacy posture (off-by-default, .strict() manifest, scrubbed, double-consent, verdict-path-forbidden)",
+      "restsOn": "probe-pins.json telemetryPosture + probe-redteam S52; src/telemetry/* imports no scored module (grep-walled)",
+      "prepared": true,
+      "operatorSigned": false
+    },
+    {
+      "id": "D25",
+      "title": "the pre-registered kill-criterion (8b4e094b, immutable-without-disclosure) + the re-score artifact scope (SAMPLE-labeled, engine's actual output)",
+      "restsOn": "probe-kill-criterion.json commitHash 8b4e094b + the post-mortems' reproHash re-verification (S53/S54)",
+      "prepared": true,
+      "operatorSigned": false
+    },
+    {
+      "id": "D26",
+      "title": "the capture-time dependency exception — viem/whatsabi ADOPT-OR-RECORD on measured evidence",
+      "restsOn": "Phase 2 — capture-truth.json: the prototype vs the hand-rolled path on the live registry + the pinned adversarial set; the S55 determinism wall (batching ON-vs-OFF byte-identity, block-pinned, exact versions, no signing import, allowlist grep). Signed ONLY on a demonstrated resolution the hand-rolled path missed; else RECORD insufficient-evidence and the deps do NOT land.",
+      "prepared": "PENDING — filled at Phase 2",
+      "operatorSigned": false
+    },
+    {
+      "id": "D27",
+      "title": "the variance decision — the i.i.d. audit → the conservative amendment OR the rendered caveat",
+      "restsOn": "Phase 4 — stamp-variance-audit.json (read-only): the i.i.d. finding evidence-matched (rigor.py::psr uses n-1; the Stamp series is autocorrelated); the two pre-designed paths. Signed as ACTIVATE the amendment (effective-N floor, conservative, per-pool census) OR RATIFY the caveat (rendered now as the honest interim).",
+      "prepared": "PENDING — filled at Phase 4",
+      "operatorSigned": false
+    }
+  ],
+  "signingConsequence": "with all five signed + IN2/IN4/AF4 discharged + the push decision, the invites go out against a goalpost already set. Until then the sprint terminates READY-PENDING-OPERATOR (or an honest STOP with the remainder quoted)."
+}

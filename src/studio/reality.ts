@@ -264,6 +264,12 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
     // WALL 3 (S47) — the deflation strength in plain words (n=1 = the weakest form — nothing to deflate away); only for a hard verdict.
     const strengthTxt = verdict === "GO" || verdict === "NO-GO" ? Lineage.strengthLine(r.familyN) : ""
     const strength = strengthTxt ? `<div class="muted"><b>Strength — how hard-won</b>: ${esc(strengthTxt)}</div>` : ""
+    // RE3 (Moat sprint; X-MOATDEEP d) — the inert-deflation label made UNMISSABLE at the render (a render-layer disclosure,
+    // NOT a verdict-path edit — the strengthLine's meaning restated crisply so no user reads sixteen-nines confidence into an
+    // UN-deflated DSR). n=1 means the multiple-testing search charge is zero, so the deflation deducted nothing.
+    const inert = (verdict === "GO" || verdict === "NO-GO") && r.familyN === 1 && !guarded.degraded
+      ? `<div class="muted"><b>The deflation is currently inert</b> — 1 attempt counted, no multiple-testing penalty was paid. The multiple-testing deflation that would harden this verdict activates only once a proposer generates multiple candidate trials (parked); today the pass rests on the single recorded track record alone.</div>`
+      : ""
     // if WALL 1 degraded the payload, the ORIGINAL reason/basis/depth are void — show the honest degradation + the lineage only.
     const reasonText = guarded.degraded ? guarded.reason : r.reason
     // WALL 3 — the DISPLAYED significance is CAPPED (the raw value stays full-precision in r.dsr + the reproHash).
@@ -291,7 +297,7 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
 <h1>The Stamp <span class="pill ${vClass}">${esc(verdict)}</span> <span class="muted">${esc(name)}</span></h1>
 <div class="card"><b>The opt-in overfit stress test — a SEPARATE verdict from the Reality Check.</b>
 <div class="muted">This is NOT the scorecard's verdict. The Reality Check answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers "does this pool's recorded track record survive the anti-PBO overfit deflation?" (GO/NO-GO/INSUFFICIENT). A GO is a floor on doubt about the track record's statistical robustness — NOT "safe". An INSUFFICIENT is a forward clock — NOT "bad". The two are never conflated.</div></div>
-<div class="card"><div>${esc(reasonText)}</div>${degradedNote}${basis}${strength}${lineage}${mintrlTxt}${depth}</div>
+<div class="card"><div>${esc(reasonText)}</div>${degradedNote}${basis}${strength}${inert}${lineage}${mintrlTxt}${depth}</div>
 <div class="trust">the frozen, byte-pinned anti-PBO adjudicator — INVOKED, never edited (zero frozen bytes moved) · deflation armed only here · off the mass path · this is not financial advice.</div>`)
   }
 
