@@ -36,7 +36,7 @@
       "id": "D27",
       "title": "the variance decision — the i.i.d. audit → the conservative amendment OR the rendered caveat",
       "restsOn": "Phase 4 — stamp-variance-audit.json (read-only): the i.i.d. finding evidence-matched (rigor.py::psr uses n-1; the Stamp series is autocorrelated); the two pre-designed paths. Signed as ACTIVATE the amendment (effective-N floor, conservative, per-pool census) OR RATIFY the caveat (rendered now as the honest interim).",
-      "prepared": "PENDING — filled at Phase 4",
+      "prepared": "READY — stamp-variance-audit.json CONFIRMED the i.i.d. finding: rigor.py::psr uses (1 - g3·SR + ((g4-1)/4)·SR²)/(n-1); measured τ_int ≈ 27–165 (median ~124) on representative REAL lending yields via the frozen effective_n.py → the DSR is grossly optimistic, direction GENEROUS. INTERIM: the caveat is rendered NOW at reality.ts renderStamp (render-layer, verdict-path 7 frozen); the effective-N-floor amendment is specified in moat-pins + PARKED. The Operator's signature ACTIVATES the amendment (a GO may become INSUFFICIENT, per-pool census disclosed) OR RATIFIES the caveat.",
       "operatorSigned": false
     }
   ],

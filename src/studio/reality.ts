@@ -270,6 +270,13 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
     const inert = (verdict === "GO" || verdict === "NO-GO") && r.familyN === 1 && !guarded.degraded
       ? `<div class="muted"><b>The deflation is currently inert</b> — 1 attempt counted, no multiple-testing penalty was paid. The multiple-testing deflation that would harden this verdict activates only once a proposer generates multiple candidate trials (parked); today the pass rests on the single recorded track record alone.</div>`
       : ""
+    // D27 CAVEAT (Moat sprint; X-MOATDEEP c) — the i.i.d.-optimism disclosed at the render, beside the significance. The
+    // frozen PSR variance (rigor.py) assumes independent observations; DeFi yields are autocorrelated (audit: τ_int ≈ 27–165
+    // on real lending yields), so the significance is an optimistic CEILING. A render-layer disclosure (verdict-path frozen);
+    // the honest interim while the effective-N-floor AMENDMENT is specified + PARKED pending the Operator's D27 signature.
+    const iidCaveat = (verdict === "GO" || verdict === "NO-GO") && !guarded.degraded && r.dsr !== null
+      ? `<div class="muted"><b>Read the significance as an optimistic ceiling, not a floor.</b> This deflation assumes each recorded observation is independent; DeFi yields are autocorrelated (they barely move day to day), so the true statistical evidence is weaker than the number suggests. A conservative effective-sample-size correction is specified and pending review.</div>`
+      : ""
     // if WALL 1 degraded the payload, the ORIGINAL reason/basis/depth are void — show the honest degradation + the lineage only.
     const reasonText = guarded.degraded ? guarded.reason : r.reason
     // WALL 3 — the DISPLAYED significance is CAPPED (the raw value stays full-precision in r.dsr + the reproHash).
@@ -297,7 +304,7 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
 <h1>The Stamp <span class="pill ${vClass}">${esc(verdict)}</span> <span class="muted">${esc(name)}</span></h1>
 <div class="card"><b>The opt-in overfit stress test — a SEPARATE verdict from the Reality Check.</b>
 <div class="muted">This is NOT the scorecard's verdict. The Reality Check answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers "does this pool's recorded track record survive the anti-PBO overfit deflation?" (GO/NO-GO/INSUFFICIENT). A GO is a floor on doubt about the track record's statistical robustness — NOT "safe". An INSUFFICIENT is a forward clock — NOT "bad". The two are never conflated.</div></div>
-<div class="card"><div>${esc(reasonText)}</div>${degradedNote}${basis}${strength}${inert}${lineage}${mintrlTxt}${depth}</div>
+<div class="card"><div>${esc(reasonText)}</div>${degradedNote}${basis}${iidCaveat}${strength}${inert}${lineage}${mintrlTxt}${depth}</div>
 <div class="trust">the frozen, byte-pinned anti-PBO adjudicator — INVOKED, never edited (zero frozen bytes moved) · deflation armed only here · off the mass path · this is not financial advice.</div>`)
   }
 

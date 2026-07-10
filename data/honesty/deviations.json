@@ -185,6 +185,15 @@
    "lawAuthority": "X-MOATDEEP(a) + PART CLEAN + A'#1/#2/#3 (viem-creep / batching-flip / adopted-on-elegance all fenced)",
    "operatorSigned": false,
    "note": "AWAITING the Operator's signature. Until signed, viem/whatsabi do NOT land as committed dependencies -- package.json stays {hono, zod}; the measurement + recommendation are recorded and the trees stay allowlist-clean. The Operator's decision also accepts (or resolves) the node-vs-bun capture-runtime split. If declined, the finding stands recorded and the contract stays pinned for the RE6 future flip."
+  },
+  {
+   "id": "D27",
+   "blueprintLine": "Moat Phase 4 / RE2: 'D27 (the variance decision -- the i.i.d. audit -> amendment or caveat, Operator-signed)'",
+   "whatWasDone": "The READ-ONLY variance audit (script/honesty/stamp-variance-audit.ts, git diff -- src/ empty through the audit; data/honesty/stamp-variance-audit.json) CONFIRMED the finding: rigor.py::psr (the frozen Stamp DSR/PSR estimator) computes the Sharpe variance as (1 - g3*SR + ((g4-1)/4)*SR^2)/(n-1) -- skew/kurtosis-aware but treating the n observations as INDEPENDENT (i.i.d.). Measured on representative REAL stablecoin-lending yield series (the Stamp's exact input kind) via the ALREADY-FROZEN effective_n.py: tau_int ~ 27-165 (median ~124), so effective N is a ~27-165x shrink of nominal N. The i.i.d. variance is grossly UNDERSTATED -> the DSR is optimistic -> the Stamp's GO bar is too easy. Direction GENEROUS (the firewall's feared direction). INTERIM DECISION recorded: the CAVEAT is rendered NOW at the Stamp strength line (reality.ts renderStamp, a render-layer disclosure -- the verdict-path 7 hashes stay frozen; disclosure of a known optimism needs no signature, the RE3 pattern). The AMENDMENT (a deterministic effective-N floor using the frozen effective_n.py: n_eff = N/tau_int; n_eff < floor -> INSUFFICIENT; ZERO frozen-byte edits, direction CONSERVATIVE, per-pool census) is SPECIFIED in moat-pins + PARKED pending the Operator's signature. No verdict moves without the signature.",
+   "why": "The evaluation's sharpest finding, answered not avoided: an un-audited i.i.d. estimator would have flattered every Stamp verdict pre-invite. Silence is the dishonest act, so the caveat is rendered now; but MOVING a verdict (activating the amendment) is the Operator's signed call -- an agent must not perform a conscious math amendment on the frozen core's behalf. The timing is the best possible: BEFORE any invited tester sees a verdict that later becomes less generous.",
+   "lawAuthority": "X-MOATDEEP(c) + X-KEEP (frozen seven byte-untouched) + A'#5/#6 (generous-fix / silent-edit fenced) + the DECAY_SIGNIF_Z re-pin precedent",
+   "operatorSigned": false,
+   "note": "AWAITING the Operator's D27 signature: ACTIVATE the amendment (the effective-N floor -- a GO may honestly become INSUFFICIENT, the fix working; per-pool verdict census disclosed at activation) OR RATIFY the caveat as the permanent choice. Until signed, the caveat stands (honest interim) and the frozen seven are byte-untouched. Surfaced in the Phase 5 handoff."
   }
  ]
 }
