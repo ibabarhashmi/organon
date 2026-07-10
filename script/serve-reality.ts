@@ -44,8 +44,10 @@ app.get("/stamp/:key", async (c) => {
   const rc = Reality.realityCheck(key, Date.now())
   if (!rc) return c.html(`<!doctype html><meta charset=utf8><body style="font-family:system-ui;background:#0e1116;color:#e6edf3;padding:24px"><a style="color:#58a6ff" href="/">← the Shelf</a><h1>Not found</h1><p>No strategy with that id is in the record. Nothing is fabricated.</p></body>`, 404)
   const { Stamp } = await import("../src/studio/stamp") // lazy — the attest core loads only when the Stamp is opted into
+  const { Lineage } = await import("../src/studio/lineage") // the render-side lineage walls (X-LINEAGE); resolves the subject's OWN series identity
   const r = await Stamp.stampFor(key)
-  return c.html(Reality.renderStamp(rc.name, key, r))
+  const identity = Lineage.resolveIdentity(key) // WALL 2 — the per-subject identity, resolved at the render; WALL 1 guards the verdict against it
+  return c.html(Reality.renderStamp(rc.name, key, r, identity))
 })
 
 // SCREEN 3 — the Ask Console (the grounded NL front door, Crown-Jewel D7). The ask module is LAZILY imported (the Shelf +

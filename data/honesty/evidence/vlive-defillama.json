@@ -3,7 +3,7 @@
   "url": "https://yields.llama.fi/pools",
   "status": 200,
   "ok": true,
-  "poolCount": 15600,
+  "poolCount": 15523,
   "keyless": true,
   "at": 1783468800000
 }

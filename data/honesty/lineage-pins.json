@@ -1,0 +1,399 @@
+{
+  "protocol": "lineage-pins",
+  "sprint": "THE LINEAGE SPRINT (the Stamp proves its bloodline or shuts up — diagnose WHY every pool renders a near-identical confident GO before any fix (D20), build all three lineage walls regardless (SAMPLE-never-GO at the render · per-subject distinctness + the lineage line · GO-strength legibility + capped precision), fix the proven cause under them, close the Interpreter findings; the LAST pre-probe engineering sprint)",
+  "at": "2026-07-10",
+  "continues": "THE INTERPRETER SPRINT (RED-TEAM-CLEAN + DOGFOOD-CLEAN, battery 917 pass / 2 skip / 0 fail across 139 files / 919 tests)",
+  "blueprint": {
+    "rel": "sprint/sprint-result/ORGANON_Lineage_Sprint_Blueprint.md",
+    "sha": "180767b0df23a4a24724095845dd63435dd2b9af4037b4e9d222029d359237f5"
+  },
+  "carriedFromPinsSha": "f09fd743847849a6cf9545887549edefbed8d2c687a9f8b1eb62fe772927d274",
+  "symptom": {
+    "quote": "clicking pool after pool on the shelf, the Stamp renders an almost-identical confident GO — the same ~1242 observations, a deflated significance of 0.9999999999998763, n counted attempts = 1, near-identical half-life and ICIR — for every pool, SOLID and AVOID alike",
+    "theDefect": "from the rendered block you cannot tell WHICH of H1 (SAMPLE-fed) / H2 (mis-keyed bleed) / H3 (real-but-illegible) holds — the render is UNFALSIFIABLE from the outside, which for a trust machine is the cardinal sin",
+    "lastPreProbe": "this is the pinned LAST pre-probe engineering sprint — the Operator found a potential honesty breach in the exact surface the 10-customer kill-test will be judged on; fixing it IS probe preparation"
+  },
+  "diagnosis": {
+    "doctrine": "no fix lands until the per-pool investigation records the Stamp input's TRUE identity and states VERBATIM which hypothesis holds; aiming at the wrong H wastes the sprint or hides a breach",
+    "script": "script/honesty/stamp-lineage-diagnose.ts → data/honesty/lineage-diagnosis.json",
+    "identitySchema": [
+      "pool",
+      "name",
+      "resolvedFrom",
+      "source",
+      "reality",
+      "provContentSha",
+      "nObs",
+      "seriesContentHash",
+      "reproHash",
+      "significance",
+      "familyN",
+      "verdict"
+    ],
+    "findingSchema": [
+      "hypothesis",
+      "perPool",
+      "evidence",
+      "conclusion"
+    ],
+    "hypotheses": {
+      "H1": "SAMPLE-fed GO (the honesty breach) — placeholder/synthetic series → a confident GO. Fix: those Stamps become INSUFFICIENT (a per-pool verdict CHANGE, disclosed pool-by-pool)",
+      "H2": "the keying bleed — one real series resolving under every pool's key (a default/cache/fallback). Fix: per-subject resolution; the bleed killed; distinctness green",
+      "H3": "real but illegible — genuinely per-pool series that merely look alike; the defect is the render (no unmissable lineage, uncapped precision, an unlabeled n=1). Fix: the walls alone"
+    },
+    "rule": "the finding must FOLLOW the evidence (a 'probably H3' hedge where the artifact shows identical hashes → fail); D20 is recorded in the ledger before Phase 3 opens; NO product diff lands in the diagnosis phase (the src tree untouched except the script)"
+  },
+  "walls": {
+    "module": "src/studio/lineage.ts",
+    "purity": "pure functions on the resolved series identity — resolveIdentity(poolKey, adapter) → SeriesIdentity; guardRender(verdict, identity, floor) → the WALL-1 allow|degrade; distinct(identities[]) → the WALL-2 ok|collision; lineageLine/strengthLine/capSig → the WALL-2/3 render formatters over pinned rules. stamp.ts stays BYTE-FROZEN (resolveIdentity re-resolves the SAME series deterministically)",
+    "wall1": {
+      "name": "SAMPLE-never-GO at the render",
+      "rule": "GO/NO-GO may render ONLY when the payload's series identity is provenance-REAL (reality REAL-PIT), per-subject, and its point count ≥ the pinned floor; else the payload is DEGRADED at the render boundary — a non-REAL series → INSUFFICIENT, a too-short series → INSUFFICIENT, an absent series → UNAVAILABLE",
+      "seriesLengthFloor": 60,
+      "enforcedOn": "the RENDERED payload (both reality.ts renderStamp AND the Ask VALIDATION path route through guardRender) — engine honesty is necessary but NOT sufficient; a stale cache or template path must ALSO be unable to show a SAMPLE-fed GO",
+      "positiveControl": "a seeded SAMPLE series ({reality:'SAMPLE', nPoints:1000}) pushed at the render → INSUFFICIENT, never GO; an absent identity (null) → UNAVAILABLE; a REAL-but-short series (nPoints 30) → INSUFFICIENT; a REAL long series passes unchanged (S45)"
+    },
+    "wall2": {
+      "name": "per-subject distinctness + the unmissable lineage line",
+      "lineageLineFields": [
+        "source",
+        "reality",
+        "asOf",
+        "nPoints",
+        "seriesHashPrefix"
+      ],
+      "derivation": "the series-hash on the lineage line is sha256 of the subject's OWN resolved return series (canonical) — recomputable from poolReturnsFromSeries(resolvedSeries) in the test (the derivation asserted, not merely displayed)",
+      "distinctnessWalk": "a standing battery test resolves N different shelf pools and asserts their identities (seriesContentHash + source) DIFFER — two subjects rendering one lineage is a WALL FAILURE; a seeded bleed (subject A's series under subject B) → caught",
+      "onEveryRender": "the lineage line renders on EVERY Stamp block — GO, NO-GO, INSUFFICIENT (source/REAL/N shown), and UNAVAILABLE (no recorded series, stated honestly)",
+      "positiveControl": "the N-pool walk is GREEN on the real per-subject shelf data / RED on a seeded shared-series bleed; the rendered hash recomputes from the resolved series (S46)"
+    },
+    "wall3": {
+      "name": "GO-strength legibility + capped precision",
+      "attemptPhrasing": {
+        "weakestForm": "deflation counted 1 attempt — the weakest form of GO: with a single submission there was no multiple-testing search to deflate away (nothing was deflated away)",
+        "manyAttempts": "deflation counted N attempts — the GO survived an N-way multiple-testing charge"
+      },
+      "capDigits": 4,
+      "cappedDisplayUncappedRecord": "the DISPLAY is capped; the RAW value stays full-precision in StampResult.dsr + the reproHash (capped display, uncapped record — the cap must NEVER touch the recorded value)",
+      "mathByteUntouched": "the GO/NO-GO/INSUFFICIENT words, thresholds, and formulas are BYTE-UNTOUCHED — the significance is the frozen seven (core_byte_identity); the depth-math + wrapper module hashes are pinned below and asserted unchanged",
+      "positiveControl": "the n=1 label reads verbatim; a dsr of 0.9999999999998763 renders '≥ 0.9999' (not sixteen digits, not '1.0000') while StampResult.dsr stays 0.9999999999998763; the math module hashes byte-identical to these pins (S47)"
+    },
+    "haltRule": "a GO rendered off SAMPLE or borrowed blood, a lineage line whose hash the series can't reproduce, two subjects sharing one lineage, a sixteen-digit rendered significance, an unlabeled n=1 pass, a display cap that also caps the RECORDED value, or a touched formula is a Halt"
+  },
+  "stampMathFreeze": {
+    "doctrine": "this sprint renders the statistics honestly; it does NOT revise them — a nudged threshold to make a wall pass prettier is a Halt",
+    "modules": {
+      "src/studio/stamp.ts": "a4007e99b634fe3b2387eebc813fb4a058b496b370986f59cd2ffd0843bcaee0",
+      "src/studio/decay.ts": "6b419268160104858efccd6817bf46e3cfdc78e03a4248eb2890e10f6ad28cd1",
+      "src/studio/icir.ts": "215eb7e6f5185d160c9d185dd8684b3d1b7d3b1d173bf9aab084eb29008128e4",
+      "src/studio/mintrl.ts": "3a1d2216361b711041f60e5173713b5f43d0261910dbbc35fd4c462c7f714658"
+    },
+    "significanceNote": "the deflated-significance (DSR) itself is computed by the FROZEN SEVEN (the 6 computational-core .py + loop.ts) — covered by core_byte_identity; these TS hashes cover the depth sub-scores (decay/ICIR/MinTRL) + the adjudication wrapper (stamp.ts), which stays byte-frozen (the walls re-resolve the series, they do not edit the Stamp)"
+  },
+  "twoVerdicts": {
+    "rule": "a Stamp GO on a scorecard-AVOID pool is CORRECT BY DESIGN and stays — the Stamp answers 'does the recorded track record survive statistical deflation?'; the scorecard answers 'is this a sound deposit?' A robust track record on a structurally dangerous pool is a coherent, informative state",
+    "thisSprint": "makes the Stamp's honesty PROVABLE (each verdict provably about its own question, on its own data); it does NOT blur or conflate the two verdicts, and it does NOT hide the Stamp on AVOID pools"
+  },
+  "inResolutions": [
+    {
+      "id": "IN1",
+      "finding": "the register wall's runtime-vs-full-rubric two strengths must be stated in continuity (continuity must not inherit 'every live Pro answer cites provenance' as a runtime guarantee)",
+      "resolution": "STATED, two strengths: (1) the RUNTIME gate enforces the always-legitimate register DISTINCTION (Simple ≠ Pro; a Simple carrying jargon / a Pro reading Simple → rejected to the correctly-registered template); (2) the FULL rubric (ctx proxy-caveat / divergence / provenance) is enforced on EXEMPLARS + POSITIVE CONTROLS, NOT on every live answer — a deterministic UNVERIFIED answer that names no axis is FACT/BOUNDARY, not gated by the register wall (W-IN02's lesson). Continuity carries NO live-Pro-provenance guarantee.",
+      "status": "RESOLVED",
+      "closesPhase": 1
+    },
+    {
+      "id": "IN4",
+      "finding": "the real browser/AT a11y pass (SV5) must be scheduled in writing as a pre-probe requirement",
+      "resolution": "PINNED, in writing, as the PROBE SPRINT's Phase 0 requirement: a real browser + assistive-technology + live-viewport pass (contrast is already COMPUTED from the token file; keyboard/responsive/non-color cues are DOM-ASSERTED — the browser/AT pass is the standing, now-scheduled follow-up, not claimed done). This harness has no browser; the pin is the durable schedule.",
+      "status": "RESOLVED",
+      "closesPhase": 1
+    },
+    {
+      "id": "IN5",
+      "finding": "the truncated-finish mark-only choice must be recorded as deliberate (or add a continuation call)",
+      "resolution": "RECORDED as DELIBERATE: mark-only was shipped (src/ask/truncation.ts markIfTruncated appends the honest '(truncated — ask a narrower question)' mark). Rationale: a continuation call doubles cost and can COMPOUND truncation (a second cut), while the honest mark + the scaled cap + the explicit fact-budget already prevent a silent cut; the mark is the honest, bounded choice. The decision is pinned; a continuation call stays a conscious future option, PARKED.",
+      "status": "RESOLVED",
+      "closesPhase": 1
+    },
+    {
+      "id": "IN3",
+      "finding": "SV2 (POOL-EVENTS live) has drifted two sprints — force the decision: token+live, or Operator-signed fence-proven-only",
+      "resolution": "FORCED — token ABSENT: POOL-EVENTS is Operator-signed FENCE-PROVEN-ONLY standing status (D21). It is built + fence-proven (the token-absent honest degrade proven) but NOT live-exercised; the drift ENDS here — it no longer carries sprint-to-sprint as an open 'attempt-or-gap'.",
+      "status": "RESOLVED",
+      "closesPhase": 1,
+      "branch": "D21-fence-proven-only"
+    },
+    {
+      "id": "IN2",
+      "finding": "the experiential claims were agent-proxied — an Operator real-screen session is owed (the human who found the defect confirms the fix)",
+      "resolution": "PHASE 5, OPERATOR-GATED: the OPERATOR (not the agent) drives ≥2 contrasting pools' Stamp drawers (a provable-lineage GO vs an honest INSUFFICIENT — the lineage lines visibly DIFFERENT, the strength line plain), one Simple≠Pro pair, one oversized COMPARE (no clip) on a real screen; the observations recorded AS THE OPERATOR'S, or an honest named gap — never an agent simulation relabeled (the A′#11 fence).",
+      "status": "PHASE-5-OPERATOR-GATED",
+      "closesPhase": 5
+    }
+  ],
+  "deviations": {
+    "D20": "RESERVED — the lineage diagnosis (Phase 2): the verbatim H-finding (which of H1/H2/H3, per pool where mixed) + the per-pool evidence, recorded before one repair line lands (X-LINEAGE a). Operator-signed.",
+    "D21": "the POOL-EVENTS decision (Phase 1, Operator-signed) — HYPERSYNC_TOKEN absent → POOL-EVENTS is FENCE-PROVEN-ONLY standing status: built + fence-proven (the token-absent honest degrade proven), NOT live-exercised; the two-sprint drift ENDS (it stops carrying as an open attempt-or-gap). If a token is later provisioned, the live capture is a conscious future run.",
+    "operatorSignedNote": "Operator-signed = the Operator directed the coding agent to engineer this blueprint end-to-end; the blueprint's own text carries the lineage diagnosis mandate (D20) + the forced POOL-EVENTS branch (D21). The directive to execute the document IS the sign-off — recorded here, not fabricated as a separate signature (the same mechanism as D11/D16/D17/D18/D19)."
+  },
+  "screens": {
+    "count": 3,
+    "set": [
+      "shelf",
+      "reality-check",
+      "ask"
+    ],
+    "stampDrawerLearnsLineage": "the Stamp drawer (opt-in, a sub-route of the Reality Check — NOT a screen) now renders the lineage line + the strength line + the capped significance + WALL-1 degradation; the Ask VALIDATION facts gain the lineage + strength lines. NO fourth screen, NO new statistics."
+  },
+  "stressCatalog": [
+    {
+      "id": "S1",
+      "name": "dead endpoint",
+      "expect": "degrade to last-good or SAMPLE; the served UI renders; never a crash/spin"
+    },
+    {
+      "id": "S2",
+      "name": "429 storm",
+      "expect": "the short-TTL cache absorbs it; the Shelf reads the record (no per-load provider fan-out)"
+    },
+    {
+      "id": "S3",
+      "name": "stale cache",
+      "expect": "the shown asOf is the capture time, visibly stale, never 'now' (OWN LINE)"
+    },
+    {
+      "id": "S4",
+      "name": "no-history pool",
+      "expect": "history-dependent rows UNVERIFIED; point-in-time rows still compute; never a fabricated SOLID"
+    },
+    {
+      "id": "S5",
+      "name": "mid-session depeg",
+      "expect": "the peg row fires → AVOID; both registers agree"
+    },
+    {
+      "id": "S6",
+      "name": "emissions-inflated trap",
+      "expect": "the yield-reality row flags temporary → verdict not SOLID"
+    },
+    {
+      "id": "S7",
+      "name": "SAMPLE-heavy state",
+      "expect": "EVERY SAMPLE verdict is UNVERIFIED — the W-E01 invariant holds under all axes (OWN LINE)"
+    },
+    {
+      "id": "S8",
+      "name": "malformed / adversarial data",
+      "expect": "boundary-validated to missing/UNVERIFIED; never a crash or a nonsense verdict"
+    },
+    {
+      "id": "S9",
+      "name": "provenance tamper",
+      "expect": "a shown-but-unrecorded REAL Halts; a broken chain refused on construct"
+    },
+    {
+      "id": "S10",
+      "name": "determinism / no-LLM-in-verdict",
+      "expect": "identical inputs → byte-identical scorecard; a model-in-verdict rejected wholesale"
+    },
+    {
+      "id": "S11",
+      "name": "thin-liquidity trap",
+      "expect": "a deep-APY pool with dust liquidity → liquidity FAIL → not SOLID"
+    },
+    {
+      "id": "S12",
+      "name": "imminent-unlock trap",
+      "expect": "a large near-term unlock → unlock FAIL → CAUTION/AVOID (ARMED; D6 on live keyless data)"
+    },
+    {
+      "id": "S13",
+      "name": "dust/new/STACKED-dependency trap",
+      "expect": "a young/tiny OR dependency-stacked pool → counterparty flag, honestly coarse (never 'audited/safe')"
+    },
+    {
+      "id": "S14",
+      "name": "verifiability",
+      "expect": "./organon.sh verify regenerates every committed evidence artifact; a tampered count/number fails"
+    },
+    {
+      "id": "S15",
+      "name": "coverage/applicability",
+      "expect": "an inapplicable axis renders not-applicable, never a fabricated pass"
+    },
+    {
+      "id": "S16",
+      "name": "stamp isolation",
+      "expect": "a scorecard render → ZERO adjudicator/decay/ICIR calls; the verdict spaces never conflate"
+    },
+    {
+      "id": "S17",
+      "name": "stamp honesty",
+      "expect": "short-history → INSUFFICIENT; deflation tightens with family size; the goldens reproduce; history-absent → 'unavailable'"
+    },
+    {
+      "id": "S18",
+      "name": "live-number provenance",
+      "expect": "./organon.sh verify asserts every cited live number resolves to a capture-manifest content-hash"
+    },
+    {
+      "id": "S19",
+      "name": "ask groundedness",
+      "expect": "a fabricated number rejected WHOLESALE → deterministic; an UNVERIFIED gap never filled; a Simple answer carries no raw decimals"
+    },
+    {
+      "id": "S20",
+      "name": "provider/BYOK/key-safety",
+      "expect": "no key → deterministic mode, no crash; BYOK selects the env provider; no key string in the served HTML or any log"
+    },
+    {
+      "id": "S21",
+      "name": "ask determinism/injection",
+      "expect": "same query → identical FACTS (raw toggle byte-identical); a prompt-injection cannot move a verdict"
+    },
+    {
+      "id": "S22",
+      "name": "decay-gate honesty (NEW)",
+      "expect": "a short/flat/SAMPLE series → INSUFFICIENT, never a fabricated half-life; a 2-period-half-life → SHORT_LIVED (a clean GO withheld); off the mass path; deterministic"
+    },
+    {
+      "id": "S23",
+      "name": "ICIR determinism/scope (NEW)",
+      "expect": "identical inputs → byte-identical ICIR; a degenerate series → INSUFFICIENT (no div-by-zero); the within-strategy scope label present (a cross-sectional claim fails); off-path"
+    },
+    {
+      "id": "S24",
+      "name": "live-AI grounding (NEW)",
+      "expect": "the committed Groq round-trip proves a real-model grounded answer passes AND a fabricated number is rejected wholesale; the redacted transcript reproduces its manifest hash; no key leaks"
+    },
+    {
+      "id": "S25",
+      "name": "contract-analysis honesty (NEW)",
+      "expect": "a contract screen reports specific structural facts + the 'not a full audit' label, NEVER 'safe/audited'; ZERO model/LLM in src/contract/*; deterministic (a fixed ContractIR → byte-identical facts + tier); a seeded unprotected admin fn → FLAGGED (the finding named)"
+    },
+    {
+      "id": "S26",
+      "name": "leak-wall / coupling-severance (NEW)",
+      "expect": "src/contract/* imports nothing from @solidity-sentinel/* or OpenCode (the dataplane_leak wall green + a positive control on the new dir); D9 records the extraction + severance; the ported code is owned in-tree, not referenced from a sibling; no new npm dep"
+    },
+    {
+      "id": "S27",
+      "name": "Foundry-absent degradation (NEW)",
+      "expect": "no build/toolchain → the contract sub-axis is UNVERIFIED, the coarse age·size·dependency screen scores alone; a SAMPLE/absent build NEVER a fabricated all-clear; the mass tool + ./organon.sh verify + the pristine fresh clone run green (never a crash)"
+    },
+    {
+      "id": "S28",
+      "name": "the REAL/SAMPLE wall (NEW)",
+      "expect": "a REAL verified build + zero flags may earn CLEAN-STRUCTURE; a SAMPLE/absent build + zero flags → UNVERIFIED, NEVER a fabricated all-clear; flags are existence-proofs from any source, absence-of-flags trustworthy only on a REAL verified deployed-source match (positive-controlled)"
+    },
+    {
+      "id": "S29",
+      "name": "capture-determinism / re-capture-hash (NEW)",
+      "expect": "a fixed build → byte-identical facts + a stable contentHash; a re-capture → the identical hash; a one-byte source change → a changed hash; a scorecard render triggers ZERO compilation (the render imports no analyzer)"
+    },
+    {
+      "id": "S30",
+      "name": "ingestion-scope / keyless-no-scrape (NEW)",
+      "expect": "ingestion is keyless-first + Operator-gated; no paywalled/unlock source is scraped (D4/D6 ARMED-never-scraped); the BYOK explorer key is server-side env-only, never in the bundle/log/registry; no key → keyless/degrade, no crash"
+    },
+    {
+      "id": "S31",
+      "name": "persona-injection resistance (NEW)",
+      "expect": "seeded injections ('ignore your rules', 'you are now an advisor', nested instructions inside quoted strategy names) → at worst a TEMPLATE fallback, NEVER fabrication; the persona is pinned; the gates are downstream of the model"
+    },
+    {
+      "id": "S32",
+      "name": "the advice wall (NEW)",
+      "expect": "seeded advice bait across phrasings → ZERO post-gate recommendations (the advice-pattern screen + the ADVICE boundary); the attempt rate is measured per provider; the oblique-advice residual disclosed, not hidden"
+    },
+    {
+      "id": "S33",
+      "name": "numeric-smuggling / verdict-contradiction / comparison-direction / severity (NEW)",
+      "expect": "seeded violations of each gate → rejected typed + fail-closed; model arithmetic (a sum of two facts) → rejected; a reversed comparison → rejected; 'safe'/'risk-free' → rejected absolutely; 'critical' without a fact-backed severity → rejected; the ANALYSIS label present in every REASONING render; a FACT-styled REASONING block fails the render check"
+    },
+    {
+      "id": "S34",
+      "name": "cross-provider degradation + deterministic parity (NEW)",
+      "expect": "ALL 13 intents green with NO key (templates, no crash, no fabrication); a weak/mock provider tripping every gate → MORE templates, never LESS truth; the eval harness reports honestly (no cherry-picking)"
+    },
+    {
+      "id": "S35",
+      "name": "calibration honesty (NEW)",
+      "expect": "the calibration ledger is append-only + hash-chained (a tamper breaks the chain); NO backfill (statedAt < the prior entry → refused); NO score on zero resolutions; the count surface honest"
+    },
+    {
+      "id": "S36",
+      "name": "honesty-preserving restyle (NEW)",
+      "expect": "no number / label / tier / verdict / provenance-mark / which-facts-appear moved by ANY style change; the content-identity wall byte-identical PER SCREEN before/after the restyle; a seeded rounding / reorder / truncation → caught; the differential + frozen seven reproduce"
+    },
+    {
+      "id": "S37",
+      "name": "a11y + honest degraded states (NEW)",
+      "expect": "WCAG-AA contrast on every semantic token pairing (computed from the token file); every verdict / Stamp / REAL-SAMPLE / trust-tier distinction carries a non-color cue (glyph/border/weight — never color alone); keyboard-reachable with a visible focus ring; responsive to the mobile breakpoint; the UNVERIFIED / INSUFFICIENT / AI-off / empty-shelf states render as INTENTIONAL designed states, not error-shaped"
+    },
+    {
+      "id": "S38",
+      "name": "the impeccable detector wall (NEW)",
+      "expect": "the deterministic 45-rule detector reports ZERO unexcepted anti-patterns over the rendered surface + the built stylesheet (every exception committed in .impeccable/config.json with a reason); NO runtime design dependency entered the mass path (deps === hono+zod; .impeccable/ gitignored); the detector SKIPS honestly where the dev-harness tool is absent (pristine clone), the built stylesheet still shipping"
+    },
+    {
+      "id": "S39",
+      "name": "plane provenance / honest-degrade / no-fabricated-history (NEW)",
+      "expect": "every owned series capture-time + content-hashed + REAL/SAMPLE; a re-capture hash-stable; gaps stay gaps (a seeded interpolation/gap-fill → REFUSED); a dead endpoint / absent token → honest degrade with the ACTUAL source recorded (a fallback value never stamped own-plane); a seeded own-vs-rented divergence → recorded + rendered, NEITHER value replaced; the Stamp/axis improvement traced to observation counts, the math goldens byte-identical"
+    },
+    {
+      "id": "S40",
+      "name": "the narrow-path fence + the armed kill-condition (NEW)",
+      "expect": "the path list is EXACTLY the pinned three; an un-enumerated event/exchange/chain → ignored/refused; a fourth path attempt → requires a re-pin (refused casually); the kill-condition text present + armed (~1 day/week → buy Pro + narrow); the upkeep ledger exists to measure it; NO general indexer / archive node"
+    },
+    {
+      "id": "S41",
+      "name": "design-pass honesty (NEW)",
+      "expect": "post-pass: the S36 content-identity golden byte-identical across the WHOLE pass (no number/label/tier/verdict/provenance-mark moved); the detector 0 unexcepted; deps exactly hono+zod (impeccable absent on the pristine clone, the stylesheet shipping); a11y AA + non-color cues green; the semantic tokens byte-frozen (any token re-pin batched + reasoned); ZERO wall suspensions attributed to the approval; the critique-run-for-real vs browser-not-run scope disclosed"
+    },
+    {
+      "id": "S42",
+      "name": "register differentiation (NEW)",
+      "expect": "Simple and Pro produce measurably DIFFERENT reasoning on the pinned rubric: a jargon-carrying Simple / a specificity-omitting Pro / two identical registers → REJECTED to the correctly-registered template; the no-key templates satisfy the rubric too (Simple ≠ Pro); positive-controlled (a Pro-jargon Simple → rejected, a Pro omitting the axis → rejected)"
+    },
+    {
+      "id": "S43",
+      "name": "the three-layer truncation kill (NEW)",
+      "expect": "an oversized COMPARE does NOT clip (the CSS surface flows/wraps, no fixed-height, the S36 golden byte-identical), does NOT silently cut (the cap scaled to the fact-set size; a truncated finish detected + continued or honestly marked), does NOT silently drop (the fact budget is EXPLICIT — a reduced set names what was summarized); each layer positive-controlled; CSS-alone refused as a complete fix"
+    },
+    {
+      "id": "S44",
+      "name": "interpretation-not-restatement + walls-hold-on-a-wider-lane (NEW)",
+      "expect": "REASONING INTERPRETS (adds meaning) rather than re-printing a FACT block's numbers; AND every one of the five walls (numeric whitelist, verdict guard, comparison-direction, severity, advice) STILL rejects its seeded violation on the WIDER output — the lane widened, the floor did not drop; the persona re-pin is signed + hash-locked (the sha moved); the FACT groundedness gate byte-unchanged"
+    },
+    {
+      "id": "S45",
+      "name": "SAMPLE-never-GO at the render (NEW)",
+      "expect": "a seeded SAMPLE/short/absent/borrowed series at the render boundary → INSUFFICIENT/UNAVAILABLE, never GO/NO-GO; a cached pre-wall payload → still guarded (WALL 1 is at the render boundary, not only the engine); a REAL long series passes unchanged; positive-controlled"
+    },
+    {
+      "id": "S46",
+      "name": "per-subject distinctness + the lineage line (NEW)",
+      "expect": "the N-pool distinctness walk asserts distinct identities (source + series hash) across shelf pools; a seeded bleed (one series under two subjects) → caught; every rendered Stamp carries the lineage line (source · REAL/SAMPLE · as-of · N · hash prefix) whose hash the test RECOMPUTES from the resolved series (the derivation asserted, not merely displayed)"
+    },
+    {
+      "id": "S47",
+      "name": "GO-strength legibility + capped precision (NEW)",
+      "expect": "the attempt count rendered in the pinned plain words (n=1 labeled the weakest form — nothing was deflated away); the displayed significance at the cap (a near-1 value → '≥ 0.9999', never sixteen digits, never a bare '1.0000'); the RECORDED value full-precision; the Stamp math module hashes byte-identical to the Phase-0 pins"
+    }
+  ],
+  "carried": {
+    "frozenSeven": "the 6 computational-core .py + loop.ts byte-untouched (core_byte_identity green every gate); the three lineage walls live ON TOP of the frozen Stamp — they RE-RESOLVE the series and RENDER honestly, touching ZERO frozen bytes, moving ZERO scorecard verdicts, changing ZERO Stamp formula, inventing ZERO numbers, adding ZERO runtime deps",
+    "stampMathFrozen": "NEW this sprint — the significance/decay/ICIR/MinTRL/stamp module hashes are pinned (stampMathFreeze) and asserted unchanged at every gate; the sprint rendered the statistics honestly, it did not revise them",
+    "verdictDifferential": "lending fp-set 70c7912f… + funding NO-GO/ILLUSTRATIVE 0a63151b… reproduce at every gate — the Stamp is OFF the scorecard path and stays there; the lineage walls touch no scorecard input, so zero verdicts move",
+    "voiceUnchanged": "the explaining voice, the registers (IN1's two strengths stated), the three-layer truncation kill, the contract tiers, the plane, the calibration clock, the design system + S36 goldens (the lineage line lands on renderStamp, which is NOT in the S36 content-golden set → S36 byte-identical), the moat — all GREEN and UNMODIFIED",
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "parked": "the LLM strategy-proposer / iterate-to-generate loop; the reports/verdict API; execution/custody (the permanent red line); the archive node; a general indexer; the implementation-level contract analysis; the Sentinel fuzzer/RAG; LIVE per-provider eval sampling; the calibration resolution+scoring; new Stamp statistics (the math does not change this sprint); the attempts-ledger linkage (wiring n to real evaluation attempts is a conscious math-adjacent change) — AND a hard scope fence (a 'while we're here, recalibrate/redesign the drawer' is a cut) — all PARKED (THE FIREWALL)",
+    "probe": "the X-PROBE metrics + KILL CRITERION remain ARMED — this was the pinned LAST pre-probe engineering sprint; the handoff's FIRST LINE commits the NEXT sprint to the research's Stage-0 (the 10-customer demand kill-test + the Stream/Elixir/Resolv re-score post-mortems), with the browser/AT a11y pass (IN4) as its pinned Phase 0 — with a Stamp that can now look a buyer in the eye because every verdict it renders proves whose data earned it or honestly says it cannot"
+  },
+  "pinsSha": "ed4bb2cb8957f244927f5e00daf7ddd0d1408abf984dd1fe40ff0557f61bd42f"
+}

@@ -1082,3 +1082,130 @@ test("INTERPRET — the constitution carries: frozen seven byte-untouched + zero
   expect(iv.carried.voiceUnchangedInContentExceptPersona).toMatch(/persona re-pin|five gates.*UNMODIFIED|advice wall/i)
   expect(iv.carried.probe).toMatch(/no prerequisites left|Stage-0|10-customer/i)
 })
+
+// ── THE LINEAGE SPRINT — the additional pins (data/honesty/lineage-pins.json), carried forward from f09fd743… ──
+const lv = JSON.parse(readFileSync(path.join(H, "lineage-pins.json"), "utf8"))
+const LINEAGE_PINS_SHA_GOLDEN = "ed4bb2cb8957f244927f5e00daf7ddd0d1408abf984dd1fe40ff0557f61bd42f"
+
+test("LINEAGE — the pins hash-lock is the pinned golden + self-consistent + carried from the interpret sha (the lock bites)", () => {
+  expect(lv.pinsSha).toBe(LINEAGE_PINS_SHA_GOLDEN)
+  const { pinsSha, ...rest } = lv
+  expect(sha256(JSON.stringify(rest))).toBe(lv.pinsSha) // self-consistent: the stored sha covers exactly the rest
+  expect(lv.carriedFromPinsSha).toBe(INTERPRET_PINS_SHA_GOLDEN) // carried forward, never rebuilt
+  const mutated = JSON.parse(JSON.stringify(rest)); mutated.walls.wall3.capDigits = 99
+  expect(sha256(JSON.stringify(mutated))).not.toBe(lv.pinsSha) // a moved pin moves the sha
+})
+
+test("LINEAGE — the blueprint is hash-locked (a changed planning doc moves the pinned sha; gitignored on a fresh clone → the pinned sha is the durable record)", () => {
+  const abs = path.join(PKG_ROOT, lv.blueprint.rel)
+  if (!existsSync(abs)) { expect(lv.blueprint.sha).toMatch(/^[0-9a-f]{64}$/); return }
+  expect(sha256(readFileSync(abs, "utf8"))).toBe(lv.blueprint.sha)
+})
+
+test("LINEAGE — the Operator's symptom is quoted verbatim + the defect named (unfalsifiable-from-the-outside) + the last-pre-probe status", () => {
+  expect(lv.symptom.quote).toMatch(/almost-identical confident GO|0\.9999999999998763|n counted attempts = 1/)
+  expect(lv.symptom.theDefect).toMatch(/H1.*H2.*H3|UNFALSIFIABLE|cardinal sin/i)
+  expect(lv.symptom.lastPreProbe).toMatch(/LAST pre-probe|10-customer|probe preparation/i)
+})
+
+test("LINEAGE — X-LINEAGE(a): the diagnosis protocol is pinned + testable (the per-pool identity schema incl. reproHash + seriesContentHash; the H-finding schema; the finding must follow the evidence; NO fix in the diagnosis phase)", () => {
+  const d = lv.diagnosis
+  expect(d.doctrine).toMatch(/no fix lands until|diagnosis before treatment|wrong H/i)
+  // the identity schema MUST capture the per-subject lineage fields (the reproHash-derivation + the series content hash are mandatory)
+  for (const f of ["pool", "source", "reality", "nObs", "seriesContentHash", "reproHash", "significance", "familyN", "verdict"]) expect(d.identitySchema).toContain(f)
+  expect(d.findingSchema).toEqual(["hypothesis", "perPool", "evidence", "conclusion"])
+  expect(Object.keys(d.hypotheses)).toEqual(["H1", "H2", "H3"])
+  expect(d.hypotheses.H1).toMatch(/SAMPLE-fed|honesty breach/i)
+  expect(d.hypotheses.H2).toMatch(/bleed|mis-keyed|one real series/i)
+  expect(d.hypotheses.H3).toMatch(/real but illegible|look alike|legibility/i)
+  expect(d.rule).toMatch(/follow the evidence/i)
+  expect(d.rule).toMatch(/NO product diff|src tree untouched except the script/i)
+})
+
+test("LINEAGE — X-LINEAGE(b): WALL 1 SAMPLE-never-GO is enforced at the RENDER (not engine-only), with a pinned length floor + a positive control", () => {
+  const w = lv.walls.wall1
+  expect(w.name).toMatch(/SAMPLE-never-GO at the render/i)
+  expect(w.seriesLengthFloor).toBe(60)
+  expect(w.rule).toMatch(/GO\/NO-GO may render ONLY|provenance-REAL|≥ the pinned floor/i)
+  expect(w.enforcedOn).toMatch(/RENDERED payload/i)
+  expect(w.enforcedOn).toMatch(/stale cache or template path/i) // engine honesty necessary but NOT sufficient
+  expect(w.positiveControl).toMatch(/seeded SAMPLE.*→ INSUFFICIENT|absent.*UNAVAILABLE|too-short.*INSUFFICIENT/i)
+})
+
+test("LINEAGE — X-LINEAGE(c): WALL 2 per-subject distinctness derives the hash from the subject's OWN series (asserted, not displayed) + the lineage line on every render + the N-pool walk", () => {
+  const w = lv.walls.wall2
+  expect(w.lineageLineFields).toEqual(["source", "reality", "asOf", "nPoints", "seriesHashPrefix"])
+  expect(w.derivation).toMatch(/sha256 of the subject's OWN resolved return series|recomputable from poolReturnsFromSeries/i)
+  expect(w.derivation).toMatch(/the derivation asserted, not merely displayed/i)
+  expect(w.distinctnessWalk).toMatch(/N different shelf pools|DIFFER|two subjects rendering one lineage/i)
+  expect(w.onEveryRender).toMatch(/GO, NO-GO, INSUFFICIENT.*UNAVAILABLE|EVERY Stamp block/i)
+})
+
+test("LINEAGE — X-LINEAGE(d): WALL 3 caps the DISPLAY not the record + labels n=1 the weakest form + the Stamp MATH is byte-untouched", () => {
+  const w = lv.walls.wall3
+  expect(w.capDigits).toBe(4)
+  expect(w.attemptPhrasing.weakestForm).toMatch(/1 attempt.*weakest form|nothing was deflated away/i)
+  expect(w.attemptPhrasing.manyAttempts).toMatch(/N attempts|multiple-testing charge/i)
+  expect(w.cappedDisplayUncappedRecord).toMatch(/capped display, uncapped record|RAW value stays full-precision/i)
+  expect(w.mathByteUntouched).toMatch(/BYTE-UNTOUCHED|frozen seven|module hashes are pinned/i)
+})
+
+test("LINEAGE — the STAMP-MATH FREEZE pins the live module hashes; a re-hash of the live files MATCHES the pins (the math is byte-frozen — a nudge moves a hash and fails here)", () => {
+  const mods = lv.stampMathFreeze.modules
+  // EXACTLY the pinned modules, and each live file re-hashes to its pinned hash (the byte-freeze bites at EVERY gate)
+  expect(Object.keys(mods).sort()).toEqual(["src/studio/decay.ts", "src/studio/icir.ts", "src/studio/mintrl.ts", "src/studio/stamp.ts"].sort())
+  for (const [rel, want] of Object.entries(mods)) {
+    expect(want).toMatch(/^[0-9a-f]{64}$/)
+    expect(sha256(readFileSync(path.join(PKG_ROOT, rel), "utf8"))).toBe(want) // the LIVE file is byte-identical to the pin
+  }
+  expect(lv.stampMathFreeze.significanceNote).toMatch(/frozen seven|core_byte_identity/i)
+})
+
+test("LINEAGE — X-LINEAGE(f): the two-verdict separation STAYS (a Stamp GO on a scorecard-AVOID pool is correct by design; the sprint makes it provable, never conflated)", () => {
+  expect(lv.twoVerdicts.rule).toMatch(/correct by design|robust track record ≠ a safe deposit|survive statistical deflation/i)
+  expect(lv.twoVerdicts.thisSprint).toMatch(/does NOT blur or conflate|does NOT hide the Stamp on AVOID/i)
+})
+
+test("LINEAGE — the Interpreter findings IN1–IN5 are pinned; IN1/IN4/IN5 + IN3 close in Phase 1, IN2 is the Phase-5 Operator session; IN3's branch is forced (token-present → live, absent → D21)", () => {
+  const ids = lv.inResolutions.map((v: { id: string }) => v.id)
+  expect(ids.sort()).toEqual(["IN1", "IN2", "IN3", "IN4", "IN5"])
+  const byId = (id: string) => lv.inResolutions.find((v: { id: string }) => v.id === id)
+  expect(byId("IN1").resolution).toMatch(/two strengths|RUNTIME gate enforces the register DISTINCTION/i)
+  expect(byId("IN1").resolution).toMatch(/NOT on every live answer|no live-Pro-provenance guarantee/i)
+  expect(byId("IN4").resolution).toMatch(/PROBE SPRINT's Phase 0|browser.*assistive-technology/i)
+  expect(byId("IN5").resolution).toMatch(/mark-only was shipped|doubles cost.*compound truncation/i)
+  // IN3 is FORCED to a branch — never left drifting undecided (this run: token absent → D21)
+  expect(byId("IN3").status).toBe("RESOLVED")
+  expect(["token-live", "D21-fence-proven-only"]).toContain(byId("IN3").branch)
+  expect(byId("IN2").status).toBe("PHASE-5-OPERATOR-GATED")
+  expect(byId("IN2").resolution).toMatch(/OPERATOR.*not the agent|never an agent simulation relabeled/i)
+})
+
+test("LINEAGE — D20 (reserved, the diagnosis) + D21 (the POOL-EVENTS decision) are pinned + Operator-signed; the ledger carries the full entries in their phases", () => {
+  expect(lv.deviations.D20).toMatch(/RESERVED|lineage diagnosis|before one repair line/i)
+  expect(lv.deviations.D21).toMatch(/POOL-EVENTS|FENCE-PROVEN-ONLY|token-live|drift ENDS/i)
+  expect(lv.deviations.operatorSignedNote).toMatch(/directive to execute.*sign-off|directed the coding agent/i)
+})
+
+test("LINEAGE — the screen set stays the conscious 3 (the Stamp DRAWER learns lineage — a sub-route, NOT a fourth screen); the stress catalog is S1–S47 (S45–S47 new)", () => {
+  expect(lv.screens.count).toBe(3)
+  expect(lv.screens.set).toEqual(["shelf", "reality-check", "ask"])
+  expect(lv.screens.stampDrawerLearnsLineage).toMatch(/NO fourth screen, NO new statistics|sub-route of the Reality Check/i)
+  expect(lv.stressCatalog).toHaveLength(47)
+  expect(lv.stressCatalog.map((s: { id: string }) => s.id)).toEqual(Array.from({ length: 47 }, (_, k) => `S${k + 1}`))
+  expect(lv.stressCatalog.find((s: { id: string }) => s.id === "S45").name).toMatch(/SAMPLE-never-GO at the render/i)
+  expect(lv.stressCatalog.find((s: { id: string }) => s.id === "S46").name).toMatch(/per-subject distinctness/i)
+  expect(lv.stressCatalog.find((s: { id: string }) => s.id === "S47").name).toMatch(/strength legibility|capped precision/i)
+})
+
+test("LINEAGE — the constitution carries: frozen seven byte-untouched, the Stamp math NEWLY frozen, zero scorecard verdicts moved, deps hono+zod, the probe committed next", () => {
+  expect(lv.carried.deps).toEqual(["hono", "zod"])
+  expect(lv.carried.frozenSeven).toMatch(/byte-untouched/i)
+  expect(lv.carried.frozenSeven).toMatch(/moving ZERO scorecard verdicts|changing ZERO Stamp formula/i)
+  expect(lv.carried.stampMathFrozen).toMatch(/pinned.*asserted unchanged|rendered the statistics honestly/i)
+  expect(lv.carried.verdictDifferential).toMatch(/70c7912f/)
+  expect(lv.carried.verdictDifferential).toMatch(/0a63151b/)
+  expect(lv.carried.verdictDifferential).toMatch(/OFF the scorecard path/i)
+  expect(lv.carried.voiceUnchanged).toMatch(/S36 content-golden set.*byte-identical|renderStamp, which is NOT in the S36/i)
+  expect(lv.carried.probe).toMatch(/LAST pre-probe|Stage-0|10-customer|look a buyer in the eye/i)
+})

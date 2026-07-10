@@ -43,11 +43,16 @@ test("INTEGRATE (X-OPTIN) — the Reality Check renders the opt-in Stamp LINK, P
 
 test("INTEGRATE — the Stamp panel renders a DISTINCT verdict + the two-verdict note; UNAVAILABLE is honest (never a crash)", () => {
   const go: import("../../src/studio/stamp").Stamp.StampResult = { available: true, verdict: "GO", terminalState: "CONDITIONAL", dsr: 1, familyN: 1, nObs: 1249, reproHash: "c011ca1666c0f3660000", reason: "GO (conditional) — the recorded track record SURVIVES the anti-PBO deflation … NOT the scorecard's SOLID.", facts: null, decay: { tier: "TRACEABLE", halfLife: 9.9, atLeast: false, floor: 5, nObs: 1249, fit: { lags: [1, 2, 3, 5, 10], rho: [0.9, 0.8, 0.7, 0.5, 0.3], rate: 0.1, points: 5 }, reason: "TRACEABLE — a persistent signal." }, icir: { tier: "CONSISTENT", icir: 0.6, floor: 0.1, scope: "within-strategy-temporal", nPeriods: 1249, reason: "CONSISTENT — steady." }, cleanGo: true }
-  const html = Reality.renderStamp("aave-v3 USDC", "defillama:pool:x", go)
+  // WALL 1/2 (Lineage sprint) — renderStamp requires the subject's resolved identity; a GO renders only off a REAL, per-subject, floor-clearing series
+  const goId: import("../../src/studio/lineage").Lineage.SeriesIdentity = { poolKey: "defillama:pool:x", source: "https://yields.llama.fi/chart/x", reality: "REAL-PIT", asOf: Date.parse("2026-07-01T00:00:00Z"), nPoints: 1249, seriesContentHash: "a".repeat(64) }
+  const html = Reality.renderStamp("aave-v3 USDC", "defillama:pool:x", go, goId)
   expect(html).toMatch(/The Stamp/)
   expect(html).toMatch(/>GO</) // the distinct verdict pill
   expect(html).toMatch(/SEPARATE verdict|never conflated|not conflated/i) // the two-verdict distinction
   expect(html).toMatch(/1249 recorded return points/) // the deflation basis is surfaced
+  expect(html).toMatch(/Lineage — whose data earned this/) // WALL 2 — the unmissable lineage line
+  expect(html).toMatch(/deflation counted 1 attempt.*weakest form/i) // WALL 3 — n=1 the weakest form (nothing deflated away)
+  expect(html).toMatch(/significance ≥ 0\.9999/) // WALL 3 — the display is capped (never sixteen digits / a bare 1.0000)
   expect(html).toMatch(/INVOKED, never edited/i) // the reactivation-not-modification framing
   // PERSISTENCE (Phase 5) — the two opt-in DEPTH sub-scores render BESIDE the deflated-Sharpe basis (off the mass path)
   expect(html).toMatch(/Track-record depth/i)
@@ -58,7 +63,7 @@ test("INTEGRATE — the Stamp panel renders a DISTINCT verdict + the two-verdict
   expect(html).toMatch(/CLEAN GO/) // both depth hurdles cleared
   // the honest UNAVAILABLE state
   const na: import("../../src/studio/stamp").Stamp.StampResult = { available: false, verdict: "UNAVAILABLE", terminalState: "UNAVAILABLE", dsr: null, familyN: 0, nObs: 0, reproHash: null, reason: "The Stamp is unavailable — no recorded return history …", facts: null, decay: null, icir: null, cleanGo: false }
-  expect(Reality.renderStamp("x", "defillama:pool:y", na)).toMatch(/unavailable/i)
+  expect(Reality.renderStamp("x", "defillama:pool:y", na, null)).toMatch(/unavailable/i)
 })
 
 test("INTEGRATE — the served /stamp/:key route works (a recorded pool → a Stamp panel; an unknown → honest 404)", async () => {

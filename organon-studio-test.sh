@@ -92,6 +92,7 @@ bun test --timeout 30000 test/walls/ \
   test/organon/findings_closed_voice.test.ts \
   test/organon/findings_closed_surface.test.ts \
   test/organon/findings_closed_sovereign.test.ts \
+  test/organon/findings_closed_interpret.test.ts \
   test/organon/findings_closed_b.test.ts \
   test/organon/voice_gates.test.ts \
   test/organon/voice_contract.test.ts \
@@ -122,4 +123,8 @@ bun test --timeout 30000 test/walls/ \
   test/organon/plane_events.test.ts \
   test/organon/plane_rpcstate.test.ts \
   test/organon/sovereign_redteam.test.ts \
-  test/organon/interpret_redteam.test.ts
+  test/organon/interpret_redteam.test.ts \
+  test/organon/lineage_diagnosis.test.ts \
+  test/organon/lineage_walls.test.ts \
+  test/organon/lineage_fix.test.ts \
+  test/organon/lineage_redteam.test.ts

@@ -90,7 +90,7 @@ test("S37 — the DEGRADED states render as INTENTIONAL designed states, not err
   expect(ask).toMatch(/class="badge SAMPLE">AI phrasing off/) // the AI-off state is a styled badge (intentional)
   // INSUFFICIENT — the Stamp renders the state as a pill with its ◔ glyph cue + the honest "forward clock" framing
   const insuff = { verdict: "INSUFFICIENT", available: false, nObs: 4, familyN: 0, dsr: null, reproHash: null, decay: null, icir: null, minTRL: null, cleanGo: false, reason: "INSUFFICIENT — not enough recorded observations yet to run the deflation; a forward clock, not a bad verdict." } as unknown as Stamp.StampResult
-  const stamp = Reality.renderStamp("aave-v3 USDC", "defillama:pool:x", insuff)
+  const stamp = Reality.renderStamp("aave-v3 USDC", "defillama:pool:x", insuff, null) // INSUFFICIENT passes WALL 1 through (already honest); a null identity → the honest "no recorded series" lineage line
   expect(stamp).toMatch(/class="pill INSUFFICIENT"/) // INSUFFICIENT is a designed pill, not an error
   expect(stamp).toContain("forward clock") // the honest framing renders (not "bad")
 })

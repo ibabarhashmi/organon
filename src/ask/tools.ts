@@ -13,6 +13,7 @@ import { Explain } from "../analytics/explain"
 import { Reality } from "../studio/reality"
 import { ProvRecord } from "../dataplane/record"
 import { Stamp } from "../studio/stamp"
+import { Lineage } from "../studio/lineage" // the render-side lineage walls (X-LINEAGE) — the VALIDATION path routes through guardRender + gains the lineage/strength grounding facts
 import { Cal } from "../cal/ledger"
 import type { ContractSubAxis } from "../contract/subaxis"
 
@@ -71,13 +72,24 @@ export namespace AskTools {
   export async function stampFor(poolKey: string | undefined, term: string): Promise<ToolResult> {
     if (!poolKey) return notFound("stampFor", term)
     const r = await Stamp.stampFor(poolKey)
-    const facts: Explain.FactRow[] = r.facts ? Explain.factTable(r.facts).rows : [{ id: "stamp", name: "the overfit Stamp (opt-in)", value: r.verdict, threshold: null, comparator: null, outcome: "info", contribution: "deciding", provenanceRef: null }]
+    // ── THE LINEAGE WALLS (X-LINEAGE) — the VALIDATION path routes through the SAME render-side guard the drawer uses.
+    // WALL 2 resolves the subject's OWN series identity; WALL 1 degrades a GO/NO-GO that isn't backed by a per-subject,
+    // REAL, floor-clearing series (a stale cache / fabricated feed can never render a confident Stamp through the voice). ──
+    const identity = Lineage.resolveIdentity(poolKey)
+    const guarded = Lineage.guardRender(r.verdict, identity)
+    const verdict = guarded.verdict
+    const facts: Explain.FactRow[] = r.facts ? Explain.factTable(r.facts).rows : [{ id: "stamp", name: "the overfit Stamp (opt-in)", value: verdict, threshold: null, comparator: null, outcome: "info", contribution: "deciding", provenanceRef: null }]
     // surface the two opt-in DEPTH sub-scores as GROUNDING facts (Persistence Phase 5) — so the AI may phrase the half-life
     // + ICIR the ENGINE produced (the numbers in r.reason resolve to these rows), never invent one. Off the mass path; a
     // fabricated half-life/ICIR is rejected WHOLESALE by the groundedness gate. Present only on a scored GO/NO-GO Stamp.
-    if (r.decay && r.decay.halfLife !== null) facts.push({ id: "decay-halflife", name: "edge half-life (periods; within-strategy serial persistence, not the carry)", value: r.decay.halfLife, threshold: r.decay.floor, comparator: "≥", outcome: r.decay.tier === "TRACEABLE" ? "pass" : "fail", contribution: "context", provenanceRef: r.reproHash })
-    if (r.icir && r.icir.icir !== null) facts.push({ id: "icir", name: "temporal consistency ratio (within-strategy — NOT a cross-sectional factor rank)", value: r.icir.icir, threshold: r.icir.floor, comparator: "≥", outcome: r.icir.tier === "CONSISTENT" ? "pass" : "fail", contribution: "context", provenanceRef: r.reproHash })
-    return { tool: "stampFor", ok: r.available, reality: r.available && r.verdict !== "UNAVAILABLE" ? "REAL" : "n/a", facts, summary: r.reason, meta: { poolKey, stampVerdict: r.verdict, nObs: r.nObs, cleanGo: r.cleanGo, decayTier: r.decay?.tier ?? null, icirTier: r.icir?.tier ?? null } }
+    if (!guarded.degraded && r.decay && r.decay.halfLife !== null) facts.push({ id: "decay-halflife", name: "edge half-life (periods; within-strategy serial persistence, not the carry)", value: r.decay.halfLife, threshold: r.decay.floor, comparator: "≥", outcome: r.decay.tier === "TRACEABLE" ? "pass" : "fail", contribution: "context", provenanceRef: r.reproHash })
+    if (!guarded.degraded && r.icir && r.icir.icir !== null) facts.push({ id: "icir", name: "temporal consistency ratio (within-strategy — NOT a cross-sectional factor rank)", value: r.icir.icir, threshold: r.icir.floor, comparator: "≥", outcome: r.icir.tier === "CONSISTENT" ? "pass" : "fail", contribution: "context", provenanceRef: r.reproHash })
+    // WALL 2 — the LINEAGE grounding fact (whose data earned it; per-subject, content-hashed) — the voice may cite it, never invent it.
+    if (identity) facts.push({ id: "lineage", name: "lineage — the recorded series behind this verdict (source · REAL/SAMPLE · N points · series hash; per-subject, content-hashed)", value: `${identity.source ?? "unknown"} · ${identity.reality === "REAL-PIT" ? "REAL" : identity.reality} · ${identity.nPoints} recorded return points · series ${identity.seriesContentHash.slice(0, 12)}…`, threshold: null, comparator: null, outcome: "info", contribution: "context", provenanceRef: identity.seriesContentHash })
+    // WALL 3 — the STRENGTH grounding fact (the deflation basis in plain words; n=1 = the weakest form — nothing deflated away).
+    if ((verdict === "GO" || verdict === "NO-GO") && r.familyN > 0) facts.push({ id: "strength", name: `deflation strength — n counted attempts${r.familyN === 1 ? " (1 attempt is the WEAKEST form of GO: a single submission, nothing to deflate away)" : ` (survived a ${r.familyN}-way multiple-testing charge)`}`, value: r.familyN, threshold: null, comparator: null, outcome: "info", contribution: "context", provenanceRef: r.reproHash })
+    const summary = guarded.degraded ? `${guarded.reason} (the render degraded a ${r.verdict} — SAMPLE-never-GO enforced at the render boundary, X-LINEAGE WALL 1).` : r.reason
+    return { tool: "stampFor", ok: r.available, reality: r.available && verdict !== "UNAVAILABLE" ? "REAL" : "n/a", facts, summary, meta: { poolKey, stampVerdict: verdict, nObs: r.nObs, cleanGo: guarded.degraded ? false : r.cleanGo, decayTier: guarded.degraded ? null : r.decay?.tier ?? null, icirTier: guarded.degraded ? null : r.icir?.tier ?? null, lineageHash: identity?.seriesContentHash ?? null, familyN: r.familyN, degraded: guarded.degraded } }
   }
 
   // ── compare — N strategies, side by side (n FACT sets; the AI phrases + a gated comparison, never re-judges). Voice: the

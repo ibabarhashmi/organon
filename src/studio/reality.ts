@@ -21,6 +21,7 @@ import { contractCoverage } from "../contract/registry" // the honest REAL-cover
 import { PlaneDivergence } from "../plane/divergence" // the Pro-side own-plane-vs-rented divergence ROW (X-PLANE d; a ROW, not a screen)
 import type { ContractFinding } from "../contract/facts" // TYPE-ONLY — the B5 findings-render groups the recorded facts; no analyzer on the render path
 import type { Stamp } from "./stamp" // TYPE-ONLY — the Stamp's runtime (the attest core) is lazily imported by the /stamp route; the mass tool stays Stamp-free (X-OPTIN, PART CLEAN)
+import { Lineage } from "./lineage" // the three lineage walls (Lineage sprint; X-LINEAGE) — DataPlane-only (imports NO Stamp runtime), so it stays off the mass path
 
 export namespace Reality {
   // THE SCREEN SET — consciously amended 2→3 (Crown-Jewel D7): the Shelf · the Reality Check · the Ask Console (the
@@ -250,10 +251,24 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
   // ── THE STAMP PANEL (Crown-Jewel Phase 5; X-OPTIN) — a DISTINCT verdict surface, reached only by opting in (/stamp/:key).
   // Pure: takes a resolved StampResult (the runtime is lazily imported by the route). The verdict pill is a DIFFERENT
   // colour/word-space from the scorecard's (never conflated); the two-verdict distinction is stated; "unavailable" is honest.
-  export function renderStamp(name: string, poolKey: string, r: Stamp.StampResult): string {
-    const vClass = r.verdict === "GO" ? "GO" : r.verdict === "NO-GO" ? "NOGO" : r.verdict === "INSUFFICIENT" ? "INSUFFICIENT" : "UNAVAILABLE"
-    const basis = r.available && r.verdict !== "UNAVAILABLE"
-      ? `<div class="muted">observations: ${r.nObs} recorded return points · deflated significance ${esc(String(r.dsr ?? "n/a"))} · n counted attempts ${r.familyN}${r.reproHash ? ` · reproHash ${esc(r.reproHash.slice(0, 12))}…` : ""}</div>`
+  export function renderStamp(name: string, poolKey: string, r: Stamp.StampResult, identity: Lineage.SeriesIdentity | null): string {
+    // ── THE THREE LINEAGE WALLS (Lineage sprint; X-LINEAGE b,c,d) — applied AT the render, ON TOP of the byte-frozen Stamp. ──
+    // WALL 1 (S45) — SAMPLE-never-GO: a GO/NO-GO may render ONLY off a per-subject, REAL, floor-clearing series; else the
+    // render DEGRADES the payload (a stale cache / template path can never resurrect a SAMPLE-fed GO — engine honesty is
+    // necessary, not sufficient). INSUFFICIENT/UNAVAILABLE pass through (already honest).
+    const guarded = Lineage.guardRender(r.verdict, identity)
+    const verdict = guarded.verdict
+    const vClass = verdict === "GO" ? "GO" : verdict === "NO-GO" ? "NOGO" : verdict === "INSUFFICIENT" ? "INSUFFICIENT" : "UNAVAILABLE"
+    // WALL 2 (S46) — the unmissable lineage line (source · REAL/SAMPLE · as-of · N · series-hash prefix) on EVERY render.
+    const lineage = `<div class="muted"><b>Lineage — whose data earned this verdict</b> (per-subject, content-hashed — the moat made unmissable): ${esc(Lineage.lineageLine(identity))}</div>`
+    // WALL 3 (S47) — the deflation strength in plain words (n=1 = the weakest form — nothing to deflate away); only for a hard verdict.
+    const strengthTxt = verdict === "GO" || verdict === "NO-GO" ? Lineage.strengthLine(r.familyN) : ""
+    const strength = strengthTxt ? `<div class="muted"><b>Strength — how hard-won</b>: ${esc(strengthTxt)}</div>` : ""
+    // if WALL 1 degraded the payload, the ORIGINAL reason/basis/depth are void — show the honest degradation + the lineage only.
+    const reasonText = guarded.degraded ? guarded.reason : r.reason
+    // WALL 3 — the DISPLAYED significance is CAPPED (the raw value stays full-precision in r.dsr + the reproHash).
+    const basis = !guarded.degraded && r.available && verdict !== "UNAVAILABLE"
+      ? `<div class="muted">observations: ${r.nObs} recorded return points · deflated significance ${esc(Lineage.capSig(r.dsr))} · n counted attempts ${r.familyN}${r.reproHash ? ` · reproHash ${esc(r.reproHash.slice(0, 12))}…` : ""}</div>`
       : ""
     // TRACK-RECORD DEPTH (Persistence; X-DECAY / X-ICIR) — the two opt-in sub-scores shown BESIDE the deflated-Sharpe basis
     // (off the mass path; a reason/basis refinement, never a scorecard verdict). The half-life is serial persistence (NOT
@@ -262,19 +277,21 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
     const icirTxt = r.icir ? (r.icir.tier === "INSUFFICIENT" ? "insufficient history" : String(r.icir.icir)) : null
     // THE MinTRL RIDER (Voice; X-DECAY/X-ICIR extended) — on short history the point estimate is SUPPRESSED, not caveated:
     // the drawer states the needed-N explicitly (the number is ABSENT above, not footnoted). On sufficient history, a Pro note.
-    const mintrlTxt = r.minTRL && r.minTRL.suppress && r.minTRL.minTRL !== null
+    const mintrlTxt = guarded.degraded ? "" : r.minTRL && r.minTRL.suppress && r.minTRL.minTRL !== null
       ? `<div class="muted"><b>Minimum Track Record Length:</b> the deflated-Sharpe point estimate is <b>SUPPRESSED</b> — ${r.nObs} recorded observations is below the ${Math.ceil(r.minTRL.minTRL)}-observation minimum this track record's own Sharpe requires; <b>need ${r.minTRL.needMore} more observations</b> before the estimate can be trusted (absent, not caveated).</div>`
       : r.minTRL && r.minTRL.minTRL !== null
         ? `<div class="pro muted">MinTRL: ${r.nObs} observations ≥ the ${Math.ceil(r.minTRL.minTRL)}-observation minimum — the track record clears its Minimum Track Record Length${r.minTRL.trialN ? ` (deflation basis: ${r.minTRL.trialN} evaluation${r.minTRL.trialN === 1 ? "" : "s"})` : ""}.</div>`
         : ""
-    const depth = r.available && (r.decay || r.icir)
-      ? `<div class="muted"><b>Track-record depth (opt-in):</b> edge half-life ${esc(String(decayTxt))} <span class="pill ${r.decay?.tier === "TRACEABLE" ? "good" : r.decay?.tier === "SHORT_LIVED" ? "warn" : "neutral"}">${esc(String(r.decay?.tier ?? "n/a"))}</span> (serial persistence of the recorded signal — not the carry) · temporal consistency (ICIR) ${esc(String(icirTxt))} <span class="pill ${r.icir?.tier === "CONSISTENT" ? "good" : r.icir?.tier === "LUMPY" ? "warn" : "neutral"}">${esc(String(r.icir?.tier ?? "n/a"))}</span> (within-strategy — NOT a cross-sectional factor rank)${r.verdict === "GO" ? (r.cleanGo ? " · <b>a CLEAN GO</b> — both depth hurdles cleared" : " · the GO is <b>FENCED</b> — a depth hurdle not cleared (the GO stands on the deflation alone)") : ""}</div>`
+    const depth = !guarded.degraded && r.available && (r.decay || r.icir)
+      ? `<div class="muted"><b>Track-record depth (opt-in):</b> edge half-life ${esc(String(decayTxt))} <span class="pill ${r.decay?.tier === "TRACEABLE" ? "good" : r.decay?.tier === "SHORT_LIVED" ? "warn" : "neutral"}">${esc(String(r.decay?.tier ?? "n/a"))}</span> (serial persistence of the recorded signal — not the carry) · temporal consistency (ICIR) ${esc(String(icirTxt))} <span class="pill ${r.icir?.tier === "CONSISTENT" ? "good" : r.icir?.tier === "LUMPY" ? "warn" : "neutral"}">${esc(String(r.icir?.tier ?? "n/a"))}</span> (within-strategy — NOT a cross-sectional factor rank)${verdict === "GO" ? (r.cleanGo ? " · <b>a CLEAN GO</b> — both depth hurdles cleared" : " · the GO is <b>FENCED</b> — a depth hurdle not cleared (the GO stands on the deflation alone)") : ""}</div>`
       : ""
+    // WALL 1 render note — when the render degraded the payload, say so plainly (never a silent swap).
+    const degradedNote = guarded.degraded ? `<div class="muted"><b>The render degraded this verdict</b> (SAMPLE-never-GO, at the render boundary — the engine's honesty is not enough, the rendered payload is guarded too).</div>` : ""
     return page(`The Stamp — ${name}`, `<a href="/check/${encodeURIComponent(poolKey)}">← the Reality Check</a>
-<h1>The Stamp <span class="pill ${vClass}">${esc(r.verdict)}</span> <span class="muted">${esc(name)}</span></h1>
+<h1>The Stamp <span class="pill ${vClass}">${esc(verdict)}</span> <span class="muted">${esc(name)}</span></h1>
 <div class="card"><b>The opt-in overfit stress test — a SEPARATE verdict from the Reality Check.</b>
 <div class="muted">This is NOT the scorecard's verdict. The Reality Check answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers "does this pool's recorded track record survive the anti-PBO overfit deflation?" (GO/NO-GO/INSUFFICIENT). A GO is a floor on doubt about the track record's statistical robustness — NOT "safe". An INSUFFICIENT is a forward clock — NOT "bad". The two are never conflated.</div></div>
-<div class="card"><div>${esc(r.reason)}</div>${basis}${mintrlTxt}${depth}</div>
+<div class="card"><div>${esc(reasonText)}</div>${degradedNote}${basis}${strength}${lineage}${mintrlTxt}${depth}</div>
 <div class="trust">the frozen, byte-pinned anti-PBO adjudicator — INVOKED, never edited (zero frozen bytes moved) · deflation armed only here · off the mass path · this is not financial advice.</div>`)
   }
 

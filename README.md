@@ -31,9 +31,9 @@
 
 ---
 
-## What is ORGΛNON?
+## What is Organon?
 
-ORGΛNON answers one question about a real DeFi strategy — **is this yield real, and what could kill it?** — as a **machine-derived scorecard**, not an opinion. It is built so the honest answer is the *only* answer the machine can produce, and so a stranger can **regenerate every number it claims with one command**.
+Organon answers one question about a real DeFi strategy — **is this yield real, and what could kill it?** — as a **machine-derived scorecard**, not an opinion. It is built so the honest answer is the *only* answer the machine can produce, and so a stranger can **regenerate every number it claims with one command**.
 
 It presents as three deliberate surfaces over one spine:
 
