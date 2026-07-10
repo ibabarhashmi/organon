@@ -41,7 +41,10 @@ test("S55 (determinism) — captures are byte-identical with batching OFF vs ON 
 })
 
 test("S55 (allowlist + grep wall) — viem/whatsabi are imported by EXACTLY ONE capture-time module; NO mass/verdict-path import (the mass path stays hono+zod)", () => {
-  const importsViem = (f: string) => /from ["']viem|from ["']@shazow\/whatsabi|require\(["']viem/.test(readFileSync(f, "utf8"))
+  // COMMENTS-STRIPPED, IMPORT-ANCHORED: only a real import STATEMENT in live code counts. A viem mention inside a comment
+  // (this wall + the red-team script describe the pattern) or a regex literal is NOT an import and must not false-match.
+  const stripComments = (s: string) => s.replace(/\/\/[^\n]*/g, "").replace(/\/\*[\s\S]*?\*\//g, "")
+  const importsViem = (f: string) => /(?:^|\n)\s*import\b[^\n]*\bfrom\s*["'](?:viem|@shazow\/whatsabi)["']/.test(stripComments(readFileSync(f, "utf8")))
   const files = [...walk(path.join(PKG_ROOT, "src")), ...walk(path.join(PKG_ROOT, "script"))]
   const importers = files.filter(importsViem).map((f) => path.relative(PKG_ROOT, f)).sort()
   expect(importers, "viem/whatsabi may be imported ONLY by the allowlisted capture module").toEqual(["script/capture/proxy-truth.ts"])

@@ -1,0 +1,34 @@
+{
+  "protocol": "moat-prereqs",
+  "at": "2026-07-11",
+  "rule": "PR1/PR2 — the COMPLETE Operator gate, presented WHOLE in one sitting (Phase 5). Everything human + Operator-signed, in one document: IN2 (the real-screen session) · IN4 (the browser/AT a11y pass) · AF4 (the first live paid-key parity diff) · the D23-D27 countersigns · the push decision. An agent can DRIVE the flows and PREPARE the deviations but CANNOT sit the Operator's session, hold the Operator's paid keys, or sign as the Operator (LN5 / A'#11). Recorded OWED-OPERATOR-GATED, NEVER simulated. Discharged whole → the invites go out; else an honest STOP with exactly what remains quoted.",
+  "humanPrerequisites": {
+    "IN2": {
+      "what": "the Operator's real-screen session — click contrasting Stamp lineages (now with the RE3 inert-deflation label + the D27 i.i.d. caveat) · Simple≠Pro · an oversized COMPARE · the wizard · the telemetry disclosure/opt-in flow · the upgraded /postmortems (per-cell REAL/SAMPLE provenance + the REAL current-state layer)",
+      "status": "OWED-OPERATOR-GATED",
+      "recordedResult": "PENDING"
+    },
+    "IN4": {
+      "what": "the browser/AT/viewport a11y pass — real screen reader + keyboard + mobile/desktop viewport traversal of the conscious 3 + the dispositioned doors",
+      "status": "OWED-OPERATOR-GATED",
+      "recordedResult": "PENDING"
+    },
+    "AF4": {
+      "what": "the FIRST live paid-key parity diff — a real paid model key + a real DeFiLlama-Pro key → verdicts byte-identical vs keyless, or the honest gap recorded; the 7-module freeze + the parity differential run UNCHANGED under the live paid profile",
+      "status": "OWED-OPERATOR-GATED",
+      "recordedResult": "PENDING",
+      "hermeticStandIn": "capability-parity cc7e5e5a (byte-identical zero/free/paid) is green in both repos; the LIVE run is the Operator's"
+    }
+  },
+  "countersigns": {
+    "document": "data/honesty/moat-countersign-package.json",
+    "deviations": ["D23", "D24", "D25", "D26", "D27"],
+    "allOperatorSigned": false,
+    "note": "D23-D25 prepared at Probe; D26 (the capture-time dependency ADOPT-RECOMMENDED) + D27 (the variance caveat-now / amendment-parked) this sprint. An agent must not sign as the Operator."
+  },
+  "pushDecision": {
+    "what": "publish the unpushed 3adffe34-descended Moat tree (both repos), or hold with the reason recorded",
+    "status": "HELD — UNPUSHED (publication Operator-gated); the reason: the human gate (IN2/IN4/AF4) + the five signatures are the Operator's, and publication is not authorized until they are discharged"
+  },
+  "handoffConsequence": "MOAT DEEPENED, READY-PENDING-OPERATOR. The moat resolves deeper (capture-time viem+whatsabi proven on 3 real proxy patterns, adopt-recommended), the artifact earned REAL cells (the Stream/Elixir/Resolv aftermath, content-hashed), the Stamp's variance no longer flatters silently (the i.i.d. caveat rendered; the conservative amendment specified + parked), and the ledger is ready to count trials. The invites go out the moment IN2/IN4/AF4 are discharged + D23-D27 are signed + the push is authorized — against a goalpost (8b4e094b) set before the throw."
+}
