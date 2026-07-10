@@ -1,0 +1,77 @@
+{
+ "protocol": "alpha-blockers-closed",
+ "at": "2026-07-10",
+ "rule": "the re-rendered RELEASE-BLOCKER REPORT \u2014 every D22 BLOCKER repaired against its audited interface with a regression test, or the sprint STOPS at this gate with the list quoted. An INTERIM state is legal ONLY with its completion slotted inside THIS sprint.",
+ "closures": [
+  {
+   "id": "AB1",
+   "status": "CLOSED",
+   "how": "both servers now pass `hostname` (env HOST, default 127.0.0.1) in their default export \u2014 Bun.serve no longer falls into 0.0.0.0; exposure is an explicit opt-in; the banners print the REAL bind",
+   "files": [
+    "script/serve-reality.ts",
+    "script/serve-studio.ts"
+   ],
+   "regressionTest": "alpha_blockers.test.ts \u2014 imports both server modules and asserts default.hostname === '127.0.0.1' with HOST unset"
+  },
+  {
+   "id": "AB2",
+   "status": "CLOSED",
+   "how": "perCallerLimit (same shape as the studio guard) applied to EVERY :4444 route \u2014 240/min general, /refresh 6/min, /ask 30/min per caller (env-tunable); 429 is a sentence, never a crash",
+   "files": [
+    "script/serve-reality.ts"
+   ],
+   "regressionTest": "alpha_blockers.test.ts \u2014 the limiter bites at max+1 within the window (injected clock) and resets across windows; the costly routes are guarded in source"
+  },
+  {
+   "id": "AB3",
+   "status": "CLOSED",
+   "how": "setup() now checks and installs from src/backtest/py/requirements-studio.txt (the path where the lockfile actually lives) \u2014 the auto-build can run for the first time; venv/pip stderr is captured and SURFACED (never laundered as 'offline'), with the Debian/WSL python3-venv cure named",
+   "files": [
+    "organon.sh"
+   ],
+   "regressionTest": "alpha_blockers.test.ts \u2014 source wall: the root-path check is gone, the sidecar path is present, stderr is captured; bash -n parses"
+  },
+  {
+   "id": "AB4",
+   "status": "CLOSED",
+   "how": "setup() installs node_modules first (bun install, idempotent) and states the remedy in its own words when it fails \u2014 the red-verify-with-no-cure state is unreachable from the runner",
+   "files": [
+    "organon.sh"
+   ],
+   "regressionTest": "alpha_blockers.test.ts \u2014 source wall: setup() contains the node_modules check + bun install before the venv step"
+  },
+  {
+   "id": "AB5",
+   "status": "CLOSED",
+   "how": "Phase-2 interim (honest pointers) COMPLETED by the Phase-4 wizard: organon-setup.sh IS the BYOK wizard \u2014 masked paste (read -s), per-provider live validation via script/validate-key.ts with an offline opt-out, the trains-on-prompts privacy flag disclosed before the paste, .env chmod 600, doctor chained, launch offered; ./organon.sh setup execs it",
+   "files": [
+    "organon-setup.sh"
+   ],
+   "regressionTest": "stranger_ready.test.ts \u2014 the wizard contracts asserted in source + behavior; alpha_blockers.test.ts asserts the stale RWA-era pointers stay gone"
+  },
+  {
+   "id": "AB6",
+   "status": "CLOSED",
+   "how": "do_ask uses the bash-3.2-safe ${ASK_ARGS[@]+\"${ASK_ARGS[@]}\"} expansion \u2014 `./organon.sh ask` with no query reaches script/ask.ts's own honest usage line on stock macOS bash",
+   "files": [
+    "organon.sh"
+   ],
+   "regressionTest": "alpha_blockers.test.ts \u2014 source wall: the guarded expansion is present, the bare fatal form is absent; the exact expansion is executed under /bin/bash with set -u and an empty array"
+  },
+  {
+   "id": "AB7",
+   "status": "CLOSED",
+   "how": "the 7 continuity tests resolve their never-committed BUILDLOGs through test/organon/fixtures/continuity.ts \u2014 content asserted in full where a log exists; on a pristine clone the ABSENCE must itself be recorded (alpha-audit DISC-1) or the test still fails. The wall keeps its bite: an unrecorded gap fails; nothing is silently skipped",
+   "files": [
+    "test/organon/fixtures/continuity.ts",
+    "test/organon/findings_closed_v.test.ts",
+    "test/organon/findings_closed_surface.test.ts",
+    "test/organon/findings_closed_sovereign.test.ts",
+    "test/organon/findings_closed_p.test.ts"
+   ],
+   "regressionTest": "alpha_blockers.test.ts \u2014 continuityLog returns content for a present file, null for the recorded-absent logs; the canonical battery goes 0-fail on this clone"
+  }
+ ],
+ "reRenderedBlockerList": [],
+ "note": "reRenderedBlockerList is EMPTY: AB1\u2013AB4, AB6, AB7 closed in Phase 2; AB5 completed in Phase 4 (the wizard)."
+}

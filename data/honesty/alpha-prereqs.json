@@ -1,0 +1,33 @@
+{
+ "protocol": "alpha-prereqs",
+ "at": "2026-07-10",
+ "rule": "LN3/IN2/IN4 (A′#10): the two human prerequisites are DISCHARGED as the Operator's own, or the sprint STOPS here as an honest ALPHA BLOCKER. The deferral budget is spent — 'next sprint' no longer exists. The coding agent can DRIVE browser flows programmatically but CANNOT SIT the Operator's real-screen session (LN5, carried verbatim).",
+ "IN4_a11y": {
+  "id": "IN4/SV5",
+  "owed": "the real browser/AT/viewport accessibility pass on a real screen — keyboard traversal, a screen-reader spot-check, mobile viewport, non-color cues OBSERVED (not only DOM-asserted/contrast-COMPUTED, which the tree already carries)",
+  "agentCanDo": "drive a headless browser and assert DOM/contrast (already done: surface_a11y computes contrast, asserts keyboard/responsive markup)",
+  "agentCannotDo": "OBSERVE with a real assistive technology on a real screen — that is the Operator's eyes",
+  "status": "OWED — OPERATOR-GATED",
+  "operatorChecklist": [
+   "load http://127.0.0.1:4444 in a real browser; Tab through the Shelf → a card → the Reality Check → the Ask form: focus order sane, focus ring visible, no keyboard trap",
+   "run a screen reader (VoiceOver ⌘F5 / NVDA) over one Reality Check: verdict + axis rows announced meaningfully; the SAMPLE/UNVERIFIED state is spoken, not silent",
+   "narrow to a 375px mobile viewport: no clipped COMPARE, no horizontal scroll on the verdict block",
+   "confirm every pass/fail cue has a non-color signal (word/icon), not color alone"
+  ],
+  "recordedResult": "PENDING — the Operator records PASS/FAIL per line here before the invites go out; until then this is an OPEN ALPHA BLOCKER, not a silent gap"
+ },
+ "IN2_operator_session": {
+  "id": "IN2",
+  "owed": "the Operator's real-screen session: two contrasting Stamp lineages visibly DIFFERENT · Simple≠Pro readably · an oversized COMPARE unclipped · the setup wizard run start-to-finish as a new user would",
+  "status": "OWED — OPERATOR-GATED",
+  "operatorChecklist": [
+   "run ./organon.sh setup as a brand-new user: paste one free key (masked), see live validation, see the privacy flag on the Google tier, confirm .env is chmod 600",
+   "./organon.sh launch; open two different pools' Stamp drawers: the lineage lines (source · REAL/SAMPLE · as-of · N · series hash) are visibly DISTINCT, not near-identical (the Lineage sprint's whole point)",
+   "toggle Simple vs Pro register on one Ask answer: the two registers read differently and both stay grounded",
+   "open a large multi-pool COMPARE: the answer is not clipped mid-sentence (the truncation mark appears if capped)",
+   "break .env on purpose, run ./organon.sh doctor: the fault is named with its cure"
+  ],
+  "recordedResult": "PENDING — the Operator records the session outcome here before the invites go out; until then this is an OPEN ALPHA BLOCKER, not a silent gap"
+ },
+ "handoffConsequence": "Because IN2 and IN4 are OWED-OPERATOR-GATED (not agent-dischargeable — LN5), the alpha verdict in the final marker is READY-PENDING-OPERATOR: every machine-checkable gate is green (audit·blockers·split·parity·stranger·security), and the ONLY thing between here and the invites is the Operator's own eyes on their own screen. This is the honest state A′#10 demands — recorded as a BLOCKER on the human step, never waved through."
+}

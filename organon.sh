@@ -5,7 +5,7 @@
 # The first command a stranger ever runs is the most honest thing in the repo: it refuses to open the door until the
 # house is provably in order, and when it refuses it says exactly why.
 #
-# Usage:  ./organon.sh [menu|status|check|launch|verify|stamp <poolKey>|--full]
+# Usage:  ./organon.sh [menu|status|check|setup|doctor|launch|verify|stamp <poolKey>|ask "<q>"|--version|--full]
 #   menu    (default) check → setup → verify → the bounded TUI (interactive)
 #   status  check → setup → verify → the status table (non-interactive; the happy transcript)
 #   check   the prerequisite enumeration only (honest per-item; exit nonzero if a required item is missing)
@@ -20,7 +20,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 MODE="menu"; FULL=""; STAMP_ARG=""; ASK_ARGS=()
-for a in "$@"; do case "$a" in menu|status|check|launch|verify|stamp|ask) MODE="$a";; --full) FULL="--full";; *) if [ "$MODE" = "stamp" ] && [ -z "$STAMP_ARG" ]; then STAMP_ARG="$a"; elif [ "$MODE" = "ask" ]; then ASK_ARGS+=("$a"); fi;; esac; done
+for a in "$@"; do case "$a" in menu|status|check|setup|setup-deps|doctor|launch|verify|stamp|ask) if [ "$MODE" = "ask" ]; then ASK_ARGS+=("$a"); else MODE="$a"; fi;; --full) FULL="--full";; --version) MODE="version";; *) if [ "$MODE" = "stamp" ] && [ -z "$STAMP_ARG" ]; then STAMP_ARG="$a"; elif [ "$MODE" = "ask" ]; then ASK_ARGS+=("$a"); fi;; esac; done
 
 need_bun() { if ! command -v bun >/dev/null 2>&1; then echo "✗ bun is required and is not on PATH — install it yourself (https://bun.sh). The runner NEVER installs system packages."; exit 1; fi; }
 
@@ -29,15 +29,26 @@ prereq_check() { need_bun; bun run script/organon-status.ts --prereq; }
 
 # ── (2) SETUP — the sidecar venv from the pinned lockfile if absent; idempotent, offline-safe ──────────────────────
 setup() {
+  # JS deps first (AB4, D22): the most common fresh-clone failure is a missing node_modules — every verify row went
+  # red 'exit 1' with no stated cure. Install here (idempotent, instant when present) so the refusal never hides the remedy.
+  if [ ! -d "node_modules" ]; then
+    echo "○ setup: node_modules is absent — running 'bun install' (hono + zod, the whole mass-path dep set)…"
+    bun install || { echo "  ✗ bun install failed — the battery and the served doors cannot run without it. Fix the error above (offline? registry?) and re-run: ./organon.sh status"; return 1; }
+  fi
   if [ -d "src/backtest/py/.venv" ]; then echo "✓ setup: the scientific sidecar venv is present (idempotent — nothing to do)."; return 0; fi
   echo "○ setup: the sidecar venv is absent."
-  if [ -f "requirements-studio.txt" ] && command -v python3 >/dev/null 2>&1; then
-    echo "  creating src/backtest/py/.venv from the pinned lockfile (no network installs beyond it)…"
-    python3 -m venv src/backtest/py/.venv 2>/dev/null && src/backtest/py/.venv/bin/pip install -q -r requirements-studio.txt 2>/dev/null \
+  # the lockfile lives in the sidecar dir, NOT the repo root (AB3, D22 — the old root-path check meant this build could never run)
+  local py_dir="src/backtest/py"
+  if [ -f "$py_dir/requirements-studio.txt" ] && command -v python3 >/dev/null 2>&1; then
+    echo "  creating $py_dir/.venv from the pinned lockfile (no network installs beyond it)…"
+    local venv_err=""
+    venv_err="$( { python3 -m venv "$py_dir/.venv" && "$py_dir/.venv/bin/pip" install -q -r "$py_dir/requirements-studio.txt"; } 2>&1 >/dev/null )" \
       && echo "  ✓ venv created from the lockfile." \
-      || echo "  ○ venv setup could not complete offline — disclosed as a GAP, never faked (the core TS battery still runs; the sidecar tests will state BLOCKED)."
+      || { echo "  ○ venv setup did not complete — disclosed as a GAP, never faked (the core TS battery still runs; the sidecar tests will state BLOCKED)."; \
+           echo "    the actual error (never laundered as 'offline'): $(printf '%s' "$venv_err" | tail -1)"; \
+           echo "    on Debian/Ubuntu/WSL the usual cure is:  sudo apt install python3-venv"; }
   else
-    echo "  ○ python3 or the lockfile is absent — the venv is a GAP (disclosed, never faked)."
+    echo "  ○ python3 or $py_dir/requirements-studio.txt is absent — the venv is a GAP (disclosed, never faked)."
   fi
 }
 
@@ -104,10 +115,16 @@ tui() {
 do_stamp() { need_bun; bun run script/stamp.ts $STAMP_ARG; }
 
 # ── the ASK verb — the grounded Ask console (Crown-Jewel; X-ASK), deterministic mode from the CLI (no AI key needed) ──
-do_ask() { need_bun; bun run script/ask.ts "${ASK_ARGS[@]}"; }
+# AB6 (D22): `set -u` + an empty-array expansion is fatal on stock macOS bash 3.2 — the ${arr[@]+…} form is the
+# bash-3.2-safe expansion, so `./organon.sh ask` with no query reaches the script's own honest usage line, not a shell error.
+do_ask() { need_bun; bun run script/ask.ts ${ASK_ARGS[@]+"${ASK_ARGS[@]}"}; }
 
 case "$MODE" in
   check)  prereq_check;;
+  setup)  exec bash "$(dirname "$0")/organon-setup.sh";;   # the wizard (masked BYOK keys · chmod 600 · doctor chained)
+  setup-deps) need_bun; setup;;                            # internal: deps+venv only (the wizard calls this)
+  doctor) need_bun; bun run script/doctor.ts;;             # the standing diagnostic — copy-pasteable bug-report block
+  version) need_bun; bun run script/doctor.ts --version;;  # version = package + git sha + PINS_SHA (truthful, pinned)
   status) do_status;;
   launch) do_launch;;
   verify) do_verify;;

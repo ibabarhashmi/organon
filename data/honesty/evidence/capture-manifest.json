@@ -4,17 +4,17 @@
   "entries": [
     {
       "capture": "vlive-defillama.json",
-      "sha256": "69cf0f7d94f811c6c4076afc503c93925cd618c062ed67dbd731be7b24e8b494",
+      "sha256": "0dd142defa10d7a88f84db0e866460713df8f093cdf188ecbe8d11deeeee8d89",
       "backs": "the DeFiLlama /pools keyless HTTP-200 live number (poolCount)"
     },
     {
       "capture": "vlive-geckoterminal.json",
-      "sha256": "edc083e4901f793abf57ee60f0c1e27120a0d5869f40c8ccad7e7e3613fd5702",
+      "sha256": "248b9771e0a6dc3c35b32e3452b7286aa29fa067a5183c10e36510c373d24ebe",
       "backs": "the GeckoTerminal reserve_in_usd keyless HTTP-200 live number (deepest-pool reserve)"
     },
     {
       "capture": "vlive-hyperliquid.json",
-      "sha256": "65a71f82222e2379173e56d9b75c37edb96978df4540b24e44ebcf365bb26fe7",
+      "sha256": "2267be555e53a08b25c83703f705f4107889542b0f956ad8f8e45a2c79e7cb42",
       "backs": "the Hyperliquid funding keyless HTTP-200 live number (points)"
     },
     {

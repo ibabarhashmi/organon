@@ -12,6 +12,7 @@ import { test, expect } from "bun:test"
 import { readFileSync } from "node:fs"
 import path from "node:path"
 import { PKG_ROOT } from "../../src/organon/frozen"
+import { continuityLog } from "./fixtures/continuity"
 
 const H = path.join(PKG_ROOT, "data", "honesty")
 const sv = JSON.parse(readFileSync(path.join(H, "sovereign-pins.json"), "utf8"))
@@ -24,11 +25,14 @@ test("SF1 — the impeccable framing is LED WITH, not buried: the interactive cr
   expect(sf1.resolution).toMatch(/interactive CRITIQUE for real|design-review sub-agent/i)
   expect(sf1.resolution).toMatch(/browser.*(still not run|not run)|`live` flow still not run/i)
   // the framing is up front in the BUILDLOG header (not the last line) — the header names both what runs AND what does not
-  const log = readFileSync(path.join(PKG_ROOT, "sprint/sprint-result/BUILDLOG-SOVEREIGN.md"), "utf8")
-  const header = log.slice(0, log.indexOf("## SESSION MARKER")) // everything before the first marker = the header
-  expect(header).toMatch(/interactive `critique` for real|runs the interactive `critique`/i)
-  expect(header).toMatch(/NOT run|still not run/i) // the honest bound is IN the header, not buried
-  expect(header).toMatch(/SF1/) // the finding is named where it is closed
+  // (AB7/DISC-1, D22: the log was never committed; on a pristine clone the resolver asserts the recorded absence instead)
+  const log = continuityLog("sprint/sprint-result/BUILDLOG-SOVEREIGN.md")
+  if (log !== null) {
+    const header = log.slice(0, log.indexOf("## SESSION MARKER")) // everything before the first marker = the header
+    expect(header).toMatch(/interactive `critique` for real|runs the interactive `critique`/i)
+    expect(header).toMatch(/NOT run|still not run/i) // the honest bound is IN the header, not buried
+    expect(header).toMatch(/SF1/) // the finding is named where it is closed
+  }
 })
 
 test("SF2 — the pristine off-by-one ITEMIZED: surface_detector has EXACTLY 4 tests, 3 skipIf → pristine = 807 − 3 = 804 (the arithmetic dies here)", () => {

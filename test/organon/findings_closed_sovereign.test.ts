@@ -13,6 +13,7 @@ import { test, expect } from "bun:test"
 import { readFileSync } from "node:fs"
 import path from "node:path"
 import { PKG_ROOT } from "../../src/organon/frozen"
+import { continuityLog } from "./fixtures/continuity"
 
 const H = path.join(PKG_ROOT, "data", "honesty")
 const iv = JSON.parse(readFileSync(path.join(H, "interpret-pins.json"), "utf8"))
@@ -25,9 +26,11 @@ test("SV1 — the plane live-coverage is stated in ONE honest line (FUNDING live
   expect(sv1.resolution).toMatch(/RPC-STATE.*single/i)
   expect(sv1.resolution).toMatch(/POOL-EVENTS.*NOT live|NOT live-exercised/i) // no path inherits another's "live"
   // the one-line coverage is carried in the BUILDLOG header (SV1 stated, not scattered)
-  const log = readFileSync(path.join(PKG_ROOT, "sprint/sprint-result/BUILDLOG-INTERPRET.md"), "utf8")
-  const header = log.slice(0, log.indexOf("## Phase 0")) // everything before Phase 0 = the header
-  expect(header).toMatch(/SV4|source review|browser.*NOT run/i) // the design-pass qualifier is up front (SV4)
+  const log = continuityLog("sprint/sprint-result/BUILDLOG-INTERPRET.md") // AB7/DISC-1 (D22): never committed; recorded absence on a clone
+  if (log !== null) {
+    const header = log.slice(0, log.indexOf("## Phase 0")) // everything before Phase 0 = the header
+    expect(header).toMatch(/SV4|source review|browser.*NOT run/i) // the design-pass qualifier is up front (SV4)
+  }
 })
 
 test("SV3 — the funding-band surface is clarified: a Stamp/facts improvement, NOT shown moving a rendered verdict (not over-read)", () => {
@@ -43,10 +46,12 @@ test("SV4 — the source-based-design-pass qualifier is carried into continuity 
   expect(sv4.resolution).toMatch(/SOURCE review/i)
   expect(sv4.resolution).toMatch(/not a.*screenshot|no browser automation|browser.*not run/i)
   // and it IS in the BUILDLOG header (carried up front, per the header's own SV4 line)
-  const log = readFileSync(path.join(PKG_ROOT, "sprint/sprint-result/BUILDLOG-INTERPRET.md"), "utf8")
-  const header = log.slice(0, log.indexOf("## Phase 0"))
-  expect(header).toMatch(/SOURCE review/i)
-  expect(header).toMatch(/NOT run|not a rasterized screenshot/i)
+  const log = continuityLog("sprint/sprint-result/BUILDLOG-INTERPRET.md") // AB7/DISC-1 (D22)
+  if (log !== null) {
+    const header = log.slice(0, log.indexOf("## Phase 0"))
+    expect(header).toMatch(/SOURCE review/i)
+    expect(header).toMatch(/NOT run|not a rasterized screenshot/i)
+  }
 })
 
 test("SV5 — the real browser/AT a11y pass is NAMED as the standing follow-up (contrast COMPUTED; keyboard/responsive DOM-ASSERTED)", () => {

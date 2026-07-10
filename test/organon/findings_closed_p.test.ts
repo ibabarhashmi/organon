@@ -13,6 +13,7 @@ import { test, expect } from "bun:test"
 import { readFileSync } from "node:fs"
 import path from "node:path"
 import { PKG_ROOT } from "../../src/organon/frozen"
+import { continuityLog } from "./fixtures/continuity"
 import { Evidence } from "../../src/studio/evidence"
 
 const read = (rel: string) => readFileSync(path.join(PKG_ROOT, rel), "utf8")
@@ -37,8 +38,8 @@ test("P2 — the terminal PINS_SHA rule is a STANDING RULE + this sprint's Phase
   expect(p2.resolution).toMatch(/EVERY final RED-TEAM-CLEAN marker/i)
   expect(p2.resolution).toMatch(/f157da69/) // Persistence's terminal PINS_SHA retroactively noted
   // the fresh BUILDLOG's Phase-0 marker CARRIES a terminal PINS_SHA (the rule, practiced this sprint)
-  const log = read("sprint/sprint-result/BUILDLOG-CONTRACT.md")
-  expect(log).toMatch(/SESSION MARKER — Phase 0 PINS-LOCKED complete\. Terminal `PINS_SHA cf620520/)
+  const log = continuityLog("sprint/sprint-result/BUILDLOG-CONTRACT.md") // AB7/DISC-1 (D22): never committed; recorded absence on a clone
+  if (log !== null) expect(log).toMatch(/SESSION MARKER — Phase 0 PINS-LOCKED complete\. Terminal `PINS_SHA cf620520/)
 })
 
 test("P3 — the surviving skip is NAMED (ask_live.test.ts) wherever the battery count is cited", () => {

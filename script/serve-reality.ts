@@ -14,6 +14,37 @@ import { ProvRecord } from "../src/dataplane/record"
 
 export const app = new Hono()
 
+// ── the invited-tester rate limit (AB2, D22) — per-caller sliding window, applied to EVERY route; the two costly
+// routes (/refresh live capture · /ask possible AI spend) get a tighter budget. Same shape as the studio guard
+// (src/studio/routes.ts) — a Map of recent hit timestamps; injectable clock so the wall test can bite. 429 is a
+// sentence, never a crash. In-memory per-process (localhost alpha) — ponytail: per-IP store if this ever fronts a proxy.
+export interface LimitOpts { max: number; windowMs: number; now?: () => number }
+export function perCallerLimit(opts: LimitOpts) {
+  const hits = new Map<string, number[]>()
+  const now = opts.now ?? (() => Date.now())
+  return async (c: { req: { header(n: string): string | undefined } ; text(b: string, s: number): Response }, next: () => Promise<void>) => {
+    const who = c.req.header("x-forwarded-for") ?? "local"
+    const t = now()
+    const recent = (hits.get(who) ?? []).filter((x) => t - x < opts.windowMs)
+    if (recent.length >= opts.max) return c.text(`rate-limited — more than ${opts.max} requests in ${opts.windowMs / 1000}s. The Reality Check is a reading tool; slow down and it will answer. Nothing was recorded.`, 429)
+    recent.push(t)
+    hits.set(who, recent)
+    await next()
+  }
+}
+// honest headers (AH1, D22) — the defense-in-depth backstop behind the HTML escaping; server-rendered pages with
+// inline styles/JS, so the CSP allows 'unsafe-inline' for self (still forbids every external origin + framing).
+app.use("*", async (c, next) => {
+  await next()
+  c.res.headers.set("x-content-type-options", "nosniff")
+  c.res.headers.set("x-frame-options", "DENY")
+  c.res.headers.set("referrer-policy", "no-referrer")
+  c.res.headers.set("content-security-policy", "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none'")
+})
+app.use("/refresh", perCallerLimit({ max: Number(process.env.REALITY_RL_REFRESH_MAX ?? 6), windowMs: 60_000 }))
+app.use("/ask", perCallerLimit({ max: Number(process.env.REALITY_RL_ASK_MAX ?? 30), windowMs: 60_000 }))
+app.use("*", perCallerLimit({ max: Number(process.env.REALITY_RL_MAX ?? 240), windowMs: 60_000 }))
+
 // health — reports the FROZEN screen set: the conscious 3 (Shelf · Reality Check · Ask; the Stamp is a sub-route, not a
 // screen — V1). A FOURTH screen is a Halt (the screens_frozen wall asserts the set is exactly ["shelf","reality-check","ask"]).
 app.get("/health", (c) => c.json({ ok: true, screens: Reality.SCREENS, chain: ProvRecord.verify().present }))
@@ -76,9 +107,12 @@ app.get("/refresh", async (c) => {
 })
 
 const port = Number(process.env.PORT ?? 4444)
-export default { port, fetch: app.fetch }
+// localhost by DEFAULT (AB1, D22): Bun.serve binds 0.0.0.0 when no hostname is passed — every interface, not the
+// localhost the banner claims. An invited tester on shared wifi must OPT IN to exposure (HOST=0.0.0.0), never fall into it.
+const hostname = process.env.HOST ?? "127.0.0.1"
+export default { port, hostname, fetch: app.fetch }
 if (import.meta.main) {
   const chain = ProvRecord.verify()
-  console.log(`ORGΛNON — the Reality Check → http://localhost:${port}  (3 screens: the Shelf · the Reality Check · the Ask console)`)
+  console.log(`ORGΛNON — the Reality Check → http://${hostname}:${port}  (3 screens: the Shelf · the Reality Check · the Ask console)`)
   console.log(chain.present ? `  provenance record: ${chain.total} REAL snapshots on the chain (verified=${chain.ok})` : "  provenance record: empty — the Shelf boots in SAMPLE mode (honest); click ↻ refresh or run `bun run script/capture-defillama.ts` for live REAL data (keyless).")
 }

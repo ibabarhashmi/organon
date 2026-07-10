@@ -1,0 +1,34 @@
+{
+ "protocol": "capability-parity",
+ "at": "2026-07-10T11:39:23.637Z",
+ "rule": "S48 — zero-key, free-key, and paid-key profiles MUST yield byte-identical scorecard + Stamp verdicts and the pinned differential; a moved verdict is the two-tier-truth breach (Halt).",
+ "profiles": [
+  "zero-key",
+  "free-key",
+  "paid-key"
+ ],
+ "fingerprints": {
+  "zero-key": "cc7e5e5a65652bd165e093f65233f56326350c177c149567b21a624c66c27093",
+  "free-key": "cc7e5e5a65652bd165e093f65233f56326350c177c149567b21a624c66c27093",
+  "paid-key": "cc7e5e5a65652bd165e093f65233f56326350c177c149567b21a624c66c27093"
+ },
+ "identical": true,
+ "verdictSurface": {
+  "profile": "zero-key",
+  "shelfVerdicts": {
+   "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501": "UNVERIFIED",
+   "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a": "UNVERIFIED",
+   "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac": "UNVERIFIED",
+   "defillama:pool:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb": "UNVERIFIED",
+   "defillama:pool:4438dabc-7f0c-430b-8136-2722711ae663": "UNVERIFIED",
+   "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487": "UNVERIFIED",
+   "defillama:pool:e91e23af-9099-45d9-8ba5-ea5b4638e453": "UNVERIFIED",
+   "funding-basis:hyperliquid:BTC": "UNVERIFIED",
+   "funding-basis:hyperliquid:ETH": "UNVERIFIED"
+  },
+  "stampVerdict": "UNAVAILABLE",
+  "lendingSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+  "fundingVerdict": "NO-GO",
+  "fundingReproHash": "0a63151b0c375d32822ace78a13ce158ef7dbef560f5f4cfdc8368ab54e2f80f"
+ }
+}

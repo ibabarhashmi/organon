@@ -1,0 +1,46 @@
+{
+ "protocol": "ln4-floor60",
+ "at": "2026-07-10T10:52:37.087Z",
+ "pool": "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501",
+ "status": "PROVEN-ON-LIVE-DATA",
+ "method": "the live REAL chart (defillama /chart, this session) sliced to the three boundary windows (59·60·61 real return points) + the ILLUSTRATIVE-reality control on the same 60 points; resolved through Lineage.resolveIdentity via an injected adapter (the committed provenance chain is not polluted with exercise keys — the POINTS are real, the ADAPTER is the seam); guardRender('GO', identity) at each window.",
+ "liveChart": {
+  "source": "defillama:yields.llama.fi/chart",
+  "fetchedPoints": 1251,
+  "usableReturnPoints": 1251,
+  "reality": "REAL"
+ },
+ "windows": [
+  {
+   "n": 59,
+   "nPointsResolved": 59,
+   "verdict": "INSUFFICIENT",
+   "degraded": true,
+   "reason": "the resolved series is 59 recorded points, below the 60-point floor — too short to render a hard verdict; INSUFFICIENT until more real history is recorded.",
+   "lineageLine": "lineage: defillama:yields.llama.fi/chart · REAL · as-of 2026-07-10 · 59 recorded return points · series d190e3d1f2ae…"
+  },
+  {
+   "n": 60,
+   "nPointsResolved": 60,
+   "verdict": "GO",
+   "degraded": false,
+   "reason": "",
+   "lineageLine": "lineage: defillama:yields.llama.fi/chart · REAL · as-of 2026-07-10 · 60 recorded return points · series e2f02b35bdc9…"
+  },
+  {
+   "n": 61,
+   "nPointsResolved": 61,
+   "verdict": "GO",
+   "degraded": false,
+   "reason": "",
+   "lineageLine": "lineage: defillama:yields.llama.fi/chart · REAL · as-of 2026-07-10 · 61 recorded return points · series 41f959b1294e…"
+  }
+ ],
+ "realityControl": {
+  "n": 60,
+  "reality": "ILLUSTRATIVE",
+  "verdict": "INSUFFICIENT",
+  "degraded": true
+ },
+ "conclusion": "WALL 1's floor-60 calibration HOLDS near-boundary on live data: 59 real points → INSUFFICIENT (degraded), 60 and 61 real points → the GO renders; the same 60 real points labeled non-REAL → INSUFFICIENT. LN4 CLOSED."
+}

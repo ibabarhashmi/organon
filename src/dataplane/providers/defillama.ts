@@ -19,7 +19,21 @@ export namespace DefiLlama {
 
   export interface Pool { chain: string; project: string; symbol: string; tvlUsd: number | null; apyBase: number | null; apyReward: number | null; apy: number | null; pool: string; stablecoin: boolean }
   export interface ChartPoint { ts: number; tvlUsd: number | null; apyBase: number | null; apyReward: number | null }
-  export interface Tagged<T> { value: T; reality: Reality; asOf: number; source: string; note?: string }
+  export interface Tagged<T> { value: T; reality: Reality; asOf: number; source: string; note?: string; tier?: Tier }
+
+  // ── THE PRO TIER SEAM (Alpha Phase 3; X-CAPABILITY a) — a paid DeFiLlama Pro key deepens the FACTS: the same
+  // endpoints served from the pro base (higher limits, longer histories, premium datasets per the descriptor), entering
+  // as tier-stamped REAL. The KEY rides ONLY the fetch URL; every RECORDED source/url uses the REDACTED form (a key can
+  // never enter the provenance chain or a log). Absent key → the free base, BYTE-EXACT (the conditional spread below
+  // leaves the free-path return objects literally unchanged). ──
+  export type Tier = "free" | "pro"
+  export const PRO_BASE = "https://pro-api.llama.fi"
+  export interface Route { fetchBase: string; recordBase: string; tier: Tier }
+  export function route(env: Record<string, string | undefined> = process.env): Route {
+    const k = env.DEFILLAMA_PRO_API_KEY
+    return k ? { fetchBase: `${PRO_BASE}/${k}/yields`, recordBase: `${PRO_BASE}/<key>/yields`, tier: "pro" } : { fetchBase: BASE, recordBase: BASE, tier: "free" }
+  }
+  const tierTag = (r: Route) => (r.tier === "pro" ? { tier: "pro" as const } : {}) // free path: the object is byte-identical to before the seam
 
   // the injectable fetch seam (default = global fetch). Tests inject a fixture / a 429 / a throwing impl.
   export interface FetchResult { ok: boolean; status: number; json(): Promise<unknown> }
@@ -73,24 +87,27 @@ export namespace DefiLlama {
   ]
 
   // /pools → the Shelf subset, tagged. On no data → the labeled SAMPLE shelf (the tool still runs, honestly).
-  export async function pools(now: number, fetchImpl: FetchImpl = globalFetch): Promise<Tagged<Pool[]>> {
-    const { body, reality, note } = await getJson(`${BASE}/pools`, now, fetchImpl)
+  // Pro-keyed env → the pro base (deeper REAL, tier-stamped); keyless → the free base, byte-exact (X-CAPABILITY a/d).
+  export async function pools(now: number, fetchImpl: FetchImpl = globalFetch, env: Record<string, string | undefined> = process.env): Promise<Tagged<Pool[]>> {
+    const rt = route(env)
+    const { body, reality, note } = await getJson(`${rt.fetchBase}/pools`, now, fetchImpl)
     const data = (body as { data?: unknown })?.data
-    if (!Array.isArray(data)) return { value: SAMPLE_POOLS, reality: "SAMPLE", asOf: now, source: `${BASE}/pools`, note: note ?? "no data — SAMPLE shelf" }
+    if (!Array.isArray(data)) return { value: SAMPLE_POOLS, reality: "SAMPLE", asOf: now, source: `${rt.recordBase}/pools`, note: note ?? "no data — SAMPLE shelf" }
     const shelf = (data.map(parsePool).filter(Boolean) as Pool[]).filter(isShelf)
-    if (!shelf.length) return { value: SAMPLE_POOLS, reality: "SAMPLE", asOf: now, source: `${BASE}/pools`, note: "empty shelf — SAMPLE fallback" }
-    return { value: shelf, reality, asOf: now, source: `${BASE}/pools`, note }
+    if (!shelf.length) return { value: SAMPLE_POOLS, reality: "SAMPLE", asOf: now, source: `${rt.recordBase}/pools`, note: "empty shelf — SAMPLE fallback" }
+    return { value: shelf, reality, asOf: now, source: `${rt.recordBase}/pools`, note, ...tierTag(rt) }
   }
 
   // /chart/{pool} → the TVL/APY history (for the TVL-trend axis), tagged. Empty → SAMPLE.
-  export async function chart(poolId: string, now: number, fetchImpl: FetchImpl = globalFetch): Promise<Tagged<ChartPoint[]>> {
-    const { body, reality, note } = await getJson(`${BASE}/chart/${poolId}`, now, fetchImpl)
+  export async function chart(poolId: string, now: number, fetchImpl: FetchImpl = globalFetch, env: Record<string, string | undefined> = process.env): Promise<Tagged<ChartPoint[]>> {
+    const rt = route(env)
+    const { body, reality, note } = await getJson(`${rt.fetchBase}/chart/${poolId}`, now, fetchImpl)
     const data = (body as { data?: unknown })?.data
-    if (!Array.isArray(data)) return { value: [], reality: "SAMPLE", asOf: now, source: `${BASE}/chart/${poolId}`, note: note ?? "no history" }
+    if (!Array.isArray(data)) return { value: [], reality: "SAMPLE", asOf: now, source: `${rt.recordBase}/chart/${poolId}`, note: note ?? "no history" }
     const pts: ChartPoint[] = data
       .map((d) => { const x = d as Record<string, unknown>; const t = Date.parse(String(x.timestamp)); return Number.isFinite(t) ? { ts: t, tvlUsd: band(num(x.tvlUsd), 0, 1e13), apyBase: band(num(x.apyBase), -100, 1e5), apyReward: band(num(x.apyReward), -100, 1e5) } : null })
       .filter(Boolean) as ChartPoint[]
-    return { value: pts.sort((a, b) => a.ts - b.ts), reality, asOf: now, source: `${BASE}/chart/${poolId}`, note }
+    return { value: pts.sort((a, b) => a.ts - b.ts), reality, asOf: now, source: `${rt.recordBase}/chart/${poolId}`, note, ...tierTag(rt) }
   }
 
   // symbol → DeFiLlama stablecoin slug (the /stablecoinprices key). A small pinned map, not a lookup service.
@@ -139,10 +156,12 @@ export namespace DefiLlama {
 
   // ── the RECORD mapping (X-MOAT): a REAL fetched pool/chart → a content-addressed SnapshotFile the store can append.
   // Pure — the recording (recordReal → DataPlane.capture) is done by the runtime capture path, never at parse time.
-  export function poolSnapshot(pool: Pool, ts: number): DataPlane.SnapshotFile {
-    return { key: `defillama:pool:${pool.pool}`, kind: "yield", source: `${BASE}/pools`, url: `${BASE}/pools`, capturedAt: ts, points: [{ ts, apyBase: pool.apyBase, apyReward: pool.apyReward, tvlUsd: pool.tvlUsd }] }
+  // The optional `source` lets the pro path record its REDACTED pro provenance (the tier is IN the recorded source —
+  // X-CAPABILITY a: provenance records the tier); the default is the free source, so every existing caller is byte-exact.
+  export function poolSnapshot(pool: Pool, ts: number, source: string = `${BASE}/pools`): DataPlane.SnapshotFile {
+    return { key: `defillama:pool:${pool.pool}`, kind: "yield", source, url: source, capturedAt: ts, points: [{ ts, apyBase: pool.apyBase, apyReward: pool.apyReward, tvlUsd: pool.tvlUsd }] }
   }
-  export function chartSnapshot(poolId: string, pts: ChartPoint[]): DataPlane.SnapshotFile {
-    return { key: `defillama:chart:${poolId}`, kind: "yield", source: `${BASE}/chart/${poolId}`, url: `${BASE}/chart/${poolId}`, capturedAt: pts.length ? pts[pts.length - 1].ts : 0, points: pts.map((p) => ({ ts: p.ts, tvlUsd: p.tvlUsd, apyBase: p.apyBase, apyReward: p.apyReward })) }
+  export function chartSnapshot(poolId: string, pts: ChartPoint[], source: string = `${BASE}/chart/${poolId}`): DataPlane.SnapshotFile {
+    return { key: `defillama:chart:${poolId}`, kind: "yield", source, url: source, capturedAt: pts.length ? pts[pts.length - 1].ts : 0, points: pts.map((p) => ({ ts: p.ts, tvlUsd: p.tvlUsd, apyBase: p.apyBase, apyReward: p.apyReward })) }
   }
 }
