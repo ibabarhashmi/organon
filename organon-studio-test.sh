@@ -135,4 +135,10 @@ bun test --timeout 30000 test/walls/ \
   test/organon/capability_parity.test.ts \
   test/organon/stranger_ready.test.ts \
   test/organon/security_pass.test.ts \
-  test/organon/alpha_redteam.test.ts
+  test/organon/alpha_redteam.test.ts \
+  test/organon/probe_pins.test.ts \
+  test/organon/findings_closed_alpha.test.ts \
+  test/organon/telemetry.test.ts \
+  test/organon/postmortem.test.ts \
+  test/organon/kill_criterion.test.ts \
+  test/organon/probe_redteam.test.ts

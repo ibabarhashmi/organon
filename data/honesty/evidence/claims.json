@@ -5,7 +5,7 @@
   "claims": [
     {
       "number": "battery-pass",
-      "value": 1014,
+      "value": 1043,
       "artifact": "evidence/battery-summary.json",
       "field": "canonical.pass"
     },
@@ -17,7 +17,7 @@
     },
     {
       "number": "battery-files",
-      "value": 152,
+      "value": 158,
       "artifact": "evidence/battery-summary.json",
       "field": "canonical.files"
     },

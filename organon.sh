@@ -19,8 +19,23 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-MODE="menu"; FULL=""; STAMP_ARG=""; ASK_ARGS=()
-for a in "$@"; do case "$a" in menu|status|check|setup|setup-deps|doctor|launch|verify|stamp|ask) if [ "$MODE" = "ask" ]; then ASK_ARGS+=("$a"); else MODE="$a"; fi;; --full) FULL="--full";; --version) MODE="version";; *) if [ "$MODE" = "stamp" ] && [ -z "$STAMP_ARG" ]; then STAMP_ARG="$a"; elif [ "$MODE" = "ask" ]; then ASK_ARGS+=("$a"); fi;; esac; done
+MODE="menu"; FULL=""; STAMP_ARG=""; ASK_ARGS=(); PASS_ARGS=()
+# once MODE is a value-taking verb (ask/telemetry/feedback), subsequent tokens are ARGS, not mode words — so a value
+# like `--screen ask` cannot flip the mode (a targeted fix for AH11 on the value-taking verbs; Probe Phase 2).
+for a in "$@"; do
+  case "$a" in
+    menu|status|check|setup|setup-deps|doctor|launch|verify|stamp|ask|telemetry|feedback)
+      case "$MODE" in ask) ASK_ARGS+=("$a");; telemetry|feedback) PASS_ARGS+=("$a");; *) MODE="$a";; esac;;
+    --full) FULL="--full";;
+    --version) MODE="version";;
+    *)
+      case "$MODE" in
+        stamp) [ -z "$STAMP_ARG" ] && STAMP_ARG="$a";;
+        ask) ASK_ARGS+=("$a");;
+        telemetry|feedback) PASS_ARGS+=("$a");;
+      esac;;
+  esac
+done
 
 need_bun() { if ! command -v bun >/dev/null 2>&1; then echo "✗ bun is required and is not on PATH — install it yourself (https://bun.sh). The runner NEVER installs system packages."; exit 1; fi; }
 
@@ -119,6 +134,11 @@ do_stamp() { need_bun; bun run script/stamp.ts $STAMP_ARG; }
 # bash-3.2-safe expansion, so `./organon.sh ask` with no query reaches the script's own honest usage line, not a shell error.
 do_ask() { need_bun; bun run script/ask.ts ${ASK_ARGS[@]+"${ASK_ARGS[@]}"}; }
 
+# ── the TELEMETRY + FEEDBACK verbs (Probe Phase 2; X-TELEMETRY) — the tester's sight + control over their OWN local data.
+# Telemetry is OFF by default; these verbs never enable capture (that is ORGANON_TELEMETRY=1 + `telemetry --accept`).
+do_telemetry() { need_bun; bun run script/telemetry.ts ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}; }
+do_feedback() { need_bun; bun run script/feedback.ts ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}; }
+
 case "$MODE" in
   check)  prereq_check;;
   setup)  exec bash "$(dirname "$0")/organon-setup.sh";;   # the wizard (masked BYOK keys · chmod 600 · doctor chained)
@@ -130,5 +150,7 @@ case "$MODE" in
   verify) do_verify;;
   stamp)  do_stamp;;
   ask)    do_ask;;
+  telemetry) do_telemetry;;
+  feedback)  do_feedback;;
   menu|*) tui;;
 esac

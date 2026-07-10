@@ -1,0 +1,45 @@
+{
+  "protocol": "probe-prereqs",
+  "at": "2026-07-10",
+  "rule": "AF1/AF2/AF4 (A′#4) — the two human prerequisites + the first live paid-key parity run are DISCHARGED on a real screen / real keys as the Operator's own, or the sprint STOPS here as the honest ALPHA BLOCKER. The deferral budget was spent two sprints ago; this is where it comes due. An agent can DRIVE flows programmatically but CANNOT SIT the Operator's real-screen session, and does not hold the Operator's paid keys (LN5). This session is agent-executed → the three are recorded OWED-OPERATOR-GATED, never simulated.",
+  "AF1_IN2_operator_session": {
+    "id": "AF1/IN2",
+    "status": "OWED — OPERATOR-GATED",
+    "owed": "the Operator's real-screen session, recorded as the Operator's own",
+    "operatorChecklist": [
+      "run ./organon.sh setup as a brand-new user: paste one free key (masked), see live validation, see the Google trains-on-prompts privacy flag, confirm .env is chmod 600",
+      "./organon.sh launch; open two different pools' Stamp drawers: the lineage lines (source · REAL/SAMPLE · as-of · N · series hash) are visibly DISTINCT, not near-identical",
+      "toggle Simple vs Pro register on one Ask answer: the two read differently and both stay grounded",
+      "open a large multi-pool COMPARE: the answer is not clipped mid-sentence (the truncation mark appears if capped)",
+      "run ./organon.sh telemetry --disclosure, then --accept, set ORGANON_TELEMETRY=1, browse, and confirm ./organon.sh telemetry --show lists ONLY the manifest fields (never a key/address/prompt)",
+      "read GET /postmortems (or the export): confirm every re-score cell is SAMPLE-labeled and the verdicts match the engine",
+      "break .env on purpose, run ./organon.sh doctor: the fault is named with its cure"
+    ],
+    "recordedResult": "PENDING — the Operator records the session outcome here before the invites go out; until then an OPEN ALPHA BLOCKER, not a silent gap"
+  },
+  "AF2_IN4_a11y": {
+    "id": "AF2/IN4/SV5",
+    "status": "OWED — OPERATOR-GATED",
+    "owed": "the real browser/AT/viewport accessibility pass on a real screen (OBSERVED, not only DOM-asserted/contrast-COMPUTED, which the tree already carries)",
+    "operatorChecklist": [
+      "Tab through the Shelf → a card → the Reality Check → the Ask form: focus order sane, focus ring visible, no keyboard trap",
+      "run a screen reader (VoiceOver ⌘F5 / NVDA) over one Reality Check: verdict + axis rows announced meaningfully; the SAMPLE/UNVERIFIED state is spoken, not silent",
+      "narrow to a 375px mobile viewport: no clipped COMPARE, no horizontal scroll on the verdict block",
+      "confirm every pass/fail cue has a non-color signal (word/icon), not color alone"
+    ],
+    "recordedResult": "PENDING — the Operator records PASS/FAIL per line before the invites go out; until then an OPEN ALPHA BLOCKER"
+  },
+  "AF4_live_paid_parity": {
+    "id": "AF4/S48-live",
+    "status": "OWED — OPERATOR-GATED",
+    "owed": "the FIRST live paid-key parity run: a real paid model key + a real DeFiLlama-Pro key under the Operator's hand → the full shelf's scorecard + Stamp verdicts BYTE-IDENTICAL vs keyless (the split's central promise, tested live), or the honest gap recorded",
+    "hermeticStatus": "PROVEN HERMETICALLY (S48) — zero/free/paid profiles yield byte-identical verdicts (fingerprint cc7e5e5a…, positive-controlled); the live run is the real-world confirmation the hermetic mock stands in for",
+    "operatorProcedure": [
+      "with a real paid model key + AI_PAID_TIER=1 and a real DEFILLAMA_PRO_API_KEY set, run: bun run script/honesty/capability-parity.ts (or the shelf verdict dump)",
+      "diff the full shelf's verdicts + the Stamp verdict against a keyless run: they MUST be byte-identical",
+      "the 7-module verdict-path hash set + the parity differential run UNCHANGED under the live paid profile; a moved verdict is a Halt, not a loosened test"
+    ],
+    "recordedResult": "PENDING — the Operator records BYTE-IDENTICAL or the honest gap; until then the live promise is asserted-hermetically, owed-live"
+  },
+  "handoffConsequence": "Because AF1/AF2/AF4 are OWED-OPERATOR-GATED (not agent-dischargeable — LN5), the probe verdict in the final marker is PROBE-ARMED / READY-PENDING-OPERATOR: every machine-checkable gate is green in both repos (pins·findings·telemetry·artifact·kill-criterion·red-team), the kill-criterion is pre-registered, and the ONLY things between here and the invites are the Operator's own eyes, the Operator's a11y pass, and one live paid-key diff. This is the honest state A′#4 demands — recorded as a BLOCKER on the human/live steps, never waved through a third time."
+}

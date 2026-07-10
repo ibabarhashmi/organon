@@ -1,0 +1,42 @@
+{
+  "protocol": "rescore-postmortems",
+  "at": "2026-07-10",
+  "rule": "S53 — the existing deterministic engine (Scorecard.score, zero new scoring) run against three real 2025-26 collapses; every fact cell REAL-and-content-hashed or labeled SAMPLE; the verdict is the engine's actual recomputed output; no fabricated cell, no unsupported certainty (X-HONEST governs absolutely).",
+  "subjects": [
+    {
+      "subject": "stream",
+      "name": "Stream Finance xUSD",
+      "verdict": "UNVERIFIED",
+      "adverseFlags": [
+        "yield-reality: fail",
+        "tvl-trend: fail",
+        "peg: fail",
+        "counterparty: caution"
+      ],
+      "reproHash": "30c2e82023b11c1338fbff9696be64e7953b4463a975676be80db51278f7dff2"
+    },
+    {
+      "subject": "elixir",
+      "name": "Elixir deUSD",
+      "verdict": "UNVERIFIED",
+      "adverseFlags": [
+        "yield-reality: caution",
+        "tvl-trend: fail",
+        "peg: fail",
+        "counterparty: caution"
+      ],
+      "reproHash": "4b157d73cdbd881f580f540e32a513f3c0b1e2b715b7012a40177b7fb11ffe9b"
+    },
+    {
+      "subject": "resolv",
+      "name": "Resolv USR",
+      "verdict": "UNVERIFIED",
+      "adverseFlags": [
+        "funding-regime: caution"
+      ],
+      "reproHash": "9e9af3799d30b8629a3ecf69d8a66979655e2fea2f24100fc2161a8d101a33c2"
+    }
+  ],
+  "allSample": true,
+  "note": "allSample=true: no cell claims REAL provenance (we did not re-fetch the delisted pools). The verdicts are UNVERIFIED (honest) with the adverse structural flags the engine actually computes — 'here is what we would have flagged, deterministically'."
+}

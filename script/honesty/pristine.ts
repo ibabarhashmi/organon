@@ -21,7 +21,12 @@ const clone = path.join(tmp, "clone")
 const isoEnv = { HOME, XDG_DATA_HOME: path.join(HOME, ".local", "share"), NO_COLOR: "1" }
 
 run(["git", "clone", "-q", PKG_ROOT, clone])
-run(["git", "checkout", "-q", "v0"], { cwd: clone })
+// AF5 (Probe Phase 1; DISC-A resolved): clone-checkout the SOURCE repo's CURRENT branch, not a hardcoded "v0". "v0" was
+// correct only in the standalone dev tree (where v0 IS the studio branch); in `organon` v0 is the OLD Sentinel code, so
+// the automated pristine gate was DORMANT there. Targeting the source HEAD branch is robust per-repo (staging in
+// organon/organon-studio, v0 in the dev tree). old: checkout -q v0 · new: checkout the branch PKG_ROOT is on.
+const srcBranch = run(["git", "rev-parse", "--abbrev-ref", "HEAD"], { cwd: PKG_ROOT }).out.trim() || "staging"
+run(["git", "checkout", "-q", srcBranch], { cwd: clone })
 const install = run(["bun", "install"], { cwd: clone, env: isoEnv })
 
 // POSITIVE CONTROL: WITHOUT the venv, a sidecar-dependent test FAILS (proves no inherited venv is used)

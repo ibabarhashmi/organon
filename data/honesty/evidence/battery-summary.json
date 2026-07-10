@@ -1,9 +1,9 @@
 {
   "protocol": "evidence-battery",
   "canonical": {
-    "pass": 1014,
+    "pass": 1043,
     "fail": 0,
-    "files": 152
+    "files": 158
   },
   "note": "the full studio trust battery (walls + capability-floor tests) — the headline count",
   "at": 1783468800000

@@ -29,3 +29,6 @@ data/dataplane/snapshots/
 
 # sprint logs — internal build telemetry, not part of the published product
 sprint-log/
+
+# telemetry + feedback — local-first capture, opt-in, NEVER committed (X-TELEMETRY)
+data/telemetry/

@@ -1,0 +1,107 @@
+{
+  "subject": "elixir",
+  "name": "Elixir deUSD",
+  "collapse": "Per public post-mortems (late 2025): deUSD carried material exposure to the Stream complex; as Stream unwound, deUSD depegged and the protocol moved to wind down / redeem. All figures below are SAMPLE (public reporting), not an ORGΛNON re-fetch.",
+  "provenancePosture": "SAMPLE — every fact cell below is drawn from public post-mortem reporting; ORGΛNON did NOT re-fetch the (now delisted) pool. A REAL cell would be a content-hashed live fetch. The engine verdict is the actual recomputed output on these SAMPLE facts.",
+  "facts": {
+    "name": "Elixir deUSD",
+    "apyBase": 3,
+    "apyReward": 9,
+    "tvlSlope30d": -0.6,
+    "pegDev": 0.25,
+    "isStablecoin": true,
+    "reality": "SAMPLE",
+    "provenanceRef": null,
+    "vertical": "stablecoin-yield",
+    "depProtocols": 3,
+    "ageDays": 300,
+    "sizeUsd": 100000000,
+    "liqUsd": null
+  },
+  "factProvenance": {
+    "apyBase": {
+      "value": 3,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — indicative base from public reporting"
+    },
+    "apyReward": {
+      "value": 9,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the reward component (reward-heavy mix)"
+    },
+    "tvlSlope30d": {
+      "value": -0.6,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the ~-60% 30d TVL move during the wind-down"
+    },
+    "pegDev": {
+      "value": 0.25,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the depeg stress as Stream contagion hit (|price-1|≈0.25)"
+    },
+    "depProtocols": {
+      "value": 3,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the counterparty dependency on the Stream complex (≥3 = a hard flag)"
+    }
+  },
+  "engineOutput": {
+    "verdict": "UNVERIFIED",
+    "failing": [
+      "liquidity-depth"
+    ],
+    "summary": "UNVERIFIED — we can't confirm this yet: the data is SAMPLE (not live-verified). We can't confirm the pool's exit liquidity — the depth data is missing.",
+    "rows": [
+      {
+        "axis": "yield-reality",
+        "name": "yield reality (durable base vs reward emissions)",
+        "tier": "caution",
+        "material": true,
+        "flagship": true
+      },
+      {
+        "axis": "tvl-trend",
+        "name": "TVL trend (money staying vs fleeing)",
+        "tier": "fail",
+        "material": true,
+        "flagship": false
+      },
+      {
+        "axis": "peg",
+        "name": "peg / stability",
+        "tier": "fail",
+        "material": true,
+        "flagship": false
+      },
+      {
+        "axis": "liquidity-depth",
+        "name": "liquidity depth (exit / slippage risk)",
+        "tier": "unverified",
+        "material": true,
+        "flagship": false
+      },
+      {
+        "axis": "unlock-overhang",
+        "name": "unlock overhang (imminent token dilution)",
+        "tier": "not-applicable",
+        "material": false,
+        "flagship": false
+      },
+      {
+        "axis": "counterparty",
+        "name": "counterparty / maturity (structural screen — NOT a contract audit)",
+        "tier": "caution",
+        "material": true,
+        "flagship": false
+      }
+    ]
+  },
+  "adverseFlags": [
+    "yield-reality: caution",
+    "tvl-trend: fail",
+    "peg: fail",
+    "counterparty: caution"
+  ],
+  "honestNote": "The headline verdict is UNVERIFIED — the engine will not bless data it cannot verify (these facts are SAMPLE). But the structural axes it computes from the documented facts flag: yield-reality: caution · tvl-trend: fail · peg: fail · counterparty: caution. It would never have rendered this SOLID.",
+  "reproHash": "4b157d73cdbd881f580f540e32a513f3c0b1e2b715b7012a40177b7fb11ffe9b"
+}
