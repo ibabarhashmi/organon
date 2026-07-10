@@ -1,0 +1,27 @@
+{
+ "protocol": "alpha-security-pass",
+ "at": "2026-07-10",
+ "sprint": "THE ALPHA SPRINT — Phase 4 (the security pass, recorded end-to-end)",
+ "keyHandling": {
+  "wizardToEnv": "masked paste (read -s, never echoed) → appended to .env → chmod 600 immediately (asserted per paste AND at exit)",
+  "envToTransport": "keys read server-side from env only (AskProvider.fromEnv / DefiLlama.route); they ride ONLY the provider transport (Authorization header / x-api-key / URL param to the chosen provider) — never a prompt, a page, a bundle, or a recorded string (the pro route's RECORDED source uses the redacted <key> form)",
+  "validationCalls": "script/validate-key.ts — one minimal auth-shaped call; adapters throw status-only messages by design; output additionally scrubbed",
+  "scrubber": "src/util/scrub.ts on every doctor/validate/phrase-error output path — tested with SEEDED keys across the paths (security_pass wall, positive-controlled)",
+  "residualNamed": "the Gemini key rides its request URL (provider API shape); a transport-level error message could embed that URL — the phrase-path reason is now SCRUBBED before render (AH3 closed by design, not arithmetic)"
+ },
+ "injectionUnderProfiles": "the five voice walls + the groundedness gate + the advice wall run IN THE BATTERY with mock providers (hostile outputs seeded); the capability layer adds NO new model-input path (descriptors change caps/urls, not prompts); the parity differential (S48) proves the verdict surface is profile-invariant, so a paid-profile injection cannot reach a verdict by construction; the gates' source is capability-blind (asserted)",
+ "dependencyAudit": {
+  "runtime": ["hono@4.12.27", "zod@4.4.3"],
+  "transitive": "none (bun.lock resolves exactly two packages)",
+  "verdict": "the mass-path dep set is unchanged; no new runtime dependency was added by this sprint (the wizard is shell + Bun stdlib)"
+ },
+ "skillIsolation": "skill/ = SKILL.md docs only; .impeccable/ = committed config.json + gitignored dev ephemera; no runtime import from either on any served path (grep-verified in the Phase-1 audit; unchanged since)",
+ "servedHardening": {
+  "bind": "127.0.0.1 default on BOTH servers (HOST env = explicit opt-in) — AB1",
+  "headers": "nosniff · X-Frame-Options DENY · referrer-policy no-referrer · CSP (self + inline styles/scripts for the server-rendered pages, frame-ancestors none) on every response of both servers — AH1",
+  "rateLimits": ":4444 → 240/min general · /refresh 6/min · /ask 30/min per caller (AB2); :4319 → the carried 120/min + console 20/min + 64KiB body cap",
+  "auth": "STUDIO_TOKEN Bearer on the studio's mutating routes, now CONSTANT-TIME compared (AH2); unset token = open ON LOCALHOST ONLY (the bind fix makes the old assumption true); ALPHA.md instructs setting the token before any exposure"
+ },
+ "secureDefaults": "keyless-first · localhost-first · SAMPLE-labeled-first · refuse-over-red launch gate · no telemetry (none exists — grep-clean) · nothing signs",
+ "updateStory": "--version = package version + git sha + PINS_SHA (truthful, from the tree); ALPHA.md carries the update paragraph (git pull → setup → verify)"
+}

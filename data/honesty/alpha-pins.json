@@ -1,0 +1,199 @@
+{
+ "protocol": "alpha-pins",
+ "sprint": "THE ALPHA SPRINT — audit-first hardening of the real tree for a closed alpha; the X-CAPABILITY split (paid DATA may deepen the facts; paid MODELS may never touch a verdict); one-command onboarding; the security pass; the stranger red-team; the Lineage findings closed. The closed alpha IS the demand probe's vehicle.",
+ "at": "2026-07-10",
+ "continues": "THE LINEAGE SPRINT (RED-TEAM-CLEAN; blueprint-claimed battery 960 pass / 2 skip / 0 fail across 144 files / 962 tests — see repoGroundTruth.entryBattery for what THIS clone reproduces; the tree wins, the delta recorded in D22)",
+ "carriedFromPinsSha": "ed4bb2cb8957f244927f5e00daf7ddd0d1408abf984dd1fe40ff0557f61bd42f",
+ "repoGroundTruth": {
+  "repo": "ibabarhashmi/organon-studio",
+  "branch": "staging",
+  "doors": {
+   ":4444": "serve-reality (Shelf · Reality Check · Ask Console) — script/serve-reality.ts",
+   ":4319": "serve-studio (Goal Console · Guided Builder · pool composer · /studio API) — script/serve-studio.ts",
+   "mcp": "6 MCP tool handlers, byte-identical to the /studio HTTP routes — src/studio/routes.ts",
+   "cli": [
+    "menu",
+    "status",
+    "check",
+    "launch",
+    "verify",
+    "stamp",
+    "ask",
+    "--full"
+   ]
+  },
+  "scripts": [
+   "organon.sh",
+   "organon-setup.sh",
+   "organon-run.sh",
+   "organon-report.sh",
+   "organon-common.sh",
+   "organon-test.sh",
+   "organon-studio-test.sh"
+  ],
+  "envSurface": [
+   "GROQ_API_KEY",
+   "GOOGLE_AI_STUDIO_KEY",
+   "GEMINI_API_KEY",
+   "OPENAI_API_KEY",
+   "ANTHROPIC_API_KEY",
+   "OPENAI_COMPATIBLE_BASE_URL",
+   "OPENAI_COMPATIBLE_API_KEY",
+   "STUDIO_TOKEN",
+   "FRED_API_KEY",
+   "PORT"
+  ],
+  "sidecarVenv": "src/backtest/py/.venv",
+  "canonicalBattery": "./organon-studio-test.sh (NOT bare `bun test` — keys blanked, 30s timeout, pinned file list)",
+  "entryBattery": "recorded in BUILDLOG-ALPHA.md Phase-0 marker from THIS clone's canonical run"
+ },
+ "descriptorSchema": {
+  "fields": {
+   "id": "string — provider id",
+   "kind": "model | data",
+   "auth": "env-key name(s), env-only, never logged",
+   "features": "typed flags — model: jsonMode·contextWindow·promptCache·batch·streaming·usageAccounting·reasoningControls; data: endpoints·historyDepth·rateLimit·datasets",
+   "limits": "{ rate, context, history }",
+   "privacy": "{ trainsOnPrompts: boolean } — surfaced at setup; never preferred for user strategy input",
+   "tier": "free | paid",
+   "degrade": "what absence means — MUST be today's behavior, byte-exact"
+  },
+  "law": "consumers read FLAGS, never provider names; zero vendor branching outside the descriptor modules (grep-walled)"
+ },
+ "splitContract": {
+  "dataMay": "deepen the FACTS — tier-stamped provenance (provenance records the tier); more real data is still real data",
+  "modelMayNever": "touch the verdict path — presentation + pipeline efficiency only",
+  "modelConsumerAllowlist": [
+   "src/ask/phrase.ts",
+   "src/ask/truncation.ts",
+   "src/ask/factbudget.ts",
+   "src/ask/answer.ts",
+   "src/ask/eval.ts"
+  ],
+  "dataConsumerAllowlist": [
+   "src/dataplane/providers/defillama.ts",
+   "src/dataplane/providers/geckoterminal.ts",
+   "src/dataplane/hyperliquid.ts"
+  ],
+  "verdictPathForbidden": [
+   "src/analytics/scorecard.ts",
+   "src/studio/stamp.ts",
+   "src/studio/decay.ts",
+   "src/studio/icir.ts",
+   "src/studio/mintrl.ts",
+   "src/studio/lineage.ts",
+   "src/ask/gates.ts"
+  ],
+  "freeBackwardCompat": "existing free/keyless behavior byte-exact; the layer wraps, never rewrites; the carried battery passes untouched"
+ },
+ "parityContract": {
+  "profiles": [
+   "zero-key",
+   "free-key",
+   "paid-key"
+  ],
+  "assertion": "the full shelf's scorecard verdicts + the Stamp verdicts + the pinned differential pair are BYTE-IDENTICAL across all three profiles; a capability that moves a verdict is the two-tier-truth breach — a Halt (S48)",
+  "differentialBaseline": {
+   "lendingSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+   "fundingNoGoReproHash": "0a63151b"
+  }
+ },
+ "verdictPathHashes": {
+  "src/analytics/scorecard.ts": "f279db554936f87921eb5695c5ed487be5223ac745bda82e0b2d69e4df0c84c1",
+  "src/studio/stamp.ts": "a4007e99b634fe3b2387eebc813fb4a058b496b370986f59cd2ffd0843bcaee0",
+  "src/studio/decay.ts": "6b419268160104858efccd6817bf46e3cfdc78e03a4248eb2890e10f6ad28cd1",
+  "src/studio/icir.ts": "215eb7e6f5185d160c9d185dd8684b3d1b7d3b1d173bf9aab084eb29008128e4",
+  "src/studio/mintrl.ts": "3a1d2216361b711041f60e5173713b5f43d0261910dbbc35fd4c462c7f714658",
+  "src/studio/lineage.ts": "fe502e5578714f1c4cb6a8d8af7802975ff7cc1e70083b172844eaa17da21fe0",
+  "src/ask/gates.ts": "364ab7b3c135f526cd2f175a699d3f06132245a0680f80529c715aa38dec994c"
+ },
+ "wizardContract": {
+  "maskedInput": "key paste is never echoed (stty -echo or read -s)",
+  "validationNeverLogsBodies": "live key validation calls never log request/response bodies",
+  "envPerms": ".env written chmod 600",
+  "scrubberTest": "a seeded key literal can never print through any log/error path (positive-controlled)",
+  "doctorChecks": [
+   "bun-version",
+   "python3",
+   "venv",
+   "ports",
+   "key-shape",
+   "pins-integrity",
+   "data-dirs",
+   "copy-pasteable-report"
+  ],
+  "offlineOptOut": "validation is skippable; skip = keyless mode, stated honestly"
+ },
+ "d22Schema": {
+  "subsystems": [
+   "architecture",
+   "backend",
+   "frontend",
+   "cli",
+   "installer",
+   "configuration",
+   "onboarding",
+   "provider-abstraction",
+   "api-layer",
+   "model-routing",
+   "prompt-pipeline",
+   "skill-isolation",
+   "caching",
+   "concurrency",
+   "error-handling",
+   "retries",
+   "validation",
+   "logging",
+   "diagnostics",
+   "testing",
+   "dependency-management",
+   "packaging",
+   "update-strategy",
+   "portability",
+   "performance",
+   "maintainability",
+   "dx",
+   "ux",
+   "security"
+  ],
+  "perFinding": [
+   "why",
+   "riskIfUnaddressed",
+   "complexity",
+   "dependencies",
+   "disposition (BLOCKER|HARDEN|DEFER)"
+  ],
+  "doorInventory": "every user-reachable surface dispositioned HARDEN-FOR-ALPHA or CONSCIOUSLY-GATED — never silently open",
+  "discrepancyList": "where the tree contradicts the blueprint history — the tree wins, the delta recorded",
+  "emptyFindingsRule": "an empty-findings subsystem needs the written 'audited-clean, here is what was checked'"
+ },
+ "lnResolutions": {
+  "LN1": "every GO is familyN=1 — named legible-not-stronger; the attempts-ledger→N linkage stays PARKED, in writing",
+  "LN2": "two significance representations — render's capped '≥ 0.9999' is the honest surface; frozen stamp.ts prose '1.000' a known parked internal residual",
+  "LN3": "IN2 (Operator real-screen session) · IN4 (real browser/AT/viewport a11y pass) · a11y computed-vs-observed — DISCHARGED this sprint or recorded as ALPHA BLOCKERS",
+  "LN4": "WALL 1 floor-60 exercised against a near-boundary REAL pool, or 'calibration unproven on live data' recorded honestly",
+  "LN5": "the agent-drive vs Operator-session distinction carried verbatim"
+ },
+ "stressCatalog": {
+  "carried": "S1–S47 first-class, re-run under the three capability profiles",
+  "S48": "capability parity + descriptor honesty — zero/free/paid byte-identical verdicts; seeded verdict-path flag refused; paid data always tier-stamped",
+  "S49": "onboarding/config/doctor/recovery + wizard key-safety — masked paste; scrubber seeded-key test; chmod 600; validation-never-logs-bodies",
+  "S50": "the external-user adversarial pass — door probe, injection per profile, hostile inputs, clean-machine install, WSL honesty",
+  "S51": "packaging/update/version + docs truthfulness — --version truthful; ALPHA.md claims cross-checked against the capability matrix"
+ },
+ "deviations": {
+  "reserved": [
+   "D22 (the alpha audit, verbatim)",
+   "D23 (the capability-layer + privacy scope, Operator-signed)"
+  ]
+ },
+ "screens": {
+  "count": 3,
+  "note": "the conscious 3 on :4444; every other door dispositioned in D22, never silently open"
+ },
+ "massPathDeps": [
+  "hono",
+  "zod"
+ ],
+ "pinsSha": "3b9f98bcba4307774326be132871798a6ff72b0a29d638e973bb65321ae9309b"
+}

@@ -26,3 +26,6 @@ data/dataplane/snapshots/
 # record, kept as dev provenance). A runtime import of impeccable / any CSS framework is a Halt — deps stay hono+zod.
 .impeccable/*
 !.impeccable/config.json
+
+# sprint logs — internal build telemetry, not part of the published product
+sprint-log/

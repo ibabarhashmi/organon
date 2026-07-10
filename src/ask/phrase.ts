@@ -11,6 +11,8 @@ import path from "node:path"
 import { PKG_ROOT } from "../organon/frozen"
 import { Ask } from "./answer"
 import { AskProvider } from "./provider"
+import { AskCapability } from "./capability"
+import { Scrub } from "../util/scrub"
 import { VoiceGates } from "./gates"
 import { VoiceContract } from "./contract"
 import { AskTruncation } from "./truncation"
@@ -90,9 +92,11 @@ export namespace AskPhrase {
     if (!provider) return { text: a.text, aiPhrased: false, rejected: false, reasons: [], providerId: null, blocks: detBlocks } // AI-optional: deterministic mode
     const { system, user, budget } = buildPrompt(a)
     // X-INTERPRET d (S43, layer 2): the output cap SCALES to the (unbudgeted) fact-set size so a big COMPARE is not cut.
-    const cap = AskTruncation.scaleCap(a.result.facts.length)
+    // X-CAPABILITY b (Alpha): the CEILING is descriptor-driven — a paid tier buys presentation room; the free/keyless
+    // descriptor carries the exact carried ceiling, so the free path is byte-identical through this line.
+    const cap = AskTruncation.scaleCap(a.result.facts.length, AskTruncation.BASE_MAX_TOKENS, AskCapability.capabilityFor(provider).features.maxOutputCeiling)
     let out: string
-    try { out = await provider.phrase(system, user, { maxTokens: cap }) } catch (e) { return { text: a.text, aiPhrased: false, rejected: true, reasons: [`provider unavailable (${String((e as Error).message).slice(0, 60)}) — deterministic fallback`], providerId: provider.id, blocks: detBlocks } }
+    try { out = await provider.phrase(system, user, { maxTokens: cap }) } catch (e) { return { text: a.text, aiPhrased: false, rejected: true, reasons: [`provider unavailable (${Scrub.redact(String((e as Error).message)).slice(0, 60)}) — deterministic fallback`], providerId: provider.id, blocks: detBlocks } } // AH3 (D22): SCRUBBED — a URL-borne key can never ride the rendered reason, by design not by arithmetic
     if (!out.trim()) return { text: a.text, aiPhrased: false, rejected: true, reasons: ["empty model output — deterministic fallback"], providerId: provider.id, blocks: detBlocks }
     // THE TYPED CONTRACT IS AUTHORITATIVE (X-VOICE b, D11): the AI draft becomes a labeled REASONING block iff it clears
     // ALL FIVE gates + the register wall (DOWNSTREAM of the model) — else the deterministic FACT/BOUNDARY block stands

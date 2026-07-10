@@ -15,9 +15,11 @@ export namespace AskTruncation {
   export const PER_FACT_TOKENS = 45 // each extra fact earns the model room to interpret it (a big COMPARE scales up)
   export const CEIL_MAX_TOKENS = 1200 // a hard ceiling (still bounded — we never let the cap run away)
 
-  // the output cap as a function of the fact-set size — a pure, monotone scaler bounded by [BASE, CEIL]
-  export function scaleCap(factCount: number, base = BASE_MAX_TOKENS): number {
-    return Math.min(CEIL_MAX_TOKENS, base + Math.max(0, factCount) * PER_FACT_TOKENS)
+  // the output cap as a function of the fact-set size — a pure, monotone scaler bounded by [BASE, ceil]. The ceiling
+  // is capability-driven (X-CAPABILITY b: a paid model tier buys a big COMPARE more room — presentation ONLY); the
+  // default is the carried CEIL, so every existing caller and the whole free path stay byte-exact.
+  export function scaleCap(factCount: number, base = BASE_MAX_TOKENS, ceil = CEIL_MAX_TOKENS): number {
+    return Math.min(ceil, base + Math.max(0, factCount) * PER_FACT_TOKENS)
   }
 
   // a generation ending WITHOUT terminal punctuation (and long enough to judge) is likely truncated mid-sentence.

@@ -141,6 +141,14 @@ ${screens.map(([t, body]) => `<section><h2>${esc(t)}</h2><pre>${esc(body)}</pre>
 }
 
 const app = new Hono()
+// honest headers (AH1, D22) — same backstop as :4444; inline styles/JS are server-rendered, external origins forbidden.
+app.use("*", async (c, next) => {
+  await next()
+  c.res.headers.set("x-content-type-options", "nosniff")
+  c.res.headers.set("x-frame-options", "DENY")
+  c.res.headers.set("referrer-policy", "no-referrer")
+  c.res.headers.set("content-security-policy", "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none'")
+})
   .get("/", (c) => c.html(dashboard()))
   .get("/health", (c) => c.json({ ok: true, trials: durable.length }))
   .get("/trust", (c) => c.json(trustState()))
@@ -231,8 +239,12 @@ const app = new Hono()
   .route("/studio", StudioRoutesNS.mountable(durable.mountableStore({ maxRootsPerAuthorDomain: 25 }), book, { token: process.env.STUDIO_TOKEN, rateLimit: { max: 120, windowMs: 60_000 }, maxBodyBytes: 65_536 }))
 
 const port = Number(process.env.PORT ?? 4319)
+// localhost by DEFAULT (AB1, D22): Bun.serve binds 0.0.0.0 when no hostname is passed — and the unset-STUDIO_TOKEN
+// "safe because localhost" default is only true if the bind actually IS localhost. Exposure is an opt-in (HOST=0.0.0.0),
+// and any non-localhost exposure should set STUDIO_TOKEN (documented in ALPHA.md).
+const hostname = process.env.HOST ?? "127.0.0.1"
 // export the served app so U-SURFACE traversals hit the REAL route handlers (a fresh served request, not a cached
 // renderer) — the console-path evidence the reachability law demands (U-SURFACE). Importing does NOT bind a port.
 export { app, dashboard }
-if (import.meta.main) console.log(`ORGΛNON STUDIO served → http://localhost:${port}  (trials=${durable.length}${process.env.STUDIO_TOKEN ? ", mutating routes behind a Bearer credential" : ""})`)
-export default { port, fetch: app.fetch }
+if (import.meta.main) console.log(`ORGΛNON STUDIO served → http://${hostname}:${port}  (trials=${durable.length}${process.env.STUDIO_TOKEN ? ", mutating routes behind a Bearer credential" : ""})`)
+export default { port, hostname, fetch: app.fetch }

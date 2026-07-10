@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# ORGΛNON · test — the full trust battery: TS organon tests + the Python
-# golden-noise self-test (the overfitting catcher). Surfaces GREEN/RED truthfully
-# and exits non-zero if anything fails. Wraps the real test runners; no fabricated
-# status — a real failure is a RED exit, never swallowed.
+# ORGΛNON · test — a SUBSET battery + the Python golden-noise self-test (the overfitting catcher).
+# HONEST NAMING (AH8, D22): this runs test/organon/ ONLY — it OMITS test/walls/, so it is a strict
+# subset of the CANONICAL battery (./organon-studio-test.sh). Its unique value is the golden-noise
+# selftest, which the canonical battery does not run. Surfaces GREEN/RED truthfully; never swallowed.
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/organon-common.sh"
 
-banner "test — full battery + golden-noise"
+banner "test — SUBSET battery (test/organon/) + golden-noise · the CANONICAL battery is ./organon-studio-test.sh"
 RC=0
 
 # 1. TS organon battery (isolated DB via a throwaway XDG_DATA_HOME so it never touches real data).

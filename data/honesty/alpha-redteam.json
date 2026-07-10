@@ -1,0 +1,48 @@
+{
+ "protocol": "alpha-redteam",
+ "at": "2026-07-10T11:39:24.169Z",
+ "lens": "the hostile tester (E.0) — scripted against the REAL route handlers in-process; the new/clumsy/paid lenses ride the battery walls (S48/S49/S51) + the wizard/doctor paths",
+ "probes": [
+  {
+   "name": "hostile ask — prompt-injection shape through the door (keyless: template at worst)",
+   "ok": true,
+   "detail": "HTTP 200; the echoed query is escaped; no over-claim outside the echoed input; no stack; no secret"
+  },
+  {
+   "name": "XSS-shaped pool key — /check/<script> renders escaped or 404, never markup",
+   "ok": true,
+   "detail": "HTTP 404; raw script tag absent from the response"
+  },
+  {
+   "name": "garbage params — register/raw/pool fuzz never crashes the Ask door",
+   "ok": true,
+   "detail": "HTTP 200; fuzzed params degraded to defaults; no stack; no secret"
+  },
+  {
+   "name": "the /ask flood — the 31st request inside a minute is a 429 SENTENCE (AB2)",
+   "ok": true,
+   "detail": "flood refused at 429 with a sentence: \"rate-limited — more than 30 requests in 60s. The Reality Che…\""
+  },
+  {
+   "name": "the fourth door — POST /studio/submit_spec with garbage is an honest envelope, never a crash",
+   "ok": true,
+   "detail": "HTTP 400: {\"ok\":false,\"error\":\"malformed-json\",\"message\":{\"code\":\"malformed-json\",\"plain\":"
+  },
+  {
+   "name": "the fourth door — an oversized body is refused at the door (64KiB cap)",
+   "ok": true,
+   "detail": "HTTP 413 (payload-too-large envelope)"
+  },
+  {
+   "name": "the composer under a hostile hand — /pool/compose with a nonsense body refuses in a sentence",
+   "ok": true,
+   "detail": "HTTP 200; no stack; no secret"
+  },
+  {
+   "name": "the seeded-key grep — the whole probe transcript is secret-free",
+   "ok": true,
+   "detail": "the seeded key appears in no probe response or detail"
+  }
+ ],
+ "clean": true
+}

@@ -10,6 +10,7 @@
  * Bearer credential on the mutating routes (opt-in via opts.token — off ⇒ open, so the in-process byte-identity tests
  * are unchanged), and a per-caller rate limit (429). None of this can soften a verdict: it gates the door, not the core.
  */
+import { timingSafeEqual } from "node:crypto"
 import { Hono } from "hono"
 import { Ledger } from "../ledger/ledger"
 import { Studio } from "./adjudicate"
@@ -48,7 +49,13 @@ export namespace StudioRoutesNS {
     const guard = async (c: any, next: any) => {
       const len = Number(c.req.header("content-length") ?? 0)
       if (len > maxBytes) return c.json(StudioErrors.enrich("payload-too-large", `body ${len}B exceeds cap ${maxBytes}B`), 413)
-      if (opts.token && c.req.header("authorization") !== `Bearer ${opts.token}`) return c.json(StudioErrors.enrich("unauthorized"), 401)
+      if (opts.token) {
+        // AH2 (D22): constant-time credential compare — `!==` short-circuits on the first differing byte (a timing oracle)
+        const want = Buffer.from(`Bearer ${opts.token}`)
+        const got = Buffer.from(c.req.header("authorization") ?? "")
+        const ok = want.length === got.length && timingSafeEqual(want, got)
+        if (!ok) return c.json(StudioErrors.enrich("unauthorized"), 401)
+      }
       const who = c.req.header("x-forwarded-for") ?? "local"
       const t = now()
       const recent = (hits.get(who) ?? []).filter((x) => t - x < rl.windowMs)

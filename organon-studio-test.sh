@@ -127,4 +127,12 @@ bun test --timeout 30000 test/walls/ \
   test/organon/lineage_diagnosis.test.ts \
   test/organon/lineage_walls.test.ts \
   test/organon/lineage_fix.test.ts \
-  test/organon/lineage_redteam.test.ts
+  test/organon/lineage_redteam.test.ts \
+  test/organon/alpha_pins.test.ts \
+  test/organon/alpha_audit.test.ts \
+  test/organon/alpha_blockers.test.ts \
+  test/organon/capability_layer.test.ts \
+  test/organon/capability_parity.test.ts \
+  test/organon/stranger_ready.test.ts \
+  test/organon/security_pass.test.ts \
+  test/organon/alpha_redteam.test.ts
