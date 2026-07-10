@@ -141,4 +141,5 @@ bun test --timeout 30000 test/walls/ \
   test/organon/telemetry.test.ts \
   test/organon/postmortem.test.ts \
   test/organon/kill_criterion.test.ts \
-  test/organon/probe_redteam.test.ts
+  test/organon/probe_redteam.test.ts \
+  test/organon/moat_pins.test.ts
