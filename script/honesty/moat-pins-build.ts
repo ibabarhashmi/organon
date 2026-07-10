@@ -1,0 +1,187 @@
+/**
+ * ORGΛNON — THE MOAT SPRINT, Phase 0 (PINS-LOCKED). Builds `data/honesty/moat-pins.json`: the four lines the resource
+ * evaluation found worth deepening, EACH pre-fenced before a line of product code lands — (a) the capture-time
+ * dependency contract (viem/whatsabi EXACT-pinned, batching PROHIBITED, every read block-pinned, a capture-module
+ * allowlist, no signing import, RE6's mass-path flip condition); (b) the PIT-honesty re-score contract (a REAL cell =
+ * content hash + exact as-of + re-fetch instruction; unprovable as-of → SAMPLE); (c) the variance-audit protocol + the
+ * two D27 paths (amendment: deterministic closed-form, direction CONSERVATIVE, old/new hashes + per-pool verdict
+ * changes disclosed, uses the ALREADY-FROZEN effective_n.py, frozen seven byte-untouched; caveat: the pinned render
+ * text + placement); (d) the trials-ledger schema (per-trial config+returns+metric+hash; deterministic clustering
+ * pre-required; implementation PARKED). Plus RE3 (inert-deflation label), RE4 (FTO action), PR1–PR5, the DISC-B
+ * reconciliation, D26/D27 reserved, S55–S57. Dual-repo (byte-identical): organon AND organon-studio.
+ * Convention follows probe-pins-build.ts: pinsSha = sha256(JSON.stringify(pins-without-sha)).
+ * Run: bun run script/honesty/moat-pins-build.ts
+ */
+import { createHash } from "node:crypto"
+import { readFileSync, writeFileSync } from "node:fs"
+import path from "node:path"
+import { PKG_ROOT } from "../../src/organon/frozen"
+
+const sha256 = (b: string) => createHash("sha256").update(b).digest("hex")
+const fileSha = (rel: string) => sha256(readFileSync(path.join(PKG_ROOT, rel), "utf8"))
+
+// the SAME 7 verdict-path modules the Probe pinned — asserted === live at every gate; unchanged EXCEPT via a signed D27.
+const VERDICT_PATH = [
+  "src/analytics/scorecard.ts",
+  "src/studio/stamp.ts",
+  "src/studio/decay.ts",
+  "src/studio/icir.ts",
+  "src/studio/mintrl.ts",
+  "src/studio/lineage.ts",
+  "src/ask/gates.ts",
+]
+
+// the frozen computational core the variance audit inspects (read-only) — the DSR/PSR variance lives in rigor.py; the
+// effective-N deflation machinery ALREADY EXISTS in effective_n.py (wired only on the funding path today).
+const FROZEN_CORE = [
+  "src/backtest/py/rigor.py",
+  "src/backtest/py/effective_n.py",
+]
+
+const pins: Record<string, unknown> = {
+  protocol: "moat-pins",
+  sprint:
+    "THE MOAT SPRINT — X-MOATDEEP: deepen the per-subject content-hashed moat along the ONLY four lines the resource evaluation found genuinely worth building, each fenced exactly as the evaluation demanded — (a) viem+whatsabi at CAPTURE TIME ONLY under a ledgered determinism contract (adopt-or-record on measured evidence, elegance is not evidence); (b) the re-score artifact earns REAL cells to the truth's exact ceiling (PIT honesty governs); (c) the Stamp's variance estimator audited for the i.i.d. assumption (a conscious Operator-signed conservative amendment OR an honest caveat); (d) the trials-ledger convention pinned so the day the proposer unparks the moat counts trials — while closing every Probe finding in BOTH repos and presenting the Operator's whole gate.",
+  at: "2026-07-11",
+  continues:
+    "THE PROBE SPRINT (VALIDATED PASS both repos; 1043 pass / 2 skip / 0 fail across 158 files / 1045 tests; X-PROBE RUNNING (ARMED) — READY-PENDING-OPERATOR)",
+  carriedFromPinsSha: "e6bed150ef680d414923df79c2f9835c732a5842644749b0df9a5a1db22f0c5e",
+  dualRepo: {
+    repos: ["ibabarhashmi/organon-studio", "ibabarhashmi/organon"],
+    rule: "one blueprint, two trees (byte-identical 34d20e7 base + the byte-identical Alpha/Probe layer, tree 3adffe34); every gate re-proven in EACH; a per-repo delta is a DISC (recorded, never smoothed); the port byte-identical or the difference recorded (PR5)",
+    startBattery: "1043 pass / 2 skip / 0 fail across 158 files / 1045 tests (pristine 1040/0) BOTH repos",
+  },
+
+  // ───────────────────────── (a) THE CAPTURE-TIME DEPENDENCY CONTRACT (RE1, RE6 — D26 reserved) ─────────────────────────
+  captureTimeDependencyContract: {
+    law: "X-MOATDEEP(a) — viem+whatsabi may resolve proxies/ABIs the hand-rolled path cannot, but ONLY at capture time, ONLY under this determinism contract, and ONLY if the prototype PROVES a resolution the hand-rolled path missed (adopt-or-record; D26 Operator-signed)",
+    candidates: {
+      viem: { version: "2.55.0", license: "MIT", depTree: ["@noble/curves", "@noble/hashes", "@scure/bip32", "@scure/bip39", "abitype", "isows", "ox", "ws"], note: "all-permissive; Bun-compatible; viem does NOT strictly follow semver for TYPES → the pin MUST be exact (no caret)" },
+      whatsabi: { name: "@shazow/whatsabi", version: "0.26.0", license: "MIT", depTree: ["ox"], note: "ABI selector/proxy resolution; sole dep `ox`, shared with viem" },
+    },
+    exactPinRule: "EXACT versions only (no ^ / ~ / *); a caret/range on either is a Halt — viem's type-semver drift makes a range a reproducibility footgun",
+    batchingProhibition: {
+      prohibited: ["batch.multicall", "http({ batch })", "webSocket({ ... }) batch aggregation"],
+      why: "the batching toggle is a one-line reproducibility footgun — aggregated multicall can reorder/merge reads and silently change capture bytes",
+      test: "S55 — captures are byte-identical with batching forced ON vs OFF at a pinned block; the prohibition BITES (a seeded batch:true → the determinism wall fails)",
+    },
+    blockPinningRule: "every readContract / getStorageAt / getCode carries an EXPLICIT blockNumber (a read at a fixed height is byte-reproducible regardless of which endpoint served it); a read without a pinned height is a Halt",
+    noSigningImport: "NO signing/wallet/account import EVER (no privateKeyToAccount, no WalletClient, no sendTransaction, no signMessage) — the crypto stack stays unexercised; a signing symbol imported by any module is a Halt (asserted by grep)",
+    captureModuleAllowlist: {
+      allowed: ["script/capture/proxy-truth.ts"],
+      rule: "viem/whatsabi may be imported ONLY by an allowlisted capture-time module; an import in ANY mass-render-path or verdict-path module fails the build (grep wall, S55). The mass path STAYS hono+zod (PART CLEAN intact)",
+    },
+    massPathRpcStateStaysHandRolled: {
+      decision: "the RPC-STATE mass path STAYS hand-rolled — elegance is not evidence",
+      flipConditionRE6: "flip to viem on the mass path ONLY when: ≥2 DISTINCT, ledgered ABI-decode or proxy-resolution CORRECTNESS failures in production captures, OR the hand-rolled maintenance cost demonstrably exceeds the supply-chain cost — pinned in writing; until then the hand-rolled path is retained",
+    },
+    consciousRecapture: "where deeper resolution LEGITIMATELY changes a contract tier, the registry re-capture is CONSCIOUS + disclosed (old/new tier + why — the W-SO01 pattern), never silent; the scorecard consumes the FROZEN registry artifacts so a tier change flows the normal conscious-re-capture path, never a silent verdict move",
+    adoptOrRecord: "differences show real resolution the hand-rolled path MISSED (a mis-resolved/unreachable proxy, a mis-decoded ABI shape) → ADOPT (D26 signed, capture-time-only). No correctness difference → RECORD insufficient-evidence VERBATIM, remove the prototype dependency, keep the contract pinned for the future flip. An ADOPT justified by cleaner code is a Halt",
+    d26Gate: "D26 is Operator-signed (an agent must not sign as the Operator); until signed, viem/whatsabi do NOT land as committed dependencies — the prototype runs at capture time and the measurement + recommendation are recorded, the committed deps stay hono+zod",
+  },
+
+  // ───────────────────────── (b) THE PIT-HONESTY RE-SCORE CONTRACT (PR3, S56) ─────────────────────────
+  pitHonestyContract: {
+    law: "X-MOATDEEP(b) — a re-score cell becomes REAL only by a genuine content-hashed fetch with its as-of stated exactly as what it is",
+    realCellDefinition: "a REAL cell = { value, reality:'REAL', contentSha (of the committed capture), asOf (fetched <timestamp>, covering <period>), source (url), reFetchInstruction } — re-verifiable from its committed instruction",
+    pitTrap: "a current API returning a series for last year returns TODAY'S copy of last year — possibly revised, possibly survivorship-filtered. A cell earns REAL with its as-of stated as REAL-AS-FETCHED-NOW (covering <period>); it does NOT claim REAL-AS-OF-COLLAPSE unless the source PROVES point-in-time fidelity",
+    sampleFallback: "a cell whose as-of cannot be proven, or that cannot be re-fetched, STAYS SAMPLE — plainly labeled; the artifact's ceiling is 'our engine, on real fetched data covering the collapse period, renders these verdicts' — not one cell further",
+    killCriterionUntouched: "the artifact improving must NOT nudge the kill-criterion — probe-kill-criterion.json commitHash 8b4e094b stays content-matched (the goalpost never moves while the artifact earns its punch)",
+    haltIf: "a REAL label without a committed hash · an as-of implying PIT fidelity the source can't prove · a tampered value the engine doesn't reproduce · a moved kill-criterion",
+  },
+
+  // ───────────────────────── (c) THE VARIANCE-AUDIT PROTOCOL + THE TWO D27 PATHS (RE2, S57 — D27 reserved) ─────────────────────────
+  varianceAuditProtocol: {
+    law: "X-MOATDEEP(c) — the variance audit's finding follows the evidence; an un-audited estimator or a silent math edit is a Halt",
+    theQuestion: "does the Stamp's Sharpe/PSR variance assume i.i.d. over autocorrelated DeFi funding/yield series? An i.i.d. variance UNDERSTATES the Sharpe/PSR variance → the DSR is overstated → the Stamp's verdicts are TOO GENEROUS — the exact direction a firewall must fear",
+    readOnly: "the audit is READ-ONLY — `git diff -- src/` empty through the audit phase (the Lineage D20 discipline); no product diff lands in the audit",
+    evidenceKnownAtPinTime: "rigor.py::psr computes the Sharpe variance as (1 - g3·SR + ((g4-1)/4)·SR²)/(n-1) — it corrects for skew (g3) and kurtosis (g4) but treats the n observations as INDEPENDENT (i.i.d.); the DSR (deflated_sharpe → psr(returns, sr0_deflated)) inherits it. The Stamp's input (poolReturnsFromSeries = daily yield accruals) is autocorrelated → the audit is expected to find YES, i.i.d. assumed. The audit MEASURES it, never assumes it",
+    alreadyHaveTheFix: "effective_n.py (FROZEN, pinned 5fc0eaac…) already implements measured integrated_autocorr_time (τ_int), effective_n_serial = N/τ_int, and Newey–West — but wired ONLY on the funding path, never the Stamp's yield-series DSR. So an amendment needs ZERO frozen-byte edits: an off-path rider (the MinTRL pattern) computes n_eff from the EXISTING frozen τ_int machinery and imposes an EFFECTIVE-N FLOOR",
+    d27Paths: {
+      amendment: {
+        shape: "a deterministic closed-form correction — an EFFECTIVE-N FLOOR: compute τ_int + n_eff = N/τ_int from the recorded series (via the frozen effective_n.py sidecar or a byte-faithful port); if n_eff < the effective floor the Stamp becomes INSUFFICIENT (the MinTRL suppression pattern) — pure, no model, no randomness",
+        direction: "CONSERVATIVE — net verdicts may only HOLD or DEGRADE (a GO may honestly become INSUFFICIENT); a net-GENEROUS outcome (a fix that keeps more GOs than it costs) is presumptively wrong and HALTS (S57 direction wall)",
+        disclosure: "a signed conscious re-freeze under the DECAY_SIGNIF_Z precedent — old/new module hashes disclosed; EVERY affected Stamp verdict listed pool-by-pool (before → after); goldens re-pinned only where legitimately changed",
+        frozenSevenUntouched: "the frozen seven stay byte-identical (the rider reads the series, it does not edit rigor.py or effective_n.py); the scorecard differential stays byte-identical (the Stamp is OFF the scorecard path)",
+        ln2FoldIn: "OPTIONAL — the LN2 frozen-prose 1.000 residual MAY fold into the same disclosed re-freeze (one conscious amendment, two honest fixes)",
+      },
+      caveat: {
+        shape: "the i.i.d.-optimism documented PROMINENTLY at the render beside the existing weakest-form strength line; the amendment PARKED with the audit evidence attached",
+        renderText: "This significance assumes each recorded observation is independent. DeFi yields are autocorrelated, so the true statistical evidence is weaker than the number suggests — read the pass as an optimistic ceiling, not a floor.",
+        placement: "the Stamp drawer, beside the strength line (reality.ts renderStamp — the render layer, NOT a verdict-path module); a plain-words statement the depositor reads",
+      },
+    },
+    interimHonestDefault: "disclosure of a KNOWN optimism is never optional and never needs a signature (the RE3 pattern) — the CAVEAT is rendered NOW as the honest interim; the AMENDMENT is specified here + PARKED pending the Operator's D27 signature (no verdict moves without it). D27 records the Operator's terminal choice: ACTIVATE the amendment (superseding the caveat with a conservative correction — the recommended path) or RATIFY the caveat as permanent",
+    d27Gate: "D27 is Operator-owned + Operator-signed (Phase 4's math decision); an un-audited estimator, a silent math edit, or a generous 'fix' is a Halt",
+  },
+
+  // ───────────────────────── (d) THE TRIALS-LEDGER SCHEMA (RE5) + the deflation-inert label (RE3) ─────────────────────────
+  trialsLedgerSchema: {
+    law: "X-MOATDEEP(d) — the moat gets ready to count trials the day the proposer generates them, at ZERO implementation cost now",
+    perTrialRecord: ["config (the candidate's spec)", "returnSeries (the realized series)", "metric (the scored statistic)", "contentSha (of config+series+metric)"],
+    deterministicClusteringPreRequired: "the ONC-style effective-trials counting requires DETERMINISTIC clustering — K-means randomness is an X-DETERM hazard; a deterministic AGGLOMERATIVE variant is the pinned direction (recorded WITH the schema)",
+    implementationParked: "the ONC implementation + PBO/CSCV stay PARKED behind the proposer + adequate T; this sprint pins the SCHEMA ONLY — an implementation commit is a cut (A′#7). ZERO implementation before trials exist",
+    ftoRE4: "the FTO flag: US 2019/0294990 A1 (AQR, the DSR/ONC-style application; grant status UNCONFIRMED) warrants a professional freedom-to-operate check before commercializing any effective-trials reimplementation — a dated, Operator-owned BUSINESS action, surfaced at handoff",
+  },
+  re3InertDeflationLabel: {
+    text: "The deflation is currently inert — 1 attempt counted, no multiple-testing penalty was paid.",
+    why: "no user should read sixteen-nines confidence into an UN-deflated DSR — n=1 means the search charge is zero, so the deflation deducted nothing (RE3, A′#8)",
+    placement: "the Stamp drawer strength line (reality.ts renderStamp render layer) on an n=1 GO/NO-GO; verified against the existing lineage.ts strengthLine(1) meaning + EXTENDED with the crisp 'inert / no penalty' words at the render (verdict-path hashes stay frozen)",
+    walled: "findings_closed_probe.test.ts asserts the rendered n=1 Stamp carries the inert text",
+  },
+  re4FtoAction: {
+    id: "RE4",
+    patent: "US 2019/0294990 A1",
+    assigneeClaimed: "AQR (the DSR / ONC-style effective-trials application)",
+    grantStatus: "UNCONFIRMED — a professional freedom-to-operate check is required before commercializing any effective-trials reimplementation",
+    owner: "Operator (a business action, not an engineering task)",
+    dated: "2026-07-11",
+    surfacedAt: "the Phase 5 handoff + the Deviations Ledger",
+  },
+
+  // ───────────────────────── THE PROBE FINDINGS PR1–PR5 ─────────────────────────
+  probeFindings: {
+    PR1: "IN2 (Operator real-screen session) · IN4 (browser/AT/viewport a11y pass) · AF4 (first LIVE paid-key parity diff) — carried to Phase 5 as the Operator gate that can no longer slip; DISCHARGED whole in one sitting or an honest STOP; agent-executed → OWED-OPERATOR-GATED, never simulated (LN5)",
+    PR2: "D23/D24/D25 countersignatures PREPARED + presented for signing alongside the new D26/D27 — one document, one sitting (Phase 5)",
+    PR3: "the REAL-cells upgrade — the Stream/Elixir/Resolv post-mortems earn REAL cells to the PIT-honesty ceiling (Phase 3, S56)",
+    PR4: "the DISC-B label reconciled AT THIS SPRINT'S NATURAL PINS BUMP — see discBReconciliation",
+    PR5: "the dual-repo behavioral-divergence wall — per-repo expect() counts recorded every sprint + both trees asserted 0-fail; every per-repo delta a DISC, never papered (dual_repo_divergence.test.ts)",
+  },
+  discBReconciliation: {
+    finding: "alpha-pins.json:8 carries repo:'ibabarhashmi/organon-studio' — the Alpha layer was reproduced FROM organon-studio's f53284c, so its pins label names organon-studio even inside the organon tree (DISC-B; the label was carried verbatim rather than mutated, honestly, at Probe)",
+    reconciliation: "the moat-pins name each tree's substrate HONESTLY: both organon@34d20e7 and organon-studio@34d20e7 are byte-identical self-substantiating bases (proven by write-tree equality, tree 3adffe34 through the Alpha+Probe layer). The Alpha-era 'organon-studio' provenance label is SUPERSEDED by each tree's own base-identity — a supersession recorded here, NOT a rewrite",
+    alphaChainIntact: "the Alpha pinsSha chain (3b9f98bc…) stays UNTOUCHED as superseded history — the U-RESUPERSEDE discipline: never rewrite a prior pin's bytes to reconcile a label; supersede it forward",
+    driftEnds: "with this bump the label drift ENDS — moat-pins is the current honest substrate record for both trees",
+  },
+
+  // ───────────────────────── carried invariants (asserted === live at every gate) ─────────────────────────
+  verdictPathForbidden: {
+    modules: VERDICT_PATH,
+    extension: "carried from Probe — telemetry + feedback import NO scored module; NEW: viem/whatsabi may import NO scored module and appear in NO verdict-path module (the capture-time allowlist); the mass path stays hono+zod",
+  },
+  verdictPathHashes: Object.fromEntries(VERDICT_PATH.map((rel) => [rel, fileSha(rel)])),
+  frozenCoreHashes: Object.fromEntries(FROZEN_CORE.map((rel) => [rel, fileSha(rel)])),
+  parityContract: {
+    profiles: ["zero-key", "free-key", "paid-key"],
+    differentialBaseline: {
+      lendingSetSha: "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+      fundingNoGoReproHash: "0a63151b",
+    },
+  },
+  deviations: {
+    reserved: ["D26 (the capture-time dependency exception — viem/whatsabi adopt-or-record, Operator-signed)", "D27 (the variance decision — amendment or caveat, Operator-signed)"],
+  },
+  stressCatalog: {
+    carried: "S1–S54 first-class, re-run in BOTH repos",
+    S55: "capture-time dependency determinism — captures byte-identical with batching forced ON vs OFF at a pinned block (the prohibition bites); the allowlist/grep wall on mass/verdict paths; exact version pins; no signing import; the adopt-or-record decision evidence-matched (an ADOPT without a demonstrated correctness difference fails; a RECORD with one demonstrated fails)",
+    S56: "re-score REAL-cell integrity — every REAL cell content-hash re-verifies + carries its exact as-of; a PIT-dishonest (REAL-as-of-collapse on a current fetch) or tampered cell caught; SAMPLE cells labeled; the kill-criterion untouched",
+    S57: "variance honesty — the audit's finding evidence-matched + read-only; the amendment (if taken) deterministic ×2 with the conservative-direction wall biting + the per-pool census complete, OR the caveat rendered; the scorecard differential byte-identical throughout",
+  },
+  screens: { count: 3, note: "the conscious 3 on :4444; /postmortems + /feedback stay DISPOSITIONED doors (the post-mortems upgrade in place — per-cell REAL/SAMPLE provenance); NO fourth screen" },
+  massPathDeps: ["hono", "zod"],
+  massPathDepsNote: "the mass render path STAYS hono+zod; viem/whatsabi are capture-time-only, exact-pinned, allowlisted, grep-walled off the mass/verdict paths; adding a mass-path dependency is a Halt (PART CLEAN)",
+}
+
+const pinsSha = sha256(JSON.stringify(pins))
+writeFileSync(path.join(PKG_ROOT, "data", "honesty", "moat-pins.json"), JSON.stringify({ ...pins, pinsSha }, null, 1) + "\n")
+console.log("moat-pins.json written · PINS_SHA", pinsSha, "· carried", pins.carriedFromPinsSha)
