@@ -1,0 +1,20 @@
+{
+  "protocol": "probe-provenance",
+  "at": "2026-07-10",
+  "rule": "AF6 (DISC-B) — a DURABLE, SELF-CONTAINED base-identity record committed to `organon`, so a future reader is NOT dependent on `organon-studio@f53284c` staying live. The two repos' Alpha trees are byte-identical; this file is the proof, in `organon`'s own tree.",
+  "baseIdentity": {
+    "sharedBase": "34d20e7dae8a9fb42c9ca022625c85a3496eb271",
+    "sharedBaseSubject": "ORGΛNON — the honest DeFi Reality Check (the Lineage snapshot, 515 files)",
+    "organonStagingBase": "34d20e7 — organon @ staging built the Alpha layer on this base",
+    "organonStudioAlphaParent": "34d20e7 — organon-studio @ f53284c's parent is the SAME object (git rev-parse matched byte-for-byte)"
+  },
+  "alphaLayer": {
+    "organonStudio": "f53284cf51c3decfbf0fc61af4085c4785feaf01 — ORGΛNON — Alpha layer (authored BABAR HASHMI, 2026-07-10)",
+    "organon": "9243a96 — the SAME Alpha layer, applied to organon@staging via `git cherry-pick --no-commit f53284c` (0 conflicts, byte-identical base)",
+    "alphaTreeHash": "2b242ac770a10f02a96d30e4660b558d0066bfd4",
+    "byteIdentical": "organon@9243a96^{tree} === organon-studio@f53284c^{tree} === 2b242ac770a10f02a96d30e4660b558d0066bfd4 (verified this session)"
+  },
+  "pinLabelNote": "DISC-B: alpha-pins.json.repoGroundTruth.repo reads 'ibabarhashmi/organon-studio' (the substrate the Alpha artifacts were authored against). Its pinned FACTS (doors/scripts/env-surface/sidecar) are byte-identical between the repos, so the label is carried verbatim rather than mutated (mutating it would break the alpha pinsSha 3b9f98bc and the hash chain for a provenance label). THIS record + BUILDLOG-PROBE.md are the honest statement that the organon substrate is `ibabarhashmi/organon`.",
+  "selfContained": true,
+  "note": "A future reader of `organon` needs nothing outside this repo: the shared base is a commit both repos carry; the Alpha tree hash is recorded here; the cherry-pick origin is stated. If organon-studio disappears, organon's Alpha layer + this record stand on their own."
+}

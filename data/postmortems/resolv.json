@@ -1,0 +1,73 @@
+{
+  "subject": "resolv",
+  "name": "Resolv USR",
+  "collapse": "Per public post-mortems (2025): USR — a delta-neutral 'stablecoin' backed by a hedged basis position with an RLP insurance layer — saw peg stress / a wobble under adverse funding, absorbed by the insurance layer (a milder event than Stream/Elixir). All figures below are SAMPLE (public reporting), not an ORGΛNON re-fetch.",
+  "provenancePosture": "SAMPLE — every fact cell below is drawn from public post-mortem reporting; ORGΛNON did NOT re-fetch the (now delisted) pool. A REAL cell would be a content-hashed live fetch. The engine verdict is the actual recomputed output on these SAMPLE facts.",
+  "facts": {
+    "name": "Resolv USR",
+    "apyBase": 5,
+    "apyReward": 7,
+    "tvlSlope30d": -0.2,
+    "pegDev": 0.03,
+    "isStablecoin": true,
+    "reality": "SAMPLE",
+    "provenanceRef": null,
+    "vertical": "delta-neutral",
+    "deltaNeutral": true,
+    "fundingBand": {
+      "p10": -8,
+      "median": 4,
+      "p90": 15
+    },
+    "depProtocols": 3,
+    "ageDays": 200,
+    "sizeUsd": 250000000,
+    "liqUsd": null
+  },
+  "factProvenance": {
+    "apyBase": {
+      "value": 5,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — indicative basis yield from public reporting"
+    },
+    "apyReward": {
+      "value": 7,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the reward component"
+    },
+    "tvlSlope30d": {
+      "value": -0.2,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — a ~-20% 30d TVL move (a wobble, not a collapse)"
+    },
+    "pegDev": {
+      "value": 0.03,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — a modest peg deviation, largely held"
+    },
+    "fundingBand": {
+      "value": null,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the delta-neutral funding band (p10 -8 / median 4 / p90 15 %) — adverse-tail funding risk"
+    }
+  },
+  "engineOutput": {
+    "verdict": "UNVERIFIED",
+    "failing": [],
+    "summary": "UNVERIFIED — we can't confirm this yet: the data is SAMPLE (not live-verified).",
+    "rows": [
+      {
+        "axis": "funding-regime",
+        "name": "funding regime (the carry's volatility band)",
+        "tier": "caution",
+        "material": true,
+        "flagship": true
+      }
+    ]
+  },
+  "adverseFlags": [
+    "funding-regime: caution"
+  ],
+  "honestNote": "The headline verdict is UNVERIFIED — the engine will not bless data it cannot verify (these facts are SAMPLE). But the structural axes it computes from the documented facts flag: funding-regime: caution. It would never have rendered this SOLID.",
+  "reproHash": "9e9af3799d30b8629a3ecf69d8a66979655e2fea2f24100fc2161a8d101a33c2"
+}

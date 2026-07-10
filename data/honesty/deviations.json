@@ -157,7 +157,25 @@
    "why": "The split is the only line the constitution allows: paid DATA may deepen the facts, paid MODELS may sharpen the telling, neither may move a verdict (X-CAPABILITY).",
    "lawAuthority": "X-CAPABILITY + X-BYOK",
    "operatorSigned": false,
-   "note": "AWAITING the Operator's signature \u2014 surfaced in the BUILDLOG-ALPHA handoff; the scope is proposed and pinned, not yet countersigned."
+   "note": "AWAITING the Operator's signature \u2014 surfaced in the BUILDLOG-ALPHA handoff; the scope is proposed and pinned, not yet countersigned. AF3 (Probe): the parity proof it rests on is now GREEN in BOTH repos (fingerprint cc7e5e5a, positive-controlled) -- the countersign block is PREPARED; operatorSigned stays false until the Operator signs (an agent must not sign as the Operator)."
+  },
+  {
+   "id": "D24",
+   "blueprintLine": "Probe Phase 0/2: 'D24 (the telemetry/feedback privacy posture, Operator-signed)'",
+   "whatWasDone": "The telemetry + feedback posture is pinned in data/honesty/probe-pins.json (telemetryPosture + captureManifest + feedbackContract) and built in src/telemetry/*: OFF by default (ORGANON_TELEMETRY=1 + an accepted first-run disclosure required); the captured field set === the pinned manifest exactly (screen/intent/verdictWord/latencyMs/degradeEvent/door/sampleRatio) and NEVER keys/strategy/addresses/prompt/PII; every event scrubbed (Alpha scrubber EXTENDED to address/txhash/token masking; a seeded secret/address is dropped, positive-controlled S52); local-first with telemetry --show/--export/--purge; egress ONLY on a SECOND explicit ORGANON_TELEMETRY_SHARE=1; telemetry+feedback are verdict-path-forbidden consumers (grep-walled). No analytics SDK; Bun-stdlib + zod only.",
+   "why": "The tool's entire thesis IS privacy-respecting honesty; telemetry that betrayed privacy would falsify the thesis in the act of measuring it. Off-by-default/manifested/scrubbed/double-consent is the posture a privacy-first buyer would respect (X-TELEMETRY).",
+   "lawAuthority": "X-TELEMETRY + X-HONEST + A'#1",
+   "operatorSigned": false,
+   "note": "AWAITING the Operator's signature -- the posture is proposed, pinned, and proven (S52); surfaced in the BUILDLOG-PROBE handoff, not yet countersigned."
+  },
+  {
+   "id": "D25",
+   "blueprintLine": "Probe Phase 0/4: 'D25 (the probe kill-criterion + the re-score artifact scope, Operator-signed)'",
+   "whatWasDone": "Two artifacts, both honesty-governed. (1) The pre-registered kill-criterion (data/honesty/probe-kill-criterion.json, commitHash 8b4e094b): concrete + numeric continue/pivot/stop over three metrics (returning-testers, feedback-trust, rescore-conversation), committed to the ledger BEFORE any invite, immutable-without-a-disclosed-re-pin (the anti-goalpost-move discipline; S54). (2) The re-score post-mortems (data/postmortems/{stream,elixir,resolv}.json): the EXISTING deterministic engine (Scorecard.score, zero new scoring) run against the three 2025-26 collapses; every fact cell labeled SAMPLE (public reporting, not re-fetched); the recorded verdict IS the engine's actual recomputed output (UNVERIFIED + the adverse structural flags); allSample=true, no fabricated cell (S53).",
+   "why": "The Stamp's anti-overfitting discipline applied to the tool's OWN thesis (pre-register the bar before the evidence), and the artifact most tempted to lie held hardest to X-HONEST (REAL-or-labeled-SAMPLE, never an invented REAL cell).",
+   "lawAuthority": "X-PROBE + X-HONEST + A'#2/#3/#11",
+   "operatorSigned": false,
+   "note": "AWAITING the Operator's ratification of the kill-criterion thresholds (adjusting them before invites is a disclosed re-pin, not a moved goalpost) -- surfaced in the BUILDLOG-PROBE handoff."
   }
  ]
 }

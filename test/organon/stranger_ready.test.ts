@@ -90,7 +90,7 @@ test("ALPHA.md exists and its claims cross-check against the tree (advertised ==
   expect(a).toMatch(/No Docker/i)
   expect(existsSync(path.join(PKG_ROOT, "Dockerfile"))).toBe(false)
   // the doctor + STUDIO_TOKEN + WSL + SAMPLE-first-launch priming are all present
-  for (const claim of [/doctor/, /STUDIO_TOKEN/, /WSL/, /SAMPLE/, /No telemetry/i]) expect(a).toMatch(claim)
+  for (const claim of [/doctor/, /STUDIO_TOKEN/, /WSL/, /SAMPLE/, /telemetry is OFF by default/i]) expect(a).toMatch(claim)
   // the parked list matches the pins (nothing advertised that is parked)
   expect(a).toMatch(/strategy-proposer/)
   expect(a).toMatch(/D21/)

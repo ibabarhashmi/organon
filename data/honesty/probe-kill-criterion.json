@@ -1,0 +1,38 @@
+{
+  "protocol": "probe-kill-criterion",
+  "at": "2026-07-10",
+  "status": "PRE-REGISTERED (committed before invites) — proposed Stage-0 bars, pending Operator ratification (D25)",
+  "rule": "S54 — concrete + numeric + continue/pivot/stop; immutable-once-committed (a later edit is a conscious, disclosed re-pin via commitHash, never silent). The anti-overfitting discipline the Stamp applies to strategies, applied to the tool's own thesis.",
+  "window": "the closed-alpha window: 14 days from the first invite accepted",
+  "cohort": "the invited testers (Stage-0 demand kill-test; target invite list ~10)",
+  "metrics": [
+    {
+      "metric": "returning-testers",
+      "question": "did the tool earn a second session? (demand, not curiosity)",
+      "measurement": "distinct testers with >= 2 sessions in the window (opt-in telemetry returning-count + Operator-confirmed; a tester who opted out counts as no-signal, never as a success)",
+      "stopThreshold": "< 2 of the cohort return",
+      "pivotThreshold": "2-3 of the cohort return",
+      "continueThreshold": ">= 4 of the cohort return"
+    },
+    {
+      "metric": "feedback-trust",
+      "question": "did the people who used it TRUST the verdicts?",
+      "measurement": "fraction of submitted /feedback entries with trusted=true (local, scrubbed, shared-on-consent)",
+      "stopThreshold": "< 0.4 trusted",
+      "pivotThreshold": "0.4-0.6 trusted",
+      "continueThreshold": ">= 0.6 trusted"
+    },
+    {
+      "metric": "rescore-conversation",
+      "question": "did the credibility artifact (the Stream/Elixir/Resolv re-scores) open a real conversation?",
+      "measurement": "count of design-partner / paid-interest conversations the re-score post-mortems directly opened (Operator-logged)",
+      "stopThreshold": "0 conversations",
+      "pivotThreshold": "1 conversation",
+      "continueThreshold": ">= 2 conversations"
+    }
+  ],
+  "decisionRule": "CONTINUE if >= 2 of the 3 metrics hit their continueThreshold and none hits its stopThreshold; STOP if >= 2 metrics hit their stopThreshold; otherwise PIVOT (the signal is weak but not dead — narrow the wedge). Graded ONCE at the window's end against THIS committed definition.",
+  "antiGoalpostMove": "this file is committed to the ledger before any invite. The commitHash below is pinned in the BUILDLOG-PROBE final marker; changing any threshold after an invite goes out changes the hash and MUST be surfaced as a disclosed re-pin (an amendment with its reason), never a silent edit — the probe cannot be graded on a moved goalpost.",
+  "parkedOnResult": "the LLM proposer / reports-API / execution / archive-node / calibration-scoring / new-Stamp-statistics unpark on EVIDENCE from this probe, not hope — which one unparks next is the probe's answer to give, not this sprint's.",
+  "commitHash": "8b4e094b373367cad91cf7148f38a4281e25e85cd0086d3cb2f352c7744e685c"
+}

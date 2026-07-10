@@ -59,8 +59,15 @@ git pull && ./organon.sh setup && ./organon.sh verify
 
 The LLM strategy-proposer as a product surface (behind its noise wall + kill-switch) · reports/API productization · execution/custody (nothing signs, ever) · archive-node RPC · calibration scoring · new Stamp statistics. The POOL-EVENTS plane path is built and fence-proven but **not live** (D21). Every deviation from the blueprints lives verbatim in `data/honesty/deviations.json` (D1–D23).
 
+## Telemetry, feedback, and the re-score post-mortems
+
+- **Telemetry is OFF by default.** It only captures if you set `ORGANON_TELEMETRY=1` **and** accept the disclosure (`./organon.sh telemetry --disclosure` then `--accept`). It records a **pinned manifest** — screen · intent · verdict-word reached · latency · degrade-event · which door · SAMPLE-ratio — and **never** keys, strategy inputs, typed pool addresses, prompt text, or PII. Every event is scrubbed. It stays on your machine: `./organon.sh telemetry --show / --export / --purge`. It leaves only if you *separately* opt in with `ORGANON_TELEMETRY_SHARE=1` — a second, explicit consent.
+- **Feedback** is the same posture: `./organon.sh feedback --screen reality --useful 1 --trusted 1 --missing "…"` (or `POST /feedback`) records your structured verdict-on-a-verdict, scrubbed and local-first, shared only on the same second consent.
+- **The re-score post-mortems** (`GET /postmortems`) run ORGΛNON's own engine against the Stream / Elixir / Resolv 2025-26 collapses: *here is what it would have flagged, deterministically.* Every fact cell is **SAMPLE-labeled** (public reporting, not a re-fetch of the delisted pools) and every verdict is the engine's actual recomputed output — never a fabricated number.
+- **The probe is graded against a bar set before you arrived.** `data/honesty/probe-kill-criterion.json` pre-registers, numerically, what your cohort's signal must show to continue / pivot / stop — committed before the invites, so the tool can't move its own goalpost.
+
 ## What we ask of you
 
 Break it. Paste a wrong key, feed it garbage, probe the second door, grep your logs for your own key (you won't find it — S49 tests that). When it refuses you, it should refuse in a sentence that tells you why; a stack trace where a sentence belongs is a bug we want filed. The one thing it must never do is tell you a comforting lie — if you catch it doing that, that's the bug report we want most.
 
-*No telemetry. Nothing phones home; nothing signs; your keys never leave your machine except to the provider you chose.*
+*Telemetry is **OFF by default** and opt-in only — no analytics SDK, nothing phones home on its own, nothing signs; your keys never leave your machine except to the provider you chose.*

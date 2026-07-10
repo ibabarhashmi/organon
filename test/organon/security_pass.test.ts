@@ -79,12 +79,20 @@ test("the key validator never logs bodies — adapters throw status-only; the va
   expect(p).toMatch(/HTTP \$\{r\.status\}/) // the throw shape is status-only, by design
 })
 
-test("the mass-path dep set is unchanged (hono + zod, nothing else) and NO telemetry exists anywhere in src/script", () => {
+test("the mass-path dep set is unchanged (hono + zod) and NO analytics SDK / phone-home exists; the Probe telemetry is opt-in + LOCAL-FIRST (D24)", () => {
   const pkg = JSON.parse(read("package.json"))
   expect(Object.keys(pkg.dependencies).sort()).toEqual(["hono", "zod"])
-  // no telemetry/analytics/phone-home surface — a telemetry grab is a cut (A′#11)
-  for (const rel of ["script/serve-reality.ts", "script/serve-studio.ts", "script/doctor.ts", "organon-setup.sh"]) {
-    expect(read(rel)).not.toMatch(/telemetry|analytics\.|segment\.|posthog|sentry/i)
+  // NO third-party analytics SDK anywhere — the covert-capture vector a telemetry grab would ride (A′#8/#11; D24). The
+  // Probe added OPT-IN telemetry (off-by-default, manifested, scrubbed, double-consent — proven in the telemetry wall,
+  // S52); the security guarantee is not "no telemetry" but "no covert SDK + no phone-home".
+  for (const rel of ["script/serve-reality.ts", "script/serve-studio.ts", "script/doctor.ts", "organon-setup.sh",
+                     "src/telemetry/telemetry.ts", "src/telemetry/store.ts", "src/telemetry/feedback.ts"]) {
+    expect(read(rel)).not.toMatch(/analytics\.|segment\.|posthog|sentry|mixpanel|amplitude|google-analytics|gtag/i)
+  }
+  // LOCAL-FIRST: the telemetry seam performs NO network egress — no fetch/XHR/http client/beacon in capture/store/share
+  // (share() only ASSEMBLES the scrubbed payload; transmitting is the Operator's explicit act, disclosed).
+  for (const rel of ["src/telemetry/telemetry.ts", "src/telemetry/store.ts", "src/telemetry/feedback.ts", "src/telemetry/manifest.ts"]) {
+    expect(read(rel)).not.toMatch(/\bfetch\(|XMLHttpRequest|axios|http\.request|https\.request|sendBeacon/i)
   }
 })
 

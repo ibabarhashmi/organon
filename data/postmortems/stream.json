@@ -1,0 +1,107 @@
+{
+  "subject": "stream",
+  "name": "Stream Finance xUSD",
+  "collapse": "Per public post-mortems (Nov 2025): xUSD — a yield-bearing 'stablecoin' fed by opaque off-chain curator strategies with recursive leverage — depegged hard (to ~$0.2–0.3) as the strategies unwound; hundreds of millions in exposure across the dependent stack. All figures below are SAMPLE (public reporting), not an ORGΛNON re-fetch.",
+  "provenancePosture": "SAMPLE — every fact cell below is drawn from public post-mortem reporting; ORGΛNON did NOT re-fetch the (now delisted) pool. A REAL cell would be a content-hashed live fetch. The engine verdict is the actual recomputed output on these SAMPLE facts.",
+  "facts": {
+    "name": "Stream Finance xUSD",
+    "apyBase": 2,
+    "apyReward": 16,
+    "tvlSlope30d": -0.72,
+    "pegDev": 0.75,
+    "isStablecoin": true,
+    "reality": "SAMPLE",
+    "provenanceRef": null,
+    "vertical": "stablecoin-yield",
+    "depProtocols": 4,
+    "ageDays": 240,
+    "sizeUsd": 150000000,
+    "liqUsd": null
+  },
+  "factProvenance": {
+    "apyBase": {
+      "value": 2,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — indicative organic base from public reporting"
+    },
+    "apyReward": {
+      "value": 16,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the large emissions component driving the >80%-reward mix (mercenary)"
+    },
+    "tvlSlope30d": {
+      "value": -0.72,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the ~-72% 30d TVL move as the pool unwound (public post-mortems)"
+    },
+    "pegDev": {
+      "value": 0.75,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the hard depeg to ~$0.25 (|price-1|≈0.75)"
+    },
+    "depProtocols": {
+      "value": 4,
+      "reality": "SAMPLE",
+      "source": "SAMPLE — the stacked off-chain-curator + recursive-leverage dependency (≥3 = a hard flag)"
+    }
+  },
+  "engineOutput": {
+    "verdict": "UNVERIFIED",
+    "failing": [
+      "liquidity-depth"
+    ],
+    "summary": "UNVERIFIED — we can't confirm this yet: the data is SAMPLE (not live-verified). We can't confirm the pool's exit liquidity — the depth data is missing.",
+    "rows": [
+      {
+        "axis": "yield-reality",
+        "name": "yield reality (durable base vs reward emissions)",
+        "tier": "fail",
+        "material": true,
+        "flagship": true
+      },
+      {
+        "axis": "tvl-trend",
+        "name": "TVL trend (money staying vs fleeing)",
+        "tier": "fail",
+        "material": true,
+        "flagship": false
+      },
+      {
+        "axis": "peg",
+        "name": "peg / stability",
+        "tier": "fail",
+        "material": true,
+        "flagship": false
+      },
+      {
+        "axis": "liquidity-depth",
+        "name": "liquidity depth (exit / slippage risk)",
+        "tier": "unverified",
+        "material": true,
+        "flagship": false
+      },
+      {
+        "axis": "unlock-overhang",
+        "name": "unlock overhang (imminent token dilution)",
+        "tier": "not-applicable",
+        "material": false,
+        "flagship": false
+      },
+      {
+        "axis": "counterparty",
+        "name": "counterparty / maturity (structural screen — NOT a contract audit)",
+        "tier": "caution",
+        "material": true,
+        "flagship": false
+      }
+    ]
+  },
+  "adverseFlags": [
+    "yield-reality: fail",
+    "tvl-trend: fail",
+    "peg: fail",
+    "counterparty: caution"
+  ],
+  "honestNote": "The headline verdict is UNVERIFIED — the engine will not bless data it cannot verify (these facts are SAMPLE). But the structural axes it computes from the documented facts flag: yield-reality: fail · tvl-trend: fail · peg: fail · counterparty: caution. It would never have rendered this SOLID.",
+  "reproHash": "30c2e82023b11c1338fbff9696be64e7953b4463a975676be80db51278f7dff2"
+}

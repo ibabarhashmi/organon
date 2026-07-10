@@ -11,6 +11,7 @@
 import { Hono } from "hono"
 import { Reality } from "../src/studio/reality"
 import { ProvRecord } from "../src/dataplane/record"
+import { Feedback } from "../src/telemetry/feedback"
 
 export const app = new Hono()
 
@@ -48,6 +49,40 @@ app.use("*", perCallerLimit({ max: Number(process.env.REALITY_RL_MAX ?? 240), wi
 // health — reports the FROZEN screen set: the conscious 3 (Shelf · Reality Check · Ask; the Stamp is a sub-route, not a
 // screen — V1). A FOURTH screen is a Halt (the screens_frozen wall asserts the set is exactly ["shelf","reality-check","ask"]).
 app.get("/health", (c) => c.json({ ok: true, screens: Reality.SCREENS, chain: ProvRecord.verify().present }))
+
+// ── the /postmortems export view (Probe Phase 3; S53) — a DISPOSITIONED door (not a screen): the Stream/Elixir/Resolv
+// re-score artifacts as JSON, the credibility artifact that ships with the invites. Read from the committed data/
+// postmortems/ (the engine's actual recomputed output; every cell SAMPLE-labeled). Absent → an honest empty note.
+app.get("/postmortems", async (c) => {
+  const { readFileSync, existsSync } = await import("node:fs")
+  const path = await import("node:path")
+  const { PKG_ROOT } = await import("../src/organon/frozen")
+  const dir = path.join(PKG_ROOT, "data", "postmortems")
+  const idxP = path.join(dir, "index.json")
+  if (!existsSync(idxP)) return c.json({ ok: true, postmortems: [], note: "no re-score artifacts recorded on this clone (run: bun run script/honesty/rescore-postmortems.ts)" })
+  const index = JSON.parse(readFileSync(idxP, "utf8"))
+  const subjects = (index.subjects as { subject: string }[]).map((s) => JSON.parse(readFileSync(path.join(dir, `${s.subject}.json`), "utf8")))
+  return c.json({ ok: true, rule: index.rule, allSample: index.allSample, subjects })
+})
+
+// ── the /feedback door (Probe Phase 2; X-TELEMETRY) — a DISPOSITIONED door (not a fourth screen): a tester's structured
+// verdict on a verdict, scrubbed + appended LOCALLY (Feedback.submit runs the store scrubber; nothing egresses here).
+// Body-capped, rate-limited (the `*` limit) + headered like every route. Never a stack, always a sentence.
+app.post("/feedback", async (c) => {
+  const raw = await c.req.text()
+  if (raw.length > 8192) return c.json({ ok: false, message: "feedback body too large (cap 8KiB)." }, 413)
+  let body: Record<string, unknown>
+  try { body = JSON.parse(raw || "{}") } catch { return c.json({ ok: false, message: "feedback must be a JSON body: { screen, useful, trusted, missing }." }, 400) }
+  const r = Feedback.submit({
+    at: Date.now(),
+    screen: body.screen as never,
+    useful: Boolean(body.useful),
+    trusted: Boolean(body.trusted),
+    missing: String(body.missing ?? "").slice(0, 500),
+  })
+  if (!r.captured) return c.json({ ok: false, message: `feedback not recorded — ${r.reason}` }, 400)
+  return c.json({ ok: true, message: "thank you — recorded locally + scrubbed. It leaves your machine only if you opt in to sharing (ORGANON_TELEMETRY_SHARE=1)." })
+})
 
 // SCREEN 1 — the Shelf (triage). Reads the recorded pools (the moat); SAMPLE fallback when the record is empty/offline.
 app.get("/", (c) => {
