@@ -1,0 +1,11 @@
+{
+ "subject": "synthetic-immutable-clone",
+ "provenance": "SYNTHETIC-FIXTURE",
+ "synthetic": true,
+ "chainId": 1,
+ "proxyCode": "0x363d3d373d3d3d363d7311111111111111111111111111111111111111115af43d82803e903d91602b57fd5bf3",
+ "resolvedImpl": "0x1111111111111111111111111111111111111111",
+ "implSlotZero": true,
+ "expect": "IMMUTABLE — a genuine EIP-1167 minimal-proxy clone: the implementation is embedded as a bytecode constant, the EIP-1967 impl slot is unused, and the 45-byte clone has no SSTORE write path. No upgrade path exists.",
+ "rationale": "the canonical IMMUTABLE positive control — the EIP-1167 minimal-proxy is the standard immutable-implementation pattern (a labeled SYNTHETIC control, never claimed as a specific on-chain pool). The live shelf has NO genuinely-immutable subject (aave/spark hold the impl in the 1967 slot — upgradeable; the class is extinct-on-shelf like EOA), so the grant is proven on the standard pattern."
+}

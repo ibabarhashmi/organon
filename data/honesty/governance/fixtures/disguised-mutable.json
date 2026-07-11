@@ -1,0 +1,11 @@
+{
+ "subject": "synthetic-disguised-mutable",
+ "provenance": "SYNTHETIC-FIXTURE",
+ "synthetic": true,
+ "chainId": 1,
+ "proxyCode": "0x7322222222222222222222222222222222222222227f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc5560006000f3",
+ "resolvedImpl": "0x2222222222222222222222222222222222222222",
+ "implSlotZero": true,
+ "expect": "UNRESOLVED — the gravest new failure mode: an embedded-looking implementation constant (condition 1 passes) AND a zero impl slot (condition 2 passes), BUT a live SSTORE to the EIP-1967 impl slot (condition 3 FAILS) — a secretly-mutable proxy. A fabricated 'no upgrade path' is stronger poison than a wrong SAFE; the proof MUST refuse it (S62).",
+ "rationale": "the S62 disguise control — proves proveImmutable is all-or-nothing: two of three conditions is NOT immutable. The write path (a 1967-slot SSTORE) is the tell the proof catches."
+}

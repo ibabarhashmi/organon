@@ -1,0 +1,109 @@
+{
+ "protocol": "immutable-proof",
+ "at": "2026-07-11",
+ "block": 25510308,
+ "rule": "X-GROUNDTRUTH(b), S62 — the three-condition bytecode-constant proof (impl a deployed-bytecode constant AND the 1967 impl slot unused AND no admin-slot write path), ALL-OR-NOTHING at the pinned block. IMMUTABLE is the strongest governance fact (no upgrade path) and makes any surviving flaw PERMANENT; a fabricated 'no upgrade path' is stronger poison than a wrong SAFE, so it is proof-only — the proof decides, never the wish.",
+ "honestFinding": "NO live shelf subject is genuinely immutable — verified on-chain. aave/spark hold the implementation in the EIP-1967 slot (upgradeable by their immutable admin; the blueprint conflated an immutable ADMIN — why the admin slot reads 0x0 — with an immutable IMPL). compound is TIMELOCK-upgradeable; curve/fluid are non-canonical direct contracts. IMMUTABLE is EXTINCT-on-shelf (like the EOA danger class) — the flagship-render change the blueprint anticipated does NOT fire, because aave is NOT immutable (truth over trophy). The class is proven on the standard EIP-1167 clone control and refused on the S62 disguise.",
+ "subjects": [
+  {
+   "subject": "aave-v3-pool",
+   "address": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+   "resolvedImpl": "0x728a138a4823392c2efa55e028d434f526fe03cf",
+   "codeLen": 2400,
+   "implSlotZero": false,
+   "probe": {
+    "implEmbeddedInCode": false,
+    "implSlotZero": false,
+    "noWritePath": false
+   },
+   "immutable": false,
+   "how": "NOT provably immutable — the implementation is not a bytecode constant; the EIP-1967 impl slot is in use (the implementation is read from a mutable slot — upgradeable); an admin-slot write path exists in the proxy bytecode → UNRESOLVED (the proof decides, never the wish)"
+  },
+  {
+   "subject": "sparklend-pool",
+   "address": "0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
+   "resolvedImpl": "0x5ae329203e00f76891094dcfedd5aca082a50e1b",
+   "codeLen": 2400,
+   "implSlotZero": false,
+   "probe": {
+    "implEmbeddedInCode": false,
+    "implSlotZero": false,
+    "noWritePath": false
+   },
+   "immutable": false,
+   "how": "NOT provably immutable — the implementation is not a bytecode constant; the EIP-1967 impl slot is in use (the implementation is read from a mutable slot — upgradeable); an admin-slot write path exists in the proxy bytecode → UNRESOLVED (the proof decides, never the wish)"
+  },
+  {
+   "subject": "fluid-usdc",
+   "address": "0x9Fb7b4477576Fe5B32be4C1843aFB1e55F251B33",
+   "resolvedImpl": null,
+   "codeLen": 19617,
+   "implSlotZero": true,
+   "probe": {
+    "implEmbeddedInCode": false,
+    "implSlotZero": true,
+    "noWritePath": true
+   },
+   "immutable": false,
+   "how": "NOT provably immutable — the implementation is not a bytecode constant → UNRESOLVED (the proof decides, never the wish)"
+  },
+  {
+   "subject": "compound-v3-usdc",
+   "address": "0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+   "resolvedImpl": "0x83d491269720ce925f92c6bf9f66b7a0779a293a",
+   "codeLen": 1878,
+   "implSlotZero": false,
+   "probe": {
+    "implEmbeddedInCode": false,
+    "implSlotZero": false,
+    "noWritePath": false
+   },
+   "immutable": false,
+   "how": "NOT provably immutable — the implementation is not a bytecode constant; the EIP-1967 impl slot is in use (the implementation is read from a mutable slot — upgradeable); an admin-slot write path exists in the proxy bytecode → UNRESOLVED (the proof decides, never the wish)"
+  },
+  {
+   "subject": "curve-usdc",
+   "address": "0xd001ae433f254283fece51d4acce8c53263aa186",
+   "resolvedImpl": null,
+   "codeLen": 23635,
+   "implSlotZero": true,
+   "probe": {
+    "implEmbeddedInCode": false,
+    "implSlotZero": true,
+    "noWritePath": true
+   },
+   "immutable": false,
+   "how": "NOT provably immutable — the implementation is not a bytecode constant → UNRESOLVED (the proof decides, never the wish)"
+  }
+ ],
+ "controls": [
+  {
+   "fixture": "immutable-clone",
+   "synthetic": true,
+   "probe": {
+    "implEmbeddedInCode": true,
+    "implSlotZero": true,
+    "noWritePath": true
+   },
+   "immutable": true,
+   "expected": true
+  },
+  {
+   "fixture": "disguised-mutable",
+   "synthetic": true,
+   "probe": {
+    "implEmbeddedInCode": true,
+    "implSlotZero": true,
+    "noWritePath": false
+   },
+   "immutable": false,
+   "expected": false
+  }
+ ],
+ "census": {
+  "immutable": [],
+  "total": 5,
+  "note": "0 immutable on the live shelf — the aave impl is in the 1967 slot (upgradeable); the class is extinct-on-shelf"
+ },
+ "contentSha": "12e138871af9b93dc4f72ee04e57afdb28a8f9254fd78bad37d99108286e3149"
+}
