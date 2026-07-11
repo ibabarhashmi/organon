@@ -212,6 +212,24 @@
    "lawAuthority": "X-PRECISION(d) + A'#6 (the governance fact must not promote itself) + the D27 precedent (an agent moves no verdict without the Operator's signature)",
    "operatorSigned": false,
    "note": "PARKED pending the Operator's signature (precision-countersign-package.json). SIGN -> the EOA-admin case begins capping contract-screen verdicts at CAUTION (degrade-only). LEAVE PARKED -> the governance fact stays info/context. Either way the render this sprint is info/context and no verdict moved."
+  },
+  {
+   "id": "D30",
+   "blueprintLine": "GroundTruth Phase 3: 'IMMUTABLE-PROVEN (PC4, D30) -- the classifier gains a fifth class IMMUTABLE on bytecode-constant proof; the collapse extends; aave's flagship render changes; Operator-signed'",
+   "whatWasDone": "BUILT + PARKED FOR SIGNATURE (not signed). The classifier class-set extends EOA/SAFE/TIMELOCK/UNRESOLVED -> +IMMUTABLE, granted ONLY on the three-condition bytecode-constant proof (the implementation address a deployed-bytecode constant AND the 1967 impl slot unused AND no admin-slot write path), all-or-nothing at the pinned block; the disguised-mutable control (embedded constant + live SSTORE write path) classifies UNRESOLVED (S62). On a proven IMMUTABLE the collapse extends to fold proxy-MACHINERY findings (moot by proof); business findings SURVIVE with the permanence note. aave is re-classified by what the proof FOUND (truth over trophy -- if the proof fails it STAYS UNRESOLVED). The flagship render changes (aave from caution+27-tucked to the immutable line + survivors). operatorSigned=false; the governance line -- incl. IMMUTABLE -- renders info/context; the verdict-path hashes are asserted UNCHANGED at every gate (no verdict moves).",
+   "why": "IMMUTABLE is the strongest reassurance available in the product (no one can change the code); a fabricated 'no upgrade path' is STRONGER poison than a wrong SAFE, so the class + the flagship-render change are a conscious Operator scope -- proof-gated, never a guess, the spec hash-pinned so it cannot be relaxed to prettify aave's census (THE FIREWALL).",
+   "lawAuthority": "X-GROUNDTRUTH(b) + A'#1 (IMMUTABLE without full proof is the gravest risk) + A'#7 (the proof spec must not be relaxed after seeing the census) + the D28/D29 precedent (a conscious classifier/render scope is Operator-signed)",
+   "operatorSigned": false,
+   "note": "PARKED pending the Operator's signature (groundtruth-countersign-package.json). SIGN -> the IMMUTABLE class + the flagship-render change are ratified. LEAVE PARKED -> the class + render stand as info/context (no verdict moved either way). The proof decides aave, never the wish."
+  },
+  {
+   "id": "D31",
+   "blueprintLine": "GroundTruth Phase 1: 'the Aligrithm due diligence filed inspiration-only + the primary-citations pin + the PBO/CSCV trigger, implementation-absent -- D31, Operator-signed'",
+   "whatWasDone": "FILED + PARKED FOR SIGNATURE (not signed). Aligrithm (aligrithm.com; Ali H. Askar, CQF) filed INSPIRATION-ONLY in data/honesty/aligrithm-filing.json -- a solo quant-research publication with real CSCV/PBO depth and ZERO on-chain scope; nothing integrates. The Stamp's load-bearing methods cite their PRIMARY papers (Bailey & LdP 2014 SSRN 2460551; Bailey/Borwein/LdP/Zhu 2016 SSRN 2326253; LdP & Lewis 2019 DOI 10.1080/14697688.2019.1622311), never the blog -- rendered into the Stamp docs surface. The PBO/CSCV companion is pinned behind the non-drifting >= 20-50 trials/family trigger with its implementation ASSERTED ABSENT (a grep wall). operatorSigned=false.",
+   "why": "the due-diligence conclusion (inspiration-only) is made durable so no future cycle re-diligences it; anything load-bearing cites the paper, never the blog; the one adaptable idea (a CSCV/PBO companion) has a non-drifting activation condition and an implementation-absent assertion until the trigger -- so the moat borrows the idea's rigor without borrowing its scope creep.",
+   "lawAuthority": "X-GROUNDTRUTH(+) + A'#9 (the Aligrithm filing must not drift into integration; primary papers for load-bearing claims) + X-DEVLEDGER",
+   "operatorSigned": false,
+   "note": "PARKED pending the Operator's signature (groundtruth-countersign-package.json). A record + citations + a pinned trigger -- it moves no verdict and adds no code; signing ratifies the inspiration-only classification + the citation discipline. The PBO/CSCV implementation stays ABSENT until the trigger, grep-walled."
   }
  ]
 }

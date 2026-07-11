@@ -89,7 +89,12 @@ app.get("/postmortems", async (c) => {
       aftermath: realLayer ? { ...realLayer, layer: LAYERS.aftermath.label } : { absent: true, layer: LAYERS.aftermath.label },
     }
   })
-  return c.json({ ok: true, rule: index.rule, layers: LAYERS, distinctness, allSample: index.allSample, realLayer: index.realLayer ?? null, subjects })
+  // PC1 (GroundTruth) — the governance-axis discrimination claim renders here too, worded to EXACTLY its evidence (today
+  // clean-vs-synthetic, or — once Phase 4 lands — a real rug's real chain state, or the honest gap). The does-NOT-claim
+  // sentence rides with it (the axis flags the upgrade-key surface, not depegs). Absent → omitted (honest).
+  const gcP = path.join(PKG_ROOT, "data", "honesty", "governance-claim.json")
+  const governanceClaim = existsSync(gcP) ? JSON.parse(readFileSync(gcP, "utf8")) : null
+  return c.json({ ok: true, rule: index.rule, layers: LAYERS, distinctness, allSample: index.allSample, realLayer: index.realLayer ?? null, subjects, governanceClaim })
 })
 
 // ── the /feedback door (Probe Phase 2; X-TELEMETRY) — a DISPOSITIONED door (not a fourth screen): a tester's structured

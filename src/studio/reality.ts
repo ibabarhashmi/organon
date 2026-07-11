@@ -295,6 +295,11 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
     const iidCaveat = (verdict === "GO" || verdict === "NO-GO") && !guarded.degraded && r.dsr !== null
       ? `<div class="muted"><b>Read the significance as an optimistic ceiling, not a floor.</b> This deflation assumes each recorded observation is independent; DeFi yields are autocorrelated (they barely move day to day), so the true statistical evidence is weaker than the number suggests. A conservative effective-sample-size correction is specified and pending review.</div>`
       : ""
+    // AL3/AL5 (GroundTruth; D31) — the load-bearing significance method cites its PRIMARY sources (the peer-reviewed paper,
+    // never a blog), rendered into the Stamp's docs surface beside the significance. A render-layer disclosure; the math is frozen.
+    const methodCite = (verdict === "GO" || verdict === "NO-GO") && !guarded.degraded && r.dsr !== null
+      ? `<div class="muted"><b>Method — primary sources.</b> Significance: the Deflated Sharpe Ratio (Bailey &amp; López de Prado, <i>The Journal of Portfolio Management</i> 2014; SSRN 2460551). The multiple-testing deflation follows the PBO framework (Bailey, Borwein, López de Prado &amp; Zhu, <i>Journal of Computational Finance</i> 2016; SSRN 2326253). Load-bearing methods cite the paper, never a blog.</div>`
+      : ""
     // if WALL 1 degraded the payload, the ORIGINAL reason/basis/depth are void — show the honest degradation + the lineage only.
     const reasonText = guarded.degraded ? guarded.reason : r.reason
     // WALL 3 — the DISPLAYED significance is CAPPED (the raw value stays full-precision in r.dsr + the reproHash).
@@ -322,7 +327,7 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`)
 <h1>The Stamp <span class="pill ${vClass}">${esc(verdict)}</span> <span class="muted">${esc(name)}</span></h1>
 <div class="card"><b>The opt-in overfit stress test — a SEPARATE verdict from the Reality Check.</b>
 <div class="muted">This is NOT the scorecard's verdict. The Reality Check answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers "does this pool's recorded track record survive the anti-PBO overfit deflation?" (GO/NO-GO/INSUFFICIENT). A GO is a floor on doubt about the track record's statistical robustness — NOT "safe". An INSUFFICIENT is a forward clock — NOT "bad". The two are never conflated.</div></div>
-<div class="card"><div>${esc(reasonText)}</div>${degradedNote}${basis}${iidCaveat}${strength}${inert}${lineage}${mintrlTxt}${depth}</div>
+<div class="card"><div>${esc(reasonText)}</div>${degradedNote}${basis}${iidCaveat}${methodCite}${strength}${inert}${lineage}${mintrlTxt}${depth}</div>
 <div class="trust">the frozen, byte-pinned anti-PBO adjudicator — INVOKED, never edited (zero frozen bytes moved) · deflation armed only here · off the mass path · this is not financial advice.</div>`)
   }
 

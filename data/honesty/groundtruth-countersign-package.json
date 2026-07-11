@@ -1,0 +1,93 @@
+{
+ "protocol": "groundtruth-countersign-package",
+ "at": "2026-07-11",
+ "supersedes": "precision-countersign-package.json (carried forward, not rewritten — U-RESUPERSEDE); this is the current whole-gate package (D23-D31)",
+ "generosityStatement": "The Stamp is knowingly generous until D27 is signed.",
+ "rule": "MT4 / PC3 / PC5 — the WHOLE Operator gate, assembled into ONE document for ONE sitting at Phase 5: the countersigns D23-D31 (D27, the variance amendment, FIRST — three sprints top-of-package) opening with the one-line generosity statement, D29 with its census-zero note (the cheapest signature), D30 (the IMMUTABLE class + flagship render) + D31 (the Aligrithm filing) added + IN2 (the real-screen session, now incl. the immutable line + the implementation-truth findings + the rug artifact or the gap) + IN4 (the browser/AT a11y pass) + AF4 (the first live paid-key parity diff) + the push decision. An agent must NOT sign as the Operator (operatorSigned stays false until the Operator's own hand — LN5). Each deviation rests on a proof already green in BOTH repos. Discharged whole, or an honest STOP with exactly what remains quoted — no partial credit.",
+ "mt1_topCountersign": "D27 (the variance amendment) is the TOP-priority countersign — the tool proved its own Stamp GENEROUS by 27-165x (τ_int on real yields); meeting invited testers on a caveat is defensible only briefly. Signing D27 ACTIVATES the effective-N floor: some GOs honestly become INSUFFICIENT, the per-pool census disclosed — THAT IS THE FIX WORKING, not a regression.",
+ "deviations": [
+  {
+   "id": "D27",
+   "order": "FIRST (MT1 — the top-priority countersign, now THREE sprints running)",
+   "title": "the variance decision — the i.i.d. audit → ACTIVATE the conservative effective-N-floor amendment OR RATIFY the rendered caveat",
+   "restsOn": "Moat Phase 4 — stamp-variance-audit.json (read-only): the i.i.d. finding CONFIRMED (rigor.py::psr uses /(n-1) i.i.d. over autocorrelated yields; τ_int ≈ 27-165, median ~124 via the frozen effective_n.py → the DSR is grossly optimistic, direction GENEROUS). The caveat is rendered NOW at reality.ts renderStamp (render-layer, verdict-path 7 frozen); the effective-N-floor amendment is specified + PARKED.",
+   "signingConsequence": "ACTIVATE → a GO may honestly become INSUFFICIENT (per-pool census disclosed; the frozen effective_n.py computes n_eff=N/τ_int; n_eff<floor → INSUFFICIENT; ZERO frozen-byte edits, the MinTRL rider pattern). RATIFY → the caveat stands as the permanent honest interim. Either is the Operator's math decision.",
+   "operatorSigned": false
+  },
+  {
+   "id": "D30",
+   "order": "the IMMUTABLE class + the flagship render (GroundTruth — NEW)",
+   "title": "IMMUTABLE-PROVEN — the fifth classifier class on the three-condition bytecode-constant proof + the collapse extension + aave's flagship render change",
+   "restsOn": "groundtruth-pins.json (PINS_SHA 3d0ef3bb) immutableProofSpec + the S62 wall green in BOTH repos: IMMUTABLE granted ONLY on the three-condition proof (bytecode-constant impl AND 1967 slot unused AND no admin-slot write path), all-or-nothing at the pinned block; the disguised-mutable control classifies UNRESOLVED; the collapse folds proxy-machinery on IMMUTABLE while business findings survive with the permanence note; aave re-classified by what the proof FOUND (truth over trophy). The governance line — incl. IMMUTABLE — renders info/context; the verdict-path hashes asserted UNCHANGED (no verdict moves).",
+   "signingConsequence": "SIGN → the IMMUTABLE class + the flagship-render change (aave from caution+27-tucked to the immutable line + survivors) are ratified. LEAVE PARKED → the class + render stand as info/context (no verdict moved either way). The proof spec is hash-pinned — it cannot be relaxed to prettify aave's census (THE FIREWALL).",
+   "operatorSigned": false
+  },
+  {
+   "id": "D29",
+   "order": "the promotion (specified CONSERVATIVE, PARKED — the CHEAPEST signature, census ZERO)",
+   "title": "the EOA-admin → `bounding` promotion — the damning case only, degrade-only, its affected-pool census attached",
+   "restsOn": "precision-pins.json d29PromotionSpec: EOA-admin on an upgradeable pool caps the contract screen at CAUTION (never lifts a verdict); SAFE/TIMELOCK/UNRESOLVED do NOT promote.",
+   "censusZeroNote": "the affected-pool census is ZERO — 0 current shelf subjects hold an EOA admin (the damning class is extinct among live survivors). Signing today caps ZERO current verdicts; it ARMS the tool for the first future EOA-admin subject. The cheapest signature on the table: eyes-open, zero present effect.",
+   "signingConsequence": "SIGN → the EOA-admin case begins CAPPING contract-screen verdicts at CAUTION (degrade-only), affecting ZERO current subjects. LEAVE PARKED → the governance fact stays info/context. An agent must not move what decides verdicts (the D27 precedent).",
+   "operatorSigned": false
+  },
+  {
+   "id": "D31",
+   "order": "the Aligrithm filing (GroundTruth — NEW; a record + citations + a pinned trigger, moves no verdict)",
+   "title": "the Aligrithm due diligence filed inspiration-only + the primary-citations pin + the PBO/CSCV trigger (implementation-absent)",
+   "restsOn": "aligrithm-filing.json — Aligrithm INSPIRATION-ONLY (nothing integrates); the load-bearing Stamp methods cite their PRIMARY papers (Bailey & LdP 2014 SSRN 2460551; Bailey/Borwein/LdP/Zhu 2016 SSRN 2326253; LdP & Lewis 2019 DOI 10.1080/14697688.2019.1622311), rendered into the Stamp docs surface; the PBO/CSCV companion pinned behind the ≥ 20-50 trials/family trigger with implementation ASSERTED ABSENT (grep-walled).",
+   "signingConsequence": "SIGN → the inspiration-only classification + the citation discipline are ratified (no future re-diligence; papers-not-blog for load-bearing claims). The PBO/CSCV implementation stays ABSENT until the trigger. Moves no verdict, adds no code.",
+   "operatorSigned": false
+  },
+  {
+   "id": "D26",
+   "order": "the resolver decision (MT2 — carried, branch B built)",
+   "title": "the capture-time dependency exception — branch A (viem/whatsabi capture-time-only) OR branch B (the hand-rolled narrow resolver, chosen)",
+   "restsOn": "Moat capture-truth.json (3 demonstrated correctness gaps) + the Bun-1.3.11 incompatibility; branch B PROVED sufficient on the shelf with ZERO deps. Branch A remains available on signature.",
+   "operatorSigned": false
+  },
+  {
+   "id": "D28",
+   "order": "the precision-pass scope (carried) — now GROUNDED",
+   "title": "the precision-pass scope — the resolved-implementation screen + the conservative governance classifier + the collapse whitelist + the discrimination wall",
+   "restsOn": "precision-pins.json (d2fa4cdc) + the S58/S59/S60 walls green in BOTH repos; GroundTruth grounds it — the implementation re-point RUN on the real pools (S61, match-or-honest-UNVERIFIED), the discrimination claim upgraded to a real rug's real state OR held at the honest gap (S63). The governance fact renders info/context (no verdict moved).",
+   "operatorSigned": false
+  },
+  {
+   "id": "D23",
+   "order": "carried (Alpha)",
+   "title": "the capability split law (paid DATA deepens facts; paid MODELS never touch a verdict) + the green parity proof",
+   "restsOn": "capability-parity.json — the hermetic differential (byte-identical zero/free/paid) green in BOTH repos; assertMayConsume guards the 7 verdict-path modules",
+   "operatorSigned": false
+  },
+  {
+   "id": "D24",
+   "order": "carried (Probe)",
+   "title": "the telemetry/feedback privacy posture (off-by-default, .strict() manifest, scrubbed, double-consent, verdict-path-forbidden)",
+   "restsOn": "probe-pins.json telemetryPosture + probe-redteam S52; src/telemetry/* imports no scored module (grep-walled)",
+   "operatorSigned": false
+  },
+  {
+   "id": "D25",
+   "order": "carried (Probe)",
+   "title": "the pre-registered kill-criterion (8b4e094b, immutable-without-disclosure) + the re-score artifact scope (TWO labeled layers, MT3)",
+   "restsOn": "probe-kill-criterion.json commitHash 8b4e094b + the post-mortems' reproHash re-verification; MT3 — the RECONSTRUCTION (all-SAMPLE) vs AFTERMATH (REAL-as-fetched) layers labeled in the /postmortems render + the ALPHA.md pitch, never blurred",
+   "operatorSigned": false
+  }
+ ],
+ "gateItems": {
+  "IN2": "the Operator's real-screen session — now including: the governance line on a clean (compound → TIMELOCK) subject, a PROVEN-IMMUTABLE subject (aave — the immutable line leading + survivors, if the proof held), and a damning (the synthetic EOA fixture) subject · the implementation-truth findings (the real-source screen where the build matched, or the honest UNVERIFIED where it did not) · the rug artifact (the real pre-collapse capture, or the honestly-named gap) · the collapsed vs surviving findings · the two post-mortem layers · the D27 caveat. OWED-OPERATOR-GATED, never simulated (LN5)",
+  "IN4": "the browser/AT/viewport a11y pass — a real assistive-tech walk of the conscious 3 screens. OWED-OPERATOR-GATED",
+  "AF4": "the first LIVE paid-key parity diff — the capability split proven on a real paid key (byte-identical verdict path). OWED-OPERATOR-GATED",
+  "push": "the publication decision — the trees are UNPUSHED (Operator-gated); the push is the Operator's call"
+ },
+ "mt5_ftoReDated": {
+  "id": "RE4/MT5",
+  "patent": "US 2019/0294990 A1",
+  "grantStatus": "UNCONFIRMED — a professional freedom-to-operate check is required before commercializing any effective-trials reimplementation",
+  "owner": "Operator (a business action, not an engineering task)",
+  "reDated": "2026-07-11",
+  "note": "carried; the effective-trials implementation stays PARKED (ZERO code before trials exist), so the FTO check is due before commercialization"
+ },
+ "signingConsequence": "with D23-D31 signed + IN2/IN4/AF4 discharged + the push decision, the invites go out against a goalpost set before the cohort arrived — now with an axis grounded in reality: findings that describe the code that executes, a 'no upgrade path' that is a proof, and a discrimination claim that rests on a real rug's real chain state or an honestly-named gap. Until then the sprint terminates GROUNDTRUTH DELIVERED — READY-PENDING-OPERATOR (or an honest STOP with the remainder quoted — MT4)."
+}
