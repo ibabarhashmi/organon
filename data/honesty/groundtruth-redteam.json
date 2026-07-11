@@ -1,0 +1,128 @@
+{
+ "protocol": "groundtruth-redteam",
+ "at": "2026-07-11",
+ "rule": "PART E — the full first-class catalog S1-S63 (S1-S60 carried + re-run; S61 implementation-truth realized, S62 the IMMUTABLE proof wall, S63 the archive-truth wall). Each new wall broken-on-purpose + proven to BITE. The whole Operator gate is OWED-OPERATOR-GATED (an agent signs nothing — LN5). The frozen invariants are byte-unchanged (no verdict moved — the governance fact incl. IMMUTABLE is info/context; D30/D31 parked).",
+ "catalog": "S1-S63",
+ "probes": [
+  {
+   "name": "S61 mask/match — identical → unmasked MATCH; a one-byte-off in logic → MISMATCH (UNVERIFIED, the screen never sees it)",
+   "ok": true,
+   "detail": "gate bites"
+  },
+  {
+   "name": "S61 mask rule — EXACTLY two masked regions pinned (immutableReferences + CBOR tail); a third is a Halt",
+   "ok": true,
+   "detail": "masks=2"
+  },
+  {
+   "name": "S61 outcomes — compound MATCHED (screen on the real source) · aave built-but-MISMATCH → UNVERIFIED (never waived)",
+   "ok": true,
+   "detail": "compound=true aave=false"
+  },
+  {
+   "name": "S62 all-or-nothing — three conditions; each falsified individually → NOT immutable",
+   "ok": true,
+   "detail": "all-or-nothing"
+  },
+  {
+   "name": "S62 disguise BITES — embedded constant + zero slot + live SSTORE-to-1967 → NOT immutable; the clone → IMMUTABLE",
+   "ok": true,
+   "detail": "disguise.noWritePath=false clone=true"
+  },
+  {
+   "name": "S62 business SURVIVES — the IMMUTABLE collapse folds proxy-machinery only; a business finding survives",
+   "ok": true,
+   "detail": "folded=1"
+  },
+  {
+   "name": "S62 truth over trophy — aave run through the proof STAYS UNRESOLVED (impl in the 1967 slot); IMMUTABLE extinct-on-shelf",
+   "ok": true,
+   "detail": "immutable-on-shelf=0"
+  },
+  {
+   "name": "S63 re-verifiable — the archive capture re-hashes from its own body (content-addressed against its named endpoints+height)",
+   "ok": true,
+   "detail": "re-hash"
+  },
+  {
+   "name": "S63 re-classify — the classifier RE-RUNS on the committed probe → EOA (a single key one hop out); cross-checked ≥2 free endpoints",
+   "ok": true,
+   "detail": "class=EOA endpoints=3"
+  },
+  {
+   "name": "S63 boundedness — ONE subject, ONE height, THREE reads — no range-scan / no second rug (archive-node scope PARKED)",
+   "ok": true,
+   "detail": "one-height"
+  },
+  {
+   "name": "S63 not simulated — the owner-hop EOA is a REAL captured address (not a synthetic placeholder), the mechanism the documented exploit",
+   "ok": true,
+   "detail": "real address"
+  },
+  {
+   "name": "S63 wording tracks evidence BOTH directions — a landed capture ⇒ UPGRADED with the capture hash (never a bare would-have-caught-it)",
+   "ok": true,
+   "detail": "rug=CAPTURED claim=UPGRADED"
+  },
+  {
+   "name": "S58 (carried) — an ungated upgrade + EOA admin SURVIVES the collapse (nothing folds — EOA is not gated, not immutable)",
+   "ok": true,
+   "detail": "collapsed=false"
+  },
+  {
+   "name": "S59 (carried) — the conservative classifier: a ZERO admin slot → UNRESOLVED, never EOA (the anti-cry-wolf datum)",
+   "ok": true,
+   "detail": "UNRESOLVED"
+  },
+  {
+   "name": "S60 (carried) — discrimination: clean (TIMELOCK, folds) vs the real rug (EOA, survives) separate on class + collapse + grammar",
+   "ok": true,
+   "detail": "separated"
+  },
+  {
+   "name": "FROZEN — verdict-path 7 + frozen-core 2 byte-unchanged (the governance fact incl. IMMUTABLE is info/context; D30/D31 parked)",
+   "ok": true,
+   "detail": "unchanged"
+  },
+  {
+   "name": "MASS PATH — package.json dependencies stay {hono, zod} (the builds/captures are capture-time; a mass-path dep is a Halt)",
+   "ok": true,
+   "detail": "hono,zod"
+  },
+  {
+   "name": "CAPTURE-TIME — no viem/whatsabi import on any src/ module (the resolver + builds stay capture-time; branch A stays on D26)",
+   "ok": true,
+   "detail": "no viem in src/"
+  },
+  {
+   "name": "GATE — the whole gate D23-D31, D27 FIRST, the generosity statement on top, ALL unsigned (an agent signs nothing — LN5)",
+   "ok": true,
+   "detail": "first=D27 unsigned=true"
+  },
+  {
+   "name": "GATE — D30/D31 in the ledger, operatorSigned=false (OWED-OPERATOR-GATED)",
+   "ok": true,
+   "detail": "unsigned"
+  }
+ ],
+ "summary": {
+  "total": 20,
+  "passed": 20,
+  "failed": 0
+ },
+ "gate": "OWED-OPERATOR-GATED — D23-D31 (D27 first), IN2/IN4/AF4, the push; discharged whole by the Operator or an honest STOP with the remainder quoted. operatorSigned=false everywhere.",
+ "frozen": {
+  "verdictPathUnchanged": true,
+  "massPath": [
+   "hono",
+   "zod"
+  ],
+  "differentialBaseline": {
+   "lendingSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+   "fundingNoGoReproHash": "0a63151b"
+  },
+  "killCriterion": "8b4e094b untouched",
+  "bundle": "9c1e7bd8 byte-identical"
+ },
+ "contentSha": "985617b52c76680c3199472c76b70f720d02c3523599a05a7a0ca3a5ca7cb52a"
+}
