@@ -1,0 +1,31 @@
+{
+ "subject": "compound-v3-usdc",
+ "block": "25507932",
+ "implementation": "0x83d491269720ce925f92c6bf9f66b7a0779a293a",
+ "pattern": "EIP-1967",
+ "canonicalMatch": true,
+ "adminSlotValue": "0x0000000000000000000000001ec63b5883c3481134fd50d5daebc83ecd2e8779",
+ "adminAddr": "0x1ec63b5883c3481134fd50d5daebc83ecd2e8779",
+ "adminClass": "TIMELOCK",
+ "how": "the admin is a contract whose owner (0x6d903f60…3925) is a timelock — gated via owner",
+ "probes": {
+  "adminCodePresent": true,
+  "isSafe": false,
+  "isTimelock": false,
+  "ownerAddr": "0x6d903f6003cca6255d85cca4d3b5e5146dc33925",
+  "ownerCodePresent": true,
+  "ownerIsSafe": false,
+  "ownerIsTimelock": true
+ },
+ "crossCheck": {
+  "etherscan": "ABSENT",
+  "agrees": null,
+  "note": "no ETHERSCAN_API_KEY — the cross-check is optional; the load-bearing read is the tool's own RPC rotation"
+ },
+ "name": "compound-v3 USDC Comet",
+ "poolKeys": [
+  "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487"
+ ],
+ "provenance": "REAL",
+ "contentSha": "e09251ae446811f71d6f712f56bb9fa54315e3afe36eb203d59e1c92f2f924aa"
+}

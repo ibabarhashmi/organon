@@ -1,0 +1,31 @@
+{
+ "subject": "curve-usdc",
+ "block": "25507932",
+ "implementation": null,
+ "pattern": "non-canonical",
+ "canonicalMatch": false,
+ "adminSlotValue": "0x0000000000000000000000000000000000000000000000000000000000000000",
+ "adminAddr": null,
+ "adminClass": "UNRESOLVED",
+ "how": "the standard EIP-1967 admin slot is empty (an off-slot/immutable admin, or not a 1967 proxy) — UNRESOLVED, never EOA (conservative)",
+ "probes": {
+  "adminCodePresent": false,
+  "isSafe": false,
+  "isTimelock": false,
+  "ownerAddr": null,
+  "ownerCodePresent": false,
+  "ownerIsSafe": false,
+  "ownerIsTimelock": false
+ },
+ "crossCheck": {
+  "etherscan": "ABSENT",
+  "agrees": null,
+  "note": "no ETHERSCAN_API_KEY — the cross-check is optional; the load-bearing read is the tool's own RPC rotation"
+ },
+ "name": "curve-dex pool",
+ "poolKeys": [
+  "defillama:pool:e91e23af-9099-45d9-8ba5-ea5b4638e453"
+ ],
+ "provenance": "REAL",
+ "contentSha": "604133ea0d92fec7ec82e05378f490bdc78f5a8e6a4cedd5b9da5a4e5488b0dd"
+}

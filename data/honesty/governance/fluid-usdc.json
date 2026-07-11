@@ -1,0 +1,31 @@
+{
+ "subject": "fluid-usdc",
+ "block": "25507932",
+ "implementation": null,
+ "pattern": "non-canonical",
+ "canonicalMatch": false,
+ "adminSlotValue": "0x0000000000000000000000000000000000000000000000000000000000000000",
+ "adminAddr": null,
+ "adminClass": "UNRESOLVED",
+ "how": "the standard EIP-1967 admin slot is empty (an off-slot/immutable admin, or not a 1967 proxy) — UNRESOLVED, never EOA (conservative)",
+ "probes": {
+  "adminCodePresent": false,
+  "isSafe": false,
+  "isTimelock": false,
+  "ownerAddr": null,
+  "ownerCodePresent": false,
+  "ownerIsSafe": false,
+  "ownerIsTimelock": false
+ },
+ "crossCheck": {
+  "etherscan": "ABSENT",
+  "agrees": null,
+  "note": "no ETHERSCAN_API_KEY — the cross-check is optional; the load-bearing read is the tool's own RPC rotation"
+ },
+ "name": "fluid USDC fToken",
+ "poolKeys": [
+  "defillama:pool:4438dabc-7f0c-430b-8136-2722711ae663"
+ ],
+ "provenance": "REAL",
+ "contentSha": "21ca8ee9ffc209cbb2c06bc9dbf76ce17054c9e4adb35361bbe3fa8da96d5a7e"
+}

@@ -1,0 +1,33 @@
+{
+ "subject": "aave-v3-pool",
+ "block": "25507932",
+ "implementation": "0x728a138a4823392c2efa55e028d434f526fe03cf",
+ "pattern": "EIP-1967",
+ "canonicalMatch": true,
+ "adminSlotValue": "0x0000000000000000000000000000000000000000000000000000000000000000",
+ "adminAddr": null,
+ "adminClass": "UNRESOLVED",
+ "how": "the standard EIP-1967 admin slot is empty (an off-slot/immutable admin, or not a 1967 proxy) — UNRESOLVED, never EOA (conservative)",
+ "probes": {
+  "adminCodePresent": false,
+  "isSafe": false,
+  "isTimelock": false,
+  "ownerAddr": null,
+  "ownerCodePresent": false,
+  "ownerIsSafe": false,
+  "ownerIsTimelock": false
+ },
+ "crossCheck": {
+  "etherscan": "ABSENT",
+  "agrees": null,
+  "note": "no ETHERSCAN_API_KEY — the cross-check is optional; the load-bearing read is the tool's own RPC rotation"
+ },
+ "name": "aave-v3 Pool",
+ "poolKeys": [
+  "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501",
+  "defillama:pool:f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
+  "defillama:pool:3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac"
+ ],
+ "provenance": "REAL",
+ "contentSha": "a90fdebbdcdcecc4d981618f6d3e1e382c3a4625f4dc76a82a01f3330f1ab834"
+}
