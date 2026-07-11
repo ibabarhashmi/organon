@@ -14,7 +14,9 @@ import { Governance } from "../../src/contract/governance"
 
 const govDir = path.join(PKG_ROOT, "data", "honesty", "governance")
 const load = (slug: string) => JSON.parse(readFileSync(path.join(govDir, `${slug}.json`), "utf8"))
-const artifacts = () => readdirSync(govDir).filter((f) => f.endsWith(".json") && f !== "census.json").map((f) => load(f.replace(/\.json$/, "")))
+// only the per-subject governance artifacts (identified by a `poolKeys` field) — robust to sibling index/spec files
+// (census.json, alarm-census.json, d29-promotion.json) that legitimately live in the same directory.
+const artifacts = () => readdirSync(govDir).filter((f) => f.endsWith(".json")).map((f) => load(f.replace(/\.json$/, ""))).filter((a) => Array.isArray(a.poolKeys))
 
 test("CAPTURE — every governance artifact re-hashes from its own body (content-hashed into the moat; tamper caught)", () => {
   for (const a of artifacts()) {

@@ -20,6 +20,7 @@ import { DataPlane } from "../dataplane/store"
 import { contractCoverage } from "../contract/registry" // the honest REAL-coverage count (a record read; no analyzer on the render path)
 import { PlaneDivergence } from "../plane/divergence" // the Pro-side own-plane-vs-rented divergence ROW (X-PLANE d; a ROW, not a screen)
 import type { ContractFinding } from "../contract/facts" // TYPE-ONLY — the B5 findings-render groups the recorded facts; no analyzer on the render path
+import { Governance } from "../contract/governance" // PRECISION (X-PRECISION) — the pure governance line + the canonical-collapse whitelist; render-layer only, imports NO scored module
 import type { Stamp } from "./stamp" // TYPE-ONLY — the Stamp's runtime (the attest core) is lazily imported by the /stamp route; the mass tool stays Stamp-free (X-OPTIN, PART CLEAN)
 import { Lineage } from "./lineage" // the three lineage walls (Lineage sprint; X-LINEAGE) — DataPlane-only (imports NO Stamp runtime), so it stays off the mass path
 
@@ -203,7 +204,7 @@ ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${t
   }
 
   // ── SCREEN 2 — THE REALITY CHECK ──
-  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = []): string {
+  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = [], governance: Governance.RenderBundle | null = null): string {
     const c = scored
     const oneLiner = c.summary.replace(/^(SOLID|CAUTION|AVOID|UNVERIFIED)\s*—\s*/, "")
     const axes = c.rows.map((r) => `<div class="axis"><b>${esc(r.name)}</b> <span class="axis-tier ${esc(r.tier)}">${r.tier === "pass" ? "✓" : r.tier === "caution" ? "!" : r.tier === "fail" ? "✗" : "?"}</span>
@@ -219,13 +220,30 @@ ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${t
     // list behind a drawer (a 27/39-finding proxy tier reads as a usable Pro row). B4 — the proxy-surface qualifier carried:
     // a REAL tier scores the deployed verified-source surface (a proxy tier names its proxy contract; implementation-level
     // analysis is parked — W-V03/D10). A material:false DETAIL render — the scorecard verdict is byte-untouched.
-    const fv = cs.findings.length ? contractFindingsView(cs.findings) : null
+    // PRECISION (X-PRECISION) — WHO HOLDS THE KEY leads the contract drawer, and the canonical proxy-shell noise collapses
+    // by WHITELIST but ONLY when the admin resolved GATED (SAFE|TIMELOCK) — every finding the canonical match cannot explain
+    // SURVIVES itemized (S58). The governance fact renders info/context (D29 parked; the scorecard verdict is byte-untouched).
+    // It is loaded OUT of the render and passed in: a call site that passes nothing (the S36 golden's synthetic poolKey) gets
+    // NO governance line and NO collapse — so `governance === null` is byte-identical to the pre-Precision render.
+    const gov = governance ?? null
+    const srcFindings: ContractFinding[] = gov?.impl?.verified && gov.impl.findings.length ? (gov.impl.findings as ContractFinding[]) : cs.findings
+    const col = gov ? Governance.collapse(srcFindings, gov.artifact.canonicalMatch, gov.artifact.adminClass) : null
+    const shown: ContractFinding[] = col ? (col.survivors as ContractFinding[]) : cs.findings
+    const govBlock = gov
+      ? `<div><b>Who holds the upgrade key</b> — ${esc(gov.line)}${gov.impl?.verified ? ` <span class="muted">(the findings below describe the resolved implementation ${esc((gov.artifact.implementation ?? "").slice(0, 10))}…)</span>` : gov.artifact.implementation ? ` <span class="muted">(implementation ${esc(gov.artifact.implementation.slice(0, 10))}… resolved; its verified source did not build here → the proxy-shell surface is screened, never guessed)</span>` : ""}</div>` +
+        (col?.collapsed
+          ? `<div class="muted">${col.foldedCount} canonical proxy-shell finding${col.foldedCount === 1 ? "" : "s"} summarized in the governance line above; ${col.survivors.length} finding${col.survivors.length === 1 ? "" : "s"} the canonical pattern cannot explain survive${col.survivors.length === 1 ? "s" : ""} itemized.</div>`
+          : `<div class="muted">the upgrade path is not resolved-gated — NOTHING is collapsed; all ${srcFindings.length} structural surface${srcFindings.length === 1 ? "" : "s"} stand (conservative: the collapse folds only a resolved multisig/timelock, never a guess).</div>`)
+      : ""
+    const fv = shown.length ? contractFindingsView(shown) : null
     const proDetail = fv
       ? ` · <b>${fv.total} structural surface${fv.total > 1 ? "s" : ""}</b> across ${fv.groups.length} categor${fv.groups.length > 1 ? "ies" : "y"}, at the deployed verified-source surface (a proxy tier names its proxy contract; implementation-level analysis parked — W-V03): ${esc(fv.topline)}.<details><summary>the full structural findings (category-grouped, deduped)</summary><ul>${fv.groups.map((g) => `<li><b>${esc(g.category)}</b> (${g.count})<ul>${g.items.map((it) => `<li>${esc(it.detail)}${it.count > 1 ? ` ×${it.count}` : ""} — <span class="muted">${esc(it.contract)}${it.line ? ` L${it.line}` : ""}</span></li>`).join("")}</ul></li>`).join("")}</ul></details>`
-      : ""
+      : gov && col?.collapsed
+        ? ` · <span class="muted">no finding survives the collapse — every structural surface was canonical proxy-shell plumbing explained by the resolved governance.</span>`
+        : ""
     const contractScreen = c.rows.some((r) => r.axis === "counterparty")
       ? `<div class="axis"><b>contract screen — deterministic structural analysis over verified source</b> <span class="pill ${csClass}">${esc(cs.tier)}</span>
-<div>${esc(cs.reason)}</div>
+${govBlock}<div>${esc(cs.reason)}</div>
 <div class="pro muted">${esc(cs.scope)}${proDetail}${cs.contentSha ? ` · contentHash ${esc(cs.contentSha.slice(0, 12))}…` : ""}</div></div>`
       : ""
     const prov = history.length

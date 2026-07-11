@@ -1,0 +1,11 @@
+{
+ "subject": "compound-v3-usdc",
+ "implementation": "0x83d491269720ce925f92c6bf9f66b7a0779a293a",
+ "provenance": "UNVERIFIED",
+ "verified": false,
+ "source": "sourcify:exact:1:0x83d491269720ce925f92c6bf9f66b7a0779a293a",
+ "contracts": [],
+ "findings": [],
+ "note": "forge build/analysis of the resolved implementation did not complete — UNVERIFIED; the coarse screen + the governance line stand",
+ "contentSha": "8f6dd8ab84ea4365968b302f10f024a7cda1276fa09ccd75f03376dfc1bc8d69"
+}

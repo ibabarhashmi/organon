@@ -1,0 +1,41 @@
+{
+ "subject": "synthetic-eoa-rug",
+ "provenance": "SYNTHETIC-FIXTURE",
+ "synthetic": true,
+ "block": "SYNTHETIC",
+ "implementation": "0xdeadbeef00000000000000000000000000000000",
+ "pattern": "UUPS/EIP-1967",
+ "canonicalMatch": true,
+ "adminSlotValue": "0x0000000000000000000000001111111111111111111111111111111111111111",
+ "adminAddr": "0x1111111111111111111111111111111111111111",
+ "adminClass": "EOA",
+ "how": "a single externally-owned key holds the upgrade admin \u2014 a single key can replace this contract's logic (SYNTHETIC fixture)",
+ "probes": {
+  "adminCodePresent": false,
+  "isSafe": false,
+  "isTimelock": false
+ },
+ "impl": {
+  "subject": "synthetic-eoa-rug",
+  "implementation": "0xdeadbeef00000000000000000000000000000000",
+  "provenance": "SYNTHETIC",
+  "verified": true,
+  "contracts": [
+   "RuggableVault"
+  ],
+  "findings": [
+   {
+    "detail": "upgradeTo(address) in the resolved implementation has no _authorizeUpgrade / access-control gate \u2014 a genuinely ungated upgrade path",
+    "category": "upgrade-proxy-hazard",
+    "contract": "RuggableVault"
+   },
+   {
+    "detail": "sweep(address,uint256): transfers tokens to an arbitrary recipient with only owner (a single EOA) auth",
+    "category": "unprotected-state-changing",
+    "contract": "RuggableVault"
+   }
+  ]
+ },
+ "rationale": "the S58 positive control + the EOA discrimination exemplar. A CONSTRUCTED artifact \u2014 NEVER claimed REAL or on-chain (provenance=SYNTHETIC-FIXTURE, synthetic=true). Its ONLY separating feature from the clean set is the admin fact (EOA) + a genuinely-ungated impl upgrade; separation rests on the thing that matters, not a cherry metric (the opposite of a gamed fixture \u2014 A'#5). The live-survivor EOA-admin class is EXTINCT (0 of ~50 real proxies probed), so the damning fixture is NECESSARILY synthetic.",
+ "contentSha": "0216fbbb28063aa893d526856290235dffe53319f55b15cd278bdbf48dda67bd"
+}
