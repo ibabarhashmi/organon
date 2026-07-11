@@ -87,14 +87,25 @@ test("AL4/AL6 — the PBO/CSCV trigger is pinned (≥20-50 trials/family) and it
 
 test("PC1 — the discrimination claim renders precisely (governance-claim.json + ALPHA.md), the does-NOT-claim sentence walled, tracking evidence BOTH directions (no premature 'would have caught it')", () => {
   const gc = readJ("data/honesty/governance-claim.json")
-  expect(gc.status).toBe("TODAY") // Phase 4 flips to UPGRADED or GAP
-  expect(gc.today).toMatch(/SYNTHETIC rugged control|EXTINCT among survivors|0 of ~50/i)
+  expect(gc.today).toMatch(/EXTINCT among survivors|0 of ~50/i)
   expect(gc.doesNotClaim).toMatch(/UPGRADE-KEY SURFACE/i)
   expect(gc.doesNotClaim).toMatch(/does NOT predict depegs|NEVER a verdict of safety/i)
-  // BOTH-directions wording guard: TODAY status must NOT carry an upgraded "would have caught it on a real rug" claim yet
-  expect(gc.upgraded).toBeNull()
-  expect(gc.gap).toBeNull()
-  expect(JSON.stringify(gc.today) + JSON.stringify(gc.doesNotClaim)).not.toMatch(/would have caught it|rendered the damning line on a real rug/i)
+  // BOTH-directions wording guard (S63) — the wording MUST track the evidence, in EITHER direction:
+  //   TODAY  → no upgraded/gap claim yet (upgraded === null)
+  //   UPGRADED → an upgraded claim WITH a capture hash (never a bare "would have caught it")
+  //   GAP    → a recorded gap, the claim held
+  if (gc.status === "TODAY") {
+    expect(gc.upgraded).toBeNull()
+    expect(gc.gap).toBeNull()
+  } else if (gc.status === "UPGRADED") {
+    expect(gc.upgraded).not.toBeNull()
+    expect(gc.upgraded.contentHash).toMatch(/^[a-f0-9]{64}$/) // an upgraded wording WITHOUT a capture hash is a Halt
+    expect(gc.upgraded.height).toBeGreaterThan(0)
+    expect(gc.upgraded.claim).toMatch(/real rug's real chain state|pre-collapse/i)
+  } else {
+    expect(gc.status).toBe("GAP")
+    expect(gc.gap).not.toBeNull()
+  }
   // ALPHA.md carries the does-NOT-claim sentence verbatim in spirit
   const alpha = read("ALPHA.md")
   expect(alpha).toMatch(/flags the upgrade-key surface/i)

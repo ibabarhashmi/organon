@@ -1,0 +1,53 @@
+{
+ "protocol": "archive-rug",
+ "status": "CAPTURED",
+ "subject": {
+  "name": "PAID Network token (V1, exploited)",
+  "address": "0x8c8687fc965593dfb2f0b4eaefd55e9d8df348df",
+  "chainId": 1
+ },
+ "block": 11975000,
+ "endpoints": [
+  "https://eth.drpc.org",
+  "https://rpc.mevblocker.io",
+  "https://eth-mainnet.public.blastapi.io"
+ ],
+ "crossChecked": true,
+ "reads": {
+  "adminSlot": "0x0000000000000000000000007bb7580edb70170daf8a24afc6aaef93db720c24",
+  "adminAddr": "0x7bb7580edb70170daf8a24afc6aaef93db720c24",
+  "implementation": "0x15e6e97206b8fbe13991cd9426ab83e23425991c",
+  "ownerAddr": "0x6ba10437fd18899a4d920b60a9663b9a1d7a1120",
+  "ownerIsEoa": true
+ },
+ "adminClass": "EOA",
+ "how": "the admin is a contract owned by an externally-owned account (0x6ba10437…1120) — a single key controls the upgrade admin, the damning case one hop out",
+ "governanceLine": "Upgradeable proxy (EIP-1967 transparent). Admin: 0x7bb7580e…0c24 — EOA. A single key can replace this contract's logic.",
+ "rug": "PAID Network — March 5 2021: a compromised deployer key (the ProxyAdmin's EOA owner, one hop out) drove the token proxy's upgrade function → a malicious implementation → minted 59,471,745 PAID. The axis reads that pre-collapse upgrade-key surface.",
+ "claim": "the governance axis rendered the DAMNING EOA line on this real rug's REAL pre-collapse state — a single key (the ProxyAdmin's EOA owner) controlled the upgrade path, one hop out",
+ "doesNotClaim": "the axis flags the UPGRADE-KEY SURFACE (the EIP-1967 admin, resolved to an EOA one hop out); it does NOT predict all collapse mechanisms. This is a real rug's real chain state, not a prediction.",
+ "attempts": [
+  {
+   "endpoint": "https://eth.drpc.org",
+   "served": true,
+   "adminAddr": "0x7bb7580edb70170daf8a24afc6aaef93db720c24",
+   "ownerAddr": "0x6ba10437fd18899a4d920b60a9663b9a1d7a1120",
+   "adminClass": "EOA"
+  },
+  {
+   "endpoint": "https://rpc.mevblocker.io",
+   "served": true,
+   "adminAddr": "0x7bb7580edb70170daf8a24afc6aaef93db720c24",
+   "ownerAddr": "0x6ba10437fd18899a4d920b60a9663b9a1d7a1120",
+   "adminClass": "EOA"
+  },
+  {
+   "endpoint": "https://eth-mainnet.public.blastapi.io",
+   "served": true,
+   "adminAddr": "0x7bb7580edb70170daf8a24afc6aaef93db720c24",
+   "ownerAddr": "0x6ba10437fd18899a4d920b60a9663b9a1d7a1120",
+   "adminClass": "EOA"
+  }
+ ],
+ "contentSha": "add26eb03f8472f23bf27d9e1f66acf4128f40bb29ed3b200db39a38821257c8"
+}
