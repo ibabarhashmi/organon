@@ -3,7 +3,7 @@
   "url": "https://api.hyperliquid.xyz/info",
   "status": 200,
   "ok": true,
-  "points": 249,
+  "points": 257,
   "keyless": true,
   "at": 1783468800000
 }
