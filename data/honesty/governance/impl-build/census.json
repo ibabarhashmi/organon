@@ -1,0 +1,27 @@
+{
+ "protocol": "impl-build-census",
+ "at": "2026-07-11",
+ "rule": "the implementation-truth column (X-GROUNDTRUTH a, S61): a subject's findings describe the code that EXECUTES only when its metadata-pinned build MATCHES the deployed bytecode at the pinned block under the mask rule; a MISMATCH stays UNVERIFIED (never waived). compound-v3 MATCHED (the screen runs on the real Comet source); aave-v3 built but its runtime bytecode does NOT match (recorded verbatim) → UNVERIFIED — a genuine improvement over Precision's both-UNVERIFIED, the coverage honest.",
+ "subjects": [
+  {
+   "subject": "aave-v3-pool",
+   "buildMatched": false,
+   "screened": false,
+   "findings": 0,
+   "tier": "UNVERIFIED"
+  },
+  {
+   "subject": "compound-v3-usdc",
+   "buildMatched": true,
+   "screened": true,
+   "findings": 177,
+   "tier": "REAL (bytecode-matched)"
+  }
+ ],
+ "matched": [
+  "compound-v3-usdc"
+ ],
+ "unverified": [
+  "aave-v3-pool"
+ ]
+}

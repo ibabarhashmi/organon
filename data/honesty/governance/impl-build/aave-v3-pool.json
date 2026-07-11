@@ -1,0 +1,23 @@
+{
+ "subject": "aave-v3-pool",
+ "chainId": 1,
+ "implementation": "0x728a138a4823392c2efa55e028d434f526fe03cf",
+ "block": "25507932",
+ "compiler": "0.8.27+commit.40a35a09",
+ "treeHash": "83685641d21cf5a14ed9e941ae31145ca873c929a0bc7468beaba63e277bff40",
+ "configHash": "52b3ac99f54b588b59499e811b0abedae2fe97fec59d671eb0b89cb495ae325f",
+ "provenance": "UNVERIFIED",
+ "verified": false,
+ "match": {
+  "matched": false,
+  "unmaskedMatch": false,
+  "sameLength": true,
+  "maskedCompiledSha": "94bea0b92c49649f52354b9a888bd83717c5dd0e0e75a5b7704fe30f482ae402",
+  "maskedDeployedSha": "d85fa92c09829372705f58141e797e9942351a1bade1e450af25ef0bb8c8809a",
+  "cborBytes": 12,
+  "immRegions": 33,
+  "note": "MISMATCH — the runtime-logic bytes differ after masking; the source does not match the chain (STAYS UNVERIFIED)"
+ },
+ "note": "the metadata-pinned build's runtime bytecode does NOT match the deployed bytecode at the pinned block — the source is NOT admitted to the screen (S61); UNVERIFIED, never waived",
+ "contentSha": "fb916cd7db420b1cf24a96d98c48029b7db8549bee5b53bfe2ee181e155116f3"
+}

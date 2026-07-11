@@ -22,13 +22,18 @@ const NOW = Date.parse("2026-07-05T00:00:00Z")
 const COMPOUND = "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487"
 const AAVE = "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501"
 
-test("SCREEN — the governance line LEADS the contract drawer; compound (TIMELOCK) collapses the canonical proxy-shell noise", () => {
+test("SCREEN — the governance line LEADS; compound's screen now runs on the REAL implementation source (bytecode-matched, GroundTruth S61)", () => {
   const rc = Reality.realityCheck(COMPOUND, NOW)!
   const html = Reality.renderRealityCheck(rc.name, rc.scored, rc.history, COMPOUND, [], bundleFor(COMPOUND))
   expect(html).toContain("Who holds the upgrade key")
   expect(html).toMatch(/Admin: 0x1ec63b58…8779 — TIMELOCK\. Upgrade path gated; verify the signers\./)
-  // the 39 proxy-shell findings collapse (all canonical OZ plumbing) → the wall of findings is gone
-  expect(html).toMatch(/39 canonical proxy-shell findings summarized in the governance line above; 0 findings/)
+  // GroundTruth: the impl's metadata-pinned build MATCHES the deployed bytecode → the findings describe the code that
+  // EXECUTES (the real Comet source), not the proxy shell — the impl re-point Precision recorded UNVERIFIED, now realized.
+  expect(html).toMatch(/whose metadata-pinned build MATCHES the deployed bytecode/)
+  // the real structural surfaces render (Pro-only, drawered) — the impl is analyzed, not the proxy plumbing
+  expect(html).toMatch(/structural surface/)
+  // the governance line still leads + the collapse still folds the canonical machinery among the impl findings
+  expect(html).toMatch(/canonical proxy-shell finding.*summarized in the governance line above/)
 })
 
 test("SCREEN (S58 — THE GRAVEST WALL) — a genuinely-ungated upgrade on a business contract + EOA admin SURVIVES the collapse AND renders the damning line", () => {
@@ -60,7 +65,7 @@ test("SCREEN — a real business-logic finding SURVIVES the collapse even on a G
   expect(c.survivors.map((s) => s.contract)).toEqual(["Comet"])
 })
 
-test("SCREEN — the governance line renders even on an UNVERIFIED implementation (aave: impl unbuilt, admin unresolved — the admin fact needs no source)", () => {
+test("SCREEN — the governance line renders even on an UNVERIFIED implementation (aave: impl built but bytecode MISMATCH → UNVERIFIED, admin unresolved — the admin fact needs no source)", () => {
   const rc = Reality.realityCheck(AAVE, NOW)!
   const html = Reality.renderRealityCheck(rc.name, rc.scored, rc.history, AAVE, [], bundleFor(AAVE))
   expect(html).toContain("Who holds the upgrade key")

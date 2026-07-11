@@ -26,8 +26,10 @@ for (const f of readdirSync(govDir)) {
   const poolKey = art.poolKeys[0]
   const cap = caps[poolKey]
   if (!cap) continue // no contract capture for this subject (e.g. curve/fluid are not in the registry)
-  const impl = Governance.loadImpl(art.subject, { readFile: (p) => readFileSync(p, "utf8"), dir: govDir })
-  const findings: ContractFinding[] = impl?.verified && impl.findings.length ? (impl.findings as ContractFinding[]) : (cap.facts.findings as ContractFinding[])
+  // the alarm-fatigue census measures the PROXY-SHELL collapse specifically (before = the proxy-shell findings the screen
+  // used to render as a wall). The GroundTruth implementation re-point (the bytecode-matched impl findings) is a SEPARATE
+  // metric recorded in impl-build/census.json — never conflated here (an impl MATCH would otherwise change this proxy count).
+  const findings = cap.facts.findings as ContractFinding[]
   const col = Governance.collapse(findings, art.canonicalMatch, art.adminClass)
   rows.push({ subject: art.subject, poolKey, adminClass: art.adminClass, governanceLine: Governance.governanceLine(art), before: findings.length, after: col.survivors.length, folded: col.foldedCount, collapsed: col.collapsed })
 }
