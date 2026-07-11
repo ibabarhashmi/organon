@@ -1,0 +1,19 @@
+{
+ "protocol": "governance-census",
+ "at": "2026-07-11",
+ "block": "25507932",
+ "rule": "the real admin-class distribution over the captured shelf subjects, at one pinned block, over the tool's own free RPC rotation (branch B, zero-dep). EOA-admin is the extinct danger class among live survivors.",
+ "census": {
+  "EOA": 0,
+  "SAFE": 0,
+  "TIMELOCK": 1,
+  "UNRESOLVED": 4
+ },
+ "subjects": [
+  "aave-v3-pool",
+  "sparklend-pool",
+  "fluid-usdc",
+  "compound-v3-usdc",
+  "curve-usdc"
+ ]
+}

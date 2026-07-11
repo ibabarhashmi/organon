@@ -1,0 +1,31 @@
+{
+ "subject": "sparklend-pool",
+ "block": "25507932",
+ "implementation": "0x5ae329203e00f76891094dcfedd5aca082a50e1b",
+ "pattern": "EIP-1967",
+ "canonicalMatch": true,
+ "adminSlotValue": "0x0000000000000000000000000000000000000000000000000000000000000000",
+ "adminAddr": null,
+ "adminClass": "UNRESOLVED",
+ "how": "the standard EIP-1967 admin slot is empty (an off-slot/immutable admin, or not a 1967 proxy) — UNRESOLVED, never EOA (conservative)",
+ "probes": {
+  "adminCodePresent": false,
+  "isSafe": false,
+  "isTimelock": false,
+  "ownerAddr": null,
+  "ownerCodePresent": false,
+  "ownerIsSafe": false,
+  "ownerIsTimelock": false
+ },
+ "crossCheck": {
+  "etherscan": "ABSENT",
+  "agrees": null,
+  "note": "no ETHERSCAN_API_KEY — the cross-check is optional; the load-bearing read is the tool's own RPC rotation"
+ },
+ "name": "sparklend Pool",
+ "poolKeys": [
+  "defillama:pool:e26ce7d9-db75-4aa4-b1db-cc21ae17bdfb"
+ ],
+ "provenance": "REAL",
+ "contentSha": "63e358011511afae36fa6a5a2a965c0abeec115ea8d0a50708b4665c2b3e4742"
+}
