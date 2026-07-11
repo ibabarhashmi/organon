@@ -183,13 +183,19 @@ export namespace Governance {
     return null
   }
 
+  // prefer the GroundTruth bytecode-MATCHED artifact (impl-build/ — admitted to the screen only on a compiled-vs-deployed
+  // match, S61) and fall back to the legacy Sourcify-only artifact (impl/). A subject whose build did NOT match carries
+  // verified=false there → the render falls back to the proxy-shell screen (the impl source is never guessed).
   export function loadImpl(subject: string, opts?: { readFile: (p: string) => string; dir: string }): ImplFindings | null {
     if (!opts) return null
-    try {
-      return JSON.parse(opts.readFile(`${opts.dir}/impl/${subject}.json`)) as ImplFindings
-    } catch {
-      return null
+    for (const sub of ["impl-build", "impl"]) {
+      try {
+        return JSON.parse(opts.readFile(`${opts.dir}/${sub}/${subject}.json`)) as ImplFindings
+      } catch {
+        /* try the next source */
+      }
     }
+    return null
   }
 
   // assemble the render bundle from an artifact + (optional) impl findings — the render's single input.

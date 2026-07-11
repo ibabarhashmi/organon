@@ -1,0 +1,1276 @@
+{
+ "subject": "compound-v3-usdc",
+ "chainId": 1,
+ "implementation": "0x83d491269720ce925f92c6bf9f66b7a0779a293a",
+ "block": "25507932",
+ "compiler": "0.8.15+commit.e14f2714",
+ "target": {
+  "file": "contracts/CometWithExtendedAssetList.sol",
+  "name": "CometWithExtendedAssetList"
+ },
+ "treeHash": "724c3948902f0447ba63211d696e88de3a9355c95e0d3f6ae7351397a9359420",
+ "configHash": "f4cc44e798483746bc4ea166fe25cf3830eab07392333f640d8bb1358e317298",
+ "provenance": "REAL",
+ "verified": true,
+ "match": {
+  "matched": true,
+  "unmaskedMatch": false,
+  "sameLength": true,
+  "maskedCompiledSha": "be8a400bb6391accc1f523fa2fe2feae655dfdb5cfffc9f38d5dbb1367749e6c",
+  "maskedDeployedSha": "be8a400bb6391accc1f523fa2fe2feae655dfdb5cfffc9f38d5dbb1367749e6c",
+  "cborBytes": 53,
+  "immRegions": 70,
+  "note": "runtime-logic MATCH — immutable-references + CBOR metadata tail masked (metadata/immutables differ, logic identical)"
+ },
+ "contracts": [
+  "CometConfiguration",
+  "CometCore",
+  "CometMainInterface",
+  "CometMath",
+  "CometWithExtendedAssetList",
+  "CometStorage"
+ ],
+ "flaggedCategories": [
+  "dangerous-edges",
+  "oracle-dependency",
+  "reentrancy-value-flow",
+  "storage-clash",
+  "unprotected-state-changing",
+  "upgrade-proxy-hazard"
+ ],
+ "findings": [
+  {
+   "category": "unprotected-state-changing",
+   "detail": "transferAssetFrom(address,address,address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "transferAssetFrom",
+   "line": 68
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdraw(address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "withdraw",
+   "line": 70
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawTo(address,address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "withdrawTo",
+   "line": 71
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawFrom(address,address,address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "withdrawFrom",
+   "line": 72
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawReserves(address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "withdrawReserves",
+   "line": 75
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "getAssetInfo(uint8) is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "getAssetInfo",
+   "line": 81
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "getAssetInfoByAddress(address) is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "getAssetInfoByAddress",
+   "line": 82
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "pause(bool,bool,bool,bool,bool) is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "pause",
+   "line": 95
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isSupplyPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "isSupplyPaused",
+   "line": 96
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isTransferPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "isTransferPaused",
+   "line": 97
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isWithdrawPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "isWithdrawPaused",
+   "line": 98
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isAbsorbPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "isAbsorbPaused",
+   "line": 99
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isBuyPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "isBuyPaused",
+   "line": 100
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "pauseGuardian() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "pauseGuardian",
+   "line": 108
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "baseToken() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "baseToken",
+   "line": 109
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "baseTokenPriceFeed() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "baseTokenPriceFeed",
+   "line": 110
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "baseTrackingSupplySpeed() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "baseTrackingSupplySpeed",
+   "line": 138
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "baseTrackingBorrowSpeed() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "baseTrackingBorrowSpeed",
+   "line": 140
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "numAssets() is a sensitive function with no explicit auth signal",
+   "contract": "CometMainInterface",
+   "fn": "numAssets",
+   "line": 148
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "initializeStorage() is an initializer-like function without an initializer signal",
+   "contract": "CometMainInterface",
+   "fn": "initializeStorage",
+   "line": 151
+  },
+  {
+   "category": "upgrade-proxy-hazard",
+   "detail": "initializeStorage() is initializer-like without an initializer/onlyInitializing signal",
+   "contract": "CometMainInterface",
+   "fn": "initializeStorage",
+   "line": 151
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "constructor mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "constructor",
+   "line": 115
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "initializeStorage() mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "initializeStorage",
+   "line": 207
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "initializeStorage() is an initializer-like function without an initializer signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "initializeStorage",
+   "line": 207
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "getAssetInfo(uint8) is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "getAssetInfo",
+   "line": 225
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "getAssetInfoByAddress(address) is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "getAssetInfoByAddress",
+   "line": 232
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "accrueAccount(address) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "accrueAccount",
+   "line": 288
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "pause(bool,bool,bool,bool,bool) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "pause",
+   "line": 496
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "pause(bool,bool,bool,bool,bool) is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "pause",
+   "line": 496
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isSupplyPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isSupplyPaused",
+   "line": 519
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isTransferPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isTransferPaused",
+   "line": 526
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isWithdrawPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isWithdrawPaused",
+   "line": 533
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isAbsorbPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isAbsorbPaused",
+   "line": 540
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "isBuyPaused() is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isBuyPaused",
+   "line": 547
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "supply(address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supply",
+   "line": 708
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "supplyTo(address,address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyTo",
+   "line": 718
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "supplyFrom(address,address,address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyFrom",
+   "line": 729
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "transfer(address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transfer",
+   "line": 806
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "transferFrom(address,address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferFrom",
+   "line": 818
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "transferAsset(address,address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAsset",
+   "line": 829
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "transferAssetFrom(address,address,address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAssetFrom",
+   "line": 840
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "transferAssetFrom(address,address,address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAssetFrom",
+   "line": 840
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdraw(address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 930
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdraw(address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 930
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawTo(address,address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 940
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawTo(address,address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 940
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawFrom(address,address,address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 951
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawFrom(address,address,address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 951
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "absorb(address,address[]) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorb",
+   "line": 1031
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "buyCollateral(address,uint256,uint256,address) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 1122
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawReserves(address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawReserves",
+   "line": 1168
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "withdrawReserves(address,uint256) is a sensitive function with no explicit auth signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawReserves",
+   "line": 1168
+  },
+  {
+   "category": "unprotected-state-changing",
+   "detail": "approveThis(address,address,uint256) mutates state without an authorization gate",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "approveThis",
+   "line": 1189
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "doTransferOut",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawInternal",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawBase",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawCollateral",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "transfer — ETH transfer / external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawReserves",
+   "line": 685
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "delegatecall — delegatecall (into attacker-controlled code if the target is mutable)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "fallback",
+   "line": 1244
+  },
+  {
+   "category": "dangerous-edges",
+   "detail": "fallback delegatecall present — the implementation target executes in this contract's storage context",
+   "contract": "CometWithExtendedAssetList"
+  },
+  {
+   "category": "upgrade-proxy-hazard",
+   "detail": "initializeStorage() is initializer-like without an initializer/onlyInitializing signal",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "initializeStorage",
+   "line": 207
+  },
+  {
+   "category": "upgrade-proxy-hazard",
+   "detail": "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+   "contract": "CometWithExtendedAssetList"
+  },
+  {
+   "category": "upgrade-proxy-hazard",
+   "detail": "fallback delegatecall present — verify the implementation target control and initialization state",
+   "contract": "CometWithExtendedAssetList"
+  },
+  {
+   "category": "storage-clash",
+   "detail": "upgradeable contract without a storage gap — a future upgrade can collide with existing slots",
+   "contract": "CometWithExtendedAssetList"
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "constructor: state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "constructor",
+   "line": 115
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "doTransferOut(address,address,uint256): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "doTransferOut",
+   "line": 684
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supply(address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supply",
+   "line": 708
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supply(address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseToken, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, userBasic, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, numAssets, assetList, totalsCollateral, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supply",
+   "line": 708
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyTo(address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyTo",
+   "line": 718
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyTo(address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseToken, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, userBasic, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, numAssets, assetList, totalsCollateral, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyTo",
+   "line": 718
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyFrom(address,address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyFrom",
+   "line": 729
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyFrom(address,address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseToken, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, userBasic, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, numAssets, assetList, totalsCollateral, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyFrom",
+   "line": 729
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyInternal(address,address,address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyInternal",
+   "line": 737
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyInternal(address,address,address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseToken, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, userBasic, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, numAssets, assetList, totalsCollateral, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyInternal",
+   "line": 737
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyBase(address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyBase",
+   "line": 754
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyBase(address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (baseToken, lastAccrualTime, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, userBasic, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyBase",
+   "line": 754
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyCollateral(address,address,address,uint128): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyCollateral",
+   "line": 781
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "supplyCollateral(address,address,address,uint128): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (numAssets, assetList, totalsCollateral, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "supplyCollateral",
+   "line": 781
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "transfer(address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transfer",
+   "line": 806
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "transferFrom(address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferFrom",
+   "line": 818
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "transferAsset(address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAsset",
+   "line": 829
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "transferAssetFrom(address,address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAssetFrom",
+   "line": 840
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "transferInternal(address,address,address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferInternal",
+   "line": 848
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "transferCollateral(address,address,address,uint128): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferCollateral",
+   "line": 906
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdraw(address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 930
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdraw(address,uint256): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 930
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdraw(address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseToken, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, userBasic, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, baseBorrowMin, baseTokenPriceFeed, numAssets, assetList, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 930
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawTo(address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 940
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawTo(address,address,uint256): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 940
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawTo(address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseToken, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, userBasic, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, baseBorrowMin, baseTokenPriceFeed, numAssets, assetList, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 940
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawFrom(address,address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 951
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawFrom(address,address,address,uint256): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 951
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawFrom(address,address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseToken, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, userBasic, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, baseBorrowMin, baseTokenPriceFeed, numAssets, assetList, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 951
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawInternal(address,address,address,address,uint256): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawInternal",
+   "line": 959
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawInternal(address,address,address,address,uint256): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawInternal",
+   "line": 959
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawInternal(address,address,address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseToken, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, userBasic, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, baseBorrowMin, baseTokenPriceFeed, numAssets, assetList, userCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawInternal",
+   "line": 959
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawBase(address,address,uint256): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawBase",
+   "line": 976
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawBase(address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (lastAccrualTime, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, baseMinForRewards, baseScale, baseTrackingSupplySpeed, baseTrackingBorrowSpeed, userBasic, trackingSupplyIndex, trackingIndexScale, accrualDescaleFactor, trackingBorrowIndex, baseBorrowMin, baseTokenPriceFeed, numAssets, assetList, userCollateral, baseToken)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawBase",
+   "line": 976
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawCollateral(address,address,address,uint128): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawCollateral",
+   "line": 1008
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawCollateral(address,address,address,uint128): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawCollateral",
+   "line": 1008
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawCollateral(address,address,address,uint128): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (userCollateral, numAssets, assetList, userBasic, baseSupplyIndex, baseBorrowIndex, baseTokenPriceFeed, baseScale)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawCollateral",
+   "line": 1008
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "absorb(address,address[]): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorb",
+   "line": 1031
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "absorbInternal(address,address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorbInternal",
+   "line": 1056
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "buyCollateral(address,uint256,uint256,address): state mutates after an external call (a reentrancy window — effects-after-interaction)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 1122
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "buyCollateral(address,uint256,uint256,address): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 1122
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "buyCollateral(address,uint256,uint256,address): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (pauseFlags, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, baseToken, targetReserves, numAssets, assetList, storeFrontPriceFactor, baseTokenPriceFeed, baseScale, totalsCollateral)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 1122
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawReserves(address,uint256): transfers ETH through an external control handoff",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawReserves",
+   "line": 1168
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "withdrawReserves(address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (governor, baseSupplyIndex, baseBorrowIndex, totalSupplyBase, totalBorrowBase, supplyKink, supplyPerSecondInterestRateBase, supplyPerSecondInterestRateSlopeLow, supplyPerSecondInterestRateSlopeHigh, borrowKink, borrowPerSecondInterestRateBase, borrowPerSecondInterestRateSlopeLow, borrowPerSecondInterestRateSlopeHigh, lastAccrualTime, baseToken)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawReserves",
+   "line": 1168
+  },
+  {
+   "category": "reentrancy-value-flow",
+   "detail": "approveThis(address,address,uint256): cross-tx dependency — the transfer amount may depend on storage variables writable by other functions (governor)",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "approveThis",
+   "line": 1189
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "getPrice",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isBorrowCollateralized",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isBorrowCollateralized",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isBorrowCollateralized",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isLiquidatable",
+   "line": 429
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isLiquidatable",
+   "line": 442
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "isLiquidatable",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transfer",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transfer",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transfer",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferFrom",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferFrom",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferFrom",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAsset",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAsset",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAsset",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAssetFrom",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAssetFrom",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferAssetFrom",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferInternal",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferInternal",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferInternal",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferBase",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferBase",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferBase",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferCollateral",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferCollateral",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "transferCollateral",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdraw",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawTo",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawFrom",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawInternal",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawInternal",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawInternal",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawBase",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawBase",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawBase",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawCollateral",
+   "line": 386
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawCollateral",
+   "line": 399
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawCollateral",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorb",
+   "line": 1065
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorb",
+   "line": 1076
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorb",
+   "line": 429
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorb",
+   "line": 442
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorb",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorbInternal",
+   "line": 1065
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorbInternal",
+   "line": 1076
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorbInternal",
+   "line": 429
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorbInternal",
+   "line": 442
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "absorbInternal",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getReserves — Uniswap V2 — SPOT reserves, trivially manipulable with flash loans",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 1125
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 1151
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 1156
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "buyCollateral",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "quoteCollateral",
+   "line": 1151
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getPrice — Generic price oracle — check for zero, staleness, manipulation",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "quoteCollateral",
+   "line": 1156
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "latestRoundData — Chainlink aggregator — check staleness (updatedAt), zero price, answeredInRound >= roundId",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "quoteCollateral",
+   "line": 345
+  },
+  {
+   "category": "oracle-dependency",
+   "detail": "getReserves — Uniswap V2 — SPOT reserves, trivially manipulable with flash loans",
+   "contract": "CometWithExtendedAssetList",
+   "fn": "withdrawReserves",
+   "line": 1171
+  }
+ ],
+ "note": "the metadata-pinned build MATCHES the deployed bytecode at the pinned block — the screen runs on the REAL implementation source (the code that executes on this pool)",
+ "contentSha": "32dda00424918539c03a914ba3e895621f73d072a5a9906c779c0062cea8c854"
+}
