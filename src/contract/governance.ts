@@ -8,11 +8,83 @@
  * EOA), and only a bare externally-owned key (direct or one owner-hop out) is EOA.
  */
 export namespace Governance {
-  export type AdminClass = "EOA" | "SAFE" | "TIMELOCK" | "UNRESOLVED"
-  // ONLY these two fold the canonical noise — the "standard, gated proxy" reassurance the collapse encodes is TRUE only
-  // when the key-holder resolved to a multisig/timelock. EOA and UNRESOLVED never fold (the damning/caution line renders).
+  // GroundTruth (X-GROUNDTRUTH b) adds the fifth class IMMUTABLE — granted ONLY on the three-condition bytecode-constant
+  // proof (proveImmutable). It is the strongest governance fact (no one can swap the logic) — and it makes any surviving
+  // business flaw PERMANENT. A fabricated "no upgrade path" is stronger poison than a wrong SAFE, so it is proof-only.
+  export type AdminClass = "EOA" | "SAFE" | "TIMELOCK" | "UNRESOLVED" | "IMMUTABLE"
+  // ONLY these two fold the canonical noise on the GATED path — the "standard, gated proxy" reassurance the collapse
+  // encodes is TRUE only when the key-holder resolved to a multisig/timelock. EOA and UNRESOLVED never fold.
   export const GATED: readonly AdminClass[] = ["SAFE", "TIMELOCK"] as const
   export const isGated = (cls: AdminClass): boolean => GATED.includes(cls)
+  // the canonical proxy-machinery folds when the admin is GATED (a standard, gated proxy) OR the impl is provably IMMUTABLE
+  // (the machinery is inert BY PROOF — upgrade-path findings on a provably-unupgradeable contract are moot). A SEPARATE
+  // fold path; business-logic findings SURVIVE under BOTH (a reentrancy in an immutable impl is MORE permanent, not less real).
+  export const foldsMachinery = (cls: AdminClass): boolean => isGated(cls) || cls === "IMMUTABLE"
+
+  // ── THE THREE-CONDITION BYTECODE-CONSTANT IMMUTABLE PROOF (X-GROUNDTRUTH b, S62) — ALL-OR-NOTHING at the pinned block ──
+  export interface ImmutableProbe {
+    implEmbeddedInCode: boolean // (1) the resolved implementation address is a CONSTANT embedded in the proxy's deployed bytecode
+    implSlotZero: boolean // (2) the EIP-1967 implementation slot is zero/unused (the impl is NOT read from a mutable slot)
+    noWritePath: boolean // (3) no admin-slot write path exists in the proxy bytecode (no SSTORE targeting the 1967 slots)
+  }
+  export interface ImmutableProof {
+    immutable: boolean
+    conditions: ImmutableProbe
+    how: string
+  }
+  // ALL THREE hold → IMMUTABLE; ANY one unproven → NOT immutable (UNRESOLVED stands). The proof decides, never the wish
+  // (the seeded DISGUISED-MUTABLE control — an embedded-looking constant PLUS a live write path — MUST classify UNRESOLVED).
+  export function proveImmutable(p: ImmutableProbe): ImmutableProof {
+    const immutable = p.implEmbeddedInCode && p.implSlotZero && p.noWritePath
+    const fails = [
+      !p.implEmbeddedInCode && "the implementation is not a bytecode constant",
+      !p.implSlotZero && "the EIP-1967 impl slot is in use (the implementation is read from a mutable slot — upgradeable)",
+      !p.noWritePath && "an admin-slot write path exists in the proxy bytecode",
+    ].filter(Boolean)
+    return {
+      immutable,
+      conditions: p,
+      how: immutable
+        ? "no upgrade path exists — the implementation is a bytecode constant, the EIP-1967 slot is unused, and no admin-slot write path exists (all three proven at the pinned block)"
+        : `NOT provably immutable — ${fails.join("; ")} → UNRESOLVED (the proof decides, never the wish)`,
+    }
+  }
+  // the combined classifier: IMMUTABLE (on the three-condition proof) SUPERSEDES the admin class (if the logic cannot be
+  // swapped, who holds the — now inert — admin key is moot); otherwise the conservative admin classifier decides.
+  export function classify(imm: ImmutableProbe, admin: AdminProbe): { adminClass: AdminClass; how: string; immutable: ImmutableProof } {
+    const proof = proveImmutable(imm)
+    if (proof.immutable) return { adminClass: "IMMUTABLE", how: proof.how, immutable: proof }
+    const c = classifyAdmin(admin)
+    return { adminClass: c.adminClass, how: c.how, immutable: proof }
+  }
+
+  // the EIP-1967 slot constants (without 0x) — a provably-immutable proxy references NEITHER (it embeds its impl and never
+  // touches the mutable governance slots). Kept here (data, not logic) so the bytecode probe stays pure + testable.
+  const SLOT_IMPL_1967 = "360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+  const SLOT_ADMIN_1967 = "b53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103"
+  // an OPCODE-AWARE SSTORE scan (skip PUSH1..32 immediates so a 0x55 DATA byte is never mistaken for the SSTORE opcode).
+  const hasSstoreOpcode = (codeHex: string): boolean => {
+    for (let i = 0; i + 2 <= codeHex.length; ) {
+      const op = parseInt(codeHex.slice(i, i + 2), 16)
+      i += 2
+      if (op >= 0x60 && op <= 0x7f) i += (op - 0x5f) * 2 // PUSH1..PUSH32: skip the immediate bytes
+      else if (op === 0x55) return true // SSTORE
+    }
+    return false
+  }
+  // compute the three-condition probe from a proxy's DEPLOYED bytecode (pure — the capture reads the bytes, this decides):
+  //   (1) implEmbeddedInCode — the resolved impl address (20 bytes) appears as a constant in the bytecode
+  //   (2) implSlotZero — the caller passes whether the 1967 impl slot read zero/unused
+  //   (3) noWritePath — the bytecode does NOT (reference a 1967 slot constant AND contain an SSTORE opcode); a genuine
+  //       immutable proxy references neither governance slot. CONSERVATIVE: an unprovable no-write-path fails (UNRESOLVED).
+  export function probeImmutability(proxyCodeHex: string, resolvedImpl: string | null, implSlotZero: boolean): ImmutableProbe {
+    const code = (proxyCodeHex ?? "").replace(/^0x/i, "").toLowerCase()
+    const impl = (resolvedImpl ?? "").replace(/^0x/i, "").toLowerCase()
+    const implEmbeddedInCode = impl.length === 40 && code.includes(impl)
+    const references1967 = code.includes(SLOT_IMPL_1967) || code.includes(SLOT_ADMIN_1967)
+    const noWritePath = !(references1967 && hasSstoreOpcode(code))
+    return { implEmbeddedInCode, implSlotZero, noWritePath }
+  }
 
   // the raw probe results a capture (or a fixture) hands the classifier — one pinned block per subject.
   export interface AdminProbe {
@@ -99,8 +171,8 @@ export namespace Governance {
   // (the fold's "this is a standard, gated proxy" reassurance is absent or false). S58's seed (ungated upgrade + EOA)
   // survives here BECAUSE adminGated is false.
   export function collapse<T extends Finding>(findings: T[], canonicalMatch: boolean, adminClass: AdminClass): Collapse<T> {
-    const adminGated = isGated(adminClass)
-    if (!canonicalMatch || !adminGated) return { folded: [], survivors: [...findings], foldedCount: 0, collapsed: false }
+    // the machinery folds when the admin is GATED (a standard, gated proxy) OR the impl is provably IMMUTABLE (inert by proof)
+    if (!canonicalMatch || !foldsMachinery(adminClass)) return { folded: [], survivors: [...findings], foldedCount: 0, collapsed: false }
     const folded: T[] = []
     const survivors: T[] = []
     for (const f of findings) (isCanonicalFingerprint(f) ? folded : survivors).push(f)
@@ -120,6 +192,7 @@ export namespace Governance {
     how: string
     probes: Partial<AdminProbe>
     crossCheck?: { etherscan?: string; blockscout?: string; agrees?: boolean | null; note?: string }
+    immutable?: ImmutableProof // GroundTruth — the three-condition proof record (present when the subject was checked for IMMUTABLE)
     contentSha: string
     provenance?: string
     synthetic?: boolean
@@ -131,14 +204,18 @@ export namespace Governance {
   export function governanceLine(a: Artifact): string {
     const pat = a.pattern && a.pattern !== "not-a-proxy" ? a.pattern : "proxy"
     const addr = a.adminAddr ? short(a.adminAddr) : "not in the standard EIP-1967 slot"
+    // IMMUTABLE (X-GROUNDTRUTH b) — the strongest form: no upgrade path exists, proven at the pinned block. It answers the
+    // upgrade-path question ONLY — a provably-unupgradeable contract can still be buggy, and its bugs are PERMANENT.
+    if (a.adminClass === "IMMUTABLE") return `Immutable implementation — no upgrade path exists; the proxy machinery is inert. (Proven at block ${a.block}: the implementation is a bytecode constant.)`
     if (a.adminClass === "EOA") return `Upgradeable proxy (${pat}). Admin: ${addr} — EOA. A single key can replace this contract's logic.`
     if (isGated(a.adminClass)) return `Upgradeable proxy (${pat}). Admin: ${addr} — ${a.adminClass}. Upgrade path gated; verify the signers.`
     return `Upgradeable proxy (${pat}). Admin: ${addr} — unresolved; treat with EOA-grade caution.`
   }
 
   // a coarse "governance strength" ordering for the discrimination wall (S60) — NOT a verdict, a render-signal ordering.
+  // IMMUTABLE sits at the strong end (no upgrade path) — reported as its OWN reassurance form, not force-ranked without D30.
   export function governanceRank(cls: AdminClass): number {
-    return cls === "EOA" ? 0 : cls === "UNRESOLVED" ? 1 : cls === "SAFE" ? 2 : 3 /* TIMELOCK */
+    return cls === "EOA" ? 0 : cls === "UNRESOLVED" ? 1 : cls === "SAFE" ? 2 : cls === "TIMELOCK" ? 3 : 4 /* IMMUTABLE */
   }
 
   // ── the RENDER bundle — the resolved governance artifact + the re-pointed implementation findings (if the impl was
