@@ -1,0 +1,76 @@
+{
+ "protocol": "precision-countersign-package",
+ "at": "2026-07-11",
+ "rule": "MT4 — the WHOLE Operator gate, assembled into ONE document for ONE sitting at Phase 5: the countersigns D23–D29 (D27, the variance amendment, FIRST — MT1) + IN2 (the real-screen session, now including the governance line) + IN4 (the browser/AT a11y pass) + AF4 (the first live paid-key parity diff) + the push decision. An agent must NOT sign as the Operator (operatorSigned stays false until the Operator's own hand — LN5). Each deviation rests on a proof already green in BOTH repos. Discharged whole, or an honest STOP with exactly what remains quoted — no partial credit.",
+ "mt1_topCountersign": "D27 (the variance amendment) is the TOP-priority countersign — the tool proved its own Stamp GENEROUS by 27–165× (τ_int on real yields); meeting invited testers on a caveat is defensible only briefly. Signing D27 ACTIVATES the effective-N floor: some GOs honestly become INSUFFICIENT, the per-pool census disclosed — THAT IS THE FIX WORKING, not a regression.",
+ "deviations": [
+  {
+   "id": "D27",
+   "order": "FIRST (MT1 — the top-priority countersign)",
+   "title": "the variance decision — the i.i.d. audit → ACTIVATE the conservative effective-N-floor amendment OR RATIFY the rendered caveat",
+   "restsOn": "Moat Phase 4 — stamp-variance-audit.json (read-only): the i.i.d. finding CONFIRMED (rigor.py::psr uses /(n-1) i.i.d. over autocorrelated yields; τ_int ≈ 27–165, median ~124 via the frozen effective_n.py → the DSR is grossly optimistic, direction GENEROUS). The caveat is rendered NOW at reality.ts renderStamp (render-layer, verdict-path 7 frozen); the effective-N-floor amendment is specified + PARKED.",
+   "signingConsequence": "ACTIVATE → a GO may honestly become INSUFFICIENT (per-pool census disclosed; the frozen effective_n.py computes n_eff=N/τ_int; n_eff<floor → INSUFFICIENT; ZERO frozen-byte edits, the MinTRL rider pattern). RATIFY → the caveat stands as the permanent honest interim. Either is the Operator's math decision.",
+   "operatorSigned": false
+  },
+  {
+   "id": "D26",
+   "order": "the resolver decision (MT2 — FORCED this sprint)",
+   "title": "the capture-time dependency exception — branch A (viem/whatsabi land capture-time-only) OR branch B (the hand-rolled narrow resolver, chosen this sprint)",
+   "restsOn": "Moat capture-truth.json (3 demonstrated correctness gaps: custom-slot USDC · EIP-1167 clone · EIP-2535 Diamond) + the Bun-1.3.11 incompatibility (viem@2.55.0 runs under node, not bun); the Precision governance capture PROVED branch B sufficient on the shelf (compound-v3 → TIMELOCK, aave-v3 → UNRESOLVED, the anti-cry-wolf zero-slot rule) with ZERO deps.",
+   "decisionThisSprint": "BRANCH B BUILT — the axis needed a resolver and branch B needs no signature; it landed zero-dep, Bun-native, over the tool's own free RPC rotation. Branch A (capture-time-only, node-runtime cost accepted) remains available the moment the Operator signs D26. The decision is recorded with the Bun cost folded (MT2).",
+   "operatorSigned": false
+  },
+  {
+   "id": "D28",
+   "order": "the precision-pass scope (this sprint)",
+   "title": "the precision-pass scope — the resolved-implementation screen + the conservative governance classifier + the collapse whitelist + the discrimination wall",
+   "restsOn": "precision-pins.json (PINS_SHA d2fa4cdc) + the S58/S59/S60 walls green in BOTH repos: the screen reads the resolved implementation, the admin is classified conservatively at a pinned block (a ZERO slot → UNRESOLVED never EOA), the canonical noise collapses by whitelist with every unexplained finding surviving, the axis discriminates clean from rugged; the governance fact renders info/context (no verdict moved).",
+   "operatorSigned": false
+  },
+  {
+   "id": "D29",
+   "order": "the promotion (specified CONSERVATIVE, PARKED)",
+   "title": "the EOA-admin → `bounding` promotion — the damning case only, degrade-only, its affected-pool census attached",
+   "restsOn": "precision-pins.json d29PromotionSpec: EOA-admin on an upgradeable pool caps the contract screen at CAUTION (never lifts a verdict); SAFE/TIMELOCK/UNRESOLVED do NOT promote. The affected-pool census is pre-computed so the Operator signs with eyes open.",
+   "signingConsequence": "SIGN → the EOA-admin case begins CAPPING contract-screen verdicts at CAUTION (degrade-only). LEAVE PARKED → the governance fact stays info/context. An agent must not move what decides verdicts (the D27 precedent).",
+   "operatorSigned": false
+  },
+  {
+   "id": "D23",
+   "order": "carried (Alpha)",
+   "title": "the capability split law (paid DATA deepens facts; paid MODELS never touch a verdict) + the green parity proof",
+   "restsOn": "capability-parity.json — the hermetic differential (byte-identical zero/free/paid) green in BOTH repos; assertMayConsume guards the 7 verdict-path modules",
+   "operatorSigned": false
+  },
+  {
+   "id": "D24",
+   "order": "carried (Probe)",
+   "title": "the telemetry/feedback privacy posture (off-by-default, .strict() manifest, scrubbed, double-consent, verdict-path-forbidden)",
+   "restsOn": "probe-pins.json telemetryPosture + probe-redteam S52; src/telemetry/* imports no scored module (grep-walled)",
+   "operatorSigned": false
+  },
+  {
+   "id": "D25",
+   "order": "carried (Probe)",
+   "title": "the pre-registered kill-criterion (8b4e094b, immutable-without-disclosure) + the re-score artifact scope (now TWO labeled layers, MT3)",
+   "restsOn": "probe-kill-criterion.json commitHash 8b4e094b + the post-mortems' reproHash re-verification; MT3 — the RECONSTRUCTION (all-SAMPLE) vs AFTERMATH (REAL-as-fetched) layers labeled in the /postmortems render + the ALPHA.md pitch, never blurred",
+   "operatorSigned": false
+  }
+ ],
+ "gateItems": {
+  "IN2": "the Operator's real-screen session — now including: the governance line on a clean (compound → TIMELOCK) and a damning (the synthetic EOA fixture) subject · the collapsed vs surviving findings · the two post-mortem layers · the D27 caveat. OWED-OPERATOR-GATED, never simulated (LN5)",
+  "IN4": "the browser/AT/viewport a11y pass — a real assistive-tech walk of the conscious 3 screens. OWED-OPERATOR-GATED",
+  "AF4": "the first LIVE paid-key parity diff — the capability split proven on a real paid key (byte-identical verdict path). OWED-OPERATOR-GATED",
+  "push": "the publication decision — the trees are UNPUSHED (Operator-gated); the push is the Operator's call"
+ },
+ "mt5_ftoReDated": {
+  "id": "RE4/MT5",
+  "patent": "US 2019/0294990 A1",
+  "assigneeClaimed": "AQR (the DSR / ONC-style effective-trials application)",
+  "grantStatus": "UNCONFIRMED — a professional freedom-to-operate check is required before commercializing any effective-trials reimplementation",
+  "owner": "Operator (a business action, not an engineering task)",
+  "reDated": "2026-07-11",
+  "note": "re-confirmed + re-dated this sprint (MT5); the effective-trials implementation stays PARKED (ZERO code before trials exist), so the FTO check is due before commercialization, not before this sprint"
+ },
+ "signingConsequence": "with D23–D29 signed + IN2/IN4/AF4 discharged + the push decision, the invites go out against a goalpost set before the cohort arrived — now with an axis that tells a depositor who holds the upgrade key in one honest line. Until then the sprint terminates READY-PENDING-OPERATOR (or an honest STOP with the remainder quoted — MT4)."
+}

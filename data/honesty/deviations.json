@@ -1,6 +1,6 @@
 {
  "protocol": "honesty-deviations",
- "at": "2026-07-08",
+ "at": "2026-07-11",
  "rule": "X-DEVLEDGER \u2014 every departure from a blueprint's literal text lives here as a first-class committed entry {blueprintLine, whatWasDone, why, lawAuthority}, surfaced verbatim in the handoff. A silent deviation is a Halt.",
  "deviations": [
   {
@@ -194,6 +194,24 @@
    "lawAuthority": "X-MOATDEEP(c) + X-KEEP (frozen seven byte-untouched) + A'#5/#6 (generous-fix / silent-edit fenced) + the DECAY_SIGNIF_Z re-pin precedent",
    "operatorSigned": false,
    "note": "AWAITING the Operator's D27 signature: ACTIVATE the amendment (the effective-N floor -- a GO may honestly become INSUFFICIENT, the fix working; per-pool verdict census disclosed at activation) OR RATIFY the caveat as the permanent choice. Until signed, the caveat stands (honest interim) and the frozen seven are byte-untouched. Surfaced in the Phase 5 handoff."
+  },
+  {
+   "id": "D28",
+   "blueprintLine": "Precision Phase 1: 'D28 (the precision-pass scope, Operator-signed)'",
+   "whatWasDone": "The CONTRACT-SCREEN PRECISION PASS executed: (a) the static screen re-points at the RESOLVED implementation (findings describe the code that executes, not the proxy shell); (b) a zero-dep hand-rolled resolver (branch B, over the tool's OWN free RPC rotation) reads the EIP-1967 admin slot at ONE pinned block per subject and classifies EOA/SAFE/TIMELOCK/UNRESOLVED, CONSERVATIVE BY LAW (a ZERO admin slot -> UNRESOLVED, NEVER EOA -- verified on-chain: aave-v3 + sparklend hold the admin immutably; a naive slot=0->EOA read would fabricate an alarm on a blue-chip); (c) the canonical proxy noise collapses by WHITELIST into one honest governance line (fold requires canonicalMatch AND a gated admin AND a canonical-fingerprint match; every unexplained finding SURVIVES itemized); (d) the axis DISCRIMINATES clean from rugged (S60). Every resolved fact is content-hashed into the moat. The governance fact renders info/context (no verdict moved; verdict-path 7 + frozen-core 2 byte-unchanged).",
+   "why": "The Operator's live COMPARE exposed the precision problem: 39 [info/context] findings on two blue-chip proxies -- the SAFE way to be imprecise but not the USEFUL way (alarm fatigue trains the depositor to ignore the axis). The cure is context (resolve WHICH code executes and WHO holds the key), not a bigger analyzer. Slither (AGPL) / Mythril / Aderyn stay rejected (the problem is context-resolution, not analysis depth).",
+   "lawAuthority": "X-PRECISION (four clauses) + X-CONTRACT/X-VERIFY (a SCREEN not an audit; a clean screen never reads 'safe') + PART CLEAN (mass path stays hono+zod; the resolver is capture-time, zero-dep)",
+   "operatorSigned": false,
+   "note": "AWAITING the Operator's signature (presented in precision-countersign-package.json, Phase 5). The pass added ONLY info/context (no verdict moved), so it proceeds without the signature; D28 ratifies the SCOPE. The screen stays a screen: resolving the governance surface proves WHO can change the code and whether the path is gated -- it does NOT prove the implementation bug-free."
+  },
+  {
+   "id": "D29",
+   "blueprintLine": "Precision Phase 4: 'D29 (the EOA-admin->bounding promotion, specified CONSERVATIVE + parked for signature)'",
+   "whatWasDone": "SPECIFIED + PARKED (not taken). The damning EOA-admin-on-upgradeable governance fact is specified to promote from info/context to `bounding` the contract screen -- direction CONSERVATIVE (degrade-only: it may CAP a verdict at CAUTION, NEVER lift one), scope the DAMNING EOA case ONLY (SAFE/TIMELOCK/UNRESOLVED do not promote), the affected-pool census pre-computed so the Operator signs with eyes open. operatorSigned=false; the render stays info/context; the verdict-path hashes are asserted UNCHANGED at every gate.",
+   "why": "'Admin = EOA on an upgradeable pool' is real, verifiable, and predicts most stable-pool disasters -- verdict-grade information, which is exactly why its promotion is Operator-gated and conservative: the tool may honestly frighten, it may never automatically comfort. An agent must not move what decides verdicts (the D27 precedent).",
+   "lawAuthority": "X-PRECISION(d) + A'#6 (the governance fact must not promote itself) + the D27 precedent (an agent moves no verdict without the Operator's signature)",
+   "operatorSigned": false,
+   "note": "PARKED pending the Operator's signature (precision-countersign-package.json). SIGN -> the EOA-admin case begins capping contract-screen verdicts at CAUTION (degrade-only). LEAVE PARKED -> the governance fact stays info/context. Either way the render this sprint is info/context and no verdict moved."
   }
  ]
 }
