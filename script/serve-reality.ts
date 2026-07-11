@@ -61,15 +61,35 @@ app.get("/postmortems", async (c) => {
   const idxP = path.join(dir, "index.json")
   if (!existsSync(idxP)) return c.json({ ok: true, postmortems: [], note: "no re-score artifacts recorded on this clone (run: bun run script/honesty/rescore-postmortems.ts)" })
   const index = JSON.parse(readFileSync(idxP, "utf8"))
-  // each subject: the SAMPLE collapse RECONSTRUCTION + (Moat Phase 3; S56) the REAL current-state layer if captured —
-  // per-cell REAL/SAMPLE provenance visible cell-by-cell (PIT-honest: REAL-AS-FETCHED-NOW, never as-of-collapse).
+  // MT3 (Precision sprint) — the TWO post-mortem layers are labeled IN THE RENDER and NEVER blurred: the all-SAMPLE
+  // collapse RECONSTRUCTION ("what we'd have flagged at the collapse") vs the REAL AFTERMATH ("what the engine renders on
+  // real fetched current state"). The tool does NOT claim "we'd have caught it on real data" — the reconstruction is
+  // SAMPLE (public reporting, not a re-fetch of the delisted pools); the aftermath is today's REAL state, not the collapse.
+  const LAYERS = {
+    reconstruction: {
+      label: "RECONSTRUCTION (all-SAMPLE)",
+      means: "what we'd have flagged at the collapse — the existing deterministic engine's verdict on RECONSTRUCTED SAMPLE facts (public reporting, not a re-fetch of the delisted pools). This is NOT a claim we caught it on real data.",
+    },
+    aftermath: {
+      label: "AFTERMATH (REAL-as-fetched)",
+      means: "what the engine renders on REAL fetched CURRENT state (REAL-AS-FETCHED-NOW, never as-of-collapse) — the pool's present reality, content-hashed. A DIFFERENT question from the reconstruction.",
+    },
+  }
+  const distinctness =
+    "MT3 — the two layers are NEVER blurred into 'we'd have caught it on real data': the RECONSTRUCTION is SAMPLE (what we'd have flagged), the AFTERMATH is real CURRENT state (not the collapse). Distinct questions, distinctly labeled."
+  // each subject: the SAMPLE reconstruction + (Moat Phase 3; S56) the REAL current-state aftermath if captured — each
+  // layer explicitly labeled, per-cell REAL/SAMPLE provenance visible cell-by-cell (PIT-honest).
   const subjects = (index.subjects as { subject: string }[]).map((s) => {
     const sample = JSON.parse(readFileSync(path.join(dir, `${s.subject}.json`), "utf8"))
     const realP = path.join(dir, `${s.subject}-real.json`)
     const realLayer = existsSync(realP) ? JSON.parse(readFileSync(realP, "utf8")) : null
-    return { ...sample, realLayer }
+    return {
+      subject: s.subject,
+      reconstruction: { ...sample, layer: LAYERS.reconstruction.label },
+      aftermath: realLayer ? { ...realLayer, layer: LAYERS.aftermath.label } : { absent: true, layer: LAYERS.aftermath.label },
+    }
   })
-  return c.json({ ok: true, rule: index.rule, allSample: index.allSample, realLayer: index.realLayer ?? null, subjects })
+  return c.json({ ok: true, rule: index.rule, layers: LAYERS, distinctness, allSample: index.allSample, realLayer: index.realLayer ?? null, subjects })
 })
 
 // ── the /feedback door (Probe Phase 2; X-TELEMETRY) — a DISPOSITIONED door (not a fourth screen): a tester's structured
