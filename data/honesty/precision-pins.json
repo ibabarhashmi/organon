@@ -1,0 +1,228 @@
+{
+ "protocol": "precision-pins",
+ "sprint": "THE PRECISION SPRINT — X-PRECISION: the contract screen stops crying wolf — analyze the RESOLVED implementation not the proxy shell, resolve WHO HOLDS THE KEY (the EIP-1967 admin slot → EOA/Safe/Timelock over the tool's OWN free RPC rotation, conservative by law), collapse the 20–40-line standard-proxy noise into ONE honest governance line (a whitelist, not a compressor — unexplained findings survive verbatim), and prove the axis can DISCRIMINATE (known-clean vs known-rugged must look different). All capture-time, no paid provider, content-hashed into the moat, Etherscan/Blockscout OPTIONAL and never load-bearing. Force the D26 decision (either branch pre-designed). Close every Moat finding (MT1–MT5, D27 first). Present the whole Operator gate again. Red-team S1–S60.",
+ "at": "2026-07-11",
+ "continues": "THE MOAT SPRINT (VALIDATED PASS both repos; 1083 pass / 2 skip / 0 fail across 165 files / 1085 tests; pristine 1080/0; X-PROBE RUNNING (ARMED) — READY-PENDING-OPERATOR; the Operator's live COMPARE exposed the precision problem — 39 info/context findings on two blue-chip proxies)",
+ "carriedFromPinsSha": "6aa2d0c7a23caaabe721732eb2efda2d2fbfbb79a67029f58a5b01da6c84170c",
+ "dualRepo": {
+  "repos": [
+   "ibabarhashmi/organon-studio",
+   "ibabarhashmi/organon"
+  ],
+  "rule": "one blueprint, two trees (byte-identical 34d20e7 base + the byte-identical Alpha/Probe/Moat layer); every gate re-proven in EACH; a per-repo delta is a DISC (recorded, never smoothed); the port byte-identical or the difference recorded (PR5)",
+  "startBattery": "1083 pass / 2 skip / 0 fail across 165 files / 1085 tests (pristine 1080/0) BOTH repos"
+ },
+ "xPrecisionLaw": {
+  "law": "X-PRECISION — four clauses, each load-bearing; a shell finding dressed as logic risk, an optimistic admin label, a collapsed real finding, or an agent-promoted axis is a Halt",
+  "clauseA_implementationNotShell": "findings describe the code that EXECUTES (the resolved, Sourcify-verified implementation); proxy-shell structure renders as the governance line, NEVER as itemized risk; an unresolvable implementation stays honestly UNVERIFIED (the screen does not guess)",
+  "clauseB_keyHolderNotKeyword": "the 1967 admin slot read over the tool's own RPC rotation at ONE pinned block per subject, content-hashed; the classifier EOA/SAFE/TIMELOCK/UNRESOLVED-CONTRACT is CONSERVATIVE — ambiguity reports as 'unresolved — treat with EOA-grade caution', never as reassurance (a wrong 'multisig' is a fabricated safety claim, the worst failure available)",
+  "clauseC_collapseIsWhitelist": "only findings EXPLAINED by a pinned canonical-pattern match collapse into the one-line grammar; anything unexplained STAYS ITEMIZED verbatim (a seeded genuinely-ungated upgrade path SURVIVES — S58's positive control, the sprint's gravest wall)",
+  "clauseD_discriminateOrStayContext": "the axis proves known-clean vs known-rugged render differently (S60); the damning EOA-admin promotion to `bounding` is D29 — specified, direction conservative (degrade-only), PARKED for the Operator; an agent moves no verdict"
+ },
+ "implementationAnalysisRule": {
+  "rule": "the static screen re-points at the implementation the resolver found (the Sourcify-verified source at the RESOLVED address); findings then describe the logic that actually executes, and the proxy shell's own structure stops masquerading as risk",
+  "unresolvableHonest": "an unresolvable/unverified implementation → the tier stays honestly UNVERIFIED; the governance line renders regardless (the admin fact needs no source); the screen does NOT guess (X-CONTRACT)",
+  "shellAsGovernanceLine": "proxy-shell fingerprints (upgrade entrypoint, delegatecall, storage gap, initializer) render ONLY as the collapsed governance line when the canonical match + gated admin explain them — never as itemized 'risk'"
+ },
+ "eip1967Slots": {
+  "implementation": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+  "admin": "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103",
+  "beacon": "0xa3f0ad74e5423aebfd80d3ef4346578335a9a72aeaee59ff6cb3582b35133d50",
+  "note": "bytes32(uint256(keccak256('eip1967.proxy.implementation'))-1) and the admin/beacon variants — pinned verbatim; one eth_getStorageAt each over the tool's OWN free RPC rotation (PlaneRpcState {llamarpc, ankr, publicnode, 1rpc}); zero new provider, zero paid tier"
+ },
+ "onePinnedBlockRule": "every read for a subject (impl slot · admin slot · getCode · the Safe/Timelock probes · the owner-hop) carries ONE explicit pinned blockNumber PER SUBJECT — the admin must not change mid-capture (X-DETERM); a mixed-block artifact fails the wall (A′#3)",
+ "classifierSpec": {
+  "law": "CONSERVATIVE BY LAW — an unresolvable or ambiguous admin is 'unresolved — treat with EOA-grade caution', NEVER optimistically Safe/timelock; a wrong 'multisig' is a fabricated reassurance (the worst possible failure of a trust tool)",
+  "zeroSlotIsUnresolvedNotEoa": "a ZERO/empty admin slot is UNRESOLVED, NEVER EOA — a REAL datum: aave-v3 (and sparklend, its fork) hold the admin IMMUTABLY in bytecode, so the standard 0xb531… slot reads 0x0; a naive slot=0 → '0x000…000 → EOA → one key can replace this' read would be a FABRICATED ALARM, the cry-wolf defect this sprint exists to kill. Only a NON-ZERO admin address whose eth_getCode is empty is a true EOA",
+  "probeSet": [
+   "read admin slot → adminAddr; ZERO/empty → UNRESOLVED (admin off-slot/immutable — NOT EOA)",
+   "adminAddr non-zero + eth_getCode EMPTY → EOA (a single externally-owned key can replace the logic — the damning case)",
+   "adminAddr is a contract + Safe pattern (getThreshold()+getOwners() both respond, or whatsabi Safe detection on branch A) → SAFE",
+   "adminAddr is a contract + a getMinDelay()/delay()/getDelay() responder → TIMELOCK",
+   "adminAddr is a contract, not Safe/Timelock → ONE owner()-hop: owner() a Timelock/Safe responder → TIMELOCK/SAFE (via owner); owner() a BARE EOA (getCode empty) → EOA (via owner) — a single key controls the upgrade admin, the damning case ONE HOP OUT (conservative: flags danger, never comforts); else UNRESOLVED-CONTRACT",
+   "any residual ambiguity → UNRESOLVED-CONTRACT (treat with EOA-grade caution; a contract, but the governance is unproven)"
+  ],
+  "selectors": {
+   "getThreshold": "0xe75235b8",
+   "getOwners": "0xa0e67e2b",
+   "getMinDelay": "0xf27a0c92",
+   "delay": "0x6a42b8f8",
+   "getDelay": "0x6a42b8f8_or_impl",
+   "owner": "0x8da5cb5b"
+  },
+  "classes": [
+   "EOA",
+   "SAFE",
+   "TIMELOCK",
+   "UNRESOLVED"
+  ],
+  "gatedClasses": [
+   "SAFE",
+   "TIMELOCK"
+  ],
+  "gatedNote": "ONLY SAFE and TIMELOCK are 'gated' (the collapse's reassurance is TRUE); EOA and UNRESOLVED are NOT gated — the noise does NOT collapse on them (the damning/caution line renders above the full surviving list)"
+ },
+ "collapseWhitelist": {
+  "law": "the collapse is a WHITELIST, not a compressor (X-PRECISION c) — fold(finding) = canonicalMatch AND adminGated(SAFE|TIMELOCK) AND matchesCanonicalFingerprint(finding.detail); survive = NOT fold; a finding the canonical pattern cannot explain STAYS ITEMIZED verbatim",
+  "foldRequiresAll": [
+   "canonicalMatch — the resolver confirmed a pinned canonical proxy pattern (OZ transparent/UUPS/beacon/EIP-1167)",
+   "adminGated — the admin resolved to SAFE or TIMELOCK (the 'this is a standard, gated proxy' reassurance the fold encodes is TRUE; an EOA/UNRESOLVED admin fails this → NOTHING folds)",
+   "matchesCanonicalFingerprint — the finding's detail matches a pinned canonical-fingerprint pattern (proxy-side AND implementation-side OZ plumbing)"
+  ],
+  "canonicalFingerprints": [
+   "looks like an upgrade entrypoint without an auth signal",
+   "delegatecall (into attacker-controlled code if the target is mutable)",
+   "fallback delegatecall present",
+   "upgradeable contract without a storage gap",
+   "upgradeable contract does not self-lock the implementation via constructor/_disableInitializers",
+   "is initializer-like without an initializer/onlyInitializing signal",
+   "initializer routines are internal-only"
+  ],
+  "survivesAlways": "a non-canonical delegatecall, an anomalous initializer, a reentrancy-value-flow finding, an oracle-dependency finding, OR any canonical-fingerprint finding on an EOA/UNRESOLVED-admin subject — all SURVIVE itemized (the fold's reassurance is absent or false)",
+  "s58Control": "a seeded fixture with a genuinely-ungated `upgradeTo` (no auth in the resolved source) + admin=EOA must SURVIVE the collapse itemized AND render the damning grammar line — because adminGated is false (EOA), NOTHING folds. Collapsing a real finding into 'standard proxy' is the gravest possible failure of this sprint (A′#1)",
+  "censusIsOutcomeNotTarget": "the alarm-fatigue census (before→after itemized-finding count per subject) is a RECORDED OUTCOME, never a target that licenses hiding a survivor (A′#9); attack #1's wall dominates"
+ },
+ "oneLineGrammar": {
+  "gated": "Upgradeable proxy ({pattern}). Admin: {addr} — {SAFE|TIMELOCK}. Upgrade path gated; verify the signers.",
+  "eoa": "Upgradeable proxy ({pattern}). Admin: {addr} — EOA. A single key can replace this contract's logic.",
+  "unresolved": "Upgradeable proxy ({pattern}). Admin: {addr|not-in-standard-slot} — unresolved; treat with EOA-grade caution.",
+  "stillInfoContext": "all three forms render info/context THIS sprint (D29 parked); the governance fact decides no verdict until the Operator signs D29"
+ },
+ "discriminationFixtures": {
+  "law": "the axis proves it can tell clean from rugged; the wall (S60) asserts separation on governance class + surviving-finding count + grammar form — all three, not one cherry metric; fixtures pinned WITH rationale (gaming the fixtures is A′#5)",
+  "knownClean": [
+   {
+    "key": "compound-v3-usdc",
+    "address": "0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+    "expect": "canonical proxy + TIMELOCK-gated admin (admin 0x1ec6…→ owner-hop → the Compound Timelock 0x6d90…) → the reassuring-with-homework grammar; the canonical noise collapses to one line",
+    "rationale": "a real, battle-tested blue-chip whose upgrade path resolves to a governance timelock — the gated exemplar the collapse should reward"
+   },
+   {
+    "key": "aave-v3-pool",
+    "address": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+    "expect": "impl resolves (0x728a…) but the standard admin slot reads 0x0 (aave's immutable-admin proxy) → UNRESOLVED — the honest 'we refuse to guess' grammar; noise does NOT collapse (adminGated false)",
+    "rationale": "the anti-cry-wolf exemplar — a naive slot=0→EOA read would fabricate an alarm on a blue-chip; the classifier must render UNRESOLVED, never EOA (the classifierSpec.zeroSlotIsUnresolvedNotEoa datum, verified on-chain)"
+   }
+  ],
+  "knownRugged": [
+   {
+    "key": "synthetic-eoa-ungated",
+    "provenance": "SYNTHETIC-FIXTURE",
+    "synthetic": true,
+    "expect": "canonical bytecode + admin=EOA + a genuinely-ungated `upgradeTo` in the resolved source → the damning grammar ('a single key can replace this contract's logic') + the ungated upgrade SURVIVES the collapse itemized",
+    "rationale": "the S58 positive control + the EOA discrimination exemplar; a CONSTRUCTED artifact (never claimed REAL/on-chain), whose ONLY separating feature is the admin fact — the opposite of a gamed fixture (separation rests on the thing that matters, not a cherry metric)"
+   }
+  ],
+  "realWorldCensus": {
+   "datum": "a REAL, captured admin-class census over ~50 mainnet proxies (blue-chip lending/LSTs/stablecoins AND smaller/older protocols — aave/compound/spark/fluid/Ethena/lido-LSTs/Alchemix/Reflexer/mStable/Vesper/Idle/Instadapp/Ribbon/Euler/Angle/…): ZERO hold a direct-EOA admin AND zero an EOA-owned ProxyAdmin — every gated one resolves to a Timelock/Safe/ProxyAdmin CONTRACT (real classifications proven on-chain: compound-v3 + Instadapp → TIMELOCK; Ribbon → SAFE; aave-v3 + sparklend → UNRESOLVED-immutable)",
+   "why": "grounds the discrimination in real data: EOA-admin governance is not merely rare, it is EXTINCT among notable live survivors — pools that gave a single key the upgrade path RUGGED and are now dead (their damning state readable only at archive height). That extinction IS the axis's meaning: 'admin = EOA on an upgradeable pool' predicts most stable-pool disasters precisely because the pools that had it did not survive"
+  },
+  "whyDamningIsSynthetic": "the CLEAN/CONTEXT side is REAL (compound TIMELOCK · Ribbon SAFE · aave UNRESOLVED — captured on-chain); the DAMNING side is necessarily a LABELED SYNTHETIC control because the live-survivor damning class is extinct (above). This is NOT gaming (A′#5): separation rests on the real admin discriminator grounded in the real census, not a cherry metric; a live real EOA-admin pool cannot be exhibited because such pools do not survive to be live",
+  "honestGap": {
+   "item": "a REAL historical rug captured AT ITS EXPLOIT BLOCK (archive-node state)",
+   "status": "HONEST GAP — surfaced, not simulated",
+   "why": "the tool's free sovereign RPC rotation serves recent state; reading a 2021–2023 rug's admin slot at its exploit height needs an ARCHIVE node (pruned on the free rotation). The EOA damning class is proven via the synthetic control (S58) + the real-world census (EOA is the extinct danger class among survivors); an archive-height real-rug capture is a pinned follow-up needing a BYOK archive endpoint — Operator-owned, never faked (LN5-adjacent honesty)"
+  }
+ },
+ "crossCheckRule": {
+  "law": "Etherscan `getsourcecode` (Proxy/Implementation fields) is a FREE corroboration WHEN a BYOK ETHERSCAN_API_KEY is present; Blockscout (OSS/self-hostable) the secondary; NEVER load-bearing (Etherscan's free tier tightened Nov 2025, ~5 r/s — a dependency would be fragility)",
+  "absentHonest": "no key → the field reads ABSENT; the FULL pass must run green with NO Etherscan/Blockscout key (S59) — the load-bearing reads are always the tool's own RPC rotation (the moat stays sovereign)",
+  "disagreementSurfaced": "a cross-check that DISAGREES with the tool's own resolution is SURFACED as a divergence fact, NEVER silently arbitrated (A′#4)"
+ },
+ "d26Branches": {
+  "branchA_signed": {
+   "what": "viem@2.55.0 + @shazow/whatsabi@0.26.0 land capture-time-only under the Moat's full determinism contract (exact pins · batching prohibited + byte-identity-tested · block-pinned · no signing import · allowlist + grep-walled)",
+   "cost": "RECORDED: viem@2.55.0's transitive @noble/hashes@1.8.0 self-referential subpath import does NOT resolve under Bun 1.3.11 — the capture step runs under NODE (tsx); the mass path (hono+zod, bun) is unaffected. The 3 measured Moat gaps (custom-slot USDC · EIP-1167 clone · EIP-2535 Diamond) justify it on the merits",
+   "requires": "the Operator's D26 signature — an agent must not land deps that need a signature (LN5)"
+  },
+  "branchB_declined": {
+   "what": "the PRE-DESIGNED hand-rolled narrow resolver — raw eth_getStorageAt on the 1967 implementation+admin slots, the EIP-1167 bytecode-embedded implementation read, the measured custom-slot heuristic, a Diamond loupe eth_call — over the tool's OWN free RPC rotation (PlaneRpcState), ZERO deps, Bun-native",
+   "ceiling": "covers exactly the pinned patterns (the 3 measured gaps + canonical OZ); NOVEL proxy shapes stay honestly UNRESOLVED → EOA-grade caution (stated, not hidden)",
+   "requires": "NO signature — zero deps, runs under Bun on the tool's own rotation"
+  },
+  "forced": "the precision pass NEEDS a resolver either way; a D26 stalemate no longer blocks the axis — branch B proceeds without a signature, branch A remains the Operator's option on signing D26"
+ },
+ "d26Decision": {
+  "decision": "BRANCH B BUILT (this sprint) — the hand-rolled narrow resolver, zero deps, Bun-native, over the tool's own RPC rotation; it needs no signature and was proven on real chain data (compound-v3 → TIMELOCK-gated; aave-v3 → UNRESOLVED immutable-admin; the anti-cry-wolf zero-slot rule verified on-chain)",
+  "d26Status": "D26 PRESENTED WHOLE — OWED-OPERATOR-GATED (operatorSigned=false); the Bun cost folded; branch A (viem+whatsabi capture-time-only) remains available the moment the Operator signs D26. The agent chose the branch that needs no signature (LN5); the Operator's trade (branch-A coverage+node-cost vs branch-B surface+UNRESOLVED-ceiling) is preserved, not pre-empted",
+  "massPathUntouched": "package.json stays {hono, zod}; branch B adds ZERO deps; a mass/verdict-path resolver import is a Halt (grep wall, S59)"
+ },
+ "d29PromotionSpec": {
+  "what": "promote the EOA-admin-on-upgradeable governance fact from info/context to `bounding` the contract screen",
+  "direction": "CONSERVATIVE — degrade-only: it may CAP a verdict at CAUTION (or lower), NEVER lift one; the tool may honestly frighten, it may never automatically comfort (a net-generous promotion is presumptively wrong and HALTS)",
+  "scope": "the DAMNING EOA-admin case ONLY (a single key can replace an upgradeable pool's logic — the fact that predicts most stable-pool disasters); SAFE/TIMELOCK/UNRESOLVED do NOT promote (gated is reassurance-with-homework, not a verdict lift; unresolved stays context)",
+  "parked": "operatorSigned=false — an agent must not move what decides verdicts (the D27 precedent); the render stays info/context; the verdict-path hashes are asserted UNCHANGED at every gate",
+  "censusPreComputed": "the affected-pool census is pre-computed so the Operator signs with eyes open (which shelf subjects would cap at CAUTION under the promotion)"
+ },
+ "mtClosures": {
+  "MT1": "the D27 variance amendment ELEVATED to the TOP-priority countersign (the tool proved its own Stamp generous by 27–165×; meeting invited testers on a caveat is defensible only briefly). Signing D27 activates the effective-N floor; GOs honestly become INSUFFICIENT; that is the fix working. FIRST in the Phase-5 package",
+  "MT2": "the D26 decision FORCED with the Bun cost folded (above) — branch B built, branch A on signature",
+  "MT3": "the two post-mortem layers kept EXPLICITLY distinct everywhere they render — the all-SAMPLE collapse RECONSTRUCTION ('what we'd have flagged at the collapse') vs the REAL AFTERMATH layer ('what the engine renders on real fetched current state'); the /postmortems surface + ALPHA.md pitch line must NEVER blur them into 'we'd have caught it on real data'",
+  "MT4": "the Operator gate presented WHOLE again in one sitting (IN2 · IN4 · AF4 · the D23–D29 countersigns · the push decision) — discharged or the honest STOP with the remainder quoted; no partial credit",
+  "MT5": "the FTO action re-confirmed + re-dated (US 2019/0294990 A1 — before any effective-trials commercialization); a dated, Operator-owned business action"
+ },
+ "screenScope": {
+  "law": "X-CONTRACT/X-VERIFY (sharpened, unchanged in kind) — resolving the governance surface proves WHO can change the code and whether the path is gated; it does NOT prove the implementation bug-free; a clean screen still NEVER reads 'safe'",
+  "ceiling": "gated ≠ bug-free; UNRESOLVED ≠ malicious; EOA ≠ already-rugged — the governance line is a screen signal, the sharpest one available, not a verdict of safety",
+  "rejectsStayRejected": "Slither (AGPL — license-radioactive, the OpenBB rule); Mythril/Aderyn (more findings ≠ more signal; symbolic execution is slow + determinism-hostile) — the problem is context-resolution, not analysis depth; all REJECTED"
+ },
+ "verdictPathForbidden": {
+  "modules": [
+   "src/analytics/scorecard.ts",
+   "src/studio/stamp.ts",
+   "src/studio/decay.ts",
+   "src/studio/icir.ts",
+   "src/studio/mintrl.ts",
+   "src/studio/lineage.ts",
+   "src/ask/gates.ts"
+  ],
+  "extension": "carried from Moat — the governance resolver (branch B) may import NO scored module and appear in NO verdict-path module; the render consumes governance in the render layer (reality.ts) only; the governance fact is info/context (D29 parked). The mass path stays hono+zod"
+ },
+ "verdictPathHashes": {
+  "src/analytics/scorecard.ts": "f279db554936f87921eb5695c5ed487be5223ac745bda82e0b2d69e4df0c84c1",
+  "src/studio/stamp.ts": "a4007e99b634fe3b2387eebc813fb4a058b496b370986f59cd2ffd0843bcaee0",
+  "src/studio/decay.ts": "6b419268160104858efccd6817bf46e3cfdc78e03a4248eb2890e10f6ad28cd1",
+  "src/studio/icir.ts": "215eb7e6f5185d160c9d185dd8684b3d1b7d3b1d173bf9aab084eb29008128e4",
+  "src/studio/mintrl.ts": "3a1d2216361b711041f60e5173713b5f43d0261910dbbc35fd4c462c7f714658",
+  "src/studio/lineage.ts": "fe502e5578714f1c4cb6a8d8af7802975ff7cc1e70083b172844eaa17da21fe0",
+  "src/ask/gates.ts": "364ab7b3c135f526cd2f175a699d3f06132245a0680f80529c715aa38dec994c"
+ },
+ "frozenCoreHashes": {
+  "src/backtest/py/rigor.py": "58c88843cbcb9d81c8d41a01f7d7cc44e99b31116e90194bf1b1ddb3a2f86fb4",
+  "src/backtest/py/effective_n.py": "5fc0eaacb4e180b03ca64ea0fd597995ecdccfe1e5e57885d3dbeca3701d7458"
+ },
+ "parityContract": {
+  "profiles": [
+   "zero-key",
+   "free-key",
+   "paid-key"
+  ],
+  "differentialBaseline": {
+   "lendingSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+   "fundingNoGoReproHash": "0a63151b"
+  }
+ },
+ "killCriterionUntouched": "probe-kill-criterion.json commitHash 8b4e094b stays content-matched — the precision pass never nudges the goalpost",
+ "deviations": {
+  "reserved": [
+   "D28 (the precision-pass scope — the resolved-implementation screen + the conservative governance classifier + the collapse whitelist; Operator-signed)",
+   "D29 (the EOA-admin → `bounding` promotion — specified CONSERVATIVE degrade-only, PARKED for the Operator's signature)"
+  ]
+ },
+ "stressCatalog": {
+  "carried": "S1–S57 first-class, re-run in BOTH repos",
+  "S58": "implementation-truth + the collapse-is-a-whitelist — the screen's input is the resolved implementation per subject; the seeded genuinely-ungated upgrade SURVIVES the collapse itemized + renders damning; canonical noise folds to the one line; the census recorded as outcome-not-target; collapsing a real finding into 'standard proxy' FAILS THE SPRINT (the gravest wall)",
+  "S59": "governance-resolution integrity — one pinned block per subject; every artifact re-hashes; the classifier CONSERVATIVE (a ZERO admin slot → UNRESOLVED not EOA; a Safe-lookalike (contract-sized, wrong pattern) → UNRESOLVED not SAFE; a seeded EOA → EOA); the cross-checks OPTIONAL (keyless pass green; disagreements surfaced, never arbitrated); the resolver capture-time-only (grep wall; package.json = {hono, zod})",
+  "S60": "the discrimination wall — clean vs rugged separate on class + survivors + grammar (all three); a clean-looking rug (canonical bytecode, EOA admin) still separates on the admin fact; D29 parked with its census; the verdict-path hashes byte-unchanged"
+ },
+ "screens": {
+  "count": 3,
+  "note": "the conscious 3 on :4444; /postmortems + /feedback stay DISPOSITIONED doors (the contract drawer upgrades IN PLACE — the governance line leads, survivors below); NO fourth screen"
+ },
+ "massPathDeps": [
+  "hono",
+  "zod"
+ ],
+ "massPathDepsNote": "the mass render path STAYS hono+zod; the branch-B governance resolver is zero-dep (raw eth_getStorageAt/eth_getCode/eth_call over PlaneRpcState) and capture-time-only; branch A's viem/whatsabi (if the Operator signs D26) stay capture-time-only, exact-pinned, allowlisted, grep-walled; adding a mass-path dependency is a Halt (PART CLEAN)",
+ "pinsSha": "d2fa4cdcea7ca431e3c2cf5f7d697982ee2d19f0b95dc55d0f794a53593a2e5d"
+}
