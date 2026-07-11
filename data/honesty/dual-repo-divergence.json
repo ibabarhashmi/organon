@@ -1,15 +1,32 @@
 {
-  "protocol": "dual-repo-divergence",
-  "at": "2026-07-11",
-  "rule": "PR5 — the standing dual-repo behavioral-divergence wall. Per-repo expect() counts recorded EVERY sprint; both trees asserted 0-fail; the delta between them is DOCUMENTED, never smoothed. A recorded delta that does NOT equal |organon − studio| is a papered delta (a Halt); a delta > 0 without a note is a smoothing (a Halt). The wall watches the divergence, it does not erase it.",
-  "repos": {
-    "organon": { "tree": "5abf749e", "pass": 1083, "skip": 2, "fail": 0, "files": 165, "tests": 1085, "expectCalls": 6723 },
-    "organon-studio": { "tree": "5abf749e", "pass": 1083, "skip": 2, "fail": 0, "files": 165, "tests": 1085, "expectCalls": 6747 }
+ "protocol": "dual-repo-divergence",
+ "at": "2026-07-11",
+ "rule": "PR5 \u2014 the standing dual-repo behavioral-divergence wall. Per-repo expect() counts recorded EVERY sprint; both trees asserted 0-fail; the delta between them is DOCUMENTED, never smoothed. A recorded delta that does NOT equal |organon \u2212 studio| is a papered delta (a Halt); a delta > 0 without a note is a smoothing (a Halt). The wall watches the divergence, it does not erase it.",
+ "repos": {
+  "organon": {
+   "tree": "312bbd75",
+   "pass": 1129,
+   "skip": 2,
+   "fail": 0,
+   "files": 172,
+   "tests": 1131,
+   "expectCalls": 7095
   },
-  "bothZeroFail": true,
-  "sameTestCount": true,
-  "sameFileCount": true,
-  "expectDelta": 24,
-  "deltaNote": "organon-studio runs 24 MORE expect() calls than organon (6747 vs 6723) — a STABLE delta held through the ENTIRE Moat sprint (Phase-0 baseline 6488-vs-6512, terminal 6723-vs-6747; +235 each from the six Moat walls, the delta unchanged at 24). The delta is data-fixture-driven (a repo-specific captured fixture drives a per-item assertion loop of different length); the pass/fail behavior is IDENTICAL (1085 tests, 165 files, 0 fail in both). This is a benign per-repo DISC — recorded, watched, never papered by forcing the counts equal.",
-  "terminalMoat": true
+  "organon-studio": {
+   "tree": "312bbd75",
+   "pass": 1129,
+   "skip": 2,
+   "fail": 0,
+   "files": 172,
+   "tests": 1131,
+   "expectCalls": 7119
+  }
+ },
+ "bothZeroFail": true,
+ "sameTestCount": true,
+ "sameFileCount": true,
+ "expectDelta": 24,
+ "deltaNote": "organon-studio runs 24 MORE expect() calls than organon (7119 vs 7095) \u2014 a STABLE delta held through the ENTIRE Precision sprint (Moat terminal 6723-vs-6747, Precision terminal 7095-vs-7119; +372 each from the six Precision walls, the delta unchanged at 24). The delta is data-fixture-driven (a repo-specific captured fixture drives a per-item assertion loop of different length); the pass/fail behavior is IDENTICAL (1131 tests, 172 files, 0 fail in both). A benign per-repo DISC \u2014 recorded, watched, never papered.",
+ "terminalMoat": false,
+ "terminalPrecision": true
 }
