@@ -1,0 +1,12 @@
+{
+ "protocol": "governance-claim",
+ "at": "2026-07-11",
+ "rule": "PC1 (GroundTruth) — the LIVE state of the governance-axis discrimination claim, the single artifact the render surfaces (the handoff, /postmortems, ALPHA.md read it). The wording tracks the evidence in BOTH directions: `status` is TODAY (clean-vs-synthetic) until Phase 4 lands a real capture (→ UPGRADED, with height+hash) or an honest gap (→ GAP, wording held). An upgraded wording without a capture hash is a Halt; a today-wording despite a landed capture is a Halt (S63).",
+ "status": "TODAY",
+ "today": "The governance axis discriminates a real CLEAN pool (compound-v3 → TIMELOCK-gated; aave-v3 → UNRESOLVED / — once proven — IMMUTABLE) from a SYNTHETIC rugged control (a labeled EOA-admin + ungated-upgrade fixture, never claimed on-chain) on class + collapse + grammar. The live EOA-admin danger class is EXTINCT among survivors (0 of ~50 mainnet proxies) — a real LIVE EOA-admin pool cannot be exhibited because such pools did not survive.",
+ "doesNotClaim": "The governance axis flags the UPGRADE-KEY SURFACE — who can replace the code, read from the EIP-1967 admin slot. It does NOT predict depegs, oracle failures, market-mechanism collapses, or upgrade authorities held OUTSIDE the 1967 admin slot (e.g. a UUPS owner in implementation storage). A clean governance line is NEVER a verdict of safety.",
+ "upgraded": null,
+ "gap": null,
+ "sourcePins": "groundtruth-pins.json claimWordings (the pinned template); this file is the live rendered state",
+ "provenance": "GroundTruth Phase 1 (FINDINGS-CLOSED); Phase 4 (REAL-RUG-AT-HEIGHT) flips status to UPGRADED or GAP"
+}

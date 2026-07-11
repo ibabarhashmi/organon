@@ -55,9 +55,17 @@ git pull && ./organon.sh setup && ./organon.sh verify
 - **Windows:** via **WSL only** — documented, not pretended. On Debian/Ubuntu/WSL, `python3 -m venv` may need `sudo apt install python3-venv`; setup surfaces the real error if so.
 - **No Docker.** There is no Dockerfile in this tree; container packaging is not part of the alpha (stated, not implied).
 
+## The contract screen — who holds the upgrade key (and what it does not claim)
+
+Beside the yield scorecard, the Reality Check resolves **who can change a pool's code**. It reads the EIP-1967 admin slot over the tool's own free RPC rotation and classifies the upgrade key conservatively — **EOA** (a single key can replace the logic — the damning case), **SAFE / TIMELOCK** (gated — verify the signers), **IMMUTABLE** (proven at a pinned block that no upgrade path exists — the strongest reassurance, granted only on a three-condition bytecode proof; any flaw in an immutable contract is *permanent*), or **UNRESOLVED** (we refuse to guess). A zero admin slot is UNRESOLVED, **never** EOA.
+
+**What the axis discriminates, and what it does not claim.** It discriminates a real clean pool (compound-v3 → TIMELOCK-gated; aave-v3 → UNRESOLVED / — once proven — IMMUTABLE) from a labeled **synthetic** EOA-admin + ungated-upgrade control — the live EOA-admin danger class is extinct among survivors (0 of ~50 mainnet proxies), so a real live EOA-admin pool cannot be exhibited. **The axis flags the upgrade-key surface** (who can replace the code, via the 1967 admin slot). It does **not** predict depegs, oracle failures, market-mechanism collapses, or upgrade authorities held outside the 1967 admin slot (e.g. a UUPS owner in implementation storage). A clean governance line is **never** a verdict of safety. `GET /postmortems` carries this claim verbatim; `data/honesty/governance-claim.json` is its live state.
+
+**Methods cite their primary sources.** The Stamp's significance is the Deflated Sharpe Ratio (Bailey & López de Prado, *The Journal of Portfolio Management* 2014; SSRN 2460551); the multiple-testing deflation follows the PBO framework (Bailey, Borwein, López de Prado & Zhu, *Journal of Computational Finance* 2016; SSRN 2326253). Load-bearing methods cite the paper, never a blog; reading references (e.g. Aligrithm) are **inspiration-only** and integrate nothing (`data/honesty/aligrithm-filing.json`).
+
 ## What is deliberately parked (you will not find these, on purpose)
 
-The LLM strategy-proposer as a product surface (behind its noise wall + kill-switch) · reports/API productization · execution/custody (nothing signs, ever) · archive-node RPC · calibration scoring · new Stamp statistics. The POOL-EVENTS plane path is built and fence-proven but **not live** (D21). Every deviation from the blueprints lives verbatim in `data/honesty/deviations.json` (D1–D23).
+The LLM strategy-proposer as a product surface (behind its noise wall + kill-switch) · the CSCV/PBO companion metric (pinned behind the ≥ 20–50-trials-per-family trigger, implementation absent) · reports/API productization · execution/custody (nothing signs, ever) · archive-node RPC (the one-subject rug capture does not unpark it) · calibration scoring · new Stamp statistics. The POOL-EVENTS plane path is built and fence-proven but **not live** (D21). Every deviation from the blueprints lives verbatim in `data/honesty/deviations.json` (D1–D31).
 
 ## Telemetry, feedback, and the re-score post-mortems
 

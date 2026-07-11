@@ -1,0 +1,42 @@
+{
+ "protocol": "aligrithm-filing",
+ "at": "2026-07-11",
+ "rule": "AL1/AL3-AL6 (GroundTruth, D31) — the durable due-diligence record of Aligrithm, filed so no future cycle re-diligences it. INSPIRATION-ONLY by ledger: nothing integrates; the one adaptable idea (a CSCV/PBO companion) is pinned behind a non-drifting trigger with its implementation asserted ABSENT. Anything load-bearing cites the PRIMARY paper, never the blog.",
+ "AL1_dueDiligence": {
+  "subject": "Aligrithm — aligrithm.com (Ali H. Askar, CQF)",
+  "whatItIs": "a solo-authored quantitative-trading research publication with real methodological depth (CSCV/PBO, backtest-overfitting discipline, research hygiene)",
+  "scope": "ZERO DeFi / on-chain scope — no protocol, no data feed, no contract tooling",
+  "classification": "INSPIRATION-ONLY",
+  "why": "NOT a competitor (different domain — systematic trading research, not a DeFi trust screen), NOT a data source (nothing on-chain), NOT a technology source (nothing to import). The value is a reading reference on multiple-testing discipline — a map, not the territory. Nothing integrates on any path.",
+  "consequence": "the classification is durable — it prevents wasted future diligence cycles; a future 'should we look at Aligrithm again?' is answered here",
+  "integrationForbidden": "a repo imported from Aligrithm, or the blog cited as authority for a load-bearing method, is a drift the wall catches (findings_closed_groundtruth); load-bearing claims cite the PRIMARY papers below"
+ },
+ "AL3_AL5_primaryCitations": {
+  "rule": "the Stamp's load-bearing statistical methods cite their PRIMARY sources — the peer-reviewed / SSRN paper, NEVER a blog; Aligrithm is a reading reference only",
+  "methods": [
+   {
+    "method": "the Deflated Sharpe Ratio (the Stamp's significance; src/backtest/py/rigor.py::psr/dsr)",
+    "primary": "Bailey, D. H. & López de Prado, M. (2014). The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality. The Journal of Portfolio Management, 40(5), 94-107.",
+    "ssrn": "2460551"
+   },
+   {
+    "method": "the Probability of Backtest Overfitting / CSCV (the multiple-testing deflation companion; parked behind the trigger)",
+    "primary": "Bailey, D. H., Borwein, J. M., López de Prado, M. & Zhu, Q. J. (2016). The Probability of Backtest Overfitting. Journal of Computational Finance, 20(4), 39-69.",
+    "ssrn": "2326253"
+   },
+   {
+    "method": "Optimal Number of Clusters (ONC — deterministic strategy-family clustering; parked)",
+    "primary": "López de Prado, M. & Lewis, M. J. (2019). Detection of False Investment Strategies Using Unsupervised Learning Methods. Quantitative Finance, 19(9), 1555-1565.",
+    "doi": "10.1080/14697688.2019.1622311"
+   }
+  ]
+ },
+ "AL4_AL6_pboTrigger": {
+  "what": "a deterministic CSCV/PBO companion metric becomes buildable in the opt-in Stamp WHEN AND ONLY WHEN the future proposer emits ≥ 20-50 trials per strategy family (the SAME trigger that makes the familyN deflation live)",
+  "pinnedTrigger": "≥ 20-50 trials/family — PINNED so it cannot drift; below the trigger the PBO/CSCV companion stays PARKED",
+  "implementationAbsent": "the frozen rigor.py contains the anti-PBO adjudicator math (CSCV/PBO/CPCV per Lopez de Prado Appendix B, byte-frozen, carried from the monorepo) but it is INERT on the single-trial Stamp path (familyN=1 -> no multiple-testing charge; RE3 renders 'the deflation is currently inert'). What is ASSERTED ABSENT is a NEW CSCV/PBO COMPANION -- a module OUTSIDE the frozen core that assembles >= 20-50 trials/family and surfaces a live overfitting metric below the trigger; a grep wall asserts no such companion exists (a seeded pbo.ts/cscv.ts companion on the path fails the wall)",
+  "extendsRE5": "extends Moat's RE5 trials-ledger schema convention (the trials-ledger is this companion's future input)",
+  "renderStatesInert": "the Stamp render already states the deflation is currently inert (RE3: '1 attempt counted, no multiple-testing penalty was paid') — the PBO companion is the future deepening of that same charge, not a hidden live metric"
+ },
+ "provenance": "GroundTruth Phase 1 (FINDINGS-CLOSED); D31 Operator-signed at the Phase 5 gate (operatorSigned=false, PARKED)"
+}
