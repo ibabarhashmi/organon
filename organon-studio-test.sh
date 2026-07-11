@@ -148,4 +148,5 @@ bun test --timeout 30000 test/walls/ \
   test/organon/capture_truth.test.ts \
   test/organon/postmortem_real.test.ts \
   test/organon/variance_audit.test.ts \
-  test/organon/moat_redteam.test.ts
+  test/organon/moat_redteam.test.ts \
+  test/organon/precision_pins.test.ts
