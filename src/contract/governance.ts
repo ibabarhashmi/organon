@@ -61,13 +61,31 @@ export namespace Governance {
     /is initializer-like without an initializer\/onlyInitializing signal/i,
     /initializer routines are internal-only/i,
   ] as const
-  export const isCanonicalFingerprint = (detail: string): boolean => CANONICAL_FINGERPRINTS.some((re) => re.test(detail))
+
+  // THE PINNED CANONICAL OZ PROXY/LIBRARY CONTRACTS — the exact contract names an OpenZeppelin (or aave/OZ-derived) proxy
+  // source is BUILT from. A finding whose `contract` is one of these is canonical proxy-shell / bundled-library plumbing
+  // (the wrapper's structure, which the governance line summarizes) — NOT business logic. A finding on a business contract
+  // (Comet, Pool, Vault, aToken, …) is NOT in this set and SURVIVES. Enumerated (a whitelist), never a wildcard.
+  export const CANONICAL_OZ_CONTRACTS: ReadonlySet<string> = new Set([
+    "Proxy", "ERC1967Proxy", "ERC1967Upgrade", "TransparentUpgradeableProxy", "BeaconProxy", "UpgradeableBeacon", "ProxyAdmin",
+    "UUPSUpgradeable", "BaseUpgradeabilityProxy", "BaseAdminUpgradeabilityProxy", "BaseImmutableAdminUpgradeabilityProxy",
+    "InitializableUpgradeabilityProxy", "InitializableAdminUpgradeabilityProxy", "InitializableImmutableAdminUpgradeabilityProxy",
+    "AdminUpgradeabilityProxy", "Address", "StorageSlot", "Context", "Initializable",
+  ])
 
   export interface Finding {
     detail: string
     category?: string
     contract?: string
     line?: number
+  }
+
+  // a finding is canonical proxy-shell plumbing if its detail matches a pinned canonical phrase OR its contract is a pinned
+  // canonical OZ proxy/library contract (the wrapper's structure, summarized by the governance line — never business logic).
+  export const isCanonicalFingerprint = (f: Finding | string): boolean => {
+    const detail = typeof f === "string" ? f : f.detail
+    if (CANONICAL_FINGERPRINTS.some((re) => re.test(detail))) return true
+    return typeof f !== "string" && !!f.contract && CANONICAL_OZ_CONTRACTS.has(f.contract)
   }
   export interface Collapse<T extends Finding> {
     folded: T[]
@@ -85,7 +103,7 @@ export namespace Governance {
     if (!canonicalMatch || !adminGated) return { folded: [], survivors: [...findings], foldedCount: 0, collapsed: false }
     const folded: T[] = []
     const survivors: T[] = []
-    for (const f of findings) (isCanonicalFingerprint(f.detail) ? folded : survivors).push(f)
+    for (const f of findings) (isCanonicalFingerprint(f) ? folded : survivors).push(f)
     return { folded, survivors, foldedCount: folded.length, collapsed: true }
   }
 
@@ -121,5 +139,61 @@ export namespace Governance {
   // a coarse "governance strength" ordering for the discrimination wall (S60) — NOT a verdict, a render-signal ordering.
   export function governanceRank(cls: AdminClass): number {
     return cls === "EOA" ? 0 : cls === "UNRESOLVED" ? 1 : cls === "SAFE" ? 2 : 3 /* TIMELOCK */
+  }
+
+  // ── the RENDER bundle — the resolved governance artifact + the re-pointed implementation findings (if the impl was
+  // Sourcify-verified + analyzed). The render (reality.ts) consumes this; it is loaded OUT of the render (by the route or
+  // a wall) so the render stays param-driven — a call site that passes nothing (the S36 golden's synthetic poolKey) gets
+  // no governance line, and the content golden stays byte-identical.
+  export interface ImplFindings {
+    subject: string
+    implementation: string | null
+    provenance: string // REAL | SAMPLE | UNVERIFIED
+    verified: boolean
+    contracts?: string[]
+    findings: Finding[]
+    contentSha: string
+    note?: string
+  }
+  export interface RenderBundle {
+    artifact: Artifact
+    line: string
+    impl: ImplFindings | null // the re-pointed implementation findings, or null (fall back to the legacy proxy findings)
+  }
+
+  // load helpers (file I/O, used by the route + the walls — NEVER on the verdict path). Injectable roots for hermetic tests.
+  export function load(poolKey: string, opts?: { readFile: (p: string) => string; readdir: (d: string) => string[]; dir: string }): Artifact | null {
+    if (!opts) return null
+    let names: string[]
+    try {
+      names = opts.readdir(opts.dir)
+    } catch {
+      return null
+    }
+    for (const f of names) {
+      if (!f.endsWith(".json") || f === "census.json") continue
+      let a: Artifact & { poolKeys?: string[] }
+      try {
+        a = JSON.parse(opts.readFile(`${opts.dir}/${f}`))
+      } catch {
+        continue
+      }
+      if (a.poolKeys && a.poolKeys.includes(poolKey)) return a
+    }
+    return null
+  }
+
+  export function loadImpl(subject: string, opts?: { readFile: (p: string) => string; dir: string }): ImplFindings | null {
+    if (!opts) return null
+    try {
+      return JSON.parse(opts.readFile(`${opts.dir}/impl/${subject}.json`)) as ImplFindings
+    } catch {
+      return null
+    }
+  }
+
+  // assemble the render bundle from an artifact + (optional) impl findings — the render's single input.
+  export function renderBundle(artifact: Artifact, impl: ImplFindings | null): RenderBundle {
+    return { artifact, line: governanceLine(artifact), impl }
   }
 }

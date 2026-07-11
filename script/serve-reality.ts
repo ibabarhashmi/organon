@@ -122,11 +122,20 @@ app.get("/", (c) => {
 })
 
 // SCREEN 2 — the Reality Check (the x-ray of one strategy). An unknown key → an honest not-found (never a crash).
-app.get("/check/:key", (c) => {
+app.get("/check/:key", async (c) => {
   const key = decodeURIComponent(c.req.param("key"))
   const rc = Reality.realityCheck(key, Date.now())
   if (!rc) return c.html(`<!doctype html><meta charset=utf8><body style="font-family:system-ui;background:#0e1116;color:#e6edf3;padding:24px"><a style="color:#58a6ff" href="/">← the Shelf</a><h1>Not found</h1><p>No strategy with that id is in the record. Nothing is fabricated.</p></body>`, 404)
-  return c.html(Reality.renderRealityCheck(rc.name, rc.scored, rc.history, key))
+  // PRECISION (X-PRECISION) — load the resolved governance (WHO HOLDS THE KEY) + the re-pointed implementation findings and
+  // pass them into the render; a subject with no captured governance renders exactly as before (the load returns null).
+  const { readFileSync: rf, readdirSync: rdd } = await import("node:fs")
+  const pth = await import("node:path")
+  const { PKG_ROOT: root } = await import("../src/organon/frozen")
+  const { Governance } = await import("../src/contract/governance")
+  const govDir = pth.join(root, "data", "honesty", "governance")
+  const art = Governance.load(key, { readFile: (p) => rf(p, "utf8"), readdir: (d) => rdd(d), dir: govDir })
+  const bundle = art ? Governance.renderBundle(art, Governance.loadImpl(art.subject, { readFile: (p) => rf(p, "utf8"), dir: govDir })) : null
+  return c.html(Reality.renderRealityCheck(rc.name, rc.scored, rc.history, key, [], bundle))
 })
 
 // THE STAMP (opt-in, Crown-Jewel; X-OPTIN) — the overfit stress test on ONE pool's recorded track record, reached ONLY

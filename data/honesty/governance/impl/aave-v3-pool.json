@@ -1,0 +1,11 @@
+{
+ "subject": "aave-v3-pool",
+ "implementation": "0x728a138a4823392c2efa55e028d434f526fe03cf",
+ "provenance": "UNVERIFIED",
+ "verified": false,
+ "source": "sourcify:partial:1:0x728a138a4823392c2efa55e028d434f526fe03cf",
+ "contracts": [],
+ "findings": [],
+ "note": "forge build/analysis of the resolved implementation did not complete — UNVERIFIED; the coarse screen + the governance line stand",
+ "contentSha": "fc9c18cbbdd6070db914af32eef2b34663f67719f96e8166b30e3b394c395c5a"
+}

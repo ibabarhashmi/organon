@@ -152,4 +152,7 @@ bun test --timeout 30000 test/walls/ \
   test/organon/precision_pins.test.ts \
   test/organon/findings_closed_moat.test.ts \
   test/organon/resolver.test.ts \
-  test/organon/governance_capture.test.ts
+  test/organon/governance_capture.test.ts \
+  test/organon/screen_truth.test.ts \
+  test/organon/discrimination.test.ts \
+  test/organon/precision_redteam.test.ts

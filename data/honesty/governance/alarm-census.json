@@ -1,0 +1,28 @@
+{
+ "protocol": "alarm-fatigue-census",
+ "at": "2026-07-11",
+ "rule": "X-PRECISION — before→after itemized-finding count per governance-resolved subject; the governance line LEADS the contract drawer (the depositor reads WHO HOLDS THE KEY first). The count is an OUTCOME, never a target (A′#9): a subject collapses ONLY when the admin resolved GATED and every folded finding was canonical proxy-shell plumbing; an unresolved-gated admin collapses NOTHING (conservative). Real business-logic findings always survive.",
+ "rows": [
+  {
+   "subject": "aave-v3-pool",
+   "poolKey": "defillama:pool:aa70268e-4b52-42bf-a116-608b370f9501",
+   "adminClass": "UNRESOLVED",
+   "governanceLine": "Upgradeable proxy (EIP-1967). Admin: not in the standard EIP-1967 slot — unresolved; treat with EOA-grade caution.",
+   "before": 27,
+   "after": 27,
+   "folded": 0,
+   "collapsed": false
+  },
+  {
+   "subject": "compound-v3-usdc",
+   "poolKey": "defillama:pool:7da72d09-56ca-4ec5-a45f-59114353e487",
+   "adminClass": "TIMELOCK",
+   "governanceLine": "Upgradeable proxy (EIP-1967). Admin: 0x1ec63b58…8779 — TIMELOCK. Upgrade path gated; verify the signers.",
+   "before": 39,
+   "after": 0,
+   "folded": 39,
+   "collapsed": true
+  }
+ ],
+ "contentSha": "3bac71a9fbad5be3eeb44dcafaeb4c14ba77a07057ced18fb05c2d7b4234a23b"
+}

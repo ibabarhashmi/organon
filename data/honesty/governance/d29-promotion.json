@@ -1,0 +1,18 @@
+{
+ "protocol": "d29-promotion-spec",
+ "at": "2026-07-11",
+ "deviation": "D29",
+ "what": "promote the DAMNING EOA-admin-on-upgradeable governance fact from info/context to `bounding` the contract screen",
+ "direction": "CONSERVATIVE — degrade-only: an EOA admin CAPS the contract screen at CAUTION (or lower), it NEVER lifts a verdict. The tool may honestly frighten, it may never automatically comfort. A net-generous promotion is presumptively wrong and HALTS.",
+ "scope": "the DAMNING EOA-admin case ONLY (a single externally-owned key — direct or one owner-hop out — can replace an upgradeable pool's logic). SAFE / TIMELOCK / UNRESOLVED do NOT promote: gated is reassurance-with-homework (not a lift), unresolved stays context (never a guessed cap).",
+ "mechanism": "at the render (reality.ts), when signed: adminClass === 'EOA' AND canonicalMatch → the contract screen's contribution caps the pool verdict at CAUTION (the counterparty axis already contributes; this makes the EOA-admin fact verdict-bearing, degrade-only). ZERO frozen-byte edits — a render-layer cap in the MinTRL/lineage-wall pattern, gated on the Operator's D29 signature.",
+ "affectedPoolCensus": {
+  "rule": "pre-computed so the Operator signs with EYES OPEN — exactly which current shelf subjects would be capped at CAUTION under the promotion.",
+  "currentShelfEoaSubjects": [],
+  "count": 0,
+  "note": "0 of the current shelf subjects hold an EOA admin (the governance census: 0 EOA / 1 TIMELOCK / 4 UNRESOLVED). Signing D29 today caps ZERO current verdicts — it ARMS the tool so the FIRST EOA-admin subject that enters the shelf is capped at CAUTION automatically. The promotion is a future-facing safety, not a present re-scoring (the curated shelf is already free of the damning class — which is itself the census's point: EOA-admin pools do not survive to be curated)."
+ },
+ "parked": true,
+ "operatorSigned": false,
+ "why": "'Admin = EOA on an upgradeable pool' predicts most stable-pool disasters — verdict-grade information, which is exactly why its promotion is Operator-gated and conservative. An agent must not move what decides verdicts (the D27 precedent). Until signed, the governance fact renders info/context and the verdict-path hashes are asserted UNCHANGED at every gate."
+}

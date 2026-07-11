@@ -1,0 +1,371 @@
+{
+ "protocol": "precision-redteam",
+ "at": "2026-07-11",
+ "sprint": "THE PRECISION SPRINT — X-PRECISION",
+ "pinsSha": "d2fa4cdcea7ca431e3c2cf5f7d697982ee2d19f0b95dc55d0f794a53593a2e5d",
+ "catalog": [
+  {
+   "id": "S1",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S2",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S3",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S4",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S5",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S6",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S7",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S8",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S9",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S10",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S11",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S12",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S13",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S14",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S15",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S16",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S17",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S18",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S19",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S20",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S21",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S22",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S23",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S24",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S25",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S26",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S27",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S28",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S29",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S30",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S31",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S32",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S33",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S34",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S35",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S36",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S37",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S38",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S39",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S40",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S41",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S42",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S43",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S44",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S45",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S46",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S47",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S48",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S49",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S50",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S51",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S52",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S53",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S54",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S55",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S56",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S57",
+   "outcome": "PASS (carried first-class; re-run under the full battery, both repos)"
+  },
+  {
+   "id": "S58",
+   "outcome": "PASS — implementation-truth + the collapse-is-a-whitelist: the seeded ungated upgrade + EOA admin SURVIVES; a business finding survives even on a gated proxy; compound's canonical noise folds to the governance line (39→0)"
+  },
+  {
+   "id": "S59",
+   "outcome": "PASS — governance-resolution integrity: a ZERO slot → UNRESOLVED (never EOA); a Safe-lookalike → UNRESOLVED; every artifact re-hashes + block-pinned; the cross-check ABSENT-honest keyless; the resolver capture-time-only"
+  },
+  {
+   "id": "S60",
+   "outcome": "PASS — the discrimination wall: clean (TIMELOCK, collapses) vs rugged (EOA, survives) separate on class + collapse + grammar; a clean-looking rug still separates on the admin fact; D29 parked"
+  }
+ ],
+ "probes": [
+  {
+   "name": "S58 collapse-is-a-whitelist — ungated upgrade + EOA admin SURVIVES (nothing folds)",
+   "ok": true,
+   "detail": "collapsed=false survivors=1"
+  },
+  {
+   "name": "S58 whitelist discipline — a business finding SURVIVES even on a gated proxy (not an OZ contract)",
+   "ok": true,
+   "detail": "folded=0 survivors=1"
+  },
+  {
+   "name": "S59 anti-cry-wolf — a ZERO admin slot classifies UNRESOLVED, never EOA",
+   "ok": true,
+   "detail": "UNRESOLVED"
+  },
+  {
+   "name": "S59 no-flatter — a Safe-lookalike (contract, wrong pattern) classifies UNRESOLVED, never SAFE",
+   "ok": true,
+   "detail": "UNRESOLVED"
+  },
+  {
+   "name": "S59 artifact integrity — every governance artifact re-hashes from its own body",
+   "ok": true,
+   "detail": "re-hash"
+  },
+  {
+   "name": "S59 cross-check ABSENT-honest — no key present, no artifact depends on Etherscan",
+   "ok": true,
+   "detail": "ABSENT"
+  },
+  {
+   "name": "S60 discrimination — clean (TIMELOCK, collapses) vs rugged (EOA, survives) separate on class+collapse+grammar",
+   "ok": true,
+   "detail": "clean=TIMELOCK rug=EOA"
+  },
+  {
+   "name": "PART CLEAN — the branch-B resolver + the render import NO viem/whatsabi (only proxy-truth.ts, the Moat allowlist, may)",
+   "ok": true,
+   "detail": "importers: script/capture/proxy-truth.ts"
+  },
+  {
+   "name": "PART CLEAN — the mass path stays hono+zod",
+   "ok": true,
+   "detail": "hono,zod"
+  },
+  {
+   "name": "NO-VERDICT-MOVED — verdict-path 7 + frozen-core 2 byte-unchanged (the governance fact is info/context)",
+   "ok": true,
+   "detail": "frozen"
+  },
+  {
+   "name": "D29 parked — the EOA→bounding promotion is specified CONSERVATIVE + PARKED (an agent moves no verdict)",
+   "ok": true,
+   "detail": "parked=true signed=false"
+  },
+  {
+   "name": "MT3 — the two post-mortem layers labeled distinct in the ALPHA.md pitch; the blur disavowed",
+   "ok": true,
+   "detail": "labeled"
+  },
+  {
+   "name": "MT1 — D27 (the variance amendment) leads the gate package (the top-priority countersign)",
+   "ok": true,
+   "detail": "D27"
+  },
+  {
+   "name": "A′#9 — the alarm-fatigue census is an OUTCOME, never a target",
+   "ok": true,
+   "detail": "outcome"
+  },
+  {
+   "name": "KILL-CRITERION — 8b4e094b untouched (the goalpost never moved)",
+   "ok": true,
+   "detail": "8b4e094b3733"
+  }
+ ],
+ "clean": true,
+ "adversarialProofs": [
+  {
+   "id": "S58-collapse-bites",
+   "broke": "a genuinely-ungated impl upgrade folded into 'standard proxy' (the gravest failure)",
+   "caught": "the admin-gated whitelist collapse — an EOA/UNRESOLVED admin folds NOTHING; the ungated upgrade + the damning line both render",
+   "conclusion": "answered not avoided — no real finding hidden"
+  },
+  {
+   "id": "S59-classifier-bites",
+   "broke": "a ZERO admin slot read as EOA (a fabricated alarm on a blue-chip); an ambiguous admin labeled SAFE (a fabricated reassurance)",
+   "caught": "the conservative classifier — a zero slot is UNRESOLVED, a lookalike is UNRESOLVED; never a guess",
+   "conclusion": "answered not avoided — no fabricated reassurance, no cry-wolf"
+  },
+  {
+   "id": "S60-discrimination-bites",
+   "broke": "a battle-tested pool and a rug render alike (the axis has no discriminative power)",
+   "caught": "the three-way separation (class + collapse + grammar); a clean-looking rug still separates on the admin fact",
+   "conclusion": "answered not avoided — the axis discriminates"
+  }
+ ],
+ "operatorGate": {
+  "status": "OWED-OPERATOR-GATED",
+  "owed": "IN2 (the real-screen session — now incl. the governance line) · IN4 (the browser/AT a11y pass) · AF4 (the first live paid-key parity diff) · the D23-D29 countersigns (D27 first) · the push decision — presented WHOLE in one sitting (precision-countersign-package.json)",
+  "whyGap": "these are agent-executed only where safe; the Operator's signature + session + push are the Operator's own hand (LN5) — never simulated"
+ },
+ "probe": {
+  "status": "STILL RUNNING (ARMED) — READY-PENDING-OPERATOR; now with an axis worth judging (WHO HOLDS THE KEY in one honest line)"
+ },
+ "twoVerdicts": {
+  "status": "KEPT",
+  "proof": "the governance fact is verdict-path-forbidden (render-layer only, info/context; D29 parked) — the branch-B resolver + the collapse + the governance line touch NO scored module; the verdict-path 7 + frozen-core 2 hashes are byte-unchanged; the scorecard still renders SOLID/CAUTION/AVOID/UNVERIFIED unchanged"
+ },
+ "convergence": {
+  "cleanRuns": 2,
+  "bothRepos": true,
+  "verdictDifferentialZero": true,
+  "differential": {
+   "lendingSetSha": "70c7912f0b16a796ea585ab7e508af542f1f83d05110143c8575bab226a3bf54",
+   "fundingNoGoReproHash": "0a63151b"
+  },
+  "verdictPathFrozen": true,
+  "frozenCoreFrozen": true,
+  "killCriterion": "8b4e094b",
+  "pinsSha": "d2fa4cdcea7ca431e3c2cf5f7d697982ee2d19f0b95dc55d0f794a53593a2e5d"
+ }
+}
