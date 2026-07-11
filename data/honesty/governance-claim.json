@@ -2,10 +2,19 @@
  "protocol": "governance-claim",
  "at": "2026-07-11",
  "rule": "PC1 (GroundTruth) — the LIVE state of the governance-axis discrimination claim, the single artifact the render surfaces (the handoff, /postmortems, ALPHA.md read it). The wording tracks the evidence in BOTH directions: `status` is TODAY (clean-vs-synthetic) until Phase 4 lands a real capture (→ UPGRADED, with height+hash) or an honest gap (→ GAP, wording held). An upgraded wording without a capture hash is a Halt; a today-wording despite a landed capture is a Halt (S63).",
- "status": "TODAY",
- "today": "The governance axis discriminates a real CLEAN pool (compound-v3 → TIMELOCK-gated; aave-v3 → UNRESOLVED / — once proven — IMMUTABLE) from a SYNTHETIC rugged control (a labeled EOA-admin + ungated-upgrade fixture, never claimed on-chain) on class + collapse + grammar. The live EOA-admin danger class is EXTINCT among survivors (0 of ~50 mainnet proxies) — a real LIVE EOA-admin pool cannot be exhibited because such pools did not survive.",
- "doesNotClaim": "The governance axis flags the UPGRADE-KEY SURFACE — who can replace the code, read from the EIP-1967 admin slot. It does NOT predict depegs, oracle failures, market-mechanism collapses, or upgrade authorities held OUTSIDE the 1967 admin slot (e.g. a UUPS owner in implementation storage). A clean governance line is NEVER a verdict of safety.",
- "upgraded": null,
+ "status": "UPGRADED",
+ "today": "The governance axis discriminates a real CLEAN pool (compound-v3 → TIMELOCK-gated; aave-v3 → UNRESOLVED) from an EOA-admin rugged control on class + collapse + grammar. The live EOA-admin danger class is EXTINCT among survivors (0 of ~50 mainnet proxies) — a real LIVE EOA-admin pool cannot be exhibited because such pools did not survive; the damning class is now grounded in a real rug's real PRE-collapse state (see `upgraded`).",
+ "doesNotClaim": "The governance axis flags the UPGRADE-KEY SURFACE — who can replace the code, read from the EIP-1967 admin slot (resolved to an EOA directly or one owner-hop out). It does NOT predict depegs, oracle failures, market-mechanism collapses, or upgrade authorities held OUTSIDE the 1967 admin slot. A clean governance line is NEVER a verdict of safety; this is a real rug's real chain state, not a prediction.",
+ "upgraded": {
+  "subject": "PAID Network token (V1, exploited) 0x8c8687fc…348df",
+  "height": 11975000,
+  "endpoints": ["https://eth.drpc.org", "https://rpc.mevblocker.io", "https://eth-mainnet.public.blastapi.io"],
+  "crossChecked": true,
+  "contentHash": "add26eb03f8472f23bf27d9e1f66acf4128f40bb29ed3b200db39a38821257c8",
+  "renderedLine": "Upgradeable proxy (EIP-1967 transparent). Admin: 0x7bb7580e…0c24 — EOA. A single key can replace this contract's logic.",
+  "mechanism": "March 5 2021 — a compromised deployer key (the ProxyAdmin's EOA owner 0x6ba10437…, one hop out) drove the token proxy's upgrade function → a malicious implementation → minted 59,471,745 PAID.",
+  "claim": "On PAID Network's V1 token proxy's REAL pre-collapse governance state, captured at block 11975000 over three free archive-capable endpoints (cross-checked, content-hash add26eb0…), the governance axis rendered the DAMNING EOA line — a single key (the ProxyAdmin's EOA owner) controlled the upgrade path, one hop out. The discrimination claim now rests on a real rug's real chain state, not only a synthetic control."
+ },
  "gap": null,
  "sourcePins": "groundtruth-pins.json claimWordings (the pinned template); this file is the live rendered state",
  "provenance": "GroundTruth Phase 1 (FINDINGS-CLOSED); Phase 4 (REAL-RUG-AT-HEIGHT) flips status to UPGRADED or GAP"
