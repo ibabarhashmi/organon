@@ -1,0 +1,46 @@
+{
+  "protocol": "coverage-redteam",
+  "at": "2026-07-12",
+  "sprint": "THE COVERAGE SPRINT (X-COVERAGE + X-CORRELATE)",
+  "rule": "PART E — the built system red-teamed across the FULL first-class catalog S1–S66 (S64 coverage-license honesty, S65 the REAL★ tier layer, S66 the inert substrate joining the carried S1–S63), every new wall broken-on-purpose + demonstrably biting, every fix-on-the-go recorded, converged clean across two consecutive runs in BOTH repos.",
+  "catalog": {
+    "carried": "S1–S63 first-class, re-run in BOTH repos (the GroundTruth catalog + the Redesign surface walls; the voice/collapse/lineage walls now also re-run on LOOKED-UP subjects)",
+    "count": 66,
+    "S64": { "name": "coverage-license honesty", "wall": "breadth.test.ts", "outcome": "PASS", "bites": "the license posture is pinned VERBATIM (breadth.test.ts asserts the USD-100k clause + standing exposure); branch γ degrades a REAL DeFiLlama number to SAMPLE in a served commercial context; the census applies the pinned 'covered' definition (a SAMPLE-only pool counted covered → the assert fails); vaults.fyi absent → byte-exact" },
+    "S65": { "name": "the REAL★ price layer + the two tiers", "wall": "chainlink.test.ts + provenance_tier.test.ts", "outcome": "PASS", "bites": "a block-pinned getRoundData read reproduces ×2 (REAL★); a stale round / down-sequencer degrades (the checks bite); an aggregator source claiming REAL★ → isRealStarLegit false (the conflation Halt); the re-label census is complete + disclosed (no source unlabeled)" },
+    "S66": { "name": "the inert substrate", "wall": "correlate.test.ts + stamp_inert.test.ts", "outcome": "PASS", "bites": "permutation of inputs → byte-identical clusters; the overlap floor → INSUFFICIENT (no thin-overlap decimal); the comment-stripped grep finds NO Math.random / k-means in the analytics tree; the Stamp path does NOT import the substrate; the K-activation door is REFUSED without BOTH the trigger AND the D33 pen; the COMPARE fact is non-advisory (the advice-shape assert bites)" }
+  },
+  "adversarialProofs": [
+    { "id": "S64-bites", "scenario": "count a SAMPLE-only lookup as 'covered' to inflate the census", "observed": "isCovered(pool, 'SAMPLE') === false + the census sampleOnly bucket catches it", "conclusion": "the gamed-census Halt is a real wall — coverage is an outcome, never a target" },
+    { "id": "S64-posture-bites", "scenario": "serve a DeFiLlama number commercially under branch γ without the SAMPLE degrade", "observed": "effectiveReality('REAL', true, {}) → SAMPLE + the verbatim ToS posture", "conclusion": "the license posture is enforced at the data boundary, not just documented" },
+    { "id": "S65-star-bites", "scenario": "an aggregator number wearing REAL★", "observed": "isRealStarLegit('yields.llama.fi', true) === false", "conclusion": "a REAL★ claim must be a block-pinned chain read — the conflation is refused" },
+    { "id": "S65-stale-bites", "scenario": "render a stale Chainlink round as fresh", "observed": "|blockTs − updatedAt| > 3600 → tier 'degraded', reality SAMPLE", "conclusion": "the pinned staleness bound bites; a widened bound is a conscious re-pin (the STALENESS_BOUND_S assert)" },
+    { "id": "S66-perm-bites", "scenario": "the cluster order flips under an input permutation", "observed": "analyze([D,C,B,A]).clusters === analyze([A,B,C,D]).clusters (byte-identical JSON)", "conclusion": "canonical ordering + lexicographic tie-break make clustering a pure function — no randomness survived" },
+    { "id": "S66-K-feed-refused", "scenario": "feed effectiveK into the Stamp 'just to see'", "observed": "activateKIntoStamp(K, {trigger:false, pen:false}) THROWS 'K-ACTIVATION REFUSED — familyN stays 1'", "conclusion": "the deflation stays inert; the substrate serves the render, not the statistics" }
+  ],
+  "findingsFixedOnTheGo": [
+    { "id": "W-CV01", "rootCause": "a latent inconsistency INHERITED from the Redesign commit — claims.json battery-pass=1172 while battery-summary.json=1176 (claims.json was restored during redesign commit-scoping without re-syncing the count-claim)", "fix": "regenerated the evidence (build-evidence) so claims + battery-summary + capture-manifest are consistent at the current count; the deterministic bundle 9c1e7bd8 stayed byte-identical (NO verdict moved)", "retest": "evidence_bundle.test.ts green" },
+    { "id": "W-CV02", "rootCause": "the capability namespace is DataCapability, not Capability (a wrong import in breadth.test.ts)", "fix": "corrected the import + refs", "retest": "breadth.test.ts green" },
+    { "id": "W-CV03", "rootCause": "the GroundTruth stressCatalog is an OBJECT (carried-summary shape), not an array — coverage-pins.ts assumed an array", "fix": "matched the carried-summary object shape (carried + count + S64–S66)", "retest": "coverage_pins.test.ts green" },
+    { "id": "W-CV04", "rootCause": "the k-means/randomness grep would false-positive on correlate.ts's own PROHIBITION prose", "fix": "stamp_inert.test.ts strips // and /* */ comments before grepping the CODE (the comment-strip pattern from the Moat viem-allowlist fix)", "retest": "stamp_inert.test.ts green" },
+    { "id": "GT2-fix", "rootCause": "the voc_proposer scipy sidecar exceeds bun-test's default 5s per-test budget under the battery's own concurrency", "fix": "an explicit load-tolerant per-test budget (SIDECAR_MS = 120_000) on every sidecar-spawning test; the runner already grants the process 120s — a logic-free fix", "retest": "voc_proposer 8/0 on the default budget; the battery two-clean-runs claim stands WITHOUT the asterisk" }
+  ],
+  "convergence": {
+    "cleanRuns": 2,
+    "bothRepos": true,
+    "verdictDifferentialZero": true,
+    "differential": { "lendingFpSetSha": "70c7912f0b16a796", "fundingReproHash": "0a63151b0c37" },
+    "evidenceBundleSha": "9c1e7bd8",
+    "bundleByteIdentical": true,
+    "killCriterionUntouched": "8b4e094b",
+    "verifyGreen": true,
+    "note": "the bundle byte-identical proves NO verdict moved — the whole sprint is additive (breadth/lookup/tiers/correlate off the scorecard verdict path; the diversification fact is info/context; the Stamp familyN stays 1)"
+  },
+  "gate": {
+    "presentedNeverSigned": true,
+    "package": "coverage-countersign-package.json (D23-D33, D27 FIRST; IN2/IN4/AF4 + the push OWED-OPERATOR-GATED — the agent NEVER signs, LN5)",
+    "d32": "the license posture — Operator business action pending (branch γ active by default; α consent / β paid on the pen)",
+    "d33": "the correlation substrate + the inert guarantee + the parked K-activation (trigger + pen)",
+    "verdict": "COVERAGE DELIVERED — READY-PENDING-OPERATOR (or an honest STOP with the remainder quoted)"
+  }
+}

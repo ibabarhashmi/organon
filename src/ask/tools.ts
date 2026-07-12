@@ -10,6 +10,8 @@ import path from "node:path"
 import { PKG_ROOT } from "../organon/frozen"
 import { Scorecard } from "../analytics/scorecard"
 import { Explain } from "../analytics/explain"
+import { Correlate } from "../analytics/correlate" // COVERAGE (X-CORRELATE) — the deterministic diversification fact (info/context; off the verdict path)
+import { DataPlane } from "../dataplane/store"
 import { Reality } from "../studio/reality"
 import { ProvRecord } from "../dataplane/record"
 import { Stamp } from "../studio/stamp"
@@ -109,6 +111,17 @@ export namespace AskTools {
     const meta: Record<string, unknown> = { count: found.length, names, verdicts }
     if (found[0]) { meta.aName = found[0].r.meta.name; meta.aVerdict = found[0].r.meta.verdict; meta.aKey = found[0].e.poolKey }
     if (found[1]) { meta.bName = found[1].r.meta.name; meta.bVerdict = found[1].r.meta.verdict; meta.bKey = found[1].e.poolKey }
+    // COVERAGE (X-CORRELATE) — surface ONE non-advisory diversification fact from the compared pools' RECORDED yield
+    // series (effectiveK via the deterministic substrate). info/context, number-traced, OFF the verdict path; surfaced
+    // ONLY on sufficient overlap (≥30 shared points → never a thin-overlap decimal). The deflation stays INERT (familyN
+    // untouched — this reads, it does not deflate). Absent series / thin overlap → the fact is simply not shown (honest).
+    const series = found
+      .map((s) => { const ser = s.e.poolKey ? DataPlane.snapshotAdapter.fetchSeries(String(s.e.poolKey).replace(":pool:", ":chart:")) : null; return ser ? { key: String(s.r.meta.name), points: ser.points.filter((p) => p.apyBase != null).map((p) => ({ ts: p.ts, value: p.apyBase as number })) } : null })
+      .filter(Boolean) as Correlate.Series[]
+    if (series.length >= 2) {
+      const an = Correlate.analyze(series)
+      if (an.sufficient) facts.push({ id: "diversification", name: `diversification (info/context) — ${Correlate.diversificationFact(an, "pro")}`, value: an.effectiveK as number, threshold: null, comparator: null, outcome: "info", contribution: "context", provenanceRef: null })
+    }
     return { tool: "compare", ok: true, reality, facts, summary: `${line}. The verdicts are the scorecard's, machine-derived; compare their axes above — I don't re-judge, I only lay them side by side.`, meta }
   }
   export function compare(aKey: string | undefined, aTerm: string, bKey: string | undefined, bTerm: string, now: number): ToolResult {

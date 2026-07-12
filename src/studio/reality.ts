@@ -21,6 +21,7 @@ import { contractCoverage } from "../contract/registry" // the honest REAL-cover
 import { PlaneDivergence } from "../plane/divergence" // the Pro-side own-plane-vs-rented divergence ROW (X-PLANE d; a ROW, not a screen)
 import type { ContractFinding } from "../contract/facts" // TYPE-ONLY — the B5 findings-render groups the recorded facts; no analyzer on the render path
 import { Governance } from "../contract/governance" // PRECISION (X-PRECISION) — the pure governance line + the canonical-collapse whitelist; render-layer only, imports NO scored module
+import { LlamaYields, CoveragePosture } from "../dataplane/providers/llama-yields" // COVERAGE (X-COVERAGE) — the breadth universe + the any-pool lookup + the license posture
 import type { Stamp } from "./stamp" // TYPE-ONLY — the Stamp's runtime (the attest core) is lazily imported by the /stamp route; the mass tool stays Stamp-free (X-OPTIN, PART CLEAN)
 import { Lineage } from "./lineage" // the three lineage walls (Lineage sprint; X-LINEAGE) — DataPlane-only (imports NO Stamp runtime), so it stays off the mass path
 
@@ -204,8 +205,12 @@ ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${t
   }
 
   // ── SCREEN 2 — THE REALITY CHECK ──
-  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = [], governance: Governance.RenderBundle | null = null): string {
+  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = [], governance: Governance.RenderBundle | null = null, provTier?: string): string {
     const c = scored
+    // THE TWO-TIER PROVENANCE LABEL (Coverage; X-COVERAGE c) — beside the stamp, a REAL subject names WHICH KIND of true:
+    // REAL★ (block-pinned, chain-reproducible) vs REAL-at-timestamp (aggregator, "what the API said at T"). Rendered ONLY
+    // for a REAL subject with a passed tier → the all-SAMPLE S36 golden (no tier) is byte-identical.
+    const tierLine = provTier && c.facts.reality === "REAL" ? `<div class="muted">provenance tier: <b>${esc(provTier)}</b> — ${provTier === "REAL★" ? "block-pinned; reproducible against the chain itself" : "an aggregator response — what the API said at that timestamp (re-fetchable, but computed and revisable)"}.</div>` : ""
     const oneLiner = c.summary.replace(/^(SOLID|CAUTION|AVOID|UNVERIFIED)\s*—\s*/, "")
     const axes = c.rows.map((r) => `<div class="axis"><b>${esc(r.name)}</b> <span class="axis-tier ${esc(r.tier)}">${r.tier === "pass" ? "✓" : r.tier === "caution" ? "!" : r.tier === "fail" ? "✗" : "?"}</span>
 <div>${esc(r.plainReason)}</div><div class="pro muted">metric ${esc(r.value)} ${esc(r.comparator ?? "")} ${esc(r.threshold ?? "")} → ${r.tier.toUpperCase()}${r.provenanceRef ? ` · provenance ${esc(String(r.provenanceRef).slice(0, 12))}…` : ""}</div></div>`).join("")
@@ -259,7 +264,7 @@ ${govBlock}<div>${esc(cs.reason)}</div>
     const askLink = poolKey ? ` · <a href="/ask?${qs({ q: `is ${name} safe?`, pool: poolKey })}">💬 ask about this</a>` : ""
     return page(`Reality Check — ${name}`, `<a href="/">← the Shelf</a>${askLink}
 <h1>${esc(name)} ${verdictPill(c.verdict)} ${realityBadge(c.facts.reality)}</h1>
-<div class="card lead"><b>${esc(oneLiner)}</b></div>
+<div class="card lead"><b>${esc(oneLiner)}</b></div>${tierLine}
 <button class="btn" onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
 ${confidenceBand(c)}
 <h2>The honesty scorecard</h2>${axes}${contractScreen}${divergenceRow(divergences)}
@@ -439,5 +444,24 @@ ${answer}
       ? Feed.fundingFacts(m.name, poolKey, ts, adapter)
       : Feed.poolFacts({ name: m.name, poolKey, chartKey: poolKey.replace(":pool:", ":chart:"), isStablecoin: m.isStablecoin, vertical: m.vertical, gtKey: m.gtKey, depProtocols: m.depProtocols }, ts, m.isStablecoin ? Feed.pegDev(m.symbol, ts, adapter) : null, adapter)
     return { name: m.name, scored: Scorecard.score(facts), history: ProvRecord.fullHistory(poolKey) }
+  }
+
+  // ── THE ANY-POOL LOOKUP (Coverage; X-COVERAGE b) — the cold-start fix. A covered pool NOT in the curated record → the
+  // EXISTING per-axis pipeline runs LIVE on whatever genuinely exists (yield-reality from the aggregator, REAL-at-timestamp;
+  // tvl-trend from the chart; peg/contract UNVERIFIED — honest thinness). Hostile/absent ids → null (the route renders the
+  // refusal). The license posture (X-COVERAGE a): in a SERVED COMMERCIAL context (ORGANON_COMMERCIAL_SERVE=1) under branch γ,
+  // DeFiLlama numbers DEGRADE to SAMPLE-labeled; a local reader (the default) sees the real facts. Async — it fetches. ──
+  export async function lookup(poolId: string, now: number, fetchImpl?: DefiLlama.FetchImpl, env: Record<string, string | undefined> = process.env): Promise<{ name: string; scored: Scorecard.Scored; history: ProvRecord.HistoryEntry[]; refusal?: string; posture?: string } | null> {
+    const v = LlamaYields.validateId(poolId)
+    if (!v.ok) return { name: poolId, scored: Scorecard.score({ name: poolId, apyBase: null, apyReward: null, tvlSlope30d: null, pegDev: null, isStablecoin: false, reality: "SAMPLE", provenanceRef: null }), history: [], refusal: v.reason }
+    const u = fetchImpl ? await LlamaYields.universe(now, fetchImpl, env) : await LlamaYields.universe(now, undefined, env)
+    const p = LlamaYields.find(v.id, u.pools)
+    if (!p) return null // an unknown pool id → an honest 404 (never a fabricated pool)
+    const ch = fetchImpl ? await DefiLlama.chart(v.id, now, fetchImpl, env) : await DefiLlama.chart(v.id, now, undefined, env)
+    // the license posture: a SERVED COMMERCIAL context under γ degrades the DeFiLlama reality to SAMPLE (the honest guard)
+    const commercial = env.ORGANON_COMMERCIAL_SERVE === "1"
+    const eff = CoveragePosture.effectiveReality(u.reality, commercial, env)
+    const facts = LlamaYields.lookupFacts(p, ch.value, eff.reality, now)
+    return { name: facts.name, scored: Scorecard.score(facts), history: [], posture: eff.degradedByPosture ? eff.posture : undefined }
   }
 }
