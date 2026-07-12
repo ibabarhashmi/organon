@@ -219,3 +219,62 @@ across 196 files / 1278 tests / 8066 expect()** (Phase-3 1268 + 8; expect 8015 �
 2 misses / 1 gap** (B1 stETH 5.71% depeg · B2 dYdX 50.8% negative funding · B3 loop GAP · B4 + SEED RWA MISSES) · evidence
 bundle `9c1e7bd8…` byte-identical, frozen seven git-clean, `git diff -- src/` empty (engine frozen through the replay) ·
 differential byte-stable. Studio port batched at close.
+
+---
+
+## Phase 5 — THE OPERATOR GATE (whole — D23–D36, D27 first) + PART E (S1–S70) ✅
+
+- **The gate (Operator-owned; the Operator's or an honest STOP — LN5).** `data/honesty/domain-countersign-package.json`
+  presents the WHOLE gate for ONE sitting: the generosity statement, then **D27** (the variance amendment — five sprints
+  running) · D23–D26 · D28–D33 · **D34** (the domain scope) · **D35** (the RWA structural cap — *installing it is the pen's
+  act; the tool tells the truth about opacity either way*) · **D36** (the catch-axis promotions — degrade-only, censuses
+  attached) · **IN2** (the real-screen session, now incl. each domain's catch line on a real subject, an RWA subject read for
+  whether the warning lands, the backtest results incl. every MISS) · **IN4** · **AF4** · the publication decision (the push
+  item RETIRED — the trees are pushed). **operatorSignedWhole = false** — the agent presents, NEVER signs.
+- **PART E — the red team (S1–S70), both repos.** `data/honesty/domain-redteam.json` + `domain_redteam.test.ts` — the carried
+  S1–S66 re-run per domain + the four new walls (S67 domain integrity · S68 the backtest's honesty incl. the MISS-reported
+  wall · S69 the RWA cap · S70 moat-under-domain), each seeded-broken + biting; 8 adversarial proofs, each SHOWING its output.
+  **Fixed on the go:** W-DM01 (the fabricated 100% HIT caught + corrected to the real 5.71%) · W-DM02 (the cross-check wall
+  over-required tri-endpoint on a single-source indexer HIT → relaxed to archive captures only).
+- **Convergence — CONVERGED (two clean runs BOTH repos).**
+  - organon: **1281 pass / 2 skip / 0 fail across 197 files / 1283 tests / 8114 expect()**, two clean runs, tree `c3fde077`.
+  - organon-studio: **1281 pass / 2 skip / 0 fail across 197 files / 1283 tests / 8138 expect()**, two clean runs, tree `c3fde077`.
+  - **CV1 — the PR5 wall RESTORED** (`dual-repo-divergence.json`): organon 8114 / studio 8138 = **+24, stable through FIVE
+    terminals**; both 0-fail; same test/file count; byte-identical trees; the delta a data-fixture DISC, recorded, never papered.
+  - evidence bundle `9c1e7bd8…` byte-identical in both; frozen seven + verdict-path 7 + frozen-core 2 byte-untouched; the
+    scorecard differential (lending `70c7912f` + funding `0a63151b`) byte-stable through nineteen sprints; kill-criterion
+    `8b4e094b` untouched; the correlation substrate UNTOUCHED, the deflation still INERT (`familyN===1`); mass path `hono`+`zod`;
+    screens the conscious 3. S36 held. `verify` GREEN both repos.
+
+---
+
+## TERMINAL MARKER
+
+**DOMAIN DELIVERED — READY-PENDING-OPERATOR.** The engine now knows a synthetic stable from a levered loop from a tokenized
+treasury, names each one's specific lie (yield-source attribution · redemption gap · leverage + distance-to-liquidation ·
+off-chain opacity — each info/context, in the pinned grammar), refuses to guess the kind it cannot classify (UNCLASSIFIED),
+refuses to bless the kind it cannot verify (the RWA cap BUILT + parked for D35 — the truth about opacity told immediately),
+and **has been fired at its own graveyard**: the complete unmodified engine (`git diff -- src/` empty throughout) replayed
+against real historical collapses at pinned archive heights, and **every hit, every MISS, and every gap reported as it fell**.
+
+- **Backtest scoreline: 2 HITS / 2 MISSES / 1 GAP** (the misses named + louder than the hits) — B1 stETH June-2022 depeg (par
+  1.0 vs Curve 0.9429 = a real **5.71% gap**, tri-endpoint) · B2 dYdX BTC funding negative in **508/1000** periods · B3 Aave
+  loop GAP (position-scoped, honest limitation) · B4 Maple/Orthogonal off-chain default MISS (**the argument FOR D35**) ·
+  SEED-MISS (the would-have-said-SOLID control, by name). `zeroMissZeroGapSuspicion: false` — not a rigged confirm-only run.
+  W-DM01: a fabricated 100% HIT was CAUGHT before shipping and corrected to the truth (the harness fixed, `src/` byte-frozen).
+- **Depth census** (CV4): yield renders across 15490/15497; a COMPLETE Reality Check reaches **4 of 7** curated pools — the
+  99.95% headline qualified everywhere + replaced by the honest per-axis number.
+- **D27 status:** STILL first, five sprints running — *"The Stamp is knowingly generous until D27 is signed."* Twelve pens now
+  (D23–D36); IN2/IN4/AF4 + the publication decision OWED-OPERATOR-GATED (never simulated — LN5).
+- **Skip set:** {ask_live, eval_live} (+ the clone-absent continuity pattern).
+- **Terminal `PINS_SHA 2b1dd373…`** carried Coverage `cc08a77b…` (→ Redesign `6b285eba…` → GroundTruth `3d0ef3bb…`).
+- **Battery:** organon **1281/2/0 ×197 files / 8114 expect()** · studio **1281/2/0 ×197 / 8138 expect()** (delta +24) — two
+  clean runs BOTH repos. Commit chain (organon): `31cb10c5` (domains + catches) → `d7d727e7` (backtest + gate) → the PR5 wall.
+  Studio byte-identical ports (tree `c3fde077`). S1–S70 RED-TEAM-CLEAN. **UNPUSHED** (the publication is the Operator's call).
+- **ITEMIZED reconciliation** (baseline 1225 → 1281 = **+56 tests / +9 files**): domain_pins (11) · findings_closed_domain (6)
+  · domain_classify (7) · domain_registry (4) · dydx (4) · catch_axes (6) · rwa_cap (5) · backtest (8) · domain_redteam (5).
+- **Parked, unmoved:** the proposer/ONC/PBO (the substrate untouched, the deflation inert) · reports/API · execution/custody ·
+  the archive node / general indexer (the backtest is bounded: pinned subjects, pinned heights, three reads) · calibration ·
+  meta-labeling/ML on the verdict path · options/prediction-markets · Pyth · the dYdX FULL cross-venue expansion (this sprint
+  used it ONLY as STABLE's second funding venue). A fourth screen, a guessed domain, a leaked axis, an agent-installed cap, an
+  RWA SOLID, a rigged subject set, an engine tuned mid-measurement, a simulated height, a buried MISS — none shipped.
