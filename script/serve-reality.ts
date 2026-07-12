@@ -94,7 +94,14 @@ app.get("/postmortems", async (c) => {
   // sentence rides with it (the axis flags the upgrade-key surface, not depegs). Absent → omitted (honest).
   const gcP = path.join(PKG_ROOT, "data", "honesty", "governance-claim.json")
   const governanceClaim = existsSync(gcP) ? JSON.parse(readFileSync(gcP, "utf8")) : null
-  return c.json({ ok: true, rule: index.rule, layers: LAYERS, distinctness, allSample: index.allSample, realLayer: index.realLayer ?? null, subjects, governanceClaim })
+  // THE COLLAPSE-BACKTEST (Domain sprint; X-BACKTEST) — the complete unmodified engine fired at real historical collapses at
+  // pinned archive heights. The MISSES are rendered as PROMINENTLY as the hits (X-BACKTEST d): a hits-only render is a Halt.
+  // Absent on a clone that hasn't run the harness → omitted honestly.
+  const btP = path.join(PKG_ROOT, "data", "honesty", "backtest", "summary.json")
+  const backtest = existsSync(btP)
+    ? (() => { const s = JSON.parse(readFileSync(btP, "utf8")); return { claim: s.claim, scoreline: s.scoreline, results: s.results, missesReported: s.missesReported, honestLimitation: s.honestLimitation, zeroMissZeroGapSuspicion: s.zeroMissZeroGapSuspicion, rule: "the misses are reported as prominently as the hits — a backtest that only ever confirms is rigged (X-BACKTEST d)." } })()
+    : null
+  return c.json({ ok: true, rule: index.rule, layers: LAYERS, distinctness, allSample: index.allSample, realLayer: index.realLayer ?? null, subjects, governanceClaim, backtest })
 })
 
 // ── the /feedback door (Probe Phase 2; X-TELEMETRY) — a DISPOSITIONED door (not a fourth screen): a tester's structured

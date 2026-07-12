@@ -1,0 +1,28 @@
+{
+  "id": "B2-stable-dydx-funding-flip",
+  "domain": "STABLE-SYNTH",
+  "name": "perp-funding-carry regime flip (dYdX v4 indexer, real history)",
+  "height": 0,
+  "outcome": "HIT",
+  "catchFired": true,
+  "reads": {
+    "periods": 1000,
+    "negative": 508,
+    "pctNegative": 50.8,
+    "firstTs": 1780232400289,
+    "lastTs": 1783828800119
+  },
+  "endpoints": [
+    "https://indexer.dydx.trade/v4"
+  ],
+  "crossChecked": false,
+  "attempts": [
+    {
+      "endpoint": "https://indexer.dydx.trade/v4",
+      "served": true
+    }
+  ],
+  "catchLine": "Yield source: perp-funding carry (not lending interest) — 100% of the yield is funding-carry; funding was negative in 508 of the last 1000 periods (50.8%, venues: dydx); when it flips, this yield inverts and the peg takes the strain. Peg and yield are scored JOINTLY here — a funding flip strains the peg, so they are one risk, not two. info/context — a fact about the yield's source, never advice.",
+  "claim": "HIT — the yield-source funding-flip census fired on REAL dYdX history: funding was negative in 508 of 1000 periods (50.8%) — a \"savings rate\" that is really short-vol carry would have inverted in those windows.",
+  "contentSha": "7657672e698c0d5ea9c99294484cffb757f3b30683195a5615f603d785e0587b"
+}

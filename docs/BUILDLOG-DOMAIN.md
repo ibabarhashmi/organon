@@ -176,3 +176,46 @@ through the lookup path + fixtures — the depth census's `domain-catch: 0/7` is
 evidence bundle `9c1e7bd8…` byte-identical, frozen seven git-clean, S36 held (the catch block is `""` for carried subjects) ·
 differential `70c7912f`/`0a63151b` byte-stable · the four axes ADOPT-covered (research_ratified green) · D35/D36 parked,
 censuses all ZERO. Studio port batched at close.
+
+---
+
+## Phase 4 — MOAT-UNDER-FIRE ✅ (the backtest; the hits, the misses, the gaps — S68/S70)
+
+- **Engineer.** `script/capture/collapse-backtest.ts` — for each pinned subject at its pinned height: capture the pre-collapse
+  state over the free archive rotation (tri-endpoint), content-hash it, run the domain catch axis + the UNMODIFIED engine over
+  it, record HIT / MISS / GAP. **The engine was FROZEN before the harness fired** (committed at `31cb10c5`; `git diff -- src/`
+  empty at start AND end — the read-only discipline, X-BACKTEST c). The results land in `data/honesty/backtest/` and render on
+  `/postmortems` (the misses as prominent as the hits).
+- **THE SCORELINE — 2 HITS · 2 MISSES (reported) · 1 GAP** (`zeroMissZeroGapSuspicion: false` — not a rigged confirm-only run):
+  | id | domain | outcome | evidence (SHOWN) |
+  |---|---|---|---|
+  | B1 | LST-LRT | **HIT** | stETH June-2022 at block 14975000 — par 1.0 ETH (inaccessible; withdrawals LOCKED) vs Curve market **0.9429** → a real **5.71% gap**; tri-endpoint agreed (drpc/mevblocker/blastapi). The redemption-gap axis rendered the depeg on REAL pre-collapse chain state. |
+  | B2 | STABLE-SYNTH | **HIT** | dYdX v4 indexer BTC-USD — funding negative in **508 of 1000** periods (50.8%). The yield-source funding-flip census fired on REAL history: a "savings rate" that is short-vol carry would have inverted in those windows. |
+  | B3 | LOOPED-CDP | **GAP** | the Aave v2 loop surface — the leverage-distance axis is position-scoped (needs a borrower's collateral/debt); the bounded harness (pinned surface, three reads) does not resolve a specific loop → an HONEST LIMITATION, recorded by name, never a faked leverage. |
+  | B4 | RWA | **MISS** | Maple/Orthogonal — the on-chain state looked solvent while the loan defaulted **off-chain** (~$36M). The engine sees NOTHING adverse → it would NOT have flagged → **the argument FOR the D35 structural cap**: for RWA a clean on-chain scorecard is not evidence of safety. |
+  | SEED-MISS | RWA | **MISS** | the seeded perfect-on-chain RWA control (on-chain SOLID) — surfaces as a MISS by name (the MISS-reporting wall bites); a signed D35 would cap it SOLID→CAUTION. |
+  The claim, worded to the evidence in BOTH directions: *"the unmodified engine would have flagged 2 of 3 reachable pinned
+  collapses, missed 2 (incl. the seeded control + the RWA off-chain default), and could not reach 1."*
+- **W-DM01 (fix-on-the-go, X-BACKTEST d — a CONSCIOUS, DISCLOSED change to the HARNESS, not the engine).** The FIRST harness
+  run produced a **fabricated 100% gap** for B1 — worse than a miss. Root cause: TWO bugs in the harness's data collection
+  (not the engine): (1) the inline `get_dy` calldata miscounted zeros → a misaligned `dx` → a near-zero garbage read; (2) I
+  compared mismatched units (wstETH→stETH `1.075` vs stETH→ETH). FIX: a proper ABI encoder + the correct read — redemption =
+  stETH par `1.0` (the rebasing invariant; par was inaccessible because withdrawals were locked), secondary = the real Curve
+  `get_dy` = `0.9429` → a real **5.71% gap** that MATCHES the documented June-2022 depeg (tri-endpoint cross-checked). The fix
+  was to `script/` (the measurement instrument); `src/` (the engine) stayed byte-frozen throughout (`git diff -- src/` empty).
+  The whole harness was re-run; the result is the true historical value, not fitted to a hit — a fabricated hit is the worst
+  possible output, and catching + correcting it is the backtest's honesty made internal.
+- **Validate — outputs SHOWN (CV3).** `backtest.test.ts` (8): every capture re-hashes + names its endpoints/height; the
+  read-only guard (start AND end empty); the subject-set pin-hash matches Phase 0 (no post-hoc swap); **the MISS-reported wall**
+  (SEED-MISS surfaces as a MISS in the artifact AND the summary, root-caused); the both-directions claim wording; the
+  zero-miss-zero-gap suspicion flag logic; the two HITs are real captures; the RWA MISS is the argument for D35.
+- **Red-team (Phase 4 controls, SHOWN).** A subject swapped after results → the pin-hash fails. A miss softened → the binary
+  wall fails. A simulated height → the tri-endpoint re-verification fails (the reads re-hash). The engine touched mid-run →
+  the read-only guard fails (proven: `src/` frozen at `31cb10c5`). A fabricated 100% HIT → CAUGHT (W-DM01) + corrected to truth.
+
+**SESSION MARKER — FIRED-AND-REPORTED.** terminal `PINS_SHA 2b1dd373…` · organon **+1 file** (backtest) +
+`collapse-backtest.ts` + `data/honesty/backtest/{B1..B4,SEED-MISS,summary}.json` · **battery 1276 pass / 2 skip / 0 fail
+across 196 files / 1278 tests / 8066 expect()** (Phase-3 1268 + 8; expect 8015 → 8066 = +51) · **backtest scoreline: 2 hits /
+2 misses / 1 gap** (B1 stETH 5.71% depeg · B2 dYdX 50.8% negative funding · B3 loop GAP · B4 + SEED RWA MISSES) · evidence
+bundle `9c1e7bd8…` byte-identical, frozen seven git-clean, `git diff -- src/` empty (engine frozen through the replay) ·
+differential byte-stable. Studio port batched at close.

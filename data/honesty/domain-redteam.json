@@ -1,0 +1,115 @@
+{
+  "protocol": "domain-redteam",
+  "at": "2026-07-12",
+  "sprint": "THE DOMAIN SPRINT (four DeFi domains as subject types + the catch each hides; the RWA cap parked for the pen; the complete unmodified engine fired at real historical collapses — every hit, MISS, and gap reported)",
+  "rule": "the FULL first-class catalog S1–S70, both repos, each seeded-broken-on-purpose + biting; the misses reported louder than the hits; a fabricated hit is worse than a miss and is CAUGHT (W-DM01).",
+  "catalog": {
+    "carried": "S1–S66 first-class, re-run in BOTH repos AND on every new domain (the voice/collapse/lineage walls, the parity, the tiers now run per domain)",
+    "count": 70,
+    "S67": {
+      "name": "domain-classification integrity",
+      "wall": "domain_classify.test.ts + domain_registry.test.ts",
+      "outcome": "PASS",
+      "bites": "the classifier is CONSERVATIVE (the seeded ambiguous 'ethena stETH hybrid' → UNCLASSIFIED, output shown; a lending stablecoin is never up-classified — no optimistic default); NO cross-domain leakage (the seeded 'leverage-distance on a STABLE subject' → REFUSED, the refusal shown); the render is byte-identical for a carried subject (the badge is '' for LENDING/FUNDING/UNCLASSIFIED)"
+    },
+    "S68": {
+      "name": "the backtest's honesty",
+      "wall": "backtest.test.ts",
+      "outcome": "PASS",
+      "bites": "the engine was READ-ONLY through the replay (git diff -- src/ empty at start AND end — proven by the freeze-then-fire commit 31cb10c5); the subject-set pin-hash matches Phase 0 (no post-hoc swap); every capture re-hashes + names its endpoints/height; THE MISS-REPORTED WALL — the seeded would-have-said-SOLID RWA surfaces as a MISS in the artifact AND the summary (never buried); the claim is worded both directions; a fabricated 100% HIT was CAUGHT + corrected to the real 5.71% (W-DM01)"
+    },
+    "S69": {
+      "name": "the RWA structural cap",
+      "wall": "rwa_cap.test.ts",
+      "outcome": "PASS",
+      "bites": "the seeded PERFECT-ON-CHAIN RWA control cannot render SOLID under the cap SIMULATION (→ CAUTION); TODAY the cap is NOT installed (the verdict is unchanged + the warning renders); the cap is provably NOT agent-installed (scorecard/explain/pool/stamp reference it ZERO times; the render never calls it with d35Signed=true); the affected census is ZERO (arms-for-future); every promotion is degrade-only, unsigned"
+    },
+    "S70": {
+      "name": "moat-under-domain",
+      "wall": "backtest.test.ts + the carried tier/differential walls",
+      "outcome": "PASS",
+      "bites": "the provenance tiers (REAL★ block-pinned vs REAL-at-timestamp indexer), the content-hashes, the governance axis, the differential (70c7912f/0a63151b), the evidence bundle (9c1e7bd8), and the kill-criterion (8b4e094b) all hold across every new domain and every backtest capture; the honest-limitation (the free archive prunes deep-2022 state) is disclosed"
+    }
+  },
+  "adversarialProofs": [
+    {
+      "id": "S67-ambiguous-unclassified",
+      "scenario": "shoehorn a novel/ambiguous subject into a domain so a wrong lens produces a confident wrong answer",
+      "observed": "'ethena stETH hybrid' matches BOTH STABLE-SYNTH + LST-LRT → classifyDomain returns UNCLASSIFIED ('AMBIGUOUS — matched multiple domain signatures … a wrong lens is a wrong answer'); a lending stablecoin (aave USDC) → LENDING with zero new-domain signatures",
+      "conclusion": "the classifier has no optimistic default — the guessed-domain Halt is a real wall"
+    },
+    {
+      "id": "S67-cross-domain-refused",
+      "scenario": "render a leverage axis on a STABLE subject (a wrong lens)",
+      "observed": "assertAxisForDomain('leverage-distance','STABLE-SYNTH') throws 'CROSS-DOMAIN AXIS LEAKAGE REFUSED — the \"leverage-distance\" axis renders ONLY for LOOPED-CDP, never for STABLE-SYNTH'",
+      "conclusion": "the no-leakage registry is a real wall — an axis renders only for its declared domain"
+    },
+    {
+      "id": "S68-miss-reported",
+      "scenario": "quietly drop a would-have-said-SOLID collapse (report 2-of-2, bury the miss)",
+      "observed": "SEED-MISS.json outcome === 'MISS' + summary.missesReported contains 'SEED-MISS-rwa-perfect' with its root cause; the RWA off-chain default (B4) is a MISS too — the argument for D35",
+      "conclusion": "the MISS-reported wall bites — a dropped miss is the gravest failure and it cannot hide"
+    },
+    {
+      "id": "S68-fabricated-hit-caught",
+      "scenario": "a harness read bug fabricates a 100% gap (worse than a miss)",
+      "observed": "the first B1 run produced a 100% gap (a misaligned get_dy dx + a unit mismatch); CAUGHT before commit, root-caused (W-DM01), corrected to the REAL 5.71% (par 1.0 vs Curve 0.9429, tri-endpoint), the whole harness re-run; the engine (src/) stayed byte-frozen",
+      "conclusion": "a fabricated hit is the worst output — it was caught and corrected to truth, not shipped"
+    },
+    {
+      "id": "S68-read-only-engine",
+      "scenario": "tune the engine while measuring it (nudge a threshold so the backtest passes)",
+      "observed": "git diff -- src/ empty at start AND end (the engine was committed at 31cb10c5 BEFORE the harness fired; the W-DM01 fix was to script/, not src/)",
+      "conclusion": "the read-only-engine guard is a real wall — tuning while measuring is a Halt"
+    },
+    {
+      "id": "S68-no-post-hoc-swap",
+      "scenario": "swap a backtest subject after seeing which ones the engine catches",
+      "observed": "summary.subjectSetHash === domain-pins subjectSetHash (628738af…); a mutated subject moves the hash",
+      "conclusion": "the pinned-before-capture rule is a real wall — the subject set cannot be rigged post-hoc"
+    },
+    {
+      "id": "S69-rwa-never-solid",
+      "scenario": "render SOLID on a perfect-on-chain RWA (a fabricated reassurance about off-chain collateral)",
+      "observed": "under the cap SIMULATION the seeded SOLID → CAUTION; the cap is BUILT but NOT INSTALLED (an agent installs no verdict rule); the warning renders today regardless",
+      "conclusion": "the RWA structural cap is a real (parked) wall — and the truth about opacity is told immediately"
+    },
+    {
+      "id": "S69-cap-not-agent-installed",
+      "scenario": "an agent silently installs the verdict-shaped cap without the pen",
+      "observed": "scorecard.ts/explain.ts/pool.ts/stamp.ts reference the cap ZERO times (grep empty); reality.ts never calls rwaStructuralCap(…,true); the rendered verdict pill is the seven-axis verdict, unchanged",
+      "conclusion": "the agent-installs-no-verdict-rule fence holds — D35 waits for the Operator"
+    }
+  ],
+  "findingsFixedOnTheGo": {
+    "W-DM01": "the collapse-backtest's FIRST B1 run produced a FABRICATED 100% gap (worse than a miss) — root cause: TWO harness data-collection bugs (a miscounted-zeros get_dy calldata → a misaligned dx → a garbage read; a unit mismatch comparing wstETH→stETH 1.075 against stETH→ETH). FIX (conscious, disclosed, X-BACKTEST d): a proper ABI encoder + the correct read (redemption = stETH par 1.0, secondary = the real Curve get_dy 0.9429 → a real 5.71% gap matching the documented June-2022 depeg, tri-endpoint cross-checked). The fix was to script/ (the measurement instrument); src/ (the engine) stayed byte-frozen; the whole harness was re-run; the result is the true historical value, not fitted to a hit.",
+    "W-DM02": "the backtest re-hash wall first over-required tri-endpoint cross-check on EVERY hit — but B2 (dYdX) is a single-source INDEXER hit (an indexer API cannot be tri-endpoint). FIX: the cross-check requirement applies to the multi-RPC ARCHIVE captures (B1, LST-LRT); a single-source indexer hit names its source (endpoints ≥ 1) without a false tri-endpoint claim."
+  },
+  "convergence": {
+    "cleanRuns": 2,
+    "bothRepos": true,
+    "verdictDifferentialZero": true,
+    "differential": {
+      "lendingFpSetSha": "70c7912f0b16a796",
+      "fundingReproHash": "0a63151b0c37"
+    },
+    "evidenceBundleSha": "9c1e7bd8",
+    "bundleByteIdentical": true,
+    "killCriterionUntouched": "8b4e094b",
+    "verifyGreen": true,
+    "backtestScoreline": {
+      "hits": 2,
+      "misses": 2,
+      "gaps": 1,
+      "note": "B1 stETH 5.71% depeg (HIT) · B2 dYdX 50.8% negative funding (HIT) · B3 Aave loop (GAP, position-scoped) · B4 Maple off-chain default (MISS, the D35 argument) · SEED-MISS (MISS, the control)"
+    },
+    "note": "the bundle byte-identical proves NO verdict moved — the whole sprint is additive (the four catch axes render like the governance line, OFF the scorecard verdict path; info/context; the Stamp familyN stays 1; the RWA cap + promotions parked for the pen). The correlation substrate is UNTOUCHED."
+  },
+  "gate": {
+    "package": "domain-countersign-package.json — D23–D36, D27 FIRST, opening with the generosity statement; D34/D35/D36 new (Operator-signed=false); the push item RETIRED (the trees are pushed) → the publication decision remains; IN2/IN4/AF4 OWED-OPERATOR-GATED.",
+    "operatorSignedWhole": false,
+    "ln5": "the agent presents the whole gate, NEVER signs it; D35's cap + D36's promotions are NOT agent-installed (a verdict-shaped rule needs the pen).",
+    "verdict": "DOMAIN DELIVERED — READY-PENDING-OPERATOR (or an honest STOP with the remainder quoted)."
+  },
+  "contentSha": "6833409f5e45983b6cd784f3e7f6583398b35ffba5fba6696a5f186b0d7dcd56"
+}

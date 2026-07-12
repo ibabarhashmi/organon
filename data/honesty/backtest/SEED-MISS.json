@@ -1,0 +1,21 @@
+{
+  "id": "SEED-MISS-rwa-perfect",
+  "domain": "RWA",
+  "name": "seeded perfect-on-chain RWA (the MISS-reporting control)",
+  "height": 0,
+  "outcome": "MISS",
+  "catchFired": false,
+  "seeded": true,
+  "reads": {
+    "onchainVerdict": "SOLID",
+    "capInstalledToday": false,
+    "wouldCapUnderD35": true
+  },
+  "endpoints": [],
+  "crossChecked": false,
+  "attempts": [],
+  "catchLine": "This yield's collateral settles off-chain. Nothing on-chain can verify it. We cannot see the thing that matters — treat every clean axis below with that in mind. info/context — a fact about what CANNOT be known, never advice.",
+  "claim": "MISS (SEEDED CONTROL) — a perfect-on-chain RWA renders SOLID today (the cap is NOT installed; an agent installs no verdict rule). This would-have-said-SOLID subject MUST appear as a MISS — it does, here, by name. Under a signed D35 it would cap SOLID→CAUTION.",
+  "rootCause": "the structural cap is NOT installed (D35 unsigned) — the warning renders, the verdict is unchanged; an agent installs no verdict rule (LN5).",
+  "contentSha": "2d36b8dcf73f7f6ffba896a86612ddbf5f59e31493aef30cb83bd73f812f12f9"
+}

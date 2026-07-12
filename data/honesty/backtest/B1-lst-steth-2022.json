@@ -1,0 +1,38 @@
+{
+  "id": "B1-lst-steth-2022",
+  "domain": "LST-LRT",
+  "name": "stETH June-2022 redemption-gap depeg",
+  "height": 14975000,
+  "outcome": "HIT",
+  "catchFired": true,
+  "reads": {
+    "redemption": 1,
+    "redemptionBasis": "stETH par (1:1 ETH backing; withdrawals LOCKED in June-2022)",
+    "secondary": 0.9429468614813717,
+    "secondaryBasis": "Curve get_dy(stETH→ETH), block-pinned REAL★",
+    "gapPct": 5.71
+  },
+  "endpoints": [
+    "https://eth.drpc.org",
+    "https://rpc.mevblocker.io",
+    "https://eth-mainnet.public.blastapi.io"
+  ],
+  "crossChecked": true,
+  "attempts": [
+    {
+      "endpoint": "https://eth.drpc.org",
+      "served": true
+    },
+    {
+      "endpoint": "https://rpc.mevblocker.io",
+      "served": true
+    },
+    {
+      "endpoint": "https://eth-mainnet.public.blastapi.io",
+      "served": true
+    }
+  ],
+  "catchLine": "Redemption 1 ETH; market 0.9429468614813717 ETH — a 5.71% gap (peg 0.9429). Exit at par needs the queue; exit now takes the pool price. (the redemption queue state is not on-chain readable here.) info/context — a fact about the redemption gap, never advice.",
+  "claim": "HIT — the redemption-gap axis rendered a 5.71% discount on stETH's REAL pre-collapse state at block 14975000: par 1.0 ETH (inaccessible — withdrawals locked) vs Curve market 0.9429 ETH. The depeg lived in the gap; exit at par needed a queue that did not yet exist.",
+  "contentSha": "a9804b3347963c160e952b20ed5037aa9f3f4c3102d3c160e31f0a8cb19d1ba0"
+}
