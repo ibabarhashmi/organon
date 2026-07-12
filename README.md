@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/organon-logo.png" alt="ORGANON" width="560">
+  <img src="docs/organon-logo.png" alt="ORGΛNON" width="560">
 </p>
 
 <p align="center">
@@ -31,9 +31,9 @@
 
 ---
 
-## What is Organon?
+## What is ORGΛNON?
 
-Organon answers one question about a real DeFi strategy — **is this yield real, and what could kill it?** — as a **machine-derived scorecard**, not an opinion. It is built so the honest answer is the *only* answer the machine can produce, and so a stranger can **regenerate every number it claims with one command**.
+ORGΛNON answers one question about a real DeFi strategy — **is this yield real, and what could kill it?** — as a **machine-derived scorecard**, not an opinion. It is built so the honest answer is the *only* answer the machine can produce, and so a stranger can **regenerate every number it claims with one command**. It knows *what kind of thing* it is looking at — a synthetic stable from a liquid-staking token from a levered loop from a tokenized treasury — and names the one catch each kind hides that the general axes cannot see; the kind it cannot verify (an off-chain RWA), it refuses to bless.
 
 It presents as three deliberate surfaces over one spine:
 
@@ -57,7 +57,7 @@ The result: **zero verdicts are manufactured.** An `AVOID` on real data is the p
 The screen set is a conscious **3** — two mass screens every user meets, plus the Ask Console. The user *checks*, they do not build (a fourth screen is a deliberate stop).
 
 - **The Shelf** — Reality Cards across all three money verticals: a real-yield split bar (durable base vs reward emissions), a verdict pill, a `REAL`/`SAMPLE` badge, a risk word.
-- **The Reality Check** — the x-ray of one strategy: the verdict banner + a one-line plain reason, the scorecard rows, a Simple/Pro toggle, a confidence **band** (never a single hero APY), and a link into the provenance history — the moat made visible. The opt-in **Stamp** is a Pro sub-route of this screen (a drawer, not a screen).
+- **The Reality Check** — the x-ray of one strategy: the verdict banner + a one-line plain reason, the scorecard rows, a Simple/Pro toggle, a confidence **band** (never a single hero APY), **who holds the upgrade key** (a conservative on-chain governance read — EOA / multisig / timelock / immutable / unresolved), the **domain catch line** where the subject is a known kind, and a link into the provenance history — the moat made visible. Every real number is labeled by **which kind of true** it is — **REAL★** (block-pinned, reproducible against the chain itself) vs **REAL-at-timestamp** (an aggregator response at time T). Any covered pool not on the curated shelf is reachable by an **any-pool lookup** (each axis degrades honestly to the data that genuinely exists). The opt-in **Stamp** is a Pro sub-route of this screen (a drawer, not a screen).
 - **The Ask Console** — the grounded natural-language front door (below).
 
 ### The scorecard axes
@@ -87,7 +87,20 @@ Each axis is a pure `(facts) → row` on hash-locked thresholds. An axis that do
 | counterparty | ✓ | ✓ | n/a |
 | funding-regime | n/a | n/a | ✓ |
 
-Data is keyless-first — **DeFiLlama** (yield · TVL · peg), **Hyperliquid** (funding), **GeckoTerminal** (liquidity depth) — so the tool demos with zero setup. A dead endpoint / rate limit / malformed body degrades to last-good or `SAMPLE`, never a crash, never a fabricated value.
+Data is keyless-first — **DeFiLlama** (yield · TVL · peg · the full pool universe for the any-pool lookup), **Hyperliquid** + the free **dYdX** v4 indexer (funding), **GeckoTerminal** (liquidity depth), **Chainlink** (block-pinned REAL★ prices) — so the tool demos with zero setup. A dead endpoint / rate limit / malformed body degrades to last-good or `SAMPLE`, never a crash, never a fabricated value.
+
+### Knowing the kind — the catch the general axes cannot see
+
+The general axes were built for lending and stable-yield pools. Four DeFi domains hide a risk they cannot see, so ORGΛNON classifies each subject **conservatively** (an ambiguous or novel subject stays *unclassified* — a wrong lens is a wrong answer) and, where the kind is known, renders **one additional honest line** in the same grammar as the rest — a fact, never advice, and never a change to the verdict:
+
+| Domain | The catch it names |
+|---|---|
+| **Synthetic stables** (Ethena · crvUSD · GHO) | **Yield-source attribution** — a "stablecoin yield" that is really short-vol perp-funding carry, with the funding-flip census: *negative in N of M periods; when it flips, the yield inverts and the peg takes the strain.* |
+| **LST / LRT** (stETH · weETH · ezETH) | **The redemption gap** — the depeg hides between the on-chain redemption rate (REAL★) and the thin secondary price: *at par needs the queue; now takes the pool.* |
+| **Looped / CDP** (recursive leverage) | **Effective leverage + distance-to-liquidation** — a headline APY undressed: *30% is 8× levered; a 12% collateral move liquidates you.* |
+| **RWA** (Ondo · Maple · Centrifuge) | **The structural cap** — the collateral settles off-chain and nothing on-chain can verify it, so a clean scorecard is *not* evidence of safety: *we cannot see the thing that matters.* |
+
+**Fired at its own graveyard.** The complete, unmodified engine is replayed against real historical collapses at pinned archive heights and records what it *would* have rendered — every hit, every **miss**, and every honest gap (a miss is the most valuable output; a backtest that only ever confirms is rigged). On the June-2022 stETH depeg it rendered a real ~5.7% redemption gap on the pre-collapse chain state; on a real off-chain credit default it rendered *nothing* adverse — which is exactly why the RWA structural cap exists.
 
 ## The opt-in Stamp
 
@@ -260,8 +273,11 @@ src/
   ledger/        the append-only, hash-chained trial ledger
   backtest/      the TS↔Python bridge + the frozen Python sidecars
   dataplane/     the PIT store, the provenance record (the moat), the feed bridge
-    providers/   keyless clients — DeFiLlama, GeckoTerminal (one small pure fn per endpoint)
+    providers/   keyless clients — DeFiLlama, GeckoTerminal, Chainlink, dYdX (one small pure fn per endpoint)
   analytics/     scorecard.ts (the deterministic risk axes + verdict), explain.ts (the WHY engine + groundedness verifier)
+  contract/      the governance read (who holds the upgrade key) + the deterministic contract screen over verified source
+  domain/        the conservative domain classifier + the four catch axes (yield-source · redemption-gap · leverage-distance · off-chain-opacity)
+  plane/         the sovereign data-plane (own-RPC funding · events · state) beside the rented breadth
   ask/           the grounded Ask Console — router (closed intents) · tools · answer · phrase · provider (BYOK)
   strategy/      the StrategySpec schema
   attest/        external-claim attestation + tiering
@@ -271,13 +287,13 @@ test/
   walls/         the integrity walls (frozen bytes, ledger bypass, no-signing, gates, …)
   organon/       capability-floor + behavior tests (incl. the honesty_* + evidence_bundle walls)
 script/          serve, capture, verify, build-evidence, differential, and tooling entry points
-docs/            identity memo + assets
+docs/            the power-floor derivation (for external audit) + the logo asset
 data/            the committed provenance chain, the evidence bundle, pins, and capability inventory
 ```
 
 ## Design principles
 
-Organon rests on a short list of non-negotiables enforced by tests, not convention:
+ORGΛNON rests on a short list of non-negotiables enforced by tests, not convention:
 
 | Principle | Enforced by |
 |---|---|
@@ -290,6 +306,9 @@ Organon rests on a short list of non-negotiables enforced by tests, not conventi
 | No model in a verdict, an axis, or the record | `honesty_scorecard` paraphrase guard |
 | The Ask AI phrases, never exceeds — a fabricated number/verdict rejects the answer wholesale | `ask_grounded` groundedness gate + verdict guard |
 | The Stamp is off the mass path; decay + ICIR are reason-only, never a scorecard axis or a new verdict word | `honesty_stamp` / `persistence_redteam` (S16/S22/S23) |
+| The tool knows the kind of thing it sees; a catch axis is info/context and never moves a verdict; an ambiguous subject stays unclassified | `domain_classify` / `domain_registry` / `catch_axes` walls (S67) |
+| An RWA is never blessed `SOLID` — the structural cap is the Operator's pen, never agent-installed | `rwa_cap` wall (S69) |
+| The moat is fired at real collapses unmodified; a miss is reported louder than a hit, never buried | `backtest` wall (S68) |
 | API keys are server-side env-only — never in the bundle, a log, the prompt, or a served page | `ask_grounded` key-safety (S20) + gitignored `.env` |
 | Advertised scope == actual scope | `capability_matrix` wall |
 | Nothing signs, is paid, or is closed | `no_signing_grep` wall |
