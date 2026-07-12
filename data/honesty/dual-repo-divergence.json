@@ -1,33 +1,34 @@
 {
  "protocol": "dual-repo-divergence",
- "at": "2026-07-11",
+ "at": "2026-07-12",
  "rule": "PR5 — the standing dual-repo behavioral-divergence wall. Per-repo expect() counts recorded EVERY sprint; both trees asserted 0-fail; the delta between them is DOCUMENTED, never smoothed. A recorded delta that does NOT equal |organon − studio| is a papered delta (a Halt); a delta > 0 without a note is a smoothing (a Halt). The wall watches the divergence, it does not erase it.",
  "repos": {
   "organon": {
-   "tree": "a0722341",
-   "pass": 1172,
+   "tree": "2f777d2d",
+   "pass": 1225,
    "skip": 2,
    "fail": 0,
-   "files": 178,
-   "tests": 1174,
-   "expectCalls": 7398
+   "files": 188,
+   "tests": 1227,
+   "expectCalls": 7705
   },
   "organon-studio": {
-   "tree": "a0722341",
-   "pass": 1172,
+   "tree": "2f777d2d",
+   "pass": 1225,
    "skip": 2,
    "fail": 0,
-   "files": 178,
-   "tests": 1174,
-   "expectCalls": 7422
+   "files": 188,
+   "tests": 1227,
+   "expectCalls": 7729
   }
  },
  "bothZeroFail": true,
  "sameTestCount": true,
  "sameFileCount": true,
  "expectDelta": 24,
- "deltaNote": "organon-studio runs 24 MORE expect() calls than organon (7422 vs 7398) — a STABLE delta held through the ENTIRE GroundTruth sprint (Moat terminal 6723-vs-6747, Precision terminal 7095-vs-7119, GroundTruth terminal 7398-vs-7422; +303 each from the six GroundTruth walls, the delta unchanged at 24). The delta is data-fixture-driven (a repo-specific captured fixture drives a per-item assertion loop of different length); the pass/fail behavior is IDENTICAL (1174 tests, 178 files, 0 fail in both). A benign per-repo DISC — recorded, watched, never papered.",
+ "deltaNote": "organon-studio runs 24 MORE expect() calls than organon (7729 vs 7705) — a STABLE delta held through FOUR terminals (Moat 6723-vs-6747, Precision 7095-vs-7119, GroundTruth 7398-vs-7422, Coverage 7705-vs-7729; the Redesign + Coverage walls added the same expect() to both trees, the delta unchanged at 24). The delta is data-fixture-driven (a repo-specific captured fixture drives a per-item assertion loop of different length); the pass/fail behavior is IDENTICAL (1227 tests, 188 files, 0 fail in both; the trees are byte-identical at 2f777d2d). A benign per-repo DISC — recorded, watched, never papered.",
  "terminalMoat": false,
  "terminalPrecision": false,
- "terminalGroundTruth": true
+ "terminalGroundTruth": false,
+ "terminalCoverage": true
 }
