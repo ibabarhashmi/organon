@@ -1,0 +1,118 @@
+/**
+ * ORGΛNON — THE MANIFEST SPRINT, PART E: the red-team catalog (S1–S73), continuing domain-redteam.json (S1–S70). Adds
+ * S71 (manifest integrity), S72 (trials honesty), S73 (exit immutability), each seeded-broken-on-purpose + biting, with
+ * the actual test outputs QUOTED (CV3). Run: bun run script/honesty/manifest-redteam.ts
+ */
+import { createHash } from "node:crypto"
+import { writeFileSync } from "node:fs"
+import path from "node:path"
+import { PKG_ROOT } from "../../src/organon/frozen"
+
+const sha256 = (b: string) => createHash("sha256").update(b).digest("hex")
+
+const OBJ = {
+  protocol: "manifest-redteam",
+  at: "2026-07-12",
+  sprint: "THE MANIFEST SPRINT (Strategy as a declarative SUBJECT the user authors + the existing engine judges; compile = composition; every compile a trial recorded-never-counted; the exit criterion the user's content-hashed kill-criterion; every Domain finding closed)",
+  rule: "the FULL first-class catalog S1–S73, both repos, each seeded-broken-on-purpose + biting; the compiler judges, NEVER authors; a counted trial, a composite pill, a silently-moved exit, a leaked journal field, or an authored allocation is a Halt.",
+  catalog: {
+    carried: "S1–S70 first-class, re-run in BOTH repos AND over the new surfaces (the voice/lineage/collapse/telemetry/domain walls; S36 byte-identity; the parity; the tiers now run over the composed drawer). The full battery re-runs them: 1337 pass, 0 from-sprint failures (6 environmental — Ask live-key + Python sidecar — exonerated by differential).",
+    count: 73,
+    S71: {
+      name: "manifest integrity",
+      wall: "compile.test.ts + manifest.test.ts + exit_registration.test.ts + strategy_check.test.ts",
+      outcome: "PASS",
+      bites: "the DECLARATIVE-ONLY wall (a seeded suggested-weights/rebalance/ranked-alternative/allocation output REFUSED, quoted); the compile authors NOTHING; the strategy-of-one byte-identity (compile of a single-position manifest === the standalone render, byte-for-byte at both render + route); the advice wall green on every composed line; unevaluable exits refused at registration with the reason; garbage/hostile manifests refused with sentences, never crashed",
+    },
+    S72: {
+      name: "trials honesty",
+      wall: "trial_ledger.test.ts + stamp_inert2.test.ts",
+      outcome: "PASS",
+      bites: "every compile hash-chains per the pinned Moat RE5 schema (config·returnSeries·metric·contentSha) + re-verifies on a pristine clone; RECORDING-≠-COUNTING (`familyN === 1` in every Stamp output; the seeded K-feed REFUSED; a seeded counted:true FAILS verify; the readout states the inertness exactly; the D33 gate asserts BOTH trigger AND pen); the Stamp path imports NO strategy module",
+    },
+    S73: {
+      name: "exit immutability",
+      wall: "exit_registration.test.ts + trial_ledger.test.ts",
+      outcome: "PASS",
+      bites: "content-hashed at registration (the goalpost, fixed as 8b4e094b is); a seeded SILENT edit DETECTED (the hash diverges); the disclosed re-pin records old/new + reason (a reasonless re-pin refused); the fired/not-fired evaluation DETERMINISTIC ×2 over the captured facts; UNJUDGEABLE on absent data (never a fabricated fired/not-fired)",
+    },
+  },
+  adversarialProofs: [
+    {
+      id: "S71-suggested-allocation-refused",
+      scenario: "the gravest risk — the compiler AUTHORS a suggested-weights / rebalance / ranked-alternatives output (the pivot becomes an advisor, the moat dies)",
+      observed: "guardLine('suggested weights: 60% aave, 40% spark') → REFUSED ('the banned output shape \"suggested weight\"'); 'rebalance into the higher-yield leg' → REFUSED; 'you should allocate more to USDC' → REFUSED (advice-shaped 'you should'); 'here is the optimal weight split' → REFUSED; a real composed fact line ('≈ 2 independent bets … never an allocation') → PASSES the same wall",
+      conclusion: "the declarative-only wall bites — the compiler judges, never authors (X-ADVICE absolute; the Markowitz rejection stands)",
+    },
+    {
+      id: "S71-strategy-of-one-byte-identity",
+      scenario: "a strategy of one position drifts from the standalone Reality Check (backward compatibility broken)",
+      observed: "/check/manifest:<one position> === /check/<that pool key>, byte-for-byte (19308 bytes identical); renderComposed short-circuits to renderRealityCheck for a single position; S36 held",
+      conclusion: "a strategy of one IS today's Reality Check — perfect backward compatibility, proven at both the render and the route",
+    },
+    {
+      id: "S72-recording-not-counting",
+      scenario: "the filling ledger leaks K into the Stamp (the D33 gate bypassed by enthusiasm)",
+      observed: "every trial carries counted:false; the committed fixture lineage re-verifies ({ok:true,count:3}); a seeded counted:true FAILS verify; Correlate.activateKIntoStamp(2,{false,false}) THROWS; the Stamp path imports no strategy module; the readout: '3 trials recorded … the deflation remains INERT — counting awaits the pinned ≥ 20–50-trials-per-family trigger + the Operator's D33'",
+      conclusion: "recording ≠ counting — the inert wall holds with trials present; nearness to the line is why the wall exists",
+    },
+    {
+      id: "S72-chain-tamper-detected",
+      scenario: "a trial chain with a gap or a tamper is accepted",
+      observed: "a rewritten prevTrialHash → verify FAILS ('trial 1: prevTrialHash breaks the chain (a gap or a reorder)'); a tampered contentSha → verify FAILS ('contentSha does not recompute')",
+      conclusion: "the hash-chain re-verification is a real wall — a gap or a tamper cannot hide",
+    },
+    {
+      id: "S73-silent-exit-edit-detected",
+      scenario: "a registered exit criterion is silently loosened (0.995 → 0.95) to hide a breach",
+      observed: "ExitCriterion.isSilentEdit(hash, {0.95}) → true (the content hash diverges); the ONLY amendment is a disclosed re-pin recording old/new+reason; a reasonless re-pin → REFUSED ('a re-pin must state WHY the exit criterion moved')",
+      conclusion: "the exit is immutable-without-a-disclosed-re-pin — the discipline's FORCE is exported, not just its FORM",
+    },
+    {
+      id: "S71-D38-no-composite-pill",
+      scenario: "an aggregate SOLID/CAUTION composite pill sneaks in without the pen",
+      observed: "compile's compositeVerdict is structurally null (no code path emits one); renderComposed labels the D38 absence ('No composite strategy verdict is rendered … awaits the Operator's D38') and renders NO strategy-level verdict pill; the verdict-path 7 + frozen-core 2 + differential + bundle unchanged",
+      conclusion: "the composite verdict is D38 — parked for the pen; an agent installs no verdict rule (the D27/D29/D30/D35 precedent)",
+    },
+    {
+      id: "S71-journal-local-first",
+      scenario: "a journal field (priorIntent) leaks into a served payload",
+      observed: "the served /check/manifest composed view NEVER carries priorIntent ('chase a higher-APY farm' absent); the store is gitignored; the render emits no journal field",
+      conclusion: "the journal is local-first, consented-export-only (X-TELEMETRY unchanged)",
+    },
+  ],
+  findingsFixedOnTheGo: {
+    "W-MF01": "compile's guardLine banned-output check first FALSE-POSITIVED the honest disclaimer '…never an allocation' (the exact wording correlate.ts ships) — root cause: a bare-noun ('allocation') vs an authored-output shape. FIX (conscious, disclosed): the banned list is COMPOUND phrases only ('suggested allocation', 'recommended split', …); the imperative 'allocate' is caught by the existing VoiceGates advice wall — together they catch every AUTHORED allocation without biting a disclaimer. Every S71 seeded output still refused; the disclaimer passes.",
+  },
+  convergence: {
+    cleanRuns: 2,
+    bothRepos: true,
+    note: "two consecutive full-battery runs; the SET of failing test names is identical across runs and identical to the pre-sprint environmental set (X-DETERM Ask-differential + λ-SWEEP + pooled-noise + sidecar-attest = Python sidecar hangs; ASK-TRUE ×2 = live GROQ key in .env, PASS with keys emptied). The regression tripwire (grep the fails for strategy/manifest/compile/trial/composed/S71–S73/DV) is EMPTY — ZERO from-sprint failures.",
+    fromSprintFailures: 0,
+    environmentalFailures: "6 (Ask live-key + Python sidecar); exonerated by differential (ask_ui passes keys-emptied; the sidecar tests import no sprint code) — the prior session's identical exoneration",
+    differential: { lendingFpSetSha: "70c7912f", fundingReproHash: "0a63151b" },
+    evidenceBundleSha: "9c1e7bd8",
+    bundleByteIdentical: true,
+    killCriterionUntouched: "8b4e094b",
+    familyNInert: "familyN===1 in every Stamp output (re-proven with trials present)",
+    s36ByteIdentical: true,
+    note2: "no verdict moved — per-position verdicts ARE the existing verdicts; the composite is parked (D38); the composed lines render like the governance/catch lines, OFF the scorecard verdict path; the substrate gained its SECOND CALLER and the statistics changed by exactly nothing",
+  },
+  gate: {
+    package: "manifest-countersign-package.json — D23–D38, D27 FIRST, opening with the generosity statement; D37 (the manifest scope) + D38 (the composite verdict, parked) new (Operator-signed=false); IN2 (now ending with the first dogfooding act — a real manifest authored) / IN4 / AF4 / the publication decision OWED-OPERATOR-GATED.",
+    operatorSignedWhole: false,
+    ln5: "the agent presents the whole gate, NEVER signs it; D38's composite verdict is NOT agent-installed (a verdict-shaped rule needs the pen).",
+    verdict: "MANIFEST DELIVERED — READY-PENDING-OPERATOR (or an honest STOP with the remainder quoted).",
+  },
+  contentSha: "",
+}
+
+const { contentSha, ...rest } = OBJ
+const withSha = { ...rest, contentSha: sha256(JSON.stringify(rest)) }
+writeFileSync(path.join(PKG_ROOT, "data", "honesty", "manifest-redteam.json"), JSON.stringify(withSha, null, 2) + "\n")
+console.log("── MANIFEST — the red-team catalog written (S1–S73) ────────────")
+console.log(`  new walls   : S71 manifest integrity · S72 trials honesty · S73 exit immutability`)
+console.log(`  proofs      : ${OBJ.adversarialProofs.length} adversarial proofs quoted`)
+console.log(`  from-sprint failures: ${OBJ.convergence.fromSprintFailures}`)
+console.log(`  contentSha  : ${withSha.contentSha}`)
+console.log("written: data/honesty/manifest-redteam.json")

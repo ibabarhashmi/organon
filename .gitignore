@@ -32,3 +32,8 @@ sprint-log/
 
 # telemetry + feedback — local-first capture, opt-in, NEVER committed (X-TELEMETRY)
 data/telemetry/
+
+# strategy manifests + the trial ledger — local-first, no accounts (X-MANIFEST e). The runtime store is gitignored; a
+# committed FIXTURE lineage (data/strategies/fixtures/) backs the walls on a pristine clone.
+data/strategies/manifests/
+data/strategies/trials/

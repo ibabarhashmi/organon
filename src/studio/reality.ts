@@ -95,9 +95,11 @@ export namespace Reality {
     const tierTxt = cf.tier === "SAMPLE" || cf.tier === "INSUFFICIENT" ? cf.tier : `provenance ${cf.tier}`
     const att = cf.attestation ? `<div class="pro muted">attestation surface (<b>SAMPLE — context you must go verify, NOT a verification</b>): issuer ${esc(cf.attestation.issuer)} · auditor ${esc(cf.attestation.auditor)} · cadence ${esc(cf.attestation.cadence)} · last ${esc(cf.attestation.lastAttestation)}.</div>` : ""
     const cap = cf.capStatus ? `<div class="pro muted">structural cap: ${esc(cf.capStatus.installed ? "INSTALLED" : "NOT installed")} — ${esc(cf.capStatus.reason)} (${esc(cf.capStatus.wouldCapUnder)}).</div>` : ""
+    // DV3 (Manifest sprint) — the leverage catch is POSITION-SCOPED; the render SAYS so (the B3 backtest lesson made legible).
+    const posScope = cf.axis === "leverage-distance" ? `<div class="muted">this evaluates a position, not the protocol — the leverage is specific to this vault's structure and collateral, not a property of the protocol as a whole.</div>` : ""
     return `<div class="axis"><b>the catch — what the seven axes can't see: ${esc(CATCH_LABEL[cf.axis])} (${esc(cf.domain)}, info/context)</b>
 <div>${esc(cf.simple)}</div>
-<div class="pro muted">${esc(cf.pro)} · ${esc(tierTxt)}</div>${att}${cap}
+<div class="pro muted">${esc(cf.pro)} · ${esc(tierTxt)}</div>${att}${cap}${posScope}
 <div class="muted">this line is <b>info/context</b> — a FACT about the kind of thing this is; it does NOT move the verdict above (X-DOMAIN c; a promotion is the Operator's pen, D36).</div></div>`
   }
 
@@ -264,7 +266,9 @@ ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${t
   }
 
   // ── SCREEN 2 — THE REALITY CHECK ──
-  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = [], governance: Governance.RenderBundle | null = null, provTier?: string, domain?: Domain.DomainType, catchFact?: Domain.Catch): string {
+  // the BODY of a Reality Check — extracted (a PURE refactor) so a Strategy can STACK per-position bodies in one page
+  // (X-MANIFEST b). renderRealityCheck === page(title, realityBody(...)); its bytes are UNCHANGED (S36 holds).
+  function realityBody(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = [], governance: Governance.RenderBundle | null = null, provTier?: string, domain?: Domain.DomainType, catchFact?: Domain.Catch): string {
     const c = scored
     // THE TWO-TIER PROVENANCE LABEL (Coverage; X-COVERAGE c) — beside the stamp, a REAL subject names WHICH KIND of true:
     // REAL★ (block-pinned, chain-reproducible) vs REAL-at-timestamp (aggregator, "what the API said at T"). Rendered ONLY
@@ -321,7 +325,7 @@ ${govBlock}<div>${esc(cs.reason)}</div>
       ? `<div class="pro"><h2>The overfit Stamp — opt-in, a SEPARATE verdict</h2><div class="muted">The Reality Check above answers "is this yield real, what's the catch?" (SOLID/CAUTION/AVOID/UNVERIFIED). The Stamp answers a DIFFERENT question with the frozen anti-PBO adjudicator — "does this pool's recorded track record survive the overfit deflation?" (GO/NO-GO/INSUFFICIENT). The two verdicts are never conflated — a GO is not "safe", an INSUFFICIENT is not "bad".</div><a href="/stamp/${encodeURIComponent(poolKey)}">▶ Run the overfit Stamp (opt-in)</a></div>`
       : ""
     const askLink = poolKey ? ` · <a href="/ask?${qs({ q: `is ${name} safe?`, pool: poolKey })}">💬 ask about this</a>` : ""
-    return page(`Reality Check — ${name}`, `<a href="/">← the Shelf</a>${askLink}
+    return `<a href="/">← the Shelf</a>${askLink}
 <h1>${esc(name)} ${verdictPill(c.verdict)} ${realityBadge(c.facts.reality)}${domainLabel(domain)}</h1>
 <div class="card lead"><b>${esc(oneLiner)}</b></div>${tierLine}
 <button class="btn" onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
@@ -329,7 +333,69 @@ ${confidenceBand(c)}
 <h2>The honesty scorecard</h2>${axes}${contractScreen}${catchBlock(catchFact)}${divergenceRow(divergences)}
 <div class="pro"><h2>Quantitative</h2><pre class="muted">${esc(c.quant)}</pre></div>
 ${stampDrawer}
-${prov}${trust(c.facts.reality === "SAMPLE")}`)
+${prov}${trust(c.facts.reality === "SAMPLE")}`
+  }
+
+  // renderRealityCheck === page(title, body) — the standalone Reality Check, its bytes UNCHANGED by the realityBody extraction.
+  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = [], governance: Governance.RenderBundle | null = null, provTier?: string, domain?: Domain.DomainType, catchFact?: Domain.Catch): string {
+    return page(`Reality Check — ${name}`, realityBody(name, scored, history, poolKey, divergences, governance, provTier, domain, catchFact))
+  }
+
+  // ── THE COMPOSED REALITY CHECK (Manifest sprint; X-MANIFEST b, e) — a STRATEGY is a subject: each position's FULL
+  // existing check STACKED, then the portfolio FACTS block (info/context, in the pinned grammar). A strategy of ONE
+  // position renders BYTE-IDENTICAL to the standalone Reality Check (S71) — renderComposed short-circuits to
+  // renderRealityCheck. NO aggregate verdict pill — the D38 absence is LABELED (never a composite SOLID/CAUTION). ──
+  export interface ComposedPosition {
+    name: string
+    scored: Scorecard.Scored
+    history: ProvRecord.HistoryEntry[]
+    poolKey?: string
+    size?: number
+    units?: string
+    reachable?: boolean
+    divergences?: PlaneDivergence.Divergence[]
+    governance?: Governance.RenderBundle | null
+    provTier?: string
+    domain?: Domain.DomainType
+    catchFact?: Domain.Catch
+  }
+  export interface ComposedView {
+    positions: ComposedPosition[]
+    thesis: string
+    lines: { kind: string; text: string }[] // the portfolio facts (info/context), pre-formatted in the pinned grammar
+    compositeAbsence: string // the pinned D38-absence label (NO aggregate pill)
+    trialReadout?: string // the ledger readout (Phase 4) — "N trials recorded; the deflation remains inert …"
+    exitLine?: string // the exit-criterion registration + evaluation summary (rendered up top, the discipline made visible)
+  }
+
+  export function renderComposed(view: ComposedView): string {
+    // S71 — a strategy of ONE position IS today's Reality Check, byte-for-byte (perfect backward compatibility).
+    if (view.positions.length === 1) {
+      const p = view.positions[0]
+      return renderRealityCheck(p.name, p.scored, p.history, p.poolKey, p.divergences ?? [], p.governance ?? null, p.provTier, p.domain, p.catchFact)
+    }
+    const factsBlock = view.lines.length
+      ? `<div class="card"><h2>The portfolio facts — composed from what the engine already computes</h2>
+<div class="muted">Every line below is <b>info/context</b>, number-traced, in the same grammar as the governance/catch lines — a FACT about the strategy, never advice about what to do with it (the compiler judges, never authors — X-ADVICE).</div>
+${view.lines.map((l) => `<div class="axis"><div>${esc(l.text)}</div></div>`).join("\n")}
+${view.exitLine ? `<div class="axis"><b>Your exit criterion — the goalpost, set before the throw</b><div>${esc(view.exitLine)}</div></div>` : ""}
+${view.trialReadout ? `<div class="muted">${esc(view.trialReadout)}</div>` : ""}</div>`
+      : ""
+    const positionsBlock = view.positions
+      .map((p, i) => `<section class="position"><h2 class="pos-head">Position ${i + 1}${p.size != null ? ` — ${esc(String(p.size))}${p.units ? ` ${esc(p.units)}` : ""}` : ""}${p.reachable === false ? ` <span class="badge SAMPLE">unresolved</span>` : ""}</h2>
+${realityBody(p.name, p.scored, p.history, p.poolKey, p.divergences ?? [], p.governance ?? null, p.provTier, p.domain, p.catchFact)}</section>`)
+      .join("\n<hr class=\"pos-sep\">\n")
+    return page(
+      "Strategy — Composed Reality Check",
+      `<a href="/">← the Shelf</a>
+<h1>Composed Reality Check <span class="badge REAL">STRATEGY</span></h1>
+<div class="card lead"><b>Your thesis:</b> ${esc(view.thesis)}</div>
+<div class="card"><div class="muted">${esc(view.compositeAbsence)}</div></div>
+<button class="btn" onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
+${factsBlock}
+<h2>The positions — each its own full Reality Check</h2>
+${positionsBlock}`,
+    )
   }
 
   // ── THE STAMP PANEL (Crown-Jewel Phase 5; X-OPTIN) — a DISTINCT verdict surface, reached only by opting in (/stamp/:key).

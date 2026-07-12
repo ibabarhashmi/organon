@@ -12,6 +12,9 @@ import { Hono } from "hono"
 import { Reality } from "../src/studio/reality"
 import { ProvRecord } from "../src/dataplane/record"
 import { Feedback } from "../src/telemetry/feedback"
+import { Manifest } from "../src/strategy/manifest"
+import { StrategyStore } from "../src/strategy/store"
+import { StrategyResolve } from "../src/strategy/resolve"
 
 export const app = new Hono()
 
@@ -136,6 +139,17 @@ app.get("/", (c) => {
 // SCREEN 2 — the Reality Check (the x-ray of one strategy). An unknown key → an honest not-found (never a crash).
 app.get("/check/:key", async (c) => {
   const key = decodeURIComponent(c.req.param("key"))
+  // ── A STRATEGY IS A SUBJECT (Manifest sprint; X-MANIFEST e) — /check accepts a MANIFEST exactly as it accepts a pool
+  // key. `manifest:<id>` loads a stored (or committed-fixture) manifest → the Composed Reality Check (each position's FULL
+  // existing check stacked, then the portfolio facts). A strategy of ONE renders BYTE-IDENTICAL to the standalone check
+  // (S71). No fourth screen — a strategy is a subject reached by a PATH. ──
+  if (key.startsWith(Manifest.MANIFEST_KEY_PREFIX)) {
+    const id = key.slice(Manifest.MANIFEST_KEY_PREFIX.length)
+    const m = StrategyStore.load(id) ?? StrategyStore.load(id, StrategyStore.FIXTURE_DIR)
+    if (!m) return c.html(`<!doctype html><meta charset=utf8><body style="font-family:system-ui;background:#0e1116;color:#e6edf3;padding:24px"><a style="color:#58a6ff" href="/">← the Shelf</a><h1>Not found</h1><p>No strategy manifest with that id is stored (or committed as a fixture). Nothing is fabricated.</p></body>`, 404)
+    const { view } = await StrategyResolve.resolveAndCompile(m, Date.now())
+    return c.html(Reality.renderComposed(view))
+  }
   // the curated record first (the moat, REAL★-eligible captures); then — the COLD-START FIX (X-COVERAGE b) — a live
   // any-pool LOOKUP for a covered pool not in the record (REAL-at-timestamp, per-axis honest degrade). An unknown id → 404.
   let rc: { name: string; scored: import("../src/analytics/scorecard").Scorecard.Scored; history: import("../src/dataplane/record").ProvRecord.HistoryEntry[]; refusal?: string } | null = Reality.realityCheck(key, Date.now())

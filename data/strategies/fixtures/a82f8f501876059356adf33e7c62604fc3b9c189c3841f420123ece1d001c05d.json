@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "positions": [
+    {
+      "subjectKey": "defillama:pool:SAMPLE-aave-usdc",
+      "size": 10000,
+      "units": "USDC"
+    },
+    {
+      "subjectKey": "defillama:pool:SAMPLE-dai-lending",
+      "size": 5000,
+      "units": "DAI",
+      "assumptions": "held through the next rate decision"
+    }
+  ],
+  "thesis": "Blue-chip stablecoin lending across two venues holds its base yield through the next rate cut; I exit if either loses its $1 peg. I am testing whether these two 'safe, different' stables are actually one bet.",
+  "exitCriterion": {
+    "kind": "peg-floor",
+    "threshold": 0.995,
+    "subjectScope": "portfolio"
+  },
+  "journal": {
+    "priorIntent": "I was about to chase a higher-APY farm; I want to check whether the safe pair is actually diversified before I move."
+  }
+}

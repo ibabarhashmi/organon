@@ -1,0 +1,47 @@
+{
+  "protocol": "manifest-countersign-package",
+  "at": "2026-07-12",
+  "supersedes": "domain-countersign-package.json (carried forward, NOT rewritten — U-RESUPERSEDE); this is the current whole-gate package (D23-D38)",
+  "generosityStatement": "The Stamp is knowingly generous until D27 is signed.",
+  "rule": "THE WHOLE Operator gate, assembled into ONE document for ONE sitting at Phase 5: the countersigns D23-D38 (D27, the variance amendment, FIRST) opening with the generosity statement; D34/D35/D36 carried from domain-countersign (the domain scope · the RWA structural cap · the catch-axis promotions); D37 (the manifest scope) + D38 (the composite strategy verdict — SPECIFIED, conservative, PARKED) NEW; IN2 (the real-screen session, now ENDING with the FIRST DOGFOODING ACT — the Operator authors a REAL manifest of actual holdings, sets priorIntent, compiles, reads the composed facts, registers a REAL exit criterion, records decisionAfter/changedByCompile) + IN4 + AF4 + the publication decision. An agent must NOT sign as the Operator (operatorSigned stays false until the Operator's own hand — LN5). Discharged whole, or an honest STOP with exactly what remains quoted.",
+  "deviationOrder": ["D27", "D30", "D29", "D31", "D26", "D28", "D23", "D24", "D25", "D32", "D33", "D34", "D35", "D36", "D37", "D38"],
+  "carriedNote": "D23-D36 are carried VERBATIM from domain-countersign-package.json (which carried coverage's, which carried groundtruth's — the detail lives there; this package supersedes it for the whole-gate view + adds D37/D38). D27 STILL FIRST — now SIX sprints running.",
+  "newDeviations": {
+    "D37": {
+      "id": "D37",
+      "order": "the manifest scope (Manifest — NEW)",
+      "title": "Strategy as a declarative SUBJECT — the compiler JUDGES, NEVER AUTHORS (declarative-only, the banned-output list enforced); every compile a hash-chained TRIAL, RECORDED, NEVER COUNTED (familyN===1 STILL; the K-door refuses without BOTH the trigger AND D33); the exit criterion the user's content-hashed kill-criterion (immutable-without-a-disclosed-re-pin); the journal local-first, consented-export-only",
+      "restsOn": "manifest-pins.json xManifest (the five clauses pinned VERBATIM — the banned-output list, the recording-≠-counting clause, the exit discipline, the strategy-of-one byte-identity) + the walls green in BOTH repos: S71 (the seeded suggested-allocation REFUSED + quoted; the strategy-of-one byte-identical to the standalone check; the advice wall green on every composed line) · S72 (the trial chain re-verifies on a clone; familyN===1 everywhere; the K-feed refused; the readout exact) · S73 (the silent exit edit detected; the disclosed re-pin records old/new+reason). The differential + bundle byte-identical (no verdict moved — per-position verdicts ARE the existing verdicts).",
+      "signingConsequence": "SIGN → the manifest scope is ratified as the engine's standing capability (it can judge what the user is actually DOING, not just one pool). The composite verdict stays D38 (parked); the trials stay recorded-never-counted; the journal stays local-first. An authored allocation, a counted trial, a silently-edited exit, or a server-side account is a Halt (THE FIREWALL). A record + a primitive — it moves no verdict and adds no advice.",
+      "operatorSigned": false
+    },
+    "D38": {
+      "id": "D38",
+      "order": "the composite strategy verdict (Manifest — NEW; a VERDICT RULE)",
+      "title": "an aggregate SOLID/CAUTION over a strategy's positions — SPECIFIED, conservative (an aggregate may be only as good as its WORST deciding position — degrade-only), and PARKED for the pen; until signed, a strategy renders its positions' verdicts + the composed facts, and NO aggregate pill (the absence itself labeled in the render)",
+      "restsOn": "manifest-pins.json deviations.D38 + the render wall: renderComposed asserts NO strategy-level verdict pill; compile's compositeVerdict is structurally null (no code path emits one); the verdict-path 7 + frozen-core 2 hashes + the differential + bundle unchanged at every gate.",
+      "signingConsequence": "SIGN → a composite verdict is INSTALLED (conservative, degrade-only — the strategy is capped at its worst deciding position, never lifted above it; the per-subject verdicts are the inputs, the census pre-computed at activation). Until then a strategy shows its positions' verdicts + the composed facts and NO aggregate pill — because a composite verdict is a verdict-shaped RULE and AN AGENT MAY NOT INSTALL A VERDICT RULE (the D27/D29/D30/D35 precedent). Signing it is a FUTURE act with its own census.",
+      "operatorSigned": false
+    }
+  },
+  "gateItems": {
+    "IN2": "the Operator's real-screen session — now ENDING WITH THE FIRST DOGFOODING ACT: the Operator authors a REAL Strategy Manifest of their ACTUAL holdings, sets priorIntent (what they meant to do before compiling), compiles it, READS the composed facts (the effective-bets fact — are the 'different' positions actually one bet? · the catch aggregation · the worst-axis · the thesis-age gate), registers a REAL exit criterion (their own content-hashed kill-criterion), and records decisionAfter/changedByCompile — the strategy memo's question (does a Reality Check change a real decision?) answered with a JOURNAL ENTRY at the gate itself; + the carried IN2 items (each new domain's catch line on a real subject, the RWA warning, the backtest results incl. every MISS, the two-tier labels, the diversification fact, the governance line, the rug artifact, the D27 caveat). OWED-OPERATOR-GATED, never simulated (LN5)",
+    "IN4": "the browser/AT/viewport a11y pass — a real assistive-tech walk of the conscious 3 screens (incl. a manifest's Composed Reality Check + its portfolio facts drawer). OWED-OPERATOR-GATED",
+    "AF4": "the first LIVE paid-key parity diff — the capability split proven on a real paid key (byte-identical verdict path). OWED-OPERATOR-GATED",
+    "publication": "the publication decision for THIS layer — the trees are ALREADY pushed (terminal/v0.2 + studio/sandbox); what remains is the Operator's call on whether the manifest layer publishes."
+  },
+  "invitePackage": {
+    "leadsWith": "the PAID Network rug capture (carried) AND the collapse-backtest scoreline — and NOW the strategy instrument the dogfooding milestone was waiting for",
+    "order": [
+      "the PAID Network rug capture (LEAD — the axis rendered the damning EOA line on a real rug's real pre-collapse state)",
+      "DV5 — the collapse-backtest scoreline: we fired the complete unmodified engine at real historical collapses and PUBLISHED THE TWO IT WOULD HAVE MISSED (the Maple off-chain default — the argument for D35 — and the seeded control), beside the two it would have flagged (stETH 5.71% depeg · dYdX negative funding) and the one the free archive cannot reach",
+      "DV2 — D35 re-presented WITH B4's MISS as its evidence: 'the on-chain state looked solvent while the loan defaulted off-chain — the engine would NOT have flagged it' (the cheapest evidence-backed pen on the table)",
+      "the Strategy Manifest demo — author what you hold, learn your three 'different' stables are about one bet, register an exit you cannot quietly move, watch your trial count grow, and never once get told what to buy",
+      "the any-pool lookup demo (your pool, answered live, per-tier, domain-typed)",
+      "the Stream/Elixir/Resolv re-score post-mortems",
+      "the pre-registered kill-criterion (8b4e094b)"
+    ]
+  },
+  "operatorSignedWhole": false,
+  "signingConsequence": "with D23-D38 signed + IN2/IN4/AF4 discharged + the publication decision, the invites go out against a goalpost set before the cohort arrived — the tool now judges not just one pool but what the user is actually DOING with the pools, hands them the same content-hashed exit discipline it holds itself to, counts nothing before its trigger, prescribes nothing ever, and has measured at its own gate whether the answer changed a real human decision. Until then the sprint terminates MANIFEST DELIVERED — READY-PENDING-OPERATOR (or an honest STOP with the remainder quoted). The agent NEVER signs (LN5). The first line of the handoff is either the sentence twenty sprints have owed — the invites are out, and the first manifest is compiled with its journal entry recorded — or the honest name of exactly what still stands."
+}
