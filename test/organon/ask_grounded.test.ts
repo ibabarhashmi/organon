@@ -173,19 +173,21 @@ test("GROQ (free-tier) — the rate-limit queue RETRIES a 429 (honoring retry-af
   expect(AskProvider.groqAdapter("gsk_x", "m", t2).phrase("s", "u")).rejects.toThrow(/429/)
 })
 
-test("GROQ (X-BYOK) — fromEnv({GROQ_API_KEY}) → groq (priority), llama-3.1-8b-instant, output-capped; the key is Bearer-header-only, NEVER the body", async () => {
+test("GROQ (X-BYOK) — fromEnv({GROQ_API_KEY}) → groq (priority), the pinned default model, output-capped + gated (stream FALSE by design); the key is Bearer-header-only, NEVER the body", async () => {
   expect(AskProvider.fromEnv({ GROQ_API_KEY: "gsk_x" })!.id).toBe("groq")
   expect(AskProvider.fromEnv({ GROQ_API_KEY: "gsk_x", GOOGLE_AI_STUDIO_KEY: "g" })!.id).toBe("groq") // GROQ preferred when both set
   const KEY = "gsk_SECRET_CANARY_123"
   let cap: { url: string; init: { headers: Record<string, string>; body: string } } | null = null
   const transport: AskProvider.Transport = async (url, init) => { cap = { url, init }; return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: "aave-v3 USDC looks steady." } }] }) } }
-  await AskProvider.groqAdapter(KEY, "llama-3.1-8b-instant", transport).phrase("system", "user")
+  await AskProvider.groqAdapter(KEY, AskProvider.GROQ_MODEL, transport).phrase("system", "user")
   expect(cap!.url).toContain("api.groq.com")
   expect(cap!.init.headers.authorization).toBe(`Bearer ${KEY}`) // the key's ONLY allowed place — the transport header
   expect(cap!.init.body).not.toContain(KEY) // NEVER in the request body
   const body = JSON.parse(cap!.init.body)
-  expect(body.model).toBe("llama-3.1-8b-instant")
+  expect(body.model).toBe(AskProvider.GROQ_MODEL) // tracks the pinned default (currently meta-llama/llama-4-scout-17b-16e-instruct)
   expect(body.max_tokens).toBe(AskProvider.GROQ_MAX_TOKENS) // output CAPPED for the free tier (only required tokens)
+  expect(body.stream).toBe(false) // stream FALSE BY LAW — the paraphrase is verified WHOLESALE before display; client-streaming would leak ungrounded text
+  expect(body.temperature).toBeLessThanOrEqual(0.3) // low temperature — faithful phrasing of fixed facts
   expect(body.messages).toHaveLength(2) // structured: system + user only, no waste
   expect(JSON.stringify(AskProvider.status({ GROQ_API_KEY: KEY }))).not.toContain(KEY) // status never leaks the key
 })

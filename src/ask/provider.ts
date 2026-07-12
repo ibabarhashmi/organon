@@ -37,7 +37,7 @@ export namespace AskProvider {
   export interface RateLimitOpts { minIntervalMs?: number; maxRetries?: number; baseBackoffMs?: number; maxBackoffMs?: number }
   const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, Math.max(0, ms)))
   export function rateLimited(transport: Transport, opts: RateLimitOpts = {}): Transport {
-    const minInterval = opts.minIntervalMs ?? 2100 // ~28 req/min — under Groq free-tier 30 RPM (llama-3.1-8b-instant)
+    const minInterval = opts.minIntervalMs ?? 2100 // ~28 req/min — under Groq free-tier 30 RPM (llama-4-scout)
     const maxRetries = opts.maxRetries ?? 5
     const base = opts.baseBackoffMs ?? 800
     const maxBackoff = opts.maxBackoffMs ?? 30_000
@@ -104,20 +104,23 @@ export namespace AskProvider {
       },
     }
   }
-  // GROQ (llama-3.1-8b-instant) — OpenAI-compatible (the pinned "any OpenAI-compatible base URL" family, X-BYOK), with a
-  // dedicated env for ergonomics + free-tier tuning. OUTPUT tokens are CAPPED (the phrasing is short — our whole use case)
-  // and the temperature is low (terse, near-deterministic). The INPUT is only the query + the engine facts + the register
-  // (buildPrompt) — no waste. Paired with the rate-limit queue, it stays under the free-tier RPM/TPM.
-  export const GROQ_MODEL = "llama-3.1-8b-instant"
-  export const GROQ_MAX_TOKENS = 220 // our answers are 1–3 sentences; a tight output cap keeps us under the free-tier TPM
+  // GROQ (meta-llama/llama-4-scout-17b-16e-instruct) — OpenAI-compatible (the pinned "any OpenAI-compatible base URL"
+  // family, X-BYOK), with a dedicated env for ergonomics + free-tier tuning. OUTPUT tokens are CAPPED and the temperature
+  // is low (faithful phrasing of fixed facts). The INPUT is only the query + the engine facts + the register (buildPrompt)
+  // — no waste. Paired with the rate-limit queue, it stays under the free-tier RPM/TPM. The model is env-overridable (GROQ_MODEL).
+  export const GROQ_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
+  export const GROQ_MAX_TOKENS = 1000 // the output cap (bounds the daily token budget); scaled per-answer by truncation.scaleCap on the live path
   export function groqAdapter(key: string, model = GROQ_MODEL, transport: Transport = globalTransport): Provider {
     return {
       id: "groq", provider: "openai-compatible",
       async phrase(system, user, opts) {
-        // temperature 0: our use case is FAITHFUL phrasing of fixed facts — minimize deviation (fewer gate rejections,
-        // fewer wasted tokens); top_p 1. The groundedness gate + verdict guard remain the guarantee regardless. The
-        // output cap is SCALED to the fact-set size (opts.maxTokens; default GROQ_MAX_TOKENS) so a big COMPARE is not cut.
-        const r = await transport(`${GROQ_BASE}/chat/completions`, { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${key}` }, body: JSON.stringify({ model, max_tokens: opts?.maxTokens ?? GROQ_MAX_TOKENS, temperature: 0, top_p: 1, stream: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }) })
+        // temperature 0.3 / top_p 0.9: low-but-not-zero for faithful phrasing of fixed facts; the groundedness gate +
+        // verdict guard remain the guarantee regardless. The output cap is SCALED to the fact-set size (opts.maxTokens;
+        // default GROQ_MAX_TOKENS) so a big COMPARE is not cut. stream is FALSE BY DESIGN + BY LAW: the answer is verified
+        // WHOLESALE by verifyGroundedness BEFORE any of it reaches the user (a single ungrounded number rejects the whole
+        // paraphrase → the deterministic text renders). Streaming tokens to the client would show ungrounded text before the
+        // gate could reject it — a post-gate leak, the one thing the tool exists to make impossible (the streamText wall bites).
+        const r = await transport(`${GROQ_BASE}/chat/completions`, { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${key}` }, body: JSON.stringify({ model, max_tokens: opts?.maxTokens ?? GROQ_MAX_TOKENS, temperature: 0.3, top_p: 0.9, stream: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }) })
         if (!r.ok) throw new Error(`groq HTTP ${r.status}`)
         const b = (await r.json()) as { choices?: { message?: { content?: string } }[] }
         return b.choices?.[0]?.message?.content ?? ""
@@ -130,7 +133,7 @@ export namespace AskProvider {
   // transport. GROQ is checked FIRST — it is the free-tier-friendly default the Operator wired (Google AI Studio, the
   // pinned default, remains a fallback). All are BYOK; the key goes ONLY to the transport, never the prompt/log. ──
   export function fromEnv(env: Record<string, string | undefined> = process.env, transport: Transport = liveTransport): Provider | null {
-    if (env.GROQ_API_KEY) return groqAdapter(env.GROQ_API_KEY, env.GROQ_MODEL ?? GROQ_MODEL, transport) // free-tier default (llama-3.1-8b-instant)
+    if (env.GROQ_API_KEY) return groqAdapter(env.GROQ_API_KEY, env.GROQ_MODEL ?? GROQ_MODEL, transport) // free-tier default (llama-4-scout-17b)
     if (env.GOOGLE_AI_STUDIO_KEY) return geminiAdapter(env.GOOGLE_AI_STUDIO_KEY, "gemini-2.0-flash", transport) // the pinned free default
     if (env.GEMINI_API_KEY) return geminiAdapter(env.GEMINI_API_KEY, "gemini-2.0-flash", transport)
     if (env.OPENAI_API_KEY) return openaiAdapter(env.OPENAI_API_KEY, OPENAI_BASE, "gpt-4o-mini", transport)

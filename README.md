@@ -120,7 +120,7 @@ A clean `GO` now needs the track record to survive deflation **and** show a trac
 A grounded front door: ask about any recorded strategy in your own words and get a register-tailored answer whose **every number, verdict, and fact is engine-sourced**. The AI is the dumbest component — it maps the query to a **closed intent set** and *phrases* the deterministic engine's facts; it never computes a metric, decides a verdict, or fills an `UNVERIFIED` gap. The output runs a **groundedness gate** (every number/claim must match a returned fact) plus a verdict guard; any miss rejects the answer **wholesale** → the deterministic template stands.
 
 - **AI-optional.** No key → deterministic mode, honestly labeled ("AI phrasing off"). The console is fully usable keyless.
-- **BYOK.** Google AI Studio (Gemini) · OpenAI · Anthropic · any OpenAI-compatible base URL · Groq (`llama-3.1-8b-instant`), selected from env. A dedicated rate-limit queue + retry/backoff keeps a free tier from ever surfacing a 429.
+- **BYOK.** Google AI Studio (Gemini) · OpenAI · Anthropic · any OpenAI-compatible base URL · Groq (`meta-llama/llama-4-scout-17b-16e-instruct`), selected from env. A dedicated rate-limit queue + retry/backoff keeps a free tier from ever surfacing a 429.
 - **Key-safe.** Keys are server-side env-only (a gitignored `.env`; see `.env.example`), sent only in the transport header — never in the client bundle, a log, the prompt, or a served page.
 
 ```bash
