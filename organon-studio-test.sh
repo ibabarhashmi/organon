@@ -158,6 +158,7 @@ bun test --timeout 30000 test/walls/ \
   test/organon/precision_redteam.test.ts \
   test/organon/groundtruth_pins.test.ts \
   test/organon/findings_closed_groundtruth.test.ts \
+  test/organon/redesign_pins.test.ts \
   test/organon/impl_build.test.ts \
   test/organon/immutable_proof.test.ts \
   test/organon/archive_rug.test.ts \

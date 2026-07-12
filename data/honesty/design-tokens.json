@@ -1,32 +1,33 @@
 {
   "protocol": "organon-design-tokens",
-  "note": "THE PINNED ORGΛNON DESIGN SYSTEM (Surface sprint; X-SURFACE a). The single source of truth for the surface: the stylesheet (public/organon.css) is BUILT from this file deterministically (script/build-stylesheet.ts); a changed token ⇒ a changed file ⇒ a changed surface-pins sha ⇒ a conscious re-pin, never a silent restyle. Colors are authored in OKLCH design-intent and expressed as sRGB hex for universal support AND deterministic WCAG-AA verification (surface_a11y). The SEMANTIC tokens each carry a non-color cue (glyph/border/weight — never color alone; a11y + honesty). The FACTS are the loudest thing on the screen; everything else recedes. Serious, precise, quiet — an instrument of reason, not a casino.",
+  "note": "THE PINNED ORGΛNON DESIGN SYSTEM (Redesign sprint; X-REDESIGN a — supersedes the Surface identity b0179998, the palette re-pinned via a conscious supersession, NOT a silent restyle). The single source of truth for the surface: the stylesheet (public/organon.css) is BUILT from this file deterministically (script/build-stylesheet.ts); a changed token ⇒ a changed file ⇒ a changed pins sha ⇒ a conscious re-pin. Colors are authored in OKLCH design-intent and expressed as sRGB hex for universal support AND deterministic WCAG-AA verification (surface_a11y). The identity is COOL GRAPHITE + SIGNAL CYAN: a truer neutral near-black ground (not GitHub's blue-tinted one) with one restrained signal-cyan brand accent — a precision instrument, not a repo. The SEMANTIC tokens (verdict/Stamp/REAL-SAMPLE/trust-tier) are UNCHANGED in value (honesty-load-bearing) and each carry a non-color cue (glyph/border/weight — never color alone). The FACTS are the loudest thing on the screen; everything else recedes. Serious, precise, quiet — an instrument of reason, not a casino.",
   "meta": {
     "name": "ORGΛNON",
-    "version": "surface-1",
+    "version": "redesign-1",
     "mode": "dark",
+    "identity": "cool graphite + signal cyan — a truer neutral near-black ground (chroma ~0, not GitHub's blue-tinted #0d1117) + one restrained signal-cyan accent; reads as a precision instrument. The semantic green/amber/red/slate are byte-unchanged (honesty-load-bearing); only the ground + brand accent moved.",
     "register": "product — a professional analytical tool (design SERVES the facts; it is never the product)",
     "antiReferences": ["no purple→blue gradients", "no neon 'number-go-up' crypto tropes", "no Inter-for-everything", "no cards-nested-in-cards", "no side-tab accent borders", "no bounce/elastic motion", "no dark glows"],
     "colorSpaceNote": "authored in OKLCH, expressed as sRGB hex — hex is universal AND lets surface_a11y compute WCAG contrast deterministically from the token file"
   },
   "color": {
-    "bg": "#0d1117",
-    "surface": "#161b22",
-    "surface2": "#1b2029",
-    "border": "#2a313c",
-    "borderStrong": "#3b434f",
-    "ink": "#e6edf3",
-    "inkMuted": "#9aa5b1",
-    "inkFaint": "#7e8894",
-    "accent": "#6cb6ff",
-    "accentInk": "#0d1117"
+    "bg": "#0b0d10",
+    "surface": "#14171c",
+    "surface2": "#191d23",
+    "border": "#262b33",
+    "borderStrong": "#38404b",
+    "ink": "#e8ecf1",
+    "inkMuted": "#9aa6b3",
+    "inkFaint": "#828d9a",
+    "accent": "#38d6c8",
+    "accentInk": "#07100f"
   },
   "semantic": {
     "note": "each entry: {color (text/mark on the dark ground), tint (a subtle same-hue fill), cue (the NON-COLOR distinction — a glyph, border-style, or weight — so the meaning survives greyscale + colorblindness)}. The pill/badge text is the WORD itself (a text cue); the glyph + border-style reinforce it. Cues render via CSS keyed on the existing semantic class — the HTML content is byte-untouched (S36).",
     "trustTier": {
-      "FACT": { "color": "#e6edf3", "tint": "#1b2029", "border": "solid", "cue": "the high-trust tier — heaviest weight, a solid full border, a '✓' eyebrow; the engine-fact treatment" },
+      "FACT": { "color": "#e8ecf1", "tint": "#191d23", "border": "solid", "cue": "the high-trust tier — heaviest weight, a solid full border, a '✓' eyebrow; the engine-fact treatment" },
       "REASONING": { "color": "#d8b45a", "tint": "#221c10", "border": "solid", "cue": "the visible 'ANALYSIS — not an engine fact' eyebrow label rendered adjacent (a screenshot carries it — V4); visibly secondary weight" },
-      "BOUNDARY": { "color": "#9aa5b1", "tint": "#161b22", "border": "dashed", "cue": "the honest edge — a DASHED full border (a non-color pattern cue) + muted weight" }
+      "BOUNDARY": { "color": "#9aa5b1", "tint": "#14171c", "border": "dashed", "cue": "the honest edge — a DASHED full border (a non-color pattern cue) + muted weight" }
     },
     "reality": {
       "REAL": { "color": "#3fb950", "tint": "#10251a", "border": "solid", "cue": "a '●' filled mark + a SOLID border + the word REAL" },

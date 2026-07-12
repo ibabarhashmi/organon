@@ -168,7 +168,7 @@ export namespace Reality {
   export function renderShelf(cards: Card[], sampleFallback: boolean, filter?: { verdict?: string }): string {
     const shown = filter?.verdict ? cards.filter((c) => c.verdict === filter.verdict) : cards
     const note = sampleFallback ? `<div class="card"><b>SAMPLE mode</b> — no live data recorded yet (offline, or run <code>bun run script/capture-defillama.ts</code>). Every card below is SAMPLE → UNVERIFIED, labeled honestly.</div>` : ""
-    const rows = shown.map((c) => `<div class="card"><h3><a href="/check/${encodeURIComponent(c.poolKey)}">${esc(c.name)}</a> ${verdictPill(c.verdict)} ${realityBadge(c.reality)}</h3>
+    const rows = shown.map((c) => `<div class="card srow v-${c.verdict}"><h3><a href="/check/${encodeURIComponent(c.poolKey)}">${esc(c.name)}</a> ${verdictPill(c.verdict)} ${realityBadge(c.reality)}</h3>
 ${c.kind === "delta-neutral"
       ? `<div class="muted">delta-neutral · funding carry <span class="num">${fundingBandText(c.scored)}</span></div><div class="band"><span class="rng"></span></div><div class="muted">a carry BAND, never a single hero APY.</div>`
       : `<div class="muted">risk: ${c.risk} · headline APY <span class="num">${pct(c.apyTotal)}</span></div>${splitBar(c.apyBase, c.apyReward)}`}</div>`).join("")
@@ -249,7 +249,7 @@ ${govBlock}<div>${esc(cs.reason)}</div>
 <div class="pro muted">${esc(cs.scope)}${proDetail}${cs.contentSha ? ` · contentHash ${esc(cs.contentSha.slice(0, 12))}…` : ""}</div></div>`
       : ""
     const prov = history.length
-      ? `<div class="muted"><b>Provenance — what was real, and when we captured it</b> (${history.length} capture${history.length > 1 ? "s" : ""}, the moat made visible; a competitor can copy the lens but not this timestamped record):<ul>${history.map((h) => `<li>${new Date(h.asOf).toISOString().slice(0, 16).replace("T", " ")}Z · contentHash ${esc(h.contentHash.slice(0, 12))}… (chain pos ${h.chainPos})</li>`).join("")}</ul></div>`
+      ? `<div class="muted prov"><b>Provenance — what was real, and when we captured it</b> (${history.length} capture${history.length > 1 ? "s" : ""}, the moat made visible; a competitor can copy the lens but not this timestamped record):<ul>${history.map((h) => `<li>${new Date(h.asOf).toISOString().slice(0, 16).replace("T", " ")}Z · contentHash ${esc(h.contentHash.slice(0, 12))}… (chain pos ${h.chainPos})</li>`).join("")}</ul></div>`
       : `<div class="muted">provenance: this value is SAMPLE — not in the record (re-capture keyless for a REAL, recorded reading).</div>`
     // THE STAMP DRAWER (opt-in, Pro-only — X-OPTIN). A LINK, never inline: the Stamp is NOT run on this page (it is off
     // the mass path); the user opts in by navigating to /stamp/:key. The two-verdict distinction is stated up front.
@@ -259,7 +259,7 @@ ${govBlock}<div>${esc(cs.reason)}</div>
     const askLink = poolKey ? ` · <a href="/ask?${qs({ q: `is ${name} safe?`, pool: poolKey })}">💬 ask about this</a>` : ""
     return page(`Reality Check — ${name}`, `<a href="/">← the Shelf</a>${askLink}
 <h1>${esc(name)} ${verdictPill(c.verdict)} ${realityBadge(c.facts.reality)}</h1>
-<div class="card"><b>${esc(oneLiner)}</b></div>
+<div class="card lead"><b>${esc(oneLiner)}</b></div>
 <button class="btn" onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
 ${confidenceBand(c)}
 <h2>The honesty scorecard</h2>${axes}${contractScreen}${divergenceRow(divergences)}
@@ -414,8 +414,12 @@ ${answer}
   function trust(sample: boolean): string {
     return `<div class="trust">as of the last capture · source: DeFiLlama (keyless, REAL) ${sample ? "— currently SAMPLE (unverified)" : ""} · this is not financial advice · the verdict is machine-derived from the fact rows, never hand-written.</div>`
   }
+  // the persistent identity mark — the ORGΛNON Λ apex on a signal peak, apex-accented cyan. A TEXT-FREE svg (path + node
+  // only): contentSig strips tags, so this adds ZERO visible text (S36 byte-identical); the accessible name rides the
+  // link's aria-label, which the signature also strips. The one persistent brand anchor across every screen.
+  const WORDMARK = `<svg class="mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20 L12 4 L20 20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="4.6" r="1.9" fill="var(--accent)"/></svg>`
   function page(title: string, body: string): string {
-    return `<!doctype html><html lang="en"><head><meta charset="utf8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>${stylesheet()}</style></head><body><div class="wrap">${body}</div></body></html>`
+    return `<!doctype html><html lang="en"><head><meta charset="utf8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>${stylesheet()}</style></head><body><header class="topbar"><div class="bar-inner"><a class="brand" href="/" aria-label="ORGΛNON — home">${WORDMARK}</a></div></header><main class="wrap">${body}</main></body></html>`
   }
 
   // resolve one pool's Reality Check from the record (clone-robust). Returns null if the key is unknown (honest 404).

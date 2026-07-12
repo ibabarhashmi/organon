@@ -1,8 +1,16 @@
 # ORGΛNON — Design System
 
-> Authored with the `impeccable` skill as a **dev-time-only seam** (Surface sprint). The machine-readable source of
-> truth is `data/honesty/design-tokens.json` (hash-locked into the pins); this file is the human/agent-readable spec.
-> The single stylesheet `public/organon.css` is BUILT from the tokens deterministically — never hand-edited.
+> Authored with the `impeccable` skill as a **dev-time-only seam** (Surface sprint; identity re-pinned in the Redesign
+> sprint). The machine-readable source of truth is `data/honesty/design-tokens.json` (hash-locked into the pins); this
+> file is the human/agent-readable spec. The single stylesheet `public/organon.css` is BUILT from the tokens
+> deterministically — never hand-edited.
+>
+> **Identity — cool graphite + signal cyan (Redesign, X-REDESIGN).** The Surface-era ground was GitHub-dark (`#0d1117`,
+> blue accent) — trustworthy but anonymous. The palette was re-pinned to a truer neutral near-black (cool graphite,
+> chroma ~0) with a single restrained **signal-cyan** brand accent — a precision instrument, not a repo. This was a
+> **conscious re-pin via supersession** (`U-RESUPERSEDE`): the live token hash-lock moved to `redesign-pins.json`, the
+> Surface record stays as history, and the **semantic green/amber/red/slate are byte-unchanged** (honesty-load-bearing).
+> The content stayed byte-identical (S36), every pairing re-cleared WCAG-AA, the detector stayed clean.
 
 ## Product register
 
@@ -17,7 +25,8 @@ cards-nested-in-cards · side-tab accent borders · bounce/elastic motion · dar
 
 ## Atmosphere & color character
 
-A restrained near-monochrome **dark** ground (an instrument panel, read in a dim room) with a small number of
+A restrained near-monochrome **cool-graphite** ground (an instrument panel, read in a dim room; chroma ~0, not a
+blue-tinted dark) with one calm **signal-cyan** brand accent for links/focus/primary actions, and a small number of
 **purposeful semantic accents** — the only colors on the screen carry meaning. There is no decorative color. Green
 reads verified/durable, amber reads caution/analysis, red reads avoid, slate reads unverified. Every semantic color is
 paired with a **non-color cue** (a glyph, a border-style, or a weight) so the meaning survives greyscale and
@@ -27,13 +36,13 @@ colorblindness — because in an honesty-first tool, color-alone is both an acce
 
 | Token | Hex | Use |
 |---|---|---|
-| bg | `#0d1117` | page ground |
-| surface | `#161b22` | cards, panels |
-| surface2 | `#1b2029` | raised / FACT tier |
-| border | `#2a313c` | hairlines |
-| ink | `#e6edf3` | primary text |
-| inkMuted | `#9aa5b1` | secondary text (AA on bg) |
-| accent | `#6cb6ff` | links, focus — the one calm brand accent |
+| bg | `#0b0d10` | page ground — cool graphite (chroma ~0) |
+| surface | `#14171c` | cards, panels |
+| surface2 | `#191d23` | raised / FACT tier |
+| border | `#262b33` | hairlines |
+| ink | `#e8ecf1` | primary text |
+| inkMuted | `#9aa6b3` | secondary text (AA on bg) |
+| accent | `#38d6c8` | links, focus — the one signal-cyan brand accent |
 
 **Semantic (color + non-color cue):**
 - **Verdict** — SOLID `#3fb950` ●, CAUTION `#d29922` ◐, AVOID `#f85149` ▲, UNVERIFIED `#9aa5b1` ○.

@@ -27,11 +27,15 @@ function lum(hex: string): number {
 }
 function contrast(a: string, b: string): number { const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x); return (hi + 0.05) / (lo + 0.05) }
 
-test("DESIGN PASS — the SEMANTIC TOKENS stayed BYTE-FROZEN: the live design-tokens.json still hashes to the frozen Surface pin (the pass changed NO token value)", () => {
-  // the honesty-load-bearing primitives (the AA-cleared palette, the type scale, the non-color cues) are hash-locked into
-  // the Surface pin b0179998 — the pass operates ABOVE them, so the live file must still match the frozen record.
-  expect(sha256(read("data/honesty/design-tokens.json"))).toBe(surfacePins.tokens.sha)
+test("DESIGN PASS — the Sovereign pass changed NO token value (its recorded baseline stands as history); the palette was LATER re-pinned by the Redesign supersession — a conscious re-pin recorded in redesign-pins, never a silent restyle", () => {
+  // the Sovereign design pass itself changed NO token (its recorded flag stands as history — it operated ABOVE the primitives).
   expect(crit.tokensChanged).toBe(false)
+  // the Redesign re-pin (a LATER sprint) records EXACTLY the Sovereign-era baseline (surfacePins.tokens.sha) as superseded,
+  // and the LIVE design-tokens.json now hashes to the Redesign pin — the palette identity moved consciously (U-RESUPERSEDE),
+  // the supersession chain explicit. (The Surface record is not re-hashed against the moved live file — it is superseded history.)
+  const redesignPins = JSON.parse(read("data/honesty/redesign-pins.json"))
+  expect(redesignPins.tokensRepin.supersedes.tokens).toBe(surfacePins.tokens.sha)
+  expect(sha256(read("data/honesty/design-tokens.json"))).toBe(redesignPins.tokensRepin.tokens.sha)
 })
 
 test("DESIGN PASS — the critique RAN for real: Assessment A (design-review) + Assessment B (detector), isolated, with the browser/live flow honestly NOT run", () => {
