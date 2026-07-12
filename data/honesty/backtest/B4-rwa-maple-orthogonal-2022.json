@@ -1,0 +1,20 @@
+{
+  "id": "B4-rwa-maple-orthogonal-2022",
+  "domain": "RWA",
+  "name": "Maple / Orthogonal Trading credit default (Dec-2022)",
+  "height": 16180000,
+  "outcome": "MISS",
+  "catchFired": false,
+  "reads": {
+    "onchainReachable": false,
+    "onchainState": "unreachable",
+    "offchainCollapse": "Orthogonal Trading defaulted on ~$36M of Maple loans — a borrower default settled OFF-CHAIN, invisible to every on-chain read"
+  },
+  "endpoints": [],
+  "crossChecked": false,
+  "attempts": [],
+  "catchLine": "This yield's collateral settles off-chain. Nothing on-chain can verify it. We cannot see the thing that matters — treat every clean axis below with that in mind. info/context — a fact about what CANNOT be known, never advice.",
+  "claim": "MISS — the on-chain axes see NOTHING adverse (the pool looked solvent while the loan defaulted off-chain). The engine would NOT have flagged this on-chain — which is EXACTLY why the RWA structural cap (D35) exists: for RWA, a clean on-chain scorecard is not evidence of safety. This MISS is the argument for the pen.",
+  "rootCause": "RWA collapses settle off-chain; no on-chain capture can see them. The only honest protection is the structural cap (an RWA may never render SOLID) — BUILT + parked for D35. The warning renders today; the cap awaits the Operator.",
+  "contentSha": "1f6d8173749e3573d6ff41fb0d413fb28c13cbfa76727ebbf5666815ee1fbed6"
+}

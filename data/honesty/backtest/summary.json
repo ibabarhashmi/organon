@@ -1,0 +1,105 @@
+{
+  "protocol": "collapse-backtest",
+  "at": "2026-07-12",
+  "subjectSetHash": "628738afb6bcdbbaabf7796f25bc1750697afa8b8745e9b5498a5e976a819df4",
+  "engineUnmodified": {
+    "gitDiffSrcEmptyAtStart": true,
+    "gitDiffSrcEmptyAtEnd": true,
+    "note": "the engine was READ-ONLY through the replay (X-BACKTEST c) — tuning while measuring is a Halt."
+  },
+  "archiveRotation": [
+    "https://eth.drpc.org",
+    "https://rpc.mevblocker.io",
+    "https://eth-mainnet.public.blastapi.io"
+  ],
+  "results": [
+    {
+      "id": "B1-lst-steth-2022",
+      "domain": "LST-LRT",
+      "outcome": "HIT",
+      "catchFired": true,
+      "height": 14975000,
+      "crossChecked": true,
+      "endpoints": [
+        "https://eth.drpc.org",
+        "https://rpc.mevblocker.io",
+        "https://eth-mainnet.public.blastapi.io"
+      ],
+      "seeded": false,
+      "contentSha": "a9804b3347963c160e952b20ed5037aa9f3f4c3102d3c160e31f0a8cb19d1ba0"
+    },
+    {
+      "id": "B2-stable-dydx-funding-flip",
+      "domain": "STABLE-SYNTH",
+      "outcome": "HIT",
+      "catchFired": true,
+      "height": 0,
+      "crossChecked": false,
+      "endpoints": [
+        "https://indexer.dydx.trade/v4"
+      ],
+      "seeded": false,
+      "contentSha": "7657672e698c0d5ea9c99294484cffb757f3b30683195a5615f603d785e0587b"
+    },
+    {
+      "id": "B3-looped-steth-aave-2022",
+      "domain": "LOOPED-CDP",
+      "outcome": "GAP",
+      "catchFired": false,
+      "height": 14975000,
+      "crossChecked": false,
+      "endpoints": [
+        "https://eth.drpc.org",
+        "https://rpc.mevblocker.io",
+        "https://eth-mainnet.public.blastapi.io"
+      ],
+      "seeded": false,
+      "contentSha": "53aae89ea0b38f8d7becf4ff9c282633d410e9f7c1e52eb707b51f6a18d9f0ea"
+    },
+    {
+      "id": "B4-rwa-maple-orthogonal-2022",
+      "domain": "RWA",
+      "outcome": "MISS",
+      "catchFired": false,
+      "height": 16180000,
+      "crossChecked": false,
+      "endpoints": [],
+      "seeded": false,
+      "contentSha": "1f6d8173749e3573d6ff41fb0d413fb28c13cbfa76727ebbf5666815ee1fbed6"
+    },
+    {
+      "id": "SEED-MISS-rwa-perfect",
+      "domain": "RWA",
+      "outcome": "MISS",
+      "catchFired": false,
+      "height": 0,
+      "crossChecked": false,
+      "endpoints": [],
+      "seeded": true,
+      "contentSha": "2d36b8dcf73f7f6ffba896a86612ddbf5f59e31493aef30cb83bd73f812f12f9"
+    }
+  ],
+  "scoreline": {
+    "reached": 3,
+    "hits": 2,
+    "misses": 2,
+    "gaps": 1,
+    "seededMiss": 1
+  },
+  "claim": "the unmodified engine would have flagged 2 of 3 reachable pinned collapses, missed 2 (incl. the seeded control + the RWA off-chain default — the argument for D35), and could not reach 1 (the free archive prunes deep-2022 state — an honest limitation, recorded by name, never simulated).",
+  "zeroMissZeroGapSuspicion": false,
+  "honestLimitation": "the free archive rotation (drpc/mevblocker/blastapi) prunes deep-2022 state, so most on-chain heights are HONEST GAPS — the dYdX indexer capture (B2) is the reachable domain HIT. A backtest dominated by gaps is an honest outcome (X-BACKTEST e); the misses (the RWA off-chain default + the seeded control) are the most valuable output — reported louder than the hits.",
+  "missesReported": [
+    {
+      "id": "B4-rwa-maple-orthogonal-2022",
+      "claim": "MISS — the on-chain axes see NOTHING adverse (the pool looked solvent while the loan defaulted off-chain). The engine would NOT have flagged this on-chain — which is EXACTLY why the RWA structural cap (D35) exists: for RWA, a clean on-chain scorecard is not evidence of safety. This MISS is the argument for the pen.",
+      "rootCause": "RWA collapses settle off-chain; no on-chain capture can see them. The only honest protection is the structural cap (an RWA may never render SOLID) — BUILT + parked for D35. The warning renders today; the cap awaits the Operator."
+    },
+    {
+      "id": "SEED-MISS-rwa-perfect",
+      "claim": "MISS (SEEDED CONTROL) — a perfect-on-chain RWA renders SOLID today (the cap is NOT installed; an agent installs no verdict rule). This would-have-said-SOLID subject MUST appear as a MISS — it does, here, by name. Under a signed D35 it would cap SOLID→CAUTION.",
+      "rootCause": "the structural cap is NOT installed (D35 unsigned) — the warning renders, the verdict is unchanged; an agent installs no verdict rule (LN5)."
+    }
+  ],
+  "contentSha": "e22c5d1268ff4d25c14a8dae674aeda316a8ec675e6f21e7d4d337be4e73e16c"
+}

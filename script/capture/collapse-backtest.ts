@@ -61,22 +61,25 @@ type Outcome = "HIT" | "MISS" | "GAP"
 interface Result { id: string; domain: string; name: string; height: number; outcome: Outcome; catchFired: boolean; reads: Record<string, unknown>; endpoints: string[]; crossChecked: boolean; attempts: unknown[]; catchLine?: string; rootCause?: string; claim: string; seeded?: boolean; contentSha?: string }
 
 const hx = (n: number) => "0x" + n.toString(16)
+// ABI-encode a call: selector + each arg left-padded to 32 bytes (64 hex). int128/uint256 non-negative args only (our reads).
+const enc = (selector: string, ...words: (bigint | number)[]) => selector + words.map((w) => BigInt(w).toString(16).padStart(64, "0")).join("")
 
-// ── B1 — stETH June-2022 redemption-gap depeg (LST-LRT). Read the wstETH→stETH redemption rate + a Curve secondary; the
-// redemption-gap axis fires (HIT) if the market trades at a discount to redemption. Unreachable height → GAP. ──
+// ── B1 — stETH June-2022 redemption-gap depeg (LST-LRT). The market read is the REAL block-pinned Curve secondary
+// (get_dy, stETH→ETH); the redemption is stETH's PAR (1.0 — a rebasing invariant: 1 stETH is backed 1:1 by staked ETH),
+// and in June-2022 par was INACCESSIBLE (no Lido withdrawals until Shanghai, Apr-2023) — which is exactly why the gap could
+// open. The axis fires (HIT) if the market trades at a discount to par beyond 0.5%. Unreachable height → GAP. ──
 async function b1(sub: any): Promise<Result> {
   const blockHex = hx(sub.height)
-  const WSTETH = "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0"
   const CURVE = sub.secondaryAddr // Curve stETH/ETH pool
-  const redRaw = await crossCall(WSTETH, "0x035faf82", blockHex) // stEthPerToken() — wstETH→stETH (≈ ETH) redemption rate
-  const secRaw = await crossCall(CURVE, "0x5e0d443f0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000de0b6b3a7640000", blockHex) // get_dy(1,0,1e18): stETH→ETH
-  if (!redRaw || !secRaw) {
-    return { id: sub.id, domain: sub.domain, name: sub.name, height: sub.height, outcome: "GAP", catchFired: false, reads: {}, endpoints: [], crossChecked: false, attempts: [...(redRaw?.attempts ?? []), ...(secRaw?.attempts ?? [])], claim: `GAP — no free archive endpoint served block ${sub.height} for stETH redemption/secondary (the free rotation prunes 2022 state; recorded by name, never simulated).` }
+  const secRaw = await crossCall(CURVE, enc("0x5e0d443f", 1n, 0n, 1000000000000000000n), blockHex) // get_dy(1,0,1e18): stETH→ETH market
+  if (!secRaw) {
+    return { id: sub.id, domain: sub.domain, name: sub.name, height: sub.height, outcome: "GAP", catchFired: false, reads: {}, endpoints: [], crossChecked: false, attempts: secRaw?.attempts ?? [{ endpoint: "archive", served: false }], claim: `GAP — no free archive endpoint served block ${sub.height} for the stETH secondary read (the free rotation prunes 2022 state; recorded by name, never simulated).` }
   }
-  const redemption = toNum(redRaw.value, 18), secondary = toNum(secRaw.value, 18)
-  const c = RedemptionGap.redemptionGapCatch({ symbol: "stETH", denom: "ETH", redemption, secondary, queueReadable: false, queueNote: "withdrawals were LOCKED (no Lido withdrawals until Shanghai, Apr-2023)", redemptionTier: "REAL★" })
+  const secondary = toNum(secRaw.value, 18) // ~0.943 ETH per stETH at the depeg trough
+  const redemption = 1.0 // stETH PAR: 1 stETH backed 1:1 by staked ETH (the rebasing invariant); par was INACCESSIBLE (withdrawals locked until Shanghai)
+  const c = RedemptionGap.redemptionGapCatch({ symbol: "stETH", denom: "ETH", redemption, secondary, queueReadable: false, queueNote: "withdrawals were LOCKED — no Lido withdrawals until Shanghai (Apr-2023); par was inaccessible", redemptionTier: "REAL★" })
   const fired = c.tier !== "INSUFFICIENT" && typeof c.numbers.gapPct === "number" && (c.numbers.gapPct as number) > 0.5 // a discount beyond 0.5% = the depeg surfaced
-  return { id: sub.id, domain: sub.domain, name: sub.name, height: sub.height, outcome: fired ? "HIT" : "MISS", catchFired: fired, reads: { redemption, secondary, gapPct: c.numbers.gapPct }, endpoints: [...new Set([...redRaw.endpoints, ...secRaw.endpoints])], crossChecked: redRaw.endpoints.length >= 2 && secRaw.endpoints.length >= 2, attempts: [...redRaw.attempts], catchLine: c.pro, claim: fired ? `HIT — the redemption-gap axis rendered a ${c.numbers.gapPct}% discount on stETH's REAL pre-collapse state at block ${sub.height}: redemption ${redemption} vs market ${secondary} (the depeg lived in the gap).` : `MISS — the reads succeeded but the gap was ${c.numbers.gapPct}% (below the 0.5% depeg threshold); the axis stayed quiet at this height.`, rootCause: fired ? undefined : `at block ${sub.height} the stETH discount had not yet opened past 0.5% — a MISS at THIS height (the axis fires on the gap, and the gap was thin here).` }
+  return { id: sub.id, domain: sub.domain, name: sub.name, height: sub.height, outcome: fired ? "HIT" : "MISS", catchFired: fired, reads: { redemption, redemptionBasis: "stETH par (1:1 ETH backing; withdrawals LOCKED in June-2022)", secondary, secondaryBasis: "Curve get_dy(stETH→ETH), block-pinned REAL★", gapPct: c.numbers.gapPct }, endpoints: secRaw.endpoints, crossChecked: secRaw.endpoints.length >= 2, attempts: secRaw.attempts, catchLine: c.pro, claim: fired ? `HIT — the redemption-gap axis rendered a ${c.numbers.gapPct}% discount on stETH's REAL pre-collapse state at block ${sub.height}: par 1.0 ETH (inaccessible — withdrawals locked) vs Curve market ${secondary.toFixed(4)} ETH. The depeg lived in the gap; exit at par needed a queue that did not yet exist.` : `MISS — the market read ${secondary.toFixed(4)} was within 0.5% of par; the axis stayed quiet at this height.`, rootCause: fired ? undefined : `at block ${sub.height} the stETH discount had not yet opened past 0.5% — a MISS at THIS height.` }
 }
 
 // ── B2 — perp-funding-carry flip (STABLE-SYNTH). Fetch the dYdX v4 indexer's REAL historical funding; the yield-source

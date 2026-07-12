@@ -1,0 +1,36 @@
+{
+  "id": "B3-looped-steth-aave-2022",
+  "domain": "LOOPED-CDP",
+  "name": "looped stETH/ETH liquidation cascade (Aave v2, June-2022)",
+  "height": 14975000,
+  "outcome": "GAP",
+  "catchFired": false,
+  "reads": {
+    "poolReachable": true,
+    "leverageInput": "absent (a specific position's collateral/debt is needed; a pool-level read cannot compute a loop's leverage)"
+  },
+  "endpoints": [
+    "https://eth.drpc.org",
+    "https://rpc.mevblocker.io",
+    "https://eth-mainnet.public.blastapi.io"
+  ],
+  "crossChecked": false,
+  "attempts": [
+    {
+      "endpoint": "https://eth.drpc.org",
+      "served": true
+    },
+    {
+      "endpoint": "https://rpc.mevblocker.io",
+      "served": true
+    },
+    {
+      "endpoint": "https://eth-mainnet.public.blastapi.io",
+      "served": true
+    }
+  ],
+  "catchLine": "leverage-distance: collateral=— debt=— liqThreshold=— — INSUFFICIENT (never a faked leverage number).",
+  "claim": "GAP — the Aave v2 pool was reachable at block 14975000, but the leverage-distance axis needs a specific looped POSITION's collateral/debt (a borrower address); the pool surface alone cannot compute a loop's leverage → INSUFFICIENT, recorded honestly (never a faked leverage number).",
+  "rootCause": "the leverage-distance axis is position-scoped; a backtest of a specific loop needs the position, which the bounded harness (pinned surface, three reads) does not resolve — an HONEST LIMITATION, not a hidden miss.",
+  "contentSha": "53aae89ea0b38f8d7becf4ff9c282633d410e9f7c1e52eb707b51f6a18d9f0ea"
+}

@@ -178,4 +178,6 @@ bun test --timeout 120000 test/walls/ \
   test/organon/domain_registry.test.ts \
   test/organon/dydx.test.ts \
   test/organon/catch_axes.test.ts \
-  test/organon/rwa_cap.test.ts
+  test/organon/rwa_cap.test.ts \
+  test/organon/backtest.test.ts \
+  test/organon/domain_redteam.test.ts
