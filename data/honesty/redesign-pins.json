@@ -1,0 +1,51 @@
+{
+  "protocol": "redesign-pins",
+  "sprint": "THE REDESIGN SPRINT (the cool-graphite + signal-cyan identity re-pinned via supersession; the composition rebuilt ABOVE the primitives — a persistent Λ chrome, the Shelf as a triage board, a masthead + scannable scorecard rail, a provenance ledger, refined controls/motion/states; content byte-identical S36, WCAG-AA re-cleared S37, the 45-rule detector clean S38, deps still hono+zod)",
+  "at": "2026-07-12",
+  "continues": "THE GROUNDTRUTH SPRINT",
+  "carriedFromPinsSha": "3d0ef3bbba4798769f46dc2b4e6518133a02315b34771efba27ab5539308e9d3",
+  "tokensRepin": {
+    "rel": "data/honesty/design-tokens.json",
+    "tokens": {
+      "sha": "3cb2b602cf60cf8747a15894de0b38daa6264faa81f728ba1470fdc2b2a3abe5"
+    },
+    "designMd": {
+      "rel": "DESIGN.md",
+      "sha": "8d6ee755d88b118dd57437044317a5dfdc0827a685a0abe1159c00a1098954b1"
+    },
+    "stylesheet": {
+      "rel": "public/organon.css",
+      "builtFrom": "data/honesty/design-tokens.json",
+      "note": "BUILT deterministically from the re-pinned tokens (script/build-stylesheet.ts); not byte-pinned — surface_system --check proves determinism (same tokens ⇒ byte-identical css)"
+    },
+    "supersedes": {
+      "tokens": "d8a6ed10827707991bfadb0b31c4da19505e629adb925509beee071adbf4fdd4",
+      "designMd": "09dd3c0258b1ee8fce8ea44ab46016c85dbcf7845d0388bce5ca82d636b9ce2e",
+      "pinsSha": "b01799989edd2f1f15a9003035ca60cf0ed75457bfa1e2a268c3c8f231cf750f"
+    },
+    "identity": "cool graphite + signal cyan — a truer neutral near-black ground (chroma ~0, not GitHub's blue-tinted #0d1117) + one restrained signal-cyan accent (#38d6c8) for links/focus/primary actions; a precision instrument, not a repo",
+    "semanticsUnchanged": "the verdict / Stamp / REAL-SAMPLE / axis-tier COLORS are BYTE-UNCHANGED (honesty-load-bearing — green verified, amber caution, red avoid, slate unverified); only bg/surface/surface2/border/borderStrong/ink/inkMuted/inkFaint/accent/accentInk moved, plus the FACT color + the FACT/BOUNDARY tints tracking the new surfaces; EVERY pairing re-verified WCAG-AA (surface_a11y GREEN on the live tokens, computed not claimed)",
+    "contentByteIdentical": "S36 surface_content_identity GREEN on the live tokens — every screen's visible text is byte-identical to the PRE-restyle golden (the restyle moved pixels, never a fact); the persistent ORGΛNON Λ wordmark is a TEXT-FREE svg (path + node only) whose accessible name rides an aria-label the content signature strips",
+    "resupersede": "U-RESUPERSEDE — the live token + DESIGN.md hash-lock MOVED here; surface-pins.json retains its historical Surface-era sha (superseded, not rewritten), so the carry chain is untouched and the Sovereign/Interpret 'tokensStayFrozen' / 'designSystemUnchangedInTokens' records stay ACCURATE HISTORY (they described Surface→Sovereign→Interpret truth; this is a LATER conscious re-pin). NO cascade — voice/engine/contract pins untouched.",
+    "consciousRePin": "a changed token ⇒ a changed tokens sha ⇒ a changed pins sha — surfaced with its sha delta; NEVER a silent restyle"
+  },
+  "composition": {
+    "aboveThePrimitives": "the composition / hierarchy / spacing rhythm / motion / component-design / states were rebuilt in script/build-stylesheet.ts + the markup CLASSES in src/studio/reality.ts, WITHOUT changing the type/space/radius/motion token VALUES — the identity re-pin is the palette; the craft uplift rides the existing scale used differently (build-stylesheet.ts is not hash-pinned; it is asserted a pure function of the tokens + the a11y/cue/detector walls)",
+    "chrome": "a persistent slim instrument topbar carrying the ORGΛNON Λ wordmark (a text-free svg, the apex signal-cyan) across every screen — the one persistent brand anchor",
+    "shelf": "a triage board — verdict-tinted row frames (a FULL border, never a side-tab), chip filters, the facts loud in mono tabular figures",
+    "realityCheck": "a masthead (name + verdict pill + REAL/SAMPLE badge) + a raised lead statement + a scannable axis-tier rail + a provenance ledger with a quiet timeline rule",
+    "ask": "a filled console with a designed empty state + the cyan primary action + the intentional AI-off badge",
+    "deps": [
+      "hono",
+      "zod"
+    ]
+  },
+  "walls": {
+    "s36": "content byte-identical per screen (surface_content_identity GREEN on the live tokens)",
+    "s37": "WCAG-AA computed from the live token file (surface_a11y GREEN — every core-text-on-ground, REAL/SAMPLE-on-ground-and-card, and verdict/Stamp/tier color-on-tint pairing clears 4.5:1)",
+    "s38": "the deterministic 45-rule impeccable detector clean over the new css + the three rendered screens (surface_detector GREEN; skips honestly when the dev-harness is absent)",
+    "designpass": "the Sovereign design-pass invariant is preserved as HISTORY (designpass-critique.json crit.tokensChanged=false — that pass changed no token); the palette re-pin is recorded HERE as the later conscious supersession",
+    "determinism": "public/organon.css reproduces byte-identically from the re-pinned tokens (surface_system --check GREEN)"
+  },
+  "pinsSha": "6b285ebaac7633fa2ecfc2334264b7d70a1dc9f43ec7a7505dec4294d12b658c"
+}

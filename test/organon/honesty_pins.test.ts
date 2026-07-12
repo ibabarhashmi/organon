@@ -722,14 +722,22 @@ test("SURFACE — the pins hash-lock is the pinned golden + self-consistent + ca
   expect(sha256(JSON.stringify(mutated))).not.toBe(su.pinsSha)
 })
 
-test("SURFACE — the design tokens are hash-locked: the stored sha is sha256(design-tokens.json) AND an edited token would move PINS_SHA (a re-pin, never a silent restyle)", () => {
-  const tokensSha = sha256(readFileSync(path.join(PKG_ROOT, su.tokens.rel), "utf8"))
-  expect(su.tokens.sha).toBe(tokensSha) // the lock is over the actual artifact bytes
+// ── THE REDESIGN RE-PIN (U-RESUPERSEDE) — the live token + DESIGN.md hash-lock MOVED to redesign-pins.json; the Surface
+// record above is retained as SUPERSEDED HISTORY (never rewritten), exactly like the Interpreter persona re-pin. ──
+const rd = JSON.parse(readFileSync(path.join(H, "redesign-pins.json"), "utf8"))
+
+test("SURFACE — the design tokens are hash-locked; the identity was RE-PINNED by the Redesign supersession (the live lock moved to redesign-pins; the Surface record is preserved as history — a conscious re-pin, never a silent restyle)", () => {
+  // the Surface record is RETAINED (superseded, not rewritten) — its rel + prose stand as the historical baseline
   expect(su.tokens.rel).toBe("data/honesty/design-tokens.json")
-  const designMdSha = sha256(readFileSync(path.join(PKG_ROOT, su.tokens.designMd.rel), "utf8"))
-  expect(su.tokens.designMd.sha).toBe(designMdSha) // DESIGN.md pinned too
   expect(su.tokens.builtNotHandEdited).toMatch(/BUILT from these tokens|never hand-edited/i)
   expect(su.tokens.consciousRePin).toMatch(/conscious re-pin|never a silent/i)
+  // the LIVE design-tokens.json + DESIGN.md now hash to the REDESIGN pin (the live hash-lock moved here — U-RESUPERSEDE)
+  expect(sha256(readFileSync(path.join(PKG_ROOT, rd.tokensRepin.rel), "utf8"))).toBe(rd.tokensRepin.tokens.sha)
+  expect(sha256(readFileSync(path.join(PKG_ROOT, rd.tokensRepin.designMd.rel), "utf8"))).toBe(rd.tokensRepin.designMd.sha)
+  // the re-pin records EXACTLY the Surface-era sha it supersedes (the chain is explicit; the Surface record IS that baseline)
+  expect(rd.tokensRepin.supersedes.tokens).toBe(su.tokens.sha)
+  expect(rd.tokensRepin.supersedes.designMd).toBe(su.tokens.designMd.sha)
+  expect(rd.tokensRepin.tokens.sha).not.toBe(su.tokens.sha) // the sha MOVED (a real re-pin, not a no-op)
   // POSITIVE CONTROL: an edited token (a changed sha in the object) changes PINS_SHA — the lock bites on the artifact
   const { pinsSha, ...rest } = su
   const mutated = JSON.parse(JSON.stringify(rest)); mutated.tokens.sha = "0".repeat(64)
