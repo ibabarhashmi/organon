@@ -149,7 +149,15 @@ app.get("/check/:key", async (c) => {
   // the two-tier provenance label (X-COVERAGE c): the subject's headline data is aggregator-sourced (DeFiLlama /
   // Hyperliquid) → REAL-at-timestamp; block-pinned axes (governance / Chainlink) carry REAL★ within their own axis. The
   // tier renders beside the stamp ONLY for a REAL subject (a SAMPLE subject is byte-identical to the pre-Coverage render).
-  return c.html(Reality.renderRealityCheck(rc.name, rc.scored, rc.history, key, [], bundle, "REAL-at-timestamp"))
+  // DOMAIN (X-DOMAIN a,b) — classify WHAT KIND of thing this is (a subject TYPE, not a screen). Conservative: an ambiguous
+  // subject is UNCLASSIFIED and badges nothing. Only a NEW domain (STABLE-SYNTH/LST-LRT/LOOPED-CDP/RWA) badges — every
+  // curated shelf subject is LENDING/FUNDING → the badge is "" → byte-identical to the pre-Domain render.
+  const domain = Reality.domainOf(rc.name, rc.scored.facts).domain
+  // the CATCH (X-DOMAIN c) — the ONE honest line a new domain adds, info/context, in the governance line's grammar. A
+  // carried/UNCLASSIFIED subject → undefined → byte-identical. The domain-specific on-chain reads aren't in the standard
+  // facts, so a general looked-up subject renders INSUFFICIENT honestly; RWA always renders its warning.
+  const catchFact = Reality.catchFor(domain, rc.name, rc.scored)
+  return c.html(Reality.renderRealityCheck(rc.name, rc.scored, rc.history, key, [], bundle, "REAL-at-timestamp", domain, catchFact))
 })
 
 // THE STAMP (opt-in, Crown-Jewel; X-OPTIN) — the overfit stress test on ONE pool's recorded track record, reached ONLY

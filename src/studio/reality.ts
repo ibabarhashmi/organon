@@ -24,6 +24,12 @@ import { Governance } from "../contract/governance" // PRECISION (X-PRECISION) �
 import { LlamaYields, CoveragePosture } from "../dataplane/providers/llama-yields" // COVERAGE (X-COVERAGE) — the breadth universe + the any-pool lookup + the license posture
 import type { Stamp } from "./stamp" // TYPE-ONLY — the Stamp's runtime (the attest core) is lazily imported by the /stamp route; the mass tool stays Stamp-free (X-OPTIN, PART CLEAN)
 import { Lineage } from "./lineage" // the three lineage walls (Lineage sprint; X-LINEAGE) — DataPlane-only (imports NO Stamp runtime), so it stays off the mass path
+import { Domain } from "../domain/types" // DOMAIN (X-DOMAIN) — the subject-TYPE classification; render-layer only, imports NO scored module (the catch line renders info/context like the governance line)
+import { DomainClassify } from "../domain/classify"
+import { YieldSource } from "../domain/axes/yield-source"
+import { RedemptionGap } from "../domain/axes/redemption-gap"
+import { LeverageDistance } from "../domain/axes/leverage-distance"
+import { OffchainOpacity } from "../domain/axes/offchain-opacity"
 
 export namespace Reality {
   // THE SCREEN SET — consciously amended 2→3 (Crown-Jewel D7): the Shelf · the Reality Check · the Ask Console (the
@@ -41,6 +47,59 @@ export namespace Reality {
     return m
   }
   function meta(reg: Map<string, RegEntry>, poolKey: string): RegEntry { return reg.get(poolKey) ?? { name: poolKey.replace(/^defillama:pool:|^funding-basis:hyperliquid:/, ""), symbol: "", isStablecoin: false, kind: poolKey.startsWith("funding-basis:") ? "delta-neutral" : "yield", vertical: poolKey.startsWith("funding-basis:") ? "delta-neutral" : "lending" } }
+
+  // ── DOMAIN CLASSIFICATION (X-DOMAIN b) — the engine knows WHAT KIND of thing it is looking at. A pure classify over the
+  // captured facts + label; CONSERVATIVE (ambiguous → UNCLASSIFIED). Built from the scorecard facts so any subject (curated
+  // or looked-up) classifies identically. `leverageSignal` is present only when a health-factor/LTV read exists (Phase 3). ──
+  export function domainOf(name: string, facts: Scorecard.PoolFacts, leverageSignal = false): Domain.Classified {
+    const [project, ...rest] = name.split(/[: ]/)
+    return DomainClassify.classifyDomain({ project: project ?? name, symbol: rest.join(" ") || name, name, isStablecoin: facts.isStablecoin, vertical: Scorecard.verticalOf(facts), deltaNeutral: facts.deltaNeutral, leverageSignal })
+  }
+  // the domain LABEL (a label, not a section — X-DOMAIN a). "" for the carried domains + UNCLASSIFIED → the render is
+  // BYTE-IDENTICAL to the pre-Domain render (only a NEW domain badges; no curated shelf subject is a new domain).
+  function domainLabel(domain?: Domain.DomainType): string {
+    return domain && Domain.isNewDomain(domain) ? ` <span class="badge REAL">${esc(domain)}</span>` : ""
+  }
+
+  // ── THE CATCH LINE (X-DOMAIN c) — the ONE additional honest line a new domain renders, in the governance line's grammar.
+  // INFO/CONTEXT: it renders like the governance line (OUT of the scorecard rows) and states plainly that it does NOT move
+  // the verdict. `undefined` → "" → BYTE-IDENTICAL to the pre-Domain render. For RWA it additionally renders the
+  // SAMPLE-labeled attestation surface + the structural-cap status (BUILT, NOT INSTALLED — D35, the agent installs no rule). ──
+  const CATCH_LABEL: Record<Domain.CatchAxis, string> = { "yield-source": "yield-source attribution", "redemption-gap": "the redemption gap", "leverage-distance": "effective leverage + distance-to-liquidation", "off-chain-opacity": "off-chain opacity" }
+  // ── ASSEMBLE THE CATCH for a subject on the LIVE path (the govBlock pattern — loaded out of the render, passed in). Only
+  // a NEW domain has a catch. The domain-specific on-chain reads (redemption rate, leverage, funding series) are NOT in the
+  // standard scorecard facts, so a general looked-up subject renders INSUFFICIENT honestly (never a faked number); RWA
+  // ALWAYS renders its warning (the opacity is told immediately). The backtest (Phase 4) + the unit tests exercise the axes
+  // with REAL reads. `undefined` for a carried/UNCLASSIFIED subject → no catch block → byte-identical. ──
+  export function catchFor(domain: Domain.DomainType, name: string, scored: Scorecard.Scored): Domain.Catch | undefined {
+    if (!Domain.isNewDomain(domain)) return undefined
+    const f = scored.facts
+    const tier = f.reality === "REAL" ? "REAL-at-timestamp" : "SAMPLE"
+    const headlineApy = f.apyBase === null ? null : +(f.apyBase + (f.apyReward ?? 0)).toFixed(2)
+    switch (domain) {
+      case "STABLE-SYNTH": {
+        const fundingSourced = /ethena|\busde\b|susde/i.test(name) // Ethena-class is perp-funding carry; crvUSD/GHO are not
+        return YieldSource.yieldSourceCatch({ apyBase: f.apyBase, apyReward: f.apyReward, fundingSourced, fundingRates: [], hasPeg: f.isStablecoin, venues: [], tier })
+      }
+      case "LST-LRT":
+        return RedemptionGap.redemptionGapCatch({ symbol: name, denom: "ETH", redemption: null, secondary: null, queueReadable: false, redemptionTier: tier })
+      case "LOOPED-CDP":
+        return LeverageDistance.leverageDistanceCatch({ collateral: null, debt: null, liqThreshold: null, headlineApy, tier })
+      case "RWA":
+        return OffchainOpacity.offchainOpacityCatch({ issuer: "unknown — go verify", auditor: "unknown — go verify", cadence: "unknown", lastAttestation: "unknown", onchainVerdict: scored.verdict })
+    }
+  }
+
+  function catchBlock(cf?: Domain.Catch): string {
+    if (!cf) return ""
+    const tierTxt = cf.tier === "SAMPLE" || cf.tier === "INSUFFICIENT" ? cf.tier : `provenance ${cf.tier}`
+    const att = cf.attestation ? `<div class="pro muted">attestation surface (<b>SAMPLE — context you must go verify, NOT a verification</b>): issuer ${esc(cf.attestation.issuer)} · auditor ${esc(cf.attestation.auditor)} · cadence ${esc(cf.attestation.cadence)} · last ${esc(cf.attestation.lastAttestation)}.</div>` : ""
+    const cap = cf.capStatus ? `<div class="pro muted">structural cap: ${esc(cf.capStatus.installed ? "INSTALLED" : "NOT installed")} — ${esc(cf.capStatus.reason)} (${esc(cf.capStatus.wouldCapUnder)}).</div>` : ""
+    return `<div class="axis"><b>the catch — what the seven axes can't see: ${esc(CATCH_LABEL[cf.axis])} (${esc(cf.domain)}, info/context)</b>
+<div>${esc(cf.simple)}</div>
+<div class="pro muted">${esc(cf.pro)} · ${esc(tierTxt)}</div>${att}${cap}
+<div class="muted">this line is <b>info/context</b> — a FACT about the kind of thing this is; it does NOT move the verdict above (X-DOMAIN c; a promotion is the Operator's pen, D36).</div></div>`
+  }
 
   export interface Card { name: string; poolKey: string; kind: "yield" | "delta-neutral"; project: string; symbol: string; chain: string; apyBase: number | null; apyReward: number | null; apyTotal: number | null; verdict: Scorecard.Verdict; risk: string; reality: Scorecard.Reality; scored: Scorecard.Scored }
 
@@ -205,7 +264,7 @@ ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${t
   }
 
   // ── SCREEN 2 — THE REALITY CHECK ──
-  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = [], governance: Governance.RenderBundle | null = null, provTier?: string): string {
+  export function renderRealityCheck(name: string, scored: Scorecard.Scored, history: ProvRecord.HistoryEntry[], poolKey?: string, divergences: PlaneDivergence.Divergence[] = [], governance: Governance.RenderBundle | null = null, provTier?: string, domain?: Domain.DomainType, catchFact?: Domain.Catch): string {
     const c = scored
     // THE TWO-TIER PROVENANCE LABEL (Coverage; X-COVERAGE c) — beside the stamp, a REAL subject names WHICH KIND of true:
     // REAL★ (block-pinned, chain-reproducible) vs REAL-at-timestamp (aggregator, "what the API said at T"). Rendered ONLY
@@ -263,11 +322,11 @@ ${govBlock}<div>${esc(cs.reason)}</div>
       : ""
     const askLink = poolKey ? ` · <a href="/ask?${qs({ q: `is ${name} safe?`, pool: poolKey })}">💬 ask about this</a>` : ""
     return page(`Reality Check — ${name}`, `<a href="/">← the Shelf</a>${askLink}
-<h1>${esc(name)} ${verdictPill(c.verdict)} ${realityBadge(c.facts.reality)}</h1>
+<h1>${esc(name)} ${verdictPill(c.verdict)} ${realityBadge(c.facts.reality)}${domainLabel(domain)}</h1>
 <div class="card lead"><b>${esc(oneLiner)}</b></div>${tierLine}
 <button class="btn" onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
 ${confidenceBand(c)}
-<h2>The honesty scorecard</h2>${axes}${contractScreen}${divergenceRow(divergences)}
+<h2>The honesty scorecard</h2>${axes}${contractScreen}${catchBlock(catchFact)}${divergenceRow(divergences)}
 <div class="pro"><h2>Quantitative</h2><pre class="muted">${esc(c.quant)}</pre></div>
 ${stampDrawer}
 ${prov}${trust(c.facts.reality === "SAMPLE")}`)
