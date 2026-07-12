@@ -1,0 +1,44 @@
+{
+  "protocol": "provenance-tier-relabel",
+  "total": 8,
+  "realStar": 4,
+  "atTimestamp": 4,
+  "old": "flat REAL (pre-Coverage: every REAL capture carried one undifferentiated label)",
+  "breakdown": [
+    {
+      "source": "https://yields.llama.fi/pools (DeFiLlama yields)",
+      "tier": "REAL-at-timestamp"
+    },
+    {
+      "source": "https://yields.llama.fi/chart (DeFiLlama chart)",
+      "tier": "REAL-at-timestamp"
+    },
+    {
+      "source": "geckoterminal /networks/{n}/pools (dex-liquidity)",
+      "tier": "REAL-at-timestamp"
+    },
+    {
+      "source": "hyperliquid /info fundingHistory (funding)",
+      "tier": "REAL-at-timestamp"
+    },
+    {
+      "source": "chainlink getRoundData (block-pinned price)",
+      "tier": "REAL★"
+    },
+    {
+      "source": "https://eth.llamarpc.com eth_call (RPC-STATE)",
+      "tier": "REAL★"
+    },
+    {
+      "source": "governance/archive capture (PAID Network block 11975000)",
+      "tier": "REAL★"
+    },
+    {
+      "source": "envio pool-events (fence-proven)",
+      "tier": "REAL★"
+    }
+  ],
+  "disclosure": "the re-label pass is conscious + disclosed: no capture is unlabeled, no silent downgrade — REAL splits into REAL★ (block-pinned) vs REAL-at-timestamp (aggregator), the same truth named precisely (W-SO01 pattern)",
+  "at": "2026-07-12",
+  "note": "the conscious re-label pass over the tool's source families — REAL split by which kind of true. DeFiLlama/GeckoTerminal/Hyperliquid are aggregators (REAL-at-timestamp); Chainlink/RPC/governance/archive/envio are block-pinned chain reads (REAL★). The truth is unchanged — its name is now precise (W-SO01)."
+}

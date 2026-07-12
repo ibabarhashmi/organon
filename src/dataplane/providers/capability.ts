@@ -54,6 +54,16 @@ export namespace DataCapability {
       privacy: { trainsOnPrompts: false },
       degrade: "absent → the existing public-RPC single-probe posture (POOL-EVENTS stays D21 fence-proven-only; no archive node is assumed)",
     },
+    // vaults.fyi (Coverage sprint; X-COVERAGE) — a BYOK-ONLY paid-DATA descriptor. The research killed the "free"
+    // impression: NO free tier ($399/mo or PAYG). It DEEPENS the facts (normalized vaults), tier-stamped REAL-at-timestamp
+    // (an aggregator response, never REAL★). ABSENT → the free path is BYTE-EXACT (this descriptor is only ever selected
+    // when the key is present); never a core dependency. It is the branch-γ promotion target (paid, commercially clean).
+    "vaultsfyi-byok": {
+      id: "vaultsfyi-byok", kind: "data", auth: "VAULTSFYI_API_KEY", tier: "pro",
+      features: { endpoints: ["/vaults", "/vaults/{address}"], historyDepthDays: null, rateLimitPerMin: null, datasets: ["normalized-vaults"] },
+      privacy: { trainsOnPrompts: false },
+      degrade: "absent → the free path is BYTE-EXACT (no free tier exists — $399/mo or PAYG; this descriptor is selected ONLY when VAULTSFYI_API_KEY is present; never a core dependency)",
+    },
   }
 
   // which DeFiLlama descriptor is ACTIVE for this env — the one place the pro key is consulted

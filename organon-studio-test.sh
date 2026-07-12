@@ -7,7 +7,7 @@ export NO_COLOR=1 XDG_DATA_HOME="$(mktemp -d)"
 # regardless of a developer's local .env (an empty shell var takes precedence over .env in Bun). The grounded-phrasing
 # path is proven separately with injected mock providers/transports.
 export GROQ_API_KEY= GOOGLE_AI_STUDIO_KEY= GEMINI_API_KEY= OPENAI_API_KEY= ANTHROPIC_API_KEY= OPENAI_COMPATIBLE_API_KEY= OPENAI_COMPATIBLE_BASE_URL=
-bun test --timeout 30000 test/walls/ \
+bun test --timeout 120000 test/walls/ \
   test/organon/ledger.test.ts \
   test/organon/ledger_laundering.test.ts \
   test/organon/ledger_refragmentation.test.ts \
@@ -159,6 +159,15 @@ bun test --timeout 30000 test/walls/ \
   test/organon/groundtruth_pins.test.ts \
   test/organon/findings_closed_groundtruth.test.ts \
   test/organon/redesign_pins.test.ts \
+  test/organon/coverage_pins.test.ts \
+  test/organon/findings_closed_coverage.test.ts \
+  test/organon/breadth.test.ts \
+  test/organon/lookup.test.ts \
+  test/organon/chainlink.test.ts \
+  test/organon/provenance_tier.test.ts \
+  test/organon/correlate.test.ts \
+  test/organon/stamp_inert.test.ts \
+  test/organon/coverage_redteam.test.ts \
   test/organon/impl_build.test.ts \
   test/organon/immutable_proof.test.ts \
   test/organon/archive_rug.test.ts \

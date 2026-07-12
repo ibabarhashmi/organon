@@ -1,0 +1,18 @@
+{
+  "protocol": "coverage-census",
+  "asOf": 1783822377906,
+  "universeSize": 15497,
+  "reality": "REAL",
+  "covered": 15490,
+  "sampleOnly": 7,
+  "hitRateOfSample": null,
+  "coveredDefinition": "a pool is COVERED iff a REAL aggregator yield exists (≥ the yield-reality axis at REAL-at-timestamp); SAMPLE-only does NOT count",
+  "tierBreakdown": {
+    "REAL-at-timestamp": 15490,
+    "SAMPLE-not-covered": 7
+  },
+  "note": "measured over the live covered universe",
+  "contentSha": "85fed41d9e6aee37a2b6522f4d55998cfcc784bf63e5a491bdf67f97a0243e19",
+  "source": "https://yields.llama.fi/pools",
+  "tier": "REAL-at-timestamp"
+}

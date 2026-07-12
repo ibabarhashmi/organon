@@ -1,0 +1,46 @@
+{
+  "protocol": "coverage-countersign-package",
+  "at": "2026-07-12",
+  "supersedes": "groundtruth-countersign-package.json (carried forward, NOT rewritten — U-RESUPERSEDE); this is the current whole-gate package (D23-D33)",
+  "generosityStatement": "The Stamp is knowingly generous until D27 is signed.",
+  "rule": "THE WHOLE Operator gate, assembled into ONE document for ONE sitting at Phase 5: the countersigns D23-D33 (D27, the variance amendment, FIRST) opening with the generosity statement; D29 census-zero; D30 (IMMUTABLE) with its arms-for-a-future-subject note (GT4); D31 (Aligrithm); D32 (the coverage/license posture) + D33 (the correlation substrate + the inert guarantee) NEW; IN2 (the real-screen session, now incl. a REAL LOOKUP of a pool NOT on the shelf + the tier labels + the diversification fact + compound's impl-truth drawer — GT3) + IN4 + AF4 + the push. An agent must NOT sign as the Operator (operatorSigned stays false until the Operator's own hand — LN5). Discharged whole, or an honest STOP with exactly what remains quoted.",
+  "deviationOrder": ["D27", "D30", "D29", "D31", "D26", "D28", "D23", "D24", "D25", "D32", "D33"],
+  "carriedNote": "D23-D31 are carried VERBATIM from groundtruth-countersign-package.json (the detail lives there; this package supersedes it for the whole-gate view + adds D32/D33 + the GT refinements). D27 STILL FIRST — now four sprints running.",
+  "newDeviations": {
+    "D32": {
+      "id": "D32",
+      "order": "the coverage scope + the license posture (Coverage — NEW)",
+      "title": "the DeFiLlama breadth layer behind a VERBATIM non-commercial license posture + the STANDING existing-use exposure + the dated Operator business action (branch α consent / β paid / γ degrade-to-SAMPLE)",
+      "restsOn": "coverage-pins.json xCoverage.a_licensePosture (the ToS + USD-100k clause + standing exposure pinned VERBATIM; the three branches pre-designed; the Pro-vs-API purchase trap named) + the S64 wall green in BOTH repos: the posture renders where DeFiLlama-sourced numbers serve; the γ SAMPLE-degrade control bites; the census matches the pinned 'covered' definition.",
+      "signingConsequence": "SIGN branch α (written consent obtained) OR β (the API subscription purchased — NOT the $300/mo Pro dashboards) → the breadth layer SERVES commercially. LEAVE at γ → DeFiLlama numbers render SAMPLE-labeled in served commercial contexts; vaults.fyi promotes. The posture cannot be softened to ship faster (THE FIREWALL). A BUSINESS action, not an engineering task; the integration cannot stall on it (the branch machinery ships).",
+      "operatorSigned": false
+    },
+    "D33": {
+      "id": "D33",
+      "order": "the correlation substrate + the inert guarantee (Coverage — NEW)",
+      "title": "the deterministic correlation substrate (permutation-invariant, k-means-prohibited) + the ONE non-advisory COMPARE diversification fact + the deflation-STAYS-INERT guarantee + the parked K-activation act",
+      "restsOn": "coverage-pins.json xCorrelate + the S66 wall green in BOTH repos: permutation-invariant byte-identical clustering; the minimum-overlap INSUFFICIENT floor; the non-advisory wording exact + the advice wall green; the deflation-inert wall (familyN===1 in every Stamp output; a seeded K-feed REFUSED).",
+      "signingConsequence": "SIGN the K-ACTIVATION → K enters the Stamp's familyN ONLY when BOTH the pinned trigger fires (≥ 20–50 trials/family from a real proposer) AND this pen moves (D33 pre-designs the future act). Until then the substrate serves the RENDER, not the statistics; the proposer stays PARKED; building the key is not turning it. An agent must not move what decides verdicts (the D27 precedent).",
+      "operatorSigned": false
+    }
+  },
+  "d30ArmsForFuture": "GT4 — D30's countersign line gains the arms-for-a-future-subject note (like D29's census-zero): NO live shelf subject is provably IMMUTABLE (aave holds the impl in the 1967 slot → genuinely upgradeable; the class is proven-on-controls, extinct-on-shelf). Signing D30 today ratifies ZERO current flagship renders; it ARMS the tool for the first future genuinely-immutable subject. Zero current qualifiers — a low-cost pen. 'IMMUTABLE-PROVEN' must NEVER read as 'aave fixed' (GT1).",
+  "gateItems": {
+    "IN2": "the Operator's real-screen session — now including: a REAL LOOKUP of a pool NOT on the curated shelf (the cold-start fix walked live, each axis rendering per-tier); the two-tier provenance labels read on a real screen ('this APY is what the aggregator said at T; this price is the chain itself at block N'); the COMPARE diversification fact read (the non-advisory 'about one bet, not three' line); READ COMPOUND'S REAL-SOURCE FINDINGS IN THE PRO DRAWER — DOES IMPL-TRUTH HELP A HUMAN? (GT3); the governance line on clean/upgradeable/damning subjects; the rug artifact; the D27 caveat. OWED-OPERATOR-GATED, never simulated (LN5)",
+    "IN4": "the browser/AT/viewport a11y pass — a real assistive-tech walk of the conscious 3 screens (incl. a looked-up subject). OWED-OPERATOR-GATED",
+    "AF4": "the first LIVE paid-key parity diff — the capability split proven on a real paid key (byte-identical verdict path). OWED-OPERATOR-GATED",
+    "push": "the publication decision — the push is the Operator's call"
+  },
+  "invitePackage": {
+    "gt5": "GT5 — the invite package is RE-LED with the PAID Network capture (the most legible proof of value the tool has produced): the axis rendered the DAMNING EOA line on a real rug's REAL pre-collapse state (block 11975000, tri-endpoint-agreed).",
+    "leadsWith": "the PAID Network rug capture — a real rug the tool provably would have flagged (the damning EOA line on its real pre-collapse chain state)",
+    "order": [
+      "the PAID Network rug capture (LEAD — the most legible proof of value)",
+      "the any-pool lookup demo (your pool, answered live, per-tier)",
+      "the Stream/Elixir/Resolv re-score post-mortems",
+      "the pre-registered kill-criterion (8b4e094b)"
+    ]
+  },
+  "operatorSignedWhole": false,
+  "signingConsequence": "with D23-D33 signed + IN2/IN4/AF4 discharged + the push decision, the invites go out against a goalpost set before the cohort arrived — the tool answers 'is my pool covered?' with yes, every number naming which kind of true it is, a real rug leading the pitch. Until then the sprint terminates COVERAGE DELIVERED — READY-PENDING-OPERATOR (or an honest STOP with the remainder quoted). The agent NEVER signs (LN5)."
+}
