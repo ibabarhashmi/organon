@@ -212,7 +212,7 @@ export namespace Ratify {
 
   // The SPINE build surfaces the wall scans: any NEW module under these roots must be covered by an ADOPT row (real
   // forward teeth — a module added later without a ratification row goes red). Directories scanned + specific files.
-  export const SCANNED_DIRS = ["src/analytics", "src/proposers"] as const
+  export const SCANNED_DIRS = ["src/analytics", "src/proposers", "src/domain", "src/domain/axes"] as const
   export const SCANNED_FILES = ["src/dataplane/hyperliquid.ts", "src/dataplane/basis.ts"] as const
 
   // ── THE EXPERIMENT REGISTRY (Explanation Phase 0; X-DEFAULT) ──

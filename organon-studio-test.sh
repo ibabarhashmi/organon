@@ -171,4 +171,11 @@ bun test --timeout 120000 test/walls/ \
   test/organon/impl_build.test.ts \
   test/organon/immutable_proof.test.ts \
   test/organon/archive_rug.test.ts \
-  test/organon/groundtruth_redteam.test.ts
+  test/organon/groundtruth_redteam.test.ts \
+  test/organon/domain_pins.test.ts \
+  test/organon/findings_closed_domain.test.ts \
+  test/organon/domain_classify.test.ts \
+  test/organon/domain_registry.test.ts \
+  test/organon/dydx.test.ts \
+  test/organon/catch_axes.test.ts \
+  test/organon/rwa_cap.test.ts

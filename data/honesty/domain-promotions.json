@@ -1,0 +1,56 @@
+{
+  "protocol": "domain-promotions",
+  "at": "2026-07-12",
+  "rule": "the catch axes are info/context; promoting one to a verdict-CAPPING role is a verdict-shaped rule that needs the Operator's pen. These specs are PARKED with their affected censuses pre-computed. Every promotion is CONSERVATIVE + DEGRADE-ONLY (cap, never lift). An agent installs no verdict rule (LN5).",
+  "D35_rwaStructuralCap": {
+    "deviation": "D35",
+    "rule": "an RWA subject may NEVER render SOLID — capped at CAUTION/UNVERIFIED, the reason rendered. BUILT (src/domain/axes/offchain-opacity.ts::rwaStructuralCap), NOT INSTALLED (the render calls it with d35Signed=false; the effect is proven under simulation only).",
+    "degradeOnly": true,
+    "affectedCensus": {
+      "total": 0,
+      "wouldCap": 0,
+      "verdicts": {}
+    },
+    "armsForFuture": "ZERO current RWA subjects on the curated shelf — signing D35 ratifies zero current renders; it ARMS the tool for the first future RWA subject (the warning renders today regardless). A low-cost pen.",
+    "operatorSigned": false
+  },
+  "D36_promotions": {
+    "deviation": "D36",
+    "rule": "the three catch-axis promotions to a verdict-CAPPING role — conservative, degrade-only, census-attached, PARKED.",
+    "promotions": [
+      {
+        "axis": "yield-source",
+        "cap": "funding-flip cap",
+        "spec": "a STABLE-SYNTH whose yield is funding-carry AND whose funding-flip census exceeds a pinned threshold (e.g. negative in > X% of periods) caps SOLID→CAUTION — the peg+yield joint risk is real. Degrade-only.",
+        "affectedCensus": {
+          "total": 0,
+          "wouldCap": 0
+        },
+        "operatorSigned": false
+      },
+      {
+        "axis": "leverage-distance",
+        "cap": "leverage cap",
+        "spec": "a LOOPED-CDP whose liquidation distance is below a pinned floor (e.g. < X%) caps SOLID→CAUTION — a thin distance-to-liquidation is a real hazard the headline APY hides. Degrade-only.",
+        "affectedCensus": {
+          "total": 0,
+          "wouldCap": 0
+        },
+        "operatorSigned": false
+      },
+      {
+        "axis": "redemption-gap",
+        "cap": "redemption-gap cap",
+        "spec": "an LST-LRT whose secondary trades at a discount beyond a pinned band caps SOLID→CAUTION — a persistent discount is a real depeg signal. Degrade-only.",
+        "affectedCensus": {
+          "total": 0,
+          "wouldCap": 0
+        },
+        "operatorSigned": false
+      }
+    ],
+    "armsForFuture": "NO curated shelf subject is a new domain today → every promotion census is ZERO (arms-for-a-future-subject). A promotion may only CAP a verdict, never LIFT one; an agent installs no verdict rule."
+  },
+  "note": "the censuses are OUTCOMES over the curated shelf; the four domains render through the lookup path + fixtures, so no curated subject is capped today. The catch axes stay info/context until the Operator signs D35 (RWA) / D36 (the three promotions).",
+  "contentSha": "3f34380fdc79ad901b0b8b61ab0feea3fd1f1c1b8c8d29c77c7a6b859fbdfb74"
+}

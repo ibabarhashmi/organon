@@ -1,0 +1,68 @@
+{
+  "protocol": "depth-census",
+  "at": "2026-07-12",
+  "rule": "the honest per-axis coverage — how many pools the tool can say something COMPLETE about, per axis, not merely 'covered' (which means yield-only). An OUTCOME over committed artifacts; a target that licenses inflating an axis count is a cut (CV4).",
+  "qualifyingSentence": "'Covered' means the yield axis is renderable — not a full Reality Check. See the depth census for per-axis coverage: how many pools the tool can say something COMPLETE about, not merely something about.",
+  "universe": 15497,
+  "breadthYieldOnly": 15490,
+  "perAxis": {
+    "yield-reality": {
+      "renderable": 15490,
+      "denominator": 15497,
+      "scope": "universe",
+      "tier": "REAL-at-timestamp",
+      "basis": "a REAL aggregator yield exists (DeFiLlama /pools) — this IS the breadth number; it means the YIELD axis renders, nothing more"
+    },
+    "tvl-trend": {
+      "renderable": 7,
+      "denominator": 7,
+      "scope": "curated-shelf",
+      "tier": "REAL-at-timestamp",
+      "basis": "requires a per-subject 30-day /chart history — captured for the curated shelf + any looked-up subject, NEVER the universe"
+    },
+    "peg": {
+      "renderable": 7,
+      "denominator": 7,
+      "scope": "curated-shelf (conditional: stablecoin leg)",
+      "tier": "REAL-at-timestamp/REAL★",
+      "basis": "conditional — a stablecoin leg + a price read; captured for the curated stablecoin subjects"
+    },
+    "liquidity-depth": {
+      "renderable": 1,
+      "denominator": 7,
+      "scope": "curated-shelf (conditional: DEX pool)",
+      "tier": "REAL-at-timestamp",
+      "basis": "requires a GeckoTerminal DEX-pool reserve — only the stablecoin-yield subjects with a gtKey"
+    },
+    "contract": {
+      "renderable": 4,
+      "denominator": 7,
+      "scope": "curated-shelf",
+      "tier": "REAL★",
+      "basis": "a deterministic structural screen over VERIFIED source with a compiled-vs-deployed match — the curated pools that carry a REAL build tier (NOT an audit)"
+    },
+    "governance": {
+      "renderable": 5,
+      "resolvedGated": 1,
+      "denominator": 5,
+      "scope": "curated-shelf",
+      "tier": "REAL★",
+      "basis": "an on-chain admin/proxy read (branch B, the tool's own free RPC rotation) — the captured shelf subjects with a resolved admin class"
+    },
+    "domain-catch": {
+      "renderable": 0,
+      "denominator": 7,
+      "scope": "lookup + fixtures (no curated-shelf subject is a new domain)",
+      "tier": "info/context",
+      "basis": "requires a domain classification into a new domain (STABLE-SYNTH/LST-LRT/LOOPED-CDP/RWA) + the domain read; NO curated-shelf subject classifies into a new domain today — the four domains render through the LOOKUP path + are fixture-proven (Domain sprint, D34)"
+    }
+  },
+  "honestSummary": "yield renders across 15490 of 15497 (the breadth number — yield ONLY); a COMPLETE Reality Check (the deeper axes at REAL) is available for the 7 curated shelf subjects + any looked-up subject — the tool says so plainly, and NEVER lets \"15490 covered\" stand unqualified (CV4).",
+  "sources": [
+    "data/honesty/coverage-census.json",
+    "data/honesty/governance/census.json",
+    "data/honesty/contract-registry.json",
+    "data/honesty/shelf-registry.json"
+  ],
+  "contentSha": "532e18906c5d3076cdd25697d6b94345e2679aa0d6c71a5dfa51f151da78f029"
+}
