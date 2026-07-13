@@ -1,35 +1,36 @@
 {
  "protocol": "dual-repo-divergence",
- "at": "2026-07-12",
- "rule": "PR5 — the standing dual-repo behavioral-divergence wall. Per-repo expect() counts recorded EVERY sprint; both trees asserted 0-fail; the delta between them is DOCUMENTED, never smoothed. A recorded delta that does NOT equal |organon − studio| is a papered delta (a Halt); a delta > 0 without a note is a smoothing (a Halt). The wall watches the divergence, it does not erase it. CV1 — RESTORED this sprint after the Coverage log let it slip.",
+ "at": "2026-07-13",
+ "rule": "PR5 — the standing dual-repo behavioral-divergence wall. Per-repo expect() counts recorded EVERY sprint; both trees asserted 0-fail; the delta between them is DOCUMENTED, never smoothed. A recorded delta that does NOT equal |organon − studio| is a papered delta (a Halt); a delta > 0 without a note is a smoothing (a Halt). The wall watches the divergence, it does not erase it. CV1 — RESTORED at Coverage; re-recorded fresh at Cadence (the Manifest terminal left the counts at the Domain numbers — the internal-consistency wall held but the absolute counts were stale; corrected here).",
  "repos": {
   "organon": {
-   "tree": "c3fde077",
-   "pass": 1281,
+   "tree": "a84ef478",
+   "pass": 1393,
    "skip": 2,
    "fail": 0,
-   "files": 197,
-   "tests": 1283,
-   "expectCalls": 8114
+   "files": 212,
+   "tests": 1395,
+   "expectCalls": 8697
   },
   "organon-studio": {
-   "tree": "c3fde077",
-   "pass": 1281,
+   "tree": "a84ef478",
+   "pass": 1393,
    "skip": 2,
    "fail": 0,
-   "files": 197,
-   "tests": 1283,
-   "expectCalls": 8138
+   "files": 212,
+   "tests": 1395,
+   "expectCalls": 8721
   }
  },
  "bothZeroFail": true,
  "sameTestCount": true,
  "sameFileCount": true,
  "expectDelta": 24,
- "deltaNote": "organon-studio runs 24 MORE expect() calls than organon (8138 vs 8114) — a STABLE delta held through FIVE terminals (Moat 6723-vs-6747, Precision 7095-vs-7119, GroundTruth 7398-vs-7422, Coverage 7705-vs-7729, Domain 8114-vs-8138; every sprint added the SAME expect() to both trees, the delta unchanged at 24). The delta is data-fixture-driven (a repo-specific GITIGNORED live capture drives a per-item assertion loop of different length; the static grep is 4981-ish in both); the pass/fail behavior is IDENTICAL (1283 tests, 197 files, 0 fail in both; the trees are byte-identical at c3fde077). A benign per-repo DISC — recorded, watched, never papered.",
+ "deltaNote": "organon-studio runs 24 MORE expect() calls than organon (8721 vs 8697) — a STABLE delta held through SIX terminals (Moat 6723-vs-6747, Precision 7095-vs-7119, GroundTruth 7398-vs-7422, Coverage 7705-vs-7729, Domain 8114-vs-8138, Cadence 8697-vs-8721; every sprint added the SAME expect() to both trees, the delta unchanged at 24). The delta is data-fixture-driven (a repo-specific GITIGNORED live capture drives a per-item assertion loop of different length; the static grep is identical in both); the pass/fail behavior is IDENTICAL (1395 tests, 212 files, 0 fail in both; the trees are byte-identical at a84ef478). A benign per-repo DISC — recorded, watched, never papered.",
  "terminalMoat": false,
  "terminalPrecision": false,
  "terminalGroundTruth": false,
  "terminalCoverage": false,
- "terminalDomain": true
+ "terminalDomain": false,
+ "terminalCadence": true
 }
