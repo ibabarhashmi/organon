@@ -1,0 +1,13 @@
+{
+  "protocol": "pools-payload-shape",
+  "note": "A committed SHAPE fixture of the DeFiLlama /pools response (yields.llama.fi/pools) — the ~10.5 MB live payload distilled to a handful of representative rows (the four MR1 pre-pinned showcase domains + two lending markets). MR1's streaming/budgeted parse is proven OFFLINE against this shape: pools() must parse it, filter the shelf, and tag REAL — without a network. A schema drift in the live payload that this shape does not cover is a HONEST gap, re-named at the window, never faked.",
+  "status": "success",
+  "data": [
+    { "chain": "Ethereum", "project": "aave-v3", "symbol": "USDC", "tvlUsd": 812000000, "apyBase": 3.42, "apyReward": null, "apy": 3.42, "pool": "aa70268e-4b52-42bf-a116-608b370f9501", "stablecoin": true },
+    { "chain": "Ethereum", "project": "compound-v3", "symbol": "USDC", "tvlUsd": 410000000, "apyBase": 4.10, "apyReward": 0.9, "apy": 5.00, "pool": "c1b2f0d3-1111-4d0f-8f26-e94c8a244108", "stablecoin": true },
+    { "chain": "Ethereum", "project": "ethena-usde", "symbol": "sUSDe", "tvlUsd": 2300000000, "apyBase": 11.2, "apyReward": null, "apy": 11.2, "pool": "66985a81-9c51-46ca-9977-42b4fe7bc6df", "stablecoin": true },
+    { "chain": "Ethereum", "project": "lido", "symbol": "STETH", "tvlUsd": 24000000000, "apyBase": 2.9, "apyReward": null, "apy": 2.9, "pool": "747c8077-f7df-4d0f-8f26-e94c8a244108", "stablecoin": false },
+    { "chain": "Ethereum", "project": "gearbox", "symbol": "USDC", "tvlUsd": 85000000, "apyBase": 6.4, "apyReward": 2.1, "apy": 8.5, "pool": "9f3a1c22-3333-4d0f-8f26-e94c8a244108", "stablecoin": true },
+    { "chain": "Ethereum", "project": "ondo-finance", "symbol": "USDY", "tvlUsd": 320000000, "apyBase": 5.1, "apyReward": null, "apy": 5.1, "pool": "b7e4d900-4444-4d0f-8f26-e94c8a244108", "stablecoin": true }
+  ]
+}

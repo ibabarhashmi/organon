@@ -15,7 +15,7 @@
  * NO daemon, NO scheduler, NO server state (grep-walled). The cadence is the user's OS clock (docs/CADENCE-TRIGGERS.md).
  */
 import { createHash } from "node:crypto"
-import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { StrategyStore } from "./store"
 import { StrategyResolve } from "./resolve"
@@ -47,6 +47,19 @@ export namespace Monitor {
     return { ok: true }
   }
 
+  // S84 (Reckoning sprint) — the cadence delta facts SPEAKABLE in both registers, behind the existing advice wall (no new
+  // intent). Pro keeps the full detail (baseline hash + capture tier); Simple strips the parenthetical provenance to plain
+  // words. Both are FACTS (they pass guardCycleLine); neither is a defence or a recommendation. Used by the Ask console.
+  export function speakDelta(d: Baseline.Delta, register: "simple" | "pro"): string {
+    if (register === "pro") return d.text
+    // Simple: strip the ENTIRE provenance parenthetical (the one carrying the baseline hash + capture tier) to plain words —
+    // the before→after direction stays; the hash/tier is Pro-only detail. Then tidy dangling spaces before punctuation.
+    return d.text.replace(/\s*\([^)]*baseline [0-9a-f]{8}[^)]*\)/gi, "").replace(/\s+([.,])/g, "$1").replace(/\s{2,}/g, " ").trim()
+  }
+  export function speakDeltas(deltas: Baseline.Delta[], register: "simple" | "pro"): string[] {
+    return deltas.filter((d) => d.judgeable).map((d) => speakDelta(d, register))
+  }
+
   // the fired-exit fact grammar (pinned, cadence-pins) — a stated fact, never an instruction.
   export function firedExitLine(hash: string, why: string): string {
     return `exit criterion ${hash.slice(0, 8)}… FIRED this cycle — ${why} (a stated fact; not an instruction).`
@@ -64,6 +77,22 @@ export namespace Monitor {
       return `${r.poolKey}:${h ? `${h.contentHash}@${h.asOf}` : "SAMPLE"}`
     })
     return sha256(parts.join("|"))
+  }
+
+  // THE CAPTURE-HEAD METADATA (Reckoning sprint; S86/S86b) — read the confirmed-capture head AND check it is safe to read:
+  //   · TORN (S86): a provenance head whose contentHash is not a well-formed 64-hex digest is a torn/mid-write read →
+  //     the monitor must not read it (a torn read is UNJUDGEABLE, never a fabricated cycle);
+  //   · SKEW (S86b): a capture asOf LATER than the injected `now` is clock skew (a head from the future) → UNJUDGEABLE.
+  export function captureMeta(resolved: StrategyResolve.Resolved[], nowMs: number): { head: string; torn: boolean; skew: boolean; maxAsOf: number } {
+    let torn = false
+    let maxAsOf = 0
+    for (const r of resolved) {
+      const h = r.history.length ? r.history[r.history.length - 1] : null
+      if (!h) continue
+      if (typeof h.contentHash !== "string" || !/^[0-9a-f]{64}$/.test(h.contentHash)) torn = true // a torn / unhashable head
+      if (typeof h.asOf === "number" && h.asOf > maxAsOf) maxAsOf = h.asOf
+    }
+    return { head: captureHeadOf(resolved), torn, skew: maxAsOf > nowMs, maxAsOf }
   }
 
   // build the baseline SURFACE from a compile result + the resolved positions (the govClass is the MR3 read).
@@ -147,11 +176,48 @@ export namespace Monitor {
     baselineDir?: string
     trialDir?: string
     captureHead?: string // injectable for deterministic tests (defaults to captureHeadOf(resolved))
+    skipLock?: boolean // test-only: bypass the concurrency lock (S86c is proven with it ON in a dedicated test)
+  }
+
+  // S86c — the per-lineage concurrency lock. Local-first does not mean single-threaded (the user-owned cron makes two
+  // overlapping monitor invocations reachable). An EXCLUSIVE create ('wx') is the lock: exactly one invocation acquires it;
+  // the other exits stating a cycle is already running. A stale lock (a crashed run) older than the TTL is reclaimed.
+  const LOCK_TTL_MS = 10 * 60_000
+  function acquireLock(id: string, dir: string, nowMs: number): { ok: true } | { ok: false; error: string } {
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
+    const lf = path.join(dir, `${id}.lock`)
+    if (existsSync(lf)) {
+      const age = nowMs - Number(readFileSync(lf, "utf8") || 0)
+      if (!(age > LOCK_TTL_MS || age < 0)) return { ok: false, error: `a cycle is already running for ${id.slice(0, 8)}… — this invocation exits without appending (S86c: exactly one cycle appends).` }
+    }
+    try {
+      writeFileSync(lf, String(nowMs), { flag: "w" })
+      return { ok: true }
+    } catch {
+      return { ok: false, error: `could not acquire the cycle lock for ${id.slice(0, 8)}…` }
+    }
+  }
+  function releaseLock(id: string, dir: string): void {
+    const lf = path.join(dir, `${id}.lock`)
+    try { if (existsSync(lf)) rmSync(lf) } catch { /* best-effort */ }
   }
 
   // CYCLE — re-judge a held manifest on the cadence. Async (it calls the live resolve pipeline); pure composition otherwise.
   export async function cycle(id: string, now: number, at: string, opts: CycleOpts = {}): Promise<CycleReport | { error: string }> {
     const cycleDir = opts.cycleDir ?? CYCLE_DIR
+    // S86c — acquire the per-lineage concurrency lock FIRST; a second overlapping invocation exits without appending.
+    if (!opts.skipLock) {
+      const lock = acquireLock(id, cycleDir, now)
+      if (!lock.ok) return { error: lock.error }
+    }
+    try {
+      return await cycleLocked(id, now, at, opts, cycleDir)
+    } finally {
+      if (!opts.skipLock) releaseLock(id, cycleDir)
+    }
+  }
+
+  async function cycleLocked(id: string, now: number, at: string, opts: CycleOpts, cycleDir: string): Promise<CycleReport | { error: string }> {
     const baselineDir = opts.baselineDir ?? BASELINE_DIR
     const trialDir = opts.trialDir ?? StrategyTrial.TRIAL_DIR
 
@@ -170,7 +236,12 @@ export namespace Monitor {
     const { composed, resolved } = await StrategyResolve.resolveAndCompile(manifest, now, Date.parse(at) || undefined, baselineGov)
     const currentSurface = surfaceOf(composed, resolved)
     const captureHead = opts.captureHead ?? captureHeadOf(resolved)
-    const fresh = lastCycle ? captureHead !== lastCycle.captureHead : true
+    // S86 (torn read) + S86b (clock skew) — a torn/unhashable provenance head, or a capture asOf later than `now`, is not
+    // safe to read: the cycle renders NO reading and appends NO trial (UNJUDGEABLE, stated). An injected captureHead (tests)
+    // bypasses the derivation but the meta is still computed over the resolved provenance.
+    const meta = captureMeta(resolved, now)
+    const unreadable: "torn" | "skew" | null = meta.torn ? "torn" : meta.skew ? "skew" : null
+    const fresh = unreadable ? false : lastCycle ? captureHead !== lastCycle.captureHead : true
 
     const seq = priorCycles.length + 1
     const prevReportHash = lastCycle ? lastCycle.reportHash : null
@@ -198,7 +269,11 @@ export namespace Monitor {
     let deltas: Baseline.Delta[] = []
     let exit: CycleReport["exit"] = null
     let note: string
-    if (baselinePinnedThisCycle) {
+    if (unreadable === "torn") {
+      note = `the confirmed-capture head is torn/unhashable this cycle — deltas UNJUDGEABLE; no reading rendered (S86: the monitor verifies the capture head's content hash before reading, never a mid-write read).`
+    } else if (unreadable === "skew") {
+      note = `the latest capture is timestamped later than now (clock skew — a head from the future) — deltas UNJUDGEABLE; no reading rendered (S86b: monotonicity).`
+    } else if (baselinePinnedThisCycle) {
       note = `baseline pinned this cycle (${baseline.hash.slice(0, 8)}…) — deltas begin next cycle. Nothing is judged against a frame that did not yet exist.`
     } else if (!fresh) {
       note = `no new confirmed capture since the last cycle (head ${captureHead.slice(0, 8)}…) — deltas UNJUDGEABLE; no reading rendered (a cycle renders only on a confirmed boundary).`

@@ -38,7 +38,18 @@ export namespace DefiLlama {
   // the injectable fetch seam (default = global fetch). Tests inject a fixture / a 429 / a throwing impl.
   export interface FetchResult { ok: boolean; status: number; json(): Promise<unknown> }
   export type FetchImpl = (url: string) => Promise<FetchResult>
-  const globalFetch: FetchImpl = (url) => fetch(url) as unknown as Promise<FetchResult>
+
+  // MR1 (Reckoning sprint; Phase 4) — THE FIX BEFORE THE CAPTURE. The ~10.5 MB /pools payload is reachable (HTTP 200) but a
+  // budget-less fetch can hang on the body pull (V32's "naive fetch times out" — the fix, not the capture, was the scoped
+  // work). The fetch now carries an EXPLICIT budget (AbortSignal.timeout): a large one for /pools, a normal one elsewhere. On
+  // timeout the request ABORTS and getJson's honest fallback returns last-good (stale REAL) or SAMPLE — NEVER a fabricated
+  // value. (True streaming-JSON parsing would need a dependency the mass path forbids; the budgeted full read is the honest fix.)
+  export const DEFAULT_FETCH_BUDGET_MS = 15_000
+  export const POOLS_FETCH_BUDGET_MS = 45_000 // generous room for the ~10.5 MB /pools body
+  export function budgetedFetch(budgetMs: number): FetchImpl {
+    return (url) => fetch(url, { signal: AbortSignal.timeout(budgetMs) }) as unknown as Promise<FetchResult>
+  }
+  const globalFetch: FetchImpl = budgetedFetch(DEFAULT_FETCH_BUDGET_MS)
 
   const cache = new Map<string, { at: number; body: unknown }>()
   export function resetCache(): void { cache.clear() } // test hook (the cache is process-global by design)
@@ -88,7 +99,7 @@ export namespace DefiLlama {
 
   // /pools → the Shelf subset, tagged. On no data → the labeled SAMPLE shelf (the tool still runs, honestly).
   // Pro-keyed env → the pro base (deeper REAL, tier-stamped); keyless → the free base, byte-exact (X-CAPABILITY a/d).
-  export async function pools(now: number, fetchImpl: FetchImpl = globalFetch, env: Record<string, string | undefined> = process.env): Promise<Tagged<Pool[]>> {
+  export async function pools(now: number, fetchImpl: FetchImpl = budgetedFetch(POOLS_FETCH_BUDGET_MS), env: Record<string, string | undefined> = process.env): Promise<Tagged<Pool[]>> {
     const rt = route(env)
     const { body, reality, note } = await getJson(`${rt.fetchBase}/pools`, now, fetchImpl)
     const data = (body as { data?: unknown })?.data

@@ -64,7 +64,7 @@ test("TRIAL — RECORDING ≠ COUNTING: the readout states the inertness; a seed
   const r = StrategyTrial.readout(FIXTURE_CONFIG, FDIR)
   console.log("  readout:", r)
   expect(r).toMatch(/deflation remains INERT/i)
-  expect(r).toMatch(/≥ 20–50-trials-per-family trigger \+ the Operator's D33/i)
+  expect(r).toMatch(/≥ 20–50-trials-per-family trigger AND the Operator's D33/i) // Reckoning S84: BOTH, taxonomy-aware
   // a seeded counted:true trial → verify fails (a counted trial is a Halt)
   const dir = path.join(StrategyStore.ROOT, "_test_trials2")
   const cfg = "seededcounted"
@@ -99,6 +99,6 @@ test("TRIAL — the journal is LOCAL-FIRST: the served composed view NEVER carri
   // the fixture manifest's journal.priorIntent ("chase a higher-APY farm") is LOCAL-FIRST — it must NEVER reach a served payload
   expect(html).not.toMatch(/chase a higher-APY farm/i)
   // but the ledger readout renders (recorded, never counted)
-  expect(html).toMatch(/3 trials recorded/i)
+  expect(html).toMatch(/3 entries on this lineage/i) // the taxonomy-aware readout (Reckoning S84): counts + the rule
   expect(html).toMatch(/deflation remains INERT/i)
 })

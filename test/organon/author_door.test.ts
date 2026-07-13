@@ -10,6 +10,7 @@ import { Author } from "../../src/strategy/author"
 import { Manifest } from "../../src/strategy/manifest"
 import { Reality } from "../../src/studio/reality"
 import { VoiceGates } from "../../src/ask/gates"
+import { AdviceShape } from "../../src/ask/advice" // the Reckoning SHAPE guard — the door copy (incl. the period-less affordance line) goes through it
 import { StrategyCompile } from "../../src/strategy/compile"
 
 const valid = {
@@ -54,7 +55,7 @@ test("S78 — the NEW door AUTHORS NOTHING: no default exit kind, no pre-filled 
   expect(html).toMatch(/name="thesis"[^>]*>\s*<\/textarea>|name="thesis" rows="4"[^>]*><\/textarea>/)
   // every pinned door string passes guardLine + advicePattern
   for (const s of Reality.DOOR_COPY) {
-    expect(VoiceGates.advicePattern(s).advice).toBe(false)
+    expect(AdviceShape.detect(s).advice).toBe(false)
     expect(StrategyCompile.guardLine(s).ok).toBe(true)
   }
 })

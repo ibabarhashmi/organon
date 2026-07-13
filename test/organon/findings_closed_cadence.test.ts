@@ -11,6 +11,7 @@ import { Monitor } from "../../src/strategy/monitor"
 import { Baseline } from "../../src/strategy/baseline"
 import { Reality } from "../../src/studio/reality"
 import { VoiceGates } from "../../src/ask/gates"
+import { AdviceShape } from "../../src/ask/advice"
 import { Author } from "../../src/strategy/author"
 
 const cd = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "cadence-pins.json"), "utf8"))
@@ -54,8 +55,10 @@ test("A′8 — the Fact Envelope is an INTERNAL serialization contract with NO 
 })
 
 test("A′9 — MR2's affordance line does not drift into marketing: it passes the advice wall (pinned phrasing only)", () => {
-  expect(VoiceGates.advicePattern(Reality.AFFORDANCE_LINE).advice).toBe(false)
-  expect(cd.mr2AffordanceLine.line).toBe(Reality.AFFORDANCE_LINE)
+  expect(AdviceShape.detect(Reality.AFFORDANCE_LINE).advice).toBe(false)
+  // the live line is SUPERSEDED by the Reckon golden move (period removed) — the cadence record is the historical pin; the
+  // live constant is bound to reckon-pins.json now (asserted in reckon_pins.test.ts). Both share the same body sans period.
+  expect(cd.mr2AffordanceLine.line.replace(/\.$/, "")).toBe(Reality.AFFORDANCE_LINE)
 })
 
 test("A′10 — the S36 byte-move is DISCLOSED (the two shelf goldens + the door addition are recorded with shas)", () => {

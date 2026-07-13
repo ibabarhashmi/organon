@@ -12,7 +12,7 @@
  *     so a downstream agent physically cannot read an authored recommendation out of an ORGΛNON fact.
  * Pure; no I/O; no model. Pinned shape: cadence-pins.json.factEnvelope.
  */
-import { VoiceGates } from "../ask/gates"
+import { AdviceShape } from "../ask/advice" // the Reckoning SHAPE guard (RP-1/S81) — the envelope's disclaimer must pass it
 
 export namespace FactEnvelope {
   export const KILL_CRITERION = "8b4e094b" // the tool's own test travels with its facts — the discipline is portable
@@ -50,6 +50,19 @@ export namespace FactEnvelope {
   // an ORGΛNON fact) — the compile-time banned-output shapes, applied to the SERIALIZED fact (keys + string values).
   export const BANNED_FACT_SHAPES = ["suggested weight", "suggested allocation", "rebalance", "ranked alternative", "rankings", "consider instead", "optimal weight", "recommended split", "you should allocate"] as const
 
+  // RP-3 (Reckoning sprint; S85) — USER TEXT IS STRUCTURALLY FIELDED AS UNTRUSTED. The envelope is the artifact built to
+  // carry ORGΛNON's facts to a THIRD-PARTY agent; a raw thesis interpolated into a narrative string is a prompt-injection
+  // vector, not merely an XSS one. Any user-supplied text (thesis, position identifiers, re-pin reason) that rides an
+  // envelope goes through `untrusted()` — it becomes a DEMARCATED data field (`untrustedUserText` + `untrusted:true`), never
+  // interpolated into the pinned disclaimer or any narrative. A downstream reader sees it is user data, never an instruction.
+  export interface Untrusted {
+    untrustedUserText: string
+    untrusted: true
+  }
+  export function untrusted(text: string): Untrusted {
+    return { untrustedUserText: text, untrusted: true }
+  }
+
   // WRAP — the ONLY constructor. `authored` is hard-set false (structural). The disclaimer + killCriterion are pinned.
   export function wrap(input: { fact: unknown; verdict: Verdict; provenance: Provenance; subject: Subject; baselineHash?: string | null }): T {
     return {
@@ -84,7 +97,7 @@ export namespace FactEnvelope {
   export function serialize(env: T): { ok: true; json: string } | { ok: false; error: string } {
     if (env.authored !== false) return { ok: false, error: "an envelope with authored !== false cannot be serialized — ORGΛNON did not author this fact (the X-MANIFEST wall, extended)" }
     if (env.killCriterion !== KILL_CRITERION) return { ok: false, error: `the kill-criterion must travel with the fact (expected ${KILL_CRITERION})` }
-    const adv = VoiceGates.advicePattern(env.disclaimer)
+    const adv = AdviceShape.detect(env.disclaimer)
     if (adv.advice) return { ok: false, error: `the disclaimer is advice-shaped ("${adv.shape}") — a fact's disclaimer must pass the advice wall` }
     const json = canonical(env)
     const lower = json.toLowerCase()

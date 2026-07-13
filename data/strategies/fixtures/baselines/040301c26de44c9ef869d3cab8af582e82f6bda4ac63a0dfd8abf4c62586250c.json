@@ -1,0 +1,43 @@
+{
+  "hash": "9bdfc026979e9cb3b9e42c00dc110d2d440cb07d9515377551f9176e8e4153cf",
+  "registeredAt": "2026-07-13T00:00:00Z",
+  "surface": {
+    "positions": [
+      {
+        "subjectKey": "defillama:pool:SAMPLE-aave-usdc",
+        "name": "aave-v3 USDC",
+        "verdict": "UNVERIFIED",
+        "govClass": null,
+        "captureTier": "REAL-at-timestamp",
+        "peg": null,
+        "tvlDrawdown": null,
+        "fundingNegPeriods": null,
+        "fundingTotalPeriods": null
+      },
+      {
+        "subjectKey": "defillama:pool:SAMPLE-dai-lending",
+        "name": "sample-lending DAI",
+        "verdict": "UNVERIFIED",
+        "govClass": null,
+        "captureTier": "REAL-at-timestamp",
+        "peg": null,
+        "tvlDrawdown": null,
+        "fundingNegPeriods": null,
+        "fundingTotalPeriods": null
+      }
+    ],
+    "effectiveK": null,
+    "catch": {
+      "fundingCarryCount": 0,
+      "leveredCount": 0,
+      "rwaPresent": false,
+      "totalReachable": 2
+    },
+    "worstAxis": {
+      "subjectKey": "defillama:pool:SAMPLE-aave-usdc",
+      "axis": "counterparty",
+      "tier": "unverified"
+    },
+    "exitHash": "ef96ed2485bac2105e3bda17ed326968ac9a2d1558b25940549f7135ce178d0b"
+  }
+}

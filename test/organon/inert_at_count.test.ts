@@ -54,9 +54,9 @@ test("S75 — every trial in the grown lineage carries counted:false (recorded, 
 test("S75 — the readout renders the REAL count + the inertness in plain words (counting awaits BOTH trigger AND D33)", () => {
   const g = grownLineage()
   const r = StrategyTrial.readout(g.config, StrategyTrial.FIXTURE_TRIAL_DIR)
-  expect(r).toMatch(new RegExp(`${g.count} trials recorded`))
+  expect(r).toMatch(new RegExp(`${g.count} entries on this lineage`)) // taxonomy-aware readout (Reckoning S84)
   expect(r).toMatch(/deflation remains INERT/i)
-  expect(r).toMatch(/≥ 20–50-trials-per-family trigger \+ the Operator's D33/i)
+  expect(r).toMatch(/≥ 20–50-trials-per-family trigger AND the Operator's D33/i) // Reckoning S84: BOTH, taxonomy-aware
 })
 
 test("S75 — the Stamp path imports NO monitor/strategy module (the trial ledger + the cadence are OFF the Stamp path — a grep)", () => {

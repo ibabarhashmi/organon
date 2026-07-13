@@ -1,0 +1,26 @@
+{
+  "protocol": "reckon-migration",
+  "at": "2026-07-13T00:00:00Z",
+  "reason": "One-time act-taxonomy materialization onto the committed fixture lineages (X-RECKON d) — the ONLY window (realLineageCount===0). SEARCH/OBSERVATION derived from the content-hash chain; a real lineage may never be re-tagged after this (X-RECKON e).",
+  "realLineageCountAtMigration": 0,
+  "entriesRetagged": 26,
+  "lineages": [
+    {
+      "id": "040301c26de44c9ef869d3cab8af582e82f6bda4ac63a0dfd8abf4c62586250c",
+      "count": 23,
+      "oldChainRoot": "f02a474216038d5de023f2c14bdac9f6bd05efc959d1e6d00e505e85dfd70770",
+      "newChainRoot": "f02a474216038d5de023f2c14bdac9f6bd05efc959d1e6d00e505e85dfd70770",
+      "search": 1,
+      "observation": 22
+    },
+    {
+      "id": "a82f8f501876059356adf33e7c62604fc3b9c189c3841f420123ece1d001c05d",
+      "count": 3,
+      "oldChainRoot": "65fd0b4d87f07906614ac6c14b2592a1c9507c918316a2f1d9ff5da6fba5441a",
+      "newChainRoot": "65fd0b4d87f07906614ac6c14b2592a1c9507c918316a2f1d9ff5da6fba5441a",
+      "search": 1,
+      "observation": 2
+    }
+  ],
+  "chainNote": "oldChainRoot === newChainRoot for every lineage — act is DERIVED metadata materialized onto each entry, NOT part of contentSha/entryHash; the chain is cryptographically UNCHANGED and verify() re-derives the act. This is a field-addition, not a chain rewrite."
+}

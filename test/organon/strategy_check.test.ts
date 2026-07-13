@@ -12,7 +12,10 @@ import { app } from "../../script/serve-reality"
 import { Manifest } from "../../src/strategy/manifest"
 import { StrategyStore } from "../../src/strategy/store"
 
-const FIXTURE_ID = StrategyStore.list(StrategyStore.FIXTURE_DIR)[0]
+// S82(b) (Reckoning sprint) — pin the V31 fixture by EXPLICIT id (no selector-loosening; the V32 "robust selector" was how a
+// wall decays). The V31 3-trial lineage has NO committed baseline, so its /check render is a plain composed view — deterministic
+// (no wall-clock thesis-age), unlike a monitored lineage (W-CAD03).
+const FIXTURE_ID = "a82f8f501876059356adf33e7c62604fc3b9c189c3841f420123ece1d001c05d"
 
 test("STRATEGY — the committed fixture manifest renders a Composed Reality Check at /check/manifest:<id>", async () => {
   expect(FIXTURE_ID).toBeDefined()

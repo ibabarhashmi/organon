@@ -4,12 +4,12 @@
   "at": "2026-07-09",
   "golden": {
     "shelf-sample": {
-      "sha": "bccef6e21bf9cf6a17ed87fadb4c6b949ffbd19c68ade2ecd29adfa7d24c513c",
-      "len": 1703
+      "sha": "66c9c75ba0d1a91cc374cc21acfcf6b58020aa4cd4c1397ce5c9baf659d8c880",
+      "len": 1702
     },
     "shelf-filter-solid": {
-      "sha": "5609438ebf553d6d85f9a0f214aa4236d4966d59a0c77e4193d5d814b9641233",
-      "len": 1355
+      "sha": "7b105590847b3c6f942a05d41404c13dd832260ad4ca9413910a2a7460520a60",
+      "len": 1354
     },
     "reality-sample": {
       "sha": "6b69b40a1e11d54d644952d8cf5fca3abf832de4fd266da67c44209d3ff20938",

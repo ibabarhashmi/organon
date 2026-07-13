@@ -228,10 +228,11 @@ export namespace Reality {
   }
 
   // ── THE MANIFEST DOOR (Cadence sprint; X-AUTHOR) — the pinned copy, every string advice-wall + guardLine checked at pin
-  // time (S78). The AFFORDANCE line (MR2) rides a CONSCIOUS S36 re-pin (the shelf's visible text changes — disclosed). Its
-  // closing clause "…never tells you what to buy." is pinned WITH the trailing period: the advice wall matches "buy " (space)
-  // but not "buy." (period) — the period is load-bearing; the S78 wall asserts the line passes advicePattern so a regression bites. ──
-  export const AFFORDANCE_LINE = "Have a strategy of your own? Author a manifest — the positions you hold, a thesis you set in advance, and an exit criterion the engine can check — and ORGΛNON gives it the same Reality Check. It judges what you're doing; it never tells you what to buy."
+  // time (S78). THE AFFORDANCE LINE (MR2) — the RECKONING sprint's ONE golden move: the trailing period after "buy" is
+  // REMOVED. Under the V32 substring guard the period was load-bearing (it matched "buy " but not "buy."); the V33 shape
+  // guard reads the negated object-of frame ("never tells you what to buy") and passes it WITHOUT the punctuation trick.
+  // The live line is now pinned by reckon-pins.json (goldenMove.affordanceLineNew — a disclosed supersession of the cadence pin).
+  export const AFFORDANCE_LINE = "Have a strategy of your own? Author a manifest — the positions you hold, a thesis you set in advance, and an exit criterion the engine can check — and ORGΛNON gives it the same Reality Check. It judges what you're doing; it never tells you what to buy"
   export const DOOR_NEW_INTRO = "Declare a strategy of your own. List the positions you hold (each a subject the engine already knows, in your own units), write the thesis you are testing, and set an exit criterion in advance — the goalpost, fixed before the throw. ORGΛNON judges what you declare against the facts it captures. It suggests no position, ranks nothing, proposes no threshold, and never tells you what to buy. Every field below is yours; nothing is pre-chosen."
   export const DOOR_EDIT_INTRO = "Edit your own registered manifest. The fields below hold what YOU declared — ORGΛNON pre-fills nothing of its own. Changing a position or the exit criterion is a disclosed re-pin: the old and new content hashes are both recorded with your reason, never a silent overwrite."
   export const DOOR_EXIT_HELP = "An exit criterion must be evaluable over facts the engine captures. Choose the kind, then a threshold; a kind the engine cannot read is refused at registration with the reason."

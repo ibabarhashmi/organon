@@ -60,9 +60,8 @@ test("CADENCE — the FACT ENVELOPE is pinned (authored:false structural; the di
   for (const s of ["rankings", "rebalance", "suggested allocation", "consider instead"]) expect(fe.bannedFactShapes).toContain(s)
 })
 
-test("CADENCE — the door copy + MR2 affordance line are pinned AND pass guardLine + advicePattern at pin time (S78)", () => {
-  // the pins and the code agree byte-for-byte
-  expect(cd.mr2AffordanceLine.line).toBe(Reality.AFFORDANCE_LINE)
+test("CADENCE — the door copy is pinned AND passes guardLine + advicePattern; the MR2 affordance line is SUPERSEDED by Reckon (S78)", () => {
+  // the door copy pins and the code still agree byte-for-byte
   expect(cd.doorCopy.newIntro).toBe(Reality.DOOR_NEW_INTRO)
   expect(cd.doorCopy.editIntro).toBe(Reality.DOOR_EDIT_INTRO)
   // every pinned string passes BOTH walls (the door authors nothing)
@@ -71,9 +70,12 @@ test("CADENCE — the door copy + MR2 affordance line are pinned AND pass guardL
     expect(VoiceGates.advicePattern(s).advice).toBe(false)
     expect(StrategyCompile.guardLine(s).ok).toBe(true)
   }
-  // the affordance line's trailing period after "buy" is LOAD-BEARING (the wall matches "buy " not "buy.")
-  expect(cd.mr2AffordanceLine.line.endsWith("buy.")).toBe(true)
-  expect(VoiceGates.advicePattern(cd.mr2AffordanceLine.line.replace(/buy\.$/, "buy")).advice).toBe(true) // strip the period → the wall bites
+  // the CADENCE record is the HISTORICAL affordance pin (with the trailing period — the V32-era load-bearing full stop). The
+  // LIVE line is now the RECKON pin (period removed — the shape guard no longer needs it); the live binding moved to
+  // reckon_pins.test.ts. The cadence record is frozen and self-consistent (d90df3c7); it is NOT re-bound to the live constant.
+  expect(cd.mr2AffordanceLine.line.endsWith("buy.")).toBe(true) // the historical record still carries the period
+  expect(Reality.AFFORDANCE_LINE.endsWith("buy")).toBe(true) // the live line no longer does (the golden move)
+  expect(Reality.AFFORDANCE_LINE).not.toBe(cd.mr2AffordanceLine.line) // superseded, not silently overwritten
 })
 
 test("CADENCE — D39-D42 present + all operatorSigned=false (LN5); D27 STILL first; MR4/MR5 discharged; walls S74-S79", () => {

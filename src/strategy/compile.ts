@@ -18,7 +18,7 @@
 import { Correlate } from "../analytics/correlate"
 import { Scorecard } from "../analytics/scorecard"
 import { Domain } from "../domain/types"
-import { VoiceGates } from "../ask/gates"
+import { AdviceShape } from "../ask/advice" // the Reckoning SHAPE guard (RP-1/S81) — catches the token-free advice the substring wall missed
 import { Manifest } from "./manifest"
 import { ExitCriterion } from "./exit"
 
@@ -77,8 +77,8 @@ export namespace StrategyCompile {
     const lower = text.toLowerCase()
     const banned = BANNED_OUTPUT_SHAPES.find((s) => lower.includes(s))
     if (banned) return { ok: false, reason: `a composed line contains the banned output shape "${banned}" — the compiler judges, never authors (X-ADVICE; S71)` }
-    const adv = VoiceGates.advicePattern(text)
-    if (adv.advice) return { ok: false, reason: `a composed line is advice-shaped ("${adv.shape}") — refused (the advice wall re-runs on every composed line; S71)` }
+    const adv = AdviceShape.detect(text)
+    if (adv.advice) return { ok: false, reason: `a composed line is advice-shaped ("${adv.shape}") — refused (the SHAPE guard re-runs on every composed line; catches token-free advice; S71/S81)` }
     return { ok: true }
   }
 
