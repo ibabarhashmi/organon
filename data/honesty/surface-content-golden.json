@@ -4,16 +4,20 @@
   "at": "2026-07-09",
   "golden": {
     "shelf-sample": {
-      "sha": "fa4e9d656efaa18e79582e2f60a5416ad5a625dad99bff55f19df5678b9048e8",
-      "len": 1426
+      "sha": "bccef6e21bf9cf6a17ed87fadb4c6b949ffbd19c68ade2ecd29adfa7d24c513c",
+      "len": 1703
     },
     "shelf-filter-solid": {
-      "sha": "a5fa5ac002f6809a7bb9f7db1a550c005a557d410c8bd5a2377312981e5cd190",
-      "len": 1078
+      "sha": "5609438ebf553d6d85f9a0f214aa4236d4966d59a0c77e4193d5d814b9641233",
+      "len": 1355
     },
     "reality-sample": {
       "sha": "6b69b40a1e11d54d644952d8cf5fca3abf832de4fd266da67c44209d3ff20938",
       "len": 3237
+    },
+    "manifest-door-new": {
+      "sha": "853b75b85c8fae37d500e693e4b59bfe9cc7c972f347aa47cb1ebddef334c509",
+      "len": 1312
     },
     "ask-empty": {
       "sha": "8151334ff54e7219402d84e5ee0739cb4c3655661bafaaf6499a6c1fb7a45301",

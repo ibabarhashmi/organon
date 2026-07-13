@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "positions": [
+    {
+      "subjectKey": "defillama:pool:SAMPLE-aave-usdc",
+      "size": 25000,
+      "units": "USDC"
+    },
+    {
+      "subjectKey": "defillama:pool:SAMPLE-dai-lending",
+      "size": 25000,
+      "units": "DAI",
+      "assumptions": "monitored on the capture cadence"
+    }
+  ],
+  "thesis": "A monitored blue-chip stablecoin pair, re-judged each capture cycle against a fixed registration baseline. I am testing whether the cadence itself changes what I do — and whether twenty-plus recorded cycles are still ONE bet, never counted.",
+  "exitCriterion": {
+    "kind": "peg-floor",
+    "threshold": 0.99,
+    "subjectScope": "portfolio"
+  },
+  "journal": {
+    "priorIntent": "I want the trial count to grow past twenty and confirm the deflation stays inert at count."
+  }
+}

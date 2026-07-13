@@ -5,7 +5,7 @@
 # The first command a stranger ever runs is the most honest thing in the repo: it refuses to open the door until the
 # house is provably in order, and when it refuses it says exactly why.
 #
-# Usage:  ./organon.sh [menu|status|check|setup|doctor|launch|verify|stamp <poolKey>|ask "<q>"|--version|--full]
+# Usage:  ./organon.sh [menu|status|check|setup|doctor|launch|verify|stamp <poolKey>|ask "<q>"|monitor [--since <iso>]|--version|--full]
 #   menu    (default) check → setup → verify → the bounded TUI (interactive)
 #   status  check → setup → verify → the status table (non-interactive; the happy transcript)
 #   check   the prerequisite enumeration only (honest per-item; exit nonzero if a required item is missing)
@@ -24,15 +24,15 @@ MODE="menu"; FULL=""; STAMP_ARG=""; ASK_ARGS=(); PASS_ARGS=()
 # like `--screen ask` cannot flip the mode (a targeted fix for AH11 on the value-taking verbs; Probe Phase 2).
 for a in "$@"; do
   case "$a" in
-    menu|status|check|setup|setup-deps|doctor|launch|verify|stamp|ask|telemetry|feedback)
-      case "$MODE" in ask) ASK_ARGS+=("$a");; telemetry|feedback) PASS_ARGS+=("$a");; *) MODE="$a";; esac;;
+    menu|status|check|setup|setup-deps|doctor|launch|verify|stamp|ask|monitor|telemetry|feedback)
+      case "$MODE" in ask) ASK_ARGS+=("$a");; monitor|telemetry|feedback) PASS_ARGS+=("$a");; *) MODE="$a";; esac;;
     --full) FULL="--full";;
     --version) MODE="version";;
     *)
       case "$MODE" in
         stamp) [ -z "$STAMP_ARG" ] && STAMP_ARG="$a";;
         ask) ASK_ARGS+=("$a");;
-        telemetry|feedback) PASS_ARGS+=("$a");;
+        monitor|telemetry|feedback) PASS_ARGS+=("$a");;
       esac;;
   esac
 done
@@ -150,6 +150,7 @@ case "$MODE" in
   verify) do_verify;;
   stamp)  do_stamp;;
   ask)    do_ask;;
+  monitor) need_bun; bun run script/monitor-manifests.ts "${PASS_ARGS[@]}";;  # re-judge held manifests on the capture cadence (X-CADENCE; reads-never-acts; no daemon)
   telemetry) do_telemetry;;
   feedback)  do_feedback;;
   menu|*) tui;;

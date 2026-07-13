@@ -14,7 +14,9 @@ import { StrategyStore } from "../../src/strategy/store"
 import { ExitCriterion } from "../../src/strategy/exit"
 import { app } from "../../script/serve-reality"
 
-const FIXTURE_CONFIG = StrategyStore.list(StrategyStore.FIXTURE_DIR)[0] // the committed fixture manifest's lineage id
+// the V31 committed fixture is the 3-trial lineage; the Cadence sprint added a DISTINCT ≥20-trial lineage (inert-at-count,
+// S75), so select the V31 fixture by its trial count rather than list position (robust to the added sibling lineage).
+const FIXTURE_CONFIG = StrategyStore.list(StrategyStore.FIXTURE_DIR).find((id) => StrategyTrial.ledger(id, StrategyTrial.FIXTURE_TRIAL_DIR).length === 3)!
 const FDIR = StrategyTrial.FIXTURE_TRIAL_DIR
 
 test("TRIAL — S72: the committed fixture trial lineage RE-VERIFIES on a pristine clone (contentSha recomputes; chain intact; counted:false)", () => {

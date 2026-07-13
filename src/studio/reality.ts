@@ -25,6 +25,7 @@ import { LlamaYields, CoveragePosture } from "../dataplane/providers/llama-yield
 import type { Stamp } from "./stamp" // TYPE-ONLY — the Stamp's runtime (the attest core) is lazily imported by the /stamp route; the mass tool stays Stamp-free (X-OPTIN, PART CLEAN)
 import { Lineage } from "./lineage" // the three lineage walls (Lineage sprint; X-LINEAGE) — DataPlane-only (imports NO Stamp runtime), so it stays off the mass path
 import { Domain } from "../domain/types" // DOMAIN (X-DOMAIN) — the subject-TYPE classification; render-layer only, imports NO scored module (the catch line renders info/context like the governance line)
+import { Manifest } from "../strategy/manifest" // X-AUTHOR (Cadence sprint) — the DOOR renders the `.strict()` schema's allowed exit kinds; the form is a thin, honest shell over the schema (no coercion, authors nothing)
 import { DomainClassify } from "../domain/classify"
 import { YieldSource } from "../domain/axes/yield-source"
 import { RedemptionGap } from "../domain/axes/redemption-gap"
@@ -226,6 +227,18 @@ export namespace Reality {
 <div class="muted">shown as a range, never a single hero APY — the durable floor to the reward-inflated headline.</div>`
   }
 
+  // ── THE MANIFEST DOOR (Cadence sprint; X-AUTHOR) — the pinned copy, every string advice-wall + guardLine checked at pin
+  // time (S78). The AFFORDANCE line (MR2) rides a CONSCIOUS S36 re-pin (the shelf's visible text changes — disclosed). Its
+  // closing clause "…never tells you what to buy." is pinned WITH the trailing period: the advice wall matches "buy " (space)
+  // but not "buy." (period) — the period is load-bearing; the S78 wall asserts the line passes advicePattern so a regression bites. ──
+  export const AFFORDANCE_LINE = "Have a strategy of your own? Author a manifest — the positions you hold, a thesis you set in advance, and an exit criterion the engine can check — and ORGΛNON gives it the same Reality Check. It judges what you're doing; it never tells you what to buy."
+  export const DOOR_NEW_INTRO = "Declare a strategy of your own. List the positions you hold (each a subject the engine already knows, in your own units), write the thesis you are testing, and set an exit criterion in advance — the goalpost, fixed before the throw. ORGΛNON judges what you declare against the facts it captures. It suggests no position, ranks nothing, proposes no threshold, and never tells you what to buy. Every field below is yours; nothing is pre-chosen."
+  export const DOOR_EDIT_INTRO = "Edit your own registered manifest. The fields below hold what YOU declared — ORGΛNON pre-fills nothing of its own. Changing a position or the exit criterion is a disclosed re-pin: the old and new content hashes are both recorded with your reason, never a silent overwrite."
+  export const DOOR_EXIT_HELP = "An exit criterion must be evaluable over facts the engine captures. Choose the kind, then a threshold; a kind the engine cannot read is refused at registration with the reason."
+  export const DOOR_JOURNAL_HELP = "Optional. Your prior intent, in your words — local-first, never sent anywhere except through the existing consented export."
+  export const DOOR_REFUSE_HEAD = "Refused before registration. Nothing was registered."
+  export const DOOR_COPY = [AFFORDANCE_LINE, DOOR_NEW_INTRO, DOOR_EDIT_INTRO, DOOR_EXIT_HELP, DOOR_JOURNAL_HELP, DOOR_REFUSE_HEAD] as const
+
   // ── SCREEN 1 — THE SHELF ──
   export function renderShelf(cards: Card[], sampleFallback: boolean, filter?: { verdict?: string }): string {
     const shown = filter?.verdict ? cards.filter((c) => c.verdict === filter.verdict) : cards
@@ -250,6 +263,7 @@ ${c.kind === "delta-neutral"
     const realTier = applicableCards.filter((c) => realPoolKeys.has(c.poolKey)).length
     const coverage = applicable ? `<div class="muted">Contract screen: <b>${realTier} of ${applicable}</b> applicable pools carry a REAL verified-build tier (a deterministic structural screen over verified source — <i>not</i> an audit); the rest are honestly UNVERIFIED. <span class="muted">(${applicable} applicable; ${cards.length} shown incl. ${notApplicable} not-applicable delta-neutral.)</span> <span class="pro">See a strategy's counterparty row for the detail — every REAL tier so far is FLAGGED; the benign direction (a REAL build with zero flags → CLEAN-STRUCTURE) is fixture-proven only, with zero real-world instances yet (B3).</span></div>` : ""
     return page("The Shelf — which yields are real?", `<h1>The Shelf</h1><div class="muted">The strategies that hold DeFi's money — is the yield real, and what's the catch? Open one for its Reality Check.</div>
+<div class="muted door-affordance">${esc(AFFORDANCE_LINE)} <a href="/check/manifest:new">▶ Author a manifest</a></div>
 ${coverage}<div class="filters">filter: <a href="/">all</a> <a href="/?verdict=SOLID">SOLID</a> <a href="/?verdict=CAUTION">CAUTION</a> <a href="/?verdict=AVOID">AVOID</a> <a href="/?verdict=UNVERIFIED">UNVERIFIED</a> · <a href="/refresh">↻ refresh (live)</a> · <a href="/ask">💬 Ask ORGΛNON</a></div>
 ${note}${rows || `<div class="card muted">no pools match this filter.</div>`}${trust(sampleFallback)}`)
   }
@@ -359,6 +373,17 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`
     domain?: Domain.DomainType
     catchFact?: Domain.Catch
   }
+  // ── THE MONITORING BLOCK (Cadence sprint; X-CADENCE) — the lifecycle rendered on the composed drawer: the baseline line
+  // (the fixed frame), the delta facts (in the pinned grammar, against the content-hashed baseline), the exit-status
+  // timeline (each cycle a fact with its hash), the trial readout with REAL counts, and the closure state. Every line is a
+  // FACT the monitor already guarded (advice wall + urgency); the render only escapes + arranges. NO aggregate pill (D38). ──
+  export interface MonitoringView {
+    baselineLine: string // "baseline pinned <hash> at registration · N cycles since · last confirmed capture <ts>"
+    deltaLines: string[] // the judgeable delta facts (pinned grammar; each names its baseline hash + capture tier)
+    exitTimeline: string[] // "cycle 4: NOT FIRED (…) · cycle 5: FIRED (…)"
+    boundaryNote?: string // the confirmed-boundary state of the LAST cycle (e.g. "no new capture — UNJUDGEABLE")
+    closureLine?: string // present iff the manifest is CLOSED (a status + a final cycle; the post-mortem is V33/D40)
+  }
   export interface ComposedView {
     positions: ComposedPosition[]
     thesis: string
@@ -366,11 +391,24 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`
     compositeAbsence: string // the pinned D38-absence label (NO aggregate pill)
     trialReadout?: string // the ledger readout (Phase 4) — "N trials recorded; the deflation remains inert …"
     exitLine?: string // the exit-criterion registration + evaluation summary (rendered up top, the discipline made visible)
+    monitoring?: MonitoringView // the cadence lifecycle (Cadence sprint) — absent → the render is byte-identical to pre-cadence
+  }
+
+  function renderMonitoringBlock(m: MonitoringView): string {
+    return `<div class="card"><h2>Monitoring — the thesis re-judged on the capture cadence</h2>
+<div class="muted">The monitor READS, never acts: every line below is a FACT against a content-hashed registration baseline that cannot move in silence — a fired exit is stated with its hash, never an instruction (X-CADENCE).</div>
+<div class="axis"><b>Baseline — the fixed frame</b><div>${esc(m.baselineLine)}</div></div>
+${m.closureLine ? `<div class="axis"><b>Closed</b><div>${esc(m.closureLine)}</div></div>` : ""}
+${m.deltaLines.length ? `<div class="axis"><b>Deltas since registration</b>${m.deltaLines.map((l) => `<div>${esc(l)}</div>`).join("")}</div>` : ""}
+${m.exitTimeline.length ? `<div class="axis"><b>Exit-status timeline</b>${m.exitTimeline.map((l) => `<div>${esc(l)}</div>`).join("")}</div>` : ""}
+${m.boundaryNote ? `<div class="muted">${esc(m.boundaryNote)}</div>` : ""}</div>`
   }
 
   export function renderComposed(view: ComposedView): string {
-    // S71 — a strategy of ONE position IS today's Reality Check, byte-for-byte (perfect backward compatibility).
-    if (view.positions.length === 1) {
+    // S71 — a strategy of ONE position IS today's Reality Check, byte-for-byte (perfect backward compatibility). A MONITORED
+    // manifest is a genuinely different subject (it carries a registration baseline + cycles), so it does NOT short-circuit —
+    // the byte-identity guarantee is for the UNMONITORED single-position case, which is preserved exactly.
+    if (view.positions.length === 1 && !view.monitoring) {
       const p = view.positions[0]
       return renderRealityCheck(p.name, p.scored, p.history, p.poolKey, p.divergences ?? [], p.governance ?? null, p.provTier, p.domain, p.catchFact)
     }
@@ -392,10 +430,71 @@ ${realityBody(p.name, p.scored, p.history, p.poolKey, p.divergences ?? [], p.gov
 <div class="card lead"><b>Your thesis:</b> ${esc(view.thesis)}</div>
 <div class="card"><div class="muted">${esc(view.compositeAbsence)}</div></div>
 <button class="btn" onclick="document.body.classList.toggle('pro-on')">Simple / Pro</button>
+${view.monitoring ? renderMonitoringBlock(view.monitoring) : ""}
 ${factsBlock}
 <h2>The positions — each its own full Reality Check</h2>
 ${positionsBlock}`,
     )
+  }
+
+  // ── THE MANIFEST DOOR (Cadence sprint; X-AUTHOR, S78) — a server-rendered form the user reaches by a PATH, NOT a fourth
+  // screen (/check/manifest:new · /check/manifest:<id>/edit). It REFUSES, never coerces (the zod schema is the refusal
+  // surface — Author.parse); it AUTHORS NOTHING (no pre-filled thesis, no suggested threshold, no ranked position, no "most
+  // users choose"); every string in the form passes the advice wall + guardLine at PIN time. Zero new deps (Hono HTML). An
+  // edit pre-fills the user's OWN prior declaration (their data, not a suggestion) + a REQUIRED reason (the disclosed re-pin). ──
+  export interface DoorValues {
+    thesis?: string
+    exitKind?: string
+    exitThreshold?: string
+    exitScope?: string
+    journalPriorIntent?: string
+    positions?: { subjectKey?: string; size?: string; units?: string; assumptions?: string }[]
+    reason?: string
+  }
+
+  function exitKindSelect(selected?: string): string {
+    // the FIRST option is an UNSELECTABLE placeholder — nothing is defaulted (no "most users choose"); the options are the
+    // schema's CLOSED evaluable set (the allowed vocabulary, like a type — not a suggestion of which to pick).
+    const opts = Manifest.EXIT_KINDS.map((k) => `<option value="${esc(k)}"${selected === k ? " selected" : ""}>${esc(k)}</option>`).join("")
+    return `<select name="exit_kind"><option value="" disabled${selected ? "" : " selected"}>— choose an evaluable exit kind —</option>${opts}</select>`
+  }
+
+  function positionRow(i: number, v?: { subjectKey?: string; size?: string; units?: string; assumptions?: string }): string {
+    return `<fieldset class="pos-row"><legend>position ${i + 1}</legend>
+<label>subject key <input name="pos${i}_subjectKey" value="${esc(v?.subjectKey)}" placeholder="a subject the engine knows (e.g. defillama:pool:…)"></label>
+<label>size <input name="pos${i}_size" value="${esc(v?.size)}" placeholder="your own units (no USD conversion)"></label>
+<label>units <input name="pos${i}_units" value="${esc(v?.units)}" placeholder="e.g. USDC"></label>
+<label>assumptions <input name="pos${i}_assumptions" value="${esc(v?.assumptions)}" placeholder="optional"></label></fieldset>`
+  }
+
+  export function renderManifestDoor(opts: { mode: "new" | "edit"; editId?: string; values?: DoorValues; refusal?: string }): string {
+    const v = opts.values
+    const action = opts.mode === "edit" && opts.editId ? `/check/manifest:${encodeURIComponent(opts.editId)}/edit` : "/check/manifest:new"
+    const rows = v?.positions?.length ? v.positions : [undefined, undefined, undefined]
+    const spare = opts.mode === "edit" ? 1 : 1 // one spare row so a position can be added; empty rows are ignored (not coerced)
+    const rowHtml = [...rows, ...Array(spare).fill(undefined)].map((r, i) => positionRow(i, r)).join("\n")
+    const refuseBlock = opts.refusal ? `<div class="card refusal"><b>${esc(DOOR_REFUSE_HEAD)}</b><div>${esc(opts.refusal)}</div></div>` : ""
+    const intro = opts.mode === "edit" ? DOOR_EDIT_INTRO : DOOR_NEW_INTRO
+    const reasonField = opts.mode === "edit"
+      ? `<fieldset class="pos-row"><legend>reason for the re-pin (required)</legend><label>why is the goalpost moving? <input name="reason" value="${esc(v?.reason)}" placeholder="a disclosed reason — the old + new hashes are both recorded"></label></fieldset>`
+      : ""
+    const body = `<a href="/">← the Shelf</a>
+<h1>${opts.mode === "edit" ? "Edit your manifest — a disclosed re-pin" : "Author a strategy manifest"}</h1>
+<div class="card"><div class="muted">${esc(intro)}</div></div>
+${refuseBlock}
+<form method="post" action="${action}">
+<h2>Positions</h2>${rowHtml}
+<h2>Thesis</h2><label>the conjecture you are testing, written in advance <textarea name="thesis" rows="4" placeholder="what you believe, filed for refutation">${esc(v?.thesis)}</textarea></label>
+<h2>Exit criterion — your kill-criterion, set before the throw</h2><div class="muted">${esc(DOOR_EXIT_HELP)}</div>
+<label>kind ${exitKindSelect(v?.exitKind)}</label>
+<label>threshold <input name="exit_threshold" value="${esc(v?.exitThreshold)}" placeholder="a number the kind can read"></label>
+<label>subject scope <input name="exit_scope" value="${esc(v?.exitScope)}" placeholder="a subject key, or 'portfolio'"></label>
+<h2>Journal <span class="muted">(optional)</span></h2><div class="muted">${esc(DOOR_JOURNAL_HELP)}</div>
+<label>prior intent <input name="journal_priorIntent" value="${esc(v?.journalPriorIntent)}"></label>
+${reasonField}
+<div><button class="btn" type="submit">${opts.mode === "edit" ? "Re-pin (record old → new + reason)" : "Register (nothing is scored until you submit)"}</button></div>
+</form>`
+    return page(opts.mode === "edit" ? "Edit a manifest" : "Author a manifest", body)
   }
 
   // ── THE STAMP PANEL (Crown-Jewel Phase 5; X-OPTIN) — a DISTINCT verdict surface, reached only by opting in (/stamp/:key).

@@ -37,6 +37,9 @@ export function renderAllScreens(): Record<string, string> {
   screens["shelf-filter-solid"] = Reality.renderShelf(Reality.shelfSample(), true, { verdict: "SOLID" })
   const rc = Reality.realityCheck(`defillama:pool:${DefiLlama.SAMPLE_POOLS[0].pool}`, NOW)
   if (rc) screens["reality-sample"] = Reality.renderRealityCheck(rc.name, rc.scored, rc.history, "defillama:pool:x")
+  // the MANIFEST DOOR (Cadence sprint; X-AUTHOR) — the authoring form's visible text gets the same byte-protection: it
+  // AUTHORS NOTHING, so its content must never silently drift into a suggestion (a disclosed ADDITION to the golden set).
+  screens["manifest-door-new"] = Reality.renderManifestDoor({ mode: "new" })
   screens["ask-empty"] = Reality.renderAsk({ register: "simple", raw: false, aiStatus: { keyed: false, provider: null } })
   screens["ask-pro-blocks"] = Reality.renderAsk({
     query: "is aave-v3 USDC safe?", register: "pro", raw: false, intentKind: "STRATEGY_LOOKUP", tool: "poolFacts", reality: "SAMPLE",

@@ -19,7 +19,9 @@ test("THE SCREEN SET IS A CONSCIOUS 3 (Crown-Jewel D7) — Shelf · Reality Chec
   // /stamp/:key is the OPT-IN Stamp sub-surface of the Reality Check (X-OPTIN — a drawer, NOT a new screen).
   // /postmortems (the re-score export view) + /feedback (POST) are DISPOSITIONED DOORS, not screens (Probe Phase 2/3;
   // D24/D25) — the same class as /health · /refresh · the /stamp drawer. A genuine 4th SCREEN still fails this wall.
-  const nonScreen = new Set(["/health", "/refresh", "/stamp/:key", "/postmortems"])
+  // /check/:key/edit is the X-AUTHOR manifest DOOR (Cadence sprint) — a PATH reached from /check, not a fourth screen (S78);
+  // /check/manifest:new is served THROUGH the /check/:key param route (no dedicated GET route) — a subject reached by a path.
+  const nonScreen = new Set(["/health", "/refresh", "/stamp/:key", "/postmortems", "/check/:key/edit"])
   const screenRoutes = app.routes.filter((r) => r.method === "GET" && !nonScreen.has(r.path))
   const unique = [...new Set(screenRoutes.map((r) => r.path))]
   expect(unique.sort()).toEqual(["/", "/ask", "/check/:key"]) // adding a 4th screen route fails this wall

@@ -15,6 +15,8 @@ import { Feedback } from "../src/telemetry/feedback"
 import { Manifest } from "../src/strategy/manifest"
 import { StrategyStore } from "../src/strategy/store"
 import { StrategyResolve } from "../src/strategy/resolve"
+import { Monitor } from "../src/strategy/monitor"
+import { Author } from "../src/strategy/author"
 
 export const app = new Hono()
 
@@ -145,10 +147,17 @@ app.get("/check/:key", async (c) => {
   // (S71). No fourth screen — a strategy is a subject reached by a PATH. ──
   if (key.startsWith(Manifest.MANIFEST_KEY_PREFIX)) {
     const id = key.slice(Manifest.MANIFEST_KEY_PREFIX.length)
+    // THE DOOR (X-AUTHOR) — `manifest:new` opens the authoring form (a PATH, not a fourth screen). It authors nothing.
+    if (id === "new") return c.html(Reality.renderManifestDoor({ mode: "new" }))
     const m = StrategyStore.load(id) ?? StrategyStore.load(id, StrategyStore.FIXTURE_DIR)
     if (!m) return c.html(`<!doctype html><meta charset=utf8><body style="font-family:system-ui;background:#0e1116;color:#e6edf3;padding:24px"><a style="color:#58a6ff" href="/">← the Shelf</a><h1>Not found</h1><p>No strategy manifest with that id is stored (or committed as a fixture). Nothing is fabricated.</p></body>`, 404)
-    const { view } = await StrategyResolve.resolveAndCompile(m, Date.now())
-    return c.html(Reality.renderComposed(view))
+    // MR3 + CADENCE — thread the registration baseline's gov-class (when a baseline exists) so the governance-change exit is
+    // evaluable + the thesis-age is measured from registration; the monitoring block renders iff the lineage has cycles.
+    const baseline = Monitor.loadBaseline(id)
+    const baselineGov = baseline ? Object.fromEntries(baseline.surface.positions.map((p) => [p.subjectKey, p.govClass])) : undefined
+    const { view } = await StrategyResolve.resolveAndCompile(m, Date.now(), baseline ? Date.parse(baseline.registeredAt) || undefined : undefined, baselineGov)
+    const monitoring = Monitor.viewOf(id)
+    return c.html(Reality.renderComposed(monitoring ? { ...view, monitoring } : view))
   }
   // the curated record first (the moat, REAL★-eligible captures); then — the COLD-START FIX (X-COVERAGE b) — a live
   // any-pool LOOKUP for a covered pool not in the record (REAL-at-timestamp, per-axis honest degrade). An unknown id → 404.
@@ -179,6 +188,73 @@ app.get("/check/:key", async (c) => {
   // facts, so a general looked-up subject renders INSUFFICIENT honestly; RWA always renders its warning.
   const catchFact = Reality.catchFor(domain, rc.name, rc.scored)
   return c.html(Reality.renderRealityCheck(rc.name, rc.scored, rc.history, key, [], bundle, "REAL-at-timestamp", domain, catchFact))
+})
+
+// ── THE DOOR (X-AUTHOR, S78) — server-rendered manifest authoring, reached by a PATH (never a fourth screen). The form
+// REFUSES, never coerces (Author.parse over the .strict() zod schema); it AUTHORS NOTHING. Zero new deps (Hono parseBody). ──
+function flatBody(body: Record<string, string | File>): Record<string, string | undefined> {
+  const flat: Record<string, string | undefined> = {}
+  for (const [k, v] of Object.entries(body)) flat[k] = typeof v === "string" ? v : undefined
+  return flat
+}
+// echo the user's OWN input back into a refused form (so they don't lose their work — echoing the user's input is not authoring).
+function valuesFromBody(flat: Record<string, string | undefined>): Reality.DoorValues {
+  const positions: Reality.DoorValues["positions"] = []
+  for (let i = 0; i < Author.MAX_ROWS; i++) {
+    if (flat[`pos${i}_subjectKey`] == null && flat[`pos${i}_size`] == null && flat[`pos${i}_units`] == null && flat[`pos${i}_assumptions`] == null) continue
+    positions.push({ subjectKey: flat[`pos${i}_subjectKey`], size: flat[`pos${i}_size`], units: flat[`pos${i}_units`], assumptions: flat[`pos${i}_assumptions`] })
+  }
+  return { thesis: flat.thesis, exitKind: flat.exit_kind, exitThreshold: flat.exit_threshold, exitScope: flat.exit_scope, journalPriorIntent: flat.journal_priorIntent, positions, reason: flat.reason }
+}
+function valuesFromManifest(m: Manifest.T): Reality.DoorValues {
+  return {
+    thesis: m.thesis,
+    exitKind: m.exitCriterion.kind,
+    exitThreshold: String(m.exitCriterion.threshold),
+    exitScope: m.exitCriterion.subjectScope,
+    journalPriorIntent: m.journal?.priorIntent,
+    positions: m.positions.map((p) => ({ subjectKey: p.subjectKey, size: String(p.size), units: p.units, assumptions: p.assumptions })),
+  }
+}
+
+app.post("/check/manifest:new", async (c) => {
+  const flat = flatBody(await c.req.parseBody())
+  const r = Author.parse(flat)
+  if (!r.ok) return c.html(Reality.renderManifestDoor({ mode: "new", refusal: r.error, values: valuesFromBody(flat) }), 400)
+  const id = StrategyStore.save(r.manifest) // register (local-first); the resolver degrades any unreachable position honestly at render
+  return c.redirect(`/check/manifest:${encodeURIComponent(id)}`)
+})
+
+app.get("/check/:key/edit", async (c) => {
+  const key = decodeURIComponent(c.req.param("key"))
+  if (!key.startsWith(Manifest.MANIFEST_KEY_PREFIX)) return c.html(`<!doctype html><meta charset=utf8><body style="font-family:system-ui;background:#0e1116;color:#e6edf3;padding:24px"><a style="color:#58a6ff" href="/">← the Shelf</a><h1>Not editable</h1><p>Only a strategy manifest can be edited. A pool subject is read-only.</p></body>`, 404)
+  const id = key.slice(Manifest.MANIFEST_KEY_PREFIX.length)
+  const m = StrategyStore.load(id) ?? StrategyStore.load(id, StrategyStore.FIXTURE_DIR)
+  if (!m) return c.html(`<!doctype html><meta charset=utf8><body style="font-family:system-ui;background:#0e1116;color:#e6edf3;padding:24px"><a style="color:#58a6ff" href="/">← the Shelf</a><h1>Not found</h1><p>No strategy manifest with that id is stored. Nothing is fabricated.</p></body>`, 404)
+  const closed = StrategyStore.closure(id)
+  if (closed) return c.html(`<!doctype html><meta charset=utf8><body style="font-family:system-ui;background:#0e1116;color:#e6edf3;padding:24px"><a style="color:#58a6ff" href="/check/manifest:${encodeURIComponent(id)}">← the strategy</a><h1>Closed</h1><p>This strategy is CLOSED (${closed.reason.replace(/[&<>"']/g, (x) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[x]!))}) — a closed lineage is not edited. What follows a closure is the post-mortem (reserved).</p></body>`, 400)
+  return c.html(Reality.renderManifestDoor({ mode: "edit", editId: id, values: valuesFromManifest(m) }))
+})
+
+app.post("/check/:key/edit", async (c) => {
+  const key = decodeURIComponent(c.req.param("key"))
+  if (!key.startsWith(Manifest.MANIFEST_KEY_PREFIX)) return c.text("only a manifest is editable", 404)
+  const id = key.slice(Manifest.MANIFEST_KEY_PREFIX.length)
+  const old = StrategyStore.load(id) ?? StrategyStore.load(id, StrategyStore.FIXTURE_DIR)
+  if (!old) return c.text("no such manifest", 404)
+  const flat = flatBody(await c.req.parseBody())
+  const r = Author.parse(flat)
+  if (!r.ok) return c.html(Reality.renderManifestDoor({ mode: "edit", editId: id, refusal: r.error, values: valuesFromBody(flat) }), 400)
+  const newId = StrategyStore.lineageId(r.manifest)
+  if (newId === id) {
+    // identity unchanged — only the mutable journal moved (no re-pin; the lineage is the same). Save + return to the strategy.
+    StrategyStore.save(r.manifest)
+    return c.redirect(`/check/manifest:${encodeURIComponent(id)}`)
+  }
+  // identity CHANGED (a position or the exit criterion) — a DISCLOSED re-pin: reason REQUIRED, old + new hashes recorded.
+  const rp = StrategyStore.repin(id, r.manifest, flat.reason ?? "", new Date().toISOString())
+  if (!rp.ok) return c.html(Reality.renderManifestDoor({ mode: "edit", editId: id, refusal: rp.error, values: valuesFromBody(flat) }), 400)
+  return c.redirect(`/check/manifest:${encodeURIComponent(rp.newId)}`)
 })
 
 // THE STAMP (opt-in, Crown-Jewel; X-OPTIN) — the overfit stress test on ONE pool's recorded track record, reached ONLY

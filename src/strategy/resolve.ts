@@ -38,6 +38,7 @@ export namespace StrategyResolve {
     reachable: boolean
     series: { ts: number; value: number }[]
     exitFacts: ExitCriterion.Facts
+    govClass: string | null // the current governance adminClass (MR3) — read-only, for the baseline delta + the gov-change exit
   }
   export type SubjectResult = Resolved | { notFound: true; refusal?: string }
 
@@ -48,8 +49,9 @@ export namespace StrategyResolve {
   }
 
   // the exit-criterion facts — extracted from what the pipeline ALREADY captured (peg from pegDev, TVL drawdown from the
-  // 30d slope, funding-flip census from the yield-source catch). governanceChanged is null this sprint (the engine reads
-  // the current class but holds no prior baseline to detect a CHANGE → a governance-change exit is honestly UNJUDGEABLE).
+  // 30d slope, funding-flip census from the yield-source catch). governanceChanged is null at single-subject resolve (a
+  // /check has no baseline to compare against); the CADENCE seam (MR3) threads it in `resolveAndCompile` when a registration
+  // baseline gov-class is known — `governanceChanged = both-read ? (baseline !== current) : null`. `exit.ts` is untouched.
   function exitFactsFor(scored: Scorecard.Scored, catchFact?: Domain.Catch): ExitCriterion.Facts {
     const f = scored.facts
     const peg = f.pegDev == null ? null : 1 - Math.abs(f.pegDev)
@@ -75,16 +77,21 @@ export namespace StrategyResolve {
     const governance = art ? Governance.renderBundle(art, Governance.loadImpl(art.subject, { readFile: (p) => readFileSync(p, "utf8"), dir: GOV_DIR })) : null
     const domain = Reality.domainOf(rc.name, rc.scored.facts).domain
     const catchFact = Reality.catchFor(domain, rc.name, rc.scored)
-    return { name: rc.name, scored: rc.scored, history: rc.history, poolKey: key, governance, provTier: "REAL-at-timestamp", domain, catchFact, reachable: true, series: seriesFor(key), exitFacts: exitFactsFor(rc.scored, catchFact) }
+    return { name: rc.name, scored: rc.scored, history: rc.history, poolKey: key, governance, provTier: "REAL-at-timestamp", domain, catchFact, reachable: true, series: seriesFor(key), exitFacts: exitFactsFor(rc.scored, catchFact), govClass: art?.adminClass ?? null }
   }
 
   // an UNREACHABLE position degrades honestly — a placeholder UNVERIFIED subject so the position renders + the compile completes.
   function unreachable(key: string): Resolved {
     const facts: Scorecard.PoolFacts = { name: key, apyBase: null, apyReward: null, tvlSlope30d: null, pegDev: null, isStablecoin: false, reality: "SAMPLE", provenanceRef: null }
-    return { name: key, scored: Scorecard.score(facts), history: [], poolKey: key, governance: null, provTier: "REAL-at-timestamp", domain: "UNCLASSIFIED", catchFact: undefined, reachable: false, series: [], exitFacts: { peg: null, tvlDrawdown: null, fundingNegPeriods: null, fundingTotalPeriods: null, governanceChanged: null } }
+    return { name: key, scored: Scorecard.score(facts), history: [], poolKey: key, governance: null, provTier: "REAL-at-timestamp", domain: "UNCLASSIFIED", catchFact: undefined, reachable: false, series: [], exitFacts: { peg: null, tvlDrawdown: null, fundingNegPeriods: null, fundingTotalPeriods: null, governanceChanged: null }, govClass: null }
   }
 
-  export async function resolveAndCompile(manifest: Manifest.T, now: number, registeredAtMs?: number): Promise<{ composed: StrategyCompile.Composed; view: Reality.ComposedView; resolved: Resolved[] }> {
+  // the governance-change delta (MR3): both-read → CHANGED/unchanged; either side unresolved → UNJUDGEABLE (null), never guessed.
+  export function govChanged(baseline: string | null | undefined, current: string | null): boolean | null {
+    return baseline != null && current != null ? baseline !== current : null
+  }
+
+  export async function resolveAndCompile(manifest: Manifest.T, now: number, registeredAtMs?: number, baselineGovClass?: Record<string, string | null>): Promise<{ composed: StrategyCompile.Composed; view: Reality.ComposedView; resolved: Resolved[] }> {
     const resolved: Resolved[] = []
     for (const p of manifest.positions) {
       const r = await resolveSubject(p.subjectKey, now)
@@ -92,7 +99,9 @@ export namespace StrategyResolve {
     }
     const positions: StrategyCompile.Position[] = manifest.positions.map((p, i) => {
       const r = resolved[i]
-      return { subjectKey: p.subjectKey, size: p.size, units: p.units, name: r.name, scored: r.scored, reachable: r.reachable, domain: r.domain, catch: r.catchFact, series: r.series, exitFacts: r.exitFacts }
+      // MR3 — thread the governance-change fact against the REGISTRATION baseline (when known); exit.ts reads it unchanged.
+      const exitFacts = baselineGovClass ? { ...r.exitFacts, governanceChanged: govChanged(baselineGovClass[p.subjectKey], r.govClass) } : r.exitFacts
+      return { subjectKey: p.subjectKey, size: p.size, units: p.units, name: r.name, scored: r.scored, reachable: r.reachable, domain: r.domain, catch: r.catchFact, series: r.series, exitFacts }
     })
     const composed = StrategyCompile.compile(positions, manifest, { nowMs: now, registeredAtMs })
     const view: Reality.ComposedView = {

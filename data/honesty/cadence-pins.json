@@ -1,0 +1,239 @@
+{
+  "protocol": "cadence-pins",
+  "sprint": "THE CADENCE SPRINT (V32, EXPANDED — Builder arc Sprint 2): the docket gains a CLOCK and a DOOR. Held manifests re-compiled on the EXISTING capture cadence, on CONFIRMED BOUNDARIES ONLY (no mid-capture reading, no repaint); exit criteria evaluated every cycle against a content-hashed registration BASELINE (per-position governance adminClass INCLUDED — the MR3 seam); the monitor READS, never ACTS; every cycle a hash-chained TRIAL recorded-never-counted, re-proven AT COUNT at the trigger's lower bound; the manifest gains a SUPPORTED AUTHORING SURFACE (server-rendered, hono+zod only, a subject reached by a PATH — the form REFUSES, never coerces); the FACT ENVELOPE pinned once for every future consumer; the V31 residues closed at ground truth; the environment made honest; the Operator gate whole, D27 STILL first. TWO laws minted (X-CADENCE governing, X-AUTHOR subordinate) — the disclosed D41 twin-law departure.",
+  "at": "2026-07-13",
+  "continues": "THE MANIFEST SPRINT (PINS_SHA 98a44bd8; battery 1337/0-from-sprint across 205 files; VALIDATED PASS; Strategy a declarative SUBJECT — compile=composition, every compile a trial recorded-never-counted, the exit the user's content-hashed kill-criterion; the whole gate D23-D38 presented, D27 STILL first)",
+  "carriedFromPinsSha": "98a44bd8970c96cc78a377f11ae7a6b779fd2cb8e7c2672093b4c404b53db084",
+  "xCadence": {
+    "a_readsNeverActs": {
+      "rule": "THE MONITOR READS, NEVER ACTS (governing law). A cycle re-states facts; a FIRED exit renders as a fact with its hash and timestamp — never 'sell', never 'exit now', never urgency; guardLine + advicePattern re-run on EVERY cycle line; a seeded instruction/urgency phrasing is REFUSED (S74).",
+      "firedExitGrammar": "exit criterion <hash8>… FIRED this cycle — <why> (a stated fact; not an instruction).",
+      "heldExitGrammar": "exit criterion <hash8>… NOT FIRED this cycle — <why>.",
+      "bannedInstructionUrgencyShapes": [
+        "exit now",
+        "sell now",
+        "act now",
+        "urgent",
+        "get out",
+        "dump now",
+        "you should exit",
+        "you should sell",
+        "time to sell",
+        "time to exit",
+        "cut your losses",
+        "take profit now"
+      ],
+      "bannedRule": "a cycle line phrased as instruction/urgency is a Halt (Monitor.guardCycleLine refuses + quotes it); the compile advice wall (advicePattern: 'sell '/'you should'/'exit your position') runs FIRST, the urgency guard SECOND — a fired exit is a stated fact with its hash, never a command."
+    },
+    "b_baselineFixedFrame": {
+      "rule": "THE BASELINE IS THE THESIS' FIXED FRAME. The composed facts at registration are content-hashed exactly as the exit criterion is, INCLUDING each position's governance adminClass; deltas compute against THAT record, never a quietly re-based one; a silent baseline edit is DETECTED; the only amendment is the disclosed re-pin (S76 — the exit discipline reused verbatim).",
+      "hashIncludes": "per-position verdicts + tiers + peg/tvlDrawdown/funding facts + the per-position governance adminClass (MR3) · effective-K · catch aggregation · worst-axis · the exit hash — canonical (stable key order); registeredAt is metadata, EXCLUDED from the hash",
+      "deltaGrammar": {
+        "governance": "<name> governance class: TIMELOCK at baseline → EOA now — CHANGED (baseline <hash8>).",
+        "peg": "<name> peg: 0.9989 at baseline → 0.9931 now (Δ -0.0058, baseline <hash8>, capture REAL-at-timestamp).",
+        "tvlDrawdown": "<name> TVL drawdown from peak: 0.12 at baseline → 0.24 now (deeper by 0.12, baseline <hash8>, capture <tier>).",
+        "funding": "<name> funding-flip census: 3 new negative periods since baseline (5 → 8 of 30, baseline <hash8>).",
+        "verdict": "<name> verdict: SOLID at baseline → CAUTION now — CHANGED (baseline <hash8>, capture <tier>).",
+        "effectiveBets": "effective bets: ≈2 at baseline → ≈3 now (baseline <hash8>). info/context — a fact about correlation, never an allocation.",
+        "unjudgeable": "<name> <fact>: UNJUDGEABLE — no captured <fact> at baseline/this cycle (baseline <hash8>)."
+      },
+      "everyDeltaCarries": "its baseline hash (first 8) + the CURRENT capture tier; a fact absent at baseline OR now → UNJUDGEABLE, never a fabricated move",
+      "tvlNote": "the engine captures a TVL DRAWDOWN fraction-from-peak (tvlDrawdown), NOT a raw TVL magnitude series — the delta is honestly the drawdown change, never a fabricated 'TVL -12.3%' the scored facts cannot support"
+    },
+    "c_confirmedBoundary": {
+      "rule": "THE CADENCE IS THE EXISTING CAPTURE CADENCE, AND A CYCLE RENDERS ONLY ON A CONFIRMED BOUNDARY. monitor runs after capture-*; NO daemon, NO scheduler, NO server state (grep-walled); a cycle with no fresh confirmed capture states so and renders NO reading; no mid-capture reading, no repaint — once a cycle is written it is immutable (S77).",
+      "noFreshCaptureGrammar": "no new confirmed capture since the last cycle (head <hash8>…) — deltas UNJUDGEABLE; no reading rendered (a cycle renders only on a confirmed boundary).",
+      "baselinePinnedGrammar": "baseline pinned this cycle (<hash8>…) — deltas begin next cycle. Nothing is judged against a frame that did not yet exist.",
+      "noRepaint": "carried, with justification, from the TradingView alert.freq_once_per_bar_close / no-repaint discipline: signals fire only on confirmed, closed bars, never intra-bar; a cycle is an append-only, hash-chained ledger record — a seeded overwrite of a past cycle FAILS verify (the analogue is exact and the honesty argument identical)",
+      "grepWall": "no setInterval / setTimeout-loop / cron / node-schedule / node-cron surface on the monitor path (src/strategy/monitor.ts + script/monitor-manifests.ts); the clock is the user's OS timer (docs/CADENCE-TRIGGERS.md), documented never installed"
+    },
+    "d_everyCycleTrial": {
+      "rule": "EVERY (FRESH) CYCLE IS A TRIAL — recorded, never counted, PROVEN AT COUNT. Cycles accumulate trials toward the ≥20-50 trigger far faster than manual compiles, so the inert wall is re-proven AT the trigger's lower bound: a committed fixture lineage grown to ≥20 trials STILL shows familyN===1 in every Stamp output and the K-door STILL refuses without D33 (S75).",
+      "atCountProof": "a committed ≥20-trial lineage (data/strategies/fixtures — a DISTINCT lineage from the V31 3-trial fixture, so no V31 wall moves) verifies on a pristine clone; Correlate.activateKIntoStamp REFUSES at count 23 without BOTH the trigger AND D33; the Stamp path imports NO monitor/strategy module (grep); a seeded counted:true FAILS; a tampered chain FAILS",
+      "idempotency": "a NO-OP cycle (no fresh confirmed capture) and a baseline-PIN cycle append NO trial — so repeated timer invocation does not inflate the count; a fresh confirmed cycle appends exactly one hash-chained trial (counted:false structural)"
+    },
+    "e_sameSubject": {
+      "rule": "A MONITORED STRATEGY IS THE SAME SUBJECT. The monitoring block lives in the existing composed drawer; the conscious 3 survive; closure is a USER act (store.close(id, reason) — a status + a final cycle, nothing more); what follows closure is V33's post-mortem, RESERVED as D40, not built.",
+      "closureVerbatim": "a closed lineage takes no further cycles (the monitor refuses, stated); a closure records WHY (never silent); the render shows the closure state; the post-mortem over a CLOSED lineage is V33/D40, not built here",
+      "screens": [
+        "shelf",
+        "reality-check",
+        "ask"
+      ],
+      "byteIdentity": "an UNMONITORED single-position manifest renders BYTE-IDENTICAL to the standalone Reality Check (S71 preserved — renderComposed short-circuits iff positions.length===1 && !monitoring); a monitored manifest is a genuinely different subject (it carries a registration baseline + cycles)"
+    }
+  },
+  "xAuthor": {
+    "a_serverRendered": {
+      "rule": "THE SURFACE IS SERVER-RENDERED ON THE EXISTING MASS PATH (subordinate law). Hono's HTML render + zod validation; ZERO new dependencies; no build step; no client framework; no SPA.",
+      "deps": [
+        "hono",
+        "zod"
+      ]
+    },
+    "b_pathNotScreen": {
+      "rule": "THE DOOR IS A SUBJECT REACHED BY A PATH, NOT A FOURTH SCREEN. /check/manifest:new and /check/manifest:<id>/edit sit beside /check/manifest:<id>; the conscious 3 are untouched (S78 asserts the screen count is exactly 3).",
+      "paths": [
+        "/check/manifest:new",
+        "/check/manifest:<id>/edit"
+      ]
+    },
+    "c_refusesNeverCoerces": {
+      "rule": "THE FORM REFUSES, NEVER COERCES. An invalid position, an unevaluable exit criterion, an over-length thesis, an unknown exit kind: each is REFUSED before registration with an honest message naming the reason ('Refused before registration. Nothing was registered.'); a silently-defaulted judgment-bearing field is a Halt.",
+      "refusalSurface": "the .strict() zod schema (manifest.ts) IS the validator; Author.parse is a thin, honest shell that re-shapes flat form fields into the manifest object and hands them over — it invents NO value (a missing size/thesis/threshold is refused, never defaulted); a position row with a size/units but NO subject is a malformed attempt, refused (never silently dropped)",
+      "refuseHead": "Refused before registration. Nothing was registered."
+    },
+    "d_authorsNothing": {
+      "rule": "THE DOOR AUTHORS NOTHING. It collects the user's declaration; it never suggests a position, never ranks, never pre-fills a thesis, never proposes an exit threshold, never says 'most users choose'; the form's own copy passes guardLine + advicePattern like every other rendered line (S78).",
+      "esmaNote": "ESMA 35-43-3861 ¶61: a recommendation 'could be implicit… several products might be presented, with one of them highlighted… people like you tend to buy this product' — a pre-filled default IS an implicit recommendation, and is therefore banned by construction; the exit-kind SELECT opens on an UNSELECTABLE placeholder (no default kind), the NEW form pre-fills nothing",
+      "editPrefillNote": "an EDIT form pre-fills the user's OWN prior declaration (their data, not a tool suggestion) + a REQUIRED reason — this is not authoring; the NEW form pre-fills nothing of the tool's own"
+    },
+    "e_editIsRepin": {
+      "rule": "AN EDIT IS A DISCLOSED RE-PIN. Editing a registered manifest's exit criterion or positions produces a re-pin record (old hash, new hash, reason), never a silent overwrite; the journal is local-first and lineage-EXCLUDED, as pinned in V31.",
+      "mechanism": "the lineage id IS the content hash of identity → editing positions/exit yields a NEW lineage; StrategyStore.repin records {oldId, newId, reason, at} and refuses a reason-less re-pin; a journal-only edit keeps the same lineage (no re-pin)"
+    }
+  },
+  "factEnvelope": {
+    "rule": "PINNED ONCE, canonical JSON, stable key order — the single serialization every consumer of ORGΛNON's facts will ever read (today the composed drawer + Ask; tomorrow the Socket/Cedar/Merkle). Shaped so the honest thing is the only serializable thing (S79).",
+    "shape": {
+      "fact": "<the value> — never a recommendation",
+      "verdict": "SOLID|CAUTION|AVOID|UNVERIFIED|UNJUDGEABLE|INSUFFICIENT|null",
+      "provenance": "{ tier: REAL★|REAL-at-timestamp|SAMPLE, contentHash, capturedAt, source }",
+      "subject": "{ kind: pool|manifest, key }",
+      "baselineHash": "<hash|null> — for cycle deltas",
+      "killCriterion": "8b4e094b — the tool's own test travels with its facts",
+      "disclaimer": "<the pinned, advice-wall-checked sentence>",
+      "authored": "false — STRUCTURAL: ORGΛNON did not author this (no code path can set it true)"
+    },
+    "disclaimer": "This is a fact ORGΛNON captured — information about a subject, not a recommendation about what to do with it.",
+    "rules": "canonical serialization is DETERMINISTIC ×2 (a wall); authored is structurally false with NO code path that can set it true (the X-MANIFEST wall, extended); the disclaimer passes advicePattern; no field may carry a ranking, a weight, an allocation, or a 'consider instead' — serialize REFUSES one that does",
+    "bannedFactShapes": [
+      "suggested weight",
+      "suggested allocation",
+      "rebalance",
+      "ranked alternative",
+      "rankings",
+      "consider instead",
+      "optimal weight",
+      "recommended split",
+      "you should allocate"
+    ]
+  },
+  "mr2AffordanceLine": {
+    "line": "Have a strategy of your own? Author a manifest — the positions you hold, a thesis you set in advance, and an exit criterion the engine can check — and ORGΛNON gives it the same Reality Check. It judges what you're doing; it never tells you what to buy.",
+    "rule": "the pinned phrasing only; it passes advicePattern + guardLine (S78/S9); its closing clause ends with a trailing PERIOD after 'buy' — LOAD-BEARING: the advice wall matches 'buy ' (space) but not 'buy.' (period); the S78 wall asserts the line passes advicePattern so a period-strip regression bites",
+    "s36": "the line rides a CONSCIOUS, DISCLOSED S36 re-pin — the shelf's visible text moved (the sprint's licensed byte-mover)"
+  },
+  "doorCopy": {
+    "newIntro": "Declare a strategy of your own. List the positions you hold (each a subject the engine already knows, in your own units), write the thesis you are testing, and set an exit criterion in advance — the goalpost, fixed before the throw. ORGΛNON judges what you declare against the facts it captures. It suggests no position, ranks nothing, proposes no threshold, and never tells you what to buy. Every field below is yours; nothing is pre-chosen.",
+    "editIntro": "Edit your own registered manifest. The fields below hold what YOU declared — ORGΛNON pre-fills nothing of its own. Changing a position or the exit criterion is a disclosed re-pin: the old and new content hashes are both recorded with your reason, never a silent overwrite.",
+    "exitHelp": "An exit criterion must be evaluable over facts the engine captures. Choose the kind, then a threshold; a kind the engine cannot read is refused at registration with the reason.",
+    "journalHelp": "Optional. Your prior intent, in your words — local-first, never sent anywhere except through the existing consented export.",
+    "refuseHead": "Refused before registration. Nothing was registered.",
+    "rule": "every string in the form + the copy passes guardLine + advicePattern AT PIN TIME (asserted in cadence_pins + S78); the door authors nothing"
+  },
+  "s36Repin": {
+    "rule": "the S36 content-identity golden was CONSCIOUSLY re-captured — the sprint's ONLY licensed byte-movers, disclosed with shas. The affordance line moved the two SHELF screens; the door was ADDED to the golden set (byte-protection for a form that authors nothing). Every other golden screen is BYTE-IDENTICAL (reality/ask unchanged).",
+    "moved": {
+      "shelf-sample": {
+        "old": "fa4e9d656efaa18e",
+        "new": "bccef6e21bf9cf6a"
+      },
+      "shelf-filter-solid": {
+        "old": "a5fa5ac002f6809a",
+        "new": "5609438ebf553d6d"
+      }
+    },
+    "added": {
+      "manifest-door-new": "853b75b85c8fae37"
+    },
+    "unchanged": {
+      "reality-sample": "6b69b40a1e11d54d",
+      "ask-empty": "8151334ff54e7219",
+      "ask-pro-blocks": "b30de994f65a27dc"
+    }
+  },
+  "mr1PrePinnedFour": {
+    "rule": "MR1's four showcase subjects were pinned PRE-feasibility in manifest-pins 98a44bd8 (DV1) — capture THOSE or gap honestly; the census is recomputed as an OUTCOME, whatever it returns. A swap of the four is a Halt.",
+    "subjects": [
+      "STABLE-SYNTH: ethena-usde / sUSDe",
+      "LST-LRT: lido / stETH",
+      "LOOPED-CDP: gearbox / USDC",
+      "RWA: ondo-finance / USDY"
+    ],
+    "captureNote": "the DeFiLlama /pools payload (~10.5 MB) is reachable (HTTP 200) but times out on a naive fetch — MR1 raises the HTTP budget / streams; an endpoint regression at RUN time → the honest gap re-named and the sprint proceeds (the axis is ARMED, never faked)"
+  },
+  "deviations": {
+    "D39": "RESERVED — the MONITORING scope: the lifecycle (baselines · cycle exits · closure) + the fact envelope + the authoring door. A record + a lifecycle — it moves no verdict, adds no advice, installs no aggregate. Operator-signed=false.",
+    "D40": "RESERVED for V33 — the POST-MORTEM scope: the existing factory over a CLOSED manifest's lineage. Not built this sprint; closure semantics exist so V33 builds with no refactor. Operator-signed=false.",
+    "D41": "THE TWIN-LAW DEPARTURE (disclosed, per X-DEVLEDGER). This sprint mints TWO laws — X-CADENCE (governing) and X-AUTHOR (subordinate) — a departure from the one-law-per-sprint cadence that held for thirty-one sprints. REASON: the cadence cannot be dogfooded by a user who cannot author a manifest, and dogfooding is the standing order's named milestone ('the bottleneck is VALIDATION, not features'). PRE-AUTHORIZED SHED ORDER: if any phase gate goes red, Phase 4 (X-AUTHOR / the door) sheds FIRST and the narrow V32 (baseline + monitor + residues) ships — the shed is pre-authorized. Operator-signed=false.",
+    "D42": "RESERVED for the pen — the DeFiLlama POSTURE decision (self-host the open adapters · buy the $300/mo Pro tier for commercial clarity · or accept the confessed exposure knowingly) AND the 'facts-as-MCP-tools (V34 Socket) vs API-as-product' RULING (the study could not settle whether the Socket is distinct from the permanently-rejected reports/API-as-product — it is the Operator's ruling, not the agent's). Operator-signed=false.",
+    "operatorGatedNote": "D23-D42 present, D27 STILL FIRST under 'The Stamp is knowingly generous until D27 is signed' (seventh sprint); the agent presents the whole gate, NEVER signs it (LN5); IN2/IN4/AF4 + the countersigns OWED-OPERATOR-GATED. D39-D42 appended to the reserved list; the central deviations.json materializes D1-D31, the reserved pens D32-D42 live in the per-sprint pins + countersign packages (all operatorSigned=false) — the split is surfaced, not silent (X-DEVLEDGER).",
+    "deviationOrderAppend": [
+      "D39",
+      "D40",
+      "D41",
+      "D42"
+    ]
+  },
+  "mr4": {
+    "rule": "three first-class deviations.json entries discharged (the V31 residue): the V31 phase reorder · the explicit-act trial-append semantics (the cycle IS a compile; a page view is NOT) · the compile.test.ts = 10, not 11, correction.",
+    "entries": [
+      "V31 phase reorder — recorded, not silent",
+      "trial-append is an EXPLICIT act (a compile / a fresh cycle), never a page view",
+      "compile.test.ts is 10 tests, not 11 (the doc simplification corrected)"
+    ]
+  },
+  "mr5": {
+    "rule": "the three-repo topology pinned (the V31 residue): studio-organon = publication mirror (Operator-word-only); organon + organon-studio = the byte-identical dev pair; recurring-vs-one-off recorded as the Operator declares.",
+    "repos": {
+      "organon": "the build repo (staging) — where the phases run",
+      "organon-studio": "the byte-identical dev mirror (DV4 port at convergence via format-patch | git am; PR5 wall re-recorded)",
+      "studio-organon": "the publication mirror on GitHub (Operator-authorized push only; NO AI attribution)"
+    }
+  },
+  "walls": {
+    "carried": "S1-S73 first-class, re-run in BOTH repos AND over every new surface (the voice/lineage/telemetry walls over the monitoring block AND the door; S36 re-run against BOTH consciously-re-pinned goldens; S71 strategy-of-one byte-identity RE-asserted with monitoring absent; S72/S73 re-run against the grown lineage)",
+    "count": 79,
+    "S74": "reads-never-acts — seeded instruction/urgency on cycle lines REFUSED + quoted; the fired-exit line renders the pinned fact grammar; every cycle line passes the advice wall + the urgency guard",
+    "S75": "inert-at-count — the ≥20-trial lineage present (23); familyN===1 everywhere; the K-feed refused at count; the D33 text asserts trigger AND pen; the readout exact",
+    "S76": "baseline immutability — hash-at-registration incl. governance classes; a seeded silent re-base DETECTED; the disclosed re-pin records old/new/reason; diff deterministic ×2; every delta names its baseline hash + capture tier",
+    "S77": "confirmed-boundary / no-repaint — no fresh confirmed capture → UNJUDGEABLE and NO reading; a written cycle is immutable (a seeded overwrite FAILS); no mid-capture reading; no daemon (grep-walled)",
+    "S78": "the door refuses and authors nothing — every invalid input REFUSED before registration with its honest reason (never coerced to a default); zero pre-filled judgment-bearing fields; no 'most users choose'/social-proof/highlighted-option shape; every form string passes guardLine + advicePattern; the screens count is still 3; an edit is a disclosed re-pin",
+    "S79": "the Fact Envelope — canonical serialization deterministic ×2; authored:false structural with NO code path able to set it true; the disclaimer + kill-criterion hash travel with every fact; a seeded ranking/weight/allocation field FAILS to serialize"
+  },
+  "carried": {
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "screens": [
+      "shelf",
+      "reality-check",
+      "ask"
+    ],
+    "frozenSevenNote": "the frozen seven + verdict-path 7 + frozen-core 2 byte-untouched; the scorecard differential + evidence bundle byte-identical at every gate (the TWO disclosed S36 golden changes excepted, with shas — no VERDICT moves); the Stamp familyN stays 1; spec.ts untouched",
+    "verdictDifferential": {
+      "lendingFpSetShaPrefix": "70c7912f",
+      "fundingReproHashPrefix": "0a63151b",
+      "note": "byte-stable through TWENTY-ONE sprints; the monitoring block + the door render like the governance/catch lines (out of the scorecard rows) — MR3 threads governanceChanged into the gov-change exit ONLY (exit.ts untouched); the Stamp's familyN stays 1; the statistics change by exactly nothing"
+    },
+    "evidenceBundleShaPrefix": "9c1e7bd8",
+    "killCriterion": "8b4e094b",
+    "massPath": "hono+zod; the manifest store + the cadence store (cycles/baselines/closures/repins) are Bun-stdlib JSON, local, gitignored; committed fixtures back the walls; the compile/monitor compose EXISTING seams; zero new dependencies, zero paid providers, zero accounts, zero daemon",
+    "parkedByName": [
+      "the MCP Socket (facts-as-MCP-tools — V34; the Fact Envelope seam pinned here)",
+      "Cedar (richer exit criteria — conditional, post-dogfood; exit facts shaped as flat attribute records)",
+      "the Merkle / transparency-log moat (parked; cycle records are canonical JSON)",
+      "the Adversary seat (later; gated on dogfooding demand)",
+      "the Proposer / K-activation / PBO / CSCV / ONC (the ≥20-50 trigger + D33)",
+      "the D38 composite strategy verdict (the pen's act; absence labeled)",
+      "a hosted cadence tier / any daemon (presented at the gate as a DECISION, not built)",
+      "a web authoring SPA / htmx / Alpine (rejected outright — server-rendered hono+zod is the honest minimum)",
+      "any new mass-path dependency (permanent)",
+      "the V33 post-mortem (D40)",
+      "execution/custody, wallets, keys, addresses beyond the position identifiers the engine already checks (permanent)"
+    ]
+  },
+  "pinsSha": "d90df3c767aa6d4c95b07b0470afa37c97f3b35cea75ac619ce501426fd4877a"
+}
