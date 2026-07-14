@@ -1,0 +1,125 @@
+/**
+ * ORGΛNON — THE DERIVATION SPRINT (V36), Phase 1: Claim.producer — NOTHING IS CLAIMED THAT IS NOT COMPUTED (X-DERIVE, S100).
+ *
+ * The build log's header, gate, and terminal marker have been the last hand-typed artifacts in the system, and three
+ * sprints of summary-drift lived there (V33/V34/V35). X-DERIVE(b): EVERY claim has a PRODUCER — a named function, over
+ * named committed artifacts, whose OUTPUT is the claim. A claim with no producer is not a claim, it is a sentence, and the
+ * generator strips it (Claim.producer throws for an unregistered name). X-DERIVE(d): every number ABOUT THE PROJECT carries
+ * its provenance tier (REAL/SAMPLE/UNJUDGEABLE) — the tier is read from the pins' claim→producer map (the single source),
+ * bound to the producer here. X-DERIVE(e): a producer that returns PARTIAL renders PARTIAL, never complete.
+ *
+ * RP-1 (F-1, the critical Part-F correction): X-DERIVE relocates the lie to the producers — a generated lie is a lie with a
+ * passing test. So each load-bearing producer has a SEEDED NEGATIVE that is the CLAIM'S OWN INVERSION (asserted in S100 +
+ * the phase walls: d33 'PBO disagrees'→UNSIGNABLE; Release 'artifact absent'→D50(i) false; census a seeded delete; verify a
+ * non-zero exit). The claim→producer map is the sprint's highest-value diff — the only place a lie can now live.
+ */
+import { readFileSync } from "node:fs"
+import { spawnSync } from "node:child_process"
+import path from "node:path"
+import { PKG_ROOT } from "./frozen"
+import { Verify } from "./verify"
+import { Reach } from "./reach"
+import { Falsify } from "./falsify"
+import { Release } from "./release"
+import { CrossCheck, Signability } from "../backtest/crosscheck"
+import { Ledger } from "../strategy/ledger"
+
+export namespace Claim {
+  export type Tier = "REAL" | "SAMPLE" | "UNJUDGEABLE" | "n/a"
+  export interface Result {
+    name: string
+    value: unknown
+    tier: Tier
+    artifacts: string[] // the committed artifacts the value was read from
+    partial: boolean // X-DERIVE(e) — the producer returned an incomplete result (renders PARTIAL, never complete)
+  }
+
+  function pins(): { claimProducerMap: { claims: Record<string, { producer: string; artifacts: string[]; tier: string }> }; lawsCountObservation: { laws: number; lawsMintedInLast6Sprints: number; productCapabilityAddedInLast3Sprints: number }; carried: { newProductCapability: number }; pinsSha: string } {
+    return JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "derive-pins.json"), "utf8"))
+  }
+
+  // the tier for a claim is bound in the pins (the single source) — a producer whose claim is absent from the map is
+  // unregistered and cannot be claimed (S100).
+  function tierOf(name: string): Tier {
+    const c = pins().claimProducerMap.claims[name]
+    if (!c) throw new Error(`Claim "${name}" has NO producer in the claim→producer map (X-DERIVE(b): a claim with no producer is a sentence, stripped)`)
+    return c.tier as Tier
+  }
+  function artifactsOf(name: string): string[] {
+    return pins().claimProducerMap.claims[name]?.artifacts ?? []
+  }
+  function git(args: string[]): string {
+    const r = spawnSync("git", args, { cwd: PKG_ROOT, encoding: "utf8" })
+    return r.status === 0 ? (r.stdout || "").trim() : ""
+  }
+
+  // ── THE PRODUCER REGISTRY — each entry reads committed artifacts and returns the claim's value + tier + partiality ──────
+  // (verify uses skipBundle so the registry is fast + offline; the generator/do_verify run the full bundle separately.)
+  const REGISTRY: Record<string, () => { value: unknown; partial?: boolean }> = {
+    pinsSha: () => ({ value: pins().pinsSha }),
+    terminalTree: () => ({ value: git(["rev-parse", "HEAD^{tree}"]) }),
+    commitSha: () => ({ value: git(["rev-parse", "HEAD"]) }),
+    pushed: () => ({ value: Reach.derivePublished().published }),
+    battery: () => {
+      const b = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "evidence", "battery-summary.json"), "utf8")).canonical
+      const removed = Falsify.DELETED_WALLS // RP-4 — a shrinking battery with NAMED removals is honest, without them a Halt
+      return { value: { pass: b.pass, fail: b.fail, files: b.files, removed: removed.length, removedReason: removed.map((d) => `${d.id}: ${d.reason}`) } }
+    },
+    verify: () => ({ value: Verify.run({ skipBundle: true }) }),
+    verifyOnClone: () => {
+      const p = path.join(PKG_ROOT, "data", "honesty", "pristine-clone.json")
+      try {
+        const j = JSON.parse(readFileSync(p, "utf8"))
+        return { value: { exitCode: j.verify?.exitCode ?? j.exitCode, battery: j.battery, ran: true }, partial: false }
+      } catch {
+        return { value: "NOT-YET-RUN", partial: true } // X-DERIVE(e) — the clone has not run; PARTIAL, never a green
+      }
+    },
+    crossCheckDsr: () => ({ value: CrossCheck.agreement("dsr") }),
+    crossCheckPsr: () => ({ value: CrossCheck.agreement("psr") }),
+    crossCheckPbo: () => ({ value: CrossCheck.agreement("pbo") }),
+    d33: () => {
+      const d = Signability.d33()
+      return { value: { state: d.state, operatorSigned: d.operatorSigned }, partial: /PRECONDITION-MET/.test(d.state) }
+    },
+    census: () => {
+      const c = Falsify.census()
+      return { value: { originUnrecorded: c.counts.ORIGIN_UNRECORDED, recovered: c.recovered, reFounded: c.reFounded, deleted: c.deleted.length, demonstrated: c.counts.DEMONSTRATED } }
+    },
+    d50i_binary: () => ({ value: Release.d50().i_binaryCommitted.value }),
+    d50ii_install: () => ({ value: Release.d50().ii_installDocumented.value }),
+    d50iii_published: () => ({ value: Release.d50().iii_published.value }),
+    d50iv_window: () => ({ value: Release.d50().iv_windowElapsed.value }),
+    reach: () => {
+      const f = Reach.fact()
+      return { value: { published: f.published, reachableHumans: f.reachableHumans, installPath: f.installPath } }
+    },
+    theNumber: () => {
+      const s = Ledger.actsSummary()
+      return { value: { manifestsReal: s.manifestsAuthoredReal, cyclesUnpromptedReal: s.cyclesRunReal, realLineageCount: s.realLineageCount } }
+    },
+    laws: () => {
+      const l = pins().lawsCountObservation
+      return { value: { laws: l.laws, mintedInLast6Sprints: l.lawsMintedInLast6Sprints, productCapabilityInLast3Sprints: l.productCapabilityAddedInLast3Sprints } }
+    },
+    newProductCapability: () => ({ value: pins().carried.newProductCapability }),
+  }
+
+  // Claim.producer(name) — the value, tier, artifacts, and partiality for a claim. Throws for an unregistered name
+  // (X-DERIVE(b): a claim with no producer is stripped). The tier comes from the pins (S102: every project-number tiered).
+  export function producer(name: string): Result {
+    const p = REGISTRY[name]
+    if (!p) throw new Error(`Claim "${name}" has NO producer registered (X-DERIVE(b): a sentence, not a claim — stripped)`)
+    const { value, partial } = p()
+    return { name, value, tier: tierOf(name), artifacts: artifactsOf(name), partial: partial ?? false }
+  }
+
+  export function names(): string[] {
+    return Object.keys(REGISTRY)
+  }
+
+  // the set of claim names the pins declare (the map) — S100 checks the registry is TOTAL over it (no orphan claims).
+  export function declaredNames(): string[] {
+    return Object.keys(pins().claimProducerMap.claims)
+  }
+}

@@ -18,8 +18,8 @@ const cc = Rigor.crossCheck()
 const record = {
   protocol: "rigor-crosscheck",
   at: "2026-07-14",
-  rule: "S94 — the frozen core's DSR/PSR/PBO cross-check EXECUTED against the INDEPENDENT purgedcv oracle. Never mocked (RP-2): a BLOCKED result carries its actionable reason. The numbers are a RECORD OF EXECUTION (env-stamped), not a determinism golden — a re-run on different BLAS may shift the low bits; the load-bearing claim is dsrAgree (|DSR_rigor − DSR_purgedcv| < 0.02) and executed=true.",
-  reference: "Bailey & López de Prado — the Deflated Sharpe Ratio 'incorporates information about the unselected trials'; the frozen rigor.deflated_sharpe (sha-pinned in frozen.ts) is cross-checked against purgedcv==0.1.2 on a golden-noise universe (true Sharpe 0, seed 20260627, T=504, N=1000) identical to selftest.py's k==0 construction.",
+  rule: "S94 (Reach V35) + S101 (Derivation V36) — the frozen core's DSR/PSR/PBO cross-check EXECUTED against the INDEPENDENT purgedcv oracle, WHOLE. V35 validated DSR only; V36 cross-checks ALL THREE (purgedcv exposes probabilistic_sharpe_ratio + probability_of_backtest_overfitting — DD-17, no pypbo needed). Never mocked (RP-2): a BLOCKED result carries its actionable reason. The numbers are a RECORD OF EXECUTION (env-stamped), not a determinism golden — a re-run on different BLAS may shift the low bits; the AGREEMENT (|Δ| < the PRE-REGISTERED tolerance in derive-pins.json) is computed in TS (CrossCheck.agreement), never from a call-site constant (X-DERIVE(f)).",
+  reference: "Bailey & López de Prado — DSR/PSR (Eq.7) + PBO/CSCV. The frozen rigor.{deflated_sharpe,psr,pbo} (sha-pinned in frozen.ts) are cross-checked against purgedcv==0.1.2 on a golden-noise universe (true Sharpe 0, seed 20260627, T=504, N=1000) identical to selftest.py's k==0 construction. RP-2: CSCV free parameters ALIGNED (S=8, mean/std-ddof=1 metric, contiguous split, no purge/embargo, matrix transposed) — a genuine comparison, not two experiments.",
   crossCheck: cc,
   frozenNote: "not one .py byte moved — S94 installs the sidecar's MISSING dependency (purgedcv), it edits no frozen byte; checkFrozenSet asserts 0 DRIFT on rigor.py.",
 }
@@ -30,9 +30,11 @@ console.log("── REACH — the frozen-core cross-check (S94) ─────�
 if (Rigor.isBlocked(cc)) {
   console.log(`  status : BLOCKED — ${cc.reason}`)
 } else {
-  console.log(`  status : EXECUTED`)
-  console.log(`  DSR    : rigor=${cc.dsr.toFixed(6)} · purgedcv=${cc.dsrPurgedcv.toFixed(6)} · |Δ|=${cc.dsrDiff.toExponential(2)} · agree=${cc.dsrAgree}`)
-  console.log(`  PSR(0) : ${cc.psr.toFixed(6)} · PBO=${cc.pbo.toFixed(4)} · deflation-collapse=${cc.deflationCollapse.toFixed(4)}`)
+  console.log(`  status : EXECUTED (WHOLE — DSR · PSR · PBO all cross-checked, S101)`)
+  console.log(`  DSR    : rigor=${cc.dsr.toFixed(6)} · purgedcv=${cc.dsrPurgedcv.toFixed(6)} · |Δ|=${cc.dsrDiff.toExponential(2)}`)
+  console.log(`  PSR    : rigor=${cc.psr.toFixed(6)} · purgedcv=${cc.psrPurgedcv.toFixed(6)} · |Δ|=${cc.psrDiff.toExponential(2)}`)
+  console.log(`  PBO    : rigor=${cc.pbo.toFixed(6)} · purgedcv=${cc.pboPurgedcv.toFixed(6)} · |Δ|=${cc.pboDiff.toExponential(2)}  (CSCV S=${cc.cscvAlignment.S}, aligned)`)
+  console.log(`  dataset: ${cc.dataset.kind} · TIER ${cc.dataset.tier} (true Sharpe ${cc.dataset.trueSharpe})`)
   console.log(`  DSR↓   : n10=${cc.dsrByNTrials.n10.toFixed(4)} > n100=${cc.dsrByNTrials.n100.toFixed(4)} > n1000=${cc.dsrByNTrials.n1000.toFixed(4)} (monotonic=${cc.dsrMonotonic})`)
   console.log(`  env    : purgedcv ${cc.purgedcvVersion} · numpy ${cc.numpyVersion}`)
 }

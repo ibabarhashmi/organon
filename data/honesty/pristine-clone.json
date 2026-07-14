@@ -1,0 +1,24 @@
+{
+  "protocol": "pristine-clone",
+  "at": "2026-07-14",
+  "rule": "S103 / DD-19 — the convergence proof promoted at D44 (V33) and deferred three times, RUN from an empty directory.",
+  "clonedCommit": "193cc622a08f420704d449679fda0e6e37849c7d",
+  "method": "git clone --no-hardlinks the LOCAL tree into a fresh temp dir; its OWN node_modules + sidecar venv built from zero (nothing shared with the working repo); keys emptied; ORGANON_ROOT/ORGANON_OFFLINE unset. NEVER simulated.",
+  "setup": {
+    "exitCode": 0,
+    "provisionedCrossCheck": true,
+    "detail": "bun install + venv + purgedcv provisioned from requirements-crosscheck.txt (RP-2's durable fix survives a fresh clone)"
+  },
+  "verify": {
+    "exitCode": 0,
+    "detail": "verify GREEN on the clone — the evidence bundle reproduces + the curated battery count matches + the frozen-seven git-clean"
+  },
+  "battery": {
+    "pass": 1625,
+    "skip": 2,
+    "fail": 0,
+    "files": 249
+  },
+  "proves": "SELF-CONTAINED — a clone of the local tree builds its own deps, verifies, and runs the full battery from zero (RP-2's durable cross-check provision + the census's clone-stability + the frozen set's coverage, all tested at last).",
+  "doesNotProve": "a STRANGER's machine — that needs the published remote, the correct Bun version, a clean OS, and no cached ~/.bun or inherited venv. The strongest claim available is SELF-CONTAINED, not reproducible-by-anyone; a stranger remains UNTESTED until publication (RP-6, X-SHOWN(b))."
+}

@@ -34,6 +34,16 @@ test("S98 — the four pinned subjects are named with their domain classificatio
     expect(s.present).toBe(true) // MR1 proved each present
     expect(typeof s.domainClass).toBe("string") // classified (conservative — UNCLASSIFIED or a real domain), never fabricated
   }
-  // the shelf state is honest: resolvable + classifiable, NOT force-shelved (the Halt — no new capability)
-  expect(record.shelfState).toMatch(/NOT force-added to the curated shelf|new capability/i)
+})
+
+test("MR12/S98 — the owed MR1 residue is DISCHARGED: the four subjects are SHELVED (owed data, not capability), badged only where a real domain class exists; domain-catch stays 0/7", () => {
+  // Derivation V36 reverses the V35 stance (E-8: the Halt-as-a-shield) — shelving already-captured data is DATA, not capability.
+  for (const s of record.pinnedSubjects) expect(s.shelved).toBe(true) // all four shelved (owed data discharged)
+  const badged = record.pinnedSubjects.filter((s: { badge: boolean }) => s.badge)
+  expect(badged.length).toBe(1) // only ethena-usde (STABLE-SYNTH) carries a real domain badge — the rest UNCLASSIFIED, never fabricated
+  expect(badged[0].domainClass).toBe("STABLE-SYNTH")
+  // the distinction is pinned, and domain-catch is UNCHANGED (shelving data does not create a new-domain subject)
+  expect(record.mr12.rule).toMatch(/forbids new CAPABILITY, not owed DATA/i)
+  expect(record.shelfState).toMatch(/SHIELD/i) // a Halt used to defer an owed residue is a shield
+  expect(record.domainCatch.renderable).toBe(0) // 0/7 UNCHANGED — no capability added
 })

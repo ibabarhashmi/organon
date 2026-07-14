@@ -23,9 +23,15 @@ import { PKG_ROOT } from "./frozen"
 
 export namespace Falsify {
   export const WALL_MIN = 1
-  export const WALL_MAX = 99 // the pinned upper bound; a test that references S(>MAX) is an ORPHAN (RP-6 living wall)
+  export const WALL_MAX = 106 // Derivation V36: bumped 99→106 for S100-S106; a test that references S(>MAX) is an ORPHAN (RP-6 living wall)
 
   export type Bucket = "DEMONSTRATED" | "WEAK" | "EXEMPT" | "ORIGIN_UNRECORDED"
+  // Derivation V36 (S104/DD-20): the census gets a TREATMENT. An ORIGIN_UNRECORDED wall is processed via one route, in
+  // order, recorded in the COMMITTED test context (a living-wall annotation, RP-6): RECOVERED (git archaeology surfaced the
+  // originating defect) → DEMONSTRATED, route "recovered"; RE-FOUNDED (no origin recoverable, so the defect it catches TODAY
+  // is stated + seeded) → DEMONSTRATED, route "reFounded" COUNTED APART (RP-3: a purpose reconstructed ≠ a purpose
+  // remembered). A wall minted with a W-tag is DEMONSTRATED route null ("remembered").
+  export type Route = "recovered" | "reFounded" | null
   export interface WallRow {
     id: string // "S45"
     n: number
@@ -35,6 +41,7 @@ export namespace Falsify {
     originStrength: "W-TAG" | "REFERENCE" | null // W-TAG = a named originating defect (strongest); REFERENCE = a sprint re-pin / audit-finding ref
     structuralAbsence: boolean
     decoration: boolean // no control and not exempt — a wall with no demonstrated failure
+    route: Route // S104 — how an ORIGIN_UNRECORDED wall was treated this sprint (recovered / re-founded), or null
     bucket: Bucket
     note: string
   }
@@ -68,6 +75,15 @@ export namespace Falsify {
   // a named defect earns the strong claim; a generic re-pin ref could bleed).
   const WTAG_RE = /W-[A-Z]{1,4}\d{2}/
   const ORIGIN_REF_RE = /minted for|minted to catch|was minted to|the original defect the wall|originating defect|\bRP-\d\b|\bC-\d\b/i
+  // Derivation V36 (S104) — the census TREATMENT annotations, committed in the test context (RP-6 living wall). RECOVERED
+  // = git archaeology surfaced the ORIGINATING defect (quoted, with its commit/sprint); RE-FOUNDED = no origin was
+  // recoverable, so the defect the wall catches TODAY is stated + seeded. They are DISTINCT and counted APART (RP-3).
+  const RECOVERED_RE = /RECOVERED-ORIGIN:/
+  const REFOUNDED_RE = /RE-FOUNDED:/
+
+  // Walls DELETED this sprint via route 3 (DELETE-WITH-PROOF, D52). Each entry preserves the wall's source so it can be
+  // restored (attack #3). EMPTY is the expected outcome — re-founding, not deleting, is the expected route for the 83.
+  export const DELETED_WALLS: { id: string; reason: string; proofOfNoDownstreamChange: string; source: string }[] = []
 
   function testFiles(): { file: string; text: string }[] {
     const out: { file: string; text: string }[] = []
@@ -116,10 +132,13 @@ export namespace Falsify {
       const structuralAbsence = ABSENCE_RE.test(ctx)
       const wtag = ctx.match(WTAG_RE)
       const ref = ctx.match(ORIGIN_REF_RE)
+      const recovered = RECOVERED_RE.test(ctx)
+      const reFounded = REFOUNDED_RE.test(ctx)
       const recordedOrigin = wtag ? wtag[0] : ref ? ref[0] : null
       const originStrength: WallRow["originStrength"] = wtag ? "W-TAG" : ref ? "REFERENCE" : null
       let bucket: Bucket
       let decoration = false
+      let route: Route = null
       let note = ""
       if (EXEMPT_OVERRIDES[`S${n}`]) {
         bucket = "EXEMPT"
@@ -131,6 +150,17 @@ export namespace Falsify {
         // a real seeded negative WITH a NAMED originating defect (W-tag) — the strong claim, and only this earns it
         bucket = "DEMONSTRATED"
         note = `a seeded negative + a named originating defect (${recordedOrigin}) in the committed context`
+      } else if (hasControl && recovered) {
+        // S104 RECOVER — git archaeology surfaced the ORIGINATING defect, quoted in the committed context (route "recovered")
+        bucket = "DEMONSTRATED"
+        route = "recovered"
+        note = "ORIGIN RECOVERED — the originating defect was surfaced by git archaeology and quoted in the committed context (S104)"
+      } else if (hasControl && reFounded) {
+        // S104 RE-FOUND — no origin recoverable; the defect the wall catches TODAY is stated + seeded (route "reFounded",
+        // counted APART, RP-3: a purpose reconstructed is not a purpose remembered)
+        bucket = "DEMONSTRATED"
+        route = "reFounded"
+        note = "RE-FOUNDED — no origin was recoverable; the defect this wall catches today is stated + seeded (S104; DEMONSTRATED(re-founded), counted apart, RP-3)"
       } else if (structuralAbsence && !hasControl) {
         // a PURE grep-for-absence wall — no seeded control, and the negative is structurally unrepresentable
         bucket = "EXEMPT"
@@ -148,12 +178,15 @@ export namespace Falsify {
           ? `a seeded negative + a WEAKER origin reference (${recordedOrigin}), not a named defect — cannot claim it is the ORIGINAL defect (RP-1)`
           : "a seeded negative exists, but NO recorded originating defect in the committed context — cannot claim it is the ORIGINAL defect (RP-1)"
       }
-      rows.push({ id: `S${n}`, n, files: inFiles, hasControl, recordedOrigin, originStrength, structuralAbsence, decoration, bucket, note })
+      rows.push({ id: `S${n}`, n, files: inFiles, hasControl, recordedOrigin, originStrength, structuralAbsence, decoration, route, bucket, note })
     }
     const counts: Record<Bucket, number> = { DEMONSTRATED: 0, WEAK: 0, EXEMPT: 0, ORIGIN_UNRECORDED: 0 }
     for (const r of rows) counts[r.bucket]++
     const decorationCount = rows.filter((r) => r.decoration).length
-    return { rows, counts, decorationCount, wallCount: rows.length, orphans: orphanWallIds(files) }
+    // S104 — recovered and re-founded counted APART (RP-3), and the deleted walls (D52) named with their proof.
+    const recovered = rows.filter((r) => r.route === "recovered").length
+    const reFounded = rows.filter((r) => r.route === "reFounded").length
+    return { rows, counts, decorationCount, wallCount: rows.length, orphans: orphanWallIds(files), recovered, reFounded, deleted: DELETED_WALLS }
   }
 
   // RP-6 — the living wall: a test that references S(>MAX) is an ORPHAN; the census range must be bumped consciously.

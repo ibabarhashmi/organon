@@ -23,6 +23,13 @@ export namespace Rigor {
     dsrAgree: boolean
     psr: number
     pbo: number
+    // ── DERIVATION V36 (S101) — the cross-check WHOLE: PSR and PBO now cross-checked against the SAME purgedcv oracle ────
+    psrPurgedcv: number
+    psrDiff: number
+    pboPurgedcv: number
+    pboDiff: number
+    cscvAlignment: { S: number; metric: string; split: string; purge: string; embargo: string; matrixOrientation: string; comparable: boolean }
+    dataset: { kind: string; tier: string; trueSharpe: number; note: string }
     deflationCollapse: number
     dsrMonotonic: boolean
     dsrByNTrials: { n10: number; n100: number; n1000: number }

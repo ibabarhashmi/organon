@@ -15,25 +15,40 @@ import { PKG_ROOT } from "../../src/organon/frozen"
 import { Falsify } from "../../src/organon/falsify"
 
 const c = Falsify.census()
-// a canonical content hash over the derived rows (deterministic order → reproducible; RP-6)
-const canonical = JSON.stringify(c.rows.map((r) => ({ id: r.id, bucket: r.bucket, hasControl: r.hasControl, recordedOrigin: r.recordedOrigin, originStrength: r.originStrength, decoration: r.decoration })))
+// a canonical content hash over the derived rows (deterministic order → reproducible; RP-6). Derivation V36 adds `route`
+// so a re-founded/recovered wall's treatment moves the hash (a living wall).
+const canonical = JSON.stringify(c.rows.map((r) => ({ id: r.id, bucket: r.bucket, hasControl: r.hasControl, recordedOrigin: r.recordedOrigin, originStrength: r.originStrength, route: r.route, decoration: r.decoration })))
 const contentSha = createHash("sha256").update(canonical).digest("hex")
+
+const V35_BASELINE_ORIGIN_UNRECORDED = 83 // the Reach census number (over 99 walls) — the before, pinned so the shrink is checkable
 
 const record = {
   protocol: "falsifiability-census",
   at: "2026-07-14",
-  rule: "S93 — every wall S1-S99 bucketed by a PURE READ over the committed test tree (Falsify.census). DEMONSTRATED = a seeded negative + a NAMED originating defect (a W-xxNN tag) in the committed context. WEAK = a recorded origin whose negative is arbitrary (to strengthen). EXEMPT = a reasoned structural-absence grep-wall (enumerated, never silently excused). ORIGIN_UNRECORDED = a control but NO recorded originating defect — the majority, and the honest one (RP-1: a census that pretends to know why 99 walls exist is the unfalsifiable claim this sprint was minted to end).",
-  method: "mechanical + transparent: hasControl (a seeded-negative / must-fail / degraded-verdict / determinism idiom), recordedOrigin (a committed W-tag or sprint re-pin reference — the untracked build logs do NOT count, so the census is clone-stable), structuralAbsence, and a short curated EXEMPT/WEAK override set (reasoned). The regexes are documented in src/organon/falsify.ts.",
+  rule: "S93 (Reach V35) + S104 (Derivation V36) — every wall bucketed by a PURE READ over the committed test tree (Falsify.census). DEMONSTRATED = a seeded negative + a NAMED originating defect (a W-tag) OR a treated origin (recovered / re-founded, S104). WEAK = a recorded origin whose negative is arbitrary. EXEMPT = a reasoned structural-absence grep-wall. ORIGIN_UNRECORDED = a control but NO recorded originating defect (RP-1: honest, and expected to be large — but no longer STATIC: S104 makes the census a TREATMENT that SHRINKS it).",
+  method: "mechanical + transparent: hasControl, recordedOrigin (a committed W-tag / sprint re-pin ref / RECOVERED-ORIGIN / RE-FOUNDED annotation — untracked build logs do NOT count, so clone-stable), structuralAbsence, route (S104: recovered vs re-founded, COUNTED APART, RP-3), and a short curated EXEMPT/WEAK override set. The regexes are documented in src/organon/falsify.ts.",
   wallCount: c.wallCount,
   counts: c.counts,
+  treatment: {
+    rule: "S104 / DD-20 — the census is a TREATMENT, not a thermometer. >=10 ORIGIN_UNRECORDED walls processed via three routes IN ORDER (RP-3: recover-first, re-founded counted APART).",
+    originUnrecordedBefore: V35_BASELINE_ORIGIN_UNRECORDED,
+    originUnrecordedAfter: c.counts.ORIGIN_UNRECORDED,
+    strictlyLower: c.counts.ORIGIN_UNRECORDED < V35_BASELINE_ORIGIN_UNRECORDED,
+    recovered: c.recovered,
+    reFounded: c.reFounded,
+    deleted: c.deleted,
+    reFoundedWalls: c.rows.filter((r) => r.route === "reFounded").map((r) => r.id),
+    recoveredWalls: c.rows.filter((r) => r.route === "recovered").map((r) => r.id),
+    recoverAttemptRecord: "RP-3 (F-3) — RECOVER was attempted FIRST for every treated wall and its result recorded (in each treated test's own title): all twelve were introduced in early SQUASHED commits (dc23cf98 'the honest DeFi Reality Check' / ab64dd96 'the opt-in Stamp') whose one-line messages name the FEATURE, not the wall's specific originating defect, and the granular sprint build log that recorded that defect is gitignored — so RECOVER FAILED and RE-FOUND is the honest route. DEMONSTRATED(re-founded) is counted APART from a remembered origin, forever (a purpose reconstructed ≠ a purpose remembered).",
+  },
   originStrength: { wTag: c.rows.filter((r) => r.originStrength === "W-TAG").length, reference: c.rows.filter((r) => r.originStrength === "REFERENCE").length },
   noSeededNegativeFlag: {
     count: c.decorationCount,
     walls: c.rows.filter((r) => r.decoration).map((r) => r.id),
-    meaning: "a HEURISTIC LOWER BOUND (attack #10, stated not hidden): the scan found no explicit demonstrated-failure signal in the committed context. NOT a proof the wall cannot fail — a flag for the auditor. Walls whose test files land later in this sprint (S96-S98) resolve on the next regenerate.",
+    meaning: "a HEURISTIC LOWER BOUND (attack #10, stated not hidden): the scan found no explicit demonstrated-failure signal in the committed context. NOT a proof the wall cannot fail — a flag for the auditor.",
   },
-  headline: `${c.counts.ORIGIN_UNRECORDED} of ${c.wallCount} walls have NO recorded originating defect in their committed context — the project has, until now, never systematically asked whether its own tests can fail (X-REACH(a), attack #1). ${c.counts.DEMONSTRATED} are DEMONSTRATED (a named defect + a seeded negative); ${c.counts.EXEMPT} are reasoned structural-absence exemptions; ${c.decorationCount} carry no seeded-negative signal at all (flagged).`,
-  livingWall: "RP-6 — this is regenerated by the battery (Falsify.census is a pure read); a wall id referencing S(>99) is an ORPHAN and FAILS the census until the range is consciously bumped. A wall added with no seeded negative raises the flagged count, visibly.",
+  headline: `${c.counts.ORIGIN_UNRECORDED} of ${c.wallCount} walls have NO recorded originating defect (down from the V35 baseline of ${V35_BASELINE_ORIGIN_UNRECORDED}). S104 the census became a TREATMENT: ${c.reFounded} walls RE-FOUNDED (a stated defect + a seeded negative, counted apart) + ${c.recovered} recovered + ${c.deleted.length} deleted-with-proof. ${c.counts.DEMONSTRATED} DEMONSTRATED; ${c.counts.EXEMPT} reasoned exemptions; ${c.decorationCount} carry no seeded-negative signal (flagged).`,
+  livingWall: "RP-6 — regenerated by the battery (Falsify.census is a pure read); a wall id referencing S(>106) is an ORPHAN and FAILS until the range is consciously bumped. A wall added with no seeded negative raises the flagged count, visibly.",
   orphans: c.orphans,
   contentSha,
   rows: c.rows,

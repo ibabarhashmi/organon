@@ -1,8 +1,8 @@
 {
   "protocol": "rigor-crosscheck",
   "at": "2026-07-14",
-  "rule": "S94 — the frozen core's DSR/PSR/PBO cross-check EXECUTED against the INDEPENDENT purgedcv oracle. Never mocked (RP-2): a BLOCKED result carries its actionable reason. The numbers are a RECORD OF EXECUTION (env-stamped), not a determinism golden — a re-run on different BLAS may shift the low bits; the load-bearing claim is dsrAgree (|DSR_rigor − DSR_purgedcv| < 0.02) and executed=true.",
-  "reference": "Bailey & López de Prado — the Deflated Sharpe Ratio 'incorporates information about the unselected trials'; the frozen rigor.deflated_sharpe (sha-pinned in frozen.ts) is cross-checked against purgedcv==0.1.2 on a golden-noise universe (true Sharpe 0, seed 20260627, T=504, N=1000) identical to selftest.py's k==0 construction.",
+  "rule": "S94 (Reach V35) + S101 (Derivation V36) — the frozen core's DSR/PSR/PBO cross-check EXECUTED against the INDEPENDENT purgedcv oracle, WHOLE. V35 validated DSR only; V36 cross-checks ALL THREE (purgedcv exposes probabilistic_sharpe_ratio + probability_of_backtest_overfitting — DD-17, no pypbo needed). Never mocked (RP-2): a BLOCKED result carries its actionable reason. The numbers are a RECORD OF EXECUTION (env-stamped), not a determinism golden — a re-run on different BLAS may shift the low bits; the AGREEMENT (|Δ| < the PRE-REGISTERED tolerance in derive-pins.json) is computed in TS (CrossCheck.agreement), never from a call-site constant (X-DERIVE(f)).",
+  "reference": "Bailey & López de Prado — DSR/PSR (Eq.7) + PBO/CSCV. The frozen rigor.{deflated_sharpe,psr,pbo} (sha-pinned in frozen.ts) are cross-checked against purgedcv==0.1.2 on a golden-noise universe (true Sharpe 0, seed 20260627, T=504, N=1000) identical to selftest.py's k==0 construction. RP-2: CSCV free parameters ALIGNED (S=8, mean/std-ddof=1 metric, contiguous split, no purge/embargo, matrix transposed) — a genuine comparison, not two experiments.",
   "crossCheck": {
     "executed": true,
     "seed": 20260627,
@@ -13,13 +13,32 @@
     "dsrDiff": 0.0012170529063393887,
     "dsrAgree": true,
     "psr": 0.9989334286155159,
+    "psrPurgedcv": 0.9989434857193364,
+    "psrDiff": 0.0000100571038205155,
     "pbo": 0.6,
+    "pboPurgedcv": 0.6,
+    "pboDiff": 0,
+    "cscvAlignment": {
+      "S": 8,
+      "metric": "mean/std ddof=1 (rigor._col_sharpe == purgedcv.sharpe)",
+      "split": "contiguous",
+      "purge": "none",
+      "embargo": "none",
+      "matrixOrientation": "rigor (T,N) -> purgedcv (N,T) via transpose",
+      "comparable": true
+    },
     "deflationCollapse": 0.5205124910374894,
     "dsrMonotonic": true,
     "dsrByNTrials": {
       "n10": 0.940538432178096,
       "n100": 0.7393927433877943,
       "n1000": 0.4784209375780265
+    },
+    "dataset": {
+      "kind": "golden-noise",
+      "tier": "SAMPLE",
+      "trueSharpe": 0,
+      "note": "synthetic seeded noise identical to selftest.py k==0 — a fixture, not real strategy returns"
     },
     "purgedcvVersion": "0.1.2",
     "numpyVersion": "2.4.6"

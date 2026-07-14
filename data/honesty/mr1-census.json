@@ -22,6 +22,7 @@
       "symbol": "USDC",
       "present": true,
       "domainClass": "UNCLASSIFIED",
+      "shelved": true,
       "badge": false
     },
     {
@@ -29,6 +30,7 @@
       "symbol": "USDC",
       "present": true,
       "domainClass": "UNCLASSIFIED",
+      "shelved": true,
       "badge": false
     },
     {
@@ -36,6 +38,7 @@
       "symbol": "sUSDe",
       "present": true,
       "domainClass": "STABLE-SYNTH",
+      "shelved": true,
       "badge": true
     },
     {
@@ -43,9 +46,16 @@
       "symbol": "DAI",
       "present": true,
       "domainClass": "UNCLASSIFIED",
+      "shelved": true,
       "badge": false
     }
   ],
-  "shelfState": "the four MR1 subjects are RESOLVABLE (4/4 present, MR1) and classifiable (conservative → UNCLASSIFIED/LENDING without the precise captured signatures). They are NOT force-added to the curated shelf — that would be new capability (the Halt). Their domain nature is stated, not badged onto a new shelf row.",
-  "honestNote": "a census that only ever improves is not a census (C-3). This one honestly reports NO improvement: domain-catch is still 0/7. The capture proved the subjects real; the depth remains what it was."
+  "shelfState": "Derivation V36 (MR12/DD-24) — the four MR1 subjects are now SHELVED as owed DATA (4/4 present, MR1) and domain-badged where a real domain class exists (ethena-usde/sUSDe → STABLE-SYNTH badged; aave-v3/compound-v3/sparklend UNCLASSIFIED, honestly un-badged — never a fabricated domain). This REVERSES the V35 stance ('NOT force-added ... that would be new capability') which was the E-8 defect: adding four already-captured, already-classified subjects to the curated shelf adds no module, no surface, no screen, no fact type — it is DATA, not capability. A Halt used to defer an owed residue is a Halt being used as a SHIELD.",
+  "mr12": {
+    "rule": "MR12 / DD-24 — the Halt forbids new CAPABILITY, not owed DATA. The five-sprint-owed MR1 residue is discharged: the four subjects are shelved (owed data) and badged where honest. domain-catch is UNCHANGED at 0/7 — shelving already-present data does not create a new-domain shelf subject, and the badge on ethena-usde reflects an EXISTING domain type (STABLE-SYNTH, D34), not a new one.",
+    "capabilityVsData": "new CAPABILITY = a module/surface/screen/fact-type/law/dependency/verdict added; owed DATA = a subject already captured + classified, marked present on the existing shelf. The four are the second — DATA.",
+    "shelvedCount": 4,
+    "badgedCount": 1
+  },
+  "honestNote": "a census that only ever improves is not a census (C-3). This one honestly reports NO improvement in domain-catch (still 0/7) even as it discharges the owed DATA (MR12): the capture proved the subjects real; shelving them adds no depth. The depth remains what it was."
 }

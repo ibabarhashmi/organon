@@ -6,7 +6,8 @@
   <b>An honest-by-construction DeFi Reality Check — and the strategy engine underneath it.</b><br>
   Is this yield real, and what's the catch? Answered as a machine-derived scorecard from real,<br>
   point-in-time data — moated by an append-only record of what was real, and when.<br>
-  Ask it in plain language; opt in to an overfit stress test on the track record — every number the engine's, never a model's.
+  Ask it in plain language; opt in to an overfit stress test on the track record — every number the engine's, never a model's.<br>
+  <i>A methodology audit, not investment advice.</i>
 </p>
 
 <p align="center">

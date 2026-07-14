@@ -67,17 +67,24 @@ setup() {
   }
   if [ -d "src/backtest/py/.venv" ]; then echo "✓ setup: the scientific sidecar venv is present (idempotent — nothing to do)."; provision_crosscheck; return 0; fi
   echo "○ setup: the sidecar venv is absent."
+  # Derivation V36 (S103 fresh-clone finding): the frozen sidecar + the cross-check oracle are Python-3.11-only (S83
+  # mandate; purgedcv==0.1.2 is 3.11), but bare `python3` on a stock macOS is 3.9 — so a fresh clone built a 3.9 venv that
+  # failed S83 and could not provision purgedcv. PREFER python3.11, then a 3.11.x, then bare python3 (disclosed gap: a
+  # non-3.11 venv trips S83 and the cross-check walls state BLOCKED, never faked). The pristine clone RAN and caught this.
+  local PYBIN=""
+  for c in python3.11 python3.12 python3; do command -v "$c" >/dev/null 2>&1 && { PYBIN="$c"; break; }; done
   # the lockfile lives in the sidecar dir, NOT the repo root (AB3, D22 — the old root-path check meant this build could never run)
-  if [ -f "$py_dir/requirements-studio.txt" ] && command -v python3 >/dev/null 2>&1; then
-    echo "  creating $py_dir/.venv from the pinned lockfile (no network installs beyond it)…"
+  if [ -f "$py_dir/requirements-studio.txt" ] && [ -n "$PYBIN" ]; then
+    echo "  creating $py_dir/.venv from the pinned lockfile via $PYBIN ($("$PYBIN" --version 2>&1))…"
+    [ "$PYBIN" = "python3" ] && ! "$PYBIN" --version 2>&1 | grep -q "3\.11" && echo "  ⚠ python3.11 not found — falling back to $("$PYBIN" --version 2>&1); the 3.11 mandate (S83) will flag it and the cross-check will state BLOCKED (disclosed, never faked)."
     local venv_err=""
-    venv_err="$( { python3 -m venv "$py_dir/.venv" && "$py_dir/.venv/bin/pip" install -q -r "$py_dir/requirements-studio.txt"; } 2>&1 >/dev/null )" \
+    venv_err="$( { "$PYBIN" -m venv "$py_dir/.venv" && "$py_dir/.venv/bin/pip" install -q -r "$py_dir/requirements-studio.txt"; } 2>&1 >/dev/null )" \
       && { echo "  ✓ venv created from the lockfile."; provision_crosscheck; } \
       || { echo "  ○ venv setup did not complete — disclosed as a GAP, never faked (the core TS battery still runs; the sidecar tests will state BLOCKED)."; \
            echo "    the actual error (never laundered as 'offline'): $(printf '%s' "$venv_err" | tail -1)"; \
            echo "    on Debian/Ubuntu/WSL the usual cure is:  sudo apt install python3-venv"; }
   else
-    echo "  ○ python3 or $py_dir/requirements-studio.txt is absent — the venv is a GAP (disclosed, never faked)."
+    echo "  ○ a python3 (prefer 3.11) or $py_dir/requirements-studio.txt is absent — the venv is a GAP (disclosed, never faked)."
   fi
 }
 
@@ -143,6 +150,12 @@ tui() {
 # ── the STAMP verb — the opt-in overfit stress test (Crown-Jewel; X-OPTIN) — a DISTINCT GO/NO-GO/INSUFFICIENT verdict ──
 do_stamp() { need_bun; bun run script/stamp.ts $STAMP_ARG; }
 
+# ── the RELEASE verb (Derivation V36, S105/DD-21) — the release in ONE COMMAND: a single-file binary + SHA-256 + install ──
+# The SAME code, compiled (distribution is not capability, X-REACH(f)/D49). dist/ is gitignored: the binary is BUILT, not
+# committed — the D50 checkboxes COMPUTE, and they compute RED until a human publishes. bun build --compile reproducibility
+# is UNVERIFIED (stated, not assumed). The console stays behind --studio (V34-sealed); no key is embedded.
+do_release() { need_bun; bun run script/release.ts ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}; }
+
 # ── the ASK verb — the grounded Ask console (Crown-Jewel; X-ASK), deterministic mode from the CLI (no AI key needed) ──
 # AB6 (D22): `set -u` + an empty-array expansion is fatal on stock macOS bash 3.2 — the ${arr[@]+…} form is the
 # bash-3.2-safe expansion, so `./organon.sh ask` with no query reaches the script's own honest usage line, not a shell error.
@@ -163,6 +176,7 @@ case "$MODE" in
   launch) do_launch;;
   verify) do_verify;;
   stamp)  do_stamp;;
+  release) do_release;;
   ask)    do_ask;;
   monitor) need_bun; bun run script/monitor-manifests.ts "${PASS_ARGS[@]}";;  # re-judge held manifests on the capture cadence (X-CADENCE; reads-never-acts; no daemon)
   telemetry) do_telemetry;;
