@@ -1,0 +1,19 @@
+{
+  "protocol": "retirement-ledger",
+  "at": "2026-07-14",
+  "rule": "D68 / DD-52 — what retires under D51 (ORGΛNON is an INSTRUMENT) and what survives. NOTHING is deleted; everything is DISPOSED, each item naming its ruling/reason. RETIRES the go-to-market thread only — the research reports STAY in the record (they informed the shipped exit kinds, the Socket, the false-fire count).",
+  "retired": [
+    { "item": "the desk study (curator rubric / sources)", "ruling": "D51/D68", "reason": "an instrument's market test collapses into its one user's use — the buyer question is moot when the buyer is the builder", "disposition": "RETIRED-BY-D68 — the research value forgone is named; the reports that informed shipped work stay in the record" },
+    { "item": "the curator kit / outreach draft", "ruling": "D51/D68", "reason": "no strangers to reach; the builder-thesis validation now has exactly one instrument: IN2", "disposition": "RETIRED-BY-D68" },
+    { "item": "D42's data-posture memo", "ruling": "D42 dissolved", "reason": "the DeFiLlama non-commercial exposure is an exposure of COMMERCIAL use; a personal tool is the non-commercial case; the RPC exposure (D60) shrinks identically", "disposition": "DISSOLVED — D42 leaves the pen package; twelve sprints of exposure evaporate on the fact of personal use" },
+    { "item": "D50's market clock (the 90-day publication window as a gate item)", "ruling": "D51/D68", "reason": "no publication as a gate item; canFire re-derives against the amended criterion or retires with it", "disposition": "RETIRED-BY-D68 — publication relabeled optional-staged, removed from the gate's blocking set" },
+    { "item": "the market-of-one-to-few gate anxiety", "ruling": "D51", "reason": "the market anxiety dissolves with the market", "disposition": "RETIRED-BY-D68" }
+  ],
+  "survived": [
+    { "item": "the Socket (as LOCAL INTERFACE)", "reason": "an INTERPRETATION, flagged and strikeable: what retires is the Socket-as-CHANNEL (to strangers); the Socket-as-local-interface (stdio, no port, a subprocess of the Operator's own agents) is exactly how an instrument's one user consumes it. A wall keeps it stdio-only forever (S113). If the pen strikes this interpretation, the registration path is removed and the tools go dark; the framing survives either ruling.", "flaggedAsInterpretation": true },
+    { "item": "the staged publication artifacts (release script, PUBLISH.md relabeled optional)", "reason": "cheap optionality, UN-gated — an instrument's owner may still publish someday" },
+    { "item": "IN4 / AF4", "reason": "quality is not audience-dependent" },
+    { "item": "every law, every wall, every audit discipline", "reason": "an instrument for one person keeps all seventeen laws — they were never about the audience; a softened wall in a personal tool is self-deception with a build system" }
+  ],
+  "reachInterpretation": "reachableHumans: 1 flips from deficiency to DESIGN — the fact stays derived, its interpretation inverts (Reach.interpretation → BY-DESIGN, derived from D51's recorded state; S139)."
+}

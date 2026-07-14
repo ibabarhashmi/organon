@@ -124,3 +124,71 @@ treeHash / commitSha: the substance commit (Marker-valid; generated against HEAD
 - **Red-team S1–S127:** the statistician (the PBO test can now succeed or fail on the merits — the SE is shown, the distance is a number); the archivist (the chart series is `RETROSPECTIVE`, said); the stranger (the current MCP client is accepted, not refused); the curator (concentration is registrable today; oracle-staleness and utilization are honestly owed, not faked); the attacker (three surfaces baited from a different lab — `guardEfficacy UNJUDGEABLE`, the corpus named the weak wall); the auditor (header and prose agree — S107 + S126); the Operator (two items alone — the question unanswered, the lift's price paid).
 
 **And the last line is the one this project has ended on since V34, computed and unchanged** — the reach and ledger producers read it below. It has never been an engineering problem, and V38 does not pretend to solve it.
+
+---
+
+# PART B — THE SURROGATE ADDENDUM (V38-B, R2): THE PEN MOVED
+
+> **X-DERIVE(a):** the addendum block below is **GENERATED**; the prose **names producers, never restates their values** (S126). This PART B appends to the Substance log and writes **no base-V38 field** (S135).
+
+## THE PEN MOVED — read first. The rulings, verbatim; the inferences, separate; the agent's hands, visible.
+
+For thirteen sprints the gate ended with *presented, never signed*. **This message is the pen.** The Operator ruled on four items in one message, and the agent records each with its inference **stated separately** — because the words are terse, the inferences are load-bearing, and an over-read inference is a forged signature by another name. **Each inference is individually strikeable, and the agent signs nothing.**
+
+| Item | The Operator's words (verbatim) | The inference (separate, strikeable) | Status |
+|---|---|---|---|
+| **D51** | *"my personal tool"* | ORGΛNON is an **INSTRUMENT** — option (2) of the V36 menu, chosen. n=1 **by design.** Only the V36/V37 pre-priced costs execute. | **ANSWERED** |
+| **D33** | *"Break it to understand yourself, red team the math adversly"* | The signature is **WITHHELD**; in its place an **adversarial red team of the frozen core's math**. D33 stays **UNSIGNED** beside its break ledger. | **RE-SCOPED** |
+| **D62** | *"try we yourself, and move on (after adverse validation)"* | The circular-gate re-cut is **DELEGATED** — evaluate both, attack both, pick one (**D62-R**), move on. Quoted, bounded, presented strikeable (the one form LN5 permits). | **DELEGATED** |
+| **D63** | *"keep it off"* | **STRUCK.** X-CORRELATE unamended; `familyN === 1`; the deflation **INERT**. | **OFF** |
+
+**What the pen did NOT touch, stated as fact (RP-4):** D27 — first in the deviation order for thirteen sprints — remains unsigned, as does the rest of the queue. The pen moved on four items and *past* the queue's head. **The package still ships, D27 still first.** Silence is not a ruling; only words move deviations.
+
+## THE GENERATED ADDENDUM
+
+```
+addendum(R2):
+  THE PEN:    rulings 4, verbatim · inferences stated separately, each strikeable
+              D51 ANSWERED: INSTRUMENT · D33 RE-SCOPED: autopsy ordered, UNSIGNED · D62 DELEGATED · D63 OFF
+              D27 STILL FIRST — skipped by the pen, stated as fact (RP-4)
+  QUARANTINE: authorship derived (HUMAN|AGENT|FIXTURE) · real := ¬FIXTURE ∧ ¬AGENT · lineage ids moved: 0
+  CANARY:     before === after — clean · leaked producer: none (S128)
+  D67:        amended criterion drafted, ⟨N⟩ EMPTY + trade-off table (RP-3) · SEARCH appended, real ledger hash in record/ (S137)
+              old 8b4e094b PRESERVED beside it · presented: y · pinned by agent: NEVER (LN5)
+  D68:        retired: desk study · curator kit · D42 (dissolved: non-commercial) · D50 market clock
+              kept: Socket-as-local-interface (INTERPRETATION, flagged, strikeable) · publication: optional-staged
+              reach.interpretation: BY-DESIGN, derived (S139)
+  MATH RED TEAM (D33): classes run 5 · known-answer PARTIAL (purgedcv + closed-form; papers not reproducibly published, RP-2)
+              findings 15 = BREAK 0 · ASSUMPTION-LIMIT 6 (each citing its section) · THEORY-GAP 3 (both readings) · clean 6
+              rigor.py bytes moved: 0 · checkFrozenSet: 0 drift (before AND after) · D33: UNSIGNED beside the ledger (S136)
+  D62-R:      options attacked: both · pick: A · nothing lit (familyN===1, seeded activation FAILS, S138)
+  IN4 DISCHARGED · AF4 STAGED (BLOCKED, no key) · publication optional-staged
+  LEFTOVER CENSUS: RETIRED-BY-D68 items each naming their ruling · no orphans
+  ADDENDUM KILL-CRITERION (DD-48-R2): canary y ∧ rulings 4/4 y ∧ ledger classified y ∧ IN2 uncontaminated y → SUCCEEDED (RP-5)
+```
+
+## THE D51 CASCADE — executed as tasks (only pre-priced costs; the one interpretation flagged)
+
+- **D67 — the market kill-criterion AMENDED, not fired.** It tested the wrong hypothesis (will strangers adopt it?) for an instrument. The `kill-criterion-amendment` producer drafts the amended criterion — *falsifiable by the moat alone* (built on V31's `changedByCompile` + journal, written at decision time, hash-chained, un-retro-fittable) — with **⟨N⟩ left empty and a trade-off table** for the pen (RP-3: a pre-filled N is a pre-filled thesis). The amendment is a **SEARCH** (re-pinning a pre-registered criterion after seeing data is the exact act X-RECKON catches; the tool's own criterion gets no exemption), carrying a real ledger hash in the record hash-chain (the S122 append-site answer, twice). The old criterion (`8b4e094b`) and its text are **preserved beside the amendment forever.** The agent **drafts; the pen pins.**
+- **D68 — the retirement ledger.** The desk study, the curator kit, the outreach draft, D50's market clock retire (each naming its reason); **D42 dissolves** — a personal tool is the non-commercial case, and twelve sprints of DeFiLlama exposure evaporate on that fact; the Reach producer's **interpretation derives BY-DESIGN** (the fact never moves, its reading inverts — S139). The **Socket survives as a local interface** — flagged as an *interpretation* of a pre-priced cost, strikeable on its own (channel retires, stdio subprocess stays). **Nothing is deleted; everything is disposed.**
+- **D63 — recorded off.** `familyN === 1`; a seeded activation FAILS; the deflated-Sharpe meter stays dark. The builder cost is printed where the builder can see it: *counts and ranks as facts, the meter dark, the memory kept* — and if the pen ever reverses D63, the meter lights over history already recorded, with zero rework.
+
+## THE MATH RED TEAM (D33's order) — *never sheds; the only direct order the pen has ever issued*
+
+The `math-redteam` producer attacked the frozen `rigor` core's DSR/PSR/PBO across **five classes** — known-answer (the closed-form PSR for a symmetric-normal series + the independent `purgedcv` oracle, since the papers' full worked inputs are not reproducibly published, disclosed per RP-2), property (monotonicity, permutation-invariance, scale-invariance), degenerate (constant / single-obs / tiny-T / ties / NaN), adversarial (the i.i.d. trap, extreme skew, odd S), and null-distribution (extending S116). **Every finding is classified into exactly one of BREAK / ASSUMPTION-LIMIT / THEORY-GAP** — and every assumption-limit **cites its assumption by paper section** (RP-1: one that cannot is reclassified BREAK, the burden toward the harsher class). The headline: **no BREAK found under five attack classes — a lower bound, not a proof.** The i.i.d. finding (autocorrelated input overstates PSR/DSR confidence) is an **assumption-limit routed flag-don't-emit**, a render-layer caveat, **never an edit to the frozen formula.** And the standing rule held: the `frozen-set` producer reports **zero drift on `rigor.py` before AND after the autopsy** — an autopsy that edits the body is a forgery, and this one moved not one byte. **D33 sits unsigned beside the ledger, which is where a signature should have to look before it lands.**
+
+## THE QUARANTINE (never sheds) + D62-R + THE GATE
+
+- **The quarantine (S128):** the `Authorship` producer derives HUMAN | AGENT | FIXTURE at the entry path (a sidecar marker outside the hashed surface — **no lineage id moves**); `real := ¬FIXTURE ∧ ¬AGENT` (prove a human, never assume one); a seeded agent lineage **cannot inflate the real count.** The **canary** re-derives clean: the base and quarantined real-class counters agree, no producer leaked. Under D51 this matters more, not less — **IN2's counters are the only validation the project has**, and a poisoned counter in an instrument's self-test destroys the only truth the tool has.
+- **D62-R:** both re-cuts attacked against the pinned criteria; the `Recut` producer picks **Option A** (count human-authored SEARCHes, the Proposer gated on the pen) — decoupled from the deflation, so safe under D63-off and if D63 ever reverses; **nothing lights.** Presented at the gate, strikeable.
+- **The addendum's success (DD-48-R2):** the `Surrogate` producer computes four legs — the canary clean, the four rulings executed traceably, the break ledger classified, IN2's instrument uncontaminated — and prints **SUCCEEDED** only if every leg holds.
+
+## THE GATE ADDENDUM (presented, NEVER signed — LN5)
+
+```
+instrument: BY-DESIGN · the only validation: IN2 · remaining pen acts: D62-R ratify · D67 pin (N) · D27… · D63: OFF (the meter dark, the memory kept) · canary: clean
+D51: ANSWERED — INSTRUMENT (the pen: my personal tool) · D33: UNSIGNED beside its break ledger · D62-R: presented (pick A, nothing lit) · D67: presented for the pin (⟨N⟩ open)
+LAWS: 17 · minted this addendum: 0 · capability added: 0 · deps: 2 · an instrument for one person keeps all seventeen laws
+```
+
+**The first line of the gate is no longer a question — the pen answered it. It is a schedule:** the only validation left is **IN2**; the instrument that will record it is **provably clean** (the quarantine); the fields that will hold the answer were **built in V31, four sprints before anyone knew why.** *A re-litigated ruling, a lit meter, a moved frozen byte, a comfortable classification, a pre-filled N, or a flattering frame is a Halt, not a done.* **The tool is yours, it is honest, and it is waiting to find out whether it changes what you do.**

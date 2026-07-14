@@ -1,0 +1,29 @@
+{
+  "protocol": "kill-criterion-amendment",
+  "at": "2026-07-14",
+  "rule": "D67 / S137 — the market kill-criterion (8b4e094b) tested the WRONG HYPOTHESIS (will strangers adopt it?) for an INSTRUMENT (D51: my personal tool). It is AMENDED, NOT FIRED. The amendment is a SEARCH under X-RECKON — re-pinning a pre-registered criterion after seeing data is exactly the act this tool catches, and the tool's own criterion gets NO exemption. The agent DRAFTS; the pen PINS. The old criterion is preserved beside the new FOREVER — you do not get to delete the test you replaced.",
+  "oldCriterion": {
+    "hash": "8b4e094b",
+    "kind": "MARKET-ADOPTION (continue/pivot/stop)",
+    "whatItTested": "whether STRANGERS adopt ORGΛNON — a demand-validation criterion, concrete/numeric/continue-pivot-stop on adoption metrics over a window, ledger-committed before any invite (the Probe sprint's pre-registration; immutable-once-committed, editable only by a disclosed re-pin).",
+    "whyWrong": "there is no market for an instrument (D51 — my personal tool). The buyer question is moot when the buyer is the builder; a market-adoption criterion tests a hypothesis that D51 dissolved.",
+    "preserved": "PRESERVED FOREVER, verbatim hash 8b4e094b, beside the amendment — the schema (metric/continueThreshold/pivotThreshold/stopThreshold/window/measurement) and its commit pin remain in the moat; the amendment does NOT delete it."
+  },
+  "amendedCriterion": {
+    "draftText": "If, across the first ⟨N⟩ HUMAN-authored lineage cycles, changedByCompile is never true AND no journal entry records a decision informed by a rendered fact, the instrument has failed its one user — and says so.",
+    "nSlot": "EMPTY — for the pen (RP-3: a pre-filled N is a pre-filled thesis, X-AUTHOR applied to the project's own manifest)",
+    "nTradeoffTable": {
+      "N=5": "an early, easy chance to prove itself and an early, easy chance to fail — high variance, fast signal",
+      "N=10": "a middle bar — enough cycles to distinguish a tool that changes the user's behaviour from one that does not, without waiting years",
+      "N=20": "a hard bar — near-certain to surface a real failure if the tool is inert, but slow; failure becomes a long verdict"
+    },
+    "falsifiableByMoatAlone": "changedByCompile and the journal (priorIntent/decisionAfter) are written at DECISION TIME (V31's schema), hash-chained, and cannot be retro-fitted — no survey, no self-report. If the tool never changes what its one user does, the moat itself will say so. An instrument with a pre-registered, machine-checkable failure condition is not a mirror; it is a manifest, and ORGΛNON is finally its own first subject in full (attack #3).",
+    "instrumentOfMeasurement": ["changedByCompile (V31 Journal field)", "the journal's priorIntent/decisionAfter written at decision time", "realLineageCount (HUMAN-authored, quarantined — S128)"],
+    "presentedNeverPinned": "the new criterion's hash is PRESENTED for the pen to pin; the agent DRAFTS, it does NOT pin (LN5). ⟨N⟩ is a slot for the pen."
+  },
+  "amendmentAsSearch": {
+    "act": "SEARCH",
+    "rule": "the amendment is a SEARCH under X-RECKON, priced exactly as any user's re-pin of a pre-registered criterion after seeing data would be. It carries the act tag and its content hash, committed and hash-chained in record/ using the SAME append-site answer S122 produced (a meta-event is not a strategy manifest, so the strategy-trial ledger has no coherent site; the price is paid in the committed hash-chained record, said honestly, twice).",
+    "appendSite": "record/chain.json (kill-criterion-amendment.json folded into the record hash-chain, like halt-lifts.json — a real immutable ledger hash; NOT the strategy-trial ledger)"
+  }
+}

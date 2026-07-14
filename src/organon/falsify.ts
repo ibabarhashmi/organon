@@ -23,7 +23,7 @@ import { PKG_ROOT } from "./frozen"
 
 export namespace Falsify {
   export const WALL_MIN = 1
-  export const WALL_MAX = 127 // Substance V38: bumped 115→127 for the S116..S127 band (two owed to V39 as gaps: oracle-staleness + the algebra); a test that references S(>MAX) is an ORPHAN (RP-6 living wall)
+  export const WALL_MAX = 139 // Surrogate Addendum V38-B: bumped 127→139 for S128,S136-S139 (S129-S135 shed/carried as gaps); a test referencing S(>MAX) is an ORPHAN (RP-6 living wall)
 
   export type Bucket = "DEMONSTRATED" | "WEAK" | "EXEMPT" | "ORIGIN_UNRECORDED"
   // Derivation V36 (S104/DD-20): the census gets a TREATMENT. An ORIGIN_UNRECORDED wall is processed via one route, in

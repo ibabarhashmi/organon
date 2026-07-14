@@ -2,11 +2,11 @@
   "protocol": "battery-baseline",
   "at": "2026-07-14",
   "rule": "S107 (G-1) — the FULL auto-discover battery's pass count, per sprint, so the generated header's Δ RECONCILES: full === prev + added − removed. V36's header hand-typed Δ+34 (the FILE count) against a real +66 (tests); the numbers are now COMPUTED and cross-checked. `full` is measured at the sprint's close (two identical runs); `added`/`removed` are DERIVED (full − prev / named removals).",
-  "prevSprint": "V37 (Socket)",
-  "prevFullPass": 1668,
-  "fullPass": 1706,
-  "added": 38,
+  "prevSprint": "V38 (Substance)",
+  "prevFullPass": 1706,
+  "fullPass": 1738,
+  "added": 32,
   "removed": 0,
   "removedReason": [],
-  "note": "SUBSTANCE V38 close: two identical runs at 1706 pass / 2 skip / 0 fail across 262 files / 11050 expect(). added = fullPass − prevFullPass (the S116-S127 walls + the substance phase walls); removed 0. Consistency.batteryReconciles asserts fullPass === prevFullPass + added − removed."
+  "note": "SUBSTANCE V38 + Surrogate Addendum V38-B close: two identical runs at 1738 pass / 2 skip / 0 fail across 268 files / 11321 expect(). added = fullPass − prevFullPass (the S128/S136-S139 surrogate walls + phase walls); removed 0. Consistency.batteryReconciles asserts fullPass === prevFullPass + added − removed."
 }

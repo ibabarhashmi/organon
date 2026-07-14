@@ -52,4 +52,43 @@ export namespace Reach {
       ? `published: true · reachableHumans: UNJUDGEABLE — ORGANON does not count strangers.`
       : `published: false · reachableHumans: 1 — the number is what it is, and until now exactly one human could have made it otherwise.`
   }
+
+  // ── SURROGATE ADDENDUM (V38-B, S139/D51) — THE INSTRUMENT'S FRAME ────────────────────────────────────────────────────
+  // The reach FACT stays derived (published ? UNJUDGEABLE : 1). Its INTERPRETATION is DERIVED from D51's recorded state in
+  // the surrogate pins: once the pen answers D51 = INSTRUMENT (my personal tool), reachableHumans: 1 is BY-DESIGN — the spec,
+  // not a deficiency. Before the ruling it is THE-OPEN-QUESTION. A producer framing the 1 as a failure FAILS (S139); the fact
+  // never moves, only its reading.
+  export type Interpretation = "BY-DESIGN" | "THE-OPEN-QUESTION"
+
+  // read D51's answered state from the surrogate pins (the single source; derived, never declared here).
+  function d51AnsweredInstrument(): boolean {
+    try {
+      const { readFileSync } = require("node:fs") as typeof import("node:fs")
+      const path = require("node:path") as typeof import("node:path")
+      const { PKG_ROOT } = require("./frozen") as { PKG_ROOT: string }
+      const sg = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "surrogate-pins.json"), "utf8"))
+      return sg?.thePenMoved?.rulings?.D51?.status === "ANSWERED" && /INSTRUMENT/.test(sg?.thePenMoved?.rulings?.D51?.inferenceStatedSeparately ?? "")
+    } catch {
+      return false // pre-addendum checkout → D51 still open
+    }
+  }
+
+  export function interpretation(): Interpretation {
+    return d51AnsweredInstrument() ? "BY-DESIGN" : "THE-OPEN-QUESTION"
+  }
+
+  // the instrument frame's sentence for reachableHumans: 1 — BY-DESIGN, never a deficiency (S139). Only rendered once D51 is
+  // answered INSTRUMENT; a line framing the 1 as a failure, or any law as relaxable-because-personal, is forbidden.
+  export function instrumentSentence(f: Fact): string {
+    if (interpretation() !== "BY-DESIGN") return reachSentence(f)
+    return `published: ${f.published} · reachableHumans: 1 — BY DESIGN. The pen answered D51: my personal tool. n=1 is the spec, not a deficiency — and an instrument for one person keeps all seventeen laws, because they were never about the audience.`
+  }
+
+  // S139 — a generated reach/framing line is VALID only if it does not frame the 1 as a failure and does not frame any law as
+  // relaxable-because-personal. Seeded negatives fail.
+  export function frameIsHonest(line: string): { ok: boolean; reason: string } {
+    if (/reachableHumans[^.]*\b(deficiency|failure|failing|too few|not enough|nobody|no one uses)\b/i.test(line)) return { ok: false, reason: "frames reachableHumans: 1 as a failure — forbidden under D51 (it is BY-DESIGN)" }
+    if (/\b(law|wall|rigor|honesty|moat)\b[^.]*\b(relax|soften|negotiable|loosen|waive)\b[^.]*\b(personal|private|instrument|one user|only reader)\b/i.test(line) || /\b(personal|private)\b[^.]*\b(relax|soften|negotiable|loosen|waive)\b[^.]*\b(law|wall|rigor|honesty)\b/i.test(line)) return { ok: false, reason: "frames a law as relaxable-because-personal — forbidden (an instrument for one person keeps all seventeen laws, S139)" }
+    return { ok: true, reason: "honest frame — the 1 is BY-DESIGN, no law is relaxed" }
+  }
 }

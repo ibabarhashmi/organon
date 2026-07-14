@@ -1,0 +1,154 @@
+{
+  "protocol": "math-redteam",
+  "at": "2026-07-14",
+  "rule": "S136 / D33's order — the frozen core's DSR/PSR/PBO attacked five classes deep (DD-49); every finding classified into EXACTLY ONE of BREAK / ASSUMPTION-LIMIT / THEORY-GAP; an ASSUMPTION-LIMIT cites its assumption by paper section (RP-1); a BREAK carries its reproduction; the search for the papers' worked examples is recorded (RP-2). rigor.py stays BYTE-FROZEN — every BREAK is ROUTED to the gate, never fixed in place. D33 remains UNSIGNED beside this ledger.",
+  "reference": "Bailey & López de Prado — PSR (2012) / Deflated Sharpe (2014) / CSCV (Bailey, Borwein, López de Prado, Zhu 2017). The frozen rigor.{psr,deflated_sharpe,sr0_deflated,pbo,per_obs_sharpe} attacked; the module is imported and READ, never edited.",
+  "frozenBefore": {
+    "ok": true,
+    "detail": "byte-identical to the pin"
+  },
+  "frozenAfter": {
+    "ok": true,
+    "detail": "byte-identical to the pin"
+  },
+  "rigorPyBytesMovedZero": true,
+  "ledger": {
+    "executed": true,
+    "attackClassesRun": [
+      "known-answer",
+      "property",
+      "degenerate",
+      "adversarial",
+      "null-distribution"
+    ],
+    "knownAnswerProvenance": "PARTIAL (RP-2): Bailey & López de Prado do not publish fully-reproducible worked inputs for DSR/PSR; the strongest independent known-answer is the purgedcv oracle (S94, already agreeing to |Δ|<0.02) plus the closed-form PSR for a symmetric-normal series (recomputed here). No printed worked example was reproduced verbatim; this is disclosed, not silently substituted.",
+    "counts": {
+      "total": 15,
+      "BREAK": 0,
+      "ASSUMPTION-LIMIT": 6,
+      "THEORY-GAP": 3,
+      "clean": 6
+    },
+    "headline": "NO BREAK found under five attack classes — a LOWER BOUND, not a proof. 6 assumption-limits (each citing its assumption by section, routed as flag-don't-emit or acceptable-as-is), 3 theory-gaps (both readings shown).",
+    "findings": [
+      {
+        "class": "known-answer",
+        "target": "psr",
+        "attack": "closed-form PSR for a symmetric-normal series (Bailey & LdP 2012, Eq.7): PSR(0)=Φ(SR·√(n-1)/√(1+SR²/2))",
+        "observation": "hand-computed PSR=0.999965 vs frozen rigor.psr=0.999966 (|Δ|=9.45e-07)",
+        "classification": "NONE"
+      },
+      {
+        "class": "known-answer",
+        "target": "deflated_sharpe",
+        "attack": "DSR = PSR(SR0) identity (Bailey & LdP 2014, Appendix): deflated_sharpe(r,N,V) must equal psr(r, sr0_deflated(V,N))",
+        "observation": "deflated_sharpe=0.000000 vs psr(r, sr0_deflated)=0.000000 (|Δ|=0.00e+00)",
+        "classification": "NONE"
+      },
+      {
+        "class": "property",
+        "target": "deflated_sharpe",
+        "attack": "DSR non-increasing in n_trials",
+        "observation": "DSR at N=10,100,1000,10000 = [0.9212, 0.5195, 0.1624, 0.0323]; non-increasing=True",
+        "classification": "NONE"
+      },
+      {
+        "class": "property",
+        "target": "psr",
+        "attack": "PSR non-increasing in sr_star",
+        "observation": "PSR at SR*=-0.05,0,0.05,0.1 = [1.0, 0.9999, 0.9815, 0.695]; non-increasing=True",
+        "classification": "NONE"
+      },
+      {
+        "class": "property",
+        "target": "pbo",
+        "attack": "PBO invariant to column permutation",
+        "observation": "pbo=0.200000 vs pbo(permuted)=0.200000",
+        "classification": "NONE"
+      },
+      {
+        "class": "property",
+        "target": "per_obs_sharpe",
+        "attack": "Sharpe scale-invariant under r→k·r (k>0)",
+        "observation": "sharpe=0.116200 vs sharpe(1000·r)=0.116200",
+        "classification": "NONE"
+      },
+      {
+        "class": "degenerate",
+        "target": "psr",
+        "attack": "constant (zero-variance) series",
+        "observation": "psr(constant)=nan (nan → None via json_safe — a flag, not a fabricated number)",
+        "classification": "ASSUMPTION-LIMIT",
+        "assumptionCited": "Bailey & LdP 2012 §1: PSR requires an estimable Sharpe, which requires σ̂>0. A constant series violates σ>0; the code faithfully emits nan (→None), which reads as 'not judgeable' rather than a fabricated probability.",
+        "routed": "ACCEPTABLE-AS-IS: nan→None already flags; an explicit refusal string would be clearer but is a render-layer improvement, routed to the gate, never a change to rigor.py."
+      },
+      {
+        "class": "degenerate",
+        "target": "psr",
+        "attack": "single observation (n<3)",
+        "observation": "psr([0.01],0)=nan (explicit n<3 guard → nan)",
+        "classification": "ASSUMPTION-LIMIT",
+        "assumptionCited": "skew/kurtosis need n≥3 (scipy); the code guards n<3 → nan EXPLICITLY (rigor.psr line: `if n < 3: return nan`). Faithful and guarded."
+      },
+      {
+        "class": "degenerate",
+        "target": "pbo",
+        "attack": "T < n_splits",
+        "observation": "pbo(4×5 matrix, S=8)=nan (explicit t<n_splits guard → nan)",
+        "classification": "ASSUMPTION-LIMIT",
+        "assumptionCited": "CSCV needs T≥S to form S row-blocks; the code guards t<n_splits → nan EXPLICITLY (rigor.pbo line: `if n < 2 or t < n_splits: return nan`)."
+      },
+      {
+        "class": "degenerate",
+        "target": "pbo",
+        "attack": "all-identical candidate columns (ranking ties)",
+        "observation": "pbo(identical cols)=1.0 — a deterministic value from stable argsort, not nan",
+        "classification": "THEORY-GAP",
+        "assumptionCited": "Bailey et al. 2017 (CSCV) assumes DISTINCT candidate performances; behaviour under exact ties is unspecified. The code breaks ties by stable argsort (a deterministic but arbitrary tie-break). Both readings shown: (a) ties→arbitrary rank (the code's choice); (b) ties→undefined/refuse. Neither contradicts the paper."
+      },
+      {
+        "class": "degenerate",
+        "target": "psr",
+        "attack": "NaN in the input series",
+        "observation": "psr(series with NaN)=nan (NaN propagates → None; never a fabricated value)",
+        "classification": "ASSUMPTION-LIMIT",
+        "assumptionCited": "the input is assumed to be a clean return series (Appendix B); a NaN violates that. The code propagates NaN→None (a flag), it does not fabricate — faithful."
+      },
+      {
+        "class": "adversarial",
+        "target": "psr",
+        "attack": "strongly autocorrelated (AR(1), φ=0.9) series — the i.i.d. assumption probed",
+        "observation": "psr(white)=0.9867; psr(AR(1) φ=0.9)=1.0000 — the code applies the i.i.d. σ-of-Sharpe formula unchanged; the AR series' effective n is far below its length, so the reported confidence is OVERSTATED",
+        "classification": "ASSUMPTION-LIMIT",
+        "assumptionCited": "Bailey & LdP 2012 §1 & 2014 (DSR): PSR/DSR assume i.i.d. returns — the σ of the Sharpe estimator, √((1 - g3·SR + (g4-1)/4·SR²)/(n-1)), is derived under i.i.d. An autocorrelated series violates this; the code is FAITHFUL to the i.i.d. formula and does not (and per the paper need not) detect autocorrelation.",
+        "routed": "FLAG-DON'T-EMIT (routed to the gate, NOT a fix to rigor.py): a render-layer autocorrelation check (e.g. a Ljung-Box / lag-1 ACF flag) should WARN that the i.i.d. precondition is violated before a PSR/DSR is shown — the number is faithful but the CONFIDENCE is overstated on autocorrelated input. This is exactly V26's τ_int finding (the ledger already knows yields are autocorrelated); the fix is a caveat at the render, never an edit to the frozen formula."
+      },
+      {
+        "class": "adversarial",
+        "target": "psr",
+        "attack": "extreme skew/kurtosis (denominator argument near/below zero)",
+        "observation": "skew=14.02, kurt(non-excess)=197.69; psr=1.0000; the denom argument (1 - g3·SR + (g4-1)/4·SR²) is floored at 1e-12 (rigor.psr uses max(·,1e-12))",
+        "classification": "THEORY-GAP",
+        "assumptionCited": "the variance-of-Sharpe estimator can be non-positive for extreme skew (a known pathology of the Mertens/Bailey moment expansion). The paper does not specify behaviour when the estimator's variance goes ≤0. The code floors at 1e-12 (→ a saturated z→±∞ → psr→{0,1}). Both readings: (a) floor-and-saturate (the code's choice — never emits a complex/nan number); (b) refuse/flag when the variance estimate is non-positive. Neither contradicts the paper; it is genuinely unspecified."
+      },
+      {
+        "class": "adversarial",
+        "target": "pbo",
+        "attack": "odd S (asymmetric IS/OOS split)",
+        "observation": "pbo(S=8)=0.5143 (symmetric 4/4); pbo(S=7)=0.5429 (asymmetric 3/4 via half=S//2) — the code emits a value for odd S rather than refusing",
+        "classification": "ASSUMPTION-LIMIT",
+        "assumptionCited": "Bailey et al. 2017 (CSCV) constructs S/2 IS and S/2 OOS blocks — S is assumed EVEN. For odd S the code uses half=S//2 (floor), giving an asymmetric (S-1)/2 vs (S+1)/2 split; it is faithful to the combinatorial machinery but the symmetric-split premise is violated. The engine only ever CALLS pbo with S=8 (even), so this is a latent input-domain limit, not a live defect.",
+        "routed": "ACCEPTABLE-AS-IS with a caveat: the engine's only call site is S=8 (even); an explicit even-S guard would be clearer but is a render/validation-layer improvement, routed to the gate, never a change to rigor.py."
+      },
+      {
+        "class": "null-distribution",
+        "target": "pbo",
+        "attack": "the PBO estimator's sampling distribution under a true-Sharpe-0 null (S116, extended)",
+        "observation": "the committed s116PowerFix shows the across-seed SD ≈ 0.10-0.13 (dataset-to-dataset variance dominates), the powered mean ≈ 0.508 vs theory 0.5 (z≈0.6) — a single PBO estimate is inherently noisy at any power",
+        "classification": "THEORY-GAP",
+        "assumptionCited": "the CSCV paper reports a point PBO without characterising its sampling distribution across datasets. V38/S116 measured it: the estimator is unbiased vs the 0.5 null (no break) but high-variance per single dataset — a property of the estimator, disclosed, not a contradiction of the paper."
+      }
+    ],
+    "standingRule": "rigor.py stays BYTE-FROZEN — every BREAK is ROUTED to the gate with its reproduction, never fixed in place (D33's order was an autopsy, and an autopsy that edits the body is a forgery). D33 remains UNSIGNED beside this ledger."
+  }
+}

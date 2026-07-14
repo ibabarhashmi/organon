@@ -1,0 +1,261 @@
+{
+  "protocol": "surrogate-pins",
+  "sprint": "THE SURROGATE ADDENDUM (V38-B, R2) — THE PEN MOVED. For the first time in THIRTEEN sprints the Operator ruled: four items in one message, each recorded VERBATIM, each inference stated SEPARATELY, each strikeable. D51 ANSWERED (INSTRUMENT, n=1 by design — option (2) of the V36 menu, pre-priced two sprints before the choice). D33 RE-SCOPED (the signature WITHHELD; in its place a commissioned adversarial red team of the frozen core's mathematics — an autopsy that edits not one byte). D62 DELEGATED (the circular-gate re-cut: evaluate both, attack both, pick one, record it, move on — a delegation quoted and bounded). D63 STRUCK (X-CORRELATE stands unamended; familyN===1; the deflation stays INERT). The agent executes ONLY the pen's words plus the V36/V37 pre-priced costs; the one interpretation not pre-priced (the Socket-as-local-interface reconciliation) is FLAGGED as an interpretation, strikeable on its own. The agent signs NOTHING — D67's amended criterion is DRAFTED not pinned, D33 stays UNSIGNED beside its break ledger, D62-R is presented strikeable. An over-read inference is a forged signature by another name; every inference here is severable from the words.",
+  "at": "2026-07-14",
+  "continues": "THE SUBSTANCE SPRINT (V38) — PINS_SHA 153628a9; battery 1706/2/0 across 262 files / 11050 expect() two identical runs; NO new law (seventeen); D33 recomputed FORWARD to SIGNABLE on a valid test (agent never signed); the false-fire count re-tiered by provenance; the Socket negotiates a live-verified MCP range; committed b420ecc7 tree b71b314c UNPUSHED. THIS ADDENDUM appends to BUILDLOG-SUBSTANCE.md as PART B.",
+  "carriedFromPinsSha": "153628a91515de14a6245be013c891fd29878407055ce7e5952cf9435718b38f",
+  "thePenMoved": {
+    "rule": "THE PEN MOVED — the rulings are the Operator's; the executions are the pen's words plus pre-priced costs; the agent's hands are visible and sign nothing. For thirteen sprints the gate ended with 'presented, never signed'. This message is the pen.",
+    "operatorMessageVerbatim": "D51 - my personal tool, D33 - Break it to understand yourself, red team the math adversly, D62 - try we yourself, and move on (after adverse validation), D63 - keep it off.",
+    "rulings": {
+      "D51": {
+        "words": "my personal tool",
+        "inferenceStatedSeparately": "THE INFERENCE (severable, strikeable): ORGΛNON is an INSTRUMENT — option (2) of the V36 menu, chosen. n=1 BY DESIGN. The pre-priced consequences (the D51 cascade) apply. This inference is the agent's reading of three words; it executes ONLY what V36/V37 pre-priced for option (2).",
+        "status": "ANSWERED"
+      },
+      "D33": {
+        "words": "Break it to understand yourself, red team the math adversly",
+        "inferenceStatedSeparately": "THE INFERENCE (severable, strikeable): the signature is WITHHELD; in its place a commissioned adversarial red team of the frozen core's mathematics (DSR/PSR/PBO). D33 stays UNSIGNED pending the break ledger. The pen did not open the pen; it ordered an autopsy first — and an autopsy that edits the body is a forgery, so rigor.py stays byte-frozen.",
+        "status": "RE-SCOPED → B3"
+      },
+      "D62": {
+        "words": "try we yourself, and move on (after adverse validation)",
+        "inferenceStatedSeparately": "THE INFERENCE (severable, strikeable): the circular-gate re-cut is DELEGATED to the agent — evaluate both options, adversarially validate both, pick one, RECORD it (D62-R), and move on. The delegation itself is the pen act, quoted verbatim; the resolution is presented at the gate where the pen can strike it. Delegation-with-validation, quoted and bounded, is the one form of agent decision LN5 permits (the form the DD register has used since V34).",
+        "status": "DELEGATED → B4"
+      },
+      "D63": {
+        "words": "keep it off",
+        "inferenceStatedSeparately": "THE INFERENCE (severable, strikeable): STRUCK — X-CORRELATE stands unamended, familyN===1 everywhere, the deflation stays INERT, K-activation stays dark. The builder's 'prices-the-search' half is therefore CAPPED, honestly, at counts and ranks rendered as facts, never a deflated Stamp.",
+        "status": "OFF"
+      }
+    },
+    "d27NotTouched": "RP-4 — what the pen did NOT touch, stated as FACT without judgment: D27, first in deviationOrder for thirteen sprints, remains unsigned, as do D46, D54, and the rest of the queue. The pen moved on four items and PAST the queue's head. The package still ships, D27 STILL FIRST. Silence is not a ruling; only words move deviations."
+  },
+  "d51Cascade": {
+    "rule": "THE D51 CASCADE — what 'my personal tool' changes. V36 priced option (2) in advance and V37 re-priced it; the price is now paid, item by item. The cascade executes ONLY pre-priced consequences; the one non-pre-priced item (the Socket reconciliation) is flagged as an interpretation.",
+    "killCriterionAmended_D67": "the market kill-criterion (8b4e094b) is testing the wrong hypothesis (a market that does not exist for an instrument) → AMENDED, NOT FIRED. The amendment is a SEARCH under X-RECKON — re-pinning a pre-registered criterion after seeing data is exactly the act this tool catches, and the tool's own criterion gets NO exemption. The agent DRAFTS the amended criterion (DD-51); it does NOT pin it.",
+    "distributionArcRetires_D68": "no publication pressure; no stranger's install path as a gate item; the staged publication artifacts are KEPT (cheap optionality, un-gated) but removed from the gate's blocking set; canFire/D50 re-derives against the amended criterion or retires with it.",
+    "curatorAndDeskStudyRetire_D68": "an instrument's market test collapses into its one user's use — the buyer question is moot when the buyer is the builder. The desk study, the curator kit, the outreach draft RETIRE whole; the builder-thesis validation now has exactly ONE instrument: IN2.",
+    "d42Dissolves": "the DeFiLlama non-commercial exposure — confessed and carried for TWELVE sprints — is an exposure of COMMERCIAL use. A personal tool is the non-commercial case. D42 dissolves; the RPC exposure (D60) shrinks identically; the data-posture memo leaves the pen package.",
+    "reachableHumans1FlipsToDesign": "reachableHumans: 1 flips from deficiency to DESIGN. The reach fact stays DERIVED; its INTERPRETATION inverts (Reach gains interpretation: BY-DESIGN, itself derived from D51's recorded state); every gate line that framed the 1 as failure is regenerated (S139).",
+    "socketSurvives_INTERPRETATION": "FLAGGED AS AN INTERPRETATION (not pre-priced, strikeable on its own): V37's pre-pricing said option (2) retires 'the Socket and the entire distribution arc.' The honest reading — what retires is the Socket-as-CHANNEL (to strangers); the Socket-as-LOCAL-INTERFACE (stdio, no port, a subprocess of the Operator's own agents) is exactly how an instrument's one user consumes it, and it stays (a wall keeps it stdio-only forever, already S113). If the pen strikes this interpretation, the Socket's registration path is removed and the tools go dark; the framing survives either ruling.",
+    "everyLawStays": "an instrument for one person keeps all seventeen laws — they were never about the audience. X-HONEST does not relax because the only reader built the tool; the moat does not soften because the only user holds the pen. The laws are what make the instrument worth trusting by its own maker. No task; a sentence in the pins.",
+    "d63CostToTheBuilder": "with the deflation off, V39's Family Enumerator ships family cardinality and selection rank as INFORMATIONAL FACTS (catch-axis grade, rendered, hash-chained, NEVER verdict-moving) and the deflated-Sharpe meter STAYS DARK. The builder becomes: you build; ORGΛNON counts your searches out loud and shows your rank in your own stated family. The Stamp does not move. If the pen ever reverses D63, the meter lights with ZERO rework — the counts are already in the moat. The ruling costs the meter, not the memory."
+  },
+  "d67_amendedKillCriterion": {
+    "rule": "D67 — the market kill-criterion AMENDED, not fired. DRAFTED by the agent (DD-51), falsifiable BY THE MOAT ALONE, built on V31's journal fields (priorIntent/decisionAfter/changedByCompile) written at decision time. ⟨N⟩ is a SLOT FOR THE PEN (RP-3: shipped EMPTY with a trade-off table; a pre-filled N is a pre-filled thesis — X-AUTHOR applied to the project's own manifest). The old criterion (8b4e094b) and its full text are PRESERVED beside the amendment FOREVER — you do not get to delete the test you replaced.",
+    "draftText": "If, across the first ⟨N⟩ HUMAN-authored lineage cycles, changedByCompile is never true AND no journal entry records a decision informed by a rendered fact, the instrument has failed its one user — and says so.",
+    "nSlot": "EMPTY — for the pen (RP-3)",
+    "nTradeoffTable": {
+      "N=5": "the instrument gets an early, easy chance to prove itself and an early, easy chance to fail — high variance, fast signal",
+      "N=10": "a middle bar — enough cycles to distinguish a tool that changes the user's behaviour from one that does not, without waiting years",
+      "N=20": "a hard bar — near-certain to surface a real failure if the tool is inert, but slow; failure becomes a long verdict"
+    },
+    "falsifiableByMoatAlone": "no survey, no self-report — changedByCompile and the journal entries are written at decision time, hash-chained, cannot be retro-fitted. If the tool never changes what its one user does, the moat itself will say so.",
+    "searchAppend": "the amendment is appended as a SEARCH using the SAME append-site answer S122 produced (halt-lifts.json → record/ hash-chain); if S122 found no coherent site, the same honesty is stated here too (a meta-event is not a strategy manifest; the price is paid in the committed hash-chained record, not the strategy-trial ledger).",
+    "oldCriterionPreserved": "8b4e094b — its hash and full text preserved beside the amendment forever (S137).",
+    "presentedNeverPinned": "the new criterion's hash is PRESENTED for the pen to pin. The agent DRAFTS; it does NOT pin (LN5)."
+  },
+  "d68_retirementLedger": {
+    "rule": "D68 — the retirement ledger. Nothing deleted; everything DISPOSED, each item naming its reason. RETIRES the go-to-market thread only; the research reports stay in the record (they informed the exit kinds, the Socket, the false-fire count — all shipped).",
+    "retires": {
+      "deskStudy": "the buyer question is moot when the buyer is the builder (D51)",
+      "curatorKit": "an instrument's market test collapses into its one user's use (D51)",
+      "outreachDraft": "no strangers to reach (D51)",
+      "d42Memo": "D42 dissolved — a personal tool is the non-commercial case",
+      "d50MarketClock": "no publication as a gate item; canFire re-derives against the amended criterion or retires with it",
+      "marketOfOneToFewGateAnxiety": "the market anxiety dissolves with the market (D51)"
+    },
+    "survives": {
+      "socketAsLocalInterface": "the reconciliation disclosed as INTERPRETATION (channel retires, local interface stays; stdio-only, S113)",
+      "stagedPublicationArtifacts": "cheap optionality, UN-gated (an instrument's owner may still publish someday)",
+      "releaseScript": "unchanged",
+      "publishMd": "relabeled OPTIONAL",
+      "in4_af4": "quality is not audience-dependent",
+      "everyLawEveryWallEveryAuditDiscipline": "kept whole — they were never about the audience"
+    }
+  },
+  "d63_off": {
+    "rule": "D63 — 'keep it off'. STRUCK. X-CORRELATE stands unamended; familyN===1 everywhere; the deflation stays INERT; K-activation stays dark. A seeded familyN > 1 FAILS, same as always (S138). The builder cost is printed where the builder can see it (the meter dark, the memory kept).",
+    "familyN": 1,
+    "deflation": "INERT",
+    "seededActivationFails": "a seeded familyN>1 or a lit deflation under D63-off FAILS (S138)"
+  },
+  "instrumentKeepsAllSeventeenLaws": "an instrument for one person keeps all seventeen laws — they were never about the audience. A softened wall in a personal tool is self-deception with a build system. Any generated line framing rigor as negotiable-because-private FAILS (S139).",
+  "dd49_mathRedTeam": {
+    "rule": "DD-49 — the MATH RED TEAM's attack classes and the three-way classification, PINNED BEFORE ANY ATTACK RUNS (D33's order: break it to understand yourself). rigor.py stays byte-frozen; every BREAK is ROUTED to the gate, never fixed in place.",
+    "attackClasses": {
+      "i_knownAnswer": "the papers' own worked examples (Bailey & López de Prado publish DSR/PSR; the CSCV construction) recomputed through the frozen rigor — a mismatch is a candidate break. Also first-principles known answers (a symmetric-normal series where PSR reduces to NormCDF(SR·√(n-1))).",
+      "ii_property": "monotonicity (DSR falls as trials rise; PSR→0 as the benchmark rises; PBO invariant to column order), symmetry, scale-invariance where theory demands it",
+      "iii_degenerate": "constant series, single observation, T shorter than the moment window, all-identical columns, NaN/Inf propagation, zero variance",
+      "iv_adversarial": "extreme skew/kurtosis at float boundaries, autocorrelated series (the i.i.d. assumption probed deliberately), ties in CSCV ranking, N=1, odd S",
+      "v_nullDistribution": "extends V38's S116 seed work"
+    },
+    "threeWayClassification": "every finding classified into EXACTLY ONE of: BREAK (the code contradicts its own paper) · ASSUMPTION-LIMIT (the code is faithful; the input violates an assumption the paper states — i.i.d., moments exist — and the code should refuse or flag rather than emit) · THEORY-GAP (the paper itself is ambiguous; both readings shown). A BREAK misclassified as assumption-limit is a cover-up; an assumption-limit misclassified as BREAK is slander of the frozen core. The classification is the red team's hardest task and it is walled (S136).",
+    "rp1_burdenTowardHarsher": "RP-1 (blocking) — every ASSUMPTION-LIMIT must cite the specific assumption, in the paper, by section ('the code is faithful; the input violates §X's i.i.d. premise'). An assumption-limit that cannot name its assumption is RECLASSIFIED BREAK by default. The burden falls toward the harsher class, never away.",
+    "rp2_knownAnswerRecorded": "RP-2 — the search for reproducible worked examples is recorded as its own step (found/partial/none, sources named). If none exist, the class renders BLOCKED-with-name and the ledger's headline carries the bound ('the strongest attack class was unavailable; what follows is the second-strongest'). Never silently substitute.",
+    "standingRule": "rigor.py stays BYTE-FROZEN — checkFrozenSet 0 drift at phase close; every BREAK ROUTED to the gate with its reproduction; every ASSUMPTION-LIMIT routed as a flag-don't-emit proposal; every THEORY-GAP shown with both readings. The break ledger is B3's artifact; an EMPTY one carries its honest bound ('no break found under five attack classes — a lower bound, not a proof'). D33 remains UNSIGNED.",
+    "wall": "S136"
+  },
+  "dd50_d62Recut": {
+    "rule": "DD-50 — which D62 re-cut, on criteria PINNED BEFORE EVALUATING. Two options, both attacked.",
+    "optionA": "the trigger counts HUMAN-authored SEARCHes only, and the Proposer (whatever it becomes) is gated on the pen alone",
+    "optionB": "the trigger fires on the DERIVED family cardinality (the Family Enumerator's count — a set operation, no generation)",
+    "criteria": "coherence (no self-reference), X-RECKON fidelity (nothing self-reported), activation safety under D63-off (NEITHER option may light the deflation — it is off by the pen), and V39-readiness",
+    "resolution": "pick one, record it as D62-R with BOTH attacks attached, present at the gate strikeable, move on (per the Operator's own words). A seeded circular gate FAILS (S138).",
+    "wall": "S138"
+  },
+  "dd51_falsifiableInstrumentCriterion": {
+    "rule": "DD-51 — a FALSIFIABLE kill-criterion for an instrument, built on V31's journal fields (written at decision time, which makes them evidence). Falsifiable by the moat alone (no survey, no self-report). See d67_amendedKillCriterion for the draft.",
+    "wall": "S137"
+  },
+  "dd52_retirementLedger": {
+    "rule": "DD-52 — exactly what retires under D68 and what survives. See d68_retirementLedger. RETIRES: the desk study, the curator kit, the outreach draft, D42's memo, D50's market clock, the market-of-one-to-few gate anxiety. SURVIVES: the Socket (as local interface — reconciliation disclosed), the staged publication artifacts (un-gated), the release script, PUBLISH.md (relabeled optional), IN4/AF4, every law, every wall, every audit discipline."
+  },
+  "surrogateDoctrine": {
+    "rule": "THE SURROGATE DOCTRINE (D64, carried) — a surrogate (an agent persona, a scripted dogfood) can DISCONFIRM (surface a real defect, a friction, a broken path); it can only WEAKLY CONFIRM (a smooth run is not evidence a human would find it useful). The SURROGATE tier is distinct from human evidence; a surrogate rendered as human evidence FAILS (S129). usefulness stays UNMEASURED — human-only.",
+    "wall": "S129"
+  },
+  "d65_quarantine": {
+    "rule": "D65 — THE QUARANTINE (S128). The poison vector: V34's `real` predicate would count an AGENT lineage as REAL today (real := ¬FIXTURE, and an agent-authored lineage is ¬FIXTURE). Fixed by authorship: HUMAN | AGENT | FIXTURE, DERIVED at the entry path (never declared), OUTSIDE the hashed surface — no lineage id moves. real := ¬FIXTURE ∧ ¬AGENT. The differential canary snapshots every real-class counter BEFORE the surrogate phases and re-derives AFTER, NAMING the leaking producer on any mismatch.",
+    "realPredicate": "real := ¬FIXTURE ∧ ¬AGENT",
+    "derivedNotDeclared": "authorship is DERIVED at the entry path (which code path created the lineage: the HTTP console form = HUMAN; a script/agent/test = AGENT; the committed fixture dir = FIXTURE), recorded outside the hashed surface — no lineage id moves",
+    "canary": "snapshot every real-class counter (realLineageCount, manifestsAuthoredReal, cyclesRunReal) before the surrogate phases; re-derive after; before===after or the leaking producer is NAMED",
+    "stakesHigherUnderD51": "the quarantine matters MORE under D51: IN2 is now the ONLY validation the project has, and its instrument (realLineageCount, the journal, changedByCompile) must be provably free of agent contamination — a poisoned counter in an instrument's self-test destroys the only truth the tool has (attack #10)",
+    "wall": "S128"
+  },
+  "d66_fixOnTheFly": {
+    "rule": "D66 — fix-on-the-fly, FENCED: MECHANICAL only. Verdict paths, frozen bytes, predicates, laws, screens, goldens ROUTE to the gate. Every fix ledgered and walled with its origin.",
+    "fenced": "verdict-path · frozen bytes (rigor.py especially — even a proven BREAK is ROUTED, never fixed in place) · predicates · laws · screens · goldens"
+  },
+  "walls": {
+    "count": 139,
+    "wallMax": 139,
+    "built": [
+      "S128",
+      "S136",
+      "S137",
+      "S138",
+      "S139"
+    ],
+    "shed": [
+      "S129 (the surrogate doctrine — its enforcement wall sheds with B5 the dogfood; the doctrine is pinned, the surface to test it is not built this addendum)",
+      "S130 (the walk/dogfood — B5 sheds)",
+      "S131 (rubric retires with its phase)",
+      "S132 (package reconciliation)",
+      "S133 (secrets scan)",
+      "S134 (leftover census — folds into the base census)",
+      "S135 (the PART B partition)"
+    ],
+    "S128": {
+      "wall": "THE QUARANTINE + THE CANARY — authorship HUMAN|AGENT|FIXTURE derived at the entry path (never declared, outside the hashed surface, 0 lineage ids moved); real := ¬FIXTURE ∧ ¬AGENT; a seeded AGENT lineage does NOT count as real (poison negative shown); the canary snapshots real-class counters before/after and NAMES any leaking producer.",
+      "origin": "D65 — V34's `real` predicate (real := ¬FIXTURE) would count an agent lineage as REAL today; under D51, IN2's counters are the ONLY validation the project has, so a poisoned counter destroys the only truth the tool has."
+    },
+    "S129": {
+      "wall": "THE SURROGATE DOCTRINE — a surrogate can DISCONFIRM but only weakly CONFIRM; the SURROGATE tier is distinct from human evidence; a surrogate rendered as human evidence FAILS; usefulness stays UNMEASURED (human-only).",
+      "origin": "D64 — a scripted dogfood/agent persona is not a human user; treating a smooth surrogate run as evidence of usefulness is the confirmation-bias trap, and under D51 (IN2 the only validation) it is the most dangerous one."
+    },
+    "S136": {
+      "wall": "THE BREAK LEDGER — every math-red-team finding classified into EXACTLY ONE of BREAK/ASSUMPTION-LIMIT/THEORY-GAP; a BREAK without a reproduction FAILS; a finding with no classification FAILS; an ASSUMPTION-LIMIT that cannot cite its assumption by section is RECLASSIFIED BREAK (RP-1); a .py byte moved FAILS (checkFrozenSet 0 drift at phase close). An empty ledger carries its honest lower-bound.",
+      "origin": "D33 — the Operator's direct order 'break it to understand yourself, red team the math adversely'; the frozen core's DSR/PSR/PBO attacked five classes deep, the classification the hardest task (a break misclassified is a cover-up; an assumption-limit misclassified is slander)."
+    },
+    "S137": {
+      "wall": "THE AMENDMENT-AS-SEARCH — D67's amended kill-criterion carries the act tag SEARCH and its hash (or the honest S122-style absence is stated: a meta-event is not a strategy manifest); the old criterion's text and hash (8b4e094b) are PRESERVED beside the new, forever; ⟨N⟩ ships EMPTY with a trade-off table (a pre-filled N FAILS, RP-3); the agent DRAFTS, never pins (LN5).",
+      "origin": "D67 — re-pinning a pre-registered criterion after seeing data is optional stopping, the exact act X-RECKON catches, and the tool's own criterion gets no exemption; the SEARCH is priced exactly as any user's re-pin would be."
+    },
+    "S138": {
+      "wall": "GATE COHERENCE — D62-R's resolved trigger definition contains NO self-reference; a seeded circular gate FAILS; NOTHING LIGHTS (a seeded deflation activation or familyN>1 under D63-off FAILS); both re-cuts' attacks are attached.",
+      "origin": "D62/D63 — the delegation must resolve to a coherent, non-self-referential trigger, and it must not light the deflation the pen struck off; a circular gate or a lit meter would violate both the ruling and X-RECKON."
+    },
+    "S139": {
+      "wall": "THE INSTRUMENT'S FRAME — reachableHumans: 1 renders as BY-DESIGN in every generated line (a producer framing it as deficiency FAILS); a generated line framing ANY law as relaxable-because-personal FAILS; the Reach.interpretation is DERIVED from D51's recorded state.",
+      "origin": "D51 — 'my personal tool' flips reachableHumans:1 from deficiency to design; and the corrosive long-term risk is that 'personal' becomes a license to relax the walls, so any line framing rigor as negotiable-because-private is a Halt."
+    }
+  },
+  "shedOrder": {
+    "rule": "SHED ORDER PINNED (attack #9): B1 (the quarantine — the safety precondition) and B3 (the math red team — the only direct order the pen has ever issued) NEVER SHED; then B7's census never sheds; B6 sheds first · B5 · B4 · B2; the rulings in B2 shed only with their pen acts. THIS ADDENDUM ships B0/B1/B2/B3/B4/B7 (the never-shed core + D62-R) and SHEDS B5 (the dogfood walk) and B6 (residues) with disclosure — DD-48-R2's success criterion (canary clean AND 4 rulings executed AND break ledger classified AND IN2 instrument uncontaminated) requires NONE of the shed phases.",
+    "order": [
+      "B1 (quarantine) NEVER sheds",
+      "B3 (math red team) NEVER sheds",
+      "B7 (census/canary/gate) NEVER sheds",
+      "B2 (rulings) sheds only with their pen acts — SHIPPED",
+      "B4 (D62-R) — SHIPPED",
+      "B6 (residues) sheds first — SHED with disclosure",
+      "B5 (dogfood walk) sheds second — SHED with disclosure"
+    ],
+    "shippedThisAddendum": [
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B7"
+    ]
+  },
+  "dd48_r2_successCriterion": {
+    "rule": "DD-48 re-pinned for R2 (RP-5) — the addendum SUCCEEDS iff the canary is clean AND all four rulings are executed traceably AND the break ledger exists with every finding classified AND IN2's instrument (the journal + counters) is provably uncontaminated. Computed, printed, and FAILED if any leg is missing.",
+    "legs": [
+      "canary clean (before===after)",
+      "four rulings executed traceably (each to quoted words or a pre-priced cost)",
+      "break ledger exists with every finding classified (BREAK/ASSUMPTION-LIMIT/THEORY-GAP)",
+      "IN2's instrument (journal + counters) provably uncontaminated (the quarantine)"
+    ]
+  },
+  "adversarialRecord_partA": {
+    "rule": "PART A' — 10 attacks, each with its binding consequence, attacked BEFORE design. findings_closed_surrogate asserts each holds in the shipped code.",
+    "A1_overReadingFourFragments": "THE GRAVEST ERROR — 'my personal tool' is three words and an entire product arc is retired on them. Answered: every inference is stated SEPARATELY from the words and individually strikeable; the cascade executes ONLY what V36/V37 pre-priced for option (2) (published two sprints before the choice); anything NOT pre-priced (the Socket reconciliation) is FLAGGED as an interpretation, not folded silently.",
+    "A2_socketPriceRenegotiated": "LANDS, disclosed not smoothed — Socket-as-CHANNEL retires (no strangers), Socket-as-LOCAL-INTERFACE stays (stdio, no port, the Operator's own agents); recorded INSIDE D68 as an interpretation of a pre-priced cost, strikeable on its own; if struck, the registration path is removed and the tools go dark.",
+    "A3_mirrorThatCannotBeWrong": "THE DEEPEST ATTACK — an instrument answerable only to its maker can never be falsified. Answered: D67's draft is falsifiable BY THE MOAT ALONE (changedByCompile + the journal are written at decision time, hash-chained, cannot be retro-fitted). An instrument with a pre-registered machine-checkable failure condition is not a mirror — it is a manifest, and ORGΛNON is finally its own first subject in full.",
+    "A4_slanderTheFrozenCore": "LANDS — the i.i.d. trap. Answered by DD-49's three-way classification, walled (S136): an autocorrelated series making DSR misbehave is an ASSUMPTION-LIMIT (flag-don't-emit, routed as a gate item, not a break); a paper worked example disagreeing is a BREAK; RP-1 makes the burden fall toward the harsher class (an assumption-limit that cannot cite its section is reclassified BREAK).",
+    "A5_d62ViolatesLN5": "would, IF the delegation were inferred — it is QUOTED. 'try we yourself, and move on (after adverse validation)' is the pen act, verbatim; the agent's resolution (D62-R) is the execution of a delegation, carries both attacks, and is presented at the gate strikeable. Delegation-with-validation, quoted and bounded, is the one form of agent decision LN5 permits.",
+    "A6_personalMeansRelax": "THE MOST CORROSIVE RISK — 'personal tool' becomes a license to soften the walls. Answered: every law survives D51 verbatim (an instrument for one person keeps all seventeen); the maker trusts the tool BECAUSE it cannot flatter him; any generated line framing rigor as negotiable-because-private FAILS S139.",
+    "A7_builderIsACounterWithDelusions": "HALF LANDS, stated in the cascade not hidden — with D63 off the meter stays dark and the builder is counts-and-ranks-as-facts; BUT the counts land in the moat from day one, so if the pen ever reverses D63 the deflation lights over recorded history with zero rework. The ruling costs the meter, not the memory.",
+    "A8_retiringDeskStudyDestroysEvidence": "fair — the forgone value is named. The research reports STAY in the record (they informed the shipped exit kinds, Socket, false-fire count); what retires is the go-to-market thread only; the retirement ledger names each item and its reason (DD-52); nothing deleted, everything disposed.",
+    "A9_executeEasyThreeShrinkTheMathRedTeam": "the realistic failure mode — the agent ships the easy three and lets the math red team quietly shrink. Answered by the shed order: B1 and B3 NEVER shed; B3 is the ONLY direct order the pen has issued; everything else sheds first.",
+    "A10_quarantineQuarantinesNothing": "WRONG, and worth answering because it recurs — the quarantine matters MORE under D51: IN2 is the only validation left, and its instrument must be provably free of agent contamination precisely because the one user's own use is the entire evidence base. A poisoned counter in an instrument's self-test destroys the only truth the tool has."
+  },
+  "postImplementationRePins_partF": {
+    "rule": "PART F — blocking re-pins for B0. findings_closed_surrogate asserts each holds in the shipped code.",
+    "RP1_assumptionLimitCitesSection": "HIGH (F-1) — the break-ledger classification is performed by the agent that benefits from 'no breaks found.' Fix: every ASSUMPTION-LIMIT must cite the specific assumption in the paper by section; an assumption-limit that cannot name its assumption is RECLASSIFIED BREAK by default. The burden falls toward the harsher class.",
+    "RP2_knownAnswerRecordedFoundPartialNone": "MEDIUM-HIGH (F-2) — the papers' worked examples may not exist in reproducible form. Fix: the search is recorded as its own step (found/partial/none, sources named); if none, the class renders BLOCKED-with-name and the ledger headline carries the bound; never silently substitute.",
+    "RP3_nEmptyWithTradeoff": "MEDIUM-HIGH (F-3) — D67's ⟨N⟩ is a free parameter and whoever drafts controls its difficulty. Fix: the draft ships ⟨N⟩ EMPTY with a stated trade-off table (N=5/10/20 implications), and the PEN picks. A pre-filled N is a pre-filled thesis (X-AUTHOR applied to the project's own manifest).",
+    "RP4_d27StaysFirst": "MEDIUM (F-4) — 'the pen moved past D27' will be read as the pen striking it. Fix: D27 stays FIRST, its skip recorded as FACT not inference; the package ordering remains deviationOrder, untouched by the rulings; only words move deviations.",
+    "RP5_dd48Repinned": "MEDIUM (F-5) — the instrument frame removes the last external check, and DD-48 was written for the old world. Fix: DD-48 re-pinned for R2 — the addendum succeeds iff canary clean AND four rulings executed AND break ledger classified AND IN2's instrument uncontaminated; computed, printed, FAILED if any leg missing."
+  },
+  "partClean": {
+    "invariants": "ZERO new dependencies (deps stay 2: hono+zod) · Screens 3 · NO new law · NO new capability (the rulings move DEVIATIONS, never verdicts) · rigor.py BYTE-FROZEN even under its own autopsy (checkFrozenSet 0 drift through B3) · familyN===1 (D63 off; a seeded activation FAILS) · the agent SIGNS NOTHING (D67 drafted-not-pinned; D33 UNSIGNED; D62-R presented strikeable; D51 answered BY THE OPERATOR's words, recorded verbatim) · no lineage id moves (authorship outside the hashed surface) · the PART B partition (no addendum producer writes a base-V38 field)."
+  },
+  "carried": {
+    "laws": "X-KEEP · X-DETERM · X-HONEST · X-MOAT · X-ADVICE · X-MANIFEST · X-CADENCE · X-AUTHOR · X-RECKON · X-SHOWN · X-REACH · X-DERIVE · X-CORRELATE (familyN===1, D63 keeps it off) · X-SURFACE · X-TELEMETRY · X-DEVLEDGER · X-AUDIT — all seventeen carried, unchanged; an instrument for one person keeps all seventeen (they were never about the audience)",
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "screens": [
+      "shelf",
+      "reality-check",
+      "ask"
+    ],
+    "newProductCapability": 0,
+    "lawsThisSprint": "ZERO — an addendum executes rulings, it does not legislate",
+    "startingCommit": "b420ecc7",
+    "startingTree": "b71b314c328c538e0743dc8be7fc4282381a0486",
+    "evidenceBundleShaPrefix": "9c1e7bd8",
+    "killCriterion": "8b4e094b",
+    "fence": [
+      "signing anything (the pen moved by the Operator's message, not the agent's hand; D27's queue untouched)",
+      "pushing the tree",
+      "editing one byte of rigor.py even to fix a proven BREAK (a break is ROUTED; the frozen set is the frozen set)",
+      "lighting the deflation (D63 off by the pen; a seeded familyN>1 FAILS)",
+      "an agent lineage counting as real",
+      "a surrogate claiming usefulness",
+      "a recommendation field",
+      "any new capability/dependency/port/daemon/law",
+      "re-litigating D51 (answered; the agent does not argue with the pen)",
+      "resurrecting the curator arc without a new pen act",
+      "framing reachableHumans:1 as failure anywhere in generated output"
+    ],
+    "partBPartition": "this addendum appends to BUILDLOG-SUBSTANCE.md as PART B; no addendum producer writes a base-V38 field (S135)"
+  },
+  "pinsSha": "1d6bd5b90bef5b0eb54a9dc15675bd009686250696e55bf5a55687757596b525"
+}

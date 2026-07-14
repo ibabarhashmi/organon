@@ -10,7 +10,7 @@
  * Run: bun run script/honesty/record-chain.ts
  */
 import { createHash } from "node:crypto"
-import { readFileSync, writeFileSync, readdirSync, copyFileSync, mkdirSync } from "node:fs"
+import { readFileSync, writeFileSync, readdirSync, copyFileSync, mkdirSync, existsSync } from "node:fs"
 import path from "node:path"
 import { PKG_ROOT } from "../../src/organon/frozen"
 
@@ -47,6 +47,22 @@ const haltSelfSha = sha256(prevSha + haltContentSha)
 chain.push({ name: "halt-lifts.json", contentSha: haltContentSha, prevSha, selfSha: haltSelfSha })
 prevSha = haltSelfSha
 
+// SURROGATE ADDENDUM (V38-B, S137 / D67) — the amended kill-criterion is a SEARCH (re-pinning a pre-registered criterion
+// after seeing data is the exact act X-RECKON catches; the tool's own criterion gets no exemption). It is folded into the
+// SAME record hash-chain (the S122 append-site answer — a meta-event is not a strategy manifest), so the amendment carries a
+// real immutable LEDGER HASH. Present only once the addendum has drafted it (a pre-addendum checkout has no amendment).
+const AMEND = path.join(PKG_ROOT, "data", "honesty", "kill-criterion-amendment.json")
+let d67SearchLedgerHash: string | null = null
+if (existsSync(AMEND)) {
+  const amendContent = readFileSync(AMEND, "utf8")
+  copyFileSync(AMEND, path.join(REC, "kill-criterion-amendment.json"))
+  const amendContentSha = sha256(amendContent)
+  const amendSelfSha = sha256(prevSha + amendContentSha)
+  chain.push({ name: "kill-criterion-amendment.json", contentSha: amendContentSha, prevSha, selfSha: amendSelfSha })
+  prevSha = amendSelfSha
+  d67SearchLedgerHash = amendSelfSha
+}
+
 const manifest = {
   protocol: "record-chain",
   at: "2026-07-14",
@@ -57,6 +73,8 @@ const manifest = {
   headSha: prevSha,
   d53SearchLedgerHash: haltSelfSha, // S122 — the immutable hash the D53 SEARCH carries (its price, paid in the moat)
   d53Note: "the Halt-lift is a META-event (sprint-level optional stopping), NOT a strategy manifest; the X-RECKON strategy-trial ledger counts acts over lineage ids and has no coherent site for it — so the price is paid HERE, committed + hash-chained, and the log no longer claims it was 'appended to the strategy ledger'.",
+  d67SearchLedgerHash, // S137 — the immutable hash the D67 kill-criterion amendment SEARCH carries (null on a pre-addendum checkout)
+  d67Note: "the kill-criterion amendment is a SEARCH (re-pinning a pre-registered criterion after seeing data — the exact act X-RECKON catches); like the Halt-lift it is a meta-event, not a strategy manifest, so its price is paid HERE (committed + hash-chained), not in the strategy-trial ledger. The old criterion (8b4e094b) is preserved beside the amendment forever.",
 }
 writeFileSync(path.join(REC, "chain.json"), JSON.stringify(manifest, null, 2) + "\n")
 
