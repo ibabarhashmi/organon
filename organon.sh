@@ -50,15 +50,29 @@ setup() {
     echo "○ setup: node_modules is absent — running 'bun install' (hono + zod, the whole mass-path dep set)…"
     bun install || { echo "  ✗ bun install failed — the battery and the served doors cannot run without it. Fix the error above (offline? registry?) and re-run: ./organon.sh status"; return 1; }
   fi
-  if [ -d "src/backtest/py/.venv" ]; then echo "✓ setup: the scientific sidecar venv is present (idempotent — nothing to do)."; return 0; fi
+  local py_dir="src/backtest/py"
+  # REACH V35 (RP-2): the frozen-core DSR/PSR/PBO cross-check (S94) needs the independent `purgedcv` oracle, which the
+  # studio-slim lockfile omits. Provision it idempotently & best-effort so S94's green survives a fresh clone — never a
+  # hard requirement: if it cannot install, S94 stays BLOCKED (named precisely by the sidecar census), never mocked.
+  provision_crosscheck() {
+    [ -x "$py_dir/.venv/bin/python" ] || return 0
+    "$py_dir/.venv/bin/python" -c "import purgedcv" >/dev/null 2>&1 && return 0
+    echo "  ○ provisioning the frozen-core cross-check oracle (purgedcv) for S94 (idempotent, best-effort)…"
+    if "$py_dir/.venv/bin/pip" install -q -r "$py_dir/requirements-crosscheck.txt" >/dev/null 2>&1; then
+      echo "  ✓ cross-check oracle present — S94 (DSR/PSR/PBO vs purgedcv) can execute."
+    else
+      echo "  ○ purgedcv did not install — S94 stays BLOCKED (disclosed by the sidecar census, never faked). Provision later with:"
+      echo "    $py_dir/.venv/bin/pip install -r $py_dir/requirements-crosscheck.txt"
+    fi
+  }
+  if [ -d "src/backtest/py/.venv" ]; then echo "✓ setup: the scientific sidecar venv is present (idempotent — nothing to do)."; provision_crosscheck; return 0; fi
   echo "○ setup: the sidecar venv is absent."
   # the lockfile lives in the sidecar dir, NOT the repo root (AB3, D22 — the old root-path check meant this build could never run)
-  local py_dir="src/backtest/py"
   if [ -f "$py_dir/requirements-studio.txt" ] && command -v python3 >/dev/null 2>&1; then
     echo "  creating $py_dir/.venv from the pinned lockfile (no network installs beyond it)…"
     local venv_err=""
     venv_err="$( { python3 -m venv "$py_dir/.venv" && "$py_dir/.venv/bin/pip" install -q -r "$py_dir/requirements-studio.txt"; } 2>&1 >/dev/null )" \
-      && echo "  ✓ venv created from the lockfile." \
+      && { echo "  ✓ venv created from the lockfile."; provision_crosscheck; } \
       || { echo "  ○ venv setup did not complete — disclosed as a GAP, never faked (the core TS battery still runs; the sidecar tests will state BLOCKED)."; \
            echo "    the actual error (never laundered as 'offline'): $(printf '%s' "$venv_err" | tail -1)"; \
            echo "    on Debian/Ubuntu/WSL the usual cure is:  sudo apt install python3-venv"; }

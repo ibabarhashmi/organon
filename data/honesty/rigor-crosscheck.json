@@ -1,0 +1,28 @@
+{
+  "protocol": "rigor-crosscheck",
+  "at": "2026-07-14",
+  "rule": "S94 — the frozen core's DSR/PSR/PBO cross-check EXECUTED against the INDEPENDENT purgedcv oracle. Never mocked (RP-2): a BLOCKED result carries its actionable reason. The numbers are a RECORD OF EXECUTION (env-stamped), not a determinism golden — a re-run on different BLAS may shift the low bits; the load-bearing claim is dsrAgree (|DSR_rigor − DSR_purgedcv| < 0.02) and executed=true.",
+  "reference": "Bailey & López de Prado — the Deflated Sharpe Ratio 'incorporates information about the unselected trials'; the frozen rigor.deflated_sharpe (sha-pinned in frozen.ts) is cross-checked against purgedcv==0.1.2 on a golden-noise universe (true Sharpe 0, seed 20260627, T=504, N=1000) identical to selftest.py's k==0 construction.",
+  "crossCheck": {
+    "executed": true,
+    "seed": 20260627,
+    "T": 504,
+    "nTrials": 1000,
+    "dsr": 0.4784209375780265,
+    "dsrPurgedcv": 0.4796379904843659,
+    "dsrDiff": 0.0012170529063393887,
+    "dsrAgree": true,
+    "psr": 0.9989334286155159,
+    "pbo": 0.6,
+    "deflationCollapse": 0.5205124910374894,
+    "dsrMonotonic": true,
+    "dsrByNTrials": {
+      "n10": 0.940538432178096,
+      "n100": 0.7393927433877943,
+      "n1000": 0.4784209375780265
+    },
+    "purgedcvVersion": "0.1.2",
+    "numpyVersion": "2.4.6"
+  },
+  "frozenNote": "not one .py byte moved — S94 installs the sidecar's MISSING dependency (purgedcv), it edits no frozen byte; checkFrozenSet asserts 0 DRIFT on rigor.py."
+}

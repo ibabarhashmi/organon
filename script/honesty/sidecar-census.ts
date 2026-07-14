@@ -44,17 +44,22 @@ function runExec(args: string[]): { ok: boolean; tail: string } {
   const r = spawnSync(VENV_PY, args, { cwd: SRC, encoding: "utf8", timeout: 120_000, env: { ...process.env, PYTHONHASHSEED: "0" } })
   return { ok: r.status === 0, tail: (r.status === 0 ? (r.stdout || "") : (r.stderr || r.stdout || "")).trim().split("\n").pop()?.slice(0, 90) ?? "" }
 }
+// REACH V35 (S94): the DSR/PSR/PBO cross-check now EXECUTES via crosscheck.py (the frozen rigor vs the independent
+// purgedcv oracle) — the studio-slim venv ships numpy+scipy only, and purgedcv is provisioned from
+// requirements-crosscheck.txt (RP-2). A crosscheck exit 0 means the frozen math agreed with the reference; an absent
+// purgedcv leaves it BLOCKED with the precise, ACTIONABLE reason (never dressed as coverage, never mocked — attack #2).
+const crosscheck = runExec(["-m", "backtest.py.crosscheck"])
 const executed = [
   { module: "effective_n", proof: "-m backtest.py.effective_n --selftest", ...runExec(["-m", "backtest.py.effective_n", "--selftest"]) },
   { module: "neutralize (lending sibling)", proof: "-m backtest.py.selftest_lending", ...runExec(["-m", "backtest.py.selftest_lending"]) },
+  { module: "rigor DSR/PSR/PBO cross-check (crosscheck.py vs purgedcv)", proof: "-m backtest.py.crosscheck", ...crosscheck },
 ]
-const rigorSelf = runExec(["-m", "backtest.py.selftest"])
-const blocked = rigorSelf.ok ? [] : [{ selftest: "rigor DSR/PSR/PBO cross-check (backtest.py.selftest)", reason: "requires `purgedcv` (Py3.11-only) — absent in this venv; the cross-check is BLOCKED and named precisely, never dressed as coverage", tail: rigorSelf.tail }]
+const blocked = crosscheck.ok ? [] : [{ selftest: "rigor DSR/PSR/PBO cross-check (backtest.py.crosscheck vs purgedcv)", reason: "requires `purgedcv` (Py3.11-only) — provision it with `src/backtest/py/.venv/bin/pip install -r src/backtest/py/requirements-crosscheck.txt`; the studio-slim venv ships numpy+scipy only. BLOCKED is named precisely, never dressed as coverage, never mocked (RP-2)", tail: crosscheck.tail }]
 
 const record = {
   protocol: "sidecar-census",
-  at: "2026-07-13",
-  rule: "S83 — every test that invokes the Python sidecar is enumerated; the venv Python version + a runtime canary are recorded. A green battery that never touches the sidecar SAYS SO. The mandate is Python 3.11.x (the Py3.11-only purgedcv; Warranty V8).",
+  at: "2026-07-14",
+  rule: "S83 — every test that invokes the Python sidecar is enumerated; the venv Python version + a runtime canary are recorded. A green battery that never touches the sidecar SAYS SO. The mandate is Python 3.11.x (the Py3.11-only purgedcv; Warranty V8). REACH V35 (S94): the DSR/PSR/PBO cross-check now EXECUTES (crosscheck.py vs the independent purgedcv) — the first time in the audited record; provisioned from requirements-crosscheck.txt (RP-2).",
   sidecarTestsNamed: sidecarTests.length,
   sidecarTests,
   venvPresent: existsSync(VENV_PY),

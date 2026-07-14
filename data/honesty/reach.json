@@ -1,0 +1,41 @@
+{
+  "protocol": "reach-fact",
+  "at": "2026-07-14",
+  "rule": "S96 — REACH IS A FACT (structural, never surveyed). published DERIVED from the git remote (RP-4); reachableHumans = published ? UNJUDGEABLE : 1. The binary is the SAME code, compiled (D49, unsigned) — distribution is not capability.",
+  "fact": {
+    "installPath": "clone the repo · have Bun ≥ 1.3 · `./organon.sh` — or the built single-file binary + one line (D49, unsigned)",
+    "firstRunSeconds": 0.016906709,
+    "published": false,
+    "publishedDetail": "no remote ref contains HEAD (DERIVED — git branch -r --contains HEAD returned empty); the commit is UNPUBLISHED — exactly one human (the Operator) can reach it",
+    "reachableHumans": 1
+  },
+  "reachSentence": "published: false · reachableHumans: 1 — the number is what it is, and until now exactly one human could have made it otherwise.",
+  "firstRun": {
+    "command": "organon   (no arguments) — or `bun run script/organon-cli.ts`",
+    "fixtureId": "040301c26de44c9ef869d3cab8af582e82f6bda4ac63a0dfd8abf4c62586250c",
+    "status": 200,
+    "bytes": 27714,
+    "seconds": 0.016906709,
+    "offline": true,
+    "sampleFallback": true,
+    "note": "the committed fixture Reality Check, rendered offline in-process (the SAME code the compiled binary runs). MEASURED, not estimated (DD-14 / R-8)."
+  },
+  "hardening": {
+    "i_noKeyRequired": {
+      "ok": true,
+      "detail": "the fixture render succeeds with all provider keys forced empty (deterministic, keyless)"
+    },
+    "ii_noProviderConstructed": {
+      "ok": true,
+      "detail": "AskProvider.fromEnv({}) === null (no provider constructed) AND the SBOM shows 2 leaf components (hono+zod) with zero transitive deps — no third-party code that could egress (RP-3: the provable strength, not an unqualified 'zero egress')"
+    },
+    "iii_consoleDisabledByDefault": {
+      "ok": true,
+      "detail": "the CLI refuses the studio console unless --studio is passed explicitly (exit 2); it carries the V34-sealed sinks and a stranger's machine does not get it by default"
+    }
+  },
+  "binary": {
+    "builder": "bun build --compile script/organon-cli.ts --outfile dist/organon",
+    "note": "the binary builds and RUNS the fixture Reality Check offline (status 200, byte-identical to the source render); ORGANON_ROOT anchors PKG_ROOT to the working directory so the compiled binary finds the on-disk committed data/. The binary is a gitignored build artifact (platform-specific, 59M), never committed — the SAME code."
+  }
+}

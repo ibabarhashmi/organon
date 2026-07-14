@@ -1,0 +1,16 @@
+# ORGΛNON — THE FROZEN-CORE CROSS-CHECK requirements (Reach V35, S94 / RP-2).
+# The DURABLE fix for the "cross-check never executed" finding: the studio-slim venv (requirements-studio.txt) ships
+# numpy+scipy ONLY, and the DSR/PSR/PBO cross-check needs the INDEPENDENT `purgedcv` oracle, which lived only in the
+# PARKED heavy requirements.txt — so the cross-check was never installable via the standard setup path AND did not
+# persist across a fresh clone (F-2 possibility (i)+(iii)). Committing THIS file + a one-line bootstrap makes S94's
+# green survive a fresh clone: `./organon.sh setup` builds the venv, then this provisions the cross-check oracle.
+#
+# Install (idempotent, after the venv exists):
+#   src/backtest/py/.venv/bin/pip install -r src/backtest/py/requirements-crosscheck.txt
+#
+# purgedcv==0.1.2 pulls pandas + scikit-learn (the independent DSR/PSR/PBO reference impl). This is NOT a mass-path
+# dependency (the mass path stays hono+zod, zero transitive — SBOM-proven); it is the frozen sidecar's own test oracle,
+# already declared in requirements.txt. NEVER vendor/stub/mock/reimplement it (a mocked cross-check is worse than absent).
+numpy
+scipy
+purgedcv==0.1.2

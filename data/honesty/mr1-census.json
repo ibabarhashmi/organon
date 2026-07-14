@@ -1,0 +1,51 @@
+{
+  "protocol": "mr1-census",
+  "at": "2026-07-14",
+  "rule": "S98 / C-3 — the depth census's domain-catch axis, stated as an OUTCOME (whatever it returns, worse-included). A census that only ever improves is not a census.",
+  "domainCatch": {
+    "renderable": 0,
+    "denominator": 7,
+    "basis": "requires a domain classification into a new domain (STABLE-SYNTH/LST-LRT/LOOPED-CDP/RWA) + the domain read; NO curated-shelf subject classifies into a new domain today — the four domains render through the LOOKUP path + are fixture-proven (Domain sprint, D34)"
+  },
+  "improved": false,
+  "outcome": "domain-catch = 0/7 — UNCHANGED. No curated-shelf subject classifies into a new domain (the conservative classifier's floor + D34: new domains render via lookup + fixtures, not the curated shelf). The MR1 capture ran (1284 pools, 4/4 pinned present) but resolving four real subjects does not add a new-domain shelf subject.",
+  "mr1Capture": {
+    "reality": "REAL",
+    "shelfCount": 1284,
+    "fetchMs": 638,
+    "pinnedPresentCount": 4,
+    "source": "https://yields.llama.fi/pools"
+  },
+  "pinnedSubjects": [
+    {
+      "project": "aave-v3",
+      "symbol": "USDC",
+      "present": true,
+      "domainClass": "UNCLASSIFIED",
+      "badge": false
+    },
+    {
+      "project": "compound-v3",
+      "symbol": "USDC",
+      "present": true,
+      "domainClass": "UNCLASSIFIED",
+      "badge": false
+    },
+    {
+      "project": "ethena-usde",
+      "symbol": "sUSDe",
+      "present": true,
+      "domainClass": "STABLE-SYNTH",
+      "badge": true
+    },
+    {
+      "project": "sparklend",
+      "symbol": "DAI",
+      "present": true,
+      "domainClass": "UNCLASSIFIED",
+      "badge": false
+    }
+  ],
+  "shelfState": "the four MR1 subjects are RESOLVABLE (4/4 present, MR1) and classifiable (conservative → UNCLASSIFIED/LENDING without the precise captured signatures). They are NOT force-added to the curated shelf — that would be new capability (the Halt). Their domain nature is stated, not badged onto a new shelf row.",
+  "honestNote": "a census that only ever improves is not a census (C-3). This one honestly reports NO improvement: domain-catch is still 0/7. The capture proved the subjects real; the depth remains what it was."
+}

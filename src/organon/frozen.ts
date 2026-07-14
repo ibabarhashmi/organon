@@ -14,8 +14,11 @@ import { createHash } from "node:crypto"
 import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 
-// src/organon/ → PKG_ROOT (the repo root) → REPO_ROOT (identical; this standalone package IS the repo root)
-export const PKG_ROOT = path.join(import.meta.dir, "..", "..")
+// src/organon/ → PKG_ROOT (the repo root) → REPO_ROOT (identical; this standalone package IS the repo root).
+// REACH V35 (D49): a compiled single-file binary (bun build --compile) virtualizes import.meta.dir, so the on-disk
+// committed data/ would not resolve. ORGANON_ROOT lets the binary's entrypoint anchor PKG_ROOT to the working directory
+// where data/ lives. Unset by default → byte-identical behaviour for `bun` / the battery / the evidence bundle.
+export const PKG_ROOT = process.env.ORGANON_ROOT ? path.resolve(process.env.ORGANON_ROOT) : path.join(import.meta.dir, "..", "..")
 export const REPO_ROOT = PKG_ROOT // STANDALONE-NATIVE: the package IS the repo root
 export const PY_DIR = path.join(PKG_ROOT, "src", "backtest", "py")
 

@@ -74,6 +74,20 @@ export namespace Marker {
       else if (frac[1] !== frac[2] && !/because|absent|reason|monorepo|gitignored/i.test(cov)) invalid.push("verifyCoverage: a shortfall that names no reason is a proof that lies by omission (X-SHOWN(e))")
     }
     if (m.battery !== undefined && !/\d+\s*\/\s*\d+\s*\/\s*\d+/.test(String(m.battery))) invalid.push("battery: not a parseable pass/skip/fail shape")
+
+    // ── THE REACH SPRINT (V35, S95) — the verify slot is a DERIVED OBJECT, and "green" is not a typed word ────────────
+    // X-REACH(c): if the marker carries a `verify` object, it must have the shape { exitCode:number, subchecks:[...] },
+    // AND a marker may NOT type the word "green" (in verifyOutput) for a command whose exitCode was non-zero. The
+    // machine's observation is the authority; the prose may not assert a health the exit code contradicts.
+    if (m.verify !== undefined) {
+      const v = m.verify as { exitCode?: unknown; subchecks?: unknown }
+      if (typeof v.exitCode !== "number") invalid.push("verify.exitCode: not a number (X-REACH(c): the verify slot is a derived object, not a sentence)")
+      if (!Array.isArray(v.subchecks) || v.subchecks.length === 0) invalid.push("verify.subchecks: not a non-empty [{name,status,detail}] list")
+      else if (!v.subchecks.every((s) => s && typeof (s as { name?: unknown }).name === "string" && typeof (s as { status?: unknown }).status === "string")) invalid.push("verify.subchecks: each entry needs {name, status}")
+      if (typeof v.exitCode === "number" && v.exitCode !== 0 && /\bgreen\b/i.test(String(m.verifyOutput ?? "")))
+        invalid.push(`verify: the marker types "green" but verify.exitCode is ${v.exitCode} — X-REACH(c): green is a derived value, not a typed word`)
+    }
+
     return { ok: missing.length === 0 && invalid.length === 0, missing, invalid }
   }
 }

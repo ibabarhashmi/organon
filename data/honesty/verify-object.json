@@ -1,0 +1,25 @@
+{
+  "protocol": "verify-object",
+  "at": "2026-07-14",
+  "rule": "X-REACH(c) — the verify slot is a DERIVED OBJECT {exitCode, subchecks[]}, never the typed word green. Produced by Verify.run() from the real sub-check exit codes.",
+  "verify": {
+    "exitCode": 0,
+    "subchecks": [
+      {
+        "name": "evidence-bundle-reproduces",
+        "status": "pass",
+        "detail": "deterministic bundle reproduces (9c1e7bd88825d7a5); every claim + live number resolves; frozen seven git-clean"
+      },
+      {
+        "name": "frozen-set-intact",
+        "status": "pass",
+        "detail": "7/9 present & byte-identical, 0 drift (2 absent on a clone, named)"
+      },
+      {
+        "name": "battery-count-matches-committed",
+        "status": "pass",
+        "detail": "curated battery 1281/0 == committed evidence 1281/0"
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "protocol": "frozen-set-coverage",
+  "at": "2026-07-14",
+  "rule": "DD-16 / C-6 — state what would close checkFrozenSet 7/9 → 9/9, or record the honest impossibility (R-6).",
+  "coverage": "7/9",
+  "present": [
+    "rigor.py",
+    "neutralize.py",
+    "funding_discriminate.py",
+    "effective_n.py",
+    "funding_accrual.py",
+    "funding_crossvenue.py",
+    "src/loop/loop.ts"
+  ],
+  "absent": [
+    "RWA-VERDICT.md",
+    "data/snapshot/MANIFEST.json"
+  ],
+  "perAbsent": {
+    "RWA-VERDICT.md": {
+      "whatWouldClose": "committing the generated RWA-VERDICT.md as a fixture so a clone has an artifact to hash",
+      "canClose": false,
+      "why": "its GENERATOR (script/rwa-verdict.ts) lives ONLY in the full monorepo — it is never generated in the standalone, so RWA-VERDICT.md is always absent on a clone. Committing a monorepo-generated file into the standalone imports a foreign artifact across the module boundary (wrong), and F-ENV forbids re-pinning the settled NO-GO/NOT-YET verdict. The pinned RWA_VERDICT_SHA + the four structural INVARIANTS in frozen.ts ARE the entire checkable record (R-6)."
+    },
+    "data/snapshot/MANIFEST.json": {
+      "whatWouldClose": "committing the gitignored local RWA discovery-snapshot manifest so a clone has an artifact to hash",
+      "canClose": false,
+      "why": "it is gitignored-LOCAL data by design (a stamped discovery snapshot, present in a working env, absent on a clone). Committing it would un-gitignore local data and change the repo's data-boundary policy. The pinned IMMUTABLE_DATA[].sha in frozen.ts is the checkable record — a present-but-CHANGED datum still fails (tamper), an absent one is an honest skip (R-6)."
+    }
+  },
+  "verdict": "7/9 CANNOT be honestly closed to 9/9 without a boundary violation (importing a monorepo artifact / committing gitignored local data). The pinned golden SHAs in frozen.ts are the entire record for the 2 absent — stated, never a silent 7-of-9 (X-SHOWN(e))."
+}

@@ -41,3 +41,5 @@ data/strategies/cycles/
 data/strategies/baselines/
 data/strategies/closures/
 data/strategies/repins/
+dist/
+*.organon-reality-check.html
