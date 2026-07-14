@@ -15,6 +15,7 @@ import { z } from "zod"
 import type { Ask } from "./answer"
 import type { Explain } from "../analytics/explain"
 import { VoiceGates } from "./gates"
+import { AdviceShape } from "./advice" // THE SHOWING SPRINT (S87, DD-1) — the ONE shape guard, composed onto the Ask output path
 import { AskRegister } from "./register"
 
 export namespace VoiceContract {
@@ -91,7 +92,15 @@ export namespace VoiceContract {
     const base = deterministicBlock(a)
     if (!aiText || !aiText.trim()) return { blocks: [base], aiUsed: false, rejected: false, adviceBoundary: false, reasons: [] }
     const g = VoiceGates.runReasoningGates(aiText.trim(), factSetOf(a, comparisons))
-    if (g.advice) return { blocks: [base, boundary(ADVICE_BOUNDARY)], aiUsed: false, rejected: true, adviceBoundary: true, reasons: [`advice shape "${g.adviceShape}" → the ADVICE boundary (X-ADVICE)`, ...g.reasons] }
+    // THE SHOWING SPRINT — ONE GUARD (S87, DD-1). The five VoiceGates route advice via VoiceGates.advicePattern, a SUBSTRING
+    // matcher (src/ask/gates.ts, a frozen verdict-path member) that misses token-free advice — "size into it", "trim the
+    // position", "you may want to wait" — the exact failure mode of an LLM phrasing a cadence delta at runtime. We compose
+    // AdviceShape.detect (the SHAPE guard) DOWNSTREAM of the gates, HERE at the single call site where the model's output
+    // becomes a REASONING block (contract.ts is NOT frozen — zero frozen bytes moved; D46 unneeded). Refusals COMPOSE: this
+    // second check can only refuse MORE, never less, and a voice-path check can never move a verdict. One definition of
+    // advice now reaches every emitted line, including the path where the LLM writes the words. (DD-1's preferred outcome.)
+    const shape = AdviceShape.detect(aiText.trim())
+    if (g.advice || shape.advice) return { blocks: [base, boundary(ADVICE_BOUNDARY)], aiUsed: false, rejected: true, adviceBoundary: true, reasons: [`advice shape "${g.adviceShape ?? shape.shape}" → the ADVICE boundary (X-ADVICE${g.advice ? "" : "; caught by the shape guard, not the substring matcher"})`, ...g.reasons] }
     if (!g.ok) return { blocks: [base], aiUsed: false, rejected: true, adviceBoundary: false, reasons: g.reasons } // fail-closed: the deterministic block stands
     // the REGISTER-DIFFERENTIATION wall (X-INTERPRET b, S42) — DOWNSTREAM of the five gates: a mis-registered REASONING
     // block (a Simple that reads Pro — jargon / a raw decimal / over-band; a Pro with no metric-literacy — no axis / too

@@ -11,8 +11,13 @@
  * of the pinned, chained verdict-path 7 (moat/precision/groundtruth/alpha/probe pins all assert its byte-hash). Refactoring it
  * in place would move a frozen verdict-path byte and cascade every downstream `pinsSha`/`carriedFromPinsSha`. So the shape
  * guard lives here and is wired into the STRATEGY surfaces the pivot creates (compile self-check · monitor cycle lines · the
- * door-copy/affordance pin checks · the Fact Envelope) — where the token-free advice would leak. The Ask OUTPUT path keeps the
- * substring `VoiceGates.advicePattern` (gates.ts untouched); upgrading that surface needs gates.ts unfrozen — a V34 item.
+ * door-copy/affordance pin checks · the Fact Envelope) — where the token-free advice would leak.
+ *
+ * THE SHOWING SPRINT (V34, S87/DD-1) CONVERGED IT: the Ask OUTPUT path is now shape-guarded too — AdviceShape.detect is
+ * composed DOWNSTREAM of the five VoiceGates at the single call site (VoiceContract.compose in src/ask/contract.ts, NOT a
+ * frozen file). gates.ts and its substring VoiceGates.advicePattern stay byte-frozen; the convergence is by COMPOSITION,
+ * not by unfreezing the verdict-path member (D46 presented, never implemented — LN5). ONE definition of advice reaches
+ * every emitted line, including the path where the LLM writes the words. The token-free hole is closed where it originates.
  */
 export namespace AdviceShape {
   const ADVICE_ACTION = "buy|sell|trim|rotate|size|hold|wait|take|add|reduce|hedge|deposit|withdraw|allocate|invest|exit|enter|scale|move|put|get"

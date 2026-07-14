@@ -1,0 +1,74 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "bom-ref": "organon@0.1.0",
+      "name": "organon",
+      "version": "0.1.0"
+    },
+    "properties": [
+      {
+        "name": "organon:mass-path",
+        "value": "the runtime mass path is exactly these components (X-SHOWN — the shown form of 'zero new dependencies')"
+      },
+      {
+        "name": "organon:transitive",
+        "value": "each mass-path component has ZERO transitive dependencies (leaf components)"
+      },
+      {
+        "name": "organon:derived-from",
+        "value": "bun.lock (re-derivable; this SBOM is generated, not hand-typed)"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/hono@4.12.27",
+      "name": "hono",
+      "version": "4.12.27",
+      "purl": "pkg:npm/hono@4.12.27",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "d72adbffec3a1d6409ad408b909d881798cd20fbef1646e557944d39897a6d5f8e03aa7d18b70ca47145193a2c4af1ef7005226ee52e911aa1958238cf7d82ed"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/zod@4.4.3",
+      "name": "zod",
+      "version": "4.4.3",
+      "purl": "pkg:npm/zod@4.4.3",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "cad10d163209165d94c1882575eda37215b61f09b818914b0e249759d4eb25004837d15cca9ee7e0387124489634024c575fc1a967d6fe4920ef55037072724d"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "organon@0.1.0",
+      "dependsOn": [
+        "pkg:npm/hono@4.12.27",
+        "pkg:npm/zod@4.4.3"
+      ]
+    },
+    {
+      "ref": "pkg:npm/hono@4.12.27",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/zod@4.4.3",
+      "dependsOn": []
+    }
+  ]
+}

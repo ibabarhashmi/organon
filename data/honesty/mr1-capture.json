@@ -1,0 +1,47 @@
+{
+  "protocol": "mr1-capture",
+  "at": "2026-07-14",
+  "diagnosis": "egress is OPEN in this environment (DD-4): yields.llama.fi/pools returns HTTP 200. The three sprints of 'network-window-gated' were an environment ASSUMPTION, not a fact. This record is the census recomputed as an OUTCOME.",
+  "budgetMs": 45000,
+  "outcome": {
+    "reality": "REAL",
+    "shelfCount": 1284,
+    "fetchMs": 638,
+    "withinBudget": true,
+    "pinnedResolved": [
+      {
+        "project": "aave-v3",
+        "symbol": "USDC",
+        "present": true,
+        "tvlUsd": 64251546,
+        "apy": 6.86574
+      },
+      {
+        "project": "compound-v3",
+        "symbol": "USDC",
+        "present": true,
+        "tvlUsd": 36525337,
+        "apy": 3.30695
+      },
+      {
+        "project": "ethena-usde",
+        "symbol": "sUSDe",
+        "present": true,
+        "tvlUsd": 1570586423,
+        "apy": 3.94794
+      },
+      {
+        "project": "sparklend",
+        "symbol": "DAI",
+        "present": true,
+        "tvlUsd": 103200952,
+        "apy": 2.3392
+      }
+    ],
+    "pinnedPresentCount": 4,
+    "note": null,
+    "source": "https://yields.llama.fi/pools",
+    "blocker": null
+  },
+  "rawPayloadCommitted": false
+}

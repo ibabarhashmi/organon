@@ -1,0 +1,146 @@
+{
+  "protocol": "show-pins",
+  "sprint": "THE SHOWING SPRINT (V34) — THE HALT, HONORED. V33 pinned a Halt against this project's own future: if IN2 is not performed by the close of the gate, V34 ships NO new capability — it becomes validation-only. The Halt fires and V34 honors it: not one new product surface, module, or capability. What ships instead is the EVIDENCE the project had been asserting without showing. ONE law: X-SHOWN — a claim that is not shown is not made. Disclosed against the Halt's letter (no new laws) as D47, unsigned; a restriction on what the agent may CLAIM is the opposite of the scope creep the Halt exists to stop.",
+  "at": "2026-07-14",
+  "continues": "THE RECKONING SPRINT (PINS_SHA 96469dbb; battery 1445/2/0 across 221 files / 9034 expect(); the act taxonomy SEARCH|OBSERVATION derived-never-declared, the shape guard delivered as a new module (W-RCK01, the Ask output path left on the substring matcher — the bifurcation this sprint converges), the sinks sealed, the walls walled; ONE law X-RECKON; single repo, DV4 retired at D44)",
+  "carriedFromPinsSha": "96469dbbfb40af89d11378092ae7cfc1eb320a83882e2d8523c1009dd6537f74",
+  "xShown": {
+    "a_everyClaimCarriesItsArtifact": "EVERY MARKER CLAIM CARRIES ITS ARTIFACT. No bare check-mark. An invariant asserted in a marker must be accompanied by the thing that proves it — an output, a hash, a count, or a path. 'differential byte-stable [ok]' is not a claim; 'differential 70c7912f == 70c7912f (recomputed at phase close)' is.",
+    "b_unshownIsNotHeld": "AN INVARIANT CLAIMED BUT NOT SHOWN IS TREATED AS NOT HELD. The strictest reading, and the only honest one. A marker containing an unproven check-mark is a HALT, not a marker. This law exists because three consecutive audits found the same defect: the header claims, the phases do not show, and the reader cannot tell a proof from a hope.",
+    "c_noHashNoEnd": "A SPRINT THAT DOES NOT END IN A HASH DID NOT END. The terminal marker MUST carry: tree hash · commit sha · terminal PINS_SHA · battery (pass/skip/fail/files/expect) · golden-move count · the pristine-clone verify output. With DV4 retired (D44), the tree hash is the successor's ONLY X-AUDIT anchor. Omitting it blinds the next sprint. Walled by S90.",
+    "d_measuredOrDeclaredUnmeasured": "A METRIC THE PROJECT DECLARED FOR ITSELF MUST BE MEASURED, OR EXPLICITLY DECLARED UNMEASURED — WITH THE REASON, IN THE GATE. 'Presumed 0, never measured' is not a measurement; it is a confession that the instrument was never built. This clause is what makes the Halt FALSIFIABLE; without it the Halt is theater. The declared metric is 'cycles run, UNPROMPTED, on REAL manifests' (V32) — read this sprint (R-5: on REAL lineages, fixtures structurally excluded, both numbers stated).",
+    "e_evidenceSurvivesEnvironment": "THE EVIDENCE MUST SURVIVE THE ENVIRONMENT. The pristine-clone verify runs and SHOWS its output at every phase gate, and must state EXACTLY what fraction of the frozen set it proves. A proof that silently covers 7 of 9 is a proof that lies by omission. DD-2 resolves the two absent artifacts (the shrunk claim, honestly, with the reason) or commits them as fixtures.",
+    "zeroCapability": "Zero product capability is added by this law. It constrains the agent, never the user. Disclosed as D47 against V33's Halt (which forbade new laws — a restriction is not a capability, and the pen may strike it)."
+  },
+  "markerSchema": {
+    "rule": "S90 — THE MARKER SCHEMA IS MACHINE-CHECKED. A per-phase or terminal marker missing any required slot FAILS the battery — the phase does not close on a reviewer's attention, it closes on a wall. R-3 (the sharpened correction): the three highest-value slots are checked for STRUCTURE, not mere presence — a slot the agent can fill by typing is a slot the agent will fill by typing.",
+    "requiredSlots_perPhase": ["pinsSha", "battery", "batteryDelta", "verifyOutput", "verifyCoverage", "goldenMoves", "controls"],
+    "requiredSlots_terminal": ["treeHash", "commitSha", "pinsSha", "battery", "expect", "verifyOutput", "verifyCoverage", "goldenMoves"],
+    "structuralChecks_R3": {
+      "treeHash": "must match /^[0-9a-f]{40}$/ AND be re-derivable by the wall via `git rev-parse HEAD^{tree}` — never a string the agent typed",
+      "verifyCoverage": "must contain the coverage fraction in parseable form (frozen_proven N/M); if < 9/9 a NON-EMPTY reason must name the absent artifacts",
+      "battery": "the pass/skip/fail/files/expect shape is parsed and range-checked; a marker that omits it fails"
+    },
+    "positiveControl": "PINNED + SHOWN (V31 did, V33 did not): a marker with a required slot removed MUST fail Marker.validate; the wall asserts the failure (Missing[] non-empty). Mutating one X-SHOWN clause moves this pins' PINS_SHA (shown in show_pins.test.ts)."
+  },
+  "buildLogContract": {
+    "note": "The shape the terminal BUILDLOG-SHOWING.md must take, so the next audit is possible (companion doc PART TWO). Under X-SHOWN(b) a slot left as a placeholder or filled with a bare check-mark is a Halt, not a done.",
+    "mandatoryHeader": ["RECKON→SHOW PINS_SHA (+ chain)", "TERMINAL TREE", "TERMINAL COMMIT · pushed y/n", "STARTING TREE · drift vs V33 terminal", "BATTERY (pass/skip/fail/files/expect · two runs identical)", "PRISTINE-CLONE VERIFY output · frozen-set coverage", "GOLDEN MOVES (n · each name, old→new sha, justification)", "LAWS MINTED: 1 (X-SHOWN) disclosed as D47", "NEW PRODUCT CAPABILITY: 0 (the Halt — if not 0, the sprint failed)"],
+    "ddRecord": "one entry per DD-1..DD-8: the question · what the codebase showed (files, call chains, line numbers) · the decision · the rationale · files changed · the evidence it works (actual output). A DD resolved without recording what the codebase showed is a silent deviation (X-DEVLEDGER → Halt).",
+    "handoffFirstLine": "MUST be a number: 'manifests authored (real): <n> · cycles run, unprompted, on real lineages: <n>' — and then either the road forward or the kill-criterion's question, asked out loud."
+  },
+  "delegatedDecisions": {
+    "rule": "Claude Code decides, documents, and proceeds — these are decisions the agent WILL make and document, NOT questions it will ask. A decision deferred back to the Operator on a codebase-answerable question is a STALL, and stalls are what this sprint exists to end.",
+    "DD1_askOutputTrace": {
+      "question": "Is Ask output emitted ONLY from inside src/ask/gates.ts?",
+      "decision": "NO — the Ask REASONING block is produced by VoiceContract.compose() in src/ask/contract.ts (NOT a frozen file); both phrase.ts call sites flow through it. Compose AdviceShape.detect() at that call site DOWNSTREAM of the five VoiceGates — a second, additional refusal (refusals COMPOSE; zero frozen bytes touched; a voice-path check cannot move a verdict). This is the strongly-preferred outcome. D46 (unfreeze gates.ts) is PRESENTED but NOT IMPLEMENTED (LN5 — an unsigned frozen-byte move is forbidden).",
+      "recorded": "the trace (files + call chain), the corpus run against the Ask output path, and the frozen transcript corpus (R-1)"
+    },
+    "DD2_absentArtifacts": {
+      "question": "What are the 2 frozen-core artifacts absent on a fresh clone?",
+      "decision": "RWA-VERDICT.md (monorepo-generated — the generator script/rwa-verdict.ts lives only in the full monorepo; F-ENV forbids re-pin) and data/snapshot/MANIFEST.json (gitignored local RWA discovery-snapshot). Both are ENVIRONMENT/monorepo, not source — committing them as fixtures would be wrong (R-6). The SHRUNK CLAIM is taken and stated: verify proves 7 of 9; the 2 carry their pinned golden SHA (RWA_VERDICT_SHA + IMMUTABLE_DATA[].sha in src/organon/frozen.ts) but no artifact to hash on a clone. R-6 follow-through: what would prove them is a regenerable copy checked against the pinned golden — routed as a NAMED item, not a shrug.",
+      "recorded": "the two artifact names, the reason, and the corrected 7/9 claim text"
+    },
+    "DD3_clockScope": {
+      "question": "Which judged paths legitimately need no clock?",
+      "decision": "Extend the Date.now() grep-wall from the 5 strategy modules to EVERY judged path. Any path exempted is enumerated with its reason (contains no time-dependent judgment).",
+      "recorded": "the enumerated exemption list with reasons (S82c-extended)"
+    },
+    "DD4_mr1Blocker": {
+      "question": "What EXACTLY blocks the MR1 live capture?",
+      "decision": "NOTHING blocks it in this environment — egress is OPEN (DeFiLlama /pools returns HTTP 200 in ~0.8s, measured Phase 0). The three sprints of 'network-window-gated' were an environment assumption, not a fact. Phase 5 RUNS the capture (the pre-pinned subjects; the census recomputed as an OUTCOME) OR, if a specific subject 404s, names that in one actionable sentence.",
+      "recorded": "the measured HTTP 200, and either the census result or the per-subject actionable blocker"
+    },
+    "DD5_delimiterCollision": {
+      "question": "Can the »»» delimiter appear in user text today?",
+      "decision": "YES (it is a real punctuation mark). STRIP the delimiter (and variants) from user content AND wrap in a per-request CSPRNG nonce delimiter (belt and braces — the payload cannot terminate its own block). R-2: the nonce comes from a CSPRNG, appears nowhere in user-reachable output; stripping happens at the Ask-PROMPT boundary ONLY, never in the stored manifest — the stored thesis is always the user's bytes (a silently-altered content-hashed thesis would be an X-HONEST violation).",
+      "recorded": "the seeded-collision test and its output; the honest limit (this closes the MECHANICAL injection, not the SEMANTIC one — ORGΛNON can field text as untrusted, it cannot make a model honor the flag)"
+    },
+    "DD6_looseningSet": {
+      "question": "Is the loosening set 2 or 3?",
+      "decision": "TWO. See MR8 — the two enumerated loosenings ('…what to buy' without the period; 'the buy button is on the exchange'). The anticipated third ('…never an allocation') already passed the OLD substring matcher (it contains no banned substring), so it is NOT a new loosening — the compound-phrase case, not a widened refusal set.",
+      "recorded": "the final enumerated set (MR8)"
+    },
+    "DD7_consoleSinks": {
+      "question": "Where are the studio console's unescaped sinks?",
+      "decision": "Inventory MECHANICALLY (R-4 — grep the emission primitives, not an editorial read): every template literal reaching a Response in script/serve-studio.ts + src/studio/*. Author the escaping fix as NEW code WITH ITS OWN WALLS. SUPERSEDE the prior session's uncommitted F-1..F-4 diff (git checkout the 4 files) — the Operator's pending decision was about committing an UNAUTHORIZED diff, and this makes it moot (D48). Do NOT touch the verdict path; the console is operator-side.",
+      "recorded": "the mechanical sink inventory, the fix, the seeded-payload proof (D48)"
+    },
+    "DD8_cyclesCounter": {
+      "question": "Where can the cycles-run counter live without a new surface?",
+      "decision": "DERIVE it from the ledger that already exists — a SEARCH is a manifest authored, an OBSERVATION is a cycle run. No new module of CAPABILITY; a small pure derivation (src/strategy/ledger.ts Ledger.actsSummary). R-5 (CRITICAL correction): REUSE the existing realLineageCount predicate (Migration.realLineageCount, which already guards the migration HALT) to structurally exclude fixtures and development seeds. Report BOTH numbers — cycles on REAL lineages (the metric) and cycles on fixtures (development noise). Reporting only the sum is a lie by aggregation.",
+      "recorded": "the derivation (reusing realLineageCount), and THE NUMBER — both parts"
+    }
+  },
+  "mr8_looseningSetReconciled": {
+    "rule": "DD-6 — the loosening set is TWO, each with a one-line justification. An unjustified loosening is a Halt (RP-1 carried).",
+    "loosenings": [
+      {"line": "…it never tells you what to buy (the affordance line, WITHOUT the trailing period)", "why": "the imperative 'buy' is the OBJECT of 'tells you what to' inside a NEGATED disclaimer ('never tells you') — the shape guard reads the negation + object-of frame and passes it, removing the load-bearing full stop (the golden move)."},
+      {"line": "the buy button is on the exchange, not here", "why": "'buy button' is a NOUN COMPOUND (buy as adjective) — a descriptive statement of where execution lives, never an imperative directed at the reader; the noun-compound guard passes it."}
+    ],
+    "notANewLoosening": "'…never an allocation' — already passed the OLD substring matcher (no banned substring present); the compound-phrase case (V31), NOT a widened refusal set. So the set is 2, not 3."
+  },
+  "s89_deriveActHash": {
+    "rule": "S89 — deriveAct's source hash is PINNED. Because act is NOT hashed (the elegance that made the V33 migration harmless), the moat's integrity check rests entirely on verify() RE-DERIVING the act; deriveAct is therefore load-bearing for the moat AND unversioned. Pinning does not freeze it — a change becomes a DISCLOSED re-pin naming how many stored acts re-derive differently, never a silent mass-verify failure across every lineage.",
+    "extraction": "the wall reads src/strategy/trial.ts and extracts the deriveAct function by the regex /  export function deriveAct\\(priorConfig: string \\| null, thisConfig: string\\): Act \\{\\n(?:.*\\n)*?  \\}/ then sha256s the matched text",
+    "hash": "00e67ef8d05f144205f9c9cc098ff09768573680b866f3ad39dd665ff92afe20"
+  },
+  "walls": {
+    "count": 92,
+    "S87": "ONE GUARD — one definition of advice (AdviceShape.detect) reaches every emitted line: the composed drawer, the monitor cycle lines, the door copy, the affordance, the envelope disclaimer, the readout, speakDeltas, AND the Ask output path (composed into VoiceContract.compose downstream of the five gates). The full enumerated corpus + the token-free set (size into it · trim the position · I'd rotate out of this · you may want to wait · consider taking some off) refuse on EVERY emitting surface incl Ask; the two enumerated loosenings pass; a GREP WALL asserts no emitting surface relies on the substring matcher alone. R-1: a FROZEN transcript corpus of REAL model output (Groq, cadence-delta facts) — every captured line passes the guard; the living-corpus clause finally points at the model's output, not the agent's own copy.",
+    "S88": "THE UNTRUSTED BOUNDARY — the Ask delimiter is STRIPPED from user content (»»» and variants) AND wrapped in a per-request CSPRNG nonce; a seeded payload containing the delimiter cannot terminate its own block (shown). R-2: strip at the prompt boundary ONLY; the stored thesis is always the user's bytes. The honest limit pinned: closes the mechanical injection, not the semantic one.",
+    "S89": "deriveAct PINNED — a silent change FAILS the wall; a disclosed re-pin names the count of differently-derived acts (see s89_deriveActHash).",
+    "S90": "THE MARKER SCHEMA — Marker.validate(marker) → Ok | Missing[]; a marker missing any required slot fails the battery. R-3: tree hash re-derived (not typed), coverage fraction parsed, battery recomputed — structure, not presence. The terminal marker carries tree + commit + PINS_SHA + battery + verify output.",
+    "S91": "THE CONSOLE'S SINKS — every mechanically-inventoried sink escapes user data or provably handles none; seeded payloads (\" onmouseover=…, </textarea><script>) neutralized by assertion; refuse-not-coerce (F-2), 400-not-500 (F-3), callerId behind TRUST_PROXY (F-4) — re-authored as NEW code with walls (D48). The verdict path is untouched.",
+    "S92": "THE INSTRUMENT — the cycles-run number is DERIVABLE and DERIVED from the ledger (Ledger.actsSummary), real vs fixture separated by the existing realLineageCount predicate (R-5); it appears in the gate WHATEVER its value. No new counter of capability; a pure derivation."
+  },
+  "deviations": {
+    "D46": "CONDITIONAL + PRESENTED-NOT-IMPLEMENTED — unfreeze src/ask/gates.ts to converge the guard IN PLACE. NOT triggered: DD-1 proved call-site composition works (compose is not frozen), so the guard converges with ZERO frozen bytes moved and D46 is not needed. If it had been needed, the diff + the downstream pinsSha/carriedFromPinsSha re-sha cascade + a proof the differential and bundle stay byte-identical would be PRESENTED to the pen — never IMPLEMENTED unsigned (LN5, the gravest violation in the constitution). operatorSigned=false.",
+    "D47": "DISCLOSED against the Halt's letter — the X-SHOWN mint + the measuring instrument. The Halt forbade new laws; X-SHOWN adds NO capability (a pure restriction on what the agent may claim) and the instrument IS the validation, not a product feature. The pen may strike either; the sprint then proceeds under the existing laws and shows its work anyway. operatorSigned=false.",
+    "D48": "DISCLOSED — the console fix supersedes the prior session's uncommitted F-1..F-4 diff. The agent authors its OWN escaping fix (with walls the diff never had) as new authored code; the Operator's pending decision was about committing an unauthorized diff, and this makes it moot. Leaving a known XSS in a served console for a fourth sprint over a paperwork question is the worse choice. operatorSigned=false.",
+    "carried": "D1–D45 carried; D43/D44/D45 (Reckoning) carried; D27 STILL FIRST — the NINTH sprint ('the Stamp is knowingly generous until D27 is signed'). D23–D48 present, all operatorSigned=false; the agent presents the whole gate and NEVER signs it (LN5). IN2/IN4/AF4 + the countersigns OWED-OPERATOR-GATED.",
+    "deviationOrderAppend": ["D46", "D47", "D48"]
+  },
+  "haltRePinned": {
+    "rule": "THE HALT IS RE-PINNED, NOT RETIRED. If IN2 is still unperformed at V34's close, V35 is VALIDATION-ONLY TOO — and the gate must then present, as a first-class item, WHETHER THE PRODUCT HAS A USER AT ALL. That is the kill-criterion's own question.",
+    "killCriterion": "8b4e094b",
+    "theNumberGoesFirst": "the gate's first line is 'manifests authored (real): <n> · cycles run unprompted on real lineages: <n>' — measured, whatever it is; if zero, the handoff says zero, beside the kill-criterion."
+  },
+  "operatingBounds": {
+    "rule": "pinned (carried from Reckoning) so a scale claim is MEASURED, not assumed — the chain-verify runtime is measured against these (Phase 3, R-7)",
+    "positionsPerManifest": 50,
+    "operators": "a single Operator",
+    "cadence": "daily-or-slower"
+  },
+  "adversarialRecord_partA": {
+    "rule": "PART A′ — 10 attacks, each with its binding consequence, attacked BEFORE design (companion doc). The findings_closed_showing wall asserts each consequence.",
+    "A1_bureaucracy": "S90 makes the marker schema machine-checked — a missing slot fails the battery, not a reviewer's attention",
+    "A2_callSiteHack": "refusals COMPOSE — a downstream check can only refuse MORE, never less; it cannot move a verdict (voice path). S87 runs the full corpus against EVERY emitting surface incl Ask",
+    "A3_alreadyGated": "the old gate matches SUBSTRINGS; every token-free line passes it cleanly. ONE definition of advice reaches every emitted line; a grep wall forbids sole reliance on the substring matcher",
+    "A4_bypassOperator": "the Operator's decision was about committing an UNAUTHORIZED diff; the agent's own authored fix makes it moot, not answered-for-them (D48)",
+    "A5_counterIsTelemetry": "DD-8 DERIVES over instruments — the ledger already records every act; no module of capability added",
+    "A6_mintingLawViolatesHalt": "X-SHOWN adds NO capability — a pure restriction on what the agent may CLAIM is the OPPOSITE of scope creep. Disclosed as D47, the pen may strike it",
+    "A7_pinningDeriveAct": "pinning does not freeze — it makes a change DISCLOSED; silent mass-verify failure is what is forbidden, not evolution",
+    "A8_nonceTheatre": "stripping+noncing closes the MECHANICAL injection, not the SEMANTIC one; the honest limit is written into the gate",
+    "A9_hateTheAnswer": "the number goes in the gate, the terminal marker, and the handoff's first line WHATEVER it is; if zero, it says zero, beside the kill-criterion",
+    "A10_wastedCycleHaltDropped": "the Halt is re-pinned not retired — if IN2 unperformed at V34 close, V35 is validation-only too, and the gate asks whether the product has a user at all",
+    "R1_corpusTestsMatcherNotModel": "HIGH — S87's string-matcher assertion proves WIRING, not efficacy. Correction folded: a FROZEN adversarial transcript corpus of REAL Groq output on the cadence-delta facts, committed as fixtures, asserted to pass the guard; the living-corpus clause repointed at the model's output",
+    "R5_ledgerNumberIsNotMetricNumber": "CRITICAL — the naive derivation would count the project's own fixtures as use. Fixed: reuse realLineageCount; report cycles-on-real and cycles-on-fixtures SEPARATELY; realLineageCount===0 means the project already, silently, proved no user exists (V33's migration gate was a validation instrument all along)"
+  },
+  "carried": {
+    "laws": "X-KEEP · X-DETERM · X-HONEST · X-MOAT · X-ADVICE · X-MANIFEST · X-CADENCE · X-AUTHOR · X-RECKON · X-CORRELATE (familyN===1; statistics change ZERO) · X-SURFACE (the conscious 3) · X-TELEMETRY (local-first, opt-in, scrubbed, NO EGRESS) · X-DEVLEDGER · X-AUDIT · PART CLEAN — all carried, unchanged; X-SHOWN minted (D47)",
+    "deps": ["hono", "zod"],
+    "screens": ["shelf", "reality-check", "ask"],
+    "repoTopology": "SINGLE REPO (organon @ staging); DV4 retired (D44); the pristine-clone verify is the convergence proof, run and SHOWN at every phase gate with its coverage fraction",
+    "lawsThisSprint": "ONE (X-SHOWN), disclosed against the Halt as D47",
+    "newProductCapability": 0,
+    "frozenSevenNote": "spec.ts + frozen seven + verdict-path 7 + frozen-core 2 byte-untouched (D46 unsigned → gates.ts NOT touched); the differential + evidence bundle byte-identical (ZERO golden moves this sprint — the one Reckoning golden move already landed; no verdict moves); the Stamp familyN stays 1; no daemon; no new dependency",
+    "verdictDifferential": {"lendingFpSetShaPrefix": "70c7912f", "fundingReproHashPrefix": "0a63151b"},
+    "evidenceBundleShaPrefix": "9c1e7bd8",
+    "killCriterion": "8b4e094b",
+    "startingTree": "eca71daf680c8a5df4b798433302d0e810755157",
+    "fence": ["the personal POST-MORTEM (D40/D45 — still no closed lineage, still no real lineage at all)", "the MCP Socket", "Cedar", "the Merkle layer", "the Adversary", "the Proposer / K-activation / PBO / CSCV / ONC", "the D38 composite verdict", "a hosted tier / any daemon", "any new mass-path dependency / a client framework", "a second law", "execution/custody/wallets (permanent)", "any new product surface, module, or capability whatsoever"],
+    "permittedBecauseNotCapability": ["the SBOM (the SHOWN form of 'zero new dependencies')", "the IN2 runbook (documentation)", "the cycles-run number (derived from the ledger — DD-8)"]
+  },
+  "pinsSha": "07d27f8116c7ce0e1883a89891eb5bfac0fecebc8731a131975d433bd4b830f9"
+}

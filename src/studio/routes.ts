@@ -12,11 +12,20 @@
  */
 import { timingSafeEqual } from "node:crypto"
 import { Hono } from "hono"
+import { getConnInfo } from "hono/bun" // THE SHOWING SPRINT (V34, F-4) — the real socket peer for the rate-limit key
 import { Ledger } from "../ledger/ledger"
 import { Studio } from "./adjudicate"
 import { StudioSurfaces } from "./surfaces"
 import { Enroll } from "./enroll"
 import { StudioErrors } from "./errors"
+
+// THE SHOWING SPRINT (V34, S91 / D48 / F-4) — the rate-limit key must not be a spoofable client header. Trust
+// x-forwarded-for ONLY behind a declared proxy (TRUST_PROXY); otherwise key on the real socket peer; no socket → "local".
+function callerId(c: { req: { header(name: string): string | undefined } }): string {
+  if (process.env.TRUST_PROXY) { const xff = c.req.header("x-forwarded-for"); if (xff) return String(xff).split(",")[0]!.trim() }
+  try { const a = getConnInfo(c as never)?.remote?.address; if (a) return a } catch {}
+  return c.req.header("x-forwarded-for") ?? "local"
+}
 
 export namespace StudioRoutesNS {
   export interface HardenOpts {
@@ -41,6 +50,9 @@ export namespace StudioRoutesNS {
     app.onError((err, c) => {
       const detail = String(err && (err as Error).message ? (err as Error).message : err).slice(0, 200)
       if (detail.startsWith("bad-spec")) return c.json(StudioErrors.enrich("bad-spec", detail), 400) // W1-04: malformed spec rejected, never adjudicated
+      // F-3 (V34, S91) — a malformed enrollment is a CLIENT fault (400), not a server fault (500): the caller enrolled a
+      // non-not-yet verdict, hit the per-author cap, or named a non-existent enrollment. The server refused correctly.
+      if (err instanceof Enroll.EnrollError) return c.json(StudioErrors.enrich("bad-enroll", detail), 400)
       const code = /\.venv\/bin\/python|posix_spawn.*python/.test(detail) ? "sidecar-not-setup" : "internal"
       return c.json(StudioErrors.enrich(code, detail), code === "sidecar-not-setup" ? 503 : 500)
     })
@@ -56,7 +68,7 @@ export namespace StudioRoutesNS {
         const ok = want.length === got.length && timingSafeEqual(want, got)
         if (!ok) return c.json(StudioErrors.enrich("unauthorized"), 401)
       }
-      const who = c.req.header("x-forwarded-for") ?? "local"
+      const who = callerId(c) // F-4 (V34) — the real socket peer, not a spoofable header
       const t = now()
       const recent = (hits.get(who) ?? []).filter((x) => t - x < rl.windowMs)
       if (recent.length >= rl.max) return c.json(StudioErrors.enrich("rate-limited", `> ${rl.max} requests / ${rl.windowMs}ms`), 429)

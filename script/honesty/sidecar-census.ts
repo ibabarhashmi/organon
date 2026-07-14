@@ -34,6 +34,23 @@ if (existsSync(VENV_PY)) {
   canary = r.status === 0 ? { ok: true, detail: `numpy+scipy import OK — ${r.stdout.trim()}` } : { ok: false, detail: `canary FAILED (exit ${r.status}): ${(r.stderr || "").trim().slice(0, 200)}` }
 }
 
+// S83 TIGHTENED (V34, B-7): naming ≠ executing. Actually RUN the frozen sidecar math end-to-end and record the exit —
+// an EXECUTION proof, not a name. Two golden-noise self-tests run the frozen modules (effective_n's own --selftest; the
+// lending sibling that validates neutralize.py). The rigor DSR/PSR/PBO cross-check needs `purgedcv` (Py3.11-only) — where
+// it is absent, the block is NAMED PRECISELY (not "environmental"), never dressed as coverage.
+const SRC = path.join(PKG_ROOT, "src")
+function runExec(args: string[]): { ok: boolean; tail: string } {
+  if (!existsSync(VENV_PY)) return { ok: false, tail: "venv absent — BLOCKED" }
+  const r = spawnSync(VENV_PY, args, { cwd: SRC, encoding: "utf8", timeout: 120_000, env: { ...process.env, PYTHONHASHSEED: "0" } })
+  return { ok: r.status === 0, tail: (r.status === 0 ? (r.stdout || "") : (r.stderr || r.stdout || "")).trim().split("\n").pop()?.slice(0, 90) ?? "" }
+}
+const executed = [
+  { module: "effective_n", proof: "-m backtest.py.effective_n --selftest", ...runExec(["-m", "backtest.py.effective_n", "--selftest"]) },
+  { module: "neutralize (lending sibling)", proof: "-m backtest.py.selftest_lending", ...runExec(["-m", "backtest.py.selftest_lending"]) },
+]
+const rigorSelf = runExec(["-m", "backtest.py.selftest"])
+const blocked = rigorSelf.ok ? [] : [{ selftest: "rigor DSR/PSR/PBO cross-check (backtest.py.selftest)", reason: "requires `purgedcv` (Py3.11-only) — absent in this venv; the cross-check is BLOCKED and named precisely, never dressed as coverage", tail: rigorSelf.tail }]
+
 const record = {
   protocol: "sidecar-census",
   at: "2026-07-13",
@@ -45,7 +62,10 @@ const record = {
   venvMandate: "3.11.x",
   venvMeetsMandate: venvPython != null && venvPython.startsWith("3.11"),
   canary,
-  honestNote: existsSync(VENV_PY) ? "the venv is present → the sidecar tests EXECUTE (coverage, not non-coverage); the census names them so a future 'green battery' cannot be mistaken for health when it is silence" : "the venv is ABSENT on this machine → the sidecar tests are BLOCKED and state so; a fresh clone runs `./organon.sh setup` to build it",
+  executed, // S83 TIGHTENED — the frozen sidecar math actually RAN (executed, not merely named); each carries its exit
+  executedCount: executed.filter((e) => e.ok).length,
+  blocked, // the precisely-named block (purgedcv absent) — an honest gap, never dressed as coverage
+  honestNote: existsSync(VENV_PY) ? "the venv is present → the sidecar tests EXECUTE (coverage, not non-coverage); S83 TIGHTENED asserts the frozen math actually RAN (effective_n --selftest + selftest_lending exit 0), not merely that files are named" : "the venv is ABSENT on this machine → the sidecar tests are BLOCKED and state so; a fresh clone runs `./organon.sh setup` to build it",
 }
 
 writeFileSync(path.join(PKG_ROOT, "data", "honesty", "sidecar-census.json"), JSON.stringify(record, null, 2) + "\n")

@@ -45,6 +45,10 @@ export namespace Builder {
     }
     const total = markets.reduce((s, m) => s + m.weight, 0)
     if (total <= 0) return { ok: false, error: "The weights sum to zero — there is nothing to allocate. Refused before registration." }
+    // F-2 (V34, S91) — an OMITTED policy defaults to the conservative 'static'; a PRESENT-but-invalid policy is REFUSED,
+    // never silently coerced to a default (silent coercion registers something the user did not choose — refuse, don't coerce).
+    if (input.policy !== undefined && input.policy !== "static" && input.policy !== "carry-tilt" && input.policy !== "carry-rotation")
+      return { ok: false, error: `Allocation policy "${input.policy}" is not one of static / carry-tilt / carry-rotation — refused before registration (never silently coerced to a default). Nothing was registered.` }
     const policy = input.policy === "carry-tilt" || input.policy === "carry-rotation" ? input.policy : "static"
     const rebalance = input.rebalance === "monthly" ? "monthly" : DEFAULTS.rebalanceTrigger
     const spec: DataPlaneEngine.LendingSpec = { family: "lending-carry", policy, rebalance: { trigger: rebalance }, markets: markets.map((m) => ({ key: m.key, weight: m.weight / total })) } // normalized weights (no leverage)
@@ -98,6 +102,9 @@ export namespace Builder {
     if (!availableVenues.includes(venue)) return { ok: false, error: `Venue "${venue}" is not in the available set (${availableVenues.join(", ")}). The builder composes only over delivered primitives — an unknown venue is refused before registration. Nothing was registered.` }
     const intervalHours = Number(input.interval ?? FUNDING_DEFAULTS.intervalHours)
     if (!(FUNDING_INTERVALS as readonly number[]).includes(intervalHours)) return { ok: false, error: `Funding interval ${input.interval} is invalid — funding settles on a ${FUNDING_INTERVALS.join("h or ")}h schedule, not arbitrary intervals. Refused before registration. Nothing was registered.` }
+    // F-2 (V34, S91) — an OMITTED side defaults to the conservative 'receive'; a PRESENT-but-invalid side is REFUSED, never silently coerced.
+    if (input.side !== undefined && input.side !== "receive" && input.side !== "pay")
+      return { ok: false, error: `Funding side "${input.side}" is not receive / pay — refused before registration (never silently coerced to a default). Nothing was registered.` }
     const side = input.side === "pay" ? "pay" : "receive"
     const parentSpecHash = input.parentSpecHash && input.parentSpecHash !== "(new strategy)" ? input.parentSpecHash : null
     return { ok: true, spec: { family: "funding-carry", venue, intervalHours, side }, lineage: { parentSpecHash, isEdit: parentSpecHash !== null } }

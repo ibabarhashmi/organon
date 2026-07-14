@@ -2,7 +2,7 @@
   "protocol": "sidecar-census",
   "at": "2026-07-13",
   "rule": "S83 — every test that invokes the Python sidecar is enumerated; the venv Python version + a runtime canary are recorded. A green battery that never touches the sidecar SAYS SO. The mandate is Python 3.11.x (the Py3.11-only purgedcv; Warranty V8).",
-  "sidecarTestsNamed": 30,
+  "sidecarTestsNamed": 31,
   "sidecarTests": [
     "alpha_blockers.test.ts",
     "basis_domain.test.ts",
@@ -25,6 +25,7 @@
     "moat_pins.test.ts",
     "moat_redteam.test.ts",
     "rwa_cap.test.ts",
+    "sidecar_census.test.ts",
     "studio_agents.test.ts",
     "studio_graph.test.ts",
     "studio_routes.test.ts",
@@ -43,5 +44,27 @@
     "ok": true,
     "detail": "numpy+scipy import OK — 2.4.6 1.17.1 3.11.15"
   },
-  "honestNote": "the venv is present → the sidecar tests EXECUTE (coverage, not non-coverage); the census names them so a future 'green battery' cannot be mistaken for health when it is silence"
+  "executed": [
+    {
+      "module": "effective_n",
+      "proof": "-m backtest.py.effective_n --selftest",
+      "ok": true,
+      "tail": "      no funding statistic reaches rigor.py undeflated; effective-N is derived-not-asserte"
+    },
+    {
+      "module": "neutralize (lending sibling)",
+      "proof": "-m backtest.py.selftest_lending",
+      "ok": true,
+      "tail": "Lending risk-premium sibling: ALL PASS"
+    }
+  ],
+  "executedCount": 2,
+  "blocked": [
+    {
+      "selftest": "rigor DSR/PSR/PBO cross-check (backtest.py.selftest)",
+      "reason": "requires `purgedcv` (Py3.11-only) — absent in this venv; the cross-check is BLOCKED and named precisely, never dressed as coverage",
+      "tail": "ModuleNotFoundError: No module named 'purgedcv'"
+    }
+  ],
+  "honestNote": "the venv is present → the sidecar tests EXECUTE (coverage, not non-coverage); S83 TIGHTENED asserts the frozen math actually RAN (effective_n --selftest + selftest_lending exit 0), not merely that files are named"
 }

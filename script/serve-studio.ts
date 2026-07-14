@@ -9,6 +9,7 @@
  * Run:  STUDIO_TOKEN=... bun run script/serve-studio.ts   → serves on http://localhost:4319
  */
 import { Hono } from "hono"
+import { getConnInfo } from "hono/bun" // THE SHOWING SPRINT (V34, F-4) — the real socket peer, so a rate-limit key is not a spoofable header
 import path from "node:path"
 import { existsSync, readFileSync } from "node:fs"
 import { PKG_ROOT } from "../src/organon/frozen"
@@ -90,6 +91,22 @@ function trustState(): StudioScreens.TrustState {
 // byte-untouched. The honest engine transcripts (StudioScreens.* / Console.renderResult) render VERBATIM inside <pre> —
 // the frame gets the craft, the facts do not move. Server-rendered; the only script is progressive submit-feedback.
 const esc = (s: string) => s.replace(/</g, "&lt;")
+// THE SHOWING SPRINT (V34, S91 / D48 / F-1) — the text esc() (only <) is sufficient inside a <pre> or element text, but an
+// HTML ATTRIBUTE value="…" also needs the double-quote (and & > ') escaped, or a crafted goal (`" onmouseover=alert(1)`)
+// breaks out of the attribute and injects a live handler (reflected XSS). escAttr is the FULL escaper, applied ONLY to the
+// user-controlled attribute sinks (the goal value) — the rendered page stays byte-identical for benign input; it bites only
+// hostile input. Authored fresh here, with its own wall (studio_sinks.test.ts), superseding the prior uncommitted F-diff.
+const escAttr = (s: string) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!)
+
+// THE SHOWING SPRINT (V34, S91 / D48 / F-4) — the console rate limit + the pool-family ratchet are anti-abuse controls;
+// their caller key must NOT be a spoofable client header. A crafted X-Forwarded-For could otherwise mint a fresh rate-limit
+// bucket (evading the limit) or a fresh pool family (evading the ratchet) on every request. Trust x-forwarded-for ONLY
+// behind a declared proxy (TRUST_PROXY); otherwise key on the REAL socket peer; no socket (in-process traversal) → "local".
+function callerId(c: { req: { header(name: string): string | undefined } }): string {
+  if (process.env.TRUST_PROXY) { const xff = c.req.header("x-forwarded-for"); if (xff) return String(xff).split(",")[0]!.trim() }
+  try { const a = getConnInfo(c as never)?.remote?.address; if (a) return a } catch {}
+  return c.req.header("x-forwarded-for") ?? "local"
+}
 const STUDIO_CSS = `:root{--bg:#0d1117;--surface:#161b22;--surface2:#1b2029;--border:#2a313c;--border-strong:#3b434f;--ink:#e6edf3;--ink-muted:#9aa5b1;--ink-faint:#7e8894;--accent:#6cb6ff;--accent-hi:#8cc6ff;--accent-ink:#0d1117;--real:#3fb950;--sample:#d29922;--avoid:#f85149;--font:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;--mono:ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;--sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:24px;--sp6:32px;--sp7:48px;--r-sm:6px;--r-md:8px;--r-lg:12px;--r-pill:999px;--dur-fast:120ms;--dur:200ms;--ease:cubic-bezier(0.22,1,0.36,1);--wrap:980px}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:74px}
@@ -210,7 +227,7 @@ function dashboard(consoleState?: { goal: string | null; resultRender: string | 
 <div class="tool__head"><span class="tool__title">Ask in plain English</span><span class="tool__note">rate-limited &amp; input-capped exactly as the API</span></div>
 <div class="tool__body">
 <form class="form" method="post" action="/console/goal">
-${ff("your goal", `<input class="field" name="goal" maxlength="${GOAL_MAX}" placeholder="Earn steady stablecoin lending carry with honest costs" value="${esc(consoleState?.goal ?? "")}">`, "f--grow")}
+${ff("your goal", `<input class="field" name="goal" maxlength="${GOAL_MAX}" placeholder="Earn steady stablecoin lending carry with honest costs" value="${escAttr(consoleState?.goal ?? "")}">`, "f--grow")}
 <button class="btn btn--primary" type="submit"><span class="btn__l">run goal</span><span class="btn__a">→</span></button>
 </form>
 ${tscript(goalRender, "no result yet — type a goal and run it to see the engine's verdict")}
@@ -223,7 +240,7 @@ ${tscript(goalRender, "no result yet — type a goal and run it to see the engin
 <div class="tool__head"><span class="tool__title">Guided Builder — Lending</span><span class="tool__n">lending</span></div>
 <div class="tool__body">
 <form class="form" method="post" action="/builder/compose">
-${CONSOLE_KEYS.map((k) => ff(esc(k.split(":").slice(1, 3).join(":")) + " weight", `<input class="field field--num" name="w_${esc(k)}" type="number" step="0.1" min="0" max="1" value="0">`)).join("")}
+${CONSOLE_KEYS.map((k) => ff(esc(k.split(":").slice(1, 3).join(":")) + " weight", `<input class="field field--num" name="w_${escAttr(k)}" type="number" step="0.1" min="0" max="1" value="0">`)).join("")}
 ${ff("policy", `<select class="field" name="policy">${policyOpts}</select>`)}
 <button class="btn btn--primary" type="submit"><span class="btn__l">compose + submit</span></button>
 <span class="hintline">default policy: ${Builder.DEFAULTS.policy} (conservative)</span>
@@ -301,7 +318,7 @@ app.use("*", async (c, next) => {
   // input cap applies as to the API; the verdict is the core's, untouched; honest failure states render truthfully.
   .post("/console/goal", async (c) => {
     // W5-01: rate-limit the form as the API is — BEFORE the joined loop spawns a sidecar (a UI storm is refused at the door)
-    const who = c.req.header("x-forwarded-for") ?? "local"
+    const who = callerId(c)
     if (consoleRateLimited(who)) return c.html(dashboard({ goal: null, resultRender: `RATE-LIMITED: more than ${CONSOLE_RL.max} goals per minute from this caller. The console form is rate-limited exactly as the API is (nothing was registered; the verdict path is untouched). Try again shortly.` }))
     let goal = ""
     try { const body = await c.req.parseBody(); goal = String(body.goal ?? "").trim() } catch { goal = "" }
@@ -317,7 +334,7 @@ app.use("*", async (c, next) => {
   // primitive → the IDENTICAL write-then-invoke gate → the verdict + panels. Validation comes from the same schema
   // (Builder.compose); an invalid composition is REFUSED with an honest message BEFORE registration (the failure state).
   .post("/builder/compose", async (c) => {
-    const who = c.req.header("x-forwarded-for") ?? "local"
+    const who = callerId(c)
     if (consoleRateLimited(who)) return c.html(dashboard(undefined, { resultRender: `RATE-LIMITED: more than ${CONSOLE_RL.max} composes per minute (the builder is rate-limited exactly as the API is; nothing was registered).` }))
     const series = consoleSeries()
     if (series.size < 2) return c.html(dashboard(undefined, { resultRender: "BLOCKED: the lending snapshots are not present in this environment (gitignored on a fresh clone). Re-capture keyless via `bun run script/capture-dataplane.ts`. No verdict is fabricated." }))
@@ -333,7 +350,7 @@ app.use("*", async (c, next) => {
   // the delivered funding primitives → the IDENTICAL write-then-invoke gate → verdict + panels (ILLUSTRATIVE data,
   // labeled). An invalid interval is REFUSED before registration (the failure state).
   .post("/builder/funding", async (c) => {
-    const who = c.req.header("x-forwarded-for") ?? "local"
+    const who = callerId(c)
     if (consoleRateLimited(who)) return c.html(dashboard(undefined, { fundingBasisRender: `RATE-LIMITED: more than ${CONSOLE_RL.max} composes per minute (nothing was registered).` }))
     let body: Record<string, string> = {}
     try { body = (await c.req.parseBody()) as Record<string, string> } catch { body = {} }
@@ -346,7 +363,7 @@ app.use("*", async (c, next) => {
   // the MIN-tier + EXPERIMENTAL are surfaced INLINE before composing; the per-leg tiers render on the verdict. A
   // mismatched-venue pair (a leg that is not a valid CeFi/DeFi venue) is REFUSED before registration (the failure state).
   .post("/builder/basis", async (c) => {
-    const who = c.req.header("x-forwarded-for") ?? "local"
+    const who = callerId(c)
     if (consoleRateLimited(who)) return c.html(dashboard(undefined, { fundingBasisRender: `RATE-LIMITED: more than ${CONSOLE_RL.max} composes per minute (nothing was registered).` }))
     let body: Record<string, string> = {}
     try { body = (await c.req.parseBody()) as Record<string, string> } catch { body = {} }
@@ -361,7 +378,7 @@ app.use("*", async (c, next) => {
   // legible deflation basis. An over-correlated pool (K_eff≈1) renders "this pool adds nothing" plainly (not refused); a
   // pool of <2 members is refused before registration (the failure state). ILLUSTRATIVE member data, labeled.
   .post("/pool/compose", async (c) => {
-    const who = c.req.header("x-forwarded-for") ?? "local"
+    const who = callerId(c)
     if (consoleRateLimited(who)) return c.html(dashboard(undefined, undefined, { render: `RATE-LIMITED: more than ${CONSOLE_RL.max} composes per minute (nothing was registered).` }))
     let body: Record<string, string> = {}
     try { body = (await c.req.parseBody()) as Record<string, string> } catch { body = {} }

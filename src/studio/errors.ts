@@ -73,6 +73,16 @@ export namespace StudioErrors {
       whatYouCanDo: "Retry; if it persists, the detail field and the logs point to the cause — this is a bug to file.",
       whatItDoesNotMean: "An internal error is never a verdict and never a GO or NO-GO about your strategy.",
     },
+    // THE SHOWING SPRINT (V34, S91 / D48 / F-3) — a malformed enrollment is a CLIENT fault (a 400), not a server fault
+    // (a 500). Enrolling a non-not-yet verdict, exceeding the per-author cap, or naming a non-existent enrollment are all
+    // the caller's request being wrong — the server behaved correctly by refusing. Mapping it to 400 (not 500) keeps the
+    // status honest and the ledger untouched; a 500 would falsely blame the server for the caller's malformed request.
+    "bad-enroll": {
+      code: "bad-enroll",
+      plain: "The enrollment request was not valid (enrollment is for a not-yet verdict with a forward clock, within the per-author cap), so nothing was enrolled.",
+      whatYouCanDo: "Enroll a not-yet verdict that needs a forward clock, within your per-author/domain cap; a valid enrollment always registers.",
+      whatItDoesNotMean: "A refused enrollment is not a NO-GO and not a server error — the request was malformed, and nothing about the strategy was judged.",
+    },
   }
 
   export function state(code: string): ErrorState | null {
