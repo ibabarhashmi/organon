@@ -403,9 +403,24 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`
   export interface FalseFireView {
     statement: string // the guard-passing count/UNJUDGEABLE statement
     tier: string // a ladder member (REAL★ · REAL-at-timestamp · RETROSPECTIVE · UNJUDGEABLE)
+    // FAMILY V39 (S145/RP-3, J-7) — the two-tier ordering: the OWN-capture number LEADS, the retrospective is BENEATH with
+    // its revisability, the window disparity STATED. Optional — when absent, the render is byte-identical to V38 (additive).
+    ownLine?: string
+    retroLine?: string
+    windowNote?: string
+    number?: number | null // the NUMBER rendered at the door (the retro count when own is UNJUDGEABLE — RP-3)
   }
   export function renderFalseFireLine(ff: FalseFireView): string {
-    return `<div class="axis"><b>If you had held this exit — a COUNT over captured history, never a prediction</b><div>${esc(ff.statement)} <span class="badge ${ff.tier === "RETROSPECTIVE" || ff.tier === "UNJUDGEABLE" ? "SAMPLE" : "REAL"}">tier: ${esc(ff.tier)}</span></div></div>`
+    const badge = `<span class="badge ${ff.tier === "RETROSPECTIVE" || ff.tier === "UNJUDGEABLE" ? "SAMPLE" : "REAL"}">tier: ${esc(ff.tier)}</span>`
+    // FAMILY V39 — the two-tier RP-3 render (own LEADS, retro BENEATH with revisability, window disparity). Only when the
+    // two-tier fields are present; otherwise the existing single-statement render (byte-identical for V38 callers).
+    if (ff.ownLine) {
+      return `<div class="axis"><b>If you had held this exit — a COUNT over captured history, never a prediction</b>` +
+        `<div>${esc(ff.ownLine)} ${badge}</div>` +
+        `<div class="muted">${esc(ff.retroLine ?? "")}</div>` +
+        `<div class="muted">${esc(ff.windowNote ?? "")}</div></div>`
+    }
+    return `<div class="axis"><b>If you had held this exit — a COUNT over captured history, never a prediction</b><div>${esc(ff.statement)} ${badge}</div></div>`
   }
 
   function renderMonitoringBlock(m: MonitoringView): string {

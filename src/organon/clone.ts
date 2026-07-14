@@ -48,4 +48,13 @@ export namespace Clone {
     const exitCode = t.setup.exitCode !== 0 ? t.setup.exitCode : t.verify.exitCode !== 0 ? t.verify.exitCode : t.battery.fail > 0 ? 1 : 0
     return { ran: true, exitCode, verify: t.verify.exitCode, battery: t.battery, proves: t.proves, doesNotProve: t.doesNotProve }
   }
+
+  // FAMILY V39 (S144 / J-6) — a STALE clone battery FAILS. V38's verifyOnClone carried V37's number (1668) — a clone that
+  // never re-ran on the new tree. The teeth: the recorded clone's commit must match THIS terminal commit; a transcript whose
+  // clonedCommit differs from the current terminal commit is STALE (its battery is a prior sprint's). Pure predicate — a
+  // seeded stale commit is caught. (The LIVE freshness is proven at Phase 7 by re-running the clone on THIS tree.)
+  export function staleAgainst(clonedCommit: string | null | undefined, terminalCommit: string): boolean {
+    if (!clonedCommit) return true // no clone recorded → cannot claim a fresh clone (stale by default, never a silent green)
+    return clonedCommit !== terminalCommit
+  }
 }

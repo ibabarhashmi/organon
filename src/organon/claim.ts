@@ -65,7 +65,9 @@ export namespace Claim {
   // substance-pins.json (newProductCapability 0 — the three V37 capabilities are made TRUE, nothing new is added; the roadmap
   // is OWED to V39). Falls back to socket-pins (V37), then derive-pins (a pre-V38 checkout).
   function currentPins(): { pinsSha: string; carried: { newProductCapability: number; lawsThisSprint: string } } | null {
-    for (const f of ["substance-pins.json", "socket-pins.json"]) {
+    // FAMILY V39 — family-pins.json is the current head (carries substance 153628a9; newProductCapability 0 — the four
+    // shipped capabilities pay a price, show a number, reach a seventh kind, and count a family, none touching a verdict).
+    for (const f of ["family-pins.json", "substance-pins.json", "socket-pins.json"]) {
       try { return JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", f), "utf8")) } catch { /* try the next */ }
     }
     return null
@@ -96,7 +98,9 @@ export namespace Claim {
     crossCheckPbo: () => ({ value: CrossCheck.agreement("pbo") }),
     d33: () => {
       const d = Signability.d33()
-      return { value: { state: d.state, operatorSigned: d.operatorSigned }, partial: /PRECONDITION-MET/.test(d.state) }
+      // FAMILY V39 (RP-1/S142) — the state carries its PRICE (testRedesigns, never resets) and its i.i.d. RIDER (direction +
+      // magnitude, on the same line), so the gate shows the Operator which pen he holds and what bears on the verdict.
+      return { value: { state: d.state, operatorSigned: d.operatorSigned, testRedesigns: d.testRedesigns, redesignSearchHashes: d.redesignSearchHashes, iidRider: d.iidRider }, partial: /PRECONDITION-MET/.test(d.state) }
     },
     census: () => {
       const c = Falsify.census()

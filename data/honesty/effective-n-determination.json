@@ -1,0 +1,28 @@
+{
+  "protocol": "effective-n-determination",
+  "at": "2026-07-15",
+  "question": "DD-53/RP-2 (J-2): WHICH independence does the frozen effective_n.py measure — SERIAL (Lo's autocorrelation axis) or CROSS-SECTIONAL (independent bets)? And can its serial correction be WIRED into the frozen rigor.psr without touching one frozen byte? Established BEFORE any wiring; a fix on the wrong axis retires the warning.",
+  "derivedNotAsserted": "this determination is DERIVED by src/backtest/effectiven.ts reading the frozen effective_n.py + rigor.py source text (X-SHOWN — the code lines are the evidence); the D33 rider reads this file, never re-decides.",
+  "axesPresent": [
+    "SERIAL",
+    "CROSS-SECTIONAL"
+  ],
+  "relevantAxis": "SERIAL",
+  "serialCorrectionPresent": true,
+  "crossSectionalPresent": true,
+  "frozenPsrDerivesNInternally": true,
+  "classification": "HARNESS-COMPOSITION-GAP",
+  "riderStands": true,
+  "riderDirection": "the frozen PSR/DSR OVERSTATE confidence on autocorrelated input — the z-score uses √(n−1) over the raw observation count, treating n serially-dependent points as n independent ones, so the reported probability is too certain (biased toward SIGNABLE / toward 'yes').",
+  "riderMagnitude": "z is inflated by ≈ √τ_int, where τ_int is the measured integrated autocorrelation time of the series. LIVE on this module's clone-stable AR(1)(ρ=0.95) demonstration, τ_int ≈ 35.8 (effective sample N_eff/N ≈ 2.8%). On ORGΛNON's OWN captured funding panel (recorded V26 via this same frozen effective_n.py), τ_int ranged 27–165 (median ≈ 124) → confidence overstated ≈ 5–13× (median ≈ 11×) on the most autocorrelated series. Daily yield series are less autocorrelated but τ_int > 1 always, so the DIRECTION always holds.",
+  "demoTauInt": 35.836855128259906,
+  "demoEffNRatio": 0.02790423424212324,
+  "evidence": {
+    "effectiveNSerial": "def effective_n_serial(n: int, x=None, tau: float | None = None) -> float:",
+    "effectiveBreadth": "def effective_breadth(matrix) -> float:",
+    "rigorPsrN": "z = (sr - sr_star) * math.sqrt(n - 1) / denom",
+    "rigorPsrNoNParam": true
+  },
+  "detail": "HARNESS-COMPOSITION gap — effective_n.py HAS the serial (Lo) correction on the right axis (effective_n_serial + integrated_autocorr_time + nw_tstat), but the frozen rigor.psr derives n = len(returns) internally and hard-codes √(n−1), taking no n parameter; so the correction CANNOT be wired into the frozen core (forbidden) and must be composed BESIDE it in the harness. The i.i.d. rider STANDS, quantified (direction + magnitude named), with a harness deflated companion available. Wiring a fix into the wrong place (or feeding a cross-sectional adjustment into a serial problem) would retire the warning — worse than no fix (RP-2).",
+  "standingRule": "D33: SIGNABLE and this i.i.d. rider render ON THE SAME LINE at the gate (S142). rigor.py stays BYTE-FROZEN — the correction is a harness companion + a render caveat, NEVER an edit to the frozen formula (the exact FLAG-DON'T-EMIT the V38 math red team routed)."
+}

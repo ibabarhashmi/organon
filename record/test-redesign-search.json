@@ -1,0 +1,21 @@
+{
+  "protocol": "test-redesign-search",
+  "at": "2026-07-15",
+  "deviation": "D56",
+  "rule": "D56 / branch (b) of DD-33 (V38): the S116 power test was REDESIGNED after it failed. V37 tested a SINGLE-SEED PBO (observed 0.6 vs pinned theory 0.5, band 0.05); the estimator's SD dominates and barely falls with the split count, so that point test could never succeed (a genuine finding). V38 redesigned to test the NULL-DISTRIBUTION MEAN over >=200 true-Sharpe-0 seeds (SE = sd/sqrt(nSeeds)), which passed, and flipped D33 -> SIGNABLE. The estimand, the sampling distribution, and the question ALL changed. A change of TEST is a change of hypothesis, and under X-RECKON a hypothesis tried is a SEARCH. V38's blueprint priced the change of TEST but wrote 'no SEARCH was incurred' -- branch (b) fired and D56 was OWED. Re-pinning a pre-registered criterion after seeing it fail is PRECISELY the act X-RECKON exists to catch; the project gets no exemption it denies its users.",
+  "act": "SEARCH",
+  "redesigns": 1,
+  "redesignLog": [
+    {
+      "from": "single-seed PBO point/band test (V37): observed PBO 0.6 vs pinned theory 0.5, band 0.05",
+      "to": "null-distribution MEAN over >=200 true-Sharpe-0 seeds at S=16 (V38): |z_mean| = (mean-0.5)/(sd/sqrt(nSeeds)) < 2",
+      "estimandChanged": "the estimand moved from a SINGLE PBO draw to the MEAN of the PBO sampling distribution; the sampling distribution moved from one backtest to >=200 seeds; the question moved from 'is this one number near 0.5' to 'is the EXPECTED number near 0.5'",
+      "at": "2026-07-14 (V38)"
+    }
+  ],
+  "d33Recompute": "D33 is recomputed WITH this SEARCH counted. F-1 (CRITICAL): Signability.d33 reads the cross-check AGREEMENTS (DSR/PSR/PBO), not the search count, so counting it cannot MECHANICALLY flip SIGNABLE -- 'recompute with it counted' returning SIGNABLE unchanged would be a receipt, not a payment. THE ONE HONEST FORM (RP-1): D33's state now carries testRedesigns:1 + this search's immutable ledger hash, rendered at the gate PERMANENTLY, never resetting. A pen that opened on the SECOND version of a test is not the same pen as one that opened on the first, and the Operator must see which one he holds.",
+  "flipSurvivesThePrice": "YES, in VALUE -- the theory leg that unlocked SIGNABLE rests on a null distribution over INDEPENDENT SEEDS (i.i.d. by construction; SE = sd/sqrt(nSeeds) is immune to serial autocorrelation), so the price does not overturn the verdict. But the verdict no longer stands naked: it carries testRedesigns:1 and the i.i.d. rider on the same line, forever. If a future recompute ever showed the flip did NOT survive, that would be the finding of the sprint and D33 would go backward.",
+  "immutable": "append-only; the SEARCH stands whether or not a later sprint re-freezes. testRedesigns NEVER resets -- a future redesign increments it.",
+  "priceStatedNotHidden": "the price is RENDERED here and at the gate (X-SHOWN), not merely appended (X-RECKON). This project is now its own honest subject for the THIRD time (after D53's Halt-lift and D67's kill-criterion amendment).",
+  "d51State": "ANSWERED = INSTRUMENT (V38-B). The instrument gets no exemption from the discipline it sells: a redesigned test is a SEARCH whether the audience is a market or a single man. The agent computes the price and never signs (LN5)."
+}

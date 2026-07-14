@@ -63,6 +63,24 @@ if (existsSync(AMEND)) {
   d67SearchLedgerHash = amendSelfSha
 }
 
+// FAMILY V39 (S140 / D56 / DD-54) — the THIRD application of S122's answer. V38 flipped D33 -> SIGNABLE on a test it
+// redesigned AFTER it failed, then wrote "no SEARCH was incurred" (J-1). Branch (b) of DD-33 fired: the change of TEST is a
+// SEARCH, and the price was owed. Like the Halt-lift and the kill-criterion amendment, a test redesign is a META-event (not
+// a strategy manifest), so its price is paid HERE -- committed + hash-chained -- carrying a real immutable LEDGER HASH.
+// D33's state reads this hash and carries testRedesigns beside the verdict, permanently (RP-1). Present only once Phase 1
+// has drafted it (a pre-Family checkout has no test-redesign record).
+const REDESIGN = path.join(PKG_ROOT, "data", "honesty", "test-redesign-search.json")
+let d56SearchLedgerHash: string | null = null
+if (existsSync(REDESIGN)) {
+  const redesignContent = readFileSync(REDESIGN, "utf8")
+  copyFileSync(REDESIGN, path.join(REC, "test-redesign-search.json"))
+  const redesignContentSha = sha256(redesignContent)
+  const redesignSelfSha = sha256(prevSha + redesignContentSha)
+  chain.push({ name: "test-redesign-search.json", contentSha: redesignContentSha, prevSha, selfSha: redesignSelfSha })
+  prevSha = redesignSelfSha
+  d56SearchLedgerHash = redesignSelfSha
+}
+
 const manifest = {
   protocol: "record-chain",
   at: "2026-07-14",
@@ -75,6 +93,8 @@ const manifest = {
   d53Note: "the Halt-lift is a META-event (sprint-level optional stopping), NOT a strategy manifest; the X-RECKON strategy-trial ledger counts acts over lineage ids and has no coherent site for it — so the price is paid HERE, committed + hash-chained, and the log no longer claims it was 'appended to the strategy ledger'.",
   d67SearchLedgerHash, // S137 — the immutable hash the D67 kill-criterion amendment SEARCH carries (null on a pre-addendum checkout)
   d67Note: "the kill-criterion amendment is a SEARCH (re-pinning a pre-registered criterion after seeing data — the exact act X-RECKON catches); like the Halt-lift it is a meta-event, not a strategy manifest, so its price is paid HERE (committed + hash-chained), not in the strategy-trial ledger. The old criterion (8b4e094b) is preserved beside the amendment forever.",
+  d56SearchLedgerHash, // FAMILY V39 (S140/D56) — the immutable hash the test-redesign SEARCH carries (null on a pre-Family checkout)
+  d56Note: "the S116 power test was redesigned after it failed and D33 flipped to SIGNABLE on the redesign (J-1); the change of TEST is a SEARCH (branch (b) of DD-33). Like the Halt-lift and the amendment it is a meta-event, so its price is paid HERE (committed + hash-chained). D33's state reads this hash and carries testRedesigns beside the verdict PERMANENTLY (RP-1); the count never resets. The project gets no exemption from the discipline it sells.",
 }
 writeFileSync(path.join(REC, "chain.json"), JSON.stringify(manifest, null, 2) + "\n")
 

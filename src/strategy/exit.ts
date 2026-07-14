@@ -30,6 +30,26 @@ export namespace ExitCriterion {
     // SOCKET V37 (S112) — concentration-ceiling. The DIMENSIONLESS share = position.size / poolTvl, pre-computed by the
     // pipeline that holds BOTH the user's authored size AND the captured pool TVL (Exit.concentration). null → UNJUDGEABLE.
     concentrationShare?: number | null
+    // FAMILY V39 (D70) — the sixth + seventh observables. oracleStalenessS = (now − feed.updatedAt) in seconds (TEMPORAL, not
+    // a value); utilizationRatio = totalBorrow/totalSupply (DIMENSIONLESS). null → UNJUDGEABLE (no captured input).
+    oracleStalenessS?: number | null
+    utilizationRatio?: number | null
+  }
+
+  // FAMILY V39 (DD-56) — oracle-staleness observable: (now − feed.updatedAt) in SECONDS. A TEMPORAL quantity, never a price
+  // or a value (the valuation ban is untouched). UNJUDGEABLE without a captured feed.updatedAt. The curator-loss #1 root
+  // cause becomes a pre-registrable kill-condition: an oracle that stopped updating while the asset moved.
+  export function oracleStaleness(feed: { updatedAt: number | null | undefined }, now: number): { seconds: number | null; why: string } {
+    if (feed.updatedAt == null || !Number.isFinite(feed.updatedAt)) return { seconds: null, why: "UNJUDGEABLE — no captured feed.updatedAt for the scoped subject; staleness cannot be computed without it." }
+    const seconds = Math.max(0, Math.round(now - feed.updatedAt))
+    return { seconds, why: `staleness = now ${now} − updatedAt ${feed.updatedAt} = ${seconds}s (temporal — seconds since the oracle last updated; a duration, not a dollar amount)` }
+  }
+
+  // FAMILY V39 (DD-57) — utilization-ceiling observable: totalBorrow / totalSupply. A DIMENSIONLESS ratio (no USD survives the
+  // division). UNJUDGEABLE without both captured inputs (missing stays missing). "Can you actually get out?"
+  export function utilization(totalBorrow: number | null | undefined, totalSupply: number | null | undefined): { ratio: number | null; why: string } {
+    if (totalBorrow == null || totalSupply == null || !Number.isFinite(totalBorrow) || !Number.isFinite(totalSupply) || totalSupply <= 0) return { ratio: null, why: "UNJUDGEABLE — no captured total borrow/supply for the scoped subject; a utilization ratio needs both." }
+    return { ratio: totalBorrow / totalSupply, why: `utilization = totalBorrow ${totalBorrow} / totalSupply ${totalSupply} = ${(totalBorrow / totalSupply).toFixed(4)} (dimensionless — a ratio, not a dollar amount)` }
   }
 
   // SOCKET V37 (S112) — Exit.concentration: the DIMENSIONLESS share of a pool a position holds. A SHARE IS NOT A VALUE —
@@ -57,6 +77,10 @@ export namespace ExitCriterion {
         return null // a boolean trigger — the threshold is unused; any value accepted (documented)
       case "concentration-ceiling":
         return c.threshold > 0 && c.threshold <= 1 ? null : `a concentration ceiling must be a share in (0, 1] — e.g. 0.25 for "exit if I am ≥ 25% of the pool"; ${c.threshold} is not a dimensionless share`
+      case "oracle-staleness":
+        return Number.isFinite(c.threshold) && c.threshold >= 60 ? null : `an oracle-staleness ceiling must be a number of SECONDS ≥ 60 — e.g. 86400 for "exit if the oracle has not updated in a day"; ${c.threshold} is not`
+      case "utilization-ceiling":
+        return c.threshold > 0 && c.threshold <= 1 ? null : `a utilization ceiling must be a ratio in (0, 1] — e.g. 0.95 for "exit if the market is ≥ 95% utilized (you cannot get out)"; ${c.threshold} is not a dimensionless ratio`
       default:
         return `the exit kind "${(c as T).kind}" is not evaluable over facts the engine captures`
     }
@@ -141,6 +165,18 @@ export namespace ExitCriterion {
         if (facts.concentrationShare == null) return { fired: false, judgeable: false, why: `UNJUDGEABLE — no concentration share for the scoped subject (${c.subjectScope}); needs the position size AND the captured pool TVL.` }
         const fired = facts.concentrationShare >= c.threshold
         return { fired, judgeable: true, why: `concentration share ${facts.concentrationShare.toFixed(4)} ${fired ? "≥" : "<"} ceiling ${c.threshold} → ${fired ? "FIRED" : "NOT FIRED"} (dimensionless; can you actually get out?)` }
+      }
+      case "oracle-staleness": {
+        // FAMILY V39 (D70) — the TEMPORAL observable: seconds since the oracle last updated. FIRED when it exceeds the ceiling.
+        if (facts.oracleStalenessS == null) return { fired: false, judgeable: false, why: `UNJUDGEABLE — no captured oracle staleness for the scoped subject (${c.subjectScope}); needs a feed.updatedAt (Chainlink latestRoundData).` }
+        const fired = facts.oracleStalenessS >= c.threshold
+        return { fired, judgeable: true, why: `oracle staleness ${facts.oracleStalenessS}s ${fired ? "≥" : "<"} ceiling ${c.threshold}s → ${fired ? "FIRED" : "NOT FIRED"} (the oracle that kept reporting $1 while the asset collapsed — a temporal count, no price)` }
+      }
+      case "utilization-ceiling": {
+        // FAMILY V39 (D70) — the DIMENSIONLESS ratio: totalBorrow/totalSupply. FIRED when the market is too utilized to exit.
+        if (facts.utilizationRatio == null) return { fired: false, judgeable: false, why: `UNJUDGEABLE — no captured utilization for the scoped subject (${c.subjectScope}); needs total borrow AND total supply.` }
+        const fired = facts.utilizationRatio >= c.threshold
+        return { fired, judgeable: true, why: `utilization ${facts.utilizationRatio.toFixed(4)} ${fired ? "≥" : "<"} ceiling ${c.threshold} → ${fired ? "FIRED" : "NOT FIRED"} (dimensionless; can you actually get out?)` }
       }
     }
   }

@@ -156,6 +156,43 @@ export namespace Signability {
     uncomparable: CrossCheck.Quantity[]
     detail: string
     operatorSigned: false // LN5 — the agent never signs, whatever the precondition (this is a compile-time constant)
+    // FAMILY V39 (RP-1/F-1, D56/S140): THE PRICE, CARRIED IN THE STATE. The number of test redesigns it took to reach this
+    // state, and the immutable SEARCH hashes that paid for them. A pen that opened on the SECOND version of a test is not the
+    // same pen as one that opened on the first — the Operator must see which he holds. THE COUNT NEVER RESETS.
+    testRedesigns: number
+    redesignSearchHashes: string[]
+    // FAMILY V39 (S142/DD-53): the i.i.d. assumption-limit that BEARS on this state, on the SAME LINE as the verdict —
+    // direction + magnitude named, or its dissolution. DERIVED from the frozen code (effective-n-determination.json), never
+    // asserted; null only if the determination artifact is absent (a pre-Family checkout).
+    iidRider: { stands: boolean; classification: string; direction: string; magnitude: string } | null
+  }
+
+  // FAMILY V39 (RP-1/S142) — read the D56 price + the i.i.d. rider from the committed artifacts (never re-decide them here:
+  // the price lives in the record hash-chain, the rider is DERIVED by effectiven.ts from the frozen code). A pre-Family
+  // checkout has neither → {0, [], null}, and the state renders exactly as it did in V38 (additive, no verdict moved).
+  function priceAndRider(): { testRedesigns: number; redesignSearchHashes: string[]; iidRider: Result["iidRider"] } {
+    let testRedesigns = 0
+    const redesignSearchHashes: string[] = []
+    try {
+      const rec = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "test-redesign-search.json"), "utf8"))
+      testRedesigns = rec.redesigns ?? 0
+    } catch { /* pre-Family — no redesign recorded */ }
+    try {
+      const chain = JSON.parse(readFileSync(path.join(PKG_ROOT, "record", "chain.json"), "utf8"))
+      if (chain.d56SearchLedgerHash) redesignSearchHashes.push(chain.d56SearchLedgerHash)
+    } catch { /* the chain is not built on this checkout */ }
+    let iidRider: Result["iidRider"] = null
+    try {
+      const d = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "effective-n-determination.json"), "utf8"))
+      iidRider = { stands: d.riderStands, classification: d.classification, direction: d.riderDirection, magnitude: d.riderMagnitude }
+    } catch { /* the autopsy has not run on this checkout */ }
+    return { testRedesigns, redesignSearchHashes, iidRider }
+  }
+
+  // the S142 render fragment — the rider on the SAME LINE as the verdict (direction + magnitude), or its absence noted.
+  export function riderLine(r: Result): string {
+    if (!r.iidRider) return ""
+    return ` · i.i.d. rider [${r.iidRider.stands ? "STANDS" : "DISSOLVED"}, ${r.iidRider.classification}]: ${r.iidRider.direction} ${r.iidRider.magnitude}`
   }
 
   // D33 COMPUTED from all three agreements (X-DERIVE(e)). SIGNABLE ONLY if all three agree; a DISAGREEMENT (a comparable
@@ -187,6 +224,16 @@ export namespace Signability {
       state = `PRECONDITION-MET-FOR-${agreed.map((q) => q.toUpperCase()).join("+")}-ONLY`
       detail = `D33 ${state} — ${agreed.map((q) => q.toUpperCase()).join(", ")} agree; ${uncomparable.map((q) => q.toUpperCase()).join(", ") || "none"} UNCOMPARABLE. Not SIGNABLE until every quantity agrees (X-DERIVE(e): a partial precondition renders PARTIAL, never complete — this is the exact V35 defect, where DSR-only was typed SIGNABLE)`
     }
-    return { state, agreed, disagreed, uncomparable, detail, operatorSigned: false }
+    // FAMILY V39 — attach the D56 price (RP-1) and the i.i.d. rider (S142). The SIGNABLE detail carries BOTH on the same
+    // line: the number of test redesigns it took to reach SIGNABLE, and the assumption-limit that bears on the verdict. A
+    // SIGNABLE that renders without its bearing rider is a Halt (S142); a SIGNABLE with no redesign count is a Halt (S140).
+    const pr = priceAndRider()
+    if (state === "SIGNABLE") {
+      const priceNote = pr.testRedesigns > 0
+        ? ` · PRICE (RP-1/D56): reached SIGNABLE on test redesign #${pr.testRedesigns} (the pen opened on version ${pr.testRedesigns + 1} of the test; SEARCH ${pr.redesignSearchHashes.map((h) => h.slice(0, 12)).join(", ")}; the count NEVER resets — the flip SURVIVES in value because the theory leg rests on a null distribution over INDEPENDENT SEEDS, immune to the rider)`
+        : ""
+      detail = `${detail}${priceNote}${riderLine({ state, agreed, disagreed, uncomparable, detail, operatorSigned: false, ...pr })}`
+    }
+    return { state, agreed, disagreed, uncomparable, detail, operatorSigned: false, ...pr }
   }
 }

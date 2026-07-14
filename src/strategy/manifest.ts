@@ -28,7 +28,10 @@ export namespace Manifest {
   // outside this closed set fails the enum → refused at parse (and again, with a reason, at exit registration). SOCKET V37
   // (S112): concentration-ceiling is the FIFTH kind. CLOSED AT FIVE — a 6th without a pin FAILS; the combinator algebra's
   // trigger is a 7th kind OR the first composed exit (Cedar rejected in its favour, not built this sprint).
-  export const EXIT_KINDS = ["peg-floor", "funding-flip-count", "tvl-drawdown", "governance-change", "concentration-ceiling"] as const
+  // FAMILY V39 (D70) — the exit set reaches SEVEN: oracle-staleness (the curator-loss #1 root cause — an oracle that kept
+  // reporting $1 while the asset collapsed) and utilization-ceiling (can you actually get out?). The set CLOSES at seven; an
+  // eighth kind must go through the combinator algebra, never the enum (F-7: if the algebra sheds twice, the set is FROZEN).
+  export const EXIT_KINDS = ["peg-floor", "funding-flip-count", "tvl-drawdown", "governance-change", "concentration-ceiling", "oracle-staleness", "utilization-ceiling"] as const
   export type ExitKind = (typeof EXIT_KINDS)[number]
 
   // a subjectKey that names another manifest — recursion is refused this sprint (a manifest of manifests is out of scope)
@@ -59,6 +62,20 @@ export namespace Manifest {
     })
     .strict()
 
+  // FAMILY V39 (D71/RP-4) — the FILTER: the user's own stated universe ("the interesting universe is stablecoin lending on
+  // Ethereum above $10M"). It is the input to the Family Enumerator (a SET OPERATION, authors nothing). It is a NEW OPTIONAL
+  // field: a manifest authored WITHOUT one hashes IDENTICALLY (its lineage id does not move — Store.lineageId includes it only
+  // when present); a manifest WITH a filter is a NEW lineage from birth. Re-stating it after seeing the count is a SEARCH.
+  export const Filter = z
+    .object({
+      chain: z.string().max(SCOPE_MAX).optional(),
+      asset: z.string().max(SCOPE_MAX).optional(),
+      project: z.string().max(SCOPE_MAX).optional(),
+      minTvlUsd: z.number().nonnegative().optional(),
+      minApy: z.number().optional(),
+    })
+    .strict()
+
   export const Schema = z
     .object({
       schemaVersion: z.literal(SCHEMA_VERSION),
@@ -66,6 +83,7 @@ export namespace Manifest {
       thesis: z.string().min(1).max(THESIS_MAX),
       exitCriterion: ExitCriterion,
       journal: Journal.optional(),
+      filter: Filter.optional(),
     })
     .strict()
 
@@ -73,6 +91,7 @@ export namespace Manifest {
   export type ExitCriterion = z.infer<typeof ExitCriterion>
   export type Journal = z.infer<typeof Journal>
   export type T = z.infer<typeof Schema>
+  export type Filter = z.infer<typeof Filter>
 
   export type ParseResult = { ok: true; manifest: T } | { ok: false; error: string }
 

@@ -1,0 +1,27 @@
+{
+  "protocol": "algebra-trigger",
+  "at": "2026-07-15",
+  "rule": "D70 — the exit set reached SEVEN this sprint (oracle-staleness + utilization-ceiling). V37 (S112) armed a pre-registered trigger: when the exit set grows beyond five, the combinator algebra fires. This records that the trigger FIRED, as a FACT with its content hash — never an instruction (X-CADENCE applied to ourselves: a trigger fires on a fact, never on a plan).",
+  "trigger": {
+    "armedAt": "V37 (S112) — 'the exit set is CLOSED AT FIVE with the algebra trigger pinned'",
+    "condition": "the exit set grows beyond five",
+    "fired": true,
+    "firedBecause": "the exit set reached SEVEN (peg-floor, funding-flip-count, tvl-drawdown, governance-change, concentration-ceiling, oracle-staleness, utilization-ceiling)"
+  },
+  "exitSet": {
+    "before": 5,
+    "after": 7,
+    "kinds": ["peg-floor", "funding-flip-count", "tvl-drawdown", "governance-change", "concentration-ceiling", "oracle-staleness", "utilization-ceiling"],
+    "closedAt": 7,
+    "note": "an EIGHTH kind must go through the combinator algebra, never the enum. F-7 (RP-7): if the algebra sheds twice without shipping, the exit set is FROZEN at seven until it ships."
+  },
+  "algebra": {
+    "shipped": true,
+    "module": "src/strategy/algebra.ts",
+    "reduction": "the seven hard-coded kinds reduce to THREE combinators (when · count · changed) over observables (Obs) — Peyton Jones / Eber / Seward, Composing Contracts (ICFP 2000; LexiFi MLFi). Cedar remains formally rejected in its favour.",
+    "nonExecutableByType": "an Obs READS a captured fact; a Condition returns a boolean; there is NO constructor that returns an order/trade/action — X-ADVICE enforced by the TYPE SYSTEM, not a wall.",
+    "additiveTwoSided": "S147: (i) every fixture lineage id UNCHANGED (the algebra touches no manifest identity), AND (ii) every fixture exit evaluation BYTE-IDENTICAL on the decision (fired + judgeable), including the UNJUDGEABLE cases — proven over the 7-kind × facts matrix. ExitCriterion.evaluate stays the sole authority on the mass path; the algebra is proved to AGREE, never wired in as a replacement (no verdict moved).",
+    "frozenAtSeven": false,
+    "frozenAtSevenNote": "the algebra SHIPPED, so the set is NOT frozen; a future eighth kind may be added through the algebra (a composition), never the enum."
+  }
+}

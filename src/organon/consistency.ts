@@ -40,13 +40,21 @@ export namespace Consistency {
   // census: before − (recovered + reFounded + deleted) === after + reclassified, with reclassified a NAMED count checked in
   // BOTH directions (S121): named-reclassified === the residual. named > residual (a plug) FAILS; named < residual (an unnamed
   // drop) FAILS; a negative residual (the treatment over-claims the OU drop) FAILS.
-  export function reconcileCensus(before: number, after: number, recovered: number, reFounded: number, deleted: number, namedReclassified: number = NAMED_RECLASSIFIED.length): { reclassified: number; namedReclassified: number; contradiction: Contradiction | null } {
+  // FAMILY V39 (S107) — the WALL_MAX before this sprint's additions. Walls with id > this are NEW this sprint (V39: S140–S150);
+  // the ones that land in OU inflate `after` WITHOUT the treatment claiming them, so they are counted SEPARATELY (derived from
+  // the census, never a plug). Without this term the model wrongly reads a new-wall inflation as a treatment that over-claims.
+  export const WALL_MAX_PRIOR = 139
+
+  export function reconcileCensus(before: number, after: number, recovered: number, reFounded: number, deleted: number, namedReclassified: number = NAMED_RECLASSIFIED.length, newOuThisSprint: number = 0): { reclassified: number; namedReclassified: number; newOuThisSprint: number; contradiction: Contradiction | null } {
     const treated = recovered + reFounded + deleted
-    const residual = before - after - treated
+    // the treatment explains the OU drop in the PRE-EXISTING wall set; new walls added THIS sprint that land in OU are
+    // subtracted from `after` first (they are not treatment). residual = before − (after − newOu) − treated.
+    const preExistingAfter = after - newOuThisSprint
+    const residual = before - preExistingAfter - treated
     let contradiction: Contradiction | null = null
-    if (residual < 0) contradiction = { a: `census before ${before} → after ${after} (drop ${before - after})`, b: `treatment recovered ${recovered} + reFounded ${reFounded} + deleted ${deleted} = ${treated}`, why: `the treatment (${treated}) exceeds the actual OU drop (${before - after}) — residual ${residual} < 0 (a producer over-claims)` }
-    else if (namedReclassified !== residual) contradiction = { a: `NAMED reclassified count ${namedReclassified}`, b: `residual (before ${before} − after ${after} − treated ${treated}) = ${residual}`, why: `the NAMED reclassified walls (${namedReclassified}) do not equal the residual (${residual}) — ${namedReclassified > residual ? "a PLUG: a wall named that did not move" : "an UNNAMED drop: the treatment under-counts"} (S121, two-directional)` }
-    return { reclassified: residual, namedReclassified, contradiction }
+    if (residual < 0) contradiction = { a: `census before ${before} → after ${after} (pre-existing drop ${before - preExistingAfter}; ${newOuThisSprint} new-this-sprint OU walls excluded)`, b: `treatment recovered ${recovered} + reFounded ${reFounded} + deleted ${deleted} = ${treated}`, why: `the treatment (${treated}) exceeds the pre-existing OU drop (${before - preExistingAfter}) — residual ${residual} < 0 (a producer over-claims)` }
+    else if (namedReclassified !== residual) contradiction = { a: `NAMED reclassified count ${namedReclassified}`, b: `residual (before ${before} − preExisting-after ${preExistingAfter} − treated ${treated}) = ${residual}`, why: `the NAMED reclassified walls (${namedReclassified}) do not equal the residual (${residual}) — ${namedReclassified > residual ? "a PLUG: a wall named that did not move" : "an UNNAMED drop: the treatment under-counts"} (S121, two-directional)` }
+    return { reclassified: residual, namedReclassified, newOuThisSprint, contradiction }
   }
   // battery: full === prev + added − removed.
   export function reconcileBattery(prev: number, full: number, added: number, removed: number): { reconciles: boolean; contradiction: Contradiction | null } {
@@ -64,11 +72,15 @@ export namespace Consistency {
   // THE CENSUS RECONCILIATION — before − (recovered + reFounded + deleted + reclassified) === after, with `reclassified`
   // the NAMED residual (an incidental OU→DEMONSTRATED move) that must be NON-NEGATIVE. A negative residual is a
   // contradiction: the treatment counts more than the OU actually dropped.
-  export function censusReconciliation(): { after: number; reclassified: number; namedReclassified: number; contradiction: Contradiction | null } {
+  export function censusReconciliation(): { after: number; reclassified: number; namedReclassified: number; newOuThisSprint: number; contradiction: Contradiction | null } {
     const c = Falsify.census()
     const after = c.counts.ORIGIN_UNRECORDED
-    const r = reconcileCensus(CENSUS_BEFORE, after, c.recovered, c.reFounded, c.deleted.length, NAMED_RECLASSIFIED.length)
-    return { after, reclassified: r.reclassified, namedReclassified: r.namedReclassified, contradiction: r.contradiction }
+    // FAMILY V39 (S107) — DERIVE the new-this-sprint OU count from the census (never a plug): walls whose id is beyond the
+    // prior WALL_MAX and land in ORIGIN_UNRECORDED. These are new walls, not a treatment drop; excluding them keeps the
+    // treatment reconciliation over the pre-existing set (residual === NAMED_RECLASSIFIED, two-directional).
+    const newOuThisSprint = c.rows.filter((r) => { const n = parseInt(r.id.slice(1), 10); return Number.isFinite(n) && n > WALL_MAX_PRIOR && r.bucket === "ORIGIN_UNRECORDED" }).length
+    const r = reconcileCensus(CENSUS_BEFORE, after, c.recovered, c.reFounded, c.deleted.length, NAMED_RECLASSIFIED.length, newOuThisSprint)
+    return { after, reclassified: r.reclassified, namedReclassified: r.namedReclassified, newOuThisSprint, contradiction: r.contradiction }
   }
 
   // THE BATTERY RECONCILIATION — the full pass === prev + added − removed. A hand-typed added (the V36 FILE count) that
@@ -92,7 +104,7 @@ export namespace Consistency {
     if (census.contradiction) contradictions.push(census.contradiction)
     if (battery.contradiction) contradictions.push(battery.contradiction)
     const reconciliations = [
-      `census: ${CENSUS_BEFORE} − (treated + reclassified ${census.reclassified}) === ${census.after} ✓`,
+      `census: ${CENSUS_BEFORE} − (treated + reclassified ${census.reclassified}) === ${census.after} − ${census.newOuThisSprint} new-this-sprint OU walls ✓`,
       `battery: prev + added − removed === full pass ${battery.fullPass} ${battery.reconciles ? "✓" : "✗"}`,
     ]
     return contradictions.length === 0 ? { ok: true, reconciliations } : { ok: false, contradictions, reconciliations }

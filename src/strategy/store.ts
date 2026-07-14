@@ -26,7 +26,10 @@ export namespace StrategyStore {
 
   // the LINEAGE id — sha256 over the strategy identity, journal EXCLUDED (canonical key order). Stable as the journal fills.
   export function lineageId(m: Manifest.T): string {
-    const identity = { schemaVersion: m.schemaVersion, positions: m.positions, thesis: m.thesis, exitCriterion: m.exitCriterion }
+    // FAMILY V39 (RP-4/F-4) — the filter joins the hashed identity ONLY when present. A manifest authored WITHOUT a filter
+    // hashes byte-identically to before (existing fixture lineage ids DO NOT move); a manifest WITH a filter is a new lineage
+    // from birth. Conditional inclusion — never an unconditional key that would rewrite the whole moat on the day the builder shipped.
+    const identity = { schemaVersion: m.schemaVersion, positions: m.positions, thesis: m.thesis, exitCriterion: m.exitCriterion, ...(m.filter !== undefined ? { filter: m.filter } : {}) }
     return sha256(JSON.stringify(identity))
   }
 

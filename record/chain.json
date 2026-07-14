@@ -3,7 +3,7 @@
   "at": "2026-07-14",
   "rule": "S108 / DD-32 (G-5) — the build logs, committed under record/ and HASH-CHAINED (tamper-evident). The reasons for the code now live inside the moat. These are RECORD, never CLAIM: a wall asserts NO Claim.producer reads a build log (X-DERIVE reads artifacts, not prose). Order is content-sorted (deterministic), not a source of truth. SUBSTANCE V38 (S122/H-6): the D53 SEARCH record (halt-lifts.json) is folded into the chain so the Halt-lift carries a real immutable LEDGER HASH — committed and hash-chained in record/, NOT appended to the strategy-trial ledger (a meta-event is not a strategy manifest, so the strategy ledger has no coherent append site).",
   "boundary": "record/ is NOT a source of truth for any producer. A Claim.producer reading a build log would import unverified human prose into a computation — forbidden (S108). Prose is evidence for humans; artifacts are input for machines.",
-  "count": 16,
+  "count": 18,
   "chain": [
     {
       "name": "BUILDLOG-ALPHA.md",
@@ -30,81 +30,95 @@
       "selfSha": "aaf4d13fa17356305bac35c7811f1f8d4c0bf69a5e765b7b52fd019ba01a129c"
     },
     {
+      "name": "BUILDLOG-FAMILY.md",
+      "contentSha": "07f5564abd45daaa77aab4584f5534345a95c55110fdc5580db9becac5375eb1",
+      "prevSha": "aaf4d13fa17356305bac35c7811f1f8d4c0bf69a5e765b7b52fd019ba01a129c",
+      "selfSha": "db96c91b1fdb9dfc9df4ad630e65464fc40cdcd1b7ea49866ded4acc30a89949"
+    },
+    {
       "name": "BUILDLOG-GROUNDTRUTH.md",
       "contentSha": "2c0647edba6f2fb1556b350de5d70553e895866ce7fb538fd188f1806dd01f22",
-      "prevSha": "aaf4d13fa17356305bac35c7811f1f8d4c0bf69a5e765b7b52fd019ba01a129c",
-      "selfSha": "8bfbdfae94dad6b7e488239f24d133d19401042871660dd8aacf6854403c897c"
+      "prevSha": "db96c91b1fdb9dfc9df4ad630e65464fc40cdcd1b7ea49866ded4acc30a89949",
+      "selfSha": "774cc8ab594c6bf708152e51125df923c18df6e68933ac5dcdf4b53bb6581fea"
     },
     {
       "name": "BUILDLOG-MANIFEST.md",
       "contentSha": "d3111d6723dc007d67771d9c32db56536d5395cd0bdab6a4e6304edce369616f",
-      "prevSha": "8bfbdfae94dad6b7e488239f24d133d19401042871660dd8aacf6854403c897c",
-      "selfSha": "ac97e6deb8368e5ecd62c700544fd7b2301b768fd78b9b913bce6f78c7a6c7db"
+      "prevSha": "774cc8ab594c6bf708152e51125df923c18df6e68933ac5dcdf4b53bb6581fea",
+      "selfSha": "54ba5f439a8b5c227e0a2c6f505ff0ba6abb7d1f59a469afcb068571d55474d9"
     },
     {
       "name": "BUILDLOG-MOAT.md",
       "contentSha": "b24c81b7fed64b56da35e046dd41d6801c98418075ee55f22293bbba86e95803",
-      "prevSha": "ac97e6deb8368e5ecd62c700544fd7b2301b768fd78b9b913bce6f78c7a6c7db",
-      "selfSha": "3a1cad8609002b57a5794e51b6cf2004f9a3422caf7c430c7fa445d491164503"
+      "prevSha": "54ba5f439a8b5c227e0a2c6f505ff0ba6abb7d1f59a469afcb068571d55474d9",
+      "selfSha": "3cfc74ffa0ff6206b689176b43ee6b04b9afa82353696ad377fb6efc9f8117c5"
     },
     {
       "name": "BUILDLOG-PRECISION.md",
       "contentSha": "4fa1de8733a9745e44db66ec72434e63c65ba6dfbbc8e2b671507109f7a2bad0",
-      "prevSha": "3a1cad8609002b57a5794e51b6cf2004f9a3422caf7c430c7fa445d491164503",
-      "selfSha": "7751d1810a5e185190a72659bb60f74a3999e33d808838400af611b65ca5b101"
+      "prevSha": "3cfc74ffa0ff6206b689176b43ee6b04b9afa82353696ad377fb6efc9f8117c5",
+      "selfSha": "37f1b19e02491fb0588b345670f7fe6085c97867f1779748e5f627ceb9e940af"
     },
     {
       "name": "BUILDLOG-PROBE.md",
       "contentSha": "94118f5bd144a1472fb94539110a1ed22603450b5460de444e0a8af245994083",
-      "prevSha": "7751d1810a5e185190a72659bb60f74a3999e33d808838400af611b65ca5b101",
-      "selfSha": "c191b2d4e56040983d0e603850c9265d3ab5bd683fd20e3e2970d86b81522b36"
+      "prevSha": "37f1b19e02491fb0588b345670f7fe6085c97867f1779748e5f627ceb9e940af",
+      "selfSha": "c7b1736f8133cb9a5cfba81af6103ab3c4c58ae3d4bbc5689ab7f1feaeb1e3d9"
     },
     {
       "name": "BUILDLOG-REACH.md",
       "contentSha": "2da75988d3ef18cebd78fc8222832a3077ef1fb9c81d33cde1b98a6874a4bb77",
-      "prevSha": "c191b2d4e56040983d0e603850c9265d3ab5bd683fd20e3e2970d86b81522b36",
-      "selfSha": "4f5d8e870a2a9d371c6191920f7ed03bc8df39d22bc2a82bc0c53ddb83260c80"
+      "prevSha": "c7b1736f8133cb9a5cfba81af6103ab3c4c58ae3d4bbc5689ab7f1feaeb1e3d9",
+      "selfSha": "b3c23f4314313f281941ad04bdf6bef3e85a391e62d3966df438b2f822391639"
     },
     {
       "name": "BUILDLOG-RECKONING.md",
       "contentSha": "8d3ce2c2970a4d3d4bf53f136ca798e3700d3adffac6207d1e1ad4227596ad39",
-      "prevSha": "4f5d8e870a2a9d371c6191920f7ed03bc8df39d22bc2a82bc0c53ddb83260c80",
-      "selfSha": "103b83fd2f375bdef5c5bb243bcc05dadc1cda2f9f0885373b6bdcaaac4006d1"
+      "prevSha": "b3c23f4314313f281941ad04bdf6bef3e85a391e62d3966df438b2f822391639",
+      "selfSha": "d2535f4da95992cdb7d638e3efb02f1236513deca29f15bfc12b74b38eeab169"
     },
     {
       "name": "BUILDLOG-SHOWING.md",
       "contentSha": "96228a23ea1a51c401f14d141e47b64d702f395c627c095419dabf61d4afd15f",
-      "prevSha": "103b83fd2f375bdef5c5bb243bcc05dadc1cda2f9f0885373b6bdcaaac4006d1",
-      "selfSha": "6cbaa645f23f7d58dfe92995e5252f598a2007a49aa81006d21276c6fa83595c"
+      "prevSha": "d2535f4da95992cdb7d638e3efb02f1236513deca29f15bfc12b74b38eeab169",
+      "selfSha": "ff837843b247d9a1c5bf0506fd06cd4776b04bfc91f90e3f85287f40e9e2009b"
     },
     {
       "name": "BUILDLOG-SOCKET.md",
       "contentSha": "48fa0f47f67a0d420c80907ecd13cbcc80f41972700114f7782afa274515277f",
-      "prevSha": "6cbaa645f23f7d58dfe92995e5252f598a2007a49aa81006d21276c6fa83595c",
-      "selfSha": "0b12d1154bb69e0788be0d2d3e2391940584ad6b55348b81a5d8f2d5134ddb40"
+      "prevSha": "ff837843b247d9a1c5bf0506fd06cd4776b04bfc91f90e3f85287f40e9e2009b",
+      "selfSha": "c7b8e8e47d73b38c10f902ff9c294326b0a1fb86c7f627335f7e6e6250f82cd7"
     },
     {
       "name": "BUILDLOG-SUBSTANCE.md",
       "contentSha": "d5ef4cc34ba8cc77058e196f46f547f5411822c293ed3e41e5fa40a264085642",
-      "prevSha": "0b12d1154bb69e0788be0d2d3e2391940584ad6b55348b81a5d8f2d5134ddb40",
-      "selfSha": "e3f0d3a8e649052a2a058410c0769f40ea21d0ef12e154e9632acd6b16f2bc80"
+      "prevSha": "c7b8e8e47d73b38c10f902ff9c294326b0a1fb86c7f627335f7e6e6250f82cd7",
+      "selfSha": "4b886ce064640e3b937667c571b63dcf6e595b1144abe1b07f084db6a4c0c403"
     },
     {
       "name": "halt-lifts.json",
       "contentSha": "f44ed14665361fcc35429982f90bba8dc31607a0e42deaefbe666991684fb586",
-      "prevSha": "e3f0d3a8e649052a2a058410c0769f40ea21d0ef12e154e9632acd6b16f2bc80",
-      "selfSha": "dea3e39f53d54415588b698dacef2a5264bd72321eadf5da7913fb5e2eec23c7"
+      "prevSha": "4b886ce064640e3b937667c571b63dcf6e595b1144abe1b07f084db6a4c0c403",
+      "selfSha": "058e106b278290f4160d73a1e2d6d5d898889c4a1d76021edd9c398a75f2b028"
     },
     {
       "name": "kill-criterion-amendment.json",
       "contentSha": "e206703279bc6a350439a475ebeeb4b98f732a7666de388ce3b65a8c09f960e4",
-      "prevSha": "dea3e39f53d54415588b698dacef2a5264bd72321eadf5da7913fb5e2eec23c7",
-      "selfSha": "83252b85d8f28589d4ebd377bb3e34790fbbd01b69d685b3e96f30a09853737d"
+      "prevSha": "058e106b278290f4160d73a1e2d6d5d898889c4a1d76021edd9c398a75f2b028",
+      "selfSha": "6ad7b4319645b22df66307851fc9239e105c6cbde9efd2a6cb8515c600de490a"
+    },
+    {
+      "name": "test-redesign-search.json",
+      "contentSha": "08b77667ecb796d06b2234ecb4c1ab7a7b2a4f74bc377385d26ea01fbc4c9da2",
+      "prevSha": "6ad7b4319645b22df66307851fc9239e105c6cbde9efd2a6cb8515c600de490a",
+      "selfSha": "44f2be5acbca64a48b3d13e24106775f31c01842e79a3a7584919d8b6b90636c"
     }
   ],
-  "headSha": "83252b85d8f28589d4ebd377bb3e34790fbbd01b69d685b3e96f30a09853737d",
-  "d53SearchLedgerHash": "dea3e39f53d54415588b698dacef2a5264bd72321eadf5da7913fb5e2eec23c7",
+  "headSha": "44f2be5acbca64a48b3d13e24106775f31c01842e79a3a7584919d8b6b90636c",
+  "d53SearchLedgerHash": "058e106b278290f4160d73a1e2d6d5d898889c4a1d76021edd9c398a75f2b028",
   "d53Note": "the Halt-lift is a META-event (sprint-level optional stopping), NOT a strategy manifest; the X-RECKON strategy-trial ledger counts acts over lineage ids and has no coherent site for it — so the price is paid HERE, committed + hash-chained, and the log no longer claims it was 'appended to the strategy ledger'.",
-  "d67SearchLedgerHash": "83252b85d8f28589d4ebd377bb3e34790fbbd01b69d685b3e96f30a09853737d",
-  "d67Note": "the kill-criterion amendment is a SEARCH (re-pinning a pre-registered criterion after seeing data — the exact act X-RECKON catches); like the Halt-lift it is a meta-event, not a strategy manifest, so its price is paid HERE (committed + hash-chained), not in the strategy-trial ledger. The old criterion (8b4e094b) is preserved beside the amendment forever."
+  "d67SearchLedgerHash": "6ad7b4319645b22df66307851fc9239e105c6cbde9efd2a6cb8515c600de490a",
+  "d67Note": "the kill-criterion amendment is a SEARCH (re-pinning a pre-registered criterion after seeing data — the exact act X-RECKON catches); like the Halt-lift it is a meta-event, not a strategy manifest, so its price is paid HERE (committed + hash-chained), not in the strategy-trial ledger. The old criterion (8b4e094b) is preserved beside the amendment forever.",
+  "d56SearchLedgerHash": "44f2be5acbca64a48b3d13e24106775f31c01842e79a3a7584919d8b6b90636c",
+  "d56Note": "the S116 power test was redesigned after it failed and D33 flipped to SIGNABLE on the redesign (J-1); the change of TEST is a SEARCH (branch (b) of DD-33). Like the Halt-lift and the amendment it is a meta-event, so its price is paid HERE (committed + hash-chained). D33's state reads this hash and carries testRedesigns beside the verdict PERMANENTLY (RP-1); the count never resets. The project gets no exemption from the discipline it sells."
 }

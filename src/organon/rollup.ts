@@ -15,6 +15,7 @@
 import { checkFrozenSet } from "./frozen"
 import { Claim } from "./claim"
 import { Verify } from "./verify"
+import { State, Evidence } from "./state"
 
 export namespace Rollup {
   export interface RunMeasured {
@@ -57,21 +58,30 @@ export namespace Rollup {
     }
   }
 
-  // THE GATE — THE NUMBER + the reach fact + D51 first, alone; the menu presented, never chosen (LN5).
+  // THE GATE — the FIRST section is TWO items alone (D33 + D67); every deviation STATE comes from the ONE State.deviations()
+  // producer (S150/MR18/J-4) — the "product or instrument?" question is ANSWERED (INSTRUMENT), so it is RETIRED and the base
+  // gate renders the supersession pointer instead of contradicting PART B. The menu is presented, never chosen (LN5).
   export function gate(): Record<string, unknown> {
     const num = Claim.producer("theNumber").value as { manifestsReal: number; cyclesUnpromptedReal: number; realLineageCount: number }
     const reach = Claim.producer("reach").value as { published: boolean; reachableHumans: number | string }
+    const d51 = State.byId("D51") // the SINGLE authority — no hardcoded "OPEN"
+    const flipEvidence = Evidence.forStateFlip("D33") // S141/J-3 — the z that flipped D33, SHOWN not claimed
     return {
-      firstLine: `manifests (real) ${num.manifestsReal} · cycles unprompted (real) ${num.cyclesUnpromptedReal} · published ${reach.published} · reachableHumans ${reach.reachableHumans} · pens unmoved: 2 sprints. Is ORGΛNON a product, or an instrument?`,
-      d51: {
-        subject: "the kill-criterion's subject — PRODUCT or INSTRUMENT (presented, never chosen — LN5)",
-        menu: {
-          option1: "IN2 + publish → the number becomes meaningful in 90 days (D50's window)",
-          option2: "declare ORGΛNON an INSTRUMENT (n=1 by design) → the market kill-criterion (8b4e094b) is a category error and must be AMENDED, not fired — and the amendment is a SEARCH under X-RECKON, incrementing trialsPerFamily in the moat forever; choosing (2) RETIRES the Socket, the curator conversation, D42, and the distribution arc",
-          option3: "stop",
-        },
-        agentComputes: "the fact; the pen chooses",
+      // FAMILY V39 (S150/MR18) — the first line reads the deviation-state producer; D51 ANSWERED = INSTRUMENT, so the base
+      // gate no longer asks the question PART B already answered (the exact V38 contradiction, J-4).
+      firstLine: `the instrument speaks · manifests (real) ${num.manifestsReal} · cycles unprompted (real) ${num.cyclesUnpromptedReal} · published ${reach.published} · reachableHumans ${reach.reachableHumans} (BY DESIGN) · D51 ${d51?.state ?? "OPEN"} = INSTRUMENT`,
+      // the FIRST gate section — TWO items, alone (blueprint Phase 7): D33 (recomputed + rider) and D67 (⟨N⟩ still empty).
+      firstSection: {
+        d33: { ...(Claim.producer("d33").value as Record<string, unknown>), flipEvidence, note: "recomputed with the D56 SEARCH counted (RP-1: testRedesigns carried in state, never resets); the i.i.d. rider on the SAME LINE (S142); the deciding z SHOWN (S141); presented, NEVER signed (LN5)." },
+        d67: "the amended kill-criterion — ⟨N⟩ STILL EMPTY, awaiting the pen; and now, for the first time, the instrument can FEED it: the false-fire count says a number, so changedByCompile has something to be changed BY.",
       },
+      d51: {
+        state: d51?.state ?? "OPEN", // ANSWERED — from the ONE producer (S150)
+        detail: d51?.detail,
+        supersedes: d51?.supersedes, // MR18 — the pointer where the stale "product or instrument?" question stood
+        agentComputes: "the fact; the pen ALREADY chose (INSTRUMENT) — the agent records it and never signs (LN5).",
+      },
+      deviationStates: State.deviations().map((d) => ({ id: d.id, state: d.state })), // S150 — the single source, rendered whole
       d33: Claim.producer("d33").value,
       d50: { i: v("d50i_binary"), ii: v("d50ii_install"), iii: v("d50iii_published"), iv: v("d50iv_window") },
       laws: Claim.producer("laws").value,

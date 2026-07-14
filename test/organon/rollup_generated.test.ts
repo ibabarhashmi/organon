@@ -100,8 +100,13 @@ test("S100 (W-DV01) — Rollup.header + gate are pure reads that assemble the pr
   expect((h.d50 as { i: boolean }).i).toBe(false) // binary uncommitted → RED (clone-INVARIANT: dist gitignored)
   expect(typeof (h.d50 as { iii: boolean }).iii).toBe("boolean") // published is DERIVED (a fresh clone's origin contains HEAD → true; that is correct, not a fixed false)
   const g = Rollup.gate()
-  expect(g.firstLine).toMatch(/Is ORGΛNON a product, or an instrument\?/) // the question, computed
-  expect((g.d51 as { agentComputes: string }).agentComputes).toMatch(/the pen chooses/) // presented, never chosen (LN5)
+  // FAMILY V39 (S150/MR18/J-4) — the gate now reads the ONE State.deviations() producer: D51 is ANSWERED (INSTRUMENT), so
+  // the base gate no longer asks the question PART B already answered (the exact V38 contradiction). The supersession pointer
+  // stands where the "product or instrument?" question was. (A carried wall consciously updated for the S150 architectural fix.)
+  expect(g.firstLine).toMatch(/D51 ANSWERED = INSTRUMENT/) // the state, computed from the single producer — no contradiction
+  expect((g.d51 as { state: string }).state).toBe("ANSWERED")
+  expect((g.d51 as { supersedes: string }).supersedes).toMatch(/product, or an instrument/) // MR18 — the pointer where the question stood
+  expect((g.d51 as { agentComputes: string }).agentComputes).toMatch(/the pen ALREADY chose|never signs/) // presented, never signed (LN5)
   // newProductCapability is DERIVED from the CURRENT sprint's pins — sprint-invariant, not a hardcoded 0. Socket V37 lifted
   // the Halt (D53) → 3; Substance V38 makes the three TRUE and adds nothing → 0 (the roadmap is OWED to V39). The generator
   // reads the current sprint's pins (substance-pins), so the header always shows THIS sprint's disclosed capability count.

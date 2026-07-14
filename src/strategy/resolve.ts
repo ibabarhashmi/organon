@@ -23,6 +23,7 @@ import { StrategyCompile } from "./compile"
 import { StrategyStore } from "./store"
 import { StrategyTrial } from "./trial"
 import { FalseFire } from "./falsefire"
+import { Series } from "./series"
 import { Provenance } from "./provenance"
 
 export namespace StrategyResolve {
@@ -107,9 +108,20 @@ export namespace StrategyResolve {
       const r = FalseFire.count(c, injected.series, injected.provenance)
       return { statement: `Replayed over ${scope}'s captured ${c.kind} history: ${r.why}`, tier: r.tier }
     }
+    // FAMILY V39 (S145/RP-3/J-7) — the instrument SAYS A NUMBER. For the observables ORGΛNON has materialized (tvl-drawdown,
+    // peg-floor), the two-tier view renders: the OWN-capture number LEADS (UNJUDGEABLE today — window growing), the
+    // RETROSPECTIVE renders beneath with its revisability, the window disparity STATED. A NUMBER at the door, not UNJUDGEABLE.
+    if (c.kind === "tvl-drawdown" || c.kind === "peg-floor") {
+      const t = Series.falseFireTwoTier(c, scope) // gate to the SCOPED subject — never the wrong subject's count (honesty)
+      if (!t.unjudgeableEverywhere) {
+        return { statement: t.statement, tier: t.tier, ownLine: t.ownLine, retroLine: t.retroLine, windowNote: t.windowNote, number: t.number }
+      }
+    }
     // no matching observable series materialized here — honest UNJUDGEABLE with the tier the count WOULD carry (X-HONEST).
+    // S145 permits UNJUDGEABLE ONLY where the series genuinely does not exist (funding-flip / governance / concentration have
+    // no captured point series to replay); never a blanket default.
     return {
-      statement: `Replayed over the subject's captured ${c.kind} history: UNJUDGEABLE here — that observable series is not materialized in this view (the count runs where the moat is present; it states a COUNT, never a prediction, and never suggests a different threshold).`,
+      statement: `Replayed over the subject's captured ${c.kind} history: UNJUDGEABLE here — that observable series is not materialized (no captured ${c.kind} point-series exists to replay; the count runs where the moat is present, states a COUNT, never a prediction, and never suggests a different threshold).`,
       tier: `RETROSPECTIVE over a provider chart · REAL-at-timestamp over own captures (${Provenance.LADDER.join(" · ")})`,
     }
   }

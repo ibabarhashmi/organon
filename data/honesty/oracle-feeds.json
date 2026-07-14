@@ -1,0 +1,81 @@
+{
+  "protocol": "oracle-feeds",
+  "at": "2026-07-15",
+  "rule": "DD-56/DD-57 (D70): the observable for oracle-staleness is (now - feed.updatedAt), the feed a hard-coded constant — a REAL Chainlink latestRoundData().updatedAt captured via ONE eth_call over the existing RPC (block-pinned, tier REAL*). utilization-ceiling reads captured lending totalBorrow/totalSupply. Both deterministic, tiered, UNJUDGEABLE without inputs; NO price, NO prediction. The curator-loss literature's #1 root cause — an oracle that kept reporting $1 while the asset collapsed — becomes a pre-registrable kill-condition.",
+  "referenceNow": 1784073600,
+  "tier": "REAL★",
+  "coverage": {
+    "resolvableOracleFeeds": 3,
+    "totalPoolUniverse": 1284,
+    "note": "3/1284 (SHELF) — a PROXY. bar: the Operator's own positions; positions held: 0; therefore the bar is UNMEASURABLE today, and this number is a proxy that may prove irrelevant (RP-6). A resolver reaching a pinned named subset is honest; one resolving nowhere does not ship."
+  },
+  "d73_rpcExposure": "the oracle-staleness resolver reuses the governance screen's existing RPC surface (one eth_call, block-pinned). D42 dissolved under D51 — a personal tool is the non-commercial case; the exposure that haunted twelve sprints evaporated on the pen's word.",
+  "coreSha": "b4a325e79d587ba651b94eb3457d8321c66253af5d7c11b975b7a19dcd1dfa62",
+  "feeds": {
+    "USDC/USD": {
+      "aggregator": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "updatedAt": 1784016035,
+      "capturedAtBlock": 25533030
+    },
+    "USDT/USD": {
+      "aggregator": "0x3E7d1eAB13ad0104d2750B8863b489D65364e32D",
+      "updatedAt": 1784056415,
+      "capturedAtBlock": 25533030
+    },
+    "DAI/USD": {
+      "aggregator": "0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9",
+      "updatedAt": 1784054879,
+      "capturedAtBlock": 25533030
+    }
+  },
+  "utilization": [
+    {
+      "project": "aave-v3",
+      "symbol": "USDC",
+      "chain": "Ethereum",
+      "totalSupplyUsd": null,
+      "totalBorrowUsd": null,
+      "utilization": null
+    },
+    {
+      "project": "aave-v3",
+      "symbol": "USDT",
+      "chain": "Ethereum",
+      "totalSupplyUsd": null,
+      "totalBorrowUsd": null,
+      "utilization": null
+    },
+    {
+      "project": "aave-v3",
+      "symbol": "DAI",
+      "chain": "Ethereum",
+      "totalSupplyUsd": null,
+      "totalBorrowUsd": null,
+      "utilization": null
+    },
+    {
+      "project": "sparklend",
+      "symbol": "DAI",
+      "chain": "Ethereum",
+      "totalSupplyUsd": null,
+      "totalBorrowUsd": null,
+      "utilization": null
+    },
+    {
+      "project": "fluid-lending",
+      "symbol": "USDC",
+      "chain": "Ethereum",
+      "totalSupplyUsd": null,
+      "totalBorrowUsd": null,
+      "utilization": null
+    },
+    {
+      "project": "compound-v3",
+      "symbol": "USDC",
+      "chain": "Ethereum",
+      "totalSupplyUsd": null,
+      "totalBorrowUsd": null,
+      "utilization": null
+    }
+  ]
+}

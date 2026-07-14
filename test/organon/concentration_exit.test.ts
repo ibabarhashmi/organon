@@ -40,13 +40,19 @@ test("S112 (W-SK06) — registration: a valid ceiling (a share in (0,1]) is eval
   if (!bad.ok) expect(bad.error).toMatch(/dimensionless share|share in/i)
 })
 
-test("S112 (W-SK06) — the exit set is CLOSED AT FIVE; a 6th kind without a pin FAILS the enum (seeded); the algebra is NOT built", () => {
-  expect(Manifest.EXIT_KINDS.length).toBe(5)
+test("S112→D70 (W-SK06) — the exit set reached SEVEN this sprint (D70); it is now CLOSED AT SEVEN; an EIGHTH kind through the enum FAILS (seeded)", () => {
+  // FAMILY V39 (D70) — V37's S112 pinned the set at FIVE with the algebra trigger armed to fire when it grew. This sprint
+  // added oracle-staleness + utilization-ceiling → the set reached SEVEN and the trigger FIRED (algebra-trigger.json). The
+  // socket-pins JSON still records V37's "five" (immutable history); the LIVE enum is seven.
+  expect(Manifest.EXIT_KINDS.length).toBe(7)
   expect(Manifest.EXIT_KINDS).toContain("concentration-ceiling")
-  expect(sp.exitSet.count).toBe(5)
-  // SEEDED NEGATIVE — a 6th kind not in the pinned set is refused at parse (the enum is the closed set)
-  const sixth = ExitCriterion.register({ kind: "oracle-staleness", threshold: 3600, subjectScope: "x" })
-  expect(sixth.ok).toBe(false) // not an evaluable kind — the set is closed at five
-  // the combinator algebra is NOT built — its trigger is pinned, not pulled
-  expect(sp.exitSet.algebraTrigger).toMatch(/7th|composed/i)
+  expect(Manifest.EXIT_KINDS).toContain("oracle-staleness") // the sixth — now a VALID kind (D70)
+  expect(Manifest.EXIT_KINDS).toContain("utilization-ceiling") // the seventh
+  expect(sp.exitSet.count).toBe(5) // socket-pins is V37's immutable pin; V39's D70 grew the live set to seven
+  // oracle-staleness now REGISTERS (it is the sixth evaluable kind) — the V37 refusal is superseded by D70
+  const sixth = ExitCriterion.register({ kind: "oracle-staleness", threshold: 86400, subjectScope: "x" })
+  expect(sixth.ok).toBe(true)
+  // SEEDED NEGATIVE — an EIGHTH kind not in the enum is refused at parse (the set is closed at seven; an eighth goes through the algebra)
+  const eighth = ExitCriterion.register({ kind: "liquidity-cliff", threshold: 0.5, subjectScope: "x" })
+  expect(eighth.ok).toBe(false)
 })
