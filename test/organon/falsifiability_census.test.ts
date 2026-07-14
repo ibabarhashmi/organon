@@ -41,7 +41,7 @@ test("S93/RP-6 — the living wall: a test that references a wall id beyond the 
   const futureId = "S" + "147"
   const injected = [{ file: "x", text: `test(${JSON.stringify(futureId + " — a hypothetical future wall")})` }] as unknown as { file: string; text: string }[]
   expect(Falsify.orphanWallIds(injected)).toEqual([futureId])
-  expect(Falsify.WALL_MAX).toBe(106) // Derivation V36: bumped 99→106 for S100-S106 (consciously admitted)
+  expect(Falsify.WALL_MAX).toBe(115) // Socket V37: bumped 106→115 for S107-S115 (consciously admitted)
 })
 
 test("S93/RP-1 — DEMONSTRATED is the STRONG claim and is never invented: every DEMONSTRATED wall carries a NAMED originating defect (a W-tag) OR a treatment route (S104)", () => {

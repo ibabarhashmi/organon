@@ -1,0 +1,82 @@
+{
+  "protocol": "record-chain",
+  "at": "2026-07-14",
+  "rule": "S108 / DD-32 (G-5) — the build logs, committed under record/ and HASH-CHAINED (tamper-evident). The reasons for the code now live inside the moat. These are RECORD, never CLAIM: a wall asserts NO Claim.producer reads a build log (X-DERIVE reads artifacts, not prose). Order is content-sorted (deterministic), not a source of truth.",
+  "boundary": "record/ is NOT a source of truth for any producer. A Claim.producer reading a build log would import unverified human prose into a computation — forbidden (S108). Prose is evidence for humans; artifacts are input for machines.",
+  "count": 12,
+  "chain": [
+    {
+      "name": "BUILDLOG-ALPHA.md",
+      "contentSha": "191ba7fd9e1743140b1b2e16108b0950b6d260c0a396b0b5a549f2a65c38466e",
+      "prevSha": "0000000000000000000000000000000000000000000000000000000000000000",
+      "selfSha": "b98747432d5d6fb9bab8b9ca7ff5ed201733f93f0885f5233f70262a008c992e"
+    },
+    {
+      "name": "BUILDLOG-CADENCE.md",
+      "contentSha": "c6f70c6c5117b8c07f8f0b73fef0962405abe81f9efa62b5ce101dd1d4726b98",
+      "prevSha": "b98747432d5d6fb9bab8b9ca7ff5ed201733f93f0885f5233f70262a008c992e",
+      "selfSha": "45acb86ccfb7057a3d130738a20f1f364f92db20c86a6ac49ef53ce6e3325747"
+    },
+    {
+      "name": "BUILDLOG-COVERAGE.md",
+      "contentSha": "e5b59986f8f084421d7bd07e030572edfce294a96ac6436691f3a64e90d8d21c",
+      "prevSha": "45acb86ccfb7057a3d130738a20f1f364f92db20c86a6ac49ef53ce6e3325747",
+      "selfSha": "b7cc63d74c157e97e443c75a4221c44915728fdeed48efdcfbe642834ad324dd"
+    },
+    {
+      "name": "BUILDLOG-DERIVE.md",
+      "contentSha": "fb8ad3a9f0490a0f2260e282cf7c422379a853c7abce8012240ac4fac451a36e",
+      "prevSha": "b7cc63d74c157e97e443c75a4221c44915728fdeed48efdcfbe642834ad324dd",
+      "selfSha": "aaf4d13fa17356305bac35c7811f1f8d4c0bf69a5e765b7b52fd019ba01a129c"
+    },
+    {
+      "name": "BUILDLOG-GROUNDTRUTH.md",
+      "contentSha": "2c0647edba6f2fb1556b350de5d70553e895866ce7fb538fd188f1806dd01f22",
+      "prevSha": "aaf4d13fa17356305bac35c7811f1f8d4c0bf69a5e765b7b52fd019ba01a129c",
+      "selfSha": "8bfbdfae94dad6b7e488239f24d133d19401042871660dd8aacf6854403c897c"
+    },
+    {
+      "name": "BUILDLOG-MANIFEST.md",
+      "contentSha": "d3111d6723dc007d67771d9c32db56536d5395cd0bdab6a4e6304edce369616f",
+      "prevSha": "8bfbdfae94dad6b7e488239f24d133d19401042871660dd8aacf6854403c897c",
+      "selfSha": "ac97e6deb8368e5ecd62c700544fd7b2301b768fd78b9b913bce6f78c7a6c7db"
+    },
+    {
+      "name": "BUILDLOG-MOAT.md",
+      "contentSha": "b24c81b7fed64b56da35e046dd41d6801c98418075ee55f22293bbba86e95803",
+      "prevSha": "ac97e6deb8368e5ecd62c700544fd7b2301b768fd78b9b913bce6f78c7a6c7db",
+      "selfSha": "3a1cad8609002b57a5794e51b6cf2004f9a3422caf7c430c7fa445d491164503"
+    },
+    {
+      "name": "BUILDLOG-PRECISION.md",
+      "contentSha": "4fa1de8733a9745e44db66ec72434e63c65ba6dfbbc8e2b671507109f7a2bad0",
+      "prevSha": "3a1cad8609002b57a5794e51b6cf2004f9a3422caf7c430c7fa445d491164503",
+      "selfSha": "7751d1810a5e185190a72659bb60f74a3999e33d808838400af611b65ca5b101"
+    },
+    {
+      "name": "BUILDLOG-PROBE.md",
+      "contentSha": "94118f5bd144a1472fb94539110a1ed22603450b5460de444e0a8af245994083",
+      "prevSha": "7751d1810a5e185190a72659bb60f74a3999e33d808838400af611b65ca5b101",
+      "selfSha": "c191b2d4e56040983d0e603850c9265d3ab5bd683fd20e3e2970d86b81522b36"
+    },
+    {
+      "name": "BUILDLOG-REACH.md",
+      "contentSha": "2da75988d3ef18cebd78fc8222832a3077ef1fb9c81d33cde1b98a6874a4bb77",
+      "prevSha": "c191b2d4e56040983d0e603850c9265d3ab5bd683fd20e3e2970d86b81522b36",
+      "selfSha": "4f5d8e870a2a9d371c6191920f7ed03bc8df39d22bc2a82bc0c53ddb83260c80"
+    },
+    {
+      "name": "BUILDLOG-RECKONING.md",
+      "contentSha": "8d3ce2c2970a4d3d4bf53f136ca798e3700d3adffac6207d1e1ad4227596ad39",
+      "prevSha": "4f5d8e870a2a9d371c6191920f7ed03bc8df39d22bc2a82bc0c53ddb83260c80",
+      "selfSha": "103b83fd2f375bdef5c5bb243bcc05dadc1cda2f9f0885373b6bdcaaac4006d1"
+    },
+    {
+      "name": "BUILDLOG-SHOWING.md",
+      "contentSha": "96228a23ea1a51c401f14d141e47b64d702f395c627c095419dabf61d4afd15f",
+      "prevSha": "103b83fd2f375bdef5c5bb243bcc05dadc1cda2f9f0885373b6bdcaaac4006d1",
+      "selfSha": "6cbaa645f23f7d58dfe92995e5252f598a2007a49aa81006d21276c6fa83595c"
+    }
+  ],
+  "headSha": "6cbaa645f23f7d58dfe92995e5252f598a2007a49aa81006d21276c6fa83595c"
+}

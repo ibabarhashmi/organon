@@ -27,6 +27,19 @@ export namespace ExitCriterion {
     fundingTotalPeriods?: number | null
     tvlDrawdown?: number | null // fraction drop from captured peak (tvl-trend), e.g. 0.3 = down 30%
     governanceChanged?: boolean | null // the captured governance class changed (governance line)
+    // SOCKET V37 (S112) — concentration-ceiling. The DIMENSIONLESS share = position.size / poolTvl, pre-computed by the
+    // pipeline that holds BOTH the user's authored size AND the captured pool TVL (Exit.concentration). null → UNJUDGEABLE.
+    concentrationShare?: number | null
+  }
+
+  // SOCKET V37 (S112) — Exit.concentration: the DIMENSIONLESS share of a pool a position holds. A SHARE IS NOT A VALUE —
+  // size / poolTvl carries no USD, no price, no oracle (the valuation ban is untouched). UNJUDGEABLE without either input
+  // (missing stays missing). The unit honesty: it is a valid share only if the user's size units match the pool's TVL
+  // denomination, which the caller states; ORGANON does not convert or price.
+  export function concentration(size: number | null | undefined, poolTvl: number | null | undefined): { share: number | null; why: string } {
+    if (size == null || !Number.isFinite(size) || size <= 0) return { share: null, why: "UNJUDGEABLE — no position size (the user's own units); a share cannot be computed without it." }
+    if (poolTvl == null || !Number.isFinite(poolTvl) || poolTvl <= 0) return { share: null, why: "UNJUDGEABLE — no captured pool TVL for the scoped subject; a share cannot be computed without it." }
+    return { share: size / poolTvl, why: `share = size ${size} / poolTvl ${poolTvl} = ${(size / poolTvl).toFixed(6)} (dimensionless — no USD, no price, no oracle)` }
   }
 
   export type RegisterResult = { ok: true; hash: string; criterion: T } | { ok: false; error: string }
@@ -42,6 +55,8 @@ export namespace ExitCriterion {
         return c.threshold > 0 && c.threshold < 1 ? null : `a TVL drawdown must be a fraction in (0, 1) — e.g. 0.3 for a 30% drop; ${c.threshold} is not`
       case "governance-change":
         return null // a boolean trigger — the threshold is unused; any value accepted (documented)
+      case "concentration-ceiling":
+        return c.threshold > 0 && c.threshold <= 1 ? null : `a concentration ceiling must be a share in (0, 1] — e.g. 0.25 for "exit if I am ≥ 25% of the pool"; ${c.threshold} is not a dimensionless share`
       default:
         return `the exit kind "${(c as T).kind}" is not evaluable over facts the engine captures`
     }
@@ -119,6 +134,13 @@ export namespace ExitCriterion {
         if (facts.governanceChanged == null) return { fired: false, judgeable: false, why: `UNJUDGEABLE — no captured governance read for the scoped subject (${c.subjectScope}).` }
         const fired = facts.governanceChanged === true
         return { fired, judgeable: true, why: `governance class ${fired ? "CHANGED" : "unchanged"} → ${fired ? "FIRED" : "NOT FIRED"}` }
+      }
+      case "concentration-ceiling": {
+        // SOCKET V37 (S112) — the DIMENSIONLESS share vs the ceiling; UNJUDGEABLE when the share could not be computed
+        // (missing size or TVL). No USD, no price, no oracle — a share, never a value.
+        if (facts.concentrationShare == null) return { fired: false, judgeable: false, why: `UNJUDGEABLE — no concentration share for the scoped subject (${c.subjectScope}); needs the position size AND the captured pool TVL.` }
+        const fired = facts.concentrationShare >= c.threshold
+        return { fired, judgeable: true, why: `concentration share ${facts.concentrationShare.toFixed(4)} ${fired ? "≥" : "<"} ceiling ${c.threshold} → ${fired ? "FIRED" : "NOT FIRED"} (dimensionless; can you actually get out?)` }
       }
     }
   }

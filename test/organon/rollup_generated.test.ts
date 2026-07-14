@@ -102,5 +102,8 @@ test("S100 (W-DV01) — Rollup.header + gate are pure reads that assemble the pr
   const g = Rollup.gate()
   expect(g.firstLine).toMatch(/Is ORGΛNON a product, or an instrument\?/) // the question, computed
   expect((g.d51 as { agentComputes: string }).agentComputes).toMatch(/the pen chooses/) // presented, never chosen (LN5)
-  expect(g.newProductCapability).toBe(0)
+  // newProductCapability is DERIVED from the CURRENT sprint's pins — sprint-invariant, not a hardcoded 0. Socket V37 lifted
+  // the Halt (D53), so it is 3 this sprint (disclosed, priced as a SEARCH); a validation-only sprint reads 0.
+  const currentCap = JSON.parse(require("node:fs").readFileSync(require("node:path").join(PKG_ROOT, "data", "honesty", "socket-pins.json"), "utf8")).carried.newProductCapability
+  expect(g.newProductCapability).toBe(currentCap)
 })

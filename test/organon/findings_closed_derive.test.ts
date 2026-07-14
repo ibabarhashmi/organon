@@ -66,8 +66,10 @@ test("PART F — all 7 re-pins (RP-1..RP-7) are recorded, and each HOLDS in the 
   expect(f.RP6_cloneProvesSelfContainedNotReproducible).toMatch(/self-contained/i)
 })
 
-test("PART E — the Halt is honored a THIRD time: newProductCapability is 0, D51 presents the menu and never chooses (LN5), every deviation unsigned", () => {
-  expect(Claim.producer("newProductCapability").value).toBe(0)
+test("PART E — the Halt was honored a THIRD time (V36): newProductCapability was 0, D51 presents the menu and never chooses (LN5), every deviation unsigned", () => {
+  // V36's HISTORICAL record: the Derivation sprint honored the Halt (capability 0). Read from derive-pins directly — the
+  // LIVE producer is sprint-current (Socket V37 lifted the Halt via D53 → 3), so this asserts V36's own truth, not V37's.
+  expect(dp.carried.newProductCapability).toBe(0)
   expect(dp.deviations.D51).toMatch(/never chosen|the pen chooses/i)
   for (const d of ["D51", "D52", "D49", "D50", "D33"]) expect(dp.deviations[d]).toMatch(/operatorSigned=false|CARRIED/i)
 })

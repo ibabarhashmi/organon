@@ -55,8 +55,20 @@ export namespace Claim {
 
   // ── THE PRODUCER REGISTRY — each entry reads committed artifacts and returns the claim's value + tier + partiality ──────
   // (verify uses skipBundle so the registry is fast + offline; the generator/do_verify run the full bundle separately.)
+  // the CURRENT sprint's pins sha — Socket V37 carries socket-pins.json (chained from derive-pins). The claim→producer
+  // MAP still lives in derive-pins (unchanged), but the header's PINS_SHA claim is the CURRENT pins (a moved sprint pin
+  // moves the header). If socket-pins is absent (a pre-V37 checkout), fall back to derive-pins.
+  function currentPinsSha(): string {
+    return currentPins()?.pinsSha ?? pins().pinsSha
+  }
+  // the CURRENT sprint's pins (socket-pins for V37) — where lawsThisSprint + newProductCapability live. The Halt was LIFTED
+  // by the Operator's instruction (D53), so capability is 3 this sprint (DISCLOSED, not a Halt violation).
+  function currentPins(): { pinsSha: string; carried: { newProductCapability: number; lawsThisSprint: string } } | null {
+    try { return JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "socket-pins.json"), "utf8")) } catch { return null }
+  }
+
   const REGISTRY: Record<string, () => { value: unknown; partial?: boolean }> = {
-    pinsSha: () => ({ value: pins().pinsSha }),
+    pinsSha: () => ({ value: currentPinsSha() }),
     terminalTree: () => ({ value: git(["rev-parse", "HEAD^{tree}"]) }),
     commitSha: () => ({ value: git(["rev-parse", "HEAD"]) }),
     pushed: () => ({ value: Reach.derivePublished().published }),
@@ -99,10 +111,12 @@ export namespace Claim {
       return { value: { manifestsReal: s.manifestsAuthoredReal, cyclesUnpromptedReal: s.cyclesRunReal, realLineageCount: s.realLineageCount } }
     },
     laws: () => {
-      const l = pins().lawsCountObservation
-      return { value: { laws: l.laws, mintedInLast6Sprints: l.lawsMintedInLast6Sprints, productCapabilityInLast3Sprints: l.productCapabilityAddedInLast3Sprints } }
+      const c = currentPins()?.carried
+      const mintedThisSprint = c?.lawsThisSprint?.toUpperCase().includes("ZERO") ? 0 : 1
+      return { value: { laws: 17, mintedThisSprint, productCapabilityThisSprint: c?.newProductCapability ?? pins().carried.newProductCapability } }
     },
-    newProductCapability: () => ({ value: pins().carried.newProductCapability }),
+    // the Halt was LIFTED (D53), so capability is 3 this sprint — DISCLOSED, priced as a SEARCH, not a Halt violation.
+    newProductCapability: () => ({ value: currentPins()?.carried.newProductCapability ?? pins().carried.newProductCapability }),
   }
 
   // Claim.producer(name) — the value, tier, artifacts, and partiality for a claim. Throws for an unregistered name

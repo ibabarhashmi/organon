@@ -70,8 +70,40 @@ export namespace CrossCheck {
   }
 }
 
+// ── SOCKET V37 (S110/DD-25/G-3) — D33 IS CORRECTNESS, NOT CONSISTENCY ──────────────────────────────────────────────────
+// V36's D33 computed SIGNABLE on consistency alone: all three quantities came from ONE oracle (purgedcv) whose Sharpe is
+// byte-identical to rigor's, and PBO's delta was exactly 0.00e+0 — shared lineage, not independent confirmation. V37 adds
+// two legs: a THEORY check (the published method's expected PBO on true-Sharpe-0 noise, pinned before compute) and a
+// NON-SHARED ORACLE (a hand-rolled CSCV with its own Sharpe). SIGNABLE requires consistency AND theory AND non-shared-oracle.
+export namespace Correctness {
+  export interface Legs {
+    consistency: { ok: boolean; detail: string } // rigor vs purgedcv agree (the V36 leg)
+    nonSharedOracle: { ok: boolean; detail: string } // the hand-rolled CSCV (own Sharpe) agrees with rigor
+    theory: { ok: boolean; expected: number; observed: number; band: number; detail: string } // observed PBO vs the pinned theory
+  }
+
+  // read the pinned theory expectation + band from the socket pins (X-DERIVE(f): read from the pins, never the call site).
+  function theoryPins(): { expected: number; band: number } {
+    const p = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "socket-pins.json"), "utf8"))
+    return { expected: p.pboTheory.expectedPboUnderNoise, band: p.pboTheory.theoryBand }
+  }
+
+  export function legs(cc: Rigor.CrossCheck | Rigor.Blocked = CrossCheck.record()): Legs | null {
+    if (Rigor.isBlocked(cc)) return null
+    const t = theoryPins()
+    const consistency = CrossCheck.all(cc).every((a) => a.agrees === true)
+    const oracleDelta = Math.abs(cc.pbo - cc.pboHandRolled)
+    const theoryDelta = Math.abs(cc.pbo - t.expected)
+    return {
+      consistency: { ok: consistency, detail: consistency ? "rigor vs purgedcv: DSR/PSR/PBO all agree" : "a consistency disagreement (see CrossCheck.all)" },
+      nonSharedOracle: { ok: oracleDelta < 0.02, detail: `hand-rolled CSCV (own Sharpe) PBO ${cc.pboHandRolled.toFixed(3)} vs rigor ${cc.pbo.toFixed(3)} · |Δ|=${oracleDelta.toFixed(4)} ${oracleDelta < 0.02 ? "< 0.02 (a third independent code path agrees)" : "≥ 0.02 (the algorithm itself diverges — a finding)"}` },
+      theory: { ok: theoryDelta <= t.band, expected: t.expected, observed: cc.pbo, band: t.band, detail: `observed PBO ${cc.pbo.toFixed(3)} vs the pinned theory ${t.expected} · |Δ|=${theoryDelta.toFixed(4)} ${theoryDelta <= t.band ? `≤ band ${t.band}` : `> band ${t.band} — theory DISAGREES (all three implementations agree on ${cc.pbo}, but the asymptotic CSCV expectation on pure noise is ${t.expected}; two/three programs agreeing cannot distinguish both-right from both-wrong, G-3)`}` },
+    }
+  }
+}
+
 export namespace Signability {
-  export type State = "SIGNABLE" | "UNSIGNABLE" | "UNCOMPARABLE" | `PRECONDITION-MET-FOR-${string}-ONLY`
+  export type State = "SIGNABLE" | "UNSIGNABLE" | "UNCOMPARABLE" | "PRECONDITION-MET-BY-CONSISTENCY-ONLY" | `PRECONDITION-MET-FOR-${string}-ONLY`
   export interface Result {
     state: State
     agreed: CrossCheck.Quantity[]
@@ -94,8 +126,15 @@ export namespace Signability {
       state = "UNSIGNABLE"
       detail = `D33 UNSIGNABLE — ${disagreed.map((q) => q.toUpperCase()).join(", ")} DISAGREE(S) with the independent reference beyond the pre-registered tolerance (the headline finding — the frozen math and purgedcv diverge; someone must know before the pen moves)`
     } else if (agreed.length === 3) {
-      state = "SIGNABLE"
-      detail = "the precondition is met WHOLE — DSR, PSR, and PBO all agree with purgedcv within the pre-registered tolerance; the pen MAY be offered. The agent still never signs it (LN5)."
+      // SOCKET V37 (S110/G-3): consistency is necessary but NOT sufficient — D33 requires theory + a non-shared oracle too.
+      const legs = Correctness.legs()
+      if (legs && legs.theory.ok && legs.nonSharedOracle.ok) {
+        state = "SIGNABLE"
+        detail = `the precondition is met on ALL THREE legs — consistency ✓, non-shared oracle ✓ (${legs.nonSharedOracle.detail}), theory ✓ (${legs.theory.detail}); the pen MAY be offered. The agent still never signs it (LN5).`
+      } else {
+        state = "PRECONDITION-MET-BY-CONSISTENCY-ONLY"
+        detail = `D33 PRECONDITION-MET-BY-CONSISTENCY-ONLY — the three implementations AGREE (consistency ✓)${legs ? ` and the non-shared oracle ${legs.nonSharedOracle.ok ? "AGREES" : "DIVERGES"}, but the THEORY leg does NOT hold: ${legs.theory.detail}` : ""}. It went BACKWARD this sprint (G-3), and that is correct — consistency is not correctness, and a pen that closes is a successful sprint. (D33 stays fenced from K-activation regardless — LN5.)`
+      }
     } else if (agreed.length === 0) {
       state = "UNCOMPARABLE"
       detail = `D33 UNCOMPARABLE — no quantity could be compared (${uncomparable.map((q) => q.toUpperCase()).join(", ")}); 'could not compare' is not 'agree' (RP-2)`

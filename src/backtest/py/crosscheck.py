@@ -33,6 +33,52 @@ SEED = 20260627
 T = 504
 N_TRIALS = 1000
 
+# SOCKET V37 (S110/DD-25) — the theory expectation, PINNED before it is computed (RP-7): under CSCV on true-Sharpe-0 noise
+# the IS-best config's OOS rank is uniform (no persistence in pure noise), so PBO_theory = 0.5. Read by the TS layer from
+# the pins; echoed here for the record.
+PBO_THEORY_UNDER_NOISE = 0.5
+
+
+def _own_sharpe(block: np.ndarray) -> np.ndarray:
+    """A per-column Sharpe (mean / sample std, ddof=1), written HERE — not rigor._col_sharpe. The non-shared oracle's own
+    metric (S110/G-3: a third independent code path, so agreement is not merely two copies of one implementation)."""
+    mu = block.mean(axis=0)
+    sd = block.std(axis=0, ddof=1)
+    out = np.zeros_like(mu)
+    nz = sd > 0
+    out[nz] = mu[nz] / sd[nz]
+    return out
+
+
+def _cscv_pbo_handrolled(matrix: np.ndarray, s: int = 8) -> float:
+    """CSCV / PBO written DIRECTLY from Bailey-Borwein-Lopez de Prado-Zhu (2017), Algorithm 1 — NOT borrowed from rigor or
+    purgedcv. Split the T rows into S contiguous blocks; over every way to choose S/2 as in-sample (rest out-of-sample),
+    select the IS-best column, take its OOS relative rank omega in (0,1), lambda = logit(omega); PBO = P(lambda < 0)."""
+    from itertools import combinations
+    from math import log
+
+    m = np.asarray(matrix, dtype=float)
+    t, n = m.shape
+    if n < 2 or t < s:
+        return float("nan")
+    bounds = np.linspace(0, t, s + 1).astype(int)
+    blocks = [np.arange(bounds[i], bounds[i + 1]) for i in range(s)]
+    half = s // 2
+    lam_neg = 0
+    total = 0
+    for is_combo in combinations(range(s), half):
+        is_set = set(is_combo)
+        is_idx = np.concatenate([blocks[g] for g in is_combo])
+        oos_idx = np.concatenate([blocks[g] for g in range(s) if g not in is_set])
+        best = int(np.argmax(_own_sharpe(m[is_idx])))
+        oos_perf = _own_sharpe(m[oos_idx])
+        ranks = np.argsort(np.argsort(oos_perf)) + 1  # 1..N (1 = worst)
+        omega = ranks[best] / (n + 1.0)
+        lam = log(omega / (1.0 - omega))
+        lam_neg += 1 if lam < 0 else 0
+        total += 1
+    return lam_neg / total
+
 
 def main() -> None:
     rng = np.random.default_rng(SEED)
@@ -68,6 +114,14 @@ def main() -> None:
     pbo_pkg = float(pcv.probability_of_backtest_overfitting(m.T, n_splits=8).pbo)
     pbo_diff = abs(pbo - pbo_pkg)
 
+    # ── SOCKET V37 (S110/DD-25/G-3): the NON-SHARED ORACLE — a hand-rolled CSCV written DIRECTLY from the paper, with its
+    # OWN Sharpe (a legitimate independent derivation, code we write from the method, NOT borrowed). G-3: purgedcv's Sharpe
+    # is byte-identical to rigor._col_sharpe and PBO's delta was exactly 0.00e+0 — two "independent" implementations
+    # producing bit-identical output is SHARED LINEAGE, not independent confirmation. This third code path tests whether the
+    # ALGORITHM is right, not just that two copies of it agree. It calls NO rigor function.
+    pbo_hand = _cscv_pbo_handrolled(m, s=8)
+    pbo_hand_diff = abs(pbo - pbo_hand)
+
     out = {
         "executed": True,
         "seed": SEED, "T": T, "nTrials": N_TRIALS,
@@ -77,6 +131,9 @@ def main() -> None:
         "psr": psr0, "psrPurgedcv": psr_pkg, "psrDiff": psr_diff,
         # PBO (S101 — now cross-checked; the machinery D33 activates)
         "pbo": pbo, "pboPurgedcv": pbo_pkg, "pboDiff": pbo_diff,
+        # PBO CORRECTNESS (S110/DD-25/G-3) — the non-shared oracle (own Sharpe) + the pinned theory expectation
+        "pboHandRolled": pbo_hand, "pboHandRolledDiff": pbo_hand_diff,
+        "pboTheoryUnderNoise": PBO_THEORY_UNDER_NOISE, "pboVsTheory": abs(pbo - PBO_THEORY_UNDER_NOISE),
         # RP-2: the aligned CSCV parameters, emitted so the wall can SHOW the alignment (a cross-check that does not first
         # align its parameters is two different experiments)
         "cscvAlignment": {

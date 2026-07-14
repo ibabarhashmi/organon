@@ -78,5 +78,5 @@ test("S78 — the door is a PATH, not a fourth screen — the conscious 3 are un
 test("S78 — the manifest prefix + the schema's evaluable exit set back the door (the refusal surface IS the schema)", () => {
   expect(Manifest.MANIFEST_KEY_PREFIX).toBe("manifest:")
   expect(Manifest.EXIT_KINDS).toContain("peg-floor")
-  expect(Manifest.EXIT_KINDS.length).toBe(4)
+  expect(Manifest.EXIT_KINDS.length).toBe(5) // SOCKET V37 (S112): concentration-ceiling is the fifth kind — CLOSED AT FIVE
 })

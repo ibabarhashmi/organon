@@ -24,9 +24,11 @@ export namespace Manifest {
   export const SCOPE_MAX = 200
   export const JOURNAL_FIELD_MAX = 4000
 
-  // the four EVALUABLE exit kinds — each maps to a fact the existing engine already captures (manifest-pins evaluableSet);
-  // a kind outside this closed set fails the enum → refused at parse (and again, with a reason, at exit registration).
-  export const EXIT_KINDS = ["peg-floor", "funding-flip-count", "tvl-drawdown", "governance-change"] as const
+  // the EVALUABLE exit kinds — each maps to a fact the existing engine already captures (manifest-pins evaluableSet); a kind
+  // outside this closed set fails the enum → refused at parse (and again, with a reason, at exit registration). SOCKET V37
+  // (S112): concentration-ceiling is the FIFTH kind. CLOSED AT FIVE — a 6th without a pin FAILS; the combinator algebra's
+  // trigger is a 7th kind OR the first composed exit (Cedar rejected in its favour, not built this sprint).
+  export const EXIT_KINDS = ["peg-floor", "funding-flip-count", "tvl-drawdown", "governance-change", "concentration-ceiling"] as const
   export type ExitKind = (typeof EXIT_KINDS)[number]
 
   // a subjectKey that names another manifest — recursion is refused this sprint (a manifest of manifests is out of scope)

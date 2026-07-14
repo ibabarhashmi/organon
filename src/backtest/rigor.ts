@@ -28,6 +28,11 @@ export namespace Rigor {
     psrDiff: number
     pboPurgedcv: number
     pboDiff: number
+    // ── SOCKET V37 (S110/DD-25) — PBO CORRECTNESS: the non-shared oracle (own Sharpe) + the pinned theory expectation ─────
+    pboHandRolled: number
+    pboHandRolledDiff: number
+    pboTheoryUnderNoise: number
+    pboVsTheory: number
     cscvAlignment: { S: number; metric: string; split: string; purge: string; embargo: string; matrixOrientation: string; comparable: boolean }
     dataset: { kind: string; tier: string; trueSharpe: number; note: string }
     deflationCollapse: number

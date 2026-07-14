@@ -19,6 +19,25 @@ export namespace Verify {
   export interface SubCheck { name: string; status: Status; detail: string }
   export interface Result { exitCode: number; subchecks: SubCheck[] }
 
+  // ── SOCKET V37 (S114 / D54, G-2) — THE SUB-CHECK SET IS DECLARED AND STABLE ────────────────────────────────────────────
+  // verify silently lost a sub-check between V35 (three) and V36 (two): the V36 generator called Verify.run without a battery
+  // count, so `battery-count-matches-committed` — the one V35 spent a phase repairing under Rule XVII — vanished with no
+  // deviation entry (X-DEVLEDGER: a silent deviation is a Halt). D54 RESTORES it; this DECLARED set is the contract, and
+  // S114 fails if the full run's actual sub-checks ever diverge from it (G-2 never again).
+  export const DECLARED_SUBCHECKS = ["evidence-bundle-reproduces", "frozen-set-intact", "battery-count-matches-committed"] as const
+
+  // the sub-check names a FULL run (bundle + battery) must produce — a silent removal is caught by comparing to DECLARED.
+  export function subcheckNames(r: Result): string[] {
+    return r.subchecks.map((s) => s.name)
+  }
+  export function subcheckSetStable(r: Result): { ok: boolean; missing: string[]; extra: string[] } {
+    const actual = new Set(subcheckNames(r))
+    const declared = new Set<string>(DECLARED_SUBCHECKS)
+    const missing = [...declared].filter((n) => !actual.has(n))
+    const extra = [...actual].filter((n) => !declared.has(n))
+    return { ok: missing.length === 0 && extra.length === 0, missing, extra }
+  }
+
   export interface Options {
     // when provided, the curated battery-count sub-check is included (live vs committed evidence)
     battery?: { live: string; committed: string }

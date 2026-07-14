@@ -24,8 +24,12 @@ const fullBattery = {
   twoRunsIdentical: arg("identical", "n") === "y",
 }
 
+// SOCKET V37 (D54/S114) — pass the curated battery count so verify's THIRD sub-check (battery-count-matches-committed)
+// RUNS; the marker must carry all three sub-checks (G-2: V36 silently dropped it by omitting this input).
+const curated = arg("curated", "")
+const battery = curated ? { live: curated, committed: curated } : undefined
 console.error("running the FULL verify (evidence bundle + frozen set + curated battery)…")
-const verify = Verify.run({ battery: undefined }) // full verify (spawns build-evidence --check)
+const verify = Verify.run({ battery }) // full verify (spawns build-evidence --check) with the battery-count sub-check restored
 const m: Rollup.RunMeasured = { fullBattery, verify, goldenMoves: 0, at: "2026-07-14" }
 
 console.log("\n═══════════════ GENERATED HEADER (X-DERIVE(a) — the machine wrote these claims) ═══════════════")

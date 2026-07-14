@@ -10,8 +10,7 @@
  * in a new field. The honest limit: remote-tracking refs reflect the last fetch; the UNPUBLISHED case (empty) cannot
  * false-positive to published without an actual push, which is exactly the direction that matters for the kill-criterion.
  */
-import { spawnSync } from "node:child_process"
-import { PKG_ROOT } from "./frozen"
+import { Published } from "./published"
 
 export namespace Reach {
   export interface Fact {
@@ -22,14 +21,11 @@ export namespace Reach {
     reachableHumans: number | "UNJUDGEABLE"
   }
 
-  // DERIVE published: HEAD is reachable from a remote-tracking ref iff `git branch -r --contains HEAD` is non-empty.
+  // DERIVE published — Socket V37 (S109/DD-26): delegated to Published.derive, which fixes G-4's defect (the V35/V36
+  // predicate `git branch -r --contains HEAD` returned TRUE ON ANY CLONE). Publication now requires a remote containing HEAD
+  // whose URL is a PUBLIC HOST (a stranger can clone it) — a local-clone origin derives false, proven on the pristine clone.
   export function derivePublished(): { published: boolean; detail: string } {
-    const r = spawnSync("git", ["branch", "-r", "--contains", "HEAD"], { cwd: PKG_ROOT, encoding: "utf8" })
-    if (r.status !== 0) return { published: false, detail: `git could not determine remote reachability (${(r.stderr || "").trim().slice(0, 120)}) — treated as UNPUBLISHED (the safe direction; a false 'published' would be the X-RECKON defect)` }
-    const refs = (r.stdout || "").split("\n").map((s) => s.trim()).filter(Boolean).filter((s) => !s.includes("->"))
-    return refs.length > 0
-      ? { published: true, detail: `HEAD is reachable from remote ref(s): ${refs.join(", ")} (DERIVED — git branch -r --contains HEAD; the honest limit: reflects the last fetch)` }
-      : { published: false, detail: "no remote ref contains HEAD (DERIVED — git branch -r --contains HEAD returned empty); the commit is UNPUBLISHED — exactly one human (the Operator) can reach it" }
+    return Published.derive()
   }
 
   export function fact(opts: { installPath?: string; firstRunSeconds?: number | null } = {}): Fact {

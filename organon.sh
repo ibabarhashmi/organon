@@ -156,6 +156,11 @@ do_stamp() { need_bun; bun run script/stamp.ts $STAMP_ARG; }
 # is UNVERIFIED (stated, not assumed). The console stays behind --studio (V34-sealed); no key is embedded.
 do_release() { need_bun; bun run script/release.ts ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}; }
 
+# ── the SOCKET verb (Socket V37, S113) — MCP over stdio: a subprocess of the user's own agent (NO port, NO listener, NO
+# network, NO daemon). Class R and nothing else; the Fact Envelope is the only payload; every tool description states the
+# one limit ORGΛNON cannot solve (it cannot bind a downstream model). Register in an MCP client with command `organon socket`.
+do_socket() { need_bun; exec bun run script/socket.ts; }
+
 # ── the ASK verb — the grounded Ask console (Crown-Jewel; X-ASK), deterministic mode from the CLI (no AI key needed) ──
 # AB6 (D22): `set -u` + an empty-array expansion is fatal on stock macOS bash 3.2 — the ${arr[@]+…} form is the
 # bash-3.2-safe expansion, so `./organon.sh ask` with no query reaches the script's own honest usage line, not a shell error.
@@ -177,6 +182,7 @@ case "$MODE" in
   verify) do_verify;;
   stamp)  do_stamp;;
   release) do_release;;
+  socket) do_socket;;
   ask)    do_ask;;
   monitor) need_bun; bun run script/monitor-manifests.ts "${PASS_ARGS[@]}";;  # re-judge held manifests on the capture cadence (X-CADENCE; reads-never-acts; no daemon)
   telemetry) do_telemetry;;

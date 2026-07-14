@@ -18,6 +18,10 @@
     "pbo": 0.6,
     "pboPurgedcv": 0.6,
     "pboDiff": 0,
+    "pboHandRolled": 0.6,
+    "pboHandRolledDiff": 0,
+    "pboTheoryUnderNoise": 0.5,
+    "pboVsTheory": 0.09999999999999998,
     "cscvAlignment": {
       "S": 8,
       "metric": "mean/std ddof=1 (rigor._col_sharpe == purgedcv.sharpe)",

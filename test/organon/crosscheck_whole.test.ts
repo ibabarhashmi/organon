@@ -38,12 +38,14 @@ test("S101 — X-DERIVE(f): the tolerance is READ FROM THE PINS, never a call-si
   expect(CrossCheck.tolerance("pbo")).toBe(pins.preRegisteredTolerances.pbo)
 })
 
-test("S101 — Signability.d33() is COMPUTED from all three (X-DERIVE(e)); this sprint SIGNABLE (whole), and operatorSigned is false (LN5)", () => {
+test("S101 — Signability.d33() is COMPUTED from all three; consistency HOLDS, but Socket V37/G-3 added CORRECTNESS legs and D33 went BACKWARD (operatorSigned false, LN5)", () => {
   const d = Signability.d33()
-  expect(d.agreed.sort()).toEqual(["dsr", "pbo", "psr"])
+  expect(d.agreed.sort()).toEqual(["dsr", "pbo", "psr"]) // consistency: all three still agree (rigor vs purgedcv)
   expect(d.disagreed).toEqual([])
-  expect(d.state).toBe("SIGNABLE")
-  expect(d.detail).toMatch(/met WHOLE/i)
+  // Socket V37 (S110/G-3): consistency is necessary but NOT sufficient — the THEORY leg (PBO 0.5 vs observed 0.6) fails,
+  // so D33 recomputes BACKWARD to PRECONDITION-MET-BY-CONSISTENCY-ONLY. V36's flat "SIGNABLE (whole)" was the G-3 defect.
+  expect(d.state).toBe("PRECONDITION-MET-BY-CONSISTENCY-ONLY")
+  expect(d.detail).toMatch(/went BACKWARD|consistency is not correctness/i)
   expect(d.operatorSigned).toBe(false) // LN5 — the precondition being met does NOT sign it
 })
 
