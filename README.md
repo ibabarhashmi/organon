@@ -15,6 +15,7 @@
   <a href="#the-reality-check">Reality Check</a> ·
   <a href="#the-opt-in-stamp">The Stamp</a> ·
   <a href="#the-ask-console">Ask Console</a> ·
+  <a href="#the-strategy-layer--set-a-kill-condition-see-what-it-would-have-cost">Strategy layer</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#capability-matrix">Capabilities</a> ·
   <a href="#usage">Usage</a>
@@ -128,6 +129,17 @@ A grounded front door: ask about any recorded strategy in your own words and get
 ./organon.sh ask "is aave-v3 USDC safe?"          # or open /ask in the browser
 ./organon.sh stamp <poolKey>                       # opt into the overfit Stamp (GO/NO-GO/INSUFFICIENT + decay + ICIR)
 ```
+
+## The strategy layer — set a kill-condition, see what it would have cost
+
+Beneath the three surfaces, the engine lets you file a strategy as a **content-hashed subject** — positions, a thesis written in advance, and a pre-registered **exit criterion** (your own kill-condition, fixed before the throw, un-editable without a disclosed re-pin). Two things then follow, and both are **facts, never advice**:
+
+- **The false-fire count — the number the tool was built to say.** ORGΛNON replays your exit criterion over the subject's captured history and tells you *how many times it would have fired* — a **count**, never a σ-band, never a prediction (DeFi observables are fat-tailed and autocorrelated; a confidently-wrong number is the one thing forbidden). Your own point-in-time captures **lead** (short today, growing every day the capture cadence runs); the deeper retrospective provider chart renders **beneath**, labeled as the weaker, revisable evidence, with the window disparity stated. On a real 771-day TVL chart a *30%-drawdown* exit would have fired **5** times; against USDC's real 459-day peg a *0.995 floor* fired **0** times — it held (a 0 is a useful number: your kill-condition would not have tripped). It states the count and stops; it never suggests a different threshold.
+- **Seven evaluable exit kinds.** `peg-floor` · `funding-flip-count` · `tvl-drawdown` · `governance-change` · `concentration-ceiling` · `oracle-staleness` (the curator-loss #1 root cause — an oracle that kept reporting \$1 while the asset collapsed, now a pre-registrable kill-condition, read from a real Chainlink `latestRoundData().updatedAt`) · `utilization-ceiling` (can you actually get out?). Each is a share, a duration, a ratio, or a count — **never a price**. A kind the engine cannot evaluate over captured facts is refused at registration, with the reason. Internally the seven reduce to three composable combinators (`when · count · changed`, after *Composing Contracts*, ICFP 2000), and a combinator that describes a condition **cannot place an order — the no-execution guarantee is enforced by the type system**, not a wall.
+
+**The Family Enumerator is an accountant, not a proposer.** State a filter — *"stablecoin lending on Ethereum above \$50M"* — and it counts the shelf members that satisfy it (a **set operation** over your own stated constraints) and **derives** where your pick sits — *"the highest-APY member of your stated filter, rank 1 of 2"* — without ever asking whether you were chasing yield, and **without authoring a manifest, ranking candidates, or suggesting an alternative**. Every variant you file is counted as a search and rendered beside your lineage in the order you filed it, because a comparison is permitted only when it carries its own price tag.
+
+**An MCP socket** (stdio, read-only) exposes the same engine facts to model clients as a typed **Fact Envelope** — falsification-shaped tool names, and the honest limit stated in every tool description: *ORGΛNON computes the fact; it cannot bind the model that reads it.*
 
 ## How it works
 
