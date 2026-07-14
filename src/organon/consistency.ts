@@ -26,15 +26,27 @@ export namespace Consistency {
 
   const CENSUS_BEFORE = 83 // the V35 baseline OU count (pinned; the census treatment's `before`)
 
+  // SUBSTANCE V38 (S121, H-5) — reclassified is a NAMED wall, not a residual plug. The V35→V36 treatment dropped OU 83→70:
+  // 12 via the DD-20 reFounding, and ONE — S94 — that flipped by an INCIDENTAL reference, NOT the treatment. Named here with
+  // proof it moved buckets (git-verified: V35 census 1aac04d8 had S94 as ORIGIN_UNRECORDED origin RP-1; now DEMONSTRATED via
+  // W-DV04, a reference added in a V36 Derive test — rigor_crosscheck/clone_pristine — not a reFounding). The check is
+  // TWO-DIRECTIONAL: NAMED_RECLASSIFIED.length must EQUAL the residual — a plug (naming a wall that did not move) FAILS, and an
+  // unnamed drop (the treatment under-counts) FAILS.
+  export const NAMED_RECLASSIFIED: { id: string; from: string; to: string; via: string }[] = [
+    { id: "S94", from: "ORIGIN_UNRECORDED (V35 census 1aac04d8, weak origin RP-1)", to: "DEMONSTRATED (route null, origin W-DV04)", via: "an INCIDENTAL W-DV04 reference added in a V36 Derive test (rigor_crosscheck/clone_pristine), NOT the DD-20 reFounding treatment — provably moved buckets, git-verified" },
+  ]
+
   // ── PURE, SEEDABLE reconcilers (S107 feeds them contradictions) ───────────────────────────────────────────────────────
-  // census: before − (recovered + reFounded + deleted + reclassified) === after, reclassified NAMED and NON-NEGATIVE.
-  export function reconcileCensus(before: number, after: number, recovered: number, reFounded: number, deleted: number): { reclassified: number; contradiction: Contradiction | null } {
+  // census: before − (recovered + reFounded + deleted) === after + reclassified, with reclassified a NAMED count checked in
+  // BOTH directions (S121): named-reclassified === the residual. named > residual (a plug) FAILS; named < residual (an unnamed
+  // drop) FAILS; a negative residual (the treatment over-claims the OU drop) FAILS.
+  export function reconcileCensus(before: number, after: number, recovered: number, reFounded: number, deleted: number, namedReclassified: number = NAMED_RECLASSIFIED.length): { reclassified: number; namedReclassified: number; contradiction: Contradiction | null } {
     const treated = recovered + reFounded + deleted
-    const reclassified = before - after - treated
-    return {
-      reclassified,
-      contradiction: reclassified < 0 ? { a: `census before ${before} → after ${after} (drop ${before - after})`, b: `treatment recovered ${recovered} + reFounded ${reFounded} + deleted ${deleted} = ${treated}`, why: `the treatment (${treated}) exceeds the actual OU drop (${before - after}) — reclassified ${reclassified} < 0 (a producer over-claims)` } : null,
-    }
+    const residual = before - after - treated
+    let contradiction: Contradiction | null = null
+    if (residual < 0) contradiction = { a: `census before ${before} → after ${after} (drop ${before - after})`, b: `treatment recovered ${recovered} + reFounded ${reFounded} + deleted ${deleted} = ${treated}`, why: `the treatment (${treated}) exceeds the actual OU drop (${before - after}) — residual ${residual} < 0 (a producer over-claims)` }
+    else if (namedReclassified !== residual) contradiction = { a: `NAMED reclassified count ${namedReclassified}`, b: `residual (before ${before} − after ${after} − treated ${treated}) = ${residual}`, why: `the NAMED reclassified walls (${namedReclassified}) do not equal the residual (${residual}) — ${namedReclassified > residual ? "a PLUG: a wall named that did not move" : "an UNNAMED drop: the treatment under-counts"} (S121, two-directional)` }
+    return { reclassified: residual, namedReclassified, contradiction }
   }
   // battery: full === prev + added − removed.
   export function reconcileBattery(prev: number, full: number, added: number, removed: number): { reconciles: boolean; contradiction: Contradiction | null } {
@@ -52,15 +64,11 @@ export namespace Consistency {
   // THE CENSUS RECONCILIATION — before − (recovered + reFounded + deleted + reclassified) === after, with `reclassified`
   // the NAMED residual (an incidental OU→DEMONSTRATED move) that must be NON-NEGATIVE. A negative residual is a
   // contradiction: the treatment counts more than the OU actually dropped.
-  export function censusReconciliation(): { after: number; reclassified: number; contradiction: Contradiction | null } {
+  export function censusReconciliation(): { after: number; reclassified: number; namedReclassified: number; contradiction: Contradiction | null } {
     const c = Falsify.census()
     const after = c.counts.ORIGIN_UNRECORDED
-    const treated = c.recovered + c.reFounded + c.deleted.length
-    const reclassified = CENSUS_BEFORE - after - treated // the residual, NAMED
-    const contradiction: Contradiction | null = reclassified < 0
-      ? { a: `census before ${CENSUS_BEFORE} → after ${after} (drop ${CENSUS_BEFORE - after})`, b: `treatment claims recovered ${c.recovered} + reFounded ${c.reFounded} + deleted ${c.deleted.length} = ${treated}`, why: `the treatment (${treated}) exceeds the actual OU drop (${CENSUS_BEFORE - after}) — reclassified would be ${reclassified} < 0 (a producer over-claims)` }
-      : null
-    return { after, reclassified, contradiction }
+    const r = reconcileCensus(CENSUS_BEFORE, after, c.recovered, c.reFounded, c.deleted.length, NAMED_RECLASSIFIED.length)
+    return { after, reclassified: r.reclassified, namedReclassified: r.namedReclassified, contradiction: r.contradiction }
   }
 
   // THE BATTERY RECONCILIATION — the full pass === prev + added − removed. A hand-typed added (the V36 FILE count) that

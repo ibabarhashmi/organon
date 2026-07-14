@@ -61,10 +61,14 @@ export namespace Claim {
   function currentPinsSha(): string {
     return currentPins()?.pinsSha ?? pins().pinsSha
   }
-  // the CURRENT sprint's pins (socket-pins for V37) — where lawsThisSprint + newProductCapability live. The Halt was LIFTED
-  // by the Operator's instruction (D53), so capability is 3 this sprint (DISCLOSED, not a Halt violation).
+  // the CURRENT sprint's pins — where lawsThisSprint + newProductCapability live. SUBSTANCE V38: the current pins are
+  // substance-pins.json (newProductCapability 0 — the three V37 capabilities are made TRUE, nothing new is added; the roadmap
+  // is OWED to V39). Falls back to socket-pins (V37), then derive-pins (a pre-V38 checkout).
   function currentPins(): { pinsSha: string; carried: { newProductCapability: number; lawsThisSprint: string } } | null {
-    try { return JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "socket-pins.json"), "utf8")) } catch { return null }
+    for (const f of ["substance-pins.json", "socket-pins.json"]) {
+      try { return JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", f), "utf8")) } catch { /* try the next */ }
+    }
+    return null
   }
 
   const REGISTRY: Record<string, () => { value: unknown; partial?: boolean }> = {

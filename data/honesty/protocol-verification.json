@@ -1,0 +1,15 @@
+{
+  "protocol": "protocol-verification",
+  "at": "2026-07-14",
+  "rule": "S120 / DD-36 / D59 (H-3) — the Socket pinned MCP protocol 2024-11-05 from MEMORY in July 2026 and loudly refused anything newer. X-HONEST: an unverified pin is UNVERIFIED. This record is the LIVE verification the blueprint mandated (DD-36: 'do NOT guess. Check the spec/SDK/changelog.'). The check RAN and PROVED H-3: the agent's recalled set (ending 2025-06-18) MISSED the current revision 2025-11-25 — a version pinned from memory is stale, live-demonstrated.",
+  "verified": true,
+  "source": "https://modelcontextprotocol.io/specification/versioning + /specification/2025-11-25/changelog (fetched live 2026-07-14)",
+  "currentVersion": "2025-11-25",
+  "verifiedRange": ["2024-11-05", "2025-03-26", "2025-06-18", "2025-11-25"],
+  "recalledRange": ["2024-11-05", "2025-03-26", "2025-06-18"],
+  "recalledWasStale": true,
+  "missedByRecall": ["2025-11-25"],
+  "finding": "the live check moved the answer — exactly H-3's point. The recalled set (what the agent would have pinned from memory) omitted 2025-11-25, the CURRENT revision; a Socket that pinned the recalled newest (2025-06-18) and refused anything newer would refuse every up-to-date client. NEGOTIATE, do not pin: the Socket accepts the whole verified range and refuses loudly only OUTSIDE it.",
+  "negotiationBehaviour": "initialize with an in-range clientVersion -> echo it back (speak the client's dialect); out-of-range -> refuse loudly naming the range; no version -> serve the newest (2025-11-25). A stale POINT-pin (one version only) is the defect S120 forbids.",
+  "changelogNote": "2025-11-25 supersedes 2025-06-18 (per the official changelog): OIDC discovery, tool icons, incremental scope consent, tool-name guidance, elicitation enum/URL modes, sampling tool-calling, tasks. Versioning is YYYY-MM-DD = last backwards-incompatible change; clients and servers MAY support multiple versions but MUST agree on one."
+}

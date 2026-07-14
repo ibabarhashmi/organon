@@ -15,6 +15,18 @@ export namespace Rigor {
   const PY = path.join(import.meta.dir, "py", ".venv", "bin", "python")
   const SRC = path.join(import.meta.dir, "..") // cwd so `-m backtest.py.crosscheck` resolves
 
+  // SUBSTANCE V38 (S116) — one leg of the PBO null distribution: the sampling mean/SD over pinned seeds and the z-distance.
+  export interface NullDist {
+    S: number
+    nSeeds: number
+    seedBase: number
+    mean: number
+    sd: number
+    empiricalSe: number
+    ci95: [number, number]
+    z: number
+  }
+
   export interface CrossCheck {
     executed: true
     dsr: number
@@ -33,6 +45,20 @@ export namespace Rigor {
     pboHandRolledDiff: number
     pboTheoryUnderNoise: number
     pboVsTheory: number
+    // ── SUBSTANCE V38 (S116/DD-33/RP-1) — THE POWER FIX: the null-distribution over pinned seeds at the underpowered S=8 and
+    // the adequately-powered S=16. The theory leg (V38) tests the POWERED estimate (nullDistS16.mean) with a z, not a single
+    // low-power draw; the S=8 result is preserved. Optional (older records / the harness without it read pbo as before).
+    s116PowerFix?: {
+      s8Legacy: { pbo: number; S: number; note: string }
+      poweredS16Single: { pbo: number; S: number; note: string }
+      nullDistS8: NullDist
+      nullDistS16: NullDist
+      theoryUnderNoise: number
+      band: number
+      toleranceUnchanged: number
+      sInsideFrozenSet: boolean
+      note: string
+    }
     cscvAlignment: { S: number; metric: string; split: string; purge: string; embargo: string; matrixOrientation: string; comparable: boolean }
     dataset: { kind: string; tier: string; trueSharpe: number; note: string }
     deflationCollapse: number

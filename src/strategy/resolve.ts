@@ -22,6 +22,8 @@ import { ExitCriterion } from "./exit"
 import { StrategyCompile } from "./compile"
 import { StrategyStore } from "./store"
 import { StrategyTrial } from "./trial"
+import { FalseFire } from "./falsefire"
+import { Provenance } from "./provenance"
 
 export namespace StrategyResolve {
   const GOV_DIR = path.join(PKG_ROOT, "data", "honesty", "governance")
@@ -91,7 +93,28 @@ export namespace StrategyResolve {
     return baseline != null && current != null ? baseline !== current : null
   }
 
-  export async function resolveAndCompile(manifest: Manifest.T, now: number, registeredAtMs?: number, baselineGovClass?: Record<string, string | null>): Promise<{ composed: StrategyCompile.Composed; view: Reality.ComposedView; resolved: Resolved[] }> {
+  // SUBSTANCE V38 (H-4) — the false-fire count rendered for the depositor. The count needs the scoped subject's captured
+  // OBSERVABLE series (tvl/peg); the readily-composed series is apyBase (yield), so a caller may INJECT a matching series
+  // (a materialized moat, or a test) and get a real count tiered RETROSPECTIVE. Absent → UNJUDGEABLE with the tier stated
+  // honestly (missing stays missing; the count runs where the moat is present, the own-capture window grows with the cadence).
+  export type FalseFireSeriesProvider = (subjectKey: string, kind: string) => { series: FalseFire.Point[]; provenance: Provenance.SeriesProvenance } | null
+
+  function falseFireView(manifest: Manifest.T, provider?: FalseFireSeriesProvider): Reality.FalseFireView | undefined {
+    const c = manifest.exitCriterion
+    const scope = c.subjectScope === "portfolio" ? manifest.positions[0]?.subjectKey : c.subjectScope
+    const injected = provider && scope ? provider(scope, c.kind) : null
+    if (injected) {
+      const r = FalseFire.count(c, injected.series, injected.provenance)
+      return { statement: `Replayed over ${scope}'s captured ${c.kind} history: ${r.why}`, tier: r.tier }
+    }
+    // no matching observable series materialized here — honest UNJUDGEABLE with the tier the count WOULD carry (X-HONEST).
+    return {
+      statement: `Replayed over the subject's captured ${c.kind} history: UNJUDGEABLE here — that observable series is not materialized in this view (the count runs where the moat is present; it states a COUNT, never a prediction, and never suggests a different threshold).`,
+      tier: `RETROSPECTIVE over a provider chart · REAL-at-timestamp over own captures (${Provenance.LADDER.join(" · ")})`,
+    }
+  }
+
+  export async function resolveAndCompile(manifest: Manifest.T, now: number, registeredAtMs?: number, baselineGovClass?: Record<string, string | null>, falseFireProvider?: FalseFireSeriesProvider): Promise<{ composed: StrategyCompile.Composed; view: Reality.ComposedView; resolved: Resolved[] }> {
     const resolved: Resolved[] = []
     for (const p of manifest.positions) {
       const r = await resolveSubject(p.subjectKey, now)
@@ -113,6 +136,8 @@ export namespace StrategyResolve {
       lines: composed.lines,
       compositeAbsence: StrategyCompile.COMPOSITE_ABSENCE,
       exitLine: composed.exit ? (composed.exit.judgeable ? `hash ${composed.exit.hash.slice(0, 8)}… · ${composed.exit.fired ? "FIRED" : "NOT FIRED"} — ${composed.exit.why}` : `hash ${composed.exit.hash.slice(0, 8)}… · ${composed.exit.why}`) : undefined,
+      // SUBSTANCE V38 (H-4) — the false-fire count for the depositor, with its corrected tier (RETROSPECTIVE/REAL-at-timestamp).
+      falseFire: composed.exit ? falseFireView(manifest, falseFireProvider) : undefined,
       // the trial-ledger readout — RECORDED, NEVER COUNTED; the inertness in plain words (render does NOT append a trial —
       // recording is an explicit act, not a page view; the committed fixture lineage backs the readout on a clone).
       trialReadout: StrategyTrial.readout(StrategyStore.manifestHash(manifest)),

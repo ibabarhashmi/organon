@@ -70,6 +70,34 @@ export namespace CrossCheck {
   }
 }
 
+// ── SUBSTANCE V38 (S116/DD-33/RP-1) — POWER: the A-PRIORI half of D33's fix ────────────────────────────────────────────
+// A point-tolerance test at `tol` on the PBO estimator can only succeed if the estimator's own sampling SE is BELOW `tol`.
+// PBO at split-count S is a mean over C(S, S/2) overlapping CSCV partitions; its NAIVE lower-bound SE is sqrt(0.25/C(S,S/2))
+// (the true SE is LARGER — the partitions overlap — so this is a lower bound: if even the lower bound exceeds the tolerance
+// the test is INVALID a-priori, X-REACH(a) read backwards). This is computable WITHOUT any result (RP-1): raising S is a
+// CORRECTION, not a tuning. The EMPIRICAL SE is measured separately (the null distribution in crosscheck.py) and SHOWN.
+export namespace Power {
+  // C(S, S/2) — the number of in-sample/out-of-sample partitions CSCV averages over.
+  export function combinations(S: number): number {
+    if (!Number.isInteger(S) || S < 2 || S % 2 !== 0) return NaN
+    const k = S / 2
+    let c = 1
+    for (let i = 0; i < k; i++) c = (c * (S - i)) / (i + 1)
+    return Math.round(c)
+  }
+  // the a-priori naive lower-bound SE of the PBO estimator at split-count S. N and T are accepted (the fuller argument uses
+  // them) but do NOT enter the combinatorial lower bound — the point is that S alone caps the achievable precision.
+  export function se(S: number, _N?: number, _T?: number): number {
+    const c = combinations(S)
+    return Number.isFinite(c) && c > 0 ? Math.sqrt(0.25 / c) : NaN
+  }
+  // a point-tolerance test at `tol` on an estimator with sampling SE `estimatorSe` can NEVER succeed if estimatorSe >= tol
+  // (X-REACH(a) read backwards). The a-priori validity check — no observed result needed.
+  export function testCanSucceed(tol: number, estimatorSe: number): boolean {
+    return Number.isFinite(estimatorSe) && estimatorSe < tol
+  }
+}
+
 // ── SOCKET V37 (S110/DD-25/G-3) — D33 IS CORRECTNESS, NOT CONSISTENCY ──────────────────────────────────────────────────
 // V36's D33 computed SIGNABLE on consistency alone: all three quantities came from ONE oracle (purgedcv) whose Sharpe is
 // byte-identical to rigor's, and PBO's delta was exactly 0.00e+0 — shared lineage, not independent confirmation. V37 adds
@@ -93,11 +121,28 @@ export namespace Correctness {
     const t = theoryPins()
     const consistency = CrossCheck.all(cc).every((a) => a.agrees === true)
     const oracleDelta = Math.abs(cc.pbo - cc.pboHandRolled)
-    const theoryDelta = Math.abs(cc.pbo - t.expected)
+    // SUBSTANCE V38 (S116/DD-33/RP-1): the theory leg tests the POWERED estimate, not a single low-power draw. V37 compared
+    // the single-seed PBO (0.6) to 0.5 against a 0.05 band — but the estimator's SE at S=8 is ~0.06, so 0.6-vs-0.5 was ~1 SE
+    // of ordinary noise: a point test on a random variable that could never succeed (X-REACH(a) backwards). The powered
+    // estimate is the null-distribution MEAN at the adequately-powered S=16 (SE collapses); the z is reported as the distance.
+    // the powered test is on the null-distribution MEAN. THE EMPIRICAL FINDING (S116): the single-estimate SD stays ~0.1 even
+    // at S=16 (the dataset-to-dataset variance dominates the within-dataset combinatorial averaging the naive SE captured),
+    // so a point/band test on ONE backtest can never succeed at any S — the real fix is to test the MEAN, whose SE is
+    // sd/√nSeeds. theory holds iff the mean is within the band AND statistically indistinguishable from theory (|z_mean| < 2).
+    const powered = cc.s116PowerFix?.nullDistS16
+    const observed = powered ? powered.mean : cc.pbo
+    const seMean = powered ? powered.sd / Math.sqrt(powered.nSeeds) : NaN
+    const zMean = powered ? (observed - t.expected) / seMean : NaN
+    const theoryDelta = Math.abs(observed - t.expected)
+    const theoryOk = powered ? theoryDelta <= t.band && Math.abs(zMean) < 2 : theoryDelta <= t.band
+    const zText = powered ? ` · empirical single-estimate SD ${powered.empiricalSe.toFixed(3)} (≫ band — one draw is noise at any S); mean over ${powered.nSeeds} seeds SE ${seMean.toFixed(4)}, z=(mean−${t.expected})/SE=${zMean.toFixed(2)}` : ""
+    const validNote = powered
+      ? `the POWERED estimate — the null-distribution MEAN at S=${powered.S} (the V37 single-seed 0.6 was ~1 SD of ordinary noise; a single PBO is inherently ±0.1, so a point/band test on one run can never succeed — S116)`
+      : `the single-seed PBO (no power fix present — V37 behaviour)`
     return {
       consistency: { ok: consistency, detail: consistency ? "rigor vs purgedcv: DSR/PSR/PBO all agree" : "a consistency disagreement (see CrossCheck.all)" },
       nonSharedOracle: { ok: oracleDelta < 0.02, detail: `hand-rolled CSCV (own Sharpe) PBO ${cc.pboHandRolled.toFixed(3)} vs rigor ${cc.pbo.toFixed(3)} · |Δ|=${oracleDelta.toFixed(4)} ${oracleDelta < 0.02 ? "< 0.02 (a third independent code path agrees)" : "≥ 0.02 (the algorithm itself diverges — a finding)"}` },
-      theory: { ok: theoryDelta <= t.band, expected: t.expected, observed: cc.pbo, band: t.band, detail: `observed PBO ${cc.pbo.toFixed(3)} vs the pinned theory ${t.expected} · |Δ|=${theoryDelta.toFixed(4)} ${theoryDelta <= t.band ? `≤ band ${t.band}` : `> band ${t.band} — theory DISAGREES (all three implementations agree on ${cc.pbo}, but the asymptotic CSCV expectation on pure noise is ${t.expected}; two/three programs agreeing cannot distinguish both-right from both-wrong, G-3)`}` },
+      theory: { ok: theoryOk, expected: t.expected, observed, band: t.band, detail: `${validNote}: PBO ${observed.toFixed(3)} vs the pinned theory ${t.expected} · |Δ|=${theoryDelta.toFixed(4)} ${theoryOk ? `≤ band ${t.band} and |z|<2 — theory AGREES on a VALID test (S116: the single-seed disagreement was low-power noise)` : `> band ${t.band} or |z|≥2 — theory DISAGREES on a VALID test: a REAL finding about rigor.py (D33 stays closed; a pen that closes on a valid test is worth more than one that opens on a broken one)`}${zText}` },
     }
   }
 }

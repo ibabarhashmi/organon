@@ -22,6 +22,49 @@
     "pboHandRolledDiff": 0,
     "pboTheoryUnderNoise": 0.5,
     "pboVsTheory": 0.09999999999999998,
+    "s116PowerFix": {
+      "s8Legacy": {
+        "pbo": 0.6,
+        "S": 8,
+        "note": "PRESERVED — the single-seed S=8 result (SEED 20260627); the test you do not get to delete (RP-1)"
+      },
+      "poweredS16Single": {
+        "pbo": 0.5533799533799534,
+        "S": 16,
+        "note": "the canonical seed at adequate power"
+      },
+      "nullDistS8": {
+        "S": 8,
+        "nSeeds": 200,
+        "seedBase": 20260714,
+        "mean": 0.49692857142857144,
+        "sd": 0.12694494465087253,
+        "empiricalSe": 0.12694494465087253,
+        "ci95": [
+          0.28535714285714286,
+          0.7575000000000001
+        ],
+        "z": -0.024194965619747093
+      },
+      "nullDistS16": {
+        "S": 16,
+        "nSeeds": 64,
+        "seedBase": 20260714,
+        "mean": 0.5079375485625486,
+        "sd": 0.10436465694984089,
+        "empiricalSe": 0.10436465694984089,
+        "ci95": [
+          0.33708624708624707,
+          0.6843240093240093
+        ],
+        "z": 0.07605590622851831
+      },
+      "theoryUnderNoise": 0.5,
+      "band": 0.05,
+      "toleranceUnchanged": 0.02,
+      "sInsideFrozenSet": false,
+      "note": "the theory leg (V38) tests the POWERED estimate null_s16.mean vs 0.5 with z = (mean-0.5)/empiricalSe; S=8's SE (nullDistS8.sd) >> tolerance, so the S=8 point-test could never succeed (X-REACH(a) backwards)."
+    },
     "cscvAlignment": {
       "S": 8,
       "metric": "mean/std ddof=1 (rigor._col_sharpe == purgedcv.sharpe)",

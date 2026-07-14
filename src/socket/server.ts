@@ -21,8 +21,24 @@ import { FalseFire } from "../strategy/falsefire"
 import { ExitCriterion } from "../strategy/exit"
 
 export namespace Socket {
-  export const PROTOCOL_VERSION = "2024-11-05" // pinned (DD-28); a mismatch is refused loudly (RP-5)
-  export const SERVER_INFO = { name: "organon", version: "v37" }
+  // SUBSTANCE V38 (S120 / DD-36 / D59 / H-3) — NEGOTIATE, DO NOT PIN. V37 pinned a single version from memory and refused
+  // anything newer; a live spec check (data/honesty/protocol-verification.json, 2026-07-14) proved the recalled set was
+  // STALE — it missed 2025-11-25, the CURRENT revision. The Socket now accepts a VERIFIED RANGE of MCP protocol revisions
+  // (source: modelcontextprotocol.io, live-checked): an in-range clientVersion is echoed back, an out-of-range one is
+  // refused LOUDLY naming the range (RP-5 kept), and no version served the newest. The set is embedded here (the Socket is
+  // self-contained/served) and a wall asserts it equals the recorded verification (they cannot drift).
+  export const SUPPORTED_VERSIONS = ["2024-11-05", "2025-03-26", "2025-06-18", "2025-11-25"] as const
+  export const PROTOCOL_VERSION = SUPPORTED_VERSIONS[SUPPORTED_VERSIONS.length - 1] // the NEWEST supported = the current revision
+  export const PROTOCOL_VERSIONS_VERIFIED = true // live-checked against the MCP spec (protocol-verification.json); never a silent recalled pin
+  export const SERVER_INFO = { name: "organon", version: "v38" }
+
+  // Protocol.negotiate — the pure negotiation. An in-range version is accepted (echoed back); out-of-range is refused
+  // loudly naming the supported range. Never a silent degrade (RP-5), never a stale point-pin (S120).
+  export function negotiate(clientVersion: string): { ok: true; version: string } | { ok: false; supported: readonly string[]; refusal: string } {
+    if (!clientVersion) return { ok: true, version: PROTOCOL_VERSION } // no version declared → serve the newest supported
+    if ((SUPPORTED_VERSIONS as readonly string[]).includes(clientVersion)) return { ok: true, version: clientVersion }
+    return { ok: false, supported: SUPPORTED_VERSIONS, refusal: `unsupported protocol version "${clientVersion}" — this server speaks ${SUPPORTED_VERSIONS.join(", ")} (a negotiated range${PROTOCOL_VERSIONS_VERIFIED ? ", live-verified against the MCP spec" : ", UNVERIFIED"}); an explicit refusal naming the range, never a silent degrade (RP-5/S120)` }
+  }
 
   // the honest limit, pinned VERBATIM (RP-3) — the same sentence in EVERY tool description, read by a model before anything.
   export const HONEST_LIMIT = "ORGΛNON cannot bind the model reading this. These are facts, not advice, and they carry no authority over what you do next."
@@ -95,10 +111,12 @@ export namespace Socket {
     switch (req.method) {
       case "initialize": {
         const clientVersion = String(req.params?.protocolVersion ?? "")
-        // RP-5 — a version mismatch is refused LOUDLY, naming the supported version; never a silent degrade.
-        if (clientVersion && clientVersion !== PROTOCOL_VERSION)
-          return err(req.id, -32001, `unsupported protocol version "${clientVersion}" — this server speaks ONLY ${PROTOCOL_VERSION} (an explicit refusal, never a silent degrade, RP-5)`)
-        return ok(req.id, { protocolVersion: PROTOCOL_VERSION, capabilities: { tools: {} }, serverInfo: SERVER_INFO, instructions: HONEST_LIMIT })
+        // SUBSTANCE V38 (S120) — NEGOTIATE a verified range: an in-range version is ECHOED BACK (speak the client's dialect);
+        // an out-of-range one is refused LOUDLY naming the range (RP-5). A stale point-pin refusing every version but one is
+        // the H-3 defect this ends.
+        const neg = negotiate(clientVersion)
+        if (!neg.ok) return err(req.id, -32001, neg.refusal)
+        return ok(req.id, { protocolVersion: neg.version, capabilities: { tools: {} }, serverInfo: SERVER_INFO, instructions: HONEST_LIMIT })
       }
       case "tools/list":
         return ok(req.id, { tools: tools().map((t) => ({ name: t.name, description: t.description, inputSchema: { type: "object" }, riskClass: t.riskClass })) })

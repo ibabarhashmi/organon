@@ -235,7 +235,7 @@ export namespace Reality {
   export const AFFORDANCE_LINE = "Have a strategy of your own? Author a manifest — the positions you hold, a thesis you set in advance, and an exit criterion the engine can check — and ORGΛNON gives it the same Reality Check. It judges what you're doing; it never tells you what to buy"
   export const DOOR_NEW_INTRO = "Declare a strategy of your own. List the positions you hold (each a subject the engine already knows, in your own units), write the thesis you are testing, and set an exit criterion in advance — the goalpost, fixed before the throw. ORGΛNON judges what you declare against the facts it captures. It suggests no position, ranks nothing, proposes no threshold, and never tells you what to buy. Every field below is yours; nothing is pre-chosen."
   export const DOOR_EDIT_INTRO = "Edit your own registered manifest. The fields below hold what YOU declared — ORGΛNON pre-fills nothing of its own. Changing a position or the exit criterion is a disclosed re-pin: the old and new content hashes are both recorded with your reason, never a silent overwrite."
-  export const DOOR_EXIT_HELP = "An exit criterion must be evaluable over facts the engine captures. Choose the kind, then a threshold; a kind the engine cannot read is refused at registration with the reason."
+  export const DOOR_EXIT_HELP = "An exit criterion must be evaluable over facts the engine captures. Choose the kind, then a threshold; a kind the engine cannot read is refused at registration with the reason. Once registered, ORGΛNON replays your criterion over the subject's captured history and shows how many times it would have fired — a COUNT, never a prediction, tiered by how the history was captured (REAL★/REAL-at-timestamp for point-in-time captures, RETROSPECTIVE for a provider chart fetched now). It states the number and stops; it never suggests a different threshold."
   export const DOOR_JOURNAL_HELP = "Optional. Your prior intent, in your words — local-first, never sent anywhere except through the existing consented export."
   export const DOOR_REFUSE_HEAD = "Refused before registration. Nothing was registered."
   export const DOOR_COPY = [AFFORDANCE_LINE, DOOR_NEW_INTRO, DOOR_EDIT_INTRO, DOOR_EXIT_HELP, DOOR_JOURNAL_HELP, DOOR_REFUSE_HEAD] as const
@@ -392,7 +392,20 @@ ${prov}${trust(c.facts.reality === "SAMPLE")}`
     compositeAbsence: string // the pinned D38-absence label (NO aggregate pill)
     trialReadout?: string // the ledger readout (Phase 4) — "N trials recorded; the deflation remains inert …"
     exitLine?: string // the exit-criterion registration + evaluation summary (rendered up top, the discipline made visible)
+    falseFire?: FalseFireView // SUBSTANCE V38 (H-4) — the false-fire count for the registered criterion, with its corrected TIER
     monitoring?: MonitoringView // the cadence lifecycle (Cadence sprint) — absent → the render is byte-identical to pre-cadence
+  }
+
+  // SUBSTANCE V38 (H-4) — the false-fire count rendered for a HUMAN (a fact only a machine can read is a fact the depositor
+  // does not have). It states the count and its TIER, never a suggested threshold/score/comparative (X-AUTHOR); it passes the
+  // ONE GUARD. When the subject's captured observable series is not materialized here, it renders UNJUDGEABLE with its tier —
+  // honestly, missing stays missing (the count runs where the moat is present; the own-capture window grows with the cadence).
+  export interface FalseFireView {
+    statement: string // the guard-passing count/UNJUDGEABLE statement
+    tier: string // a ladder member (REAL★ · REAL-at-timestamp · RETROSPECTIVE · UNJUDGEABLE)
+  }
+  export function renderFalseFireLine(ff: FalseFireView): string {
+    return `<div class="axis"><b>If you had held this exit — a COUNT over captured history, never a prediction</b><div>${esc(ff.statement)} <span class="badge ${ff.tier === "RETROSPECTIVE" || ff.tier === "UNJUDGEABLE" ? "SAMPLE" : "REAL"}">tier: ${esc(ff.tier)}</span></div></div>`
   }
 
   function renderMonitoringBlock(m: MonitoringView): string {
@@ -418,6 +431,7 @@ ${m.boundaryNote ? `<div class="muted">${esc(m.boundaryNote)}</div>` : ""}</div>
 <div class="muted">Every line below is <b>info/context</b>, number-traced, in the same grammar as the governance/catch lines — a FACT about the strategy, never advice about what to do with it (the compiler judges, never authors — X-ADVICE).</div>
 ${view.lines.map((l) => `<div class="axis"><div>${esc(l.text)}</div></div>`).join("\n")}
 ${view.exitLine ? `<div class="axis"><b>Your exit criterion — the goalpost, set before the throw</b><div>${esc(view.exitLine)}</div></div>` : ""}
+${view.falseFire ? renderFalseFireLine(view.falseFire) : ""}
 ${view.trialReadout ? `<div class="muted">${esc(view.trialReadout)}</div>` : ""}</div>`
       : ""
     const positionsBlock = view.positions

@@ -22,7 +22,11 @@ export namespace Release {
     built: { ran: boolean; binaryPath: string; sha256: string | null; sizeBytes: number | null; note: string }
     committedArtifactPath: string | null // a release artifact at a COMMITTED (git-tracked) path — null while dist/ is gitignored
     installLine: string
-    reproducibilityUnverified: true
+    reproducibilityUnverified: boolean // SUBSTANCE V38 (S127) — now COMPUTED from a two-build check, not a blanket true
+    // SUBSTANCE V38 (S127) — the verified (or NAMED) reproducibility result: two builds to the canonical outfile, two shas.
+    reproducible?: { verified: boolean; sha1: string; sha2: string; note: string }
+    // SUBSTANCE V38 (S120) — the negotiated MCP protocol range travels with the release manifest.
+    protocolRange?: { supported: string[]; current: string; verified: boolean }
   }
 
   export type Artifact = { path: string; sha256: string; installLine: string } | "ABSENT"

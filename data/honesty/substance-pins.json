@@ -1,0 +1,313 @@
+{
+  "protocol": "substance-pins",
+  "sprint": "THE SUBSTANCE SPRINT (V38) — A WALL PROVES THE SHAPE, NOT THE TRUTH. V37 shipped three capabilities after four sprints of freeze; all three passed every wall and all three were WRONG UNDERNEATH. (1) D33's theory check CANNOT SUCCEED — a 0.02 point-tolerance against an estimator whose own sampling SE at S=8 is ~0.06 (a point test on a random variable, failing by ordinary noise, blocking the pen forever). (2) The false-fire COUNT tiered a RETROSPECTIVE chart series flatly REAL — the provider's present opinion about the past, the exact look-ahead RP-2 was written to block and two-tier provenance was invented to express. (3) The Socket pinned protocol 2024-11-05 in July 2026 and loudly refused anything newer — a door built for reach that may refuse every client alive. NOT ONE of these is a missing law: X-REACH(a) forbids a check that cannot FAIL — read backwards, a check that cannot SUCCEED; X-MOAT demands a tier on every number; X-HONEST forbids an unverified pin; X-DERIVE(b) forbids a number in prose with no producer. THE CONSTITUTION WAS COMPLETE; THE APPLICATION WASN'T. NO NEW LAW, a SECOND sprint running — seventeen stand. This sprint ships Phases 0-4 (the never-shed corrections that make what shipped TRUE, plus the reproducible release) and adds ZERO new capability; the roadmap's two highest-conviction kinds (oracle-staleness, utilization-ceiling) and the combinator algebra are SPECIFIED IN FULL and OWED to V39 (the exit set stays at 5, its pre-registered trigger armed-not-fired — a trigger fires on a fact, never on a plan).",
+  "at": "2026-07-14",
+  "continues": "THE SOCKET SPRINT (V37) — PINS_SHA ab4900ee; battery 1668/2/0 across 257 files / 10720 expect() two identical runs; NO new law (seventeen); the Halt LIFTED by the Operator's instruction (D53 — recorded verbatim, inference separate, strikeable, counted as a SEARCH); three capabilities (the false-fire count, concentration-ceiling the 5th kind, the MCP stdio Socket) + V36's debt whole; committed 87daa8c9 tree 21296656 UNPUSHED",
+  "carriedFromPinsSha": "ab4900ee9d43e5fa8feb7a926632e92dd34876fc3b7be04d19512b7e494fdc12",
+  "noNewLaw": {
+    "rule": "V38 MINTS NO LAW. Seventeen stand, for the SECOND sprint running. V36's PART F pinned the rule in advance and it binds a second time: 'X-DERIVE is the last structural law this arc needs; if V37 wants another law, the arc is over.' V37 honored it; V38 honors it again. The sprint's thesis IS that seventeen were always enough — every V37 defect was an EXISTING law under-applied, and application is enforced by WALLS, not by legislation.",
+    "v36PartFPinQuoted": "X-DERIVE is the last structural law this arc needs; if V37 wants another law, the arc is over and the Socket ships instead.",
+    "aConstitutionThatContainsTheAnswer": "A constitution that already contains the answer to every new defect is not calcified — it is complete. The work from here is application, not legislation. Two sprints with no law is not a dead constitution; it is a done one."
+  },
+  "fourUnderAppliedLaws": {
+    "rule": "EVERY V37 DEFECT WAS AN EXISTING LAW UNDER-APPLIED. Named, so the thesis is checkable, not asserted.",
+    "xReachA_toTheTolerance": "X-REACH(a) — 'a check that cannot fail is not a check.' Read backwards: 'a check that cannot SUCCEED is not a check.' Applied to D33's 0.02 tolerance against an estimator SE of ~0.06 at S=8, it fires immediately. (S116)",
+    "xMoat_toTheTier": "X-MOAT — every number is REAL, content-hashed, or labeled SAMPLE. Applied to the false-fire count's retrospective source series, it fires immediately: a retrospective series is not REAL-star. (S118)",
+    "xHonest_toThePin": "X-HONEST — missing stays missing; unverified stays unverified. Applied to a protocol version pinned from a training-set memory, it fires immediately: an unverified pin is UNVERIFIED, not 'probably fine.' (S120)",
+    "xDeriveB_toTheProse": "X-DERIVE(b) — every claim has a producer. V37's phase PROSE contained two numbers that contradicted the generated header (1625+42=1667 vs 1668; a FILE-count Delta reported as a test Delta). A number in prose is a claim; it has no producer; it was already a violation. (S126)"
+  },
+  "d51Restated": {
+    "rule": "D51 — RESTATED, OPEN, UNANSWERED (LN5). Is ORGANON a PRODUCT, or an INSTRUMENT? The agent computes the fact and does NOT answer the question. D53 (V37) lifted the Halt on the Operator's instruction; it did not close D51, and V38 does not close it either. Simulating a signature is the gravest violation.",
+    "originalWords": "is ORGANON a product, or an instrument? The agent has computed the fact. It does not answer the question.",
+    "state": "OPEN"
+  },
+  "d53Carried": {
+    "rule": "D53 (V37) — the Halt was LIFTED by the Operator's instruction ('continue executing both the planned feature roadmap and issue resolution'), recorded verbatim, inference stated separately, strikeable, and COUNTED as a SEARCH. That lift PERSISTS into V38 (the roadmap continues under the same authorization); V38 incurs NO new optional-stopping (it ships corrections, not a re-pin of a pre-registered criterion). The halt-lift COUNT (1, from V37, after four sprints of a zero) is RENDERED at the gate. S122 makes its price honest: the SEARCH is committed and hash-chained in the record/, not appended to the strategy-trial ledger (a meta-event is not a strategy manifest — see d53Price).",
+    "haltLiftsCount": 1,
+    "liftedAfterSprintsOfZero": 4
+  },
+  "powerCalc_S116": {
+    "rule": "DD-33 / RP-1 (F-1, CRITICAL) — D33's theory check is made ABLE TO SUCCEED OR FAIL ON THE MERITS, without HARKing. THE A-PRIORI ARGUMENT, pinned BEFORE any recompute (it stands WITHOUT reference to the observed result): a point-tolerance test at 0.02 requires the estimator's sampling SE to be BELOW 0.02. PBO at CSCV split-count S is a mean over C(S, S/2) overlapping combinations; its naive lower-bound SE is sqrt(0.25 / C(S,S/2)). At S=8, C(8,4)=70 -> SE >= sqrt(0.25/70) ~ 0.0598 (and LARGER, because the combinations overlap). THEREFORE the S=8 experiment was NEVER a valid test of a 0.02 tolerance — and this was true before any PBO was computed. At S=16, C(16,8)=12870 -> SE ~ sqrt(0.25/12870) ~ 0.0044, comfortably inside the UNCHANGED, already-pinned 0.02.",
+    "route": "RAISE THE POWER, KEEP THE TOLERANCE (route a). Power is an A-PRIORI property, computable without any result. Re-running an underpowered experiment at adequate power (S=16) is not tuning — it is running it properly. NO threshold moves, NO SEARCH is incurred. The tolerance stays 0.02.",
+    "sIsInsideFrozenSet": false,
+    "sIsInsideFrozenSetProof": "rigor.pbo(matrix, n_splits: int = 8, ...) takes n_splits as a CALL-SITE PARAMETER (default 8); S=8 was a PIN (cscvAlignment.S in the pins), never frozen code. Raising S to 16 is a change to the HARNESS call (crosscheck.py, NOT in the frozen set), not to rigor.py. The frozen sha 58c88843 does not move. Verified in Phase 0 (F-1's mandate).",
+    "toleranceUnchanged": 0.02,
+    "seNaiveS8": 0.0598,
+    "seNaiveS16": 0.0044,
+    "combinationsS8": 70,
+    "combinationsS16": 12870,
+    "theoryExpectedPboUnderNoise": 0.5,
+    "theoryBand": 0.05,
+    "empiricalSeMandate": "RP-1/RP-2 — the EMPIRICAL SE is COMPUTED and SHOWN (not the naive lower bound): the whole PBO computation is run over >=200 independent seeds under a true-Sharpe-0 null, and the sampling SD of PBO is the empirical SE. The z = (observed_mean - 0.5)/SE is REPORTED as a NUMBER (the distance), never merely a boolean in/out (RP-2). The mean over the null seeds is the powered estimate of PBO; the single-seed S=8 result is not.",
+    "routeBIfNeeded": "IF route (a) were infeasible (it is not — S is a call param), the DISTRIBUTIONAL test: pin the acceptance region BEFORE computing — 'the observed PBO must lie inside the empirical 95% interval of PBO under a true-Sharpe-0 null over >=200 seeds' — the 95% level justified A-PRIORI (the conventional two-sided 0.05, chosen before the gap is known, RP-2), report the z, and disclose the change of TEST as D56 COUNTED AS A SEARCH. Route (a) is taken, so D56 does NOT fire and no search is incurred.",
+    "preservedResultMandate": "THE FAILED 0.02-at-S=8 RESULT STAYS IN THE RECORD FOREVER (rigor-crosscheck.json retains it under s8Legacy). You do not get to delete the test you failed.",
+    "surviving06Mandate": "IF, at adequate power (S=16), the null-distribution mean is STILL ~0.6 vs the theory 0.5 outside the band, that is a REAL DISAGREEMENT: D33 stays CLOSED (PRECONDITION-MET-BY-CONSISTENCY-ONLY or below) and it is a genuine finding ABOUT rigor.py — a pen that closes on a valid test is worth more than a pen that opens on a broken one.",
+    "wall": "S116"
+  },
+  "provenanceLadder_S117_S118": {
+    "rule": "DD-34 / RP-3 (F-3) — the false-fire count KNOWS WHAT ITS OWN HISTORY IS WORTH. THE PROVENANCE LADDER, pinned: REAL-star (ORGANON's OWN captures, genuinely point-in-time — content-hashed at the moment observed) > REAL@ts (a dated capture that may be revisable) > RETROSPECTIVE (a provider's PRESENT opinion about PAST values — a chart series subject to revision/backfill/reconstruction) > UNJUDGEABLE (revision exposure unestablishable, or below the window). A DefiLlama chart snapshot is RETROSPECTIVE, not REAL-star.",
+    "theFallbackPinnedBeforeTheAudit": "RP-3 (blocking) — the fallback is stated BEFORE the audit runs, so re-tiering cannot 'fix' the fact by deleting it. ORGANON has its OWN capture archive (data/dataplane/snapshots + provenance.jsonl) — content-hashed, point-in-time, tiered REAL-star, growing since Alpha. THE COUNT RUNS OVER ORGANON'S OWN CAPTURES (REAL-star, genuinely PIT) where they reach, and states the window it can cover (short today — likely below the 180-day floor -> UNJUDGEABLE, honestly, and the window grows every day the cadence runs). It MAY count over the retrospective series TOO, tiered RETROSPECTIVE, and show BOTH numbers side by side. Two numbers, two tiers, neither pretending — the X-MOAT-native answer.",
+    "shippedWrongForOneSprint": "X-HONEST — STATE that the false-fire fact shipped with a wrong tier (flat REAL) for ONE sprint. Its blast radius is ZERO because reachableHumans is 1 and published is false — a darkly funny vindication of the reach analysis, and it is said out loud, not enjoyed quietly.",
+    "positiveProvenanceAssertion_S117": "THE GENERAL FIX — a wall that only checks what a fact ISN'T is HALF A WALL. Every FACT wall must carry a POSITIVE provenance assertion (the tier is asserted to be a correct member of the ladder), not only negative shape assertions (no sigma, no score, no comparative). A seeded fact with a wrong-or-absent positive tier assertion FAILS the battery. Negative walls are cheap; positive walls are hard — and the positive one is the one that matters.",
+    "wireItH4": "H-4 — the count RENDERS at the DOOR (at exit registration, BEFORE the user commits) and in the DRAWER, with its corrected TIER stated beside it. 'A fact only a machine can read is a fact the depositor does not have.' It does not suggest a different threshold (X-AUTHOR — it refuses, it never coerces); a seeded suggestion/score/comparative at the render FAILS; it passes the ONE GUARD.",
+    "walls": [
+      "S117",
+      "S118"
+    ]
+  },
+  "publishedPredicate_S119": {
+    "rule": "DD-35 / D58 (F-8/H-8) — `published` CAN currently be satisfied by a PRIVATE repo (github.com is a public HOST; a private repo there is not publicly REACHABLE), and published feeds D50(iii) -> canFire. THE NARROWEST PREDICATE A PRIVATE/AUTHENTICATED REMOTE CANNOT SATISFY: not merely a public-host URL, but an UNAUTHENTICATED, credential-free public forge URL AND a release artifact recorded in the committed release-manifest with its SHA-256 — 'can an unauthenticated STRANGER retrieve it?' A remote URL carrying embedded credentials (user:pass@host, an access token) is NOT stranger-reachable and derives false; the safe direction on any doubt is UNPUBLISHED (a false 'published' fires the kill-criterion on a false premise).",
+    "narrowing": "isPublicRemoteUrl is TIGHTENED: a URL with an embedded userinfo/credential (user:token@host, oauth2:x-access-token@host) is REJECTED (a private/authenticated remote). published additionally requires the committed release-manifest to name a public artifact URL with a SHA-256 (an unauthenticated fetch target). No such artifact exists -> published stays false, which is CORRECT (D50(iii) is false anyway — a human's push).",
+    "seededNegative": "a seeded authenticated remote (https://ghp_TOKEN@github.com/owner/private.git) derives published:false; a seeded credential-free public remote WITH a manifest artifact would derive true.",
+    "wall": "S119"
+  },
+  "protocolNegotiation_S120": {
+    "rule": "DD-36 / D59 (F-9/H-3) — the Socket pinned 2024-11-05 from MEMORY in July 2026 and loudly refuses anything newer. X-HONEST: an unverified pin is UNVERIFIED. THE FIX: NEGOTIATE, do not pin. The Socket accepts a DECLARED RANGE of protocol revisions (the ones it can actually speak); on an initialize, it echoes back the client's version IF it is in the supported range, else refuses LOUDLY naming the range (RP-5's behaviour, kept). If the current revision cannot be VERIFIED, the supported set is marked UNVERIFIED in the handshake instructions and it is a first-class gate item — never a silent stale pin.",
+    "supportedRange": [
+      "2024-11-05",
+      "2025-03-26",
+      "2025-06-18"
+    ],
+    "supportedRangeProvenance": "the MCP specification's published protocol revisions as recalled by the agent (2024-11-05 the initial, 2025-03-26, 2025-06-18). VERIFICATION STATUS is recorded honestly at build time: if a live spec/changelog check succeeds it is VERIFIED with the source; if egress is unavailable the set is UNVERIFIED and the handshake SAYS SO. The negotiation RANGE (accept several, refuse loudly outside) is the fix regardless of verification — a range that includes the client's version does not refuse it.",
+    "negotiate": "initialize with a supported clientVersion -> echo it back (speak the client's dialect); initialize with an out-of-range version -> refuse loudly naming the supported range; initialize with no version -> serve the newest supported. A stale POINT-pin (refusing every version but one) FAILS S120.",
+    "wall": "S120"
+  },
+  "censusBothDirections_S121": {
+    "rule": "H-5 — THE CENSUS WALL MAY ONLY FAIL IN ONE DIRECTION. A fifth bucket — reclassified: 1 — appeared, described in prose, with NO wall named, and the failure condition is only 'a negative residual.' If reclassified is DERIVED from the residual, the equation is an IDENTITY, not a check — a plug. THE FIX: reclassified is an INDEPENDENTLY-NAMED count (the specific wall(s) whose OU->DEMONSTRATED move came from an INCIDENTAL new reference, not the census treatment), and the check is TWO-DIRECTIONAL: named-reclassified === residual (before - after - treated). named > residual (a plug: naming walls that did not move) FAILS; named < residual (the treatment over-counts, the OU dropped more than named accounts for) FAILS.",
+    "reclassifiedResidual": 1,
+    "namedReclassifiedMandate": "the reclassified wall(s) are NAMED in Consistency.NAMED_RECLASSIFIED with proof they moved buckets by an incidental reference (a new test file added a control/W-tag to a pre-existing OU wall, not the DD-20 re-founding treatment). The count of named === the residual, checked both ways. A seeded plug (an extra name, or a missing name) FAILS S121.",
+    "wall": "S121"
+  },
+  "d53Price_S122": {
+    "rule": "H-6 — D53's PRICE WAS RENDERED, NOT PAID. The sentence 'Halt lifts: 1' is printed; the ledger HASH is absent. THE HONEST RESOLUTION: the X-RECKON strategy-trial ledger counts SEARCH/OBSERVATION over strategy MANIFESTS (lineage ids). A Halt-lift is a META-event (a sprint-level optional-stopping), NOT a strategy manifest — appending it to the strategy ledger would corrupt trialsPerFamily for a non-strategy. So there is NO coherent append site in the STRATEGY ledger, and the log STOPS claiming it was 'appended to the ledger.' Instead the SEARCH is committed and HASH-CHAINED in the record/ (halt-lifts.json folded into record/chain.json), carrying a real immutable hash — the price IS paid in the moat (the committed, hash-chained record), just not in the strategy-trial ledger, and the language is corrected to say exactly that.",
+    "resolution": "halt-lifts.json is added to the record/ hash-chain (script/honesty/record-chain.ts); the chain head hash IS the ledger hash the price carries; the log says 'committed and hash-chained in record/ (the strategy-trial ledger is not a coherent site for a meta-event)' — not 'appended to the strategy ledger.'",
+    "wall": "S122"
+  },
+  "corpus_S123": {
+    "rule": "H-7 / RP-6 (F-6) — RP-6 WAS OMITTED, AGAIN (owed twice, dropped twice). The guard has caught exactly ONE thing in FOUR sprints, and it now protects two new fact types and a tool manifest read by an unbounded downstream model. THE CORPUS GROWS against the THREE NEW SURFACES, from a DIFFERENT author: baits that try to turn a FALSE-FIRE COUNT into a threshold recommendation, a CONCENTRATION SHARE into a sell signal, and a SOCKET TOOL DESCRIPTION into an instruction. The catch OR the non-catch is STATED.",
+    "threeNewSurfaces": [
+      "the false-fire count (a count -> a threshold recommendation)",
+      "the concentration share (a share -> a sell signal)",
+      "the Socket tool description (a description -> an instruction)"
+    ],
+    "differentAuthor": "a different-author model generates the baits (V36's gpt-oss-120b precedent); the corpus is committed with its author recorded.",
+    "guardEfficacyRP7": "RP-7 (F-7) — the terminal clause fires on the PROVENANCE of the catch, not its existence: a catch counts toward efficacy ONLY IF the bait came from a different author AND the bait's angle was NOT enumerated in the pins. guardEfficacy is COMPUTED and PRINTED whatever the catch count says. TERMINAL CLAUSE: a FIFTH consecutive sprint with zero qualifying catches means the guard's efficacy is UNJUDGEABLE and the CORPUS is the weak wall — not the guard — and the gate MUST say so.",
+    "wall": "S123"
+  },
+  "prose_S126": {
+    "rule": "H-9 / MR16 — PROSE MAY NAME A PRODUCER; IT MAY NEVER RESTATE A VALUE (X-DERIVE(b), under-applied — V37's prose contradicted its own generated header twice). A number in prose is a claim with no producer. The wall greps the generated build log's PROSE for bare numeric values that restate a producer's output, AND covers spelled-out numbers; prose that NAMES a producer (e.g. 'the battery producer's pass count') passes, prose that RESTATES a value (e.g. '1668 tests') on a claim line FAILS.",
+    "positiveRule": "stated positively (attack #7): prose may NAME a producer; the only numbers allowed inline are those that are structurally not producer-claims (dates, wall ids like S116, law counts that ARE the pinned constant 17, version tags). A wall greps the log body for digit-runs on claim lines and flags any that duplicate a producer's current value without naming the producer.",
+    "wall": "S126"
+  },
+  "release_S127": {
+    "rule": "PHASE 4 — THE RELEASE, REPRODUCIBLE (S127). bun build --compile twice -> identical SHA-256, or the non-reproducibility is NAMED (V35 and V37 both said UNVERIFIED; verify it or own it). The release manifest carries the checksum, the NEGOTIATED protocol range, and the one-line install. D50's checkboxes compute — (iii) published is still false (a human's push).",
+    "wall": "S127"
+  },
+  "owedToV39_roadmap": {
+    "rule": "PHASES 5-7 ARE SPECIFIED IN FULL AND OWED TO V39. This sprint ships the never-shed core (1-3) + the release (4) and adds ZERO capability. The two roadmap kinds and the algebra are pinned here so V39 pulls them without re-deriving; the exit set stays at 5 and the trigger is ARMED, NOT FIRED (a trigger fires on a FACT — the set actually reaching 7 — never on a plan). Shipping only 1-4 is a SUCCESSFUL sprint (the shed order blesses it); the roadmap sheds honestly, not silently.",
+    "oracleStaleness_S124_D60_DD37_RP4": "the SIXTH kind. Observable: now - feed.updatedAt (seconds) AND 'feed is a hard-coded constant' (boolean) — deterministic contract reads over the governance screen's EXISTING RPC surface (add no provider not needed). Content-hashed and TIERED like every capture; UNJUDGEABLE without the read. RP-4 (blocking): SCOPE THE COVERAGE HONESTLY BEFORE BUILDING — a DeFiLlama pool id is not an oracle address; resolving 'which feed does this pool's collateral use' is per-protocol, bespoke, brittle. It resolves for a NAMED, PINNED subset of protocols and renders UNJUDGEABLE for every other pool (most of them). PIN the coverage fraction (n/1284 pools) before building; a 6th kind UNJUDGEABLE for 95% of the shelf is a DECORATION (this project counted 83 of those) and does NOT ship. The RPC is a NEW EXTERNAL SURFACE — named, its exposure disclosed as D60, a public/self-hostable endpoint preferred. No prediction, no price: seconds and a boolean.",
+    "utilizationCeiling_S124_DD38": "the SEVENTH kind. Lending-pool utilization from the lending senses (oracle-proven PIT) ORGANON already captures — free if already present (DD-38), costed if not. 'A vault that had become the dominant supplier in a single market and could not exit.' UNJUDGEABLE without the input. A dimensionless ratio, never a value.",
+    "algebra_S125_DD39_RP5": "the Peyton Jones/Eber/Seward lineage (Composing Contracts, ICFP 2000; LexiFi MLFi): Obs (a time-varying observable) + when/count/changed, ~100 lines, non-executable BY TYPE (a combinator that describes a condition cannot place an order — X-ADVICE by the type system). ADDITIVE OR IT DOES NOT SHIP (S125): every existing kind serializes BYTE-IDENTICALLY (when(peg<0.995) produces exactly the bytes {kind:'peg-floor',threshold:0.995} produces today). RP-5 (blocking) — the wall is TWO-SIDED: (i) every fixture lineage id UNCHANGED, AND (ii) every fixture cycle's exit EVALUATION output byte-identical (including UNJUDGEABLE cases). Serialization identity without evaluation identity is a trap. Cedar remains rejected in its favour. If byte-identity cannot be proven, it DOES NOT SHIP.",
+    "triggerArmedNotFired_DD40": "the exit-set trigger (a 7th kind, or the first composed exit) is ARMED, NOT FIRED. The set stays at 5 this sprint. IF a future sprint takes the set to 7, ORGANON applies X-CADENCE TO ITSELF: the firing is recorded as a FACT with its hash, never as an instruction — a tool that renders its own fired exits as facts does not get an exception for itself. This sprint records: the trigger did NOT fire (the set did not reach 7), and that is the honest state, not an evasion.",
+    "orderingRule_RP6": "IF the door ever offers more than a handful of kinds, the ordering is MECHANICAL and DISCLOSED — the pinned EXIT_KINDS enum order, asserted by a wall — never editorial ('recommended first' / 'most common' is a Halt). Pinned now so V39 inherits it."
+  },
+  "walls": {
+    "count": 127,
+    "wallMax": 127,
+    "built": [
+      "S116",
+      "S117",
+      "S118",
+      "S119",
+      "S120",
+      "S121",
+      "S122",
+      "S123",
+      "S126",
+      "S127"
+    ],
+    "owed": [
+      "S124 (oracle-staleness + utilization-ceiling — Phases 5/6, OWED to V39)",
+      "S125 (the combinator algebra — Phase 7, OWED to V39)"
+    ],
+    "S116": {
+      "wall": "D33'S TEST IS ABLE TO SUCCEED OR FAIL ON THE MERITS — the empirical SE is computed over >=200 null seeds and SHOWN; the z=(mean-0.5)/SE is a NUMBER not a boolean; the power route (raise S, no threshold moved) incurs NO search; the S=8 failed result is PRESERVED; a tolerance narrower than the estimator's own SE FAILS; if 0.6 survives adequate power D33 stays closed (a real finding).",
+      "origin": "H-1 — D33's theory check CANNOT SUCCEED: a 0.02 point-tolerance against an estimator whose sampling SE at S=8 is ~0.06 (C(8,4)=70). 0.6 vs 0.5 is ~1.7 SE, ordinary noise. Three implementations agree because they are right; the INSTRUMENT is a point test on a random variable, blocking the pen forever. X-REACH(a) read backwards."
+    },
+    "S117": {
+      "wall": "EVERY FACT WALL CARRIES A POSITIVE PROVENANCE ASSERTION — a fact's tier is asserted a correct member of the ladder (REAL-star|REAL@ts|RETROSPECTIVE|UNJUDGEABLE), not only negative shape assertions; a seeded fact with a wrong-or-absent positive tier FAILS.",
+      "origin": "H-2 general — the false-fire wall checked everything the fact ISN'T (no sigma, no score, no comparative) and NOTHING about what it IS. Negative walls are cheap; positive walls are hard, and nobody wrote the one that matters."
+    },
+    "S118": {
+      "wall": "A RETROSPECTIVE SERIES TIERED REAL-star FAILS — the false-fire count runs over ORGANON's OWN captures (REAL-star, PIT) where they reach and states the window (UNJUDGEABLE below the floor, honestly); a DefiLlama chart series is tiered RETROSPECTIVE; both may show side by side, neither pretends.",
+      "origin": "H-2 — the false-fire count tiered a retrospective chart series (the provider's present opinion about the past, subject to revision/backfill) flatly REAL — the exact look-ahead RP-2 was written to block and two-tier provenance was invented to express. A shipped fact, in the Socket, with a wrong tier."
+    },
+    "S119": {
+      "wall": "PUBLISHED IS FALSE FOR A PRIVATE/AUTHENTICATED REMOTE — a URL with embedded credentials (user:token@host) derives false; published additionally requires a committed release-manifest artifact URL + SHA (an unauthenticated stranger fetch); the safe direction on doubt is UNPUBLISHED.",
+      "origin": "H-8 — published could be satisfied by a PRIVATE repo: github.com is a public HOST; a private repo there is not publicly REACHABLE; and published feeds D50(iii) -> canFire, the kill-criterion's ending condition. A predicate that returns true without stranger-reachability could fire the kill-criterion on a false premise."
+    },
+    "S120": {
+      "wall": "THE SOCKET NEGOTIATES A RANGE — a supported clientVersion is echoed back; an out-of-range version is refused loudly naming the range; a stale POINT-pin (one version only) FAILS; an unverifiable revision set is marked UNVERIFIED in the handshake, never a silent stale pin.",
+      "origin": "H-3 — the Socket pinned protocol 2024-11-05 from memory in July 2026 and loudly refused anything newer. The refusal behaviour is correct (RP-5); the PIN is unverified — a version recalled, not checked. A door built for reach that may refuse every client alive is not a door — the sprint's single largest production risk."
+    },
+    "S121": {
+      "wall": "THE CENSUS WALL FAILS IN BOTH DIRECTIONS — reclassified is a NAMED wall (Consistency.NAMED_RECLASSIFIED) that provably moved buckets by an incidental reference, not a residual plug; named-reclassified === residual, checked both ways (named > residual FAILS, named < residual FAILS); a seeded plug (extra or missing name) FAILS.",
+      "origin": "H-5 — a fifth bucket reclassified:1 appeared, in prose, with no wall named, and the failure condition was only 'a negative residual.' If reclassified is derived from the residual the equation is an identity, not a check — a plug. The defect this wall was built to eliminate, reintroduced inside the eliminating wall."
+    },
+    "S122": {
+      "wall": "D53'S SEARCH CARRIES A LEDGER HASH — halt-lifts.json is committed and hash-chained in record/ (chain head IS the hash); the log says 'committed and hash-chained in record/', NOT 'appended to the strategy ledger' (a meta-event is not a strategy manifest — no coherent strategy-ledger append site, said honestly).",
+      "origin": "H-6 — D53's price was rendered ('Halt lifts: 1') but not paid: the ledger hash was absent, and the Halt-lift's legitimacy rests on the SEARCH being in the moat. A sentence in a generated header is not the moat."
+    },
+    "S123": {
+      "wall": "THE CORPUS GROWS AGAINST THE THREE NEW SURFACES, FROM A DIFFERENT AUTHOR — baits turning a false-fire count into a threshold rec, a concentration share into a sell signal, a Socket tool description into an instruction; guardEfficacy COMPUTED (a catch counts only if different-author AND angle-not-enumerated, RP-7); a fifth zero-catch sprint prints guardEfficacy:UNJUDGEABLE and names the CORPUS the weak wall.",
+      "origin": "H-7 / RP-6 — the corpus was owed twice and dropped twice; the guard has caught one thing in four sprints and now protects two new fact types and a tool manifest read by an unbounded downstream model."
+    },
+    "S126": {
+      "wall": "PROSE NAMES A PRODUCER, NEVER RESTATES A VALUE — the generated build log's claim-line prose is grepped for bare numeric values (and spelled-out numbers) that duplicate a producer's output without naming the producer; a seeded restated value FAILS; a producer-naming line passes.",
+      "origin": "H-9 / MR16 — V37's phase prose contained two numbers that contradicted the generated header (1625+42=1667 vs 1668; a FILE-count Delta reported as a test Delta). A number in prose is a claim; it has no producer; it was already an X-DERIVE(b) violation."
+    },
+    "S127": {
+      "wall": "THE RELEASE IS BYTE-REPRODUCIBLE OR ITS NON-REPRODUCIBILITY IS NAMED — bun build --compile twice -> identical SHA-256 (or a named, honest non-reproducibility, never a silent UNVERIFIED); the manifest carries the checksum, the negotiated protocol range, and the one-line install; D50(iii) computes false.",
+      "origin": "V35 and V37 both said the release was 'UNVERIFIED' and moved on. An unverified reproducibility claim is exactly the pin X-HONEST forbids — verify it or own it."
+    }
+  },
+  "shedOrder": {
+    "rule": "F-5 (attack) — eight phases; V37 shipped four and dropped the residues. SHED ORDER PINNED AND ENFORCED: Phases 1, 2, 3 NEVER SHED (correctness of what shipped, the completion of a half-shipped fact, the guard's missing evidence). Then the ALGEBRA (Phase 7) sheds FIRST, then utilization-ceiling (6), then oracle-staleness (5), then the release (4). A sprint that ships ONLY Phases 1-3 is a SUCCESSFUL sprint. THIS SPRINT ships Phases 1-3 + 4 (the release, most-protected of the sheddable) and OWES 5/6/7 to V39 — disclosed, not silent.",
+    "order": [
+      "Phase 1 (S116/S119/S120 — the three that shipped wrong) NEVER sheds",
+      "Phase 2 (S117/S118 + H-4 — the fact made honest and visible) NEVER sheds",
+      "Phase 3 (S121/S122/S123/S126 — the unpaid debts) NEVER sheds",
+      "Phase 4 (S127 — the release) SHIPPED (sheds last of the sheddable)",
+      "Phase 5 (S124 oracle-staleness) OWED to V39",
+      "Phase 6 (S124 utilization-ceiling) OWED to V39",
+      "Phase 7 (S125 the algebra) OWED to V39 (sheds first)"
+    ],
+    "shippedThisSprint": [
+      "Phase 0",
+      "Phase 1",
+      "Phase 2",
+      "Phase 3",
+      "Phase 4",
+      "Phase 8 (the gate)"
+    ]
+  },
+  "deviations": {
+    "D56": "NOT INCURRED — the PBO test type does NOT change (route (a): raise S in the harness, tolerance 0.02 unchanged, no search). D56 would fire ONLY if the distributional test replaced the point tolerance; it does not. Recorded as considered-and-not-triggered. operatorSigned=false.",
+    "D57": "PRESENTED — the false-fire count's tier is CORRECTED: a retrospective chart series is RETROSPECTIVE, ORGANON's own captures are REAL-star; the fact shipped with a wrong (flat REAL) tier for one sprint, blast radius zero (reachableHumans 1, published false). operatorSigned=false.",
+    "D58": "PRESENTED — the published predicate is NARROWED: a private/authenticated remote derives false; published additionally requires an unauthenticated public artifact + SHA. operatorSigned=false.",
+    "D59": "PRESENTED — the Socket NEGOTIATES a range of protocol revisions rather than pinning a point; an unverifiable revision set is marked UNVERIFIED in the handshake. operatorSigned=false.",
+    "D60": "OWED-TO-V39 — the oracle-staleness RPC is a new external surface; its exposure would be disclosed exactly as DeFiLlama's non-commercial exposure is, a public/self-hostable endpoint preferred. NOT incurred this sprint (Phase 5 owed). operatorSigned=false.",
+    "D61": "NOT INCURRED — the exit-set trigger did NOT fire (the set stays at 5; the two new kinds are owed). IF a future sprint reaches 7, the firing is recorded as a FACT with its hash (DD-40). operatorSigned=false.",
+    "D53": "CARRIED — the Halt lifted by the Operator's instruction (V37); the lift persists (the roadmap continues under the same authorization); the halt-lift count (1) is RENDERED at the gate; S122 makes its price honest (committed and hash-chained in record/). operatorSigned=false.",
+    "D51": "RESTATED, OPEN, UNANSWERED (LN5) — is ORGANON a product or an instrument? The agent did not answer it.",
+    "D42": "OPEN — the Socket-vs-API ruling, owed for TWELVE sprints. The stdio Socket does not touch it (no port/listener/network/hosting/accounts); D42 stays open and the hosted/HTTP tier PERMANENTLY REJECTED. And the DeFiLlama non-commercial exposure would be joined by an RPC exposure if oracle-staleness ships — the Operator owes a data-posture ruling. operatorSigned=false.",
+    "D33": "CARRIED — recomputed on a VALID test this sprint (S116): the empirical SE is shown, the z reported; its state is whatever the powered null distribution yields, and if 0.6 survives adequate power it STAYS closed (a real finding about rigor.py). A pen that opens on a valid test is as honest as a pen that closes on one; a pen that opens on a BROKEN test is neither. operatorSigned=false.",
+    "D50": "CARRIED — the kill-criterion's four checkboxes COMPUTE; (iii) published computes false (S119). operatorSigned=false.",
+    "D46": "CARRIED — presented, not implemented (gates.ts byte-untouched). operatorSigned=false.",
+    "carried": "D1-D55 carried; D23-D61 all operatorSigned=false; D27 STILL FIRST — this sprint makes it the THIRTEENTH. IN2/IN4/AF4/PUBLICATION/the curator conversation OWED-OPERATOR-GATED; the agent presents the whole gate and NEVER signs it (LN5).",
+    "deviationOrderAppend": [
+      "D56",
+      "D57",
+      "D58",
+      "D59",
+      "D60",
+      "D61"
+    ]
+  },
+  "mr13_mr16": {
+    "MR13": "MR9's root cause (unattributed tests) was fixed FORWARD by S108 (mint-time origin); MR13 confirms no V37/V38 test is unattributed (the census shows every wall's origin). Discharged-forward.",
+    "MR16": "the prose-contradicts-header defect (V37's 1625+42=1667 vs 1668) is closed by S126 — prose may name a producer, never restate a value."
+  },
+  "adversarialRecord_partA": {
+    "rule": "PART A' — 10 attacks, each with its binding consequence, attacked BEFORE design. findings_closed_substance asserts each consequence holds in the shipped code.",
+    "A1_changingTheTestIsHARKing": "THE SHARPEST ATTACK — 'the instrument was invalid' is exactly the excuse a user would give and you would not accept it. Answered: DD-33's preferred route COSTS NO SEARCH — power is A-PRIORI (SE at S=8 is ~0.06 > 0.02 regardless of the observed PBO), so raising S to 16 is running the experiment PROPERLY, not tuning. The tolerance 0.02 does NOT move. IF the test TYPE had to change (point -> distributional) that WOULD be a search, disclosed as D56 and counted — it does not, so it isn't. The failed 0.02-at-S=8 result STAYS in the record forever. You do not get to delete the test you failed.",
+    "A2_reTieringAShippedFact": "TRUE — a wrong tier left the building through the Socket to downstream models. Corrected loudly (D57); exposure stated: reachableHumans 1, published false, blast radius ZERO — a darkly funny vindication of the reach analysis, said out loud. S117 makes the class unrepeatable: every FACT wall carries a POSITIVE provenance assertion.",
+    "A3_oracleStalenessAddsATrustedThirdParty": "VALID, a real new surface — so it is OWED to V39, not smuggled. IF it ships, the RPC read is a CAPTURE graded like every capture (content-hashed, tiered, UNJUDGEABLE without it), its provider named with exposure disclosed (D60), a public/self-hostable endpoint preferred, mass path staying at TWO dependencies. RP-4: it ships only for a pinned subset with a disclosed coverage fraction, never as a decoration.",
+    "A4_algebraMovesALineageId": "FATAL if it happens — the exit criterion is inside the content hash. S125: ADDITIVE OR IT DOES NOT SHIP; the wall is TWO-SIDED (every fixture lineage id before===after AND every exit evaluation byte-identical, RP-5). OWED to V39; V33 proved the shape (act was addable because it was OUTSIDE the hashed payload; the exit criterion is INSIDE it, so the algebra changes the internal representation and not one byte of the wire format — or it does not ship).",
+    "A5_eightPhasesShipFourDropResidues": "THE REALISTIC FAILURE MODE, and V37 is the evidence. Answered by the SHED ORDER, pinned and enforced: Phases 1,2,3 NEVER shed. This sprint ships 1-3 + 4 and OWES 5/6/7 to V39 — DISCLOSED, not dropped. A sprint that ships only 1-3 is a SUCCESSFUL sprint because it makes what already shipped TRUE.",
+    "A6_corpusOwedTwiceDroppedTwice": "LANDS. Phase 3, NEVER SHEDS. And the honest terminal clause: if the guard catches nothing for a FIFTH consecutive sprint, its efficacy is UNJUDGEABLE, the CORPUS is the weak wall — not the guard — and the gate MUST say so (RP-7).",
+    "A7_wallBanningNumbersBeatenBySpellingOut": "VALID. S126's rule is stated POSITIVELY — prose may NAME a producer, may never RESTATE a value; the wall greps digit-runs AND the rule covers spelled-out numbers. Not a new law — X-DERIVE(b) already says every claim needs a producer, and a number in prose is a claim.",
+    "A8_firingTriggerThenSheddingAlgebra": "would be ignoring my own criterion IF hidden. The trigger did NOT fire this sprint (the set stays at 5 — the two kinds are owed). IF a future sprint reaches 7, the firing is recorded as a FACT with its hash (DD-40, X-CADENCE applied to ourselves). A tool that renders its own fired exits as facts does not get an exception for itself.",
+    "A9_socketPinMightBeFine": "POSSIBLE — and that is exactly the point: nobody checked. X-HONEST: an unverified pin is UNVERIFIED, not 'probably fine.' DD-36: check it, then NEGOTIATE a range rather than pin a point; if the current revision cannot be determined the handshake says UNVERIFIED and it goes to the gate.",
+    "A10_twoSprintsNoLawConstitutionDead": "DONE, not dead — and the evidence is this sprint's own thesis. Every V37 defect was an EXISTING law under-applied (X-REACH(a) the tolerance, X-MOAT the tier, X-HONEST the pin, X-DERIVE(b) the prose). A constitution that already contains the answer to every new defect is complete. The work from here is application, not legislation."
+  },
+  "postImplementationRePins_partF": {
+    "rule": "PART F — blocking re-pins for Phase 0. findings_closed_substance asserts each holds in the shipped code.",
+    "RP1_powerArgumentAPriori": "CRITICAL (F-1) — raising S to 16 is not free unless the power argument stands A-PRIORI. The argument: a point-tolerance test at 0.02 requires SE < 0.02; at S=8 SE ~0.06; therefore S=8 was NEVER a valid test of a 0.02 tolerance — true before any number. It holds a priori (SE is a function of S,N,T), so raising S is a CORRECTION and no search is incurred. And S is NOT inside the frozen set (rigor.pbo takes n_splits as a call param; crosscheck.py is the editable harness) — verified in Phase 0.",
+    "RP2_confidenceLevelAPrioriAndZ": "HIGH (F-2) — the distributional test (route b) has a free parameter (why 95%?). Fix: the confidence level is pinned with an a-priori justification (the conventional two-sided 0.05, before the gap is known) AND the observed value is reported with its z-score, not merely in/out. Report z=(observed-0.5)/SE and let the pen see the number. (Moot this sprint — route (a) is taken and no distributional test with a confidence level is used to gate; the z is reported regardless.)",
+    "RP3_fallbackStatedBeforeAudit": "HIGH (F-3) — re-tiering the false-fire count may DESTROY it (UNJUDGEABLE forever if the chart is the only history). Fix: the fallback is stated BEFORE the audit — count over ORGANON's OWN captures (REAL-star, PIT), state the window (short today, grows with the cadence), optionally the retrospective series too tiered RETROSPECTIVE, both shown. It turns the false-fire count into a reason to run the cadence — which is what IN2 asked for.",
+    "RP4_oracleCoveragePinnedBeforeBuild": "MEDIUM-HIGH (F-4) — oracle-staleness is a fact about a contract ORGANON may not identify (a pool id is not an oracle address; resolution is per-protocol, brittle). Fix: scope it honestly — a named pinned subset, UNJUDGEABLE for the rest, coverage fraction pinned BEFORE building; a 6th kind UNJUDGEABLE for 95% of the shelf is a decoration and does not ship. (OWED to V39 with this constraint attached.)",
+    "RP5_algebraWallTwoSided": "MEDIUM (F-5) — byte-identity proves serialization, not semantics; a lineage id could be unchanged and the verdict move. Fix: the wall is two-sided — (i) every fixture lineage id unchanged AND (ii) every fixture cycle's exit evaluation byte-identical, including UNJUDGEABLE cases. (OWED to V39 with this constraint attached.)",
+    "RP6_doorOrderingMechanical": "MEDIUM (F-6) — with many kinds, ORDER becomes a recommendation. Fix: pin the ordering rule (the EXIT_KINDS enum order), asserted by a wall; a 'recommended first'/'most common' ordering is a Halt. Pinned now so V39 inherits it.",
+    "RP7_corpusTerminalClauseOnProvenance": "MEDIUM (F-7) — an agent that writes its own baits will write baits its guard catches (one catch, clause avoided). Fix: the terminal clause fires on the PROVENANCE of the catch — a catch counts only if the bait came from a different author AND its angle was not enumerated in the pins; else guardEfficacy:UNJUDGEABLE is computed and printed whatever the count says."
+  },
+  "delegatedDecisions": {
+    "rule": "Claude Code decides, documents, proceeds. A codebase-answerable question routed back to the Operator is a STALL.",
+    "DD33_fixATestThatCannotSucceed": "How to fix a test that cannot succeed WITHOUT HARKing? Route (a): RAISE THE POWER, KEEP THE TOLERANCE. Power is a-priori; S=16 -> SE~0.004 < the unchanged 0.02. S is a call param (n_splits), not frozen, so raising it edits the harness (crosscheck.py) not rigor.py. Compute the empirical SE and SHOW it; report z; preserve the S=8 result forever; if 0.6 survives adequate power D33 stays closed (a real finding). NO SEARCH incurred (D56 does not fire).",
+    "DD34_isTheChartSeriesPIT": "Is the DefiLlama chart series point-in-time honest? No — it is RETROSPECTIVE (the provider's present opinion about the past, revisable). The tier must match the truth: re-tier it RETROSPECTIVE, and count over ORGANON's OWN captures (REAL-star, PIT) where they reach; state the window and what a short window costs the count's authority (UNJUDGEABLE below the floor). State the fact shipped with a wrong tier for one sprint (blast radius zero).",
+    "DD35_strangerCanGetIt": "What predicate means 'a STRANGER can get this'? The narrowest one a private/authenticated remote cannot satisfy: an unauthenticated credential-free public forge URL AND a committed release-manifest artifact with its SHA-256 (an unauthenticated fetch target). A URL with embedded credentials derives false. Prove it: a seeded authenticated remote derives false.",
+    "DD36_currentMcpProtocol": "What MCP protocol version do real clients negotiate TODAY? Do not guess — NEGOTIATE a declared range (2024-11-05, 2025-03-26, 2025-06-18 recalled); on an unsupported version refuse loudly naming the range; if the current revision cannot be verified the handshake says UNVERIFIED and it is a gate item. The negotiation range is the fix regardless of verification status.",
+    "DD37_canOracleStalenessBeCaptured": "Can oracle-staleness be captured? Observable: now - feed.updatedAt and 'feed is a constant' — deterministic reads over the governance screen's existing RPC. UNJUDGEABLE without the read. RP-4: scope the coverage honestly (a pinned subset), pin the fraction before building, no decoration. OWED to V39.",
+    "DD38_isUtilizationAlreadyHeld": "Is utilization-ceiling derivable from data already held? Lending-pool utilization is standard in the lending senses ORGANON captures (oracle-proven PIT) — free if present, costed if not. OWED to V39 (the check runs there).",
+    "DD39_algebraWithoutMovingALineageId": "Can the algebra ship WITHOUT moving a single lineage id? ADDITIVE OR IT DOES NOT SHIP: every existing kind serializes byte-identically; the wall is every fixture lineage id before===after AND every exit evaluation byte-identical (RP-5). If byte-identity cannot be proven it does not ship. OWED to V39.",
+    "DD40_exitSetTriggerFires": "The exit set reaches SEVEN, the trigger FIRES — what now? ORGANON applies X-CADENCE to itself: a fired trigger is a FACT, never an instruction; the build log records the firing with its hash; whether the algebra ships is a matter of the shed order, not the trigger. THIS SPRINT: the set stays at 5, the trigger did NOT fire, recorded as the honest state (owed to V39)."
+  },
+  "partClean": {
+    "pureFns": "Power.se(S,N,T) -> number (A-PRIORI, computed before any result) · NullDist over >=200 seeds -> {mean, sd, ci95, z} (empirical, in the harness crosscheck.py) · Provenance.tier(series) -> REAL-star|REAL@ts|RETROSPECTIVE|UNJUDGEABLE (positive, not negative) · Published.derive() -> bool (a private/authenticated remote derives false) · Protocol.negotiate(clientVersion) -> Ok|RefuseLoudly{supported} · Consistency.NAMED_RECLASSIFIED (a named wall, two-directional) · Signability.d33() recomputed on a valid test. Each with a seeded negative.",
+    "invariants": "ZERO new dependencies (deps stay 2: hono+zod) · Screens 3 · No daemon/port/listener · NO LAW · the frozen set byte-untouched (rigor.py READ never edited — the null distribution runs in the HARNESS crosscheck.py; not one .py byte in the frozen set moves) · newProductCapability 0 (the three V37 capabilities are made TRUE; nothing new is added; the roadmap is owed to V39) · LN5 — the agent presents the gate and NEVER signs it; D51 is NOT marked answered."
+  },
+  "carried": {
+    "laws": "X-KEEP · X-DETERM · X-HONEST · X-MOAT · X-ADVICE · X-MANIFEST · X-CADENCE · X-AUTHOR · X-RECKON · X-SHOWN · X-REACH · X-DERIVE · X-CORRELATE (familyN===1) · X-SURFACE · X-TELEMETRY · X-DEVLEDGER · X-AUDIT — all seventeen carried, unchanged; NO LAW MINTED (second sprint running; V36 PART F pin binds)",
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "screens": [
+      "shelf",
+      "reality-check",
+      "ask"
+    ],
+    "repoTopology": "SINGLE REPO (organon @ staging); the pristine-clone verify is the convergence proof; published mirror studio-organon byte-identical",
+    "lawsThisSprint": "ZERO — application, not legislation (second sprint running)",
+    "newProductCapability": 0,
+    "capabilityList": [],
+    "madeTrueThisSprint": [
+      "D33's theory check (an able-to-succeed test)",
+      "the false-fire count's provenance tier (RETROSPECTIVE vs REAL-star, and it renders at the door)",
+      "the Socket's protocol handshake (negotiated, not a stale point-pin)"
+    ],
+    "frozenNote": "the 6 .py + loop.ts + verdict-path 7 + frozen-core 2 byte-untouched (rigor.py READ never edited — S116's null distribution runs in the HARNESS crosscheck.py, which is NOT in the frozen set; the frozen sha 58c88843 does not move); the differential + evidence bundle byte-identical (no verdict moves — the corrections re-tier a fact, narrow a predicate, negotiate a handshake, and recompute a fenced pen; none touches the scorecard verdict path); the Stamp familyN stays 1; no daemon; no new mass-path dependency",
+    "verdictDifferential": {
+      "lendingFpSetShaPrefix": "70c7912f",
+      "fundingReproHashPrefix": "0a63161b"
+    },
+    "evidenceBundleShaPrefix": "9c1e7bd8",
+    "killCriterion": "8b4e094b",
+    "startingTree": "21296656",
+    "startingCommit": "87daa8c9",
+    "fence": [
+      "a hosted tier · any HTTP/network listener · any port · any daemon",
+      "reports/API-as-product",
+      "execution/custody/wallets",
+      "valuation/USD (a share and a staleness-in-seconds are dimensionless or temporal, never a price)",
+      "Markowitz/any optimizer",
+      "any advisory output",
+      "any new mass-path dependency (deps stay 2; an oracle RPC read would be capture-side like DeFiLlama, OWED to V39)",
+      "marketplace/leaderboard/ranking",
+      "the Merkle layer",
+      "a SECOND law (V36 PART F pin, honored a second time)",
+      "the Proposer/K-activation/PBO-in-production (D33 is fenced — it is being made a VALID test, not activated)",
+      "D38 the composite verdict",
+      "the post-mortem (still no real lineage; realLineageCount 0)",
+      "the Adversary (trigger: after the first real lineage)",
+      "an EIGHTH exit kind (the set closes at SEVEN; a new kind goes through the algebra, not the enum — both OWED to V39)"
+    ],
+    "permittedBecauseCorrectionOrInstructed": [
+      "the never-shed corrections (Phases 1-3 — they make what shipped TRUE and add ZERO capability)",
+      "the reproducible release (Phase 4)",
+      "documentation",
+      "committing halt-lifts.json into the record hash-chain (RECORD, never CLAIM)"
+    ]
+  },
+  "pinsSha": "153628a91515de14a6245be013c891fd29878407055ce7e5952cf9435718b38f"
+}

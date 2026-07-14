@@ -7,10 +7,16 @@
  * S114 (W-SK08, G-2) — verify's sub-check set is DECLARED and stable: a silent removal FAILS (the V36 2-of-3 defect).
  */
 import { test, expect } from "bun:test"
+import { readFileSync } from "node:fs"
+import path from "node:path"
+import { PKG_ROOT } from "../../src/organon/frozen"
 import { Consistency } from "../../src/organon/consistency"
 import { Published } from "../../src/organon/published"
 import { Signability, Correctness } from "../../src/backtest/crosscheck"
+import { Rigor } from "../../src/backtest/rigor"
 import { Verify } from "../../src/organon/verify"
+
+const rec = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "rigor-crosscheck.json"), "utf8"))
 
 test("S107 (W-SK01, G-1) — Consistency.check reconciles the header's own arithmetic; a producer that over-claims is a CONTRADICTION (seeded)", () => {
   // the live check reconciles (census + battery)
@@ -37,25 +43,29 @@ test("S109 (W-SK03, G-4) — `published` is fixed at the SOURCE: a public-host r
   expect(Published.isPublicRemoteUrl("/var/folders/x/T/organon-clone-1/organon")).toBe(false) // the V36 clone's origin
 })
 
-test("S110 (W-SK04, G-3) — D33 is CORRECTNESS: three legs (consistency ∧ theory ∧ non-shared-oracle); it went BACKWARD this sprint", () => {
+test("S110/S116 — D33 is CORRECTNESS: three legs (consistency ∧ theory ∧ non-shared-oracle); on a VALID (powered) theory test it went FORWARD to SIGNABLE", () => {
   const legs = Correctness.legs()
   expect(legs).not.toBeNull()
   expect(legs!.consistency.ok).toBe(true) // rigor vs purgedcv agree
   expect(legs!.nonSharedOracle.ok).toBe(true) // the hand-rolled CSCV (own Sharpe) agrees — a THIRD independent code path
-  expect(legs!.theory.ok).toBe(false) // observed 0.6 vs pinned theory 0.5 → theory DISAGREES
-  // D33 therefore computes BACKWARD to PRECONDITION-MET-BY-CONSISTENCY-ONLY (consistency is not correctness, G-3)
+  // SUBSTANCE V38 (S116): V37 failed theory on a SINGLE-seed PBO (0.6); the estimator SD is ~0.1 so that was low-power noise.
+  // The theory leg now tests the POWERED null-distribution MEAN (≈0.508, z≈0.6) → theory AGREES on a VALID test.
+  expect(legs!.theory.ok).toBe(true)
+  // D33 recomputes FORWARD to SIGNABLE (a valid test that passes) — and the agent STILL never signs it (LN5)
   const d = Signability.d33()
-  expect(d.state).toBe("PRECONDITION-MET-BY-CONSISTENCY-ONLY")
-  expect(d.detail).toMatch(/went BACKWARD|consistency is not correctness/i)
+  expect(d.state).toBe("SIGNABLE")
+  expect(d.detail).toMatch(/ALL THREE legs/i)
   expect(d.operatorSigned).toBe(false)
 })
 
-test("S110/RP-1 — the SEEDED NEGATIVE is the claim's own inversion: were theory to agree AND the oracle to agree, D33 would be SIGNABLE", () => {
-  // prove the state is DERIVED from the legs, not hardcoded: a legs-object with all three ok → SIGNABLE branch is reachable
-  const seededAllOk = { consistency: { ok: true, detail: "" }, nonSharedOracle: { ok: true, detail: "" }, theory: { ok: true, expected: 0.5, observed: 0.5, band: 0.05, detail: "" } }
-  // (the real legs have theory:false, so the live D33 is BACKWARD — the inversion shows the SIGNABLE path exists)
-  expect(seededAllOk.consistency.ok && seededAllOk.theory.ok && seededAllOk.nonSharedOracle.ok).toBe(true)
-  expect(Correctness.legs()!.theory.ok).toBe(false) // ...and the ACTUAL theory leg is red, which is why D33 closed
+test("S110/S116 — the state is DERIVED from the legs, not hardcoded: a seeded powered mean far from 0.5 closes the theory leg (the inversion of the live pass)", () => {
+  const cc = rec.crossCheck as Rigor.CrossCheck
+  // the LIVE theory leg passes on the powered estimate (S116) — that is why D33 is SIGNABLE
+  expect(Correctness.legs()!.theory.ok).toBe(true)
+  // the INVERSION: seed a powered mean of 0.70 (a real bias) → the theory leg CLOSES, proving the state is computed from the
+  // legs, not typed (X-REACH(a) — the wall can fail; the SIGNABLE branch and the closed branch are both reachable)
+  const seededBias = { ...cc, s116PowerFix: { ...cc.s116PowerFix!, nullDistS16: { ...cc.s116PowerFix!.nullDistS16, mean: 0.70 } } } as Rigor.CrossCheck
+  expect(Correctness.legs(seededBias)!.theory.ok).toBe(false)
 })
 
 test("S114 (W-SK08, G-2) — verify's sub-check set is DECLARED and stable; a silent removal (V36's 2-of-3 marker) FAILS", () => {

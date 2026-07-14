@@ -46,9 +46,11 @@ test("PART F — all 7 re-pins recorded, and each HOLDS in the shipped code", ()
   // RP-3 — every tool description passes the ONE GUARD (asserted in socket_server); the honest limit is pinned verbatim
   expect(sp.socketCatalog.honestLimitInEveryDescription).toMatch(/PINNED VERBATIM|passes the ONE GUARD/i)
   expect(Socket.tools().every((t) => t.description.includes(Socket.HONEST_LIMIT))).toBe(true)
-  // RP-7 — the theory expectation was pinned before compute, and D33 went BACKWARD
+  // RP-7 — the theory expectation was pinned before compute (still 0.5). SUBSTANCE V38 (S116): the theory leg now tests the
+  // POWERED estimate on a VALID test (V37's single-seed 0.6 was low-power noise) → D33 recomputed FORWARD to SIGNABLE; the
+  // agent still never signs it (LN5). V37's socket-pins prose recorded the backward state it saw; the live pen moved forward.
   expect(sp.pboTheory.expectedPboUnderNoise).toBe(0.5)
-  expect(Signability.d33().state).toBe("PRECONDITION-MET-BY-CONSISTENCY-ONLY")
+  expect(Signability.d33().state).toBe("SIGNABLE")
 })
 
 test("PART E — MR13 (MR9 discharged) + MR14 (the PBO tolerance below its granularity) are pinned and reasoned", () => {

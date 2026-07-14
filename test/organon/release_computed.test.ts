@@ -22,7 +22,11 @@ test("S105 — organon.sh release wired + the manifest exists (built, checksumme
   expect(m!.built.ran).toBe(true)
   expect(m!.built.sha256).toMatch(/^[0-9a-f]{64}$/) // a real SHA-256 of the built binary (shape, not a cross-machine golden)
   expect(m!.installLine.length).toBeGreaterThan(10)
-  expect(m!.reproducibilityUnverified).toBe(true) // attack #8 — bun build --compile reproducibility UNVERIFIED, stated
+  // SUBSTANCE V38 (S127) supersedes the V36 "UNVERIFIED": reproducibility is now VERIFIED by a two-build SHA-256 comparison,
+  // so reproducibilityUnverified is COMPUTED false (byte-identical), and the two-build result is recorded.
+  expect(m!.reproducibilityUnverified).toBe(false)
+  expect(m!.reproducible?.verified).toBe(true)
+  expect(m!.reproducible?.sha1).toBe(m!.reproducible?.sha2)
 })
 
 test("S105 — the binary is BUILT, not committed: Release.artifact() is ABSENT (dist/ gitignored — distribution is not capability)", () => {

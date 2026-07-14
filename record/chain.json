@@ -1,9 +1,9 @@
 {
   "protocol": "record-chain",
   "at": "2026-07-14",
-  "rule": "S108 / DD-32 (G-5) — the build logs, committed under record/ and HASH-CHAINED (tamper-evident). The reasons for the code now live inside the moat. These are RECORD, never CLAIM: a wall asserts NO Claim.producer reads a build log (X-DERIVE reads artifacts, not prose). Order is content-sorted (deterministic), not a source of truth.",
+  "rule": "S108 / DD-32 (G-5) — the build logs, committed under record/ and HASH-CHAINED (tamper-evident). The reasons for the code now live inside the moat. These are RECORD, never CLAIM: a wall asserts NO Claim.producer reads a build log (X-DERIVE reads artifacts, not prose). Order is content-sorted (deterministic), not a source of truth. SUBSTANCE V38 (S122/H-6): the D53 SEARCH record (halt-lifts.json) is folded into the chain so the Halt-lift carries a real immutable LEDGER HASH — committed and hash-chained in record/, NOT appended to the strategy-trial ledger (a meta-event is not a strategy manifest, so the strategy ledger has no coherent append site).",
   "boundary": "record/ is NOT a source of truth for any producer. A Claim.producer reading a build log would import unverified human prose into a computation — forbidden (S108). Prose is evidence for humans; artifacts are input for machines.",
-  "count": 12,
+  "count": 15,
   "chain": [
     {
       "name": "BUILDLOG-ALPHA.md",
@@ -76,7 +76,27 @@
       "contentSha": "96228a23ea1a51c401f14d141e47b64d702f395c627c095419dabf61d4afd15f",
       "prevSha": "103b83fd2f375bdef5c5bb243bcc05dadc1cda2f9f0885373b6bdcaaac4006d1",
       "selfSha": "6cbaa645f23f7d58dfe92995e5252f598a2007a49aa81006d21276c6fa83595c"
+    },
+    {
+      "name": "BUILDLOG-SOCKET.md",
+      "contentSha": "48fa0f47f67a0d420c80907ecd13cbcc80f41972700114f7782afa274515277f",
+      "prevSha": "6cbaa645f23f7d58dfe92995e5252f598a2007a49aa81006d21276c6fa83595c",
+      "selfSha": "0b12d1154bb69e0788be0d2d3e2391940584ad6b55348b81a5d8f2d5134ddb40"
+    },
+    {
+      "name": "BUILDLOG-SUBSTANCE.md",
+      "contentSha": "4ec50d0706bde1628d8c21b4f11f1f6710009f174e623bb68398c60f335c4ead",
+      "prevSha": "0b12d1154bb69e0788be0d2d3e2391940584ad6b55348b81a5d8f2d5134ddb40",
+      "selfSha": "48e2d5d28eb75aecca3d01aaeb2d077558001c81551cbb5f7a8562eaa3ac44b0"
+    },
+    {
+      "name": "halt-lifts.json",
+      "contentSha": "f44ed14665361fcc35429982f90bba8dc31607a0e42deaefbe666991684fb586",
+      "prevSha": "48e2d5d28eb75aecca3d01aaeb2d077558001c81551cbb5f7a8562eaa3ac44b0",
+      "selfSha": "26ccfbd68f50bd69adc21a6896657d95ba391d8f471fda6dff1cd1f6f009d839"
     }
   ],
-  "headSha": "6cbaa645f23f7d58dfe92995e5252f598a2007a49aa81006d21276c6fa83595c"
+  "headSha": "26ccfbd68f50bd69adc21a6896657d95ba391d8f471fda6dff1cd1f6f009d839",
+  "d53SearchLedgerHash": "26ccfbd68f50bd69adc21a6896657d95ba391d8f471fda6dff1cd1f6f009d839",
+  "d53Note": "the Halt-lift is a META-event (sprint-level optional stopping), NOT a strategy manifest; the X-RECKON strategy-trial ledger counts acts over lineage ids and has no coherent site for it — so the price is paid HERE, committed + hash-chained, and the log no longer claims it was 'appended to the strategy ledger'."
 }

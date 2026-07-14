@@ -17,6 +17,7 @@
 import { ExitCriterion } from "./exit"
 import { FactEnvelope } from "./envelope"
 import { AdviceShape } from "../ask/advice"
+import { Provenance } from "./provenance"
 
 export namespace FalseFire {
   export const MIN_WINDOW_DAYS = 180 // DD-29 — below this, the count is UNJUDGEABLE (not enough captured history)
@@ -29,17 +30,24 @@ export namespace FalseFire {
     peg?: number | null
   }
 
+  // SUBSTANCE V38 (S118/DD-34) — the count's tier is DERIVED from the series' provenance (the ladder), never hardcoded REAL.
   export type Result =
-    | { judgeable: true; fired: number; points: number; windowDays: number; from: number; to: number; tier: "REAL"; why: string }
-    | { judgeable: false; why: string }
+    | { judgeable: true; fired: number; points: number; windowDays: number; from: number; to: number; tier: Provenance.Tier; why: string }
+    | { judgeable: false; tier: Provenance.Tier; why: string }
 
   // COUNT the fire EPISODES — transitions from not-fired to fired (an exit triggers once per episode, not once per day it
   // stays tripped). Model-free: a boolean fire test per point, then episode-counting. NO σ, NO distribution, NO probability.
-  export function count(criterion: ExitCriterion.T, series: Point[]): Result {
+  // SUBSTANCE V38 (S117/S118): the SERIES PROVENANCE decides the tier (REAL★ own-pit · REAL-at-timestamp · RETROSPECTIVE ·
+  // UNJUDGEABLE). A RETROSPECTIVE series (a chart fetched now about the past) is COUNTED but SAYS its tier — the count is
+  // only as good as its history, and it never pretends the history is point-in-time when it is not (H-2's defect closed). An
+  // UNJUDGEABLE provenance (an unestablishable capture mode) renders UNJUDGEABLE regardless of the window (missing stays missing).
+  export function count(criterion: ExitCriterion.T, series: Point[], provenance: Provenance.SeriesProvenance = { captureMode: "unknown", source: "" }): Result {
+    const tier = Provenance.tier(provenance)
+    if (tier === "UNJUDGEABLE") return { judgeable: false, tier, why: "UNJUDGEABLE — the series' revision exposure cannot be established (an unknown capture mode); a count over a history you cannot vouch for is worse than no count (missing stays missing)." }
     const pts = [...series].filter((p) => Number.isFinite(p.ts)).sort((a, b) => a.ts - b.ts)
-    if (pts.length < 2) return { judgeable: false, why: "UNJUDGEABLE — fewer than two captured points; a count needs a series." }
+    if (pts.length < 2) return { judgeable: false, tier, why: "UNJUDGEABLE — fewer than two captured points; a count needs a series." }
     const windowDays = (pts[pts.length - 1].ts - pts[0].ts) / DAY_MS
-    if (windowDays < MIN_WINDOW_DAYS) return { judgeable: false, why: `UNJUDGEABLE — only ${windowDays.toFixed(0)} days of captured history (< ${MIN_WINDOW_DAYS}); the moat is too shallow for this observable (missing stays missing, DD-29).` }
+    if (windowDays < MIN_WINDOW_DAYS) return { judgeable: false, tier, why: `UNJUDGEABLE — only ${windowDays.toFixed(0)} days of captured history (< ${MIN_WINDOW_DAYS}); the moat is too shallow for this observable (missing stays missing, DD-29). tier: ${tier}${tier === "REAL★" ? " (own point-in-time captures — the window grows every day the cadence runs)" : ""}.` }
 
     // the per-point fire test for the replayable kinds — reads the observable the chart carries. A kind with no captured
     // series (funding-flip-count / governance-change / concentration-ceiling) → UNJUDGEABLE (never a fabricated count).
@@ -64,7 +72,8 @@ export namespace FalseFire {
       if (f && !inEpisode) episodes++ // a NEW episode: the exit would have triggered here
       inEpisode = f
     }
-    if (usable < 2) return { judgeable: false, why: `UNJUDGEABLE — the series carries no usable ${criterion.kind} observable (the chart lacks it).` }
+    if (usable < 2) return { judgeable: false, tier, why: `UNJUDGEABLE — the series carries no usable ${criterion.kind} observable (the chart lacks it).` }
+    const caveat = tier === "RETROSPECTIVE" ? " — tier RETROSPECTIVE: this history was fetched now from the provider and may have been revised or backfilled, so the count is only as good as an unrevised series (not point-in-time)" : tier === "REAL★" ? " — tier REAL★: ORGΛNON's own point-in-time captures (each observed and content-hashed at its moment)" : ` — tier ${tier}`
     return {
       judgeable: true,
       fired: episodes,
@@ -72,9 +81,26 @@ export namespace FalseFire {
       windowDays: Math.round(windowDays),
       from: pts[0].ts,
       to: pts[pts.length - 1].ts,
-      tier: "REAL",
-      why: `a criterion at this level would have fired ${episodes} time${episodes === 1 ? "" : "s"} in the last ${Math.round(windowDays)} days of REAL captured data (${usable} points; a COUNT of the exit evaluator replayed over the content-hashed capture — no model, no σ, no prediction).`,
+      tier,
+      why: `a criterion at this level would have fired ${episodes} time${episodes === 1 ? "" : "s"} in the last ${Math.round(windowDays)} days of captured data (${usable} points; a COUNT of the exit evaluator replayed over the content-hashed capture — no model, no σ, no prediction)${caveat}.`,
     }
+  }
+
+  // RP-3 (F-3) — the TWO-TIER fallback, stated before the audit: count over ORGΛNON's OWN captures (REAL★, genuinely
+  // point-in-time) where they reach, AND over the retrospective series where they do not — BOTH tiered, BOTH shown, neither
+  // pretending. The own-capture window is short today (likely UNJUDGEABLE < 180d) and grows every day the cadence runs, which
+  // turns the false-fire count into a reason to run the cadence (what IN2 asked for). Either or both may be UNJUDGEABLE.
+  export interface BothResult {
+    own: Result // ORGΛNON's own point-in-time captures (REAL★) — often UNJUDGEABLE by window today
+    retrospective: Result // the provider's chart series (RETROSPECTIVE) — deeper history, weaker provenance
+    why: string
+  }
+  export function countBoth(criterion: ExitCriterion.T, ownSeries: Point[], retroSeries: Point[], ownSource = "own-capture"): BothResult {
+    const own = count(criterion, ownSeries, { captureMode: "own-pit", source: ownSource })
+    const retrospective = count(criterion, retroSeries, { captureMode: "retrospective-fetch", source: "defillama" })
+    const ownLine = own.judgeable ? `${own.fired} over ${own.windowDays}d (${own.tier}, own point-in-time)` : `UNJUDGEABLE (${own.tier}, own captures — window still growing every day the cadence runs)`
+    const retroLine = retrospective.judgeable ? `${retrospective.fired} over ${retrospective.windowDays}d (${retrospective.tier}, provider chart — revisable)` : `UNJUDGEABLE (${retrospective.tier})`
+    return { own, retrospective, why: `two numbers, two tiers, neither pretending — own: ${ownLine} · retrospective: ${retroLine}` }
   }
 
   // DD-30 — the false-fire fact travels in the Fact Envelope (authored:false) and passes the ONE GUARD. The fact object

@@ -14,6 +14,11 @@ import path from "node:path"
 import { PKG_ROOT } from "../../src/organon/frozen"
 import { Rigor } from "../../src/backtest/rigor"
 
+// SUBSTANCE V38 (S116) — the REGENERATION runs the full power fix (the null distribution at S=8/S=16 over pinned seeds, a few
+// minutes). Rigor.crossCheck forwards process.env to crosscheck.py, so setting this here gates the heavy compute ON for the
+// artifact regen ONLY — the battery's live cross-check does NOT set it and stays fast (seconds, DSR/PSR/PBO agreement only).
+process.env.ORGANON_NULLDIST = "1"
+
 const cc = Rigor.crossCheck()
 const record = {
   protocol: "rigor-crosscheck",

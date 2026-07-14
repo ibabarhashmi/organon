@@ -12,7 +12,7 @@ import { test, expect } from "bun:test"
 import { readFileSync } from "node:fs"
 import path from "node:path"
 import { PKG_ROOT, checkFrozenSet } from "../../src/organon/frozen"
-import { CrossCheck, Signability } from "../../src/backtest/crosscheck"
+import { CrossCheck, Signability, Correctness } from "../../src/backtest/crosscheck"
 import { Rigor } from "../../src/backtest/rigor"
 
 const H = path.join(PKG_ROOT, "data", "honesty")
@@ -38,15 +38,26 @@ test("S101 — X-DERIVE(f): the tolerance is READ FROM THE PINS, never a call-si
   expect(CrossCheck.tolerance("pbo")).toBe(pins.preRegisteredTolerances.pbo)
 })
 
-test("S101 — Signability.d33() is COMPUTED from all three; consistency HOLDS, but Socket V37/G-3 added CORRECTNESS legs and D33 went BACKWARD (operatorSigned false, LN5)", () => {
+test("S101/S116 — Signability.d33() is COMPUTED from all three; on a VALID (powered) theory test D33 went FORWARD to SIGNABLE — and the agent STILL never signs (operatorSigned false, LN5)", () => {
   const d = Signability.d33()
   expect(d.agreed.sort()).toEqual(["dsr", "pbo", "psr"]) // consistency: all three still agree (rigor vs purgedcv)
   expect(d.disagreed).toEqual([])
-  // Socket V37 (S110/G-3): consistency is necessary but NOT sufficient — the THEORY leg (PBO 0.5 vs observed 0.6) fails,
-  // so D33 recomputes BACKWARD to PRECONDITION-MET-BY-CONSISTENCY-ONLY. V36's flat "SIGNABLE (whole)" was the G-3 defect.
-  expect(d.state).toBe("PRECONDITION-MET-BY-CONSISTENCY-ONLY")
-  expect(d.detail).toMatch(/went BACKWARD|consistency is not correctness/i)
-  expect(d.operatorSigned).toBe(false) // LN5 — the precondition being met does NOT sign it
+  // SUBSTANCE V38 (S116): V37 failed the theory leg on a SINGLE-seed PBO (0.6 vs 0.5) — but the estimator's SD is ~0.1, so
+  // that was ~1 SD of ordinary noise, a point/band test that could never succeed (X-REACH(a) backwards). The theory leg now
+  // tests the POWERED null-distribution MEAN (≈0.508, z≈0.6): theory AGREES on a VALID test → D33 recomputes FORWARD to
+  // SIGNABLE. It went forward because the invalid test was replaced by a valid one that passes, not by tuning any threshold.
+  expect(d.state).toBe("SIGNABLE")
+  expect(d.detail).toMatch(/precondition is met on ALL THREE legs/i)
+  expect(d.operatorSigned).toBe(false) // LN5 — the precondition being met does NOT sign it; D33 stays fenced from K-activation
+})
+
+test("S116 — the theory leg can still FAIL (X-REACH(a)): a seeded powered mean far from 0.5 makes the theory leg close (a valid test that CAN fail)", () => {
+  const cc = rec.crossCheck as Rigor.CrossCheck
+  // seed a POWERED mean of 0.70 (a real bias, z far past 2) — the theory leg must FAIL (D33 would not be SIGNABLE)
+  const seeded = { ...cc, s116PowerFix: { ...cc.s116PowerFix!, nullDistS16: { ...cc.s116PowerFix!.nullDistS16, mean: 0.70 } } } as Rigor.CrossCheck
+  expect(Correctness.legs(seeded)!.theory.ok).toBe(false)
+  // and the real record's theory leg passes (the positive control the seeded one inverts)
+  expect(Correctness.legs()!.theory.ok).toBe(true)
 })
 
 test("S101 — RP-1: a SEEDED disagreement (the claim's own inversion — 'PBO disagrees') makes D33 compute UNSIGNABLE (the headline finding, not a bug)", () => {

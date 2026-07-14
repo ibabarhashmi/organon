@@ -21,6 +21,7 @@ Run:  cd src && PYTHONHASHSEED=0 backtest/py/.venv/bin/python -m backtest.py.cro
 from __future__ import annotations
 
 import json
+import os
 import sys
 
 import numpy as np
@@ -37,6 +38,36 @@ N_TRIALS = 1000
 # the IS-best config's OOS rank is uniform (no persistence in pure noise), so PBO_theory = 0.5. Read by the TS layer from
 # the pins; echoed here for the record.
 PBO_THEORY_UNDER_NOISE = 0.5
+
+# SUBSTANCE V38 (S116/DD-33/RP-1) — THE POWER FIX. V37's D33 theory leg compared a SINGLE-seed PBO (0.6) to the theory 0.5
+# against a 0.05 band; but the PBO estimator's own sampling SE at S=8 is ~0.06 (C(8,4)=70 overlapping combinations), so
+# 0.6-vs-0.5 was ~1 SE — ORDINARY NOISE. A point-tolerance test on a random variable whose SE exceeds the tolerance can
+# never succeed (X-REACH(a) read backwards). THE FIX (route a, no HARKing): raise the POWER. `rigor.pbo` takes n_splits as
+# a CALL PARAMETER (S is NOT frozen — this harness is not in the frozen set, rigor.py is byte-untouched), so we run the WHOLE
+# computation over many independent true-Sharpe-0 seeds at the underpowered S=8 AND the adequately-powered S=16, and SHOW the
+# empirical SE (the sampling SD) and the z-distance. The single-seed S=8 0.6 is PRESERVED (s8Legacy) — you do not delete the
+# test you failed. Seeds are pinned so the committed artifact is reproducible.
+NULL_SEED_BASE = 20260714
+NULL_SEEDS_S8 = 200   # tractable (~9s): shows SE_S8 >> tolerance 0.02 and >> band 0.05 — the invalidity, empirically
+NULL_SEEDS_S16 = 64   # ~8 min at ~7.4s/seed: shows the SE collapses at adequate power and the powered mean vs the theory
+
+
+def _null_distribution(s: int, n_seeds: int, T: int, N: int) -> dict:
+    """Run rigor.pbo over `n_seeds` independent true-Sharpe-0 noise datasets at split-count `s`; return the sampling mean,
+    SD (= the EMPIRICAL SE of a single PBO estimate), 95% percentile interval, and z = (mean - theory)/SE. rigor.pbo is
+    called with n_splits=s (a call param); NO frozen byte is touched."""
+    vals = []
+    for i in range(n_seeds):
+        r = np.random.default_rng(NULL_SEED_BASE + i)
+        mm = r.normal(0.0, 0.01, size=(T, N))
+        vals.append(float(rigor.pbo(mm, n_splits=s)))
+    a = np.array(vals, dtype=float)
+    mean = float(a.mean())
+    sd = float(a.std(ddof=1))
+    ci95 = [float(np.percentile(a, 2.5)), float(np.percentile(a, 97.5))]
+    z = (mean - PBO_THEORY_UNDER_NOISE) / sd if sd > 0 else float("inf")
+    return {"S": s, "nSeeds": n_seeds, "seedBase": NULL_SEED_BASE, "mean": mean, "sd": sd,
+            "empiricalSe": sd, "ci95": ci95, "z": z}
 
 
 def _own_sharpe(block: np.ndarray) -> np.ndarray:
@@ -122,6 +153,26 @@ def main() -> None:
     pbo_hand = _cscv_pbo_handrolled(m, s=8)
     pbo_hand_diff = abs(pbo - pbo_hand)
 
+    # ── SUBSTANCE V38 (S116/DD-33/RP-1): THE POWER FIX — the empirical SE, at the underpowered S=8 and the powered S=16.
+    # rigor.pbo(n_splits=16) is the SAME frozen function at a higher, a-priori-justified power; not one frozen byte moves.
+    # GATED behind ORGANON_NULLDIST=1: the null distribution at S=16 over many seeds is minutes of compute, so it runs ONLY
+    # when the committed artifact is regenerated (script/honesty/rigor-crosscheck.ts sets the flag). The BATTERY's live
+    # cross-check (which only checks DSR/PSR/PBO agreement) skips it and stays fast; s116PowerFix lives in the committed json.
+    s116_power_fix = None
+    if os.environ.get("ORGANON_NULLDIST") == "1":
+        pbo_s16_single = float(rigor.pbo(m, n_splits=16))  # the canonical seed at adequate power
+        null_s8 = _null_distribution(8, NULL_SEEDS_S8, T, N_TRIALS)
+        null_s16 = _null_distribution(16, NULL_SEEDS_S16, T, N_TRIALS)
+        s116_power_fix = {
+            "s8Legacy": {"pbo": pbo, "S": 8, "note": "PRESERVED — the single-seed S=8 result (SEED 20260627); the test you do not get to delete (RP-1)"},
+            "poweredS16Single": {"pbo": pbo_s16_single, "S": 16, "note": "the canonical seed at adequate power"},
+            "nullDistS8": null_s8,
+            "nullDistS16": null_s16,
+            "theoryUnderNoise": PBO_THEORY_UNDER_NOISE, "band": 0.05, "toleranceUnchanged": 0.02,
+            "sInsideFrozenSet": False,
+            "note": "the theory leg (V38) tests the POWERED estimate null_s16.mean vs 0.5 with z = (mean-0.5)/empiricalSe; S=8's SE (nullDistS8.sd) >> tolerance, so the S=8 point-test could never succeed (X-REACH(a) backwards).",
+        }
+
     out = {
         "executed": True,
         "seed": SEED, "T": T, "nTrials": N_TRIALS,
@@ -134,6 +185,10 @@ def main() -> None:
         # PBO CORRECTNESS (S110/DD-25/G-3) — the non-shared oracle (own Sharpe) + the pinned theory expectation
         "pboHandRolled": pbo_hand, "pboHandRolledDiff": pbo_hand_diff,
         "pboTheoryUnderNoise": PBO_THEORY_UNDER_NOISE, "pboVsTheory": abs(pbo - PBO_THEORY_UNDER_NOISE),
+        # SUBSTANCE V38 (S116/DD-33/RP-1) — THE POWER FIX (gated behind ORGANON_NULLDIST=1; None on a fast live run — the
+        # committed artifact carries the full block). Preserves s8Legacy; the empirical SE is the null-distribution SD; the
+        # theory leg tests the POWERED estimate (null_s16.mean) with a z. sInsideFrozenSet: false — n_splits is a call param.
+        **({"s116PowerFix": s116_power_fix} if s116_power_fix is not None else {}),
         # RP-2: the aligned CSCV parameters, emitted so the wall can SHOW the alignment (a cross-check that does not first
         # align its parameters is two different experiments)
         "cscvAlignment": {

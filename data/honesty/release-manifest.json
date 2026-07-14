@@ -3,13 +3,29 @@
   "built": {
     "ran": true,
     "binaryPath": "dist/organon",
-    "sha256": "ebbf9d61355bef00d655ab93d4d2bd2bb5c16e5d3ed543bf1588cd7821b872e0",
-    "sizeBytes": 62043424,
+    "sha256": "0fb322b9412ed22dea8c6540bf6e041bdcafbe91eada4dbefef8639f0ee5936d",
+    "sizeBytes": 62059936,
     "note": "bun build --compile of script/organon-cli.ts — the SAME code, keyless, offline on first run, console behind --studio (V34-sealed)"
   },
   "committedArtifactPath": null,
   "installLine": "clone + Bun ≥ 1.3 + ./organon.sh — or, once published, download the checksummed single-file binary + `chmod +x organon && ./organon`",
-  "reproducibilityUnverified": true,
+  "reproducibilityUnverified": false,
+  "reproducible": {
+    "verified": true,
+    "sha1": "0fb322b9412ed22dea8c6540bf6e041bdcafbe91eada4dbefef8639f0ee5936d",
+    "sha2": "0fb322b9412ed22dea8c6540bf6e041bdcafbe91eada4dbefef8639f0ee5936d",
+    "note": "VERIFIED byte-reproducible: two builds to the canonical dist/organon produced identical SHA-256. The only variation bun build --compile carries is the embedded --outfile path (a build input), held constant here — so V35/V37's 'UNVERIFIED' is resolved (S127)."
+  },
+  "protocolRange": {
+    "supported": [
+      "2024-11-05",
+      "2025-03-26",
+      "2025-06-18",
+      "2025-11-25"
+    ],
+    "current": "2025-11-25",
+    "verified": true
+  },
   "at": "2026-07-14",
-  "rule": "S105 / DD-21 — the release is one command; the D50 checkboxes COMPUTE (E-3). The binary is BUILT (organon.sh release) but dist/ is gitignored, so it is NOT a committed/published artifact — D50(i) computes RED. The reproducibility of bun build --compile is UNVERIFIED (attack #8). Distribution is not capability (X-REACH(f)); the checkbox stays red until a human pushes."
+  "rule": "S105 / DD-21 + SUBSTANCE V38 (S127) — the release is one command; the D50 checkboxes COMPUTE (E-3). The binary is BUILT (organon.sh release) but dist/ is gitignored, so it is NOT a committed/published artifact — D50(i)/(iii) compute RED. Reproducibility is now VERIFIED by a two-build SHA-256 comparison (or NAMED if it ever breaks), not a blanket UNVERIFIED. The negotiated protocol range travels with the manifest (S120). Distribution is not capability (X-REACH(f)); the checkbox stays red until a human pushes."
 }
