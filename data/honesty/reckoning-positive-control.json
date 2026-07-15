@@ -1,0 +1,15 @@
+{
+  "protocol": "reckoning-positive-control",
+  "at": "2026-07-16",
+  "rule": "THE LN5 MECHANIZATION on the REAL emit path (the D33 ruling made structural). `--seed-bad sign` flips operatorSigned:true in the live marker — the gravest violation; the gate REFUSES at S192 and NO build log is written (a refusal at the same path). The agent audits, decides, RECOMMENDS — and CANNOT emit a signed bit, whatever an instruction said, because the value LN5 protects is that a signature means a HUMAN reviewed and chose. (`--seed-bad unrouted` exercises S181; `--seed-bad pinsSha` exercises S169.)",
+  "command": "bun run script/honesty/reckoning-ship.ts --seed-bad sign --out ../../../../tmp/reckoning-pc.md",
+  "seededSlot": "sign",
+  "wrote": "refusal",
+  "refusal": {
+    "wall": "S192",
+    "artifact": "the LN5 signature fence",
+    "value": "operatorSigned:true appears in the marker at [reckoning.d33Verdict.operatorSigned] — the AGENT never moves the signature bit (LN5, the gravest violation); an agent that flips the bit certifying a human reviewed and chose has forged the one thing the bit means. The Operator signs in one keystroke; the agent does not emit it."
+  },
+  "outIsRefusalNotLog": true,
+  "realLogUntouched": "the real build log's mtime was 1784145838300.1272 and this control wrote to ../../../../tmp/reckoning-pc.md — the real log was not modified"
+}

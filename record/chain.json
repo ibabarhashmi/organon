@@ -85,64 +85,64 @@
     },
     {
       "name": "BUILDLOG-RECKONING.md",
-      "contentSha": "8d3ce2c2970a4d3d4bf53f136ca798e3700d3adffac6207d1e1ad4227596ad39",
+      "contentSha": "378e90902b90ec55a8641012592a0d083d9c2164d87f5d88491c45c7e618159b",
       "prevSha": "7955bf3ea7fcfb6d9ba06737a8c2b0e13611f8474948b8aa2827067fc964ccdf",
-      "selfSha": "ce77fd5fc6c748d2b1b3576f2fe0a58ab8628c62e0c67c27df22d9e71ee7c9ab"
+      "selfSha": "a0070011f30e0136d473f947a41002964a8f9ce77a2d11054ee1adaff9d239bd"
     },
     {
       "name": "BUILDLOG-SHIP.md",
       "contentSha": "54ea5d5f2b640cf85b046e0ca204d84d8935ad0ace2db806745f374746336279",
-      "prevSha": "ce77fd5fc6c748d2b1b3576f2fe0a58ab8628c62e0c67c27df22d9e71ee7c9ab",
-      "selfSha": "5bcd8b24de6e3599a0a37e8ccbae83ac0d24bbe284004747a99bad46721ce0da"
+      "prevSha": "a0070011f30e0136d473f947a41002964a8f9ce77a2d11054ee1adaff9d239bd",
+      "selfSha": "619b4ca500d83aed21794c706eea4387cfd47ffcdd409d1153c478290dbf2ce2"
     },
     {
       "name": "BUILDLOG-SHOWING.md",
       "contentSha": "96228a23ea1a51c401f14d141e47b64d702f395c627c095419dabf61d4afd15f",
-      "prevSha": "5bcd8b24de6e3599a0a37e8ccbae83ac0d24bbe284004747a99bad46721ce0da",
-      "selfSha": "4f9d4dbd003d7fbea2e5fe7630879fa0fbd8e1df711e2f7f967025e1b24ebe55"
+      "prevSha": "619b4ca500d83aed21794c706eea4387cfd47ffcdd409d1153c478290dbf2ce2",
+      "selfSha": "355b56d218319c9657bfa09cf77d9929d43b8e3017c306a700740b5d53c8aac5"
     },
     {
       "name": "BUILDLOG-SOCKET.md",
       "contentSha": "48fa0f47f67a0d420c80907ecd13cbcc80f41972700114f7782afa274515277f",
-      "prevSha": "4f9d4dbd003d7fbea2e5fe7630879fa0fbd8e1df711e2f7f967025e1b24ebe55",
-      "selfSha": "0e17c73db9e3cec1467282e55d351c1255efde1f4caa79d9417786d1c7e312ef"
+      "prevSha": "355b56d218319c9657bfa09cf77d9929d43b8e3017c306a700740b5d53c8aac5",
+      "selfSha": "9c1e217beacfcdc5ac0b72e5448fe089357349dd3a360431b04139ad9c016d91"
     },
     {
       "name": "BUILDLOG-SUBSTANCE.md",
       "contentSha": "d5ef4cc34ba8cc77058e196f46f547f5411822c293ed3e41e5fa40a264085642",
-      "prevSha": "0e17c73db9e3cec1467282e55d351c1255efde1f4caa79d9417786d1c7e312ef",
-      "selfSha": "0cb4c59ba9ff7c3d33aa3af9e87daf7ecfd41293787bb72527fd6f6c6aeae2e7"
+      "prevSha": "9c1e217beacfcdc5ac0b72e5448fe089357349dd3a360431b04139ad9c016d91",
+      "selfSha": "a2b2c679c88e11abde2e84f088675cca764f4d23a5153f80bd7682bfd5d235cd"
     },
     {
       "name": "BUILDLOG-VARIANT.md",
       "contentSha": "f1901baa348974d4fa79cf09dc3f0e80a72462f12668af7a60907417e40b82b2",
-      "prevSha": "0cb4c59ba9ff7c3d33aa3af9e87daf7ecfd41293787bb72527fd6f6c6aeae2e7",
-      "selfSha": "63b88ece8710985b2222ef1d5a1c6420d47a9e6f09ee1940450b709637b649d6"
+      "prevSha": "a2b2c679c88e11abde2e84f088675cca764f4d23a5153f80bd7682bfd5d235cd",
+      "selfSha": "ba7d95cbe43c6d100db148dbc7e0e3632297a4e1f49e356a4dcad393d9811fb1"
     },
     {
       "name": "halt-lifts.json",
       "contentSha": "f44ed14665361fcc35429982f90bba8dc31607a0e42deaefbe666991684fb586",
-      "prevSha": "63b88ece8710985b2222ef1d5a1c6420d47a9e6f09ee1940450b709637b649d6",
-      "selfSha": "1b9bec9d973847ce325af754c5b9d34431ff61d2af0453eb592e383f860d3311"
+      "prevSha": "ba7d95cbe43c6d100db148dbc7e0e3632297a4e1f49e356a4dcad393d9811fb1",
+      "selfSha": "ebc5c8c8c38faa767ead1341d3743a42882bb6b5c579c868afef241e7ac3f3ae"
     },
     {
       "name": "kill-criterion-amendment.json",
       "contentSha": "e206703279bc6a350439a475ebeeb4b98f732a7666de388ce3b65a8c09f960e4",
-      "prevSha": "1b9bec9d973847ce325af754c5b9d34431ff61d2af0453eb592e383f860d3311",
-      "selfSha": "5feac9129fd3132cbe28a298403edfeb177ac5d7ce30138e52f364f0e61e71da"
+      "prevSha": "ebc5c8c8c38faa767ead1341d3743a42882bb6b5c579c868afef241e7ac3f3ae",
+      "selfSha": "e7612079a96333d534896761a7d665a44efdf32a78be228ee60e6724173d96a2"
     },
     {
       "name": "test-redesign-search.json",
       "contentSha": "08b77667ecb796d06b2234ecb4c1ab7a7b2a4f74bc377385d26ea01fbc4c9da2",
-      "prevSha": "5feac9129fd3132cbe28a298403edfeb177ac5d7ce30138e52f364f0e61e71da",
-      "selfSha": "bf6d0a9933a7860ab899bd888739cb9df823737561f2095f4dd20209c37cb904"
+      "prevSha": "e7612079a96333d534896761a7d665a44efdf32a78be228ee60e6724173d96a2",
+      "selfSha": "b663230c57223938f43d22cc8051e9936748446a81aee2894c89d0cd6621d7cd"
     }
   ],
-  "headSha": "bf6d0a9933a7860ab899bd888739cb9df823737561f2095f4dd20209c37cb904",
-  "d53SearchLedgerHash": "1b9bec9d973847ce325af754c5b9d34431ff61d2af0453eb592e383f860d3311",
+  "headSha": "b663230c57223938f43d22cc8051e9936748446a81aee2894c89d0cd6621d7cd",
+  "d53SearchLedgerHash": "ebc5c8c8c38faa767ead1341d3743a42882bb6b5c579c868afef241e7ac3f3ae",
   "d53Note": "the Halt-lift is a META-event (sprint-level optional stopping), NOT a strategy manifest; the X-RECKON strategy-trial ledger counts acts over lineage ids and has no coherent site for it — so the price is paid HERE, committed + hash-chained, and the log no longer claims it was 'appended to the strategy ledger'.",
-  "d67SearchLedgerHash": "5feac9129fd3132cbe28a298403edfeb177ac5d7ce30138e52f364f0e61e71da",
+  "d67SearchLedgerHash": "e7612079a96333d534896761a7d665a44efdf32a78be228ee60e6724173d96a2",
   "d67Note": "the kill-criterion amendment is a SEARCH (re-pinning a pre-registered criterion after seeing data — the exact act X-RECKON catches); like the Halt-lift it is a meta-event, not a strategy manifest, so its price is paid HERE (committed + hash-chained), not in the strategy-trial ledger. The old criterion (8b4e094b) is preserved beside the amendment forever.",
-  "d56SearchLedgerHash": "bf6d0a9933a7860ab899bd888739cb9df823737561f2095f4dd20209c37cb904",
+  "d56SearchLedgerHash": "b663230c57223938f43d22cc8051e9936748446a81aee2894c89d0cd6621d7cd",
   "d56Note": "the S116 power test was redesigned after it failed and D33 flipped to SIGNABLE on the redesign (J-1); the change of TEST is a SEARCH (branch (b) of DD-33). Like the Halt-lift and the amendment it is a meta-event, so its price is paid HERE (committed + hash-chained). D33's state reads this hash and carries testRedesigns beside the verdict PERMANENTLY (RP-1); the count never resets. The project gets no exemption from the discipline it sells."
 }
