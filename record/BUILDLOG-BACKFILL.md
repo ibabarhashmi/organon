@@ -1,0 +1,326 @@
+# ORGΛNON — THE BACKFILL SPRINT (V43) — BUILD LOG
+
+**Builder Arc, sprint 13. THE CURE SURVIVED INSIDE THE DISEASE, AND THE MOAT IS BORN LENGTH-ZERO.** NO NEW LAW (an EIGHTH sprint; seventeen stand, zero minted). The prose below names the producers; the machine wrote the claims (X-DERIVE(a), S126). This log is UNWRITABLE unless every continuity wall (S180–S183) passed against the real artifacts — the continuity-total Ship Gate emitted it, or it does not exist.
+
+## THE DIAGNOSIS — the defect has evolved, and so must the fix
+
+For three sprints the finding wore three faces, and they are the same face:
+
+| Sprint | The finding | The shape |
+|---|---|---|
+| V41 (L-1) | census reconciled in prose, not displayed arithmetic | a continuity *asserted*, not *reconciled* |
+| V42 (M-5→fixed; D-2 new) | census *static* partition displayed — but its *movement* (78→89) still only asserted | the fix reached the partition, not the movement |
+| V42 (D-1) | `batteryDelta` reads full 1941; `verify` sub-check still reads curated 1281 | the fix reached one producer, not its sibling |
+
+**The diagnosis has graduated.** V39–V42 said *a wall checks shape, not truth.* V43 says something sharper: **the truth-checking discipline now EXISTS and is CORRECT — and it is applied one producer at a time while its siblings drift.** The continuity check that reconciled the battery was not wrong; it was *not total*. **X-DERIVE already forbids this: a producer must be TOTAL over its domain, not a template you instantiate per-field and forget one.** So V43 does not add a continuity wall — it **generalizes the one that exists**, and makes forgetting impossible. **No new law. Seventeen stand, an eighth sprint.** *A discipline you can forget to apply is not a discipline.*
+
+### Ground truth beat the blueprint — a third time, the sprint's own thesis applied to itself
+
+The blueprint's **DD-83 hypothesized** that rate-space observables are not on Chainlink (Aave's supply rate is not), and reached for The Graph `prune:never` time-travel. **Probed live before design, the ground truth refined it twice:** (1) **the Aave hosted subgraph is DECOMMISSIONED** (`api.thegraph.com` unreachable — F-4/RP-4 confirmed, not merely feared), so Aave stays **forward-only**, honestly; and (2) **there ARE genuinely rate-space Chainlink feeds** — `rETH/ETH` is a unitless redemption RATIO (18-dec, `desc "RETH / ETH"`) whose slope IS the RocketPool staking yield — and `getRoundData` walks its real history over the pinned public RPC **with no archive node** (rounds are stored contract state). `FRAX/USD` is a PRICE feed, the S187 negative control. The carried head (`04c606dd`, Provenance) is read from disk, `Pins.selfHash`-verified, never retyped.
+
+## PHASE 1 — CONTINUITY, MADE TOTAL (S180–S183) · *never sheds — the sprint's spine*
+
+- **S180 (N-1)** — `src/organon/verify.ts`: the verify sub-check `battery-count-matches-committed` reads the CURATED 1281-subset while its name implied THE battery, in a header that reads the full count everywhere else — the last home of the split M-3 exposed. **RENAMED `curated-evidence-subset-matches-committed`** so the name states its domain (`Verify.subcheckDomain` / `nameStatesItsDomain`); the FULL battery is reconciled through `Continuity`. A name that implies a domain it does not check FAILS. (The prior pins — socket-pins V37, ship-pins V40 — describe the old name; those are HISTORICAL records, not rewritten — S182.)
+- **S181 (N-2/F-1/RP-1)** — `src/organon/continuity.ts`: **the ONE reconciler.** `Continuity.reconcile(countable, now, prev)` is TYPED per countable (F-4/RP-4) — ADDITIVE (`prev + added − removed === now`), PARTITION (`Σ buckets === total` + a **MOVED transfer map** — the census's movement shown as a transfer, *not a delta from nowhere*), DERIVED (a ratio recomputed from its inputs), INVARIANT (must equal prev). A pinned **countable registry** (16 countables) is routed through it, and the gate **DIFFS the whole marker against the previous marker** (`markerDiff` vs the Phase-0 `prevMarker` snapshot) and REFUSES the log if any number moved that is neither reconciled nor explicitly exempted. **The registry is a convenience; the diff is the guarantee — a number cannot move without being found, whether or not a human remembered to register it.** *Red-team hardening (the sprint's own thesis, self-applied):* the diff is over the **RAW terminal marker's every numeric leaf** (`Continuity.markerCoverage`), not a curated `snapshot()` — each of the marker's ~37 leaves is owned by a registered countable OR in a pinned `MARKER_EXEMPT` set (the verdict-core `crossCheck` floats, guarded by the byte-identical bundle; the invariants `reachableHumans`/`theNumber`/`testRedesigns`). A phantom numeric field owned by nothing and exempt by nothing REFUSES — the curated-list defect the sprint exists to kill, not half-relocated but closed. **Proven on the REAL emit path (RP-1, the fatal recursion, the fourth time): a seeded moved-but-unrouted countable (`backfillDepth`) → S181 REFUSES, no build log written.**
+- **S182 (N-3)** — `src/organon/historical.ts`: `redesignSearchHashes` — the immutable D56 SEARCH — drifted `a578032b→d5147f8d`, untagged, because its rendered hash was the record chain's **position-dependent `selfSha`**. `HistoricalAct.hash` is now the sha256 of the act's **immutable core** (`{deviation, act, redesigns, redesignLog}`) — a fixed act yields a fixed hash forever; the chain selfSha remains the chain's tamper-evidence, a different concern. A drift without a `carried:{from}` tag REFUSES. *The one carried hash that drifted, in the sprint about carried identity — cured.*
+- **S183 (N-4)** — `src/organon/capability.ts`: *"captures move no verdict"* rested on the bundle hash. Now it is a **rendered, checked, bidirectional import fence**: no capability engine (`observe`, `backfill`, `capture`) imports a verdict-path module (`loop`, `stamp`, `adjudicate`, `scorecard`), and no verdict-path module imports a capability engine. Asserted structurally, not implied by `9c1e7bd8`.
+
+## PHASE 2 — THE CARRIED / HISTORICAL AUDIT (S182 applied) · *sheds second*
+
+Every generated field is COMPUTED or `carried:{from,why,reverified}` (S170 carried), and every historical act is stable-hashed or carried (S182). The committed audit is `data/honesty/carried-audit.json` — the freshness fields plus the D56 SEARCH's stable immutable-core hash. A seeded drifting historical hash REFUSES.
+
+## PHASE 3–5 — THE MOAT'S SECOND STONE · *Phases 3, 4 never shed*
+
+The REAL★ engine (V42) captures forward, one point per run — the archive is length-zero the day it is born. So `organon.sh backfill` walks a rate feed's **historical rounds** and chains them **REAL-DERIVED**: re-derivable at each round (`getRoundData(roundId)` reproduces it forever — rounds are immutable), but third-party-sourced, a TIER between REAL★ and RETROSPECTIVE.
+
+- **S184/S185/S186 (Phase 3)** — `src/plane/backfill.ts`: `Backfill.round` decodes a `getRoundData` return (word 0 roundId, word 1 answer `int256`, word 3 `updatedAt`), enforces **re-derivability** (the returned roundId must equal the requested one — a feed that returned a different round is NOT re-derivable → REJECT, not chained, S184), and a **STRUCTURAL-only plausibility gate** (carried from V42 — an economically-extreme historical round is CHAINED, an address mis-slice REJECTED). `Backfill.walk` handles **phase transitions deliberately** (F-3/RP-3: `roundId = (phaseId << 64) | aggregatorRoundId`; the reachable depth stated per phase, never a silent truncation). **Hand-encoded `getRoundData(uint80)` selector `0x9a6fc8f5` over the pinned RPC via `fetch` — no ethers/viem/graph-client, deps stay 2 (S186).** Validated against a REAL, re-derivable known-answer round captured live before design (`rETH/ETH` roundId `36893488147419103932`, phaseId 2, aggRound 700, exchange rate **1.16493**, `updatedAt 1780427447` — finalized/immutable).
+  - **THE MOAT'S SECOND STONE IS REAL AND DEEP:** `organon.sh backfill --run` walked **185 re-derivable `rETH/ETH` REAL-DERIVED rounds** (phase 2, agg 742→558, exchange rates 1.1678→1.1551, ~185 days), chained into `observe-ledger.json`'s `realDerived` chain — hash-linked, every entry re-derivable at its round. The length-zero archive became a real series a falsifier can replay a kill-criterion over.
+- **S187/S188 (Phase 4)** — `src/plane/tier.ts`: the ladder **REAL★ > REAL-DERIVED > REAL@ts > RETROSPECTIVE**, pinned. **A cross-tier chain FAILS** (a REAL-DERIVED in the REAL★ chain, a RETROSPECTIVE in either — the cardinal provenance sin, S188); **a PRICE feed backfilled as a RATE FAILS** (the observable must match the source — S187; `rETH/ETH` exchange-rate passes, `FRAX/USD` price is the negative control). The own-leg mix is labeled with the **RATIO** and capped by the weakest dominant tier (F-2/RP-2).
+- **S189 (Phase 5)** — `src/strategy/capture.ts`: the false-fire own-leg now has depth. `Capture.ownArchive` renders the mix: **187 points — 1 REAL★ (0.5%), 185 REAL-DERIVED (98.9%), 1 RETROSPECTIVE (0.5%) — PREDOMINANTLY THIRD-PARTY HISTORICAL** (re-derivable, but NOT self-captured; the confidence capped by REAL-DERIVED). With the re-derivable series (186) past the 180-point floor, the own-leg is **JUDGEABLE as a tiered COUNT, never a verdict, never a threshold** (S145 carried). The **HUMAN own-count stays 0** — a backfill is third-party, not a self-capture; the first HUMAN capture is the Operator's. The meter stays dark (D63); `familyN === 1`.
+
+## THE RED TEAM (S1–S189) — RED-TEAM-CLEAN
+
+S1–S179 carried and re-run against the SHIPPED artifacts under the continuity-total gate. S180–S189 built, each with a seeded negative that REFUSES: an overclaiming sub-check name, a moved-but-unrouted countable, a drifting historical hash, a capability→verdict import, a non-re-derivable point, a cross-tier splice, a mass-path web3 import, a price-feed-as-rate. **Fix-on-the-fly (red-team):** ground truth beat the blueprint's DD-83 (rETH/ETH IS a reachable rate-space Chainlink feed; the Aave subgraph is dead — Aave forward-only); the S186 scheduler grep matched honest prose ("no cron, no daemon") and was tightened to code constructs; the V40/V41/V42 Ship-gate artifact builders were extended with the four continuity fields so the carried walls run under the new gate; the provenance-pins tests were updated to show V42 is now SUPERSEDED (the chain-tip guard bites correctly — the M-1 recurrence caught structurally).
+
+## THE GATE (whole — D23–D89; D27 STILL FIRST — the EIGHTEENTH sprint) · presented, NEVER signed (LN5)
+
+The FIRST section three items: **(1) THE COMPOUNDED GENEROSITY** (D27 unsigned, eighteen sprints + the ≈√τ_int overstatement, the PBO cross-check honest and independent behind it); **(2) D33** — SIGNABLE, note `carried:{from:V39,reverified:true}`, `testRedesigns 1`, `riderEnforced true`, unsigned; **(3) D67** — ⟨N⟩ STILL EMPTY, and now the own-capture false-fire leg has a REAL★+REAL-DERIVED series with real depth to be changed BY. D87–D89 RESERVED, unsigned. `LAWS: 17 · minted: 0 (eight sprints) · deps: 2 · screens: 3 · exit kinds: 7 · familyN: 1 · realLineageCount: 0 · reachableHumans: 1 (BY DESIGN)`. **The agent presents the whole gate, NEVER signs it. D33 or D46 implemented while unsigned is the gravest Halt.**
+
+
+## THE GENERATED MARKER (X-DERIVE(a) — the machine wrote these claims; S181 CONTINUITY-checked)
+
+```
+treeHash: 9dad74d14f96d4fecccaea7dc894ff723fee93ab
+commitSha: 4548748989d6bc857ca39ea7a61b017b16b8b4c0
+pinsSha: 7bf877ce16d839c2aad045482d2b9cd509cf75aab2b4d2a8068b11d4787b8ece
+battery: 1991/2/0
+expect: 13289
+verify: {"exitCode":0,"subchecks":[{"name":"evidence-bundle-reproduces","status":"pass","detail":"deterministic bundle reproduces (9c1e7bd88825d7a5); every claim + live number resolves; frozen seven git-clean"},{"name":"frozen-set-intact","status":"pass","detail":"7/9 present & byte-identical, 0 drift (2 absent on a clone, named)"},{"name":"curated-evidence-subset-matches-committed","status":"pass","detail":"curated evidence subset 1281 == committed evidence 1281 (the CURATED subset — the FULL battery is reconciled through Continuity, S180)"}]}
+verifyOutput: verify exit 0 — every sub-check passed (evidence-bundle-reproduces, frozen-set-intact, curated-evidence-subset-matches-committed)
+verifyCoverage: 7/9 (2 absent on a clone — monorepo-generated / gitignored, named in frozen-set-coverage.json)
+goldenMoves: 0
+crossCheck: {"dsr":{"quantity":"dsr","ours":0.4784209375780265,"theirs":0.4796379904843659,"delta":0.0012170529063393887,"tolerance":0.02,"agrees":true,"comparable":true,"detail":"DSR: ours=0.478421 theirs=0.479638 |Δ|=1.22e-3 < tol=0.02 → agrees=true"},"psr":{"quantity":"psr","ours":0.9989334286155159,"theirs":0.9989434857193364,"delta":0.0000100571038205155,"tolerance":0.02,"agrees":true,"comparable":true,"detail":"PSR: ours=0.998933 theirs=0.998943 |Δ|=1.01e-5 < tol=0.02 → agrees=true"},"pbo":{"quantity":"pbo","ours":0.6,"theirs":0.6,"delta":0,"tolerance":0.02,"agrees":true,"comparable":true,"detail":"PBO: ours=0.600000 theirs=0.600000 |Δ|=0.00e+0 < tol=0.02 → agrees=true"}}
+d33: {"state":"SIGNABLE","operatorSigned":false,"testRedesigns":1,"redesignSearchHashes":["7d63b5e25df25e9d3f8398d4105fd7e832abbcade4bccbdfd36fcea50b58d6c8"],"iidRider":{"stands":true,"classification":"HARNESS-COMPOSITION-GAP","direction":"the frozen PSR/DSR OVERSTATE confidence on autocorrelated input — the z-score uses √(n−1) over the raw observation count, treating n serially-dependent points as n independent ones, so the reported probability is too certain (biased toward SIGNABLE / toward 'yes').","magnitude":"z is inflated by ≈ √τ_int, where τ_int is the measured integrated autocorrelation time of the series. LIVE on this module's clone-stable AR(1)(ρ=0.95) demonstration, τ_int ≈ 35.8 (effective sample N_eff/N ≈ 2.8%). On ORGΛNON's OWN captured funding panel (recorded V26 via this same frozen effective_n.py), τ_int ranged 27–165 (median ≈ 124) → confidence overstated ≈ 5–13× (median ≈ 11×) on the most autocorrelated series. Daily yield series are less autocorrelated but τ_int > 1 always, so the DIRECTION always holds."},"riderEnforced":true,"pboEvidence":"independent (hand-rolled CSCV proven to detect + theory null-dist; degenerate 0.6-vs-0.6 retired)"}
+census: {"originUnrecorded":78,"recovered":0,"reFounded":12,"deleted":0,"demonstrated":100}
+d50: {"i":false,"ii":true,"iii":false,"iv":false}
+reach: {"published":false,"reachableHumans":1,"installPath":"clone the repo · have Bun ≥ 1.3 · `./organon.sh` — or the built single-file binary + one line (D49, unsigned)"}
+theNumber: {"manifestsReal":0,"cyclesUnpromptedReal":0,"realLineageCount":0}
+laws: {"laws":17,"mintedThisSprint":0,"productCapabilityThisSprint":1}
+newProductCapability: 1
+verifyOnClone: {"exitCode":0,"battery":{"pass":1991,"skip":2,"fail":0,"files":299},"ran":true}
+```
+
+## THE GENERATED HEADER
+
+```json
+{
+  "pinsSha": "7bf877ce16d839c2aad045482d2b9cd509cf75aab2b4d2a8068b11d4787b8ece",
+  "terminalTree": "9dad74d14f96d4fecccaea7dc894ff723fee93ab",
+  "commitSha": "4548748989d6bc857ca39ea7a61b017b16b8b4c0",
+  "pushed": false,
+  "battery": "1991/2/0 · 299 files · 13289 expect() · two runs identical: y",
+  "batteryDelta": {
+    "pass": 1991,
+    "prev": 1941,
+    "added": 50,
+    "removed": 0,
+    "removedReason": [],
+    "full": true,
+    "reconciles": true
+  },
+  "crossCheck": {
+    "dsr": {
+      "quantity": "dsr",
+      "ours": 0.4784209375780265,
+      "theirs": 0.4796379904843659,
+      "delta": 0.0012170529063393887,
+      "tolerance": 0.02,
+      "agrees": true,
+      "comparable": true,
+      "detail": "DSR: ours=0.478421 theirs=0.479638 |Δ|=1.22e-3 < tol=0.02 → agrees=true"
+    },
+    "psr": {
+      "quantity": "psr",
+      "ours": 0.9989334286155159,
+      "theirs": 0.9989434857193364,
+      "delta": 0.0000100571038205155,
+      "tolerance": 0.02,
+      "agrees": true,
+      "comparable": true,
+      "detail": "PSR: ours=0.998933 theirs=0.998943 |Δ|=1.01e-5 < tol=0.02 → agrees=true"
+    },
+    "pbo": {
+      "quantity": "pbo",
+      "ours": 0.6,
+      "theirs": 0.6,
+      "delta": 0,
+      "tolerance": 0.02,
+      "agrees": true,
+      "comparable": true,
+      "detail": "PBO: ours=0.600000 theirs=0.600000 |Δ|=0.00e+0 < tol=0.02 → agrees=true"
+    }
+  },
+  "d33": {
+    "state": "SIGNABLE",
+    "operatorSigned": false,
+    "testRedesigns": 1,
+    "redesignSearchHashes": [
+      "7d63b5e25df25e9d3f8398d4105fd7e832abbcade4bccbdfd36fcea50b58d6c8"
+    ],
+    "iidRider": {
+      "stands": true,
+      "classification": "HARNESS-COMPOSITION-GAP",
+      "direction": "the frozen PSR/DSR OVERSTATE confidence on autocorrelated input — the z-score uses √(n−1) over the raw observation count, treating n serially-dependent points as n independent ones, so the reported probability is too certain (biased toward SIGNABLE / toward 'yes').",
+      "magnitude": "z is inflated by ≈ √τ_int, where τ_int is the measured integrated autocorrelation time of the series. LIVE on this module's clone-stable AR(1)(ρ=0.95) demonstration, τ_int ≈ 35.8 (effective sample N_eff/N ≈ 2.8%). On ORGΛNON's OWN captured funding panel (recorded V26 via this same frozen effective_n.py), τ_int ranged 27–165 (median ≈ 124) → confidence overstated ≈ 5–13× (median ≈ 11×) on the most autocorrelated series. Daily yield series are less autocorrelated but τ_int > 1 always, so the DIRECTION always holds."
+    },
+    "riderEnforced": true,
+    "pboEvidence": "independent (hand-rolled CSCV proven to detect + theory null-dist; degenerate 0.6-vs-0.6 retired)"
+  },
+  "census": {
+    "originUnrecorded": 78,
+    "recovered": 0,
+    "reFounded": 12,
+    "deleted": 0,
+    "demonstrated": 100
+  },
+  "batteryContinuity": "prev 1941 + added 50 − removed 0 === now 1991",
+  "censusIdentity": "demonstrated 100 + weak 0 + exempt 2 + originUnrecorded 78 === total 180",
+  "continuity": "16 countables reconciled through the ONE reconciler; 9 moved, all classified (9 reconciled, 0 exempt, 0 unclassified) — continuity is total · census MOVED: demonstrated 89 + newWalls-demonstrated 10 + reclassified-from-OU 1 === 100",
+  "capabilityIsolation": "capability→verdict isolation: HELD — the capability→verdict fence holds: 3 capability engine(s) import 0 verdict-path modules, 4 verdict-path module(s) import 0 capability engines — RENDERED and CHECKED (not implied by the bundle hash)",
+  "ownArchive": "187 points: 1 REAL★ (0.5%), 185 REAL-DERIVED (98.9%), 1 RETROSPECTIVE (0.5%) — PREDOMINANTLY THIRD-PARTY HISTORICAL (re-derivable, but NOT self-captured; the confidence is capped by the weakest dominant tier, REAL-DERIVED)",
+  "d50": {
+    "i": false,
+    "ii": true,
+    "iii": false,
+    "iv": false
+  },
+  "reach": {
+    "published": false,
+    "reachableHumans": 1,
+    "installPath": "clone the repo · have Bun ≥ 1.3 · `./organon.sh` — or the built single-file binary + one line (D49, unsigned)"
+  },
+  "theNumber": {
+    "manifestsReal": 0,
+    "cyclesUnpromptedReal": 0,
+    "realLineageCount": 0
+  },
+  "laws": {
+    "laws": 17,
+    "mintedThisSprint": 0,
+    "productCapabilityThisSprint": 1
+  },
+  "newProductCapability": 1,
+  "verifyOnClone": {
+    "exitCode": 0,
+    "battery": {
+      "pass": 1991,
+      "skip": 2,
+      "fail": 0,
+      "files": 299
+    },
+    "ran": true
+  }
+}
+```
+
+## THE GENERATED GATE (D27 first; the menu presented, never chosen — LN5)
+
+```json
+{
+  "firstLine": "the instrument speaks · manifests (real) 0 · cycles unprompted (real) 0 · published false · reachableHumans 1 (BY DESIGN) · D51 ANSWERED = INSTRUMENT",
+  "firstSection": {
+    "d33": {
+      "state": "SIGNABLE",
+      "operatorSigned": false,
+      "testRedesigns": 1,
+      "redesignSearchHashes": [
+        "7d63b5e25df25e9d3f8398d4105fd7e832abbcade4bccbdfd36fcea50b58d6c8"
+      ],
+      "iidRider": {
+        "stands": true,
+        "classification": "HARNESS-COMPOSITION-GAP",
+        "direction": "the frozen PSR/DSR OVERSTATE confidence on autocorrelated input — the z-score uses √(n−1) over the raw observation count, treating n serially-dependent points as n independent ones, so the reported probability is too certain (biased toward SIGNABLE / toward 'yes').",
+        "magnitude": "z is inflated by ≈ √τ_int, where τ_int is the measured integrated autocorrelation time of the series. LIVE on this module's clone-stable AR(1)(ρ=0.95) demonstration, τ_int ≈ 35.8 (effective sample N_eff/N ≈ 2.8%). On ORGΛNON's OWN captured funding panel (recorded V26 via this same frozen effective_n.py), τ_int ranged 27–165 (median ≈ 124) → confidence overstated ≈ 5–13× (median ≈ 11×) on the most autocorrelated series. Daily yield series are less autocorrelated but τ_int > 1 always, so the DIRECTION always holds."
+      },
+      "riderEnforced": true,
+      "pboEvidence": "independent (hand-rolled CSCV proven to detect + theory null-dist; degenerate 0.6-vs-0.6 retired)",
+      "flipEvidence": {
+        "z": 0.6084472498281465,
+        "acceptanceRegion": "|z_mean| < 2 (the pre-registered band; the null-distribution MEAN indistinguishable from the pinned theory 0.5)",
+        "preRegisteredAt": "2026-07-14"
+      },
+      "note": "recomputed with the D56 SEARCH counted (RP-1: testRedesigns carried in state, never resets); the i.i.d. rider on the SAME LINE (S142); the deciding z SHOWN (S141); presented, NEVER signed (LN5).",
+      "noteFreshness": {
+        "field": "gate.firstSection.d33.note",
+        "kind": "CARRIED",
+        "from": "V39",
+        "why": "the D33 SIGNABILITY note is unchanged since the autopsy; recomputing re-derives the identical SIGNABLE-state note (RP-2: its only input is D33's state, which did not move this sprint)",
+        "value": "recomputed with the D56 SEARCH counted (RP-1: testRedesigns carried in state, never resets); the i.i.d. rider on the SAME LINE (S142); the deciding z SHOWN (S141); presented, NEVER signed (LN5).",
+        "inputs": [
+          "d33.state"
+        ],
+        "inputsMoved": false,
+        "reverified": true
+      }
+    },
+    "d67": "the amended kill-criterion — ⟨N⟩ STILL EMPTY, awaiting the pen; and now the own-capture false-fire leg has a REAL★+REAL-DERIVED series with real depth: 187 points: 1 REAL★ (0.5%), 185 REAL-DERIVED (98.9%), 1 RETROSPECTIVE (0.5%) — PREDOMINANTLY THIRD-PARTY HISTORICAL (re-derivable, but NOT self-captured; the confidence is capped by the weakest dominant tier, REAL-DERIVED). the own-capture false-fire leg is JUDGEABLE: 186 re-derivable points (187 points: 1 REAL★ (0.5%), 185 REAL-DERIVED (98.9%), 1 RETROSPECTIVE (0.5%) — PREDOMINANTLY THIRD-PARTY HISTORICAL (re-derivable, but NOT self-captured; the confidence is capped by the weakest dominant tier, REAL-DERIVED)) reach the 180-point floor. It renders a COUNT with its tier mix + ratio, NEVER a verdict, NEVER a suggested threshold (S145 carried). PREDOMINANTLY THIRD-PARTY HISTORICAL — the confidence is capped by REAL-DERIVED (re-derivable, not self-captured). HUMAN own-captures: 0 (a backfill is third-party, not a self-capture; the HUMAN count is the Operator's to make)."
+  },
+  "d51": {
+    "state": "ANSWERED",
+    "detail": "ANSWERED — INSTRUMENT (n=1 BY DESIGN); the pen ruled 'my personal tool' (V38-B). reachableHumans: 1 BY DESIGN.",
+    "supersedes": "the base gate's V38 line 'D51 OPEN · pens unmoved: 2 sprints · Is ORGΛNON a product, or an instrument?' — that question is ANSWERED; the base gate now redirects to this state (MR18/S150).",
+    "agentComputes": "the fact; the pen ALREADY chose (INSTRUMENT) — the agent records it and never signs (LN5)."
+  },
+  "deviationStates": [
+    {
+      "id": "D51",
+      "state": "ANSWERED"
+    },
+    {
+      "id": "D33",
+      "state": "SIGNABLE"
+    },
+    {
+      "id": "D63",
+      "state": "OFF"
+    },
+    {
+      "id": "D27",
+      "state": "FIRST"
+    },
+    {
+      "id": "D80",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D81",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D82",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D83",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D84",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D85",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D86",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D87",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D88",
+      "state": "RESERVED"
+    },
+    {
+      "id": "D89",
+      "state": "RESERVED"
+    }
+  ],
+  "d33": {
+    "state": "SIGNABLE",
+    "operatorSigned": false,
+    "testRedesigns": 1,
+    "redesignSearchHashes": [
+      "7d63b5e25df25e9d3f8398d4105fd7e832abbcade4bccbdfd36fcea50b58d6c8"
+    ],
+    "iidRider": {
+      "stands": true,
+      "classification": "HARNESS-COMPOSITION-GAP",
+      "direction": "the frozen PSR/DSR OVERSTATE confidence on autocorrelated input — the z-score uses √(n−1) over the raw observation count, treating n serially-dependent points as n independent ones, so the reported probability is too certain (biased toward SIGNABLE / toward 'yes').",
+      "magnitude": "z is inflated by ≈ √τ_int, where τ_int is the measured integrated autocorrelation time of the series. LIVE on this module's clone-stable AR(1)(ρ=0.95) demonstration, τ_int ≈ 35.8 (effective sample N_eff/N ≈ 2.8%). On ORGΛNON's OWN captured funding panel (recorded V26 via this same frozen effective_n.py), τ_int ranged 27–165 (median ≈ 124) → confidence overstated ≈ 5–13× (median ≈ 11×) on the most autocorrelated series. Daily yield series are less autocorrelated but τ_int > 1 always, so the DIRECTION always holds."
+    },
+    "riderEnforced": true,
+    "pboEvidence": "independent (hand-rolled CSCV proven to detect + theory null-dist; degenerate 0.6-vs-0.6 retired)"
+  },
+  "d50": {
+    "i": false,
+    "ii": true,
+    "iii": false,
+    "iv": false
+  },
+  "laws": {
+    "laws": 17,
+    "mintedThisSprint": 0,
+    "productCapabilityThisSprint": 1
+  },
+  "newProductCapability": 1
+}
+```
+
+
+## DEFINITION OF DONE
+
+**The cure had been surviving inside the disease, so this sprint made the cure total.** A single reconciler, a pinned registry of every cross-sprint countable, and a gate that diffs the whole marker against the last one and refuses the log if any number moved without being reconciled or exempted — so continuity cannot be forgotten, because the gate counts the countables and not the diligence. The last home of the 1281/1941 split is closed by making the verify sub-check name what it measures, and the census's movement is shown for what it always was — **not a delta from nowhere but a bucket transfer**. **And the moat got its second stone:** `organon.sh backfill` walked 185 re-derivable `rETH/ETH` rounds and chained them REAL-DERIVED — weaker than the REAL★ ORGΛNON captures itself, stronger than the RETROSPECTIVE charts it may never deflate on, and the ladder says so, forever, in a ratio the Operator cannot miss. **The record can no longer drift a number past the gate, and the archive is deep enough to replay a kill-criterion the moment one is authored — but a deep archive of a criterion no one has written is a false-fire count with nothing to count, and the first manifest, like the first capture, is a human's to make. V43 makes the room behind the door deeper. It cannot open it.**

@@ -1,0 +1,15 @@
+{
+  "protocol": "backfill-positive-control",
+  "at": "2026-07-15",
+  "rule": "RP-1 / PART A′ #1 (THE FATAL RECURSION, the FOURTH time this arc has faced its shape): the positive control on the REAL emit path. `--seed-bad unrouted` injects a MOVED-BUT-UNROUTED countable (a V44-style backfillDepth that changed vs the prev marker but is neither registered nor exempted); the gate REFUSES at S181 and NO build log is written (a refusal at the same path). The reconciler cannot be forgotten because the gate DIFFS the whole marker and counts the countables, not the diligence. (`--seed-bad pinsSha` exercises S169: a stale parent pin refuses.) A gate that cannot fail on a drifting number is the exact defect; the control proves it CAN.",
+  "command": "bun run script/honesty/backfill-ship.ts --seed-bad unrouted --out ../../../../tmp/backfill-pc.md",
+  "seededSlot": "unrouted",
+  "wrote": "refusal",
+  "refusal": {
+    "wall": "S181",
+    "artifact": "the countable continuity",
+    "value": "continuity is NOT total: an UNCLASSIFIED number moved vs the prev marker: backfillDepth (prev null → now 500) is neither a registered countable nor exempted (F-1/RP-1) — a number cannot move without being reconciled or explicitly exempted (N-2/F-1/RP-1 — a discipline you can forget to apply is not a discipline; the gate counts the countables)"
+  },
+  "outIsRefusalNotLog": true,
+  "realLogUntouched": "the real build log did not exist before this control run"
+}
