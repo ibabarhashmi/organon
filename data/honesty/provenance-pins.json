@@ -1,0 +1,264 @@
+{
+  "protocol": "provenance-pins",
+  "sprint": "THE PROVENANCE SPRINT (V42): the Ship Gate checked the SHAPE and not the IDENTITY, so a stale header sailed through the one wall built to stop it. V41 emitted a pinsSha that was a PARENT'S (currentPins frozen at family-pins.json, V39 2c299b9e — never THIS sprint's), a batteryDelta describing the 1281-CURATED subset instead of the 1892-battery's +48 movement, and a D33 note that was V39's prose reproduced verbatim in a 'generated' field — each SHAPE-VALID and IDENTITY-WRONG, each sailing through Ship.gate() because it proved 'is it a 40-hex hash?' and never 'is it THIS SPRINT'S hash?'. The exact 'shape ≠ truth' lesson this arc was built on, recurring ONE LAYER UP — and STILL NO NEW LAW (a seventh sprint), because X-REACH(a) already reaches it: a check that cannot fail where it matters is not a check, and a hash never compared to its own source is a shape check wearing an identity check's clothes. So the Ship Gate graduates from SHAPE to IDENTITY-AND-FRESHNESS: the emitted pins-sha must equal sha256 of THIS sprint's own pins file (frozen at Phase 0); every generated claim is recomputed-this-run or explicitly tagged carried:{from,why,reverified} (re-verified against a recompute, never skipped); the batteryDelta reconciles the FULL battery across the sprint boundary. AND THEN, with the research in hand, the first data-provider stone in the moat: the REAL★ point-in-time capture engine — organon.sh capture grows from a marginal-value renderer (V41) into a real poller of rate-space yield (Aave getReserveData, Sky SSR, Ethena funding), block-pinned, re-derivable, content-hashed, provider-attributed, structurally walled away from the RETROSPECTIVE charts a falsifier may never deflate on. No new mass-path dependency (fetch + hand-encoded eth_call; deps stay 2), no daemon (a VERB, the Operator's own cadence), no valuation (rate-space only). The whole Operator gate D23–D86, D27 STILL FIRST (the SEVENTEENTH sprint).",
+  "at": "2026-07-15",
+  "continues": "THE VARIANT SPRINT (V41) — battery 1892/2/0 across 288 files / 12368 expect() (two runs identical), verify exit 0 with THREE sub-checks, the clone RAN on this tree (1892 from zero), the SHIP GATE holds (Rollup refuses to write on any wall failure — but on SHAPE, not yet IDENTITY), frozen 0 drift, bundle 9c1e7bd8 byte-identical (no verdict moved since Alpha), deps 2, screens 3, exit kinds 7, familyN 1, 17 laws / 0 minted for SIX sprints; D51 ANSWERED (INSTRUMENT), D33 SIGNABLE (testRedesigns 1, riderEnforced true, pboEvidence independent) unsigned, D63 OFF, D27 STILL FIRST (the sixteenth sprint). The Variant Ledger shipped; the record was audited MOSTLY ACHIEVED — three identity defects (M-1/M-2/M-3) are carried and cured here.",
+  "carriedFromPinsSha": "eb64cebe435bc0797dd3752cef35afc36da3ff23230b2d69cd41b5f86c756d08",
+  "chain": "eb64cebe (Variant) ← c0777d9a (Ship) ← 2c299b9e (Family) ← 153628a9 (Substance) ← ab4900ee (Socket) ← 257684c0 (Derive) ← 8c80367a (Reach) ← 07d27f81 (Show) ← 96469dbb (Reckon) ← d90df3c7 (Cadence) ← 98a44bd8 (Manifest) ← 2b1dd373 (Domain) ← cc08a77b (Coverage) ← 6b285eba (Redesign) ← 3d0ef3bb (GroundTruth)",
+  "chainProvenanceNote": "the carried head is READ FROM variant-pins.json ON DISK (eb64cebe), not typed from the blueprint's prose. The blueprint's chain named c0777d9a (V40 Ship's pin) as 'the true V41 pin' and inserted a phantom 22a34e0c matching NO pins file — the exact stale-but-shape-valid identity error this sprint exists to cure, present in the blueprint that commissioned the cure. The ground-truth chain is the linked list of self-consistent heads: variant(eb64cebe) ← ship(c0777d9a) ← family(2c299b9e) ← …",
+  "noNewLaw": {
+    "rule": "SEVENTEEN laws stand; ZERO minted this sprint (the seventh running). Every V41 defect is an existing law UNDER-APPLIED. X-REACH(a): a check that cannot fail WHERE IT MATTERS is not a check — a pins-sha never compared to its own source file cannot fail on a stale value, so S143's shape check was an identity check's clothes. X-SHOWN(c): the sprint must end in ITS OWN hash — a header echoing a parent's pin does not. X-DERIVE(a): the claim is COMPUTED THIS RUN, not echoed — a 'generated' field holding a prior sprint's verbatim prose is a stored string, not a derived claim. The constitution reaches all of it; the gate's application was shallow, and this sprint deepens it from shape to identity. The moat is not extended by a law; it is extended by a capture engine and a gate that cannot be fooled by last sprint's truth.",
+    "laws": 17,
+    "minted": 0,
+    "sprintsWithoutALaw": 7,
+    "threeUnderApplied": {
+      "pinsShaIdentity": "X-REACH(a) — the emitted pins-sha was never compared to sha256 of this sprint's own pins file, so it could not fail on a stale (parent) value. currentPins() in claim.ts was frozen at family-pins.json (V39, 2c299b9e) — the header emitted 2c299b9e regardless of sprint. → PHASE 1 (S169: emitted === sha256(provenance-pins.json, frozen Phase 0)).",
+      "generatedFieldEchoed": "X-DERIVE(a) — a 'generated' field holding a prior sprint's verbatim prose (D33's note/iidRider/flipEvidence, V39) is a stored string, not a claim computed this run. → PHASE 1/2 (S170: COMPUTED or carried:{from,why,reverified}, re-verified against a recompute).",
+      "batteryWrongBattery": "X-DERIVE(a)/X-REACH(a) — batteryDelta read battery-summary.json.canonical (the CURATED 1281-subset), not the FULL 1892-battery's +48 movement; RP-4 (V38 lineage) required {pass, delta, added, removed} on the FULL battery. → PHASE 1 (S171: batteryDelta describes the full battery; S172: prevMarker.battery + added − removed === now, displayed)."
+    }
+  },
+  "frame": {
+    "d51": "ANSWERED = INSTRUMENT (V38-B). V40 was the first FULLY-ACHIEVED sprint in ten; V41 built the Variant Ledger and was audited MOSTLY ACHIEVED — three IDENTITY defects (M-1/M-2/M-3) slipped the SHAPE-only Ship Gate. This sprint is TWO things: (1) it graduates the gate from shape to identity so the record can no longer be fooled by last sprint's truth, and (2) it lays the first REAL★ stone in the provenance moat the research names as the only honest yield-history source ('the only genuinely unrevised source is one you capture yourself').",
+    "thesis": "ORGΛNON is a strategy FALSIFIER whose moat is CONTENT-HASHED PROVENANCE. The gate that writes the record must not be foolable by a shape-valid lie, and the yield history the falsifier deflates on must include a tier that a provider can never silently revise. V42 hardens the gate to identity AND polls the first REAL★ point-in-time observations of rate-space yield.",
+    "reachableHumans": 1,
+    "reachableHumansNote": "reachableHumans: 1 is BY DESIGN under D51 (carried). realLineageCount: 0 — the door has never been opened. ownCaptures: 0 — the Operator has never run the verb. The capture engine is the FIRST feature whose value COMPOUNDS with use and whose FIRST run produces something the tool never had (a REAL★ point of length 1); the agent cannot take the first run (it would be AGENT-tier, quarantined) — the door is still the Operator's to open."
+  },
+  "auditFindings": {
+    "M1": "THE HEADER's pinsSha IS A PARENT'S, NOT THIS SPRINT'S. Empirically the header emits 2c299b9e (family-pins.json, V39) — currentPins() in claim.ts iterates only [family, substance, socket] and was never advanced, so the pins-sha claim is frozen at V39 regardless of sprint. The Ship Gate proved a real 40-hex hash (S143) but never that it was THIS sprint's. → PHASE 1 — S169: emitted pins-sha === sha256(this sprint's pins file). Never sheds. The gate's identity graduation. (The blueprint mislabeled the true pin as c0777d9a; ground truth is eb64cebe.)",
+    "M2": "THE D33 NOTE/flipEvidence/iidRider IS V39's PROSE REPRODUCED VERBATIM in a generated field. D33 correctly did not change — but a generated header echoing a prior sprint's narrative means the note is a STORED STRING, not a derived claim (S141's evidence echoed, not recomputed). → PHASE 1/2 — S170: a generated claim is recomputed-this-run OR tagged carried:{from,why,reverified}; an untagged prior-sprint string REFUSES.",
+    "M3": "batteryDelta DESCRIBES THE WRONG BATTERY. {pass:1281, files:197} is the curated verify subset, not the 1892-battery's +48 movement; RP-4 (V38 lineage) required {pass, delta, added, removed} on the FULL battery. → PHASE 1 — S171: batteryDelta describes the full battery.",
+    "M4": "CROSS-SPRINT BATTERY CONTINUITY NOT DISPLAYED. V40 closed 1844; V41 opened 1892 (+48); S156 (V40) required continuity with the previous terminal marker but never DISPLAYED it across the boundary. → PHASE 1 — S172: prevMarker.battery + added − removed === now, displayed and gated.",
+    "M5": "THE CENSUS TOTAL ISN'T SHOWN RECONCILING. S161 fixed the originUnrecorded line; the demonstrated/reFounded arithmetic carries no displayed identity tying demonstrated to the total wall count. → PHASE 1 — S173: the full census identity displayed (demonstrated + reFounded + originUnrecorded + … === total).",
+    "M6": "D80–D83 ABSENT FROM deviationStates. Phase 0 pinned them, the gate listed them, but the machine-readable state list enumerated only D51/D33/D63/D27. → PHASE 1 — S174/MR20: every pinned deviation appears in deviationStates.",
+    "M7": "MR13 unmentioned — seventh sprint. → Phase 0 — discharge or record undischargeable (it turns on the Operator opening the tool; realLineageCount 0).",
+    "M8": "THE REAL★ own-capture archive is the provenance moat ('the only genuinely unrevised source is one you capture yourself'). organon.sh capture exists (V40/V41) as a MARGINAL-VALUE RENDERER but captures NOTHING — the own-capture window is 0 forever until it actually polls. → PHASES 3–5 — the REAL★ capture engine. Never sheds. The first data-provider stone in the moat."
+  },
+  "partClean": {
+    "rule": "pure functions, each with a seeded negative and a mint-time origin enforced AT SHIP (S108/S155); deps 2, screens 3, familyN === 1, no daemon, no law. Every artifact passes the IDENTITY-hardened Ship Gate or the build log is not written.",
+    "producers": {
+      "Pins.selfHash": "(pinsFileName) → {recomputed, stored, matches} — sha256 of the file content minus the pinsSha field; matches iff the file is self-consistent (unedited after Phase 0). S169; a parent-pin emission or a post-Phase-0 edit FAILS.",
+      "Freshness.classify": "(fieldName, value) → COMPUTED | CARRIED{from, why, reverified} — a field is COMPUTED (a producer recomputed it this run to `value`) or CARRIED (equals a prior sprint's string AND a recompute of its own inputs still matches). S170; a carried claim that would recompute differently, or an untagged prior-sprint string, REFUSES.",
+      "Battery.fullDelta": "(baseline, continuity) → {prev, added, removed, now, reconciles, display} — the FULL battery across the boundary; S171/S172; a delta describing the curated subset, or a non-reconciling boundary, FAILS.",
+      "Census.identity": "() → {demonstrated, weak, exempt, originUnrecorded, total, reconciles, display} — the full census identity DISPLAYED; S173; a sum that does not equal the wall count FAILS.",
+      "Observe.observe": "(subject, block, rawReturn?) → REAL★{blockNumber, rawReturn, decoded, prevHash} | REAL@ts | RETROSPECTIVE{revisable} — tier-typed; a REAL★ with no block FAILS (S175); a RETROSPECTIVE in a REAL★ chain FAILS (S178).",
+      "Observe.plausible": "(rawWord, decoded, decimals) → Ok | REJECT{reason} — STRUCTURAL-only decode plausibility (RP-3); a −42% funding value is CHAINED, an address/index mis-slice or NaN is REJECTED; S177.",
+      "Observe.chain": "(entries) → {ok, brokenAt} — the hash-chain integrity (prevHash links); a REAL★ entry without a block, or a RETROSPECTIVE entry in the REAL★ chain, breaks it; S175/S178.",
+      "Capture.marginalValue": "(run, before) → {seriesAdvanced, ownCapturesAfter, firstCapture, render} — fed ACTUAL captures now (S179); the window renders from real captures; the UNJUDGEABLE floor holds; in CAPTURES, never days (RP-6)."
+    }
+  },
+  "delegatedDecisions": {
+    "DD74": {
+      "rule": "how does the pins-sha producer derive its value, and why did it emit the parent's? READ Rollup/claim.ts's pins-sha source. currentPins() iterates [family-pins, substance-pins, socket-pins] and returns family-pins.json (2c299b9e) — a CARRIED chain-head list frozen at V39, never advanced. FIX: the header's pins-sha reads the CURRENT head (provenance-pins.json), and Pins.selfHash() = sha256(canonical(this sprint's pins file minus pinsSha)); S169 asserts the emitted value === sha256(provenance-pins.json on disk) AND the file is self-consistent. A seeded parent-pin emission FAILS on the real emit path.",
+      "bug": "currentPins() in src/organon/claim.ts iterates a fixed list [family-pins.json, substance-pins.json, socket-pins.json] — never advanced past V39, so pinsSha := 2c299b9e for every sprint since Family.",
+      "fix": "src/organon/pins.ts — Pins.HEAD is provenance-pins.json (this sprint's head, pinned); Pins.selfHash() recomputes sha256(canonical(file minus pinsSha)); the pinsSha claim reads Pins.head().pinsSha; S169 compares the emitted value to sha256(provenance-pins.json on disk) — two INDEPENDENT paths to the value, so a stale head cannot make both agree on a wrong value."
+    },
+    "DD75": {
+      "rule": "DD-75/RP-2: a generated field is COMPUTED (recomputed this run) or carried:{from, why, reverified}. A carried field is RE-RUN and the carried value must equal the recompute (a carry that would recompute differently is a LIE and REFUSES the log — S170). RP-2 (F-2): re-verification recomputes only the claim's OWN inputs; a claim whose input MOVED this sprint must be COMPUTED, not carried. An UNTAGGED generated field whose value equals a prior sprint's byte-for-byte REFUSES.",
+      "d33NoteSplit": "the D33 note is SPLIT (F-2/RP-2): (a) the SIGNABILITY claim — carried:{from:V39, why:'D33 unchanged since the autopsy; recomputing re-derives the identical state=SIGNABLE'}, re-verified by recomputing d33.state; (b) any FALSE-FIRE reference — COMPUTED this run from the false-fire producer, because the REAL★ archive feeds the own-capture leg (its inputs move with every capture). A carried signability claim whose d33.state changed, or a false-fire reference carried while ownCaptures moved, → REFUSE."
+    },
+    "DD76": {
+      "rule": "DD-76/RP-5: rate-space observables ONLY. Aave V3 getReserveData(address) → currentLiquidityRate (return WORD 2, 0-indexed, RAY 1e27, on-chain, REAL★) · Sky SSR (Savings USDS Rate, on-chain accumulator, REAL★) · Ethena sUSDe funding (on-chain where available, else the provider API tagged REAL@ts). Each subject pins {contract, selector, argEncoding, returnWord, decimals, contractCodeHash}. The selector is HAND-ENCODED (the chainlink 0xfeaf968c precedent — no ABI library). RP-5: the implementation is version-pinned; a code-hash mismatch is a NEW pinned target, disclosed — never a silent mis-decode of a moved struct.",
+      "aaveV3PoolMainnet": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "aaveGetReserveDataSelector": "0x35ea6a75",
+      "aaveCurrentLiquidityRateWord": 2,
+      "groundTruthNote": "the return word index was VERIFIED against a live, re-derivable eth_call — NOT assumed. An early read of the ABI (1-indexed) tentatively put currentLiquidityRate at word 3; a real getReserveData(USDC) on the pinned Pool at block 25537838 (0x185ad2e) decoded word 2 = 3.2691% (the plausible supply rate) and word 3 = 1.24 (variableBorrowINDEX, ~1.0-scale) — so the ground truth is WORD 2. The sprint about ground-truth-over-assumption corrected its own assumption when the chain disagreed. The known-answer is committed at data/honesty/capture-known-answer.json (AGENT-tier, quarantined — DD-79/S128).",
+      "knownAnswer": {
+        "subject": "aave-v3-usdc-supply",
+        "blockNumber": 25537838,
+        "blockHex": "0x185ad2e",
+        "returnWord": 2,
+        "decimals": 27,
+        "expectedRatePct": 3.2691,
+        "tolerancePct": 0.0001,
+        "fixture": "data/honesty/capture-known-answer.json"
+      },
+      "ray": "1e27",
+      "note": "the pinned block + code-hash make each capture a re-derivable claim; the shelf's USDC reserve on the pinned Pool is the canonical known-answer subject"
+    },
+    "DD77": {
+      "rule": "the capture engine adds NO mass-path dependency. The poller reads a pinned RPC endpoint over fetch (Bun native — no dep; the src/plane/rpcstate.ts jsonRpc + ROTATION precedent) and a hand-encoded eth_call (the chainlink 0xfeaf968c selector precedent — no ethers/viem/web3). The chain is hash-chained JSONL (canonical); bun:sqlite indexes it (native, no dep). Deps stay 2. A seeded ethers/viem/web3 import on the mass path FAILS (S176).",
+      "deps": 2,
+      "fetchPath": "src/plane/rpcstate.ts::jsonRpc(url, method, params) over the pinned ROTATION (eth.llamarpc.com / rpc.ankr.com/eth / ethereum.publicnode.com / 1rpc.io/eth) — reused, no new endpoint class",
+      "handEncoded": "the getReserveData(address) selector 0x35ea6a75 with the asset address left-padded to a 32-byte word — hand-encoded (no ABI library); the return decoded by 64-hex word slicing + BigInt (the chainlink decodeRound precedent)"
+    },
+    "DD78": {
+      "rule": "a capture's point-in-time honesty is PROVEN, not asserted: the block number is pinned in the observation, so it is RE-DERIVABLE (anyone can eth_call at that block and reproduce the raw value). A REAL★ capture records {blockNumber, blockHash, contract, contractCodeHash, asset, rawReturn, providerAtCapture, capturedAt, prevHash}. RETROSPECTIVE captures record the provider's response + revisable:true. A REAL★ observation with NO block number FAILS (S175).",
+      "schema": {
+        "rule": "DD-78: a REAL★ capture is PROVEN point-in-time, not asserted. It records {chainId, blockNumber, blockHash, contract, contractCodeHash, asset, selector, rawReturn, decoded, decimals, tier: 'REAL★', providerAtCapture, capturedAt, prevHash, sha} — so it is RE-DERIVABLE: anyone can eth_call(contract, selector‖asset, blockNumber) and reproduce rawReturn, then decode identically. A REAL★ capture with NO blockNumber FAILS (S175) — it cannot be point-in-time without one. A RETROSPECTIVE capture records the provider's response + revisable:true and NO block (S178). The chain is append-only hash-chained JSONL (canonical), bun:sqlite-indexed (native, no dep); raw payloads over 400 numbers are gitignored, the chain committed (the E-PREVENT / provenance.jsonl precedent).",
+        "observationFields": [
+          "chainId",
+          "blockNumber",
+          "blockHash",
+          "contract",
+          "contractCodeHash",
+          "asset",
+          "selector",
+          "rawReturn",
+          "decoded",
+          "decimals",
+          "tier",
+          "providerAtCapture",
+          "capturedAt",
+          "prevHash",
+          "sha"
+        ],
+        "tiers": {
+          "REAL★": "block-pinned, re-derivable at the block — the genuinely point-in-time tier the moat exists to hold",
+          "REAL@ts": "venue-sourced at a timestamp, no block (a provider API where no on-chain read exists) — honest but not block-re-derivable",
+          "RETROSPECTIVE": "a provider CHART (DeFiLlama /yields) — revisable:true, stored in a SEPARATE chain, NEVER mixed into a REAL★ series (the research's cardinal provenance sin)"
+        }
+      }
+    },
+    "DD79": {
+      "rule": "the capture verb touches the false-fire count's own-capture leg — this is the point. Each REAL★ capture advances the own-capture window; the false-fire count's own leg (V38/V39, currently UNJUDGEABLE at 0 captures) now has a growing REAL★ series to replay over. Render the marginal value from ACTUAL captures (V41's renderer, now fed real data). A false-fire own-count that claims judgeable below the pinned minimum window still FAILS (S145 carried). An AGENT capture is AGENT-tier, quarantined (D65/S128) — it cannot advance a HUMAN-tier count."
+    },
+    "DD80": {
+      "rule": "no daemon — organon.sh capture is a VERB the Operator invokes. ORGΛNON ships no cron, no systemd unit, no suggested crontab line (a wall greps the tree — S160 carried). The verb renders 'run me again to advance the window' — an invitation, not a schedule. A seeded scheduler FAILS.",
+      "screens": 3
+    }
+  },
+  "fence": {
+    "refused": [
+      "valuation / USD (rate-space covers the entire July-2026 opportunity set — Aave/sUSDS/sUSDe same-denomination; a price feed on the mass path FAILS)",
+      "any mass-path dependency (deps stay 2; the poller is fetch + hand-encoded eth_call; no ethers/viem/web3)",
+      "the deflation METER lit (D63 OFF; the search price stays dark ingredients)",
+      "the Proposer (D62-R Option A) · any ranking/best/recommend/'diversify' (X-MANIFEST)",
+      "the Adversary (after the first REAL lineage; realLineageCount 0) · the post-mortem · D38",
+      "any daemon / cron / scheduler / service / port / listener (capture is a VERB)",
+      "a hosted tier · reports/API-as-product · execution / custody / wallets · Markowitz / any optimizer",
+      "the Merkle layer (DEAD, D74) · marketplace / leaderboard",
+      "a second law (seventeen; SEVEN sprints)",
+      "mixing RETROSPECTIVE into a REAL★ series (the research's cardinal provenance sin — S178)",
+      "an eighth exit kind through the enum (the algebra shipped)",
+      "REJECTING an economically-extreme but real value from the moat (the plausibility gate is STRUCTURAL only — RP-3)"
+    ]
+  },
+  "phase1_identityGate": {
+    "s169": "DD-74 — Pins.selfHash(): the emitted pins-sha MUST equal sha256(this sprint's pins file on disk, minus pinsSha) — i.e. the pinsSha field of provenance-pins.json, which is the Phase-0 anchor (F-1/RP-1). The header's pins-sha reads the current head (provenance-pins.json), and S169 compares it to an INDEPENDENT sha256 of the file at emit time; a parent-pin emission (eb64cebe or 2c299b9e) REFUSES the log, AND a pins file edited after Phase 0 (self-consistency broken) REFUSES. Proven on the REAL emit path (RP-1): seed the parent pin into the real producer, run the real emit, show the refusal and that no log was written.",
+    "s170": "DD-75 — Freshness.classify(): every generated field is COMPUTED (recomputed this run) or carried:{from, why, reverified}. A carried claim is RE-RUN and matched (RP-2 — a carry that would recompute differently is a lie and REFUSES). An untagged generated field whose value equals a prior sprint's byte-for-byte REFUSES.",
+    "s171": "batteryDelta describes the FULL battery (Battery.fullDelta reads battery-baseline.json {prevFullPass, fullPass, added, removed}), not the curated verify subset (battery-summary.json.canonical). A batteryDelta whose pass is the 1281-curated count FAILS.",
+    "s172": "prevMarker.battery + added − removed === now, DISPLAYED (in the header) and gated (Ship.Battery.continuity, S156 carried). The cross-boundary continuity (V41 terminal 1892 → V42) is shown, not only asserted. A non-reconciling boundary REFUSES.",
+    "s173": "the FULL census identity DISPLAYED: demonstrated + weak + exempt + originUnrecorded === total wall count (Census.identity). A displayed identity that does not equal the wall count FAILS.",
+    "s174": "MR20 — every pinned deviation (incl D80–D83, and this sprint's D84–D86) appears in deviationStates (State.deviations()). A pinned deviation absent from the machine-readable state list FAILS.",
+    "rp1": "F-1/RP-1 (CRITICAL): the pins file is frozen at Phase 0; its pinsSha field is the self-referential anchor (sha256 of the content minus that field). S169 compares the emitted pins-sha to sha256(provenance-pins.json on disk) at emit time, and the self-consistency check (recompute === stored) asserts the file did not change after Phase 0. A pins file edited after Phase 0 without re-pinning breaks self-consistency → REFUSE. Proven on the real emit path, not a unit test."
+  },
+  "phase2_carriedAudit": {
+    "rule": "walk every field of the marker/header/gate; tag COMPUTED or CARRIED; the D33 note/iidRider/flipEvidence render carried:{from:V39, why, reverified:true} (D33 unchanged since the autopsy; the recompute matches). Every carried field is RE-VERIFIED, not trusted.",
+    "rp2": "F-2 (blocking): carried re-verification recomputes ONLY the specific claim's own inputs, not transitively-coupled state. The D33 note is SPLIT: the SIGNABILITY claim (carried, unchanged) from any FALSE-FIRE reference (recomputed — the REAL★ archive feeds it this sprint). A carried claim that transitively depends on state that moved this sprint must be RECOMPUTED, not carried; the audit shows each carried field's input set and proves none moved.",
+    "auditTable": "the per-field COMPUTED/CARRIED audit is a committed artifact (data/honesty/carried-audit.json), each carried field naming {from, why, reverified, inputs, inputsMoved:false}. A seeded carried-field-that-would-recompute-differently REFUSES the log."
+  },
+  "phase3_captureEngine": {
+    "rule": "DD-76/77/78 — Observe.observe polls rate-space observables (Aave getReserveData, Sky SSR, Ethena funding) over a pinned RPC via fetch with hand-encoded eth_call (no ethers/viem — deps stay 2, S176). Each observation is content-hashed, chained, append-only JSONL, bun:sqlite-indexed. Tier-typed: REAL★ (block-pinned, re-derivable) — a REAL★ with no block FAILS (S175). The plausibility gate (S177/D86) is STRUCTURAL-only: a garbage decode is REJECTED and NOT chained; a −42% funding value is CHAINED; the calldata selector is pinned; the value is cross-checked CLOSE (order of magnitude, RP-4) against DeFiLlama's RETROSPECTIVE chart. A known-answer validation at a pinned historical block (a committed fixture rawReturn) is shown.",
+    "s175": "a REAL★ capture carries a block number and is RE-DERIVABLE (its rawReturn reproduces via eth_call at the block); a REAL★ observation with NO block FAILS. Seeded negative: a REAL★ entry without a blockNumber → REFUSE / broken chain. (W-PR07)",
+    "s176": "the capture engine adds no mass-path dependency (a seeded ethers/viem/web3 import FAILS); deps 2. Seeded negative: a grep for an ABI library on the mass path → Halt. (W-PR08)",
+    "s177": "the plausibility gate is STRUCTURAL-only (RP-3): it rejects a non-64-hex word, a non-finite decode, or a fraction outside ±10000% (an address/index mis-slice) — and NEVER an economically-extreme real value. A seeded −42% funding capture is CHAINED (positive control); a seeded address-word / NaN decode is REJECTED and NOT chained. The calldata selector is pinned; a known-answer at a pinned historical block validates (fixture). (W-PR09/D86)",
+    "d85": "RESERVED — THE REAL★ CAPTURE ENGINE: block-pinned, re-derivable, content-hashed, append-only observations of rate-space yield (Aave/Sky/Ethena) over fetch + hand-encoded eth_call; deps stay 2; no daemon. Operator-signed=false.",
+    "d86": "RESERVED — THE PLAUSIBILITY GATE: structural-only decode validation (RP-3); a garbage decode is not chained; an economically-extreme but real value IS chained; the gate tests the encoding, never the economics. Operator-signed=false.",
+    "rp5": "F-5 (blocking): the poller pins the implementation address and records the contract code-hash per capture; a capture against a contract whose code hash differs from the pinned one FAILS (the struct may have moved) — an upgrade is a NEW pinned target, disclosed, never a silent re-decode."
+  },
+  "phase4_retrospectiveBoundary": {
+    "rule": "DD-76 — DeFiLlama /yields/chart ingested as RETROSPECTIVE, revisable:true, stored in a SEPARATE chain from REAL★. A RETROSPECTIVE point in a REAL★ series FAILS (S178) — the research's cardinal sin, walled. The false-fire count's countBoth (V38) feeds from REAL★ (own, growing) and RETROSPECTIVE (provider, revisable) — the own leg leading, the retrospective beneath with its revisability stated (RP-3 of V39, carried).",
+    "s178": "REAL★ and RETROSPECTIVE never mix: a REAL★ entry has a blockNumber and no revisable flag; a RETROSPECTIVE entry has revisable:true and no block; a cross-contaminated series (a RETROSPECTIVE point in the REAL★ chain, or a REAL★ point missing its block) FAILS. DeFiLlama cited as the RETROSPECTIVE source. Seeded negative: a RETROSPECTIVE point spliced into the REAL★ chain → REFUSE. (W-PR10)",
+    "rp4": "F-4 (blocking): the DeFiLlama cross-check is a plausibility SMOKE TEST (order-of-magnitude) ONLY, never a correctness oracle. REAL★'s authority is its re-derivability at the block, NOT its agreement with DeFiLlama. A REAL★ capture that disagrees with DeFiLlama is still REAL★ if it re-derives."
+  },
+  "phase5_captureWindow": {
+    "rule": "DD-79/80 — V41's marginal-value renderer, now fed ACTUAL captures: each run advances the own-capture window; the false-fire count's own leg grows from 0 toward the pinned judgeable minimum. Render the window from ACTUAL captures ('3 REAL★ captures · peg-floor own-count 3 of 180 toward judgeable'). Still UNJUDGEABLE below the floor (S145 carried) — honest, not inflated. organon.sh capture renders 'run again to advance' — an invitation, not a schedule; zero schedulers in the tree (S160 carried).",
+    "s179": "the own-capture window renders from ACTUAL captures (the REAL★ observe-ledger); the UNJUDGEABLE floor holds (an own-count below the minimum window renders UNJUDGEABLE — honest at length 0, 1, 3); no scheduler. An AGENT capture is quarantined (S128 — cannot advance a HUMAN-tier count). Seeded negative: an own-count that claims judgeable below the floor, or a projection to days → Halt. (W-PR11)",
+    "rp6": "F-6/RP-6: the false-fire own-leg renders honestly at every length — at 0, UNJUDGEABLE (0 captures); at 3, UNJUDGEABLE (3 of 180 captures — 177 to go); never a number that pretends 3 captures is a judgeable series. The gate prints ownCaptures:0 today, truthfully. An archive of length 3 that claims to price a search is the exact overfitting the tool exists to catch."
+  },
+  "adversarialRecord_partA": {
+    "A1_fatalRecursion": "'The identity gate is itself code that will be tested-not-applied — S169 will pass its unit test and the real emit will still carry a stale pin, exactly like S143 did.' THE FATAL RECURSION, the THIRD time this arc has faced it. It must be proven on the real emit path or the sprint is theatre. The positive control is an end-to-end transcript (the V40 RP-1 discipline, mandatory): seed the parent pin into the real pins-sha producer, run the REAL emit command, SHOW the refusal and that no build log was written. And S169 compares the emitted value to sha256 of the pins file ON DISK at emit time — not to a constant, not to a fixture. A gate that cannot fail on a stale pin is the exact defect; the control proves it CAN.",
+    "A2_carriedIsLoophole": "'carried:{from,why} is a loophole — every stale field will be tagged carried and sail through, and now staleness is BLESSED.' Lands hard. A tag that excuses staleness is worse than no tag. So carried is legal ONLY when the underlying deviation's state is unchanged AND the carry is RE-VERIFIED: S170 asserts a carried field's value equals what a recompute WOULD produce — it re-runs the producer and checks the carried string matches. If a recompute would differ, carried is a lie and FAILS. A carried claim is a claim that was recomputed and found identical — not one that was skipped. The D33 note qualifies (D33 unchanged); a stale batteryDelta would NOT (the battery moved).",
+    "A3_handEncodedIsBugFarm": "'The capture engine hand-encodes eth_call — a hand-rolled ABI encoder is a bug farm, and a wrong encoding silently captures GARBAGE into your provenance moat, worse than no moat.' THE SHARPEST ATTACK. A poisoned REAL★ archive is a catastrophe. So: the hand-encoded call is validated against a KNOWN-ANSWER at a pinned historical block (a committed fixture rawReturn decoded to a known rate, cross-checked CLOSE against DeFiLlama at the same timestamp — CLOSE, not identical, different methodologies). A capture whose raw decode is implausible (non-numeric, address/index mis-slice) FAILS and is NOT chained. The encoding is frozen once validated: a wall pins the exact selector for each function (S177). Garbage cannot enter the chain silently — it must pass a STRUCTURAL plausibility gate and match a pinned selector.",
+    "A4_scopeCreepToDataPlatform": "'You are building a data-ingestion pipeline into a tool whose whole identity is 2 dependencies and no server. Scope creep toward a data platform.' A real drift risk; the boundary must be surgical. The capture engine is a VERB that reads over fetch and writes hash-chained JSONL — no new dep, no daemon, no server, no port. It is the SAME architecture as every existing capture (the governance screen, the oracle-staleness read already eth_call today). Deps 2, screens 3, no scheduler — all walled.",
+    "A5_emptyArchiveForever": "'REAL★ captures start at zero and grow one-per-run. The Operator has never run anything. So the archive is empty forever, an elaborate poller for a series of length 0.' TRUE, the recurring truth — but it inverts under the pivot. The capture engine is the FIRST feature whose value COMPOUNDS with use and whose FIRST run produces something the tool never had: a REAL★ point of length 1. V41 made authoring a second manifest worth it; V42 makes running capture worth it — each run advances the false-fire count toward judgeable. The agent cannot run it for him (AGENT-tier, quarantined). realLineageCount 0 and ownCaptures 0 both render at the gate, honestly.",
+    "A6_noLawForAPipeline": "'Seven sprints without a law, and now a whole capture subsystem governed by the existing laws? A data pipeline has failure modes the constitution never anticipated.' The laws answer: X-MOAT governs the tier (REAL★ vs RETROSPECTIVE vs REAL@ts); X-HONEST governs the UNJUDGEABLE floor (missing stays missing); X-RECKON governs the capture as an act (content-hashed at the append site); X-REACH(a) governs the plausibility gate (a capture that cannot fail its decode is not validated). Every failure mode maps to an existing law. If one appeared that did not — THAT would be the signal for law eighteen. It has not."
+  },
+  "postImplementationRePins_partF": {
+    "RP1_pinsFrozenAtPhase0": "F-1 CRITICAL — the pins file on disk at EMIT time may not be the one the sprint was BUILT against. The pins file is frozen at Phase 0 and content-hashed into provenance-pins.json itself (the pinsSha field, a self-referential anchor computed once = sha256 of the content minus that field). S169 compares the emitted pins-sha to that Phase-0 anchor, and the self-consistency check (recompute === stored) asserts the pins file did not change after Phase 0. A pins file edited after Phase 0 REFUSES the log.",
+    "RP2_ownInputsNotTransitive": "F-2 HIGH — carried re-verification recomputes ONLY the specific claim's own inputs, not transitively-coupled state. The D33 note is SPLIT: the SIGNABILITY claim (carried, unchanged) from any FALSE-FIRE reference (recomputed, changed this sprint by the REAL★ archive). A carried claim that transitively depends on state that moved this sprint is RECOMPUTED, not carried. A carry is honest only if every input to it is unchanged.",
+    "RP3_structuralNotEconomic": "F-3 HIGH — the plausibility gate rejects ONLY structurally-impossible decodes (wrong ABI width, non-finite, address/index mis-slice), NOT economically-extreme values. A −42% funding rate is plausible and CAPTURED (it is real); a 1.7e308 word is a decode error and rejected. The gate tests the ENCODING, never the ECONOMICS. A seeded −42% funding capture MUST be CHAINED (the positive control).",
+    "RP4_deFiLlamaSmokeTest": "F-4 MEDIUM-HIGH — the DeFiLlama cross-check is a plausibility sanity check ONLY (order-of-magnitude), never a correctness oracle. The REAL★ value's authority is its re-derivability at the pinned block, NOT its agreement with DeFiLlama. The log states: 'REAL★ is authoritative by re-derivation; DeFiLlama agreement is a smoke test, not a proof.' A REAL★ capture that disagrees with DeFiLlama is still REAL★ if it re-derives.",
+    "RP5_contractVersionPinned": "F-5 MEDIUM-HIGH — the poller pins the implementation address and the exact struct layout per capture, and records the contract code-hash in the observation. A capture against a contract whose code hash differs from the pinned one FAILS. The re-derivability guarantee requires pinning not just the block but the contract version decoded — an upgrade is a new pinned target, disclosed, not a silent re-decode.",
+    "RP6_honestAtEveryLength": "F-6 MEDIUM — the false-fire own-leg renders honestly at every length: at 0, UNJUDGEABLE (0 captures); at 3, UNJUDGEABLE (3 of 180 — 177 to go); never a number that pretends 3 captures is a judgeable series. The gate prints ownCaptures:0 today, truthfully. The honest rendering of its smallness is the feature, not a bug.",
+    "F7_performance": "LOW-MEDIUM — the poller is O(subjects) per run, bounded by the Operator's cadence; bun:sqlite indexing is trivial; the JSONL chain is append-only and cheap to verify. The real new maintenance tax is the pinned contract versions (RP-5) — an Aave/Sky/Ethena upgrade requires a disclosed re-pin. That is correct: the moat's trustworthiness is worth a re-pin per upgrade.",
+    "F8_cannotAnswer": "realLineageCount 0. ownCaptures 0 until the Operator runs the verb. V42 makes the record un-foolable and lays the first REAL★ stone — but the stone is length-0 until a human runs capture, and the second manifest is still unwritten. The capture verb is the closest thing to an on-ramp the instrument has ever had — it pays from the first real run — but the agent cannot take the first run for him (AGENT-tier, quarantined). The door is still his to open."
+  },
+  "deviations": {
+    "D84": "RESERVED — THE IDENTITY GATE: the Ship Gate graduates from shape to identity-and-freshness — the emitted pins-sha must equal sha256(this sprint's pins file, frozen Phase 0); every generated claim is COMPUTED or carried:{from,why,reverified}; the batteryDelta reconciles the FULL battery across the boundary; the census identity is displayed; every pinned deviation is in deviationStates. Proven on the real emit path. Operator-signed=false.",
+    "D85": "RESERVED — THE REAL★ CAPTURE ENGINE: block-pinned, re-derivable, content-hashed, append-only observations of rate-space yield (Aave/Sky/Ethena) over fetch + hand-encoded eth_call; deps stay 2; no daemon; the RETROSPECTIVE charts kept in a separate chain. Operator-signed=false.",
+    "D86": "RESERVED — THE PLAUSIBILITY GATE: structural-only decode validation; a garbage decode is not chained; an economically-extreme but real value IS chained; the gate tests the encoding, never the economics. Operator-signed=false.",
+    "mr13": "MR9 carried a SEVENTH sprint — discharged or recorded undischargeable in the log (it turns on the Operator opening the tool; realLineageCount 0; ownCaptures 0; the remaining action is a human running a verb, which has never been a Phase).",
+    "mr20": "the machine-readable deviationStates must enumerate EVERY pinned deviation (M-6): D51/D33/D63/D27 AND D80–D83 (V41) AND D84–D86 (this sprint). State.deviations() is the single source; a pinned deviation absent from it FAILS (S174).",
+    "operatorGatedNote": "D23–D86 present, D27 STILL FIRST (the SEVENTEENTH sprint) under 'the Stamp is knowingly generous until D27 is signed'; the FIRST gate section is THREE items alone — (1) THE COMPOUNDED GENEROSITY (D27's generosity AND the ≈√τ_int overstatement, the PBO cross-check honest and independent behind it), (2) D33 (SIGNABLE · testRedesigns 1 · riderEnforced true · pboEvidence independent · note now carried:{from:V39,reverified:true} · unsigned), (3) D67 (⟨N⟩ STILL EMPTY, and now the REAL★ archive gives the own-capture false-fire leg a growing series, so changedByCompile has point-in-time data to be changed BY). D62-R · D80–D86 · D46/D50/D54/D55 · IN2 (the ONLY validation left, and capture is the first verb that pays from its first run). The agent presents the whole gate, NEVER signs it (LN5). D33 or D46 implemented while unsigned is the gravest Halt."
+  },
+  "shedOrder": {
+    "rule": "Phases 1, 3, 4 NEVER SHED (the gate must check identity · the capture engine must actually capture · the chain must be honest). Then Phase 5 sheds FIRST · Phase 2 second. A sprint that ships only 1, 3, 4 is a SUCCESSFUL sprint: it makes the record un-foolable and lays the first REAL★ stone.",
+    "neverShed": [
+      "1_identityGate",
+      "3_captureEngine",
+      "4_retrospectiveBoundary"
+    ],
+    "shedOrderIfNeeded": [
+      "5_captureWindow",
+      "2_carriedAudit"
+    ]
+  },
+  "walls": {
+    "carried": "S1–S168 first-class, re-run (two identical battery runs) — every one runs against the SHIPPED artifact at ship time (the IDENTITY-hardened Ship Gate, V40+V42).",
+    "built": [
+      "S169",
+      "S170",
+      "S171",
+      "S172",
+      "S173",
+      "S174",
+      "S175",
+      "S176",
+      "S177",
+      "S178",
+      "S179"
+    ],
+    "S169": "the emitted pins-sha equals sha256 of this sprint's pins file (frozen Phase 0); a parent-pin emission REFUSES the log (proven on the emit path); a pins file edited after Phase 0 REFUSES. (W-PR01)",
+    "S170": "every generated field is COMPUTED or carried:{from,why,reverified}; a carried claim is re-run and matched; an untagged prior-sprint string, or a carried claim that would recompute differently, REFUSES. (W-PR02)",
+    "S171": "batteryDelta describes the FULL battery (battery-baseline, not the curated subset); a curated-subset delta FAILS. (W-PR03)",
+    "S172": "cross-sprint battery continuity displayed and reconciles (prev + added − removed === now); a non-reconciling boundary REFUSES. (W-PR04)",
+    "S173": "the full census identity displayed (demonstrated + weak + exempt + originUnrecorded === total); a sum ≠ wall count FAILS. (W-PR05)",
+    "S174": "every pinned deviation (incl D80–D86) appears in deviationStates; a pinned deviation absent FAILS. (W-PR06)",
+    "S175": "a REAL★ capture carries a block number and is re-derivable; one without a block FAILS / breaks the chain. (W-PR07)",
+    "S176": "the capture engine adds no mass-path dep (a seeded ethers/viem/web3 import FAILS); deps 2. (W-PR08)",
+    "S177": "the plausibility gate rejects garbage (non-64-hex / non-finite / address-index mis-slice) and NEVER an economically-extreme real value (a −42% funding capture is CHAINED); the selector is pinned; a known-answer at a historical block validates. (W-PR09/D86)",
+    "S178": "REAL★ and RETROSPECTIVE never mix; a cross-contaminated series FAILS; DeFiLlama cited as the RETROSPECTIVE source. (W-PR10)",
+    "S179": "the own-capture window renders from actual captures; the UNJUDGEABLE floor holds (honest at every length); no scheduler; an AGENT capture cannot advance a HUMAN count. (W-PR11)"
+  },
+  "convergence": {
+    "rule": "two clean runs · identical expect() · the IDENTITY-hardened Ship Gate held (a seeded stale pin/delta/note REFUSES the log, proven on the emit path) · the emitted pins-sha equals this sprint's pins file · the clone RAN on this tree · a real, re-derivable terminal tree + commit hash · verify with all three sub-checks · bundle + differential byte-identical (no verdict moved — captures move no verdict) · familyN === 1 · frozen 0 drift · deps 2 · screens 3 · REAL★ and RETROSPECTIVE structurally distinct · no scheduler · AND Rollup would have refused to write any of it if one identity wall had failed.",
+    "halts": "a stale pin · an untagged carried claim · a wrong-battery delta · a REAL★ without a block or a pinned contract version · a garbage decode chained · an economically-extreme-but-real value rejected · a RETROSPECTIVE-in-REAL★ · a mass-path web3 import · a lit meter · a scheduler · a build log that exists while an identity wall failed · D33 or D46 implemented while unsigned (LN5 — the gravest)."
+  },
+  "carried": {
+    "deps": [
+      "hono",
+      "zod"
+    ],
+    "screens": [
+      "shelf",
+      "reality-check",
+      "ask"
+    ],
+    "newProductCapability": 1,
+    "newProductCapabilityNote": "1 DISCLOSED capability — the REAL★ CAPTURE ENGINE (the first data-provider stone in the provenance moat: block-pinned, re-derivable, content-hashed observations of rate-space yield, structurally walled from the RETROSPECTIVE charts). The identity-gate graduation (S169–S174), the carried-claim audit, the RETROSPECTIVE boundary, and the real capture window are the V41 audit's cure + the moat's discipline — hardening and proof, not new scored capability. Reported honestly, not a Halt.",
+    "lawsThisSprint": "ZERO — application, not legislation (a SEVENTH sprint running; every V41 defect is an existing law under-applied)",
+    "laws": 17,
+    "exitKinds": 7,
+    "familyN": 1,
+    "reachableHumans": 1,
+    "published": false,
+    "frozenSevenNote": "the 6 .py + loop.ts + verdict-path 7 + frozen-core 2 byte-untouched (the capture engine reads a live RPC and writes JSONL — it touches NO frozen byte and MOVES NO verdict; a capture is not a scorecard input); the scorecard differential + evidence bundle byte-identical at every gate (the identity gate, the carried audit, the capture engine, the RETROSPECTIVE boundary, the capture window — none touches the scorecard verdict path); the Stamp familyN stays 1; no daemon; no new mass-path dependency (fetch + hand-encoded eth_call, native bun:sqlite).",
+    "evidenceBundleShaPrefix": "9c1e7bd8",
+    "killCriterion": "8b4e094b",
+    "ownCaptures": 0,
+    "ownCapturesNote": "ownCaptures 0 today — the Operator has never run the verb; the capture engine CAN capture (proven by a known-answer fixture + an AGENT-tier live capture, quarantined) but the first HUMAN-tier capture is the Operator's to make.",
+    "d67NEmpty": "D67's ⟨N⟩ is STILL EMPTY — awaiting the pen; the REAL★ archive now gives the own-capture false-fire leg a growing series to be changed BY."
+  },
+  "pinsSha": "04c606dd5846e7cdcd9fab86bff7ae4de2dd3c942563fda114abf63e9d3df3f8"
+}

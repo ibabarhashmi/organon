@@ -122,9 +122,13 @@ test("S150 (MR18/J-4) — ONE State.deviations() producer: D51 ANSWERED; a rende
   expect(g.d51.state).toBe("ANSWERED")
 })
 
-test("S150 — the deviation states render whole from the single source (D51, D33, D63, D27 present)", () => {
+test("S150 — the deviation states render whole from the single source (D51, D33, D63, D27 present; PROVENANCE V42/MR20: D80–D86 too)", () => {
   const ids = State.deviations().map((d) => d.id)
-  expect(ids).toEqual(["D51", "D33", "D63", "D27"])
+  // the four base deviations lead, in order (the single-producer discipline)
+  expect(ids.slice(0, 4)).toEqual(["D51", "D33", "D63", "D27"])
+  // PROVENANCE V42 (MR20/S174) — the reserved deviations D80–D86 are now folded in by the ONE producer (M-6: they were
+  // pinned and gated but absent from the machine-readable list; the state list can no longer under-enumerate the gate).
+  for (const d of ["D80", "D81", "D82", "D83", "D84", "D85", "D86"]) expect(ids).toContain(d)
   // D33's state carries its price + rider through the single producer (RP-1/S142 travel with the state)
   const d33 = State.byId("D33")!
   expect(d33.detail).toMatch(/redesign #1|SIGNABLE/)

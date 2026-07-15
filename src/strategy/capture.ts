@@ -104,6 +104,40 @@ export namespace Capture {
     return { ran: run.ran, seriesAdvanced, ownCapturesBefore: ownBefore, ownCapturesAfter: ownAfter, minWindow, firstCapture, unit: "CAPTURES", render }
   }
 
+  // ── PROVENANCE V42 (S179, DD-79/80) — THE OWN-CAPTURE WINDOW, NOW FED BY THE REAL★ OBSERVE-LEDGER. ──
+  // V41's marginal-value renderer described a window that captured NOTHING; V42's REAL★ capture engine (src/plane/observe.ts)
+  // finally polls block-pinned rate-space yield, so the window renders from ACTUAL captures. The HUMAN own-count is what feeds
+  // the false-fire leg; an AGENT capture (the builder's known-answer proof the engine works) is QUARANTINED (DD-79/S128) and
+  // NEVER advances the HUMAN count. The UNJUDGEABLE floor holds at every length (F-6/RP-6): 0 is UNJUDGEABLE and says so.
+  export interface RealStarLedger { minWindowCaptures: number; ownCapturesHuman: number; agentCaptures: number; realStar: unknown[]; retrospective: unknown[] }
+  export function realStarLedger(): RealStarLedger {
+    try {
+      const j = JSON.parse(readFileSync(path.join(H, "observe-ledger.json"), "utf8"))
+      return { minWindowCaptures: j.minWindowCaptures ?? 180, ownCapturesHuman: j.ownCapturesHuman ?? 0, agentCaptures: j.agentCaptures ?? 0, realStar: j.realStar ?? [], retrospective: j.retrospective ?? [] }
+    } catch {
+      return { minWindowCaptures: 180, ownCapturesHuman: 0, agentCaptures: 0, realStar: [], retrospective: [] }
+    }
+  }
+
+  // S128/DD-79 — the quarantine: only a HUMAN capture advances the HUMAN own-count. An AGENT capture cannot (the differential
+  // canary, extended to the capture verb). Pure.
+  export function advancesHumanCount(capturedBy: "AGENT" | "HUMAN"): boolean { return capturedBy === "HUMAN" }
+
+  export interface RealStarWindow { humanCaptures: number; agentCaptures: number; minWindow: number; judgeable: boolean; firstHumanCapture: boolean; unit: "CAPTURES"; render: string }
+  export function realStarWindow(): RealStarWindow {
+    const l = realStarLedger()
+    const human = l.ownCapturesHuman
+    const agent = l.agentCaptures
+    const min = l.minWindowCaptures
+    const judgeable = human >= min // the UNJUDGEABLE floor: below the minimum window, the own leg is UNJUDGEABLE — never inflated
+    const render = human === 0
+      ? `ownCaptures 0 (HUMAN) — UNJUDGEABLE (0 of ${min} CAPTURES, not days). The engine CAN capture: ${agent} AGENT-tier proof capture(s) — a real, re-derivable Aave USDC supply rate at a pinned block — QUARANTINED (DD-79/S128), they NEVER advance the HUMAN count. The FIRST HUMAN capture is yours; run \`organon.sh capture\` to advance the window (an invitation, not a schedule — ORGΛNON schedules NOTHING).`
+      : judgeable
+        ? `ownCaptures ${human} (HUMAN) — the ${min}-capture window is reached; the own-capture false-fire leg is JUDGEABLE. Run again to keep it fresh.`
+        : `ownCaptures ${human} (HUMAN) — UNJUDGEABLE (${human} of ${min} CAPTURES — ${min - human} to go, never a projected date, RP-6). Run \`organon.sh capture\` again to advance.`
+    return { humanCaptures: human, agentCaptures: agent, minWindow: min, judgeable, firstHumanCapture: human === 0, unit: "CAPTURES", render }
+  }
+
   // daysToJudgeable — in CAPTURES, not days (RP-6). The false-fire count needs a minimum window; the requirement is stated
   // in CAPTURES, and the cadence is measured in captures. It is UNJUDGEABLE because ORGΛNON cannot know the Operator's future cadence.
   export interface Judgeability { minWindowDays: number; ownCaptures: number; capturesNeeded: number; unit: "CAPTURES"; verdict: string }

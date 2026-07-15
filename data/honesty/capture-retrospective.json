@@ -1,0 +1,20 @@
+{
+  "protocol": "capture-retrospective",
+  "note": "RETROSPECTIVE (revisable) — a DeFiLlama /yields provider CHART point, stored in a SEPARATE chain from REAL★, NEVER mixed in (S178, the research cardinal sin). RP-4: this is a SMOKE TEST against the REAL★ re-derived value, NOT a correctness oracle — REAL★ is authoritative by re-derivation at the pinned block; DeFiLlama is the one that may be wrong or revised.",
+  "source": "defillama",
+  "endpoint": "https://yields.llama.fi/pools",
+  "asset": "USDC",
+  "project": "aave-v3",
+  "chain": "Ethereum",
+  "poolId": "aa70268e-4b52-42bf-a116-608b370f9501",
+  "apyPct": 3.27033,
+  "tvlUsd": 182167976,
+  "revisable": true,
+  "tier": "RETROSPECTIVE",
+  "smokeTestAgainstRealStar": {
+    "realStarPct": 3.2691,
+    "retrospectivePct": 3.27033,
+    "deltaPp": 0.0012300000000000644,
+    "verdict": "order-of-magnitude AGREE (CLOSE, not identical — different methodologies; a smoke test, NOT a proof). REAL★ is authoritative by re-derivation at the block."
+  }
+}

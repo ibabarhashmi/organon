@@ -1,0 +1,45 @@
+{
+  "protocol": "carried-audit",
+  "rule": "S170/RP-2 — every generated field is COMPUTED (recomputed this run) or carried:{from, why, reverified}; a carried field re-runs its OWN inputs and the carried value must equal the recompute (a carry that would recompute differently is a lie the Ship Gate refuses). The D33 note is SPLIT: SIGNABILITY (carried, D33 unchanged) from FALSE-FIRE (computed, the REAL★ archive feeds it this sprint).",
+  "honest": true,
+  "computed": 5,
+  "carried": 1,
+  "fields": [
+    {
+      "field": "gate.firstSection.d33.note",
+      "kind": "CARRIED",
+      "from": "V39",
+      "why": "the D33 SIGNABILITY note is unchanged since the autopsy; recomputing re-derives the identical SIGNABLE-state note (RP-2: its only input is D33's state, which did not move this sprint)",
+      "reverified": true,
+      "inputs": [
+        "d33.state"
+      ],
+      "inputsMoved": false
+    },
+    {
+      "field": "gate.firstSection.d67",
+      "kind": "COMPUTED",
+      "producer": "Capture.realStarWindow (HUMAN ownCaptures) + the amended D67"
+    },
+    {
+      "field": "header.pinsSha",
+      "kind": "COMPUTED",
+      "producer": "Claim.producer(pinsSha) → Pins.head"
+    },
+    {
+      "field": "header.batteryDelta",
+      "kind": "COMPUTED",
+      "producer": "Claim.producer(battery) → battery-baseline (full)"
+    },
+    {
+      "field": "header.census",
+      "kind": "COMPUTED",
+      "producer": "Claim.producer(census) → Falsify.census"
+    },
+    {
+      "field": "terminalTree",
+      "kind": "COMPUTED",
+      "producer": "git rev-parse HEAD^{tree}"
+    }
+  ]
+}

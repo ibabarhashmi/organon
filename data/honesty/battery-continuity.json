@@ -4,9 +4,33 @@
   "rule": "S156 (K-7) — each sprint's TERMINAL battery pass, chained, so the NEXT sprint's battery-baseline.prevFullPass MUST equal the last entry here. S107 reconciled WITHIN a sprint and never ACROSS the boundary: V39's baseline `prev` was 1738 while V38's terminal marker recorded 1706, and thirty-two tests appeared unaccounted. Ship.Battery.continuity() makes the cross-boundary gap a REFUSE at ship time (Ship.gate S156), not a discovery two sprints later.",
   "mr19": "the 1706→1738 gap, EXPLAINED: V38's terminal marker recorded 1706; V38-B (the Surrogate Addendum) is a DISTINCT commit AFTER that marker, and it added the 32 tests that took the count to 1738. The gap was a real sprint boundary the baseline never chained across — not a miscount. This ledger records both, so the successor reconciles against 1738 (V38-B's terminal), and V39's 1793 chains from it.",
   "chain": [
-    { "sprint": "V38 (Substance)", "terminalFullPass": 1706, "at": "2026-07-14" },
-    { "sprint": "V38-B (Surrogate Addendum)", "terminalFullPass": 1738, "at": "2026-07-14", "note": "MR19 — +32 tests after V38's 1706 marker (a distinct commit); the K-7 gap, explained and chained" },
-    { "sprint": "V39 (Family)", "terminalFullPass": 1793, "at": "2026-07-15" },
-    { "sprint": "V40 (Ship)", "terminalFullPass": 1844, "at": "2026-07-15", "note": "the first FULLY-ACHIEVED sprint; the ship gate held, the clone ran from zero to 1844" }
+    {
+      "sprint": "V38 (Substance)",
+      "terminalFullPass": 1706,
+      "at": "2026-07-14"
+    },
+    {
+      "sprint": "V38-B (Surrogate Addendum)",
+      "terminalFullPass": 1738,
+      "at": "2026-07-14",
+      "note": "MR19 — +32 tests after V38's 1706 marker (a distinct commit); the K-7 gap, explained and chained"
+    },
+    {
+      "sprint": "V39 (Family)",
+      "terminalFullPass": 1793,
+      "at": "2026-07-15"
+    },
+    {
+      "sprint": "V40 (Ship)",
+      "terminalFullPass": 1844,
+      "at": "2026-07-15",
+      "note": "the first FULLY-ACHIEVED sprint; the ship gate held, the clone ran from zero to 1844"
+    },
+    {
+      "sprint": "V41 (Variant)",
+      "terminalFullPass": 1892,
+      "at": "2026-07-15",
+      "note": "the builder second half — the Variant Ledger; battery 1892 from zero"
+    }
   ]
 }

@@ -16,6 +16,9 @@ import { PKG_ROOT } from "../../src/organon/frozen"
 import { Ship } from "../../src/organon/ship"
 import { Consistency } from "../../src/organon/consistency"
 import { Verify } from "../../src/organon/verify"
+import { Pins } from "../../src/organon/pins"
+import { Rollup } from "../../src/organon/rollup"
+import { State } from "../../src/organon/state"
 
 const TERMINAL = "abc1234def5678000000000000000000000000ff"
 
@@ -38,6 +41,11 @@ function artifacts(cr: Ship.Artifacts["censusReconciliation"] = reconcilingCensu
     marker: marker(), terminalCommit: TERMINAL, clone: { clonedCommit: TERMINAL, ran: true },
     verify: { exitCode: 0, subchecks: Verify.DECLARED_SUBCHECKS.map((name) => ({ name, status: "pass", detail: "ok" })) },
     census: { newWallsInOu: [] }, battery: battery(), censusReconciliation: cr,
+    // PROVENANCE V42 (S169–S174) — the identity artifacts, honest, so the V41 census-fold wall runs under the V42 gate.
+    pinsEmitted: Pins.selfHash().recomputed, freshness: Rollup.freshnessAudit(),
+    batteryDelta: { full: true, pass: Consistency.batteryFullDelta().now },
+    batteryFullDelta: Consistency.batteryFullDelta(), censusIdentity: Consistency.censusIdentity(),
+    deviationStateIds: State.deviations().map((d) => d.id),
   }
 }
 
@@ -54,7 +62,7 @@ test("S161 (W-VR01) — the Ship Gate PASSES on a reconciling census (the check 
   const g = Ship.gate(artifacts())
   expect(g.pass).toBe(true)
   expect(g.checks.some((c) => c.wall === "S161" && c.ok)).toBe(true)
-  expect(g.checks.length).toBe(6) // S152–S156 + S161
+  expect(g.checks.length).toBe(12) // S152–S156 + S161 + S169–S174 (V42 identity gate)
 })
 
 test("S161 (W-VR01) — SEEDED NEGATIVE: a non-reconciling census REFUSES the log (a reconciling total that hides a regression)", () => {

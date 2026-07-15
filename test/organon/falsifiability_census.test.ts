@@ -38,10 +38,10 @@ test("S93/RP-6 — the living wall: a test that references a wall id beyond the 
   // the mechanism is real: orphanWallIds scans the whole test tree; a future wall numbered beyond the pinned range is
   // caught and must be consciously admitted. Proven directly — the id is BUILT at runtime so no ">99" token appears
   // literally in this file (which would make the census flag its own test — the living wall really does bite).
-  const futureId = "S" + "181"
+  const futureId = "S" + "191"
   const injected = [{ file: "x", text: `test(${JSON.stringify(futureId + " — a hypothetical future wall")})` }] as unknown as { file: string; text: string }[]
   expect(Falsify.orphanWallIds(injected)).toEqual([futureId])
-  expect(Falsify.WALL_MAX).toBe(170) // Variant Sprint V41: bumped 160→170 for the S161..S168 band (census fold/guard hole/PBO/rider dry-run/capture marginal/variant ledger; consciously admitted)
+  expect(Falsify.WALL_MAX).toBe(180) // Provenance Sprint V42: bumped 170→180 for the S169..S179 band (identity gate + REAL★ capture engine / RETROSPECTIVE boundary / capture window; consciously admitted)
 })
 
 test("S93/RP-1 — DEMONSTRATED is the STRONG claim and is never invented: every DEMONSTRATED wall carries a NAMED originating defect (a W-tag) OR a treatment route (S104)", () => {
@@ -66,16 +66,18 @@ test("S93 — the EXEMPT class is ENUMERATED with reasons (never silently excuse
   }
 })
 
-test("S93 — the headline holds: ORIGIN_UNRECORDED is the LARGEST bucket (the project has been grading its own tests) — stated, not hidden", () => {
-  // ORIGIN_UNRECORDED is still the LARGEST single bucket (a plurality) — the project's uncomfortable finding, stated not hidden.
-  // VARIANT V41: six sprints of W-tagged walls + the S104 treatment have driven OU DOWN from the V35 baseline of 83 and
-  // DEMONSTRATED UP, so OU is now APPROACHING PARITY (79 of 159 ≈ 49.7%) — it is no longer a strict >50% majority, but it
-  // remains the largest bucket, greater than DEMONSTRATED and greater than every other bucket. The honest trend is toward
-  // parity as walls earn their origins; the headline is not softened, it is updated to the measured reality.
-  expect(live.counts.ORIGIN_UNRECORDED).toBeGreaterThan(live.counts.DEMONSTRATED) // still the largest bucket
+test("S93 — the headline, updated to a MILESTONE: DEMONSTRATED has reached parity with ORIGIN_UNRECORDED (the project has graded as many tests as not) — stated, not hidden", () => {
+  // For many sprints the census's uncomfortable finding was that ORIGIN_UNRECORDED was the LARGEST bucket — the project had
+  // not graded its own tests. PROVENANCE V42: SEVEN sprints of W-tagged walls + the S104 treatment have driven OU DOWN from the
+  // V35 baseline of 83 and DEMONSTRATED UP, and this sprint's identity + capture walls (S169–S179, all W-tagged with seeded
+  // negatives) bring DEMONSTRATED to PARITY WITH OR PAST OU — a real milestone, stated not spun: for the first time, at least
+  // as many walls carry a NAMED originating defect as do not. OU and DEMONSTRATED remain the two dominant buckets, each far
+  // above EXEMPT/WEAK; the count of ungraded walls is still named out loud (never hidden), it has simply stopped being the largest.
+  expect(live.counts.DEMONSTRATED).toBeGreaterThanOrEqual(live.counts.ORIGIN_UNRECORDED) // DEMONSTRATED has caught up — the milestone
   expect(live.counts.ORIGIN_UNRECORDED).toBeGreaterThan(live.counts.EXEMPT)
-  expect(live.counts.ORIGIN_UNRECORDED).toBeGreaterThan(live.counts.WEAK)
-  expect(committed.headline).toMatch(/NO recorded originating defect/i)
+  expect(live.counts.DEMONSTRATED).toBeGreaterThan(live.counts.EXEMPT)
+  expect(live.counts.ORIGIN_UNRECORDED + live.counts.DEMONSTRATED).toBeGreaterThan(live.wallCount * 0.9) // the two dominate the partition
+  expect(committed.headline).toMatch(/NO recorded originating defect/i) // the ungraded count is still stated, not hidden
 })
 
 test("S93 — the no-seeded-negative count is a STATED heuristic flag (attack #10), under a pinned ceiling; a new decoration raises it visibly", () => {

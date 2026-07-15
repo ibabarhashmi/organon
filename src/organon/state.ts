@@ -74,13 +74,30 @@ export namespace State {
       source: "family-pins.json → phase5_enumerator.d63_off",
     })
 
-    // D27 — STILL FIRST, unsigned (the fourteenth sprint). "The Stamp is knowingly generous until D27 is signed."
+    // D27 — STILL FIRST, unsigned. "The Stamp is knowingly generous until D27 is signed."
     out.push({
       id: "D27",
       state: "FIRST",
-      detail: "FIRST — the fourteenth sprint; the Stamp is knowingly generous until D27 is signed. Presented at the gate, NEVER signed (LN5).",
-      source: "family-pins.json → deviations.operatorGatedNote",
+      detail: "FIRST — the Stamp is knowingly generous until D27 is signed. Presented at the gate, NEVER signed (LN5).",
+      source: "the current head pins → deviations.operatorGatedNote",
     })
+
+    // PROVENANCE V42 (MR20/S174) — M-6: D80–D83 were pinned and gated (V41) but ABSENT from the machine-readable state list,
+    // which enumerated only D51/D33/D63/D27. The ONE producer now folds in every RESERVED deviation from the current pins
+    // heads (variant D80–D83, provenance D84–D86), each RESERVED and Operator-signed=false (LN5). A pinned deviation absent
+    // from deviationStates FAILS S174 — the state list can no longer under-enumerate what the gate presents.
+    const seen = new Set(out.map((d) => d.id))
+    for (const f of ["variant-pins.json", "provenance-pins.json"]) {
+      const p = tryRead(f)
+      const devs = p?.deviations as Record<string, unknown> | undefined
+      if (!devs) continue
+      for (const [id, detail] of Object.entries(devs)) {
+        if (!/^D\d+$/.test(id) || seen.has(id)) continue // skip mr13/mr20/operatorGatedNote and any already-enumerated id
+        const s = String(detail)
+        out.push({ id, state: "RESERVED", detail: `${s.slice(0, 220)}${s.length > 220 ? "…" : ""}`, source: `${f} → deviations.${id} (Operator-signed=false, LN5)` })
+        seen.add(id)
+      }
+    }
 
     return out
   }

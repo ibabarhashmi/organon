@@ -16,6 +16,9 @@ import { checkFrozenSet } from "./frozen"
 import { Claim } from "./claim"
 import { Verify } from "./verify"
 import { State, Evidence } from "./state"
+import { Freshness } from "./freshness"
+import { Consistency } from "./consistency"
+import { Capture } from "../strategy/capture"
 
 export namespace Rollup {
   export interface RunMeasured {
@@ -49,6 +52,10 @@ export namespace Rollup {
       crossCheck: { dsr: v("crossCheckDsr"), psr: v("crossCheckPsr"), pbo: v("crossCheckPbo") },
       d33: v("d33"),
       census: v("census"),
+      // PROVENANCE V42 (S172/S173, M-4/M-5) — the cross-sprint battery continuity and the full census identity, DISPLAYED
+      // (not merely gated): prev + added − removed === now, and demonstrated + weak + exempt + originUnrecorded === total.
+      batteryContinuity: Consistency.batteryFullDelta().display,
+      censusIdentity: Consistency.censusIdentity().display,
       d50: { i: v("d50i_binary"), ii: v("d50ii_install"), iii: v("d50iii_published"), iv: v("d50iv_window") },
       reach: v("reach"),
       theNumber: v("theNumber"),
@@ -56,6 +63,42 @@ export namespace Rollup {
       newProductCapability: v("newProductCapability"),
       verifyOnClone: v("verifyOnClone"),
     }
+  }
+
+  // ── PROVENANCE V42 (M-2/S170, RP-2) — THE D33 NOTE IS CARRIED-AND-RE-VERIFIED, NOT ECHOED. ──
+  // V41's D33 note was V39's prose reproduced verbatim in a generated field. Here the SIGNABILITY note is tagged carried:{from,
+  // why, reverified} and its ONLY input (D33's state) is recomputed — the carry is honest iff D33 is still SIGNABLE. A state
+  // that moved makes the recompute differ, and the carry becomes a lie the gate refuses (S170).
+  const D33_SIGNABILITY_NOTE = "recomputed with the D56 SEARCH counted (RP-1: testRedesigns carried in state, never resets); the i.i.d. rider on the SAME LINE (S142); the deciding z SHOWN (S141); presented, NEVER signed (LN5)."
+  export function d33NoteClass(): Freshness.Carried {
+    const state = (Claim.producer("d33").value as { state: string }).state
+    return Freshness.carried(
+      "gate.firstSection.d33.note", "V39",
+      "the D33 SIGNABILITY note is unchanged since the autopsy; recomputing re-derives the identical SIGNABLE-state note (RP-2: its only input is D33's state, which did not move this sprint)",
+      D33_SIGNABILITY_NOTE, ["d33.state"],
+      () => (state === "SIGNABLE" ? D33_SIGNABILITY_NOTE : `D33 state is now ${state} — the carried SIGNABLE note no longer holds; RECOMPUTE (X-DERIVE(a))`),
+    )
+  }
+  // the D67 line references the FALSE-FIRE count, which the REAL★ archive now feeds — COMPUTED this run (RP-2/F-2: a claim
+  // whose input moved this sprint is recomputed, not carried). PROVENANCE V42: the own-count is the HUMAN REAL★ own-count
+  // (Capture.realStarWindow — the archive that feeds the false-fire leg), NOT the TVL window. At ownCaptures 0 it renders
+  // UNJUDGEABLE, honestly (an AGENT proof capture is quarantined and never counts).
+  export function d67Line(): { line: string; cls: Freshness.Computed } {
+    const own = Capture.realStarWindow().humanCaptures
+    const line = `the amended kill-criterion — ⟨N⟩ STILL EMPTY, awaiting the pen; and now the REAL★ archive feeds the own-capture false-fire leg (ownCaptures ${own} today — UNJUDGEABLE${own === 0 ? " (0 HUMAN captures; an AGENT proof capture is quarantined)" : ` (${own} captures, below the floor)`}), so changedByCompile has a growing point-in-time series to be changed BY.`
+    return { line, cls: Freshness.computed("gate.firstSection.d67", "Capture.realStarWindow (HUMAN ownCaptures) + the amended D67", line) }
+  }
+  // S170 — the freshness audit over the generated header/gate fields. Every field is COMPUTED (a producer ran this run) or
+  // carried:{from,why,reverified}; Freshness.honest() refuses a carried claim that would recompute differently.
+  export function freshnessAudit(): Freshness.Class[] {
+    return [
+      d33NoteClass(),
+      d67Line().cls,
+      Freshness.computed("header.pinsSha", "Claim.producer(pinsSha) → Pins.head", String(v("pinsSha"))),
+      Freshness.computed("header.batteryDelta", "Claim.producer(battery) → battery-baseline (full)", JSON.stringify(v("battery"))),
+      Freshness.computed("header.census", "Claim.producer(census) → Falsify.census", JSON.stringify(v("census"))),
+      Freshness.computed("terminalTree", "git rev-parse HEAD^{tree}", String(v("terminalTree"))),
+    ]
   }
 
   // THE GATE — the FIRST section is TWO items alone (D33 + D67); every deviation STATE comes from the ONE State.deviations()
@@ -71,9 +114,11 @@ export namespace Rollup {
       // gate no longer asks the question PART B already answered (the exact V38 contradiction, J-4).
       firstLine: `the instrument speaks · manifests (real) ${num.manifestsReal} · cycles unprompted (real) ${num.cyclesUnpromptedReal} · published ${reach.published} · reachableHumans ${reach.reachableHumans} (BY DESIGN) · D51 ${d51?.state ?? "OPEN"} = INSTRUMENT`,
       // the FIRST gate section — TWO items, alone (blueprint Phase 7): D33 (recomputed + rider) and D67 (⟨N⟩ still empty).
+      // PROVENANCE V42 (M-2/S170): the D33 note is CARRIED-and-re-verified (noteFreshness), not echoed; D67 is COMPUTED from
+      // the live own-capture count (the REAL★ archive now feeds it — RP-2/F-2).
       firstSection: {
-        d33: { ...(Claim.producer("d33").value as Record<string, unknown>), flipEvidence, note: "recomputed with the D56 SEARCH counted (RP-1: testRedesigns carried in state, never resets); the i.i.d. rider on the SAME LINE (S142); the deciding z SHOWN (S141); presented, NEVER signed (LN5)." },
-        d67: "the amended kill-criterion — ⟨N⟩ STILL EMPTY, awaiting the pen; and now, for the first time, the instrument can FEED it: the false-fire count says a number, so changedByCompile has something to be changed BY.",
+        d33: { ...(Claim.producer("d33").value as Record<string, unknown>), flipEvidence, note: d33NoteClass().value, noteFreshness: d33NoteClass() },
+        d67: d67Line().line,
       },
       d51: {
         state: d51?.state ?? "OPEN", // ANSWERED — from the ONE producer (S150)

@@ -1,12 +1,12 @@
 {
   "protocol": "battery-baseline",
   "at": "2026-07-15",
-  "rule": "S107 (G-1) — the FULL auto-discover battery's pass count, per sprint, so the generated header's Δ RECONCILES: full === prev + added − removed. `full` is measured at the sprint's close (two identical runs); `added`/`removed` are DERIVED (full − prev / named removals). SHIP V40 (S156): the cross-boundary continuity is ALSO chained in battery-continuity.json and enforced at ship (Ship.Battery.continuity) — prevFullPass must equal the previous terminal. VARIANT V41 (S161): the census reconciliation is ALSO folded into the Ship Gate (Ship.censusReconciliation) and displayed.",
-  "prevSprint": "V40 (Ship)",
-  "prevFullPass": 1844,
-  "fullPass": 1892,
-  "added": 48,
+  "rule": "S107 (G-1) — the FULL auto-discover battery's pass count, per sprint, so the generated header's Δ RECONCILES: full === prev + added − removed. `full` is measured at the sprint's close (two identical runs); `added`/`removed` are DERIVED (full − prev / named removals). SHIP V40 (S156): the cross-boundary continuity is ALSO chained in battery-continuity.json and enforced at ship (Ship.Battery.continuity) — prevFullPass must equal the previous terminal. VARIANT V41 (S161): the census reconciliation is ALSO folded into the Ship Gate (Ship.censusReconciliation) and displayed. PROVENANCE V42 (S171/S172): the batteryDelta claim reads THIS file (the FULL battery), not the curated verify subset; Consistency.batteryFullDelta() DISPLAYS prev + added − removed === now across the boundary.",
+  "prevSprint": "V41 (Variant)",
+  "prevFullPass": 1892,
+  "fullPass": 1941,
+  "added": 49,
   "removed": 0,
   "removedReason": [],
-  "note": "VARIANT V41 close: two identical runs at 1892 pass / 2 skip / 0 fail across 288 files / 12364+ expect(). added = fullPass − prevFullPass = 48 (the S161–S168 variant walls: pins 13 + phase1 census-fold 5 + phase2 guard-hole 5 + phase3 pbo 6 + phase4 rider-dryrun 5 + phase5 capture-marginal 4 + phase6 variant-ledger 10); removed 0. Consistency.batteryReconciles asserts fullPass === prevFullPass + added − removed; Ship.Battery.continuity asserts prevFullPass (1844) === the previous terminal in battery-continuity.json (V40, 1844)."
+  "note": "PROVENANCE V42 close: two identical runs at 1941 pass / 2 skip / 0 fail across 294 files. added = fullPass − prevFullPass = 49 (the S169–S179 provenance walls: pins 13 + phase1 identity-gate 13 incl the chain-tip hardening + phase2 carried-audit 5 + phase3 REAL★ engine 9 + phase4 retrospective-boundary 5 + phase5 capture-window 4); removed 0. Consistency.batteryFullDelta asserts fullPass === prevFullPass + added − removed; Ship.Battery.continuity asserts prevFullPass (1892) === the previous terminal in battery-continuity.json (V41, 1892)."
 }

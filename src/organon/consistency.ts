@@ -114,6 +114,41 @@ export namespace Consistency {
     return { fullPass: b.fullPass, reconciles, contradiction }
   }
 
+  // ── PROVENANCE V42 (S171/S172, M-3/M-4) — THE FULL-BATTERY DELTA, ACROSS THE BOUNDARY, DISPLAYED. ──
+  // M-3: V41's batteryDelta described the CURATED 1281-subset (battery-summary.json.canonical), not the FULL 1892-battery's
+  // +48 movement. M-4: the cross-sprint continuity (prev terminal → now) was gated (Ship.Battery.continuity, S156) but never
+  // DISPLAYED. This reads the FULL battery (battery-baseline.json) and renders `prev + added − removed === now` — the same
+  // arithmetic the header must show. `full:true` marks it the full-battery delta (a curated-subset pass FAILS S171).
+  export interface FullDelta { prev: number; added: number; removed: number; now: number; reconciles: boolean; full: true; display: string; contradiction: Contradiction | null }
+  export function batteryFullDelta(): FullDelta {
+    const b = baseline()
+    const now = b.fullPass
+    const reconciles = b.prevFullPass + b.added - b.removed === now
+    const display = `prev ${b.prevFullPass} + added ${b.added} − removed ${b.removed} === now ${now}`
+    const contradiction: Contradiction | null = reconciles ? null : { a: `full battery pass ${now}`, b: `prev ${b.prevFullPass} + added ${b.added} − removed ${b.removed} = ${b.prevFullPass + b.added - b.removed}`, why: `the FULL-battery delta does not reconcile across the sprint boundary (M-4/S172)` }
+    return { prev: b.prevFullPass, added: b.added, removed: b.removed, now, reconciles, full: true, display, contradiction }
+  }
+
+  // ── PROVENANCE V42 (S173, M-5) — THE FULL CENSUS IDENTITY, DISPLAYED. ──
+  // M-5: S161 fixed the originUnrecorded continuity line, but the demonstrated/weak/exempt arithmetic carried no displayed
+  // identity tying the buckets to the total wall count. This renders the whole partition: the four buckets sum to the wall
+  // count, DISPLAYED as `demonstrated + weak + exempt + originUnrecorded === total`. A sum that does not equal the wall count
+  // (a producer miscount) is a contradiction — the exact totality-was-never-coherence defect (G-1) at the census level.
+  export interface CensusIdentity { demonstrated: number; weak: number; exempt: number; originUnrecorded: number; total: number; reconciles: boolean; display: string; contradiction: Contradiction | null }
+  // the PURE, SEEDABLE reconciler — the four buckets must sum to the independently-supplied total. A seeded bad partition
+  // (buckets that do NOT sum to total) FAILS; this is the check that CAN fail, fed the live census by censusIdentity().
+  export function censusIdentityOf(demonstrated: number, weak: number, exempt: number, originUnrecorded: number, total: number): CensusIdentity {
+    const sum = demonstrated + weak + exempt + originUnrecorded
+    const reconciles = sum === total
+    const display = `demonstrated ${demonstrated} + weak ${weak} + exempt ${exempt} + originUnrecorded ${originUnrecorded} === total ${total}`
+    const contradiction: Contradiction | null = reconciles ? null : { a: `census buckets sum ${sum}`, b: `wall count ${total}`, why: `the census identity does not close: the four buckets sum to ${sum}, not the ${total} walls counted (M-5/S173)` }
+    return { demonstrated, weak, exempt, originUnrecorded, total, reconciles, display, contradiction }
+  }
+  export function censusIdentity(): CensusIdentity {
+    const c = Falsify.census()
+    return censusIdentityOf(c.counts.DEMONSTRATED, c.counts.WEAK, c.counts.EXEMPT, c.counts.ORIGIN_UNRECORDED, c.wallCount)
+  }
+
   // Consistency.check — the whole cross-producer check. Returns every contradiction (empty = coherent). This is what the
   // generator runs before it emits the header (S107): a header whose producers contradict one another is a Halt.
   export function check(): Result {

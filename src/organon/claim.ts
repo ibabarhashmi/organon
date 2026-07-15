@@ -24,6 +24,7 @@ import { Release } from "./release"
 import { CrossCheck, Signability } from "../backtest/crosscheck"
 import { Rider } from "../backtest/rider"
 import { Ledger } from "../strategy/ledger"
+import { Pins } from "./pins"
 
 export namespace Claim {
   export type Tier = "REAL" | "SAMPLE" | "UNJUDGEABLE" | "n/a"
@@ -56,22 +57,18 @@ export namespace Claim {
 
   // ── THE PRODUCER REGISTRY — each entry reads committed artifacts and returns the claim's value + tier + partiality ──────
   // (verify uses skipBundle so the registry is fast + offline; the generator/do_verify run the full bundle separately.)
-  // the CURRENT sprint's pins sha — Socket V37 carries socket-pins.json (chained from derive-pins). The claim→producer
-  // MAP still lives in derive-pins (unchanged), but the header's PINS_SHA claim is the CURRENT pins (a moved sprint pin
-  // moves the header). If socket-pins is absent (a pre-V37 checkout), fall back to derive-pins.
+  // the CURRENT sprint's pins sha — PROVENANCE V42 (M-1/S169): the header's PINS_SHA claim is THIS sprint's own pins file, via
+  // the ONE head pointer (Pins.HEAD_FILE). The prior code iterated a FIXED list [family, substance, socket] never advanced past
+  // V39, so the claim was frozen at family-pins.json (2c299b9e) for every sprint since Family — the exact M-1 defect (a hash
+  // never compared to its own source). Pins.head() reads HEAD_FILE first; S169 in Ship.gate compares the emitted value to
+  // sha256 of THIS sprint's pins file (Pins.selfHash) via an independent path, so a stale head cannot pass.
   function currentPinsSha(): string {
-    return currentPins()?.pinsSha ?? pins().pinsSha
+    return Pins.head()?.pinsSha ?? pins().pinsSha
   }
-  // the CURRENT sprint's pins — where lawsThisSprint + newProductCapability live. SUBSTANCE V38: the current pins are
-  // substance-pins.json (newProductCapability 0 — the three V37 capabilities are made TRUE, nothing new is added; the roadmap
-  // is OWED to V39). Falls back to socket-pins (V37), then derive-pins (a pre-V38 checkout).
+  // the CURRENT sprint's pins — where lawsThisSprint + newProductCapability live. Now the ONE head pointer (Pins.head), which
+  // resolves HEAD_FILE (provenance-pins.json) first and falls back through prior heads only on a pre-V42 checkout.
   function currentPins(): { pinsSha: string; carried: { newProductCapability: number; lawsThisSprint: string } } | null {
-    // FAMILY V39 — family-pins.json is the current head (carries substance 153628a9; newProductCapability 0 — the four
-    // shipped capabilities pay a price, show a number, reach a seventh kind, and count a family, none touching a verdict).
-    for (const f of ["family-pins.json", "substance-pins.json", "socket-pins.json"]) {
-      try { return JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", f), "utf8")) } catch { /* try the next */ }
-    }
-    return null
+    return Pins.head()
   }
 
   const REGISTRY: Record<string, () => { value: unknown; partial?: boolean }> = {
@@ -80,9 +77,13 @@ export namespace Claim {
     commitSha: () => ({ value: git(["rev-parse", "HEAD"]) }),
     pushed: () => ({ value: Reach.derivePublished().published }),
     battery: () => {
-      const b = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "evidence", "battery-summary.json"), "utf8")).canonical
+      // PROVENANCE V42 (M-3/S171): the batteryDelta describes the FULL battery (battery-baseline.json {prevFullPass, fullPass,
+      // added, removed}), NOT the CURATED verify subset (battery-summary.json.canonical, 1281 — what V41 wrongly emitted). full:true
+      // marks it the full-battery delta; a curated-subset pass FAILS S171. `removed`/`removedReason` (RP-4, named removals) carried.
+      const base = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "battery-baseline.json"), "utf8"))
       const removed = Falsify.DELETED_WALLS // RP-4 — a shrinking battery with NAMED removals is honest, without them a Halt
-      return { value: { pass: b.pass, fail: b.fail, files: b.files, removed: removed.length, removedReason: removed.map((d) => `${d.id}: ${d.reason}`) } }
+      const reconciles = base.prevFullPass + base.added - base.removed === base.fullPass
+      return { value: { pass: base.fullPass, prev: base.prevFullPass, added: base.added, removed: removed.length, removedReason: removed.map((d) => `${d.id}: ${d.reason}`), full: true, reconciles } }
     },
     verify: () => ({ value: Verify.run({ skipBundle: true }) }),
     verifyOnClone: () => {

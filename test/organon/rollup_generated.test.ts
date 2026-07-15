@@ -108,9 +108,10 @@ test("S100 (W-DV01) — Rollup.header + gate are pure reads that assemble the pr
   expect((g.d51 as { state: string }).state).toBe("ANSWERED")
   expect((g.d51 as { supersedes: string }).supersedes).toMatch(/product, or an instrument/) // MR18 — the pointer where the question stood
   expect((g.d51 as { agentComputes: string }).agentComputes).toMatch(/the pen ALREADY chose|never signs/) // presented, never signed (LN5)
-  // newProductCapability is DERIVED from the CURRENT sprint's pins — sprint-invariant, not a hardcoded 0. Socket V37 lifted
-  // the Halt (D53) → 3; Substance V38 makes the three TRUE and adds nothing → 0 (the roadmap is OWED to V39). The generator
-  // reads the current sprint's pins (substance-pins), so the header always shows THIS sprint's disclosed capability count.
-  const currentCap = JSON.parse(require("node:fs").readFileSync(require("node:path").join(PKG_ROOT, "data", "honesty", "substance-pins.json"), "utf8")).carried.newProductCapability
+  // newProductCapability is DERIVED from the CURRENT sprint's pins — sprint-invariant, not a hardcoded value. PROVENANCE V42
+  // (M-1/S169): the generator now reads the ACTUAL head (Pins.head → provenance-pins.json), so the header shows THIS sprint's
+  // disclosed capability count. (Before the M-1 fix, currentPins was frozen at family-pins.json and this test hardcoded
+  // substance-pins — the same stale-head class of defect the identity gate now forbids.)
+  const currentCap = JSON.parse(require("node:fs").readFileSync(require("node:path").join(PKG_ROOT, "data", "honesty", "provenance-pins.json"), "utf8")).carried.newProductCapability
   expect(g.newProductCapability).toBe(currentCap)
 })

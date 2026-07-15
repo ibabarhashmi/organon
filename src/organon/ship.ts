@@ -24,6 +24,11 @@ import { Clone } from "./clone"
 import { Verify } from "./verify"
 import { Falsify } from "./falsify"
 import { Consistency } from "./consistency"
+import { Pins } from "./pins"
+import { Freshness } from "./freshness"
+import { State } from "./state"
+import { Rollup } from "./rollup"
+import { Claim } from "./claim"
 
 export namespace Ship {
   // ── BATTERY CONTINUITY (S156, K-7) — the cross-boundary check the within-sprint reconciliation never made ──
@@ -66,6 +71,15 @@ export namespace Ship {
     census: { newWallsInOu: string[] } // this sprint's new walls (id > NEW_WALL_FLOOR) that landed in ORIGIN_UNRECORDED
     battery: Battery.Continuity // S156 — the cross-boundary continuity result
     censusReconciliation: Consistency.CensusContinuity // VARIANT V41 (S161, L-1) — the census reconciliation, DISPLAYED
+    // PROVENANCE V42 (S169–S174) — the IDENTITY artifacts: the emitted pins-sha (from the marker), the per-field freshness
+    // audit (COMPUTED / carried:{reverified}), the FULL-battery delta, the census identity, and the machine-readable
+    // deviationStates — each an IDENTITY property the SHAPE-only gate never checked.
+    pinsEmitted: string // marker.pinsSha — S169 compares it to sha256(this sprint's pins file)
+    freshness: Freshness.Class[] // S170 — every generated field COMPUTED or carried-and-reverified
+    batteryDelta: { full: boolean; pass: number } // S171 — batteryDelta describes the FULL battery, not the curated subset
+    batteryFullDelta: Consistency.FullDelta // S172 — the FULL-battery delta across the boundary (DISPLAYED, seedable at emit)
+    censusIdentity: Consistency.CensusIdentity // S173 — the full census identity (DISPLAYED, seedable at emit)
+    deviationStateIds: string[] // S174/MR20 — the ids State.deviations() enumerates
   }
 
   export type Refusal = { wall: string; artifact: string; value: string }
@@ -111,6 +125,42 @@ export namespace Ship {
     if (!cr.reconciles) return fail("S161", "the census reconciliation", `the census does NOT reconcile — ${cr.display}${cr.contradiction ? ` (${cr.contradiction.why})` : ""}; L-1 demands prev + new − moved === now, DISPLAYED not asserted`)
     checks.push({ wall: "S161", artifact: "the census reconciliation", ok: true, detail: `${cr.display} ✓ (displayed, run against the real census at emit time — L-1)` })
 
+    // ── PROVENANCE V42 (S169–S174) — THE GATE GRADUATES FROM SHAPE TO IDENTITY. The three defects V41 sailed through were
+    // each SHAPE-VALID and IDENTITY-WRONG; these walls check identity AND freshness, on the REAL emit artifacts. ──
+
+    // S169 (M-1, W-PR01) — the emitted pins-sha must equal sha256(THIS sprint's pins file, frozen Phase 0); a parent-pin
+    // emission (a prior head's sha), or a pins file edited after Phase 0 (self-consistency broken), REFUSES the log. Two
+    // independent paths to the value: the header via Pins.head, the gate via a direct file read — so a stale head cannot pass.
+    const idv = Pins.verifyEmitted(a.pinsEmitted)
+    if (!idv.ok) return fail("S169", "the emitted pins-sha", `${idv.reason} — a hash never compared to its own source is a SHAPE check wearing an identity check's clothes (X-REACH(a))`)
+    checks.push({ wall: "S169", artifact: "the emitted pins-sha", ok: true, detail: idv.detail })
+
+    // S170 (M-2, W-PR02) — every generated field is COMPUTED or carried:{from,why,reverified}; a carried claim is re-run and
+    // matched (a carry that would recompute differently is a lie), and an untagged prior-sprint string REFUSES.
+    const fr = Freshness.honest(a.freshness)
+    if (!fr.ok) return fail("S170", "the generated fields (freshness)", `a carried claim would recompute differently — staleness cannot be BLESSED by a tag: ${fr.lies.join(" · ")} (M-2, RP-2)`)
+    checks.push({ wall: "S170", artifact: "the generated fields (freshness)", ok: true, detail: `${fr.computed} COMPUTED · ${fr.carried} carried-and-reverified · 0 stale-carried, 0 untagged prior-sprint echoes` })
+
+    // S171 (M-3, W-PR03) — batteryDelta describes the FULL battery (battery-baseline), not the curated 1281-subset.
+    const fd = a.batteryFullDelta
+    if (!a.batteryDelta.full || a.batteryDelta.pass !== fd.now) return fail("S171", "the batteryDelta", `the batteryDelta describes the WRONG battery — pass ${a.batteryDelta.pass} (full:${a.batteryDelta.full}) ≠ the FULL battery ${fd.now}; V41 emitted the CURATED 1281-subset (M-3, RP-4 required the full battery)`)
+    checks.push({ wall: "S171", artifact: "the batteryDelta", ok: true, detail: `batteryDelta.pass ${a.batteryDelta.pass} === the FULL battery ${fd.now} (full:true, not the curated subset)` })
+
+    // S172 (M-4, W-PR04) — the cross-sprint battery continuity is DISPLAYED and reconciles: prev + added − removed === now.
+    if (!fd.reconciles) return fail("S172", "the battery continuity", `the FULL-battery delta does not reconcile across the boundary — ${fd.display}${fd.contradiction ? ` (${fd.contradiction.why})` : ""} (M-4)`)
+    checks.push({ wall: "S172", artifact: "the battery continuity", ok: true, detail: `${fd.display} ✓ (displayed across the sprint boundary)` })
+
+    // S173 (M-5, W-PR05) — the FULL census identity is DISPLAYED and closes: demonstrated + weak + exempt + originUnrecorded === total.
+    const ci = a.censusIdentity
+    if (!ci.reconciles) return fail("S173", "the census identity", `the census identity does not close — ${ci.display}${ci.contradiction ? ` (${ci.contradiction.why})` : ""} (M-5)`)
+    checks.push({ wall: "S173", artifact: "the census identity", ok: true, detail: `${ci.display} ✓ (the full partition displayed)` })
+
+    // S174 (M-6/MR20, W-PR06) — every pinned deviation (incl D80–D86) appears in the machine-readable deviationStates.
+    const REQUIRED_DEVIATIONS = ["D80", "D81", "D82", "D83", "D84", "D85", "D86"]
+    const missingDevs = REQUIRED_DEVIATIONS.filter((d) => !a.deviationStateIds.includes(d))
+    if (missingDevs.length > 0) return fail("S174", "deviationStates", `pinned deviation(s) [${missingDevs.join(", ")}] absent from deviationStates — Phase 0 pinned them and the gate lists them, but the machine-readable state list under-enumerated (M-6/MR20)`)
+    checks.push({ wall: "S174", artifact: "deviationStates", ok: true, detail: `every pinned deviation present incl D80–D86 (${a.deviationStateIds.length} states enumerated)` })
+
     return { pass: true, checks }
   }
 
@@ -125,6 +175,8 @@ export namespace Ship {
     } catch { clone = null }
     const census = Falsify.census()
     const newWallsInOu = census.rows.filter((r) => r.n > NEW_WALL_FLOOR && r.bucket === "ORIGIN_UNRECORDED").map((r) => r.id)
+    // PROVENANCE V42 (S171) — the batteryDelta from the live claim (full battery, not the curated subset).
+    const bd = Claim.producer("battery").value as { pass: number; full?: boolean }
     return {
       marker,
       terminalCommit,
@@ -133,6 +185,13 @@ export namespace Ship {
       census: { newWallsInOu },
       battery: Battery.continuity(),
       censusReconciliation: Consistency.censusContinuityDisplay(), // S161 (V41) — run against the REAL census at emit
+      // PROVENANCE V42 (S169–S174) — the IDENTITY artifacts, from the REAL marker + live producers.
+      pinsEmitted: String(marker.pinsSha), // S169 — the emitted pins-sha, compared to sha256(this sprint's pins file)
+      freshness: Rollup.freshnessAudit(), // S170 — the per-field COMPUTED / carried-and-reverified audit
+      batteryDelta: { full: bd.full === true, pass: bd.pass }, // S171 — the FULL battery, not the curated subset
+      batteryFullDelta: Consistency.batteryFullDelta(), // S172 — the FULL-battery delta across the boundary
+      censusIdentity: Consistency.censusIdentity(), // S173 — the full census identity
+      deviationStateIds: State.deviations().map((d) => d.id), // S174/MR20 — the enumerated deviation ids
     }
   }
 

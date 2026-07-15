@@ -20,6 +20,10 @@ import path from "node:path"
 import { PKG_ROOT } from "../../src/organon/frozen"
 import { Ship } from "../../src/organon/ship"
 import { Verify } from "../../src/organon/verify"
+import { Pins } from "../../src/organon/pins"
+import { Rollup } from "../../src/organon/rollup"
+import { Consistency } from "../../src/organon/consistency"
+import { State } from "../../src/organon/state"
 
 const TERMINAL = "abc1234def5678000000000000000000000000ff"
 
@@ -58,13 +62,20 @@ function goodArtifacts(): Ship.Artifacts {
     census: { newWallsInOu: [] },
     battery: goodBattery(),
     censusReconciliation: goodCensus(),
+    // PROVENANCE V42 (S169–S174) — the identity artifacts, honest, so the V40 ship walls run under the identity-hardened gate.
+    pinsEmitted: Pins.selfHash().recomputed, // === sha256(this sprint's pins file) — S169 passes
+    freshness: Rollup.freshnessAudit(), // every field COMPUTED or carried-and-reverified — S170 passes
+    batteryDelta: { full: true, pass: Consistency.batteryFullDelta().now }, // the FULL battery — S171 passes
+    batteryFullDelta: Consistency.batteryFullDelta(), // reconciles across the boundary — S172 passes
+    censusIdentity: Consistency.censusIdentity(), // the full partition closes — S173 passes
+    deviationStateIds: State.deviations().map((d) => d.id), // incl D80–D86 — S174 passes
   }
 }
 
 test("S151 (W-SH01) — Ship.gate PASSES on clean real-shaped artifacts; Ship.emit writes the LOG only then", () => {
   const g = Ship.gate(goodArtifacts())
   expect(g.pass).toBe(true)
-  expect(g.checks.length).toBe(6) // S152–S156 + S161 (the V41 census fold), all ✓
+  expect(g.checks.length).toBe(12) // S152–S156 + S161 (V41 census fold) + S169–S174 (V42 identity gate), all ✓
   const e = Ship.emit("FULL BUILD LOG CONTENT", goodArtifacts(), "2026-07-15")
   expect(e.wrote).toBe("log")
   if (e.wrote === "log") expect(e.content).toBe("FULL BUILD LOG CONTENT")
@@ -157,6 +168,7 @@ test("S156 (W-SH06) — the continuity ledger EXPLAINS the 1706→1738 gap (MR19
   expect(terminals).toContain(1706)
   expect(terminals).toContain(1738)
   expect(terminals).toContain(1793) // V39's terminal — what V40's baseline.prevFullPass equalled
-  expect(terminals[terminals.length - 1]).toBe(1844) // VARIANT V41: V40's terminal appended — what V41's baseline.prevFullPass must equal
+  expect(terminals).toContain(1844) // V40's terminal — what V41's baseline.prevFullPass equalled
+  expect(terminals[terminals.length - 1]).toBe(1892) // PROVENANCE V42: V41's terminal appended — what V42's baseline.prevFullPass must equal
   expect(ledger.mr19).toMatch(/1706→1738|Surrogate Addendum/)
 })
