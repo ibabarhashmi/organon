@@ -41,12 +41,13 @@ test("S181 (W-BF02) — every registered countable reconciles through the ONE re
   expect(all.results.length).toBe(Continuity.registry().length)
 })
 
-test("S181 (W-BF02) — the reconciler is TYPED (F-4/RP-4): the census is a PARTITION with a MOVED transfer map, not a delta", () => {
+test("S181 (W-BF02) — the reconciler is TYPED (F-4/RP-4): the census is a PARTITION, now reconciled as CONSERVATION + GROWTH (two identities, V44/S190)", () => {
   const census = Continuity.reconcileAll().results.find((r) => r.type === "PARTITION")
   expect(census).toBeDefined()
-  // the census movement is shown as a TRANSFER (new walls + reclassification), not a bare delta from nowhere (N-2)
+  // the census movement is shown as a TRANSFER, not a bare delta — V44 (S190/O-1) split it into CONSERVATION + GROWTH
   expect(census!.moved).not.toBeNull()
-  expect(census!.moved!.display).toMatch(/demonstrated \d+ \+ newWalls-demonstrated \d+ \+ reclassified-from-OU -?\d+ === \d+/)
+  expect(census!.twoIdentity).toBeDefined()
+  expect(census!.moved!.display).toMatch(/CONSERVATION.*net to.*GROWTH.*total/s)
 })
 
 test("S181 (W-BF02) — SEEDED NEGATIVE: a moved-but-UNROUTED countable (a V44-style new number) REFUSES", () => {

@@ -21,6 +21,13 @@ import { Rollup } from "../../src/organon/rollup"
 import { State } from "../../src/organon/state"
 import { Continuity } from "../../src/organon/continuity"
 import { Capability } from "../../src/organon/capability"
+import { HistoricalAct } from "../../src/organon/historical"
+import { Ln5 } from "../../src/organon/ln5"
+import { Delegation } from "../../src/organon/delegation"
+import { Strict } from "../../src/studio/strict"
+import { Backfill } from "../../src/plane/backfill"
+import { Capture } from "../../src/strategy/capture"
+import { Contagion } from "../../src/strategy/contagion"
 
 const TERMINAL = "abc1234def5678000000000000000000000000ff"
 
@@ -51,6 +58,13 @@ function artifacts(cr: Ship.Artifacts["censusReconciliation"] = reconcilingCensu
     // BACKFILL V43 (S180–S183) — the continuity-total artifacts, honest.
     verifyDomainsStated: true, continuity: Continuity.check(),
     searchHashStable: { ok: true, detail: "stable (test)" }, capabilityIsolation: Capability.verdictIsolation(),
+    // RECKONING V44 (S190–S197)
+    censusTwoIdentity: Continuity.reconcileAll().results.find((r) => r.key === "census")?.twoIdentity ?? null,
+    historicalRebasing: HistoricalAct.rebasingVerdict(), ln5: Ln5.verify({}),
+    strictBar: (() => { const r = Strict.strictRecord(); return { positiveControlGO: r.positiveControlGO, flips: r.flips } })(),
+    rateSpace: Backfill.rateSpaceVerdict(), judgeableReconciled: Capture.judgeableReconciled(),
+    contagion: (() => { const r = Contagion.mutationRate(); return { complete: r.complete, detail: r.note } })(),
+    delegation: Delegation.verdict(),
   }
 }
 
@@ -67,7 +81,7 @@ test("S161 (W-VR01) — the Ship Gate PASSES on a reconciling census (the check 
   const g = Ship.gate(artifacts())
   expect(g.pass).toBe(true)
   expect(g.checks.some((c) => c.wall === "S161" && c.ok)).toBe(true)
-  expect(g.checks.length).toBe(16) // S152–S156 + S161 + S169–S174 (V42 identity gate) + S180–S183 (V43 continuity-total)
+  expect(g.checks.length).toBe(24) // + S190–S197 (V44 reckoning: the pen's reckoning + the moat's third stone)
 })
 
 test("S161 (W-VR01) — SEEDED NEGATIVE: a non-reconciling census REFUSES the log (a reconciling total that hides a regression)", () => {

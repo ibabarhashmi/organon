@@ -1,0 +1,14 @@
+{
+  "protocol": "historical-hash-rebasing",
+  "at": "2026-07-16",
+  "rule": "O-2/S191 — V43's S182 cure switched the rendered redesignSearchHash from the record chain's position-dependent selfSha to the immutable-core hash (HistoricalAct.hash). That was the RIGHT fix, but its OWN inaugural transition (d5147f8d→7d63b5e2) shipped UNTAGGED — looking identical to the drift it cured (the cure's first transition looks like the disease). This tags the re-basing {from, to, scheme, at:V44}, and HistoricalAct.rebasingVerdict() asserts the immutable-core hash is now STABLE V44→V45 (the recomputed hash equals `to`). An untagged re-basing, or a fresh drift after the tag, FAILS S191.",
+  "rebased": {
+    "from": "d5147f8d",
+    "to": "7d63b5e25df25e9d3f8398d4105fd7e832abbcade4bccbdfd36fcea50b58d6c8",
+    "scheme": "immutable-core",
+    "at": "V44",
+    "why": "V43 (S182) switched the rendered redesignSearchHash from the record chain's position-dependent selfSha (which drifted a578032b→d5147f8d as new build logs were content-sorted into the chain, though the ACT never changed) to HistoricalAct.hash — the act's immutable core, position-independent, stable forever. The RIGHT fix; but its inaugural transition d5147f8d→7d63b5e2 shipped untagged in V43, indistinguishable in shape from the very drift it cured. Tagged here; stable from V44 forward."
+  },
+  "actFile": "test-redesign-search.json",
+  "stableFrom": "V44"
+}

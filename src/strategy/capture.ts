@@ -126,10 +126,15 @@ export namespace Capture {
   // confidence is capped by the weakest DOMINANT tier: a series that is predominantly REAL-DERIVED is 'third-party historical,
   // re-derivable but NOT self-captured'. Below the floor it stays UNJUDGEABLE and says how many points remain. The HUMAN
   // own-capture count stays separate (0 — the Operator has never run the verb; a backfill is third-party, not a self-capture). ──
+  // RECKONING V44 (O-4, S195) — the judgeable tier. A bare judgeable:true on a 0.5%-REAL★ series points OPPOSITE to its own
+  // "predominantly third-party" cap. So judgeability is gated on the REAL★ fraction: past the floor AND predominantly
+  // self-captured → JUDGEABLE (clean); past the floor but predominantly THIRD-PARTY → JUDGEABLE-WITH-CAVEAT (the caveat is
+  // inseparable from the flag); below the floor → UNJUDGEABLE. The flag and its tier cap can no longer point opposite ways.
+  export type JudgeableTier = "JUDGEABLE" | "JUDGEABLE-WITH-CAVEAT" | "UNJUDGEABLE"
   export interface OwnArchive {
     realStar: number; realDerived: number; retrospective: number; humanCaptures: number
     reDerivableSeries: number // REAL★ + REAL-DERIVED — the re-derivable points a kill-criterion can replay over
-    minWindow: number; judgeable: boolean; pointsToJudgeable: number
+    minWindow: number; judgeable: boolean; judgeableTier: JudgeableTier; realStarFraction: number; pointsToJudgeable: number
     mix: Tier.Mix; render: string
   }
   export function ownArchive(): OwnArchive {
@@ -139,13 +144,32 @@ export namespace Capture {
     const retrospective = l.retrospective.length
     const min = l.minWindowCaptures
     const reDerivableSeries = realStar + realDerived // both tiers are re-derivable (REAL★ at block, REAL-DERIVED at round)
-    const judgeable = reDerivableSeries >= min
-    const pointsToJudgeable = Math.max(0, min - reDerivableSeries)
+    const pastFloor = reDerivableSeries >= min
+    const realStarFraction = reDerivableSeries > 0 ? realStar / reDerivableSeries : 0
     const mix = Tier.mixLabel({ realStar, realDerived, retrospective })
-    const render = judgeable
-      ? `the own-capture false-fire leg is JUDGEABLE: ${reDerivableSeries} re-derivable points (${mix.label}) reach the ${min}-point floor. It renders a COUNT with its tier mix + ratio, NEVER a verdict, NEVER a suggested threshold (S145 carried). ${mix.predominantlyThirdParty ? "PREDOMINANTLY THIRD-PARTY HISTORICAL — the confidence is capped by REAL-DERIVED (re-derivable, not self-captured)." : ""} HUMAN own-captures: ${l.ownCapturesHuman} (a backfill is third-party, not a self-capture; the HUMAN count is the Operator's to make).`
-      : `the own-capture false-fire leg is UNJUDGEABLE: ${reDerivableSeries} of ${min} re-derivable points (${mix.label}) — ${pointsToJudgeable} to a judgeable own-count, never a projected date (RP-6). HUMAN own-captures: ${l.ownCapturesHuman}.`
-    return { realStar, realDerived, retrospective, humanCaptures: l.ownCapturesHuman, reDerivableSeries, minWindow: min, judgeable, pointsToJudgeable, mix, render }
+    // S195/O-4 — the judgeable tier is RECONCILED with the tier cap: predominantly third-party → JUDGEABLE-WITH-CAVEAT, never a bare judgeable:y
+    const judgeableTier: JudgeableTier = !pastFloor ? "UNJUDGEABLE" : mix.predominantlyThirdParty ? "JUDGEABLE-WITH-CAVEAT" : "JUDGEABLE"
+    const judgeable = judgeableTier !== "UNJUDGEABLE"
+    const pointsToJudgeable = Math.max(0, min - reDerivableSeries)
+    const render = judgeableTier === "JUDGEABLE"
+      ? `the own-capture false-fire leg is JUDGEABLE: ${reDerivableSeries} re-derivable points (${mix.label}) reach the ${min}-point floor, predominantly self-captured (REAL★ ${(realStarFraction * 100).toFixed(1)}%). It renders a COUNT with its tier mix + ratio, NEVER a verdict. HUMAN own-captures: ${l.ownCapturesHuman}.`
+      : judgeableTier === "JUDGEABLE-WITH-CAVEAT"
+        ? `the own-capture false-fire leg is JUDGEABLE-WITH-CAVEAT: ${reDerivableSeries} re-derivable points reach the ${min}-point floor, but the series is PREDOMINANTLY THIRD-PARTY HISTORICAL (REAL★ only ${(realStarFraction * 100).toFixed(1)}%, ${mix.label}) — the count is judgeable as a TIERED count, its confidence capped by REAL-DERIVED (re-derivable, NOT self-captured); the caveat is inseparable from the flag (S195/O-4). It renders a COUNT with its tier mix + ratio, NEVER a verdict. HUMAN own-captures: ${l.ownCapturesHuman} (a backfill is third-party, not a self-capture).`
+        : `the own-capture false-fire leg is UNJUDGEABLE: ${reDerivableSeries} of ${min} re-derivable points (${mix.label}) — ${pointsToJudgeable} to a judgeable own-count, never a projected date (RP-6). HUMAN own-captures: ${l.ownCapturesHuman}.`
+    return { realStar, realDerived, retrospective, humanCaptures: l.ownCapturesHuman, reDerivableSeries, minWindow: min, judgeable, judgeableTier, realStarFraction, pointsToJudgeable, mix, render }
+  }
+
+  // S195/O-4 — the judgeable flag agrees with its tier cap: a bare JUDGEABLE while the mix is predominantly third-party FAILS
+  // (the flag and the cap must not point opposite ways). Used by the gate + the wall.
+  export function judgeableReconciled(): { ok: boolean; detail: string } {
+    const a = ownArchive()
+    const contradiction = a.judgeableTier === "JUDGEABLE" && a.mix.predominantlyThirdParty
+    return {
+      ok: !contradiction,
+      detail: contradiction
+        ? `judgeableTier JUDGEABLE (clean) while the mix is PREDOMINANTLY THIRD-PARTY (REAL★ ${(a.realStarFraction * 100).toFixed(1)}%) — the flag and its cap point opposite ways (S195/O-4)`
+        : `judgeableTier ${a.judgeableTier} agrees with the tier cap (REAL★ ${(a.realStarFraction * 100).toFixed(1)}%, ${a.mix.predominantlyThirdParty ? "predominantly third-party → WITH-CAVEAT" : "predominantly self-captured → clean"})`,
+    }
   }
 
   // S128/DD-79 — the quarantine: only a HUMAN capture advances the HUMAN own-count. An AGENT capture cannot (the differential

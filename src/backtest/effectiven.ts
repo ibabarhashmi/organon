@@ -77,6 +77,102 @@ export namespace EffectiveN {
     return e.map((v) => 0.07 + (v - mean)) // small constant mean + demeaned persistent fluctuation
   }
 
+  // ── RECKONING V44 (DD-89, RP-3) — THE N_eff CORRECTION, COMPOSED IN THE HARNESS. The frozen rigor.psr hard-codes √(n−1)
+  // over the raw observation count — valid for i.i.d. returns, WRONG for autocorrelated ones. This composes the correction
+  // BESIDE the frozen number (effective_n.py + rigor.py are READ, never edited): N_eff = clamp(n/τ_int, [1,n]), and √(N_eff−1)
+  // replaces √(n−1) in the PSR z-score. τ_int uses the windowed/tapered estimator (tauInt above truncates at the first
+  // non-positive lag — the Sokal automatic window). RP-3: N_eff is CLAMPED to [1,n] (a noisy negative ρ_k cannot drive it
+  // above n or the denominator negative), and where the series is too short to estimate τ_int stably (< SHORT_SAMPLE_FLOOR),
+  // N_eff is UNJUDGEABLE and the caller (the Stamp) renders INSUFFICIENT — the short-sample case fails safe toward caution. ──
+  export const SHORT_SAMPLE_FLOOR = 30 // below this, τ_int cannot be estimated stably → N_eff UNJUDGEABLE → Stamp INSUFFICIENT
+
+  // the standard-normal CDF via a deterministic erf (Abramowitz–Stegun 7.1.26, |error| < 1.5e-7) — clone-stable, no numpy.
+  // Φ(z) = 0.5·(1 + erf(z/√2)). Enough precision to compare a PSR to the 0.95 bar.
+  export function normalCdf(z: number): number {
+    const sign = z < 0 ? -1 : 1
+    const x = Math.abs(z) / Math.SQRT2
+    const t = 1 / (1 + 0.3275911 * x)
+    const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x)
+    return 0.5 * (1 + sign * y)
+  }
+
+  export interface Serial {
+    n: number
+    tauInt: number // the integrated autocorrelation time (windowed at the first non-positive lag)
+    nEff: number // clamp(n/τ_int, [1,n]) — the effective sample size under autocorrelation
+    lagWindow: number // the lag at which the τ_int sum truncated (the Sokal automatic window)
+    acfHead: number[] // the first few ρ_k (rendered so the estimate is auditable — RP-3)
+    stable: boolean // n ≥ SHORT_SAMPLE_FLOOR AND τ_int finite AND nEff in [1,n] — else UNJUDGEABLE
+    detail: string
+  }
+  // EffectiveN.serial(returns) — τ_int + N_eff, windowed + clamped + stability-flagged (RP-3). The decisive application-leg
+  // instrument: on the AR(1) demonstration (τ_int ≈ 36), N_eff collapses to ≈ n/36; on a near-white series (τ_int ≈ 1), N_eff ≈ n.
+  export function serial(returns: number[]): Serial {
+    const r = returns.filter((v) => Number.isFinite(v))
+    const n = r.length
+    const a = acf(r, Math.min(Math.max(n - 1, 1), 200))
+    // the windowed τ_int (matching tauInt: truncate at the first non-positive lag — the Sokal automatic window)
+    let tau = 1.0
+    let lagWindow = 0
+    for (let k = 1; k < a.length; k++) {
+      if (a[k] <= 0) { lagWindow = k; break }
+      tau += 2.0 * a[k]
+      lagWindow = k
+    }
+    tau = Math.max(tau, 1.0)
+    const nEffRaw = tau > 0 ? n / tau : n
+    const nEff = Math.min(Math.max(nEffRaw, 1), n) // RP-3 clamp to [1,n]
+    const stable = n >= SHORT_SAMPLE_FLOOR && Number.isFinite(tau) && nEff >= 1 && nEff <= n
+    return {
+      n, tauInt: tau, nEff, lagWindow, acfHead: a.slice(0, Math.min(6, a.length)),
+      stable,
+      detail: stable
+        ? `n ${n} · τ_int ${tau.toFixed(2)} (windowed at lag ${lagWindow}) · N_eff ${nEff.toFixed(1)} (${((nEff / n) * 100).toFixed(1)}% of n) — the effective sample under autocorrelation`
+        : n < SHORT_SAMPLE_FLOOR
+          ? `n ${n} < ${SHORT_SAMPLE_FLOOR} — too short to estimate τ_int stably; N_eff is UNJUDGEABLE (the Stamp renders INSUFFICIENT, never GO on a naive n — RP-3 fail-safe)`
+          : `N_eff unstable (τ_int ${tau}, N_eff ${nEff}) — UNJUDGEABLE`,
+    }
+  }
+
+  export interface PsrAtNeff {
+    n: number
+    nEff: number
+    tauInt: number
+    sr: number
+    psrNaive: number // Φ((SR−SR*)·√(n−1)/denom) — the frozen formula, reproduced in TS (validated against the closed form)
+    psrCorrected: number // Φ((SR−SR*)·√(N_eff−1)/denom) — the N_eff correction, always ≤ psrNaive on autocorrelated input
+    judgeable: boolean // the serial estimate is stable — else the corrected PSR is not to be trusted (Stamp → INSUFFICIENT)
+    detail: string
+  }
+  // EffectiveN.psrAtNeff(returns, srStar) — the frozen PSR z-score with √(N_eff−1) instead of √(n−1), composed in the harness.
+  // The moments (sr via ddof=1 std; g3 biased skew; g4 biased non-excess kurtosis) match rigor.psr EXACTLY, so psrNaive
+  // reproduces the frozen number and psrCorrected is the honest deflation. A frozen-core edit is NOT required and is FORBIDDEN.
+  export function psrAtNeff(returns: number[], srStar = 0): PsrAtNeff {
+    const r = returns.filter((v) => Number.isFinite(v))
+    const n = r.length
+    const s = serial(r)
+    if (n < 3) return { n, nEff: s.nEff, tauInt: s.tauInt, sr: 0, psrNaive: NaN, psrCorrected: NaN, judgeable: false, detail: "n < 3 — PSR undefined" }
+    const mu = r.reduce((x, y) => x + y, 0) / n
+    const varDdof1 = r.reduce((x, y) => x + (y - mu) ** 2, 0) / (n - 1)
+    const std1 = Math.sqrt(varDdof1)
+    const sr = std1 === 0 ? 0 : mu / std1
+    // biased central moments (ddof=0) — scipy.stats.skew / kurtosis(fisher=False), matching the frozen rigor.psr
+    const m2 = r.reduce((x, y) => x + (y - mu) ** 2, 0) / n
+    const m3 = r.reduce((x, y) => x + (y - mu) ** 3, 0) / n
+    const m4 = r.reduce((x, y) => x + (y - mu) ** 4, 0) / n
+    const g3 = m2 > 0 ? m3 / m2 ** 1.5 : 0
+    const g4 = m2 > 0 ? m4 / m2 ** 2 : 3
+    const denom = Math.sqrt(Math.max(1.0 - g3 * sr + ((g4 - 1.0) / 4.0) * sr * sr, 1e-12))
+    const zNaive = ((sr - srStar) * Math.sqrt(Math.max(n - 1, 0))) / denom
+    const zCorr = ((sr - srStar) * Math.sqrt(Math.max(s.nEff - 1, 0))) / denom
+    const psrNaive = normalCdf(zNaive)
+    const psrCorrected = normalCdf(zCorr)
+    return {
+      n, nEff: s.nEff, tauInt: s.tauInt, sr, psrNaive, psrCorrected, judgeable: s.stable,
+      detail: `PSR naive ${psrNaive.toFixed(4)} (√(n−1)=${Math.sqrt(n - 1).toFixed(1)}) → corrected ${psrCorrected.toFixed(4)} (√(N_eff−1)=${Math.sqrt(Math.max(s.nEff - 1, 0)).toFixed(1)}); τ_int ${s.tauInt.toFixed(1)} deflates the confidence ${s.stable ? "" : "(UNJUDGEABLE — short/unstable sample)"}`.trim(),
+    }
+  }
+
   export type Axis = "SERIAL" | "CROSS-SECTIONAL"
   export type Classification = "WIRING-GAP" | "CROSS-SECTIONAL-ONLY" | "HARNESS-COMPOSITION-GAP"
 

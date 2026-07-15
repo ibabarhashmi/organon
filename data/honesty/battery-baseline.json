@@ -1,16 +1,16 @@
 {
   "protocol": "battery-baseline",
-  "at": "2026-07-15",
-  "rule": "S107 (G-1) — the FULL auto-discover battery's pass count, per sprint, so the generated header's Δ RECONCILES: full === prev + added − removed. `full` is measured at the sprint's close (two identical runs); `added`/`removed` are DERIVED (full − prev / named removals). SHIP V40 (S156): the cross-boundary continuity is ALSO chained in battery-continuity.json and enforced at ship (Ship.Battery.continuity) — prevFullPass must equal the previous terminal. VARIANT V41 (S161): the census reconciliation is folded into the Ship Gate and displayed. PROVENANCE V42 (S171/S172): the batteryDelta claim reads THIS file (the FULL battery); Consistency.batteryFullDelta() DISPLAYS prev + added − removed === now. BACKFILL V43 (S181/DD-81): the FULL battery (pass/skip/fail/expect/files) is a set of cross-sprint COUNTABLES routed through the ONE Continuity.reconcile; the full numbers below (fullSkip/fullFail/fullExpect/fullFiles) are what Continuity.snapshot() reads — the committed record of the FULL battery at close, not the curated verify subset.",
-  "prevSprint": "V42 (Provenance)",
-  "prevFullPass": 1941,
-  "fullPass": 1991,
-  "added": 50,
+  "at": "2026-07-16",
+  "rule": "S107 (G-1) — the FULL auto-discover battery's pass count, per sprint, so the generated header's Δ RECONCILES: full === prev + added − removed. `full` is measured at the sprint's close (two identical runs); `added`/`removed` are DERIVED (full − prev / named removals). SHIP V40 (S156): the cross-boundary continuity is ALSO chained in battery-continuity.json and enforced at ship (Ship.Battery.continuity) — prevFullPass must equal the previous terminal. VARIANT V41 (S161): the census reconciliation is folded into the Ship Gate and displayed. PROVENANCE V42 (S171/S172): the batteryDelta claim reads THIS file (the FULL battery); Consistency.batteryFullDelta() DISPLAYS prev + added − removed === now. BACKFILL V43 (S181/DD-81): the FULL battery (pass/skip/fail/expect/files) is a set of cross-sprint COUNTABLES routed through the ONE Continuity.reconcile. RECKONING V44 (S190): the census PARTITION countable now reconciles as CONSERVATION + GROWTH (two identities); the battery countables here are unchanged in kind — measured at close, self-consistent full === prev + added − removed.",
+  "prevSprint": "V43 (Backfill)",
+  "prevFullPass": 1991,
+  "fullPass": 2024,
+  "added": 33,
   "removed": 0,
   "removedReason": [],
   "fullSkip": 2,
   "fullFail": 0,
-  "fullExpect": 13289,
-  "fullFiles": 299,
-  "note": "BACKFILL V43 close: two identical runs at 1991 pass / 2 skip / 0 fail across 299 files / 13289 expect(). added = fullPass − prevFullPass = 50 (the S180–S189 backfill walls: pins 13 + continuity-total 15 + engine 10 + tier 7 + own-leg 5). removed 0. Consistency.batteryFullDelta asserts fullPass === prevFullPass + added − removed; Ship.Battery.continuity asserts prevFullPass (1941) === the previous terminal in battery-continuity.json (V42, 1941); Continuity.snapshot reads fullSkip/fullFail/fullExpect/fullFiles here."
+  "fullExpect": 13450,
+  "fullFiles": 303,
+  "note": "RECKONING V44 close: two identical runs at 2024 pass / 2 skip / 0 fail across 303 files / 13450 expect(). added = fullPass − prevFullPass = 33 (the S190–S197 reckoning walls + the new module tests). removed 0. Consistency.batteryFullDelta asserts fullPass === prevFullPass + added − removed; Ship.Battery.continuity asserts prevFullPass (1991) === the previous terminal in battery-continuity.json (V43, 1991); Continuity.snapshot reads fullSkip/fullFail/fullExpect/fullFiles here."
 }

@@ -1,0 +1,49 @@
+{
+  "protocol": "stamp-strict-record",
+  "at": "2026-07-16",
+  "rule": "D27/DD-90/S193 — the 'knowingly generous' Stamp is retired: a GO must clear PSR(N_eff) > 0.95 AND observed length > MinTRL (López de Prado / Bailey, the literature's bar). This record grades a pinned set of representative series BOTH ways (naive √(n−1) vs the strict √(N_eff−1)) and shows the GO→INSUFFICIENT flips + the synthetic positive control (RP-2). RP-1 (ground truth): the mass-path bundle 9c1e7bd8 is byte-identical (the Stamp is off it); this versions the Stamp's OWN change, the scoped diff manifest.",
+  "bundleGroundTruth": "9c1e7bd8 byte-identical — the strict bar and N_eff land in the opt-in Stamp (off the mass path, outside the deterministic bundle: determinism=Scorecard, frozen=git-clean, differential=frozen-attest). The three routes to move the bundle each violate a fence; so it does not move, and this record is the honest diff of what DID change (the Stamp's own verdicts).",
+  "targetPSR": 0.95,
+  "barSource": "López de Prado / Bailey — PSR > 0.95 at the corrected effective-N (N_eff = n/τ_int) AND observed length > MinTRL; NOT a home-grown threshold",
+  "positiveControlGO": true,
+  "flips": 1,
+  "fixtures": [
+    {
+      "name": "positive-control (low-autocorr, genuine signal, n=400)",
+      "n": 400,
+      "psrNaive": 0.9994512235974634,
+      "psrCorrected": 0.994435891046952,
+      "nEff": 242.32560378647685,
+      "tauInt": 1.6506716325050679,
+      "naiveWouldPass": true,
+      "strictVerdict": "GO",
+      "flipped": false,
+      "note": "a synthetic series with real, near-white signal — the RP-2 positive control; it MUST clear the strict bar → GO"
+    },
+    {
+      "name": "ar1-persistent (ρ=0.95, n=1600)",
+      "n": 1600,
+      "psrNaive": 0.9999980858982556,
+      "psrCorrected": 0.7773924151804721,
+      "nEff": 44.64677478739719,
+      "tauInt": 35.836855128259906,
+      "naiveWouldPass": true,
+      "strictVerdict": "INSUFFICIENT",
+      "flipped": true,
+      "note": "the clone-stable autocorrelated demonstration — naive √(n−1) says near-certain; the strict √(N_eff−1) deflates below the bar → INSUFFICIENT (the overstatement made concrete)"
+    },
+    {
+      "name": "near-white-weak (low Sharpe, n=300)",
+      "n": 300,
+      "psrNaive": 0.902723222862909,
+      "psrCorrected": 0.902723222862909,
+      "nEff": 300,
+      "tauInt": 1,
+      "naiveWouldPass": false,
+      "strictVerdict": "INSUFFICIENT",
+      "flipped": false,
+      "note": "a genuinely weak edge — neither naive nor strict passes; INSUFFICIENT both ways (no flip)"
+    }
+  ],
+  "note": "the strict bar re-grades the fixtures: 1 flip(s) GO→INSUFFICIENT (the generosity made concrete — naive √(n−1) would have passed them; the strict √(N_eff−1) does not), and the synthetic positive control CLEARS the bar → GO (RP-2: the machinery can say BOTH GO and INSUFFICIENT). The frozen Stamp is byte-identical (the strict bar composes beside it); the mass-path bundle 9c1e7bd8 is byte-identical (the Stamp is off it, F-1); this record versions the strict bar's OWN change."
+}

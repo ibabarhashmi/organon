@@ -21,6 +21,10 @@ import { Consistency } from "./consistency"
 import { Continuity } from "./continuity"
 import { Capability } from "./capability"
 import { Capture } from "../strategy/capture"
+import { D33 } from "../backtest/crosscheck"
+import { Contagion } from "../strategy/contagion"
+import { Backfill } from "../plane/backfill"
+import { Delegation } from "./delegation"
 
 export namespace Rollup {
   export interface RunMeasured {
@@ -71,6 +75,7 @@ export namespace Rollup {
       laws: v("laws"),
       newProductCapability: v("newProductCapability"),
       verifyOnClone: v("verifyOnClone"),
+      reckoning: reckoningSection(),
     }
   }
 
@@ -186,6 +191,31 @@ export namespace Rollup {
       laws: v("laws"),
       newProductCapability: v("newProductCapability"),
       verifyOnClone: v("verifyOnClone"),
+      reckoning: reckoningSection(),
+    }
+  }
+
+  // ── RECKONING V44 — the pen's reckoning + the moat's third stone, rendered in the marker (strings/booleans; the numeric
+  // leaves are exempt via MARKER_EXEMPT `^reckoning\.` — verdict-state + per-manifest facts, derived this run, NOT cross-sprint
+  // countables). The operatorSigned:false flags are what the LN5 mechanization (S192/Ln5.verify) scans — a seeded true REFUSES. ──
+  export function reckoningSection(): Record<string, unknown> {
+    const d33 = D33.verdict()
+    const two = Continuity.reconcileAll().results.find((r) => r.key === "census")?.twoIdentity ?? null
+    const arch = Capture.ownArchive()
+    return {
+      d33Verdict: {
+        implementation: d33.implementation, // SOUND
+        application: d33.application, // SIGNABLE (N_eff enforced)
+        riderEnforced: d33.riderEnforced, // the N_eff correction is the enforced default (bites on autocorrelated input)
+        recommendedForSignature: d33.recommendedForSignature,
+        operatorSigned: d33.operatorSigned, // false — LN5 (a seeded true REFUSES via S192)
+      },
+      accountabilitySplit: d33.accountabilitySplit, // RP-4 — agent: the math verdict; Operator: the decision to rely on it
+      censusTwoIdentities: { conservation: two?.conservation.sumsToZero ?? null, growth: two?.growth.reconciles ?? null }, // S190
+      contagionGuardComplete: Contagion.mutationRate().complete, // S196 — the dedicated advisory guard is complete
+      backfill: { rateSpace: Backfill.rateSpaceVerdict().ok, judgeableTier: arch.judgeableTier }, // S194/S195
+      delegation: { D87: "AGENT-RATIFIED", D88: "AGENT-RATIFIED", D89: "AGENT-RATIFIED", operatorSigned: false }, // S197 — ratified, not signed
+      bundle: "9c1e7bd8 byte-identical — the strict bar + N_eff land in the opt-in Stamp (off the mass path, outside the deterministic bundle); the Stamp's own verdict change is versioned in stamp-strict-record.json (F-1 ground truth, RP-1's scoped diff manifest)",
     }
   }
 

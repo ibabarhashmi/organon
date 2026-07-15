@@ -87,7 +87,7 @@ export namespace State {
     // heads (variant D80–D83, provenance D84–D86), each RESERVED and Operator-signed=false (LN5). A pinned deviation absent
     // from deviationStates FAILS S174 — the state list can no longer under-enumerate what the gate presents.
     const seen = new Set(out.map((d) => d.id))
-    for (const f of ["variant-pins.json", "provenance-pins.json", "backfill-pins.json"]) {
+    for (const f of ["variant-pins.json", "provenance-pins.json", "backfill-pins.json", "reckoning-pins.json"]) {
       const p = tryRead(f)
       const devs = p?.deviations as Record<string, unknown> | undefined
       if (!devs) continue

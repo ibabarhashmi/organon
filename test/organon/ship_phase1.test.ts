@@ -26,6 +26,13 @@ import { Consistency } from "../../src/organon/consistency"
 import { State } from "../../src/organon/state"
 import { Continuity } from "../../src/organon/continuity"
 import { Capability } from "../../src/organon/capability"
+import { HistoricalAct } from "../../src/organon/historical"
+import { Ln5 } from "../../src/organon/ln5"
+import { Delegation } from "../../src/organon/delegation"
+import { Strict } from "../../src/studio/strict"
+import { Backfill } from "../../src/plane/backfill"
+import { Capture } from "../../src/strategy/capture"
+import { Contagion } from "../../src/strategy/contagion"
 
 const TERMINAL = "abc1234def5678000000000000000000000000ff"
 
@@ -76,13 +83,22 @@ function goodArtifacts(): Ship.Artifacts {
     continuity: Continuity.check(), // S181 — every countable reconciled + marker-diff clean
     searchHashStable: { ok: true, detail: "stable (test)" }, // S182 — the historical-act hash is stable
     capabilityIsolation: Capability.verdictIsolation(), // S183 — the capability→verdict fence holds
+    // RECKONING V44 (S190–S197) — the pen's reckoning + the moat's third stone, honest so the walls run under the reckoning gate.
+    censusTwoIdentity: Continuity.reconcileAll().results.find((r) => r.key === "census")?.twoIdentity ?? null, // S190
+    historicalRebasing: HistoricalAct.rebasingVerdict(), // S191
+    ln5: Ln5.verify(goodMarker()), // S192 — the marker is operatorSigned-clean
+    strictBar: (() => { const r = Strict.strictRecord(); return { positiveControlGO: r.positiveControlGO, flips: r.flips } })(), // S193
+    rateSpace: Backfill.rateSpaceVerdict(), // S194
+    judgeableReconciled: Capture.judgeableReconciled(), // S195
+    contagion: (() => { const r = Contagion.mutationRate(); return { complete: r.complete, detail: r.note } })(), // S196
+    delegation: Delegation.verdict(), // S197
   }
 }
 
 test("S151 (W-SH01) — Ship.gate PASSES on clean real-shaped artifacts; Ship.emit writes the LOG only then", () => {
   const g = Ship.gate(goodArtifacts())
   expect(g.pass).toBe(true)
-  expect(g.checks.length).toBe(16) // S152–S156 + S161 + S169–S174 (V42 identity gate) + S180–S183 (V43 continuity-total), all ✓
+  expect(g.checks.length).toBe(24) // S152–S156 + S161 + S169–S174 (V42 identity gate) + S180–S183 (V43 continuity-total), all ✓
   const e = Ship.emit("FULL BUILD LOG CONTENT", goodArtifacts(), "2026-07-15")
   expect(e.wrote).toBe("log")
   if (e.wrote === "log") expect(e.content).toBe("FULL BUILD LOG CONTENT")
@@ -177,6 +193,7 @@ test("S156 (W-SH06) — the continuity ledger EXPLAINS the 1706→1738 gap (MR19
   expect(terminals).toContain(1793) // V39's terminal — what V40's baseline.prevFullPass equalled
   expect(terminals).toContain(1844) // V40's terminal — what V41's baseline.prevFullPass equalled
   expect(terminals).toContain(1892) // V41's terminal
-  expect(terminals[terminals.length - 1]).toBe(1941) // BACKFILL V43: V42's terminal appended — what V43's baseline.prevFullPass must equal
+  expect(terminals).toContain(1941) // V42's terminal — what V43's baseline.prevFullPass equalled
+  expect(terminals[terminals.length - 1]).toBe(1991) // RECKONING V44: V43's terminal appended — what V44's baseline.prevFullPass must equal
   expect(ledger.mr19).toMatch(/1706→1738|Surrogate Addendum/)
 })

@@ -17,21 +17,23 @@ const H = path.join(PKG_ROOT, "data", "honesty")
 const PINS = JSON.parse(readFileSync(path.join(H, "backfill-pins.json"), "utf8"))
 const sha256 = (b: string) => createHash("sha256").update(b).digest("hex")
 
-test("BACKFILL Phase 0 — the pins file is SELF-CONSISTENT (S169 carried): sha256(content minus pinsSha) === pinsSha", () => {
+test("BACKFILL Phase 0 — the pins file stays SELF-CONSISTENT (S169 carried): sha256(content minus pinsSha) === pinsSha (a frozen historical head)", () => {
   const { pinsSha, ...rest } = PINS
   expect(sha256(JSON.stringify(rest))).toBe(pinsSha)
-  // and Pins.selfHash agrees via the HEAD_FILE pointer (two independent paths)
-  const sh = Pins.selfHash()
+  // backfill-pins is a FROZEN historical head — its OWN self-hash stays valid (history does not drift), even though HEAD advanced
+  const sh = Pins.selfHash("backfill-pins.json")
   expect(sh.file).toBe("backfill-pins.json")
   expect(sh.matches).toBe(true)
   expect(sh.recomputed).toBe(pinsSha)
 })
 
-test("BACKFILL Phase 0 — HEAD_FILE is backfill-pins.json and it is the CHAIN TIP (nothing carries from it — the M-1 recurrence guard)", () => {
-  expect(Pins.HEAD_FILE).toBe("backfill-pins.json")
-  const tip = Pins.headIsChainTip()
-  expect(tip.tip).toBe(true)
-  expect(tip.supersededBy).toBeNull()
+test("BACKFILL Phase 0 — backfill-pins is now SUPERSEDED by reckoning-pins (V44): HEAD_FILE advanced, and the chain-tip guard BITES (the M-1 recurrence, caught)", () => {
+  // V44 advanced the head — HEAD_FILE is reckoning-pins.json now (the arc moved one link forward)
+  expect(Pins.HEAD_FILE).toBe("reckoning-pins.json")
+  // backfill-pins is NO LONGER the tip — reckoning-pins carries from it (the chain-tip guard proves the supersession is real)
+  const tip = Pins.headIsChainTip("backfill-pins.json")
+  expect(tip.tip).toBe(false)
+  expect(tip.supersededBy).toBe("reckoning-pins.json")
 })
 
 test("BACKFILL Phase 0 — carries the TRUE Provenance head (04c606dd), READ FROM DISK, and the guard asserts Provenance carries Variant", () => {

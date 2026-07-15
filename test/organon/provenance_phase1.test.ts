@@ -20,6 +20,13 @@ import { Ship } from "../../src/organon/ship"
 import { Pins } from "../../src/organon/pins"
 import { Continuity } from "../../src/organon/continuity"
 import { Capability } from "../../src/organon/capability"
+import { HistoricalAct } from "../../src/organon/historical"
+import { Ln5 } from "../../src/organon/ln5"
+import { Delegation } from "../../src/organon/delegation"
+import { Strict } from "../../src/studio/strict"
+import { Backfill } from "../../src/plane/backfill"
+import { Capture } from "../../src/strategy/capture"
+import { Contagion } from "../../src/strategy/contagion"
 import { Freshness } from "../../src/organon/freshness"
 import { Consistency } from "../../src/organon/consistency"
 import { Rollup } from "../../src/organon/rollup"
@@ -54,6 +61,13 @@ function artifacts(over: Partial<Ship.Artifacts> = {}): Ship.Artifacts {
     // BACKFILL V43 (S180–S183) — the continuity-total artifacts, honest, so the V42 identity walls run under the V43 gate.
     verifyDomainsStated: true, continuity: Continuity.check(),
     searchHashStable: { ok: true, detail: "stable (test)" }, capabilityIsolation: Capability.verdictIsolation(),
+    // RECKONING V44 (S190–S197)
+    censusTwoIdentity: Continuity.reconcileAll().results.find((r) => r.key === "census")?.twoIdentity ?? null,
+    historicalRebasing: HistoricalAct.rebasingVerdict(), ln5: Ln5.verify({}),
+    strictBar: (() => { const r = Strict.strictRecord(); return { positiveControlGO: r.positiveControlGO, flips: r.flips } })(),
+    rateSpace: Backfill.rateSpaceVerdict(), judgeableReconciled: Capture.judgeableReconciled(),
+    contagion: (() => { const r = Contagion.mutationRate(); return { complete: r.complete, detail: r.note } })(),
+    delegation: Delegation.verdict(),
   }
   return { ...base, ...over }
 }

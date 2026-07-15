@@ -32,6 +32,12 @@ import { Claim } from "./claim"
 import { Continuity } from "./continuity"
 import { HistoricalAct } from "./historical"
 import { Capability } from "./capability"
+import { Ln5 } from "./ln5"
+import { Delegation } from "./delegation"
+import { Backfill } from "../plane/backfill"
+import { Capture } from "../strategy/capture"
+import { Strict } from "../studio/strict"
+import { Contagion } from "../strategy/contagion"
 
 export namespace Ship {
   // ── BATTERY CONTINUITY (S156, K-7) — the cross-boundary check the within-sprint reconciliation never made ──
@@ -90,6 +96,15 @@ export namespace Ship {
     continuity: Continuity.Verdict // S181 — the continuity-total check (every countable reconciled + marker-diff clean)
     searchHashStable: HistoricalAct.Verdict // S182 — the D56 SEARCH's rendered hash is stable-or-carried
     capabilityIsolation: Capability.Isolation // S183 — the capability→verdict import fence
+    // RECKONING V44 (S190–S197) — the pen's reckoning + the moat's third stone, checked against the SHIPPED artifacts.
+    censusTwoIdentity: Continuity.CensusTwoIdentity | null // S190 — the census reconciles as CONSERVATION + GROWTH (two identities)
+    historicalRebasing: HistoricalAct.Verdict // S191 — the redesignSearchHash re-basing is tagged + stable V44→V45
+    ln5: Ln5.Verdict // S192 — the marker is LN5-clean (operatorSigned false everywhere; a seeded agent signature REFUSES)
+    strictBar: { positiveControlGO: boolean; flips: number } // S193 — the strict Stamp can say BOTH GO and INSUFFICIENT
+    rateSpace: Backfill.RateSpaceVerdict // S194 — every backfilled observable states its rate-space membership
+    judgeableReconciled: { ok: boolean; detail: string } // S195 — the own-leg judgeable agrees with its tier cap
+    contagion: { complete: boolean; detail: string } // S196 — the contagion surface's dedicated advisory guard is complete
+    delegation: Delegation.Verdict // S197 — D87/D88/D89 AGENT-RATIFIED, operatorSigned:false (LN5 mechanized)
   }
 
   export type Refusal = { wall: string; artifact: string; value: string }
@@ -196,6 +211,42 @@ export namespace Ship {
     if (!a.capabilityIsolation.isolated) return fail("S183", "the capability→verdict fence", `${a.capabilityIsolation.detail} — a capture must move no verdict, asserted structurally not implied by 9c1e7bd8 (N-4): ${a.capabilityIsolation.violations[0]}`)
     checks.push({ wall: "S183", artifact: "the capability→verdict fence", ok: true, detail: a.capabilityIsolation.detail })
 
+    // ── RECKONING V44 (S190–S197) — the pen's reckoning, V43's residues closed, and the moat's third stone, against the SHIPPED
+    // artifacts. S192 is the CRITICAL LN5 mechanization: the marker must be operatorSigned-clean, and a seeded agent flip REFUSES.
+    // S190 (O-1, W-RK01) — the census reconciles as CONSERVATION (transfers net to zero) + GROWTH (new walls change the total).
+    if (!a.censusTwoIdentity || !a.censusTwoIdentity.reconciles) return fail("S190", "the census two identities", `the census does NOT reconcile as conservation + growth — ${a.censusTwoIdentity?.contradiction ?? "no census reconciliation produced"} (O-1: a transfer summed with an addition in one identity)`)
+    checks.push({ wall: "S190", artifact: "the census two identities", ok: true, detail: a.censusTwoIdentity.display })
+
+    // S191 (O-2, W-RK02) — the redesignSearchHash re-basing is tagged {from,to,scheme,at:V44} and stable V44→V45.
+    if (!a.historicalRebasing.ok) return fail("S191", "the historical-hash re-basing", `${(a.historicalRebasing as { reason: string }).reason} (O-2 — the cure's inaugural transition must be tagged, not untagged like the drift it cured)`)
+    checks.push({ wall: "S191", artifact: "the historical-hash re-basing", ok: true, detail: (a.historicalRebasing as { detail: string }).detail })
+
+    // S192 (the D33 ruling, W-RK03) — THE LN5 MECHANIZATION: the marker is operatorSigned-clean. A seeded agent flip REFUSES the
+    // log — the agent audits, decides, recommends, and CANNOT emit a signed bit, whatever an instruction said (the gravest Halt).
+    if (!a.ln5.ok) return fail("S192", "the LN5 signature fence", `${(a.ln5 as { reason: string }).reason}`)
+    checks.push({ wall: "S192", artifact: "the LN5 signature fence", ok: true, detail: (a.ln5 as { detail: string }).detail })
+
+    // S193 (D27, W-RK04) — the strict Stamp is proven capable of BOTH GO (the synthetic positive control) and INSUFFICIENT (the
+    // fixtures re-graded). A Stamp that can only ever say INSUFFICIENT (no positive control) is not a Stamp (RP-2).
+    if (!a.strictBar.positiveControlGO) return fail("S193", "the strict Stamp positive control", `the strict Stamp's synthetic positive control did NOT clear the bar → GO — the machinery cannot say GO, only INSUFFICIENT (RP-2: a check that cannot pass is not a check)`)
+    checks.push({ wall: "S193", artifact: "the strict Stamp positive control", ok: true, detail: `the strict Stamp says BOTH — positive control → GO, ${a.strictBar.flips} fixture flip(s) GO→INSUFFICIENT (the literature's bar; INSUFFICIENT is first-class)` })
+
+    // S194 (O-3, W-RK05) — every backfilled observable states its rate-space membership; a price-as-rate FAILS.
+    if (!a.rateSpace.ok) return fail("S194", "the rate-space membership", `${(a.rateSpace as { reason: string }).reason}`)
+    checks.push({ wall: "S194", artifact: "the rate-space membership", ok: true, detail: (a.rateSpace as { detail: string }).detail })
+
+    // S195 (O-4, W-RK06) — the own-leg judgeable agrees with its tier cap (predominantly third-party → JUDGEABLE-WITH-CAVEAT).
+    if (!a.judgeableReconciled.ok) return fail("S195", "the judgeable tier", `${a.judgeableReconciled.detail}`)
+    checks.push({ wall: "S195", artifact: "the judgeable tier", ok: true, detail: a.judgeableReconciled.detail })
+
+    // S196 (D90, W-RK08) — the contagion surface's dedicated advisory guard is COMPLETE (every seeded advisory phrasing caught).
+    if (!a.contagion.complete) return fail("S196", "the contagion advisory guard", `the contagion surface's dedicated guard is NOT complete — ${a.contagion.detail} (a seeded advisory phrasing escaped; the score must be a count, never counsel)`)
+    checks.push({ wall: "S196", artifact: "the contagion advisory guard", ok: true, detail: a.contagion.detail })
+
+    // S197 (DD-93, W-RK07) — D87/D88/D89 are AGENT-RATIFIED with operatorSigned:false; a seeded agent signature REFUSES (LN5).
+    if (!a.delegation.ok) return fail("S197", "the delegation ratification", `${(a.delegation as { reason: string }).reason}`)
+    checks.push({ wall: "S197", artifact: "the delegation ratification", ok: true, detail: (a.delegation as { detail: string }).detail })
+
     return { pass: true, checks }
   }
 
@@ -232,6 +283,15 @@ export namespace Ship {
       continuity: Continuity.checkWithMarker(marker), // S181 — every countable reconciled + snapshot diff + RAW-marker leaf coverage (red-team hardening)
       searchHashStable: searchHashVerdict(), // S182 — the D56 SEARCH's rendered hash is stable-or-carried
       capabilityIsolation: Capability.verdictIsolation(), // S183 — the capability→verdict import fence
+      // RECKONING V44 (S190–S197) — the pen's reckoning, from the live producers + the REAL marker.
+      censusTwoIdentity: Continuity.reconcileAll().results.find((r) => r.key === "census")?.twoIdentity ?? null, // S190
+      historicalRebasing: HistoricalAct.rebasingVerdict(), // S191 — the re-basing tag + stability V44→V45
+      ln5: Ln5.verify(marker), // S192 — the marker is operatorSigned-clean (a seeded agent flip REFUSES) — the CRITICAL positive control
+      strictBar: (() => { const r = Strict.strictRecord(); return { positiveControlGO: r.positiveControlGO, flips: r.flips } })(), // S193
+      rateSpace: Backfill.rateSpaceVerdict(), // S194 — every backfilled observable states its rate-space membership
+      judgeableReconciled: Capture.judgeableReconciled(), // S195 — the own-leg judgeable agrees with its tier cap
+      contagion: (() => { const r = Contagion.mutationRate(); return { complete: r.complete, detail: r.note } })(), // S196 — the dedicated advisory guard is complete
+      delegation: Delegation.verdict(), // S197 — D87/D88/D89 AGENT-RATIFIED, operatorSigned:false (LN5 mechanized)
     }
   }
 

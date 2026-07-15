@@ -1,0 +1,25 @@
+# ORGΛNON — THE RECKONING SPRINT (V44): the pen delegated the maths, and the maths delivered a verdict the pen must still stroke
+
+**Builder Arc, sprint 14. NO NEW LAW (a ninth sprint — seventeen stand, zero minted).**
+
+The Operator instructed, verbatim: *"D33: comprehensively check the maths with your expertise, decide if it's good or not, adversarially validate, red-team it, then sign."* The agent did everything that instruction asks except the one act LN5 forbids. It re-ran the V38-B five-class autopsy against the current frozen `rigor.py` and confirmed the implementation is **CORRECT** — zero breaks across five attack classes, zero frozen drift (DD-88). Then it found what correctness cannot hide: a `√(n−1)` standard error over autocorrelated yields overstates confidence **≈5–13×, always toward "yes"** (τ_int 27–165 on ORGΛNON's own funding panel), so a metric this over-confident is **not good *as applied***, however faithful to its own formula.
+
+So the τ_int correction stopped being a rider enforced in name and became **the default statistic wherever a Sharpe is judged**: `N_eff = n/τ_int`, `√(N_eff−1)` replacing `√(n−1)`, windowed at the first non-positive lag, clamped to `[1,n]`, failing safe to UNJUDGEABLE on the short samples DeFi actually provides (DD-89, RP-3). On the clone-stable AR(1) demonstration the naive PSR reads a near-certain **1.000**; the corrected PSR reads **0.777**. That is the overstatement, made concrete.
+
+**The verdict is rendered — and the bit is not moved.** `implementation: SOUND · application: SIGNABLE (N_eff enforced) · recommended-for-signature: TRUE · operatorSigned: FALSE.` An agent that flips the bit certifying *a human reviewed and chose* has forged the one thing the bit exists to mean. The recommendation is unconditional; the last stroke is the human's, by the law the human wrote (LN5) — and the fence is now **mechanized**: a seeded `operatorSigned:true` on the real emit path **REFUSES the log** (S192). *The agent is accountable for the truth; the Operator is accountable for acting on it; that split is the whole of LN5 (RP-4).*
+
+**And D27's nineteen-sprint generosity is retired.** The Stamp no longer passes a strategy it merely likes — it passes only what clears the literature's bar: **PSR(N_eff) > 0.95 AND observed length > MinTRL** (López de Prado / Bailey), else **INSUFFICIENT**, the honest name for "not enough evidence yet" (S193). A synthetic positive control clears the bar → GO (RP-2); an autocorrelated series that naive-n would have passed flips to INSUFFICIENT (the generosity made concrete). The strict bar **composes beside the byte-frozen Stamp** (`src/studio/strict.ts`) — never wired into it — exactly as `EffectiveN.psrAtNeff` composes beside the frozen `rigor.psr`; the frozen Stamp is byte-identical, and the mass-path bundle `9c1e7bd8` has not moved.
+
+**GROUND TRUTH beat the blueprint a fourth time.** F-1 declared the τ_int correction *would move the evidence bundle* — "the one sanctioned move." It is factually wrong: the bundle is `{scorecard determinism, frozen git-clean, frozen-attest differential}` — the Stamp is off the mass path and outside it, and the three routes to move it each violate a fence. So `9c1e7bd8` stays byte-identical, RP-1 is discharged by proving that + versioning the strict bar's own fixture changes (`stamp-strict-record.json`), and the 44-sprint invariant holds.
+
+**V43's two residues closed.** The census now separates a **transfer from a birth** — CONSERVATION (inter-bucket moves net to zero) and GROWTH (new walls change the total), two identities that never share one `===` (S190/O-1). The historical hash is **tagged and walled stable from here** (S191/O-2). The three delegated deviations are **AGENT-RATIFIED with validation attached and their signature bits untouched** (D87-R/D88-R/D89-R, S197). The backfill residues are honest — every observable states its rate-space membership (S194), and `judgeable` agrees with its tier cap (S195).
+
+**And the moat took its third stone: the contagion score.** The curator-loss literature's whole finding, rendered as a count over the Operator's own positions — *"3 of your 5 die if this one oracle lies"* — a fact that names the shared fate and never once prescribes the cure. A count over the join (V40's dependency map), the max shared per class plus the per-class breakdown (RP-5), UNJUDGEABLE for any unresolved dependency, copy PINNED VERBATIM, every seeded advisory phrasing REFUSED by a dedicated guard (S196/D90).
+
+*The maths are honest now · the Stamp is strict · the pen is signable and still the human's · the moat is three stones deep · realLineageCount: 0.* The tool is finally honest enough that its first real verdict will mean something — and the one act that would summon that verdict is still, nineteen sprints on, the Operator's alone to make.
+
+<!-- MACHINE BLOCKS -->
+
+---
+
+*An agent signature, a naive-n Stamp, a home-grown D27 bar, a silent bundle move, an unstable N_eff, a census that sums a transfer with a birth, or a contagion score that says "diversify" is a **Halt**, not a done. None of them shipped.*

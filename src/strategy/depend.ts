@@ -92,6 +92,35 @@ export namespace Depend {
     shelfWideOracleCoverage: string
   }
 
+  // ── RECKONING V44 (DD-92, RP-5) — THE PER-CLASS GROUP BREAKDOWN. The contagion score's SHAPE: for each dependency class,
+  // EVERY shared group of size ≥ 2 (not just the largest), so the breakdown resists collapse into a single scalar (RP-5: a
+  // scalar contagion score is a ranking waiting to happen; the breakdown is a count). This exposes Depend's grouping for the
+  // Contagion.score layer; it ranks nothing, suggests nothing. ──
+  export interface Group { value: string; count: number }
+  export interface ClassBreakdown { key: "underlying" | "adminKey" | "oracle"; groups: Group[]; maxShared: number; maxValue: string | null; resolved: number; total: number; unjudgeable: number }
+  function allGroups(values: (string | null)[]): Group[] {
+    const g = new Map<string, number>()
+    for (const v of values) if (v) g.set(v, (g.get(v) ?? 0) + 1)
+    return [...g.entries()].filter(([, c]) => c >= 2).map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count || a.value.localeCompare(b.value))
+  }
+  function classBreakdown(key: ClassBreakdown["key"], values: (string | null)[], m: number): ClassBreakdown {
+    const groups = allGroups(values)
+    const resolved = values.filter((v) => v !== null).length
+    const top = groups[0]
+    return { key, groups, maxShared: top?.count ?? 0, maxValue: top?.value ?? null, resolved, total: m, unjudgeable: m - resolved }
+  }
+  // Depend.groups(subjectKeys) — the per-class breakdown for the contagion score (RP-5). Every shared group per class.
+  export function groups(subjectKeys: string[]): { positions: number; underlying: ClassBreakdown; adminKey: ClassBreakdown; oracle: ClassBreakdown } {
+    const { resolved } = resolve(subjectKeys)
+    const m = resolved.length
+    return {
+      positions: m,
+      underlying: classBreakdown("underlying", resolved.map((r) => r.underlying), m),
+      adminKey: classBreakdown("adminKey", resolved.map((r) => r.adminAuthority), m),
+      oracle: classBreakdown("oracle", resolved.map((r) => r.oracleFeed), m),
+    }
+  }
+
   // group the resolved positions by a key's value; the largest group of size ≥ 2 is the "definitely share" claim.
   function largestGroup(values: (string | null)[]): { count: number; value: string | null } {
     const groups = new Map<string, number>()

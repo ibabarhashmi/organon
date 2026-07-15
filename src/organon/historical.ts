@@ -60,4 +60,25 @@ export namespace HistoricalAct {
   export function verifyFile(name: string, rendered: string, carried?: { from: string; why: string }): Verdict {
     return stableOrCarried(rendered, hashFile(name), carried)
   }
+
+  // ── RECKONING V44 (O-2, S191) — THE RE-BASING TAG. V43's S182 cure switched the rendered redesignSearchHash from the chain's
+  // position-dependent selfSha (d5147f8d) to the immutable-core hash (7d63b5e2) — the RIGHT fix, but its OWN inaugural
+  // transition shipped UNTAGGED, looking identical to the drift it cured (the cure's first transition looks like the disease).
+  // S191 tags that re-basing {from, to, scheme, at} and asserts the immutable-core hash is now STABLE from V44 forward. ──
+  export interface Rebasing { from: string; to: string; scheme: string; at: string; why: string; currentHash: string; stable: boolean }
+  export function rebasing(): Rebasing | null {
+    let rec: { rebased?: { from: string; to: string; scheme: string; at: string; why: string }; actFile?: string }
+    try { rec = JSON.parse(readFileSync(path.join(H, "historical-hash-rebasing.json"), "utf8")) } catch { return null }
+    if (!rec.rebased) return null
+    const current = hashFile(rec.actFile ?? "test-redesign-search.json")
+    return { ...rec.rebased, currentHash: current, stable: current === rec.rebased.to }
+  }
+  // S191 — the re-basing is tagged (from/to/scheme/at) AND the current immutable-core hash equals the tagged `to` (stable
+  // V44→V45). An untagged re-basing (no artifact), or a `to` that no longer matches the recomputed hash (a fresh drift), FAILS.
+  export function rebasingVerdict(): Verdict {
+    const r = rebasing()
+    if (!r) return { ok: false, reason: `the historical-hash re-basing is NOT tagged — O-2 requires the d5147f8d→7d63b5e2 immutable-core transition to be recorded {from, to, scheme, at:V44} (an untagged re-basing looks identical to the drift it cured, S191)` }
+    if (!r.stable) return { ok: false, reason: `the re-basing's tagged 'to' ${r.to.slice(0, 12)}… ≠ the recomputed immutable-core hash ${r.currentHash.slice(0, 12)}… — the redesignSearchHash drifted AGAIN after the tag (S191 asserts stability V44→V45)` }
+    return { ok: true, detail: `the re-basing is tagged {from:${r.from.slice(0, 8)}, to:${r.to.slice(0, 8)}, scheme:${r.scheme}, at:${r.at}} and the immutable-core hash is stable V44→V45 (current ${r.currentHash.slice(0, 12)}… === to) — the cure's inaugural transition is no longer untagged (S191/O-2)` }
+  }
 }

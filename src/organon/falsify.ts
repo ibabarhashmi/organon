@@ -23,7 +23,7 @@ import { PKG_ROOT } from "./frozen"
 
 export namespace Falsify {
   export const WALL_MIN = 1
-  export const WALL_MAX = 190 // Backfill Sprint V43: bumped 180→190 for the S180–S189 band (continuity-total S180–S183 + the on-chain backfill engine S184–S186 + the tier ladder / own-leg S187–S189; consciously admitted); a test referencing S(>MAX) is an ORPHAN (RP-6 living wall)
+  export const WALL_MAX = 198 // Reckoning Sprint V44: bumped 190→198 for the S190–S197 band (census two-identity S190 + hash re-basing S191 + D33 maths/N_eff S192 + strict bar S193 + backfill residues S194–S195 + contagion S196 + delegation S197); a test referencing S(>MAX) is an ORPHAN (RP-6 living wall)
 
   export type Bucket = "DEMONSTRATED" | "WEAK" | "EXEMPT" | "ORIGIN_UNRECORDED"
   // Derivation V36 (S104/DD-20): the census gets a TREATMENT. An ORIGIN_UNRECORDED wall is processed via one route, in

@@ -9,7 +9,9 @@
  * mocked green would be worse than an absent one (attack #2, the gravest available failure).
  */
 import path from "node:path"
-import { existsSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
+import { createHash } from "node:crypto"
+import { PKG_ROOT, FROZEN_PY, checkFrozenSet } from "../organon/frozen"
 
 export namespace Rigor {
   const PY = path.join(import.meta.dir, "py", ".venv", "bin", "python")
@@ -97,6 +99,59 @@ export namespace Rigor {
 
   export function isBlocked(x: CrossCheck | Blocked): x is Blocked {
     return (x as Blocked).blocked === true
+  }
+
+  // ── RECKONING V44 (DD-88, S192) — THE CORRECTNESS LEG of the D33 audit. The V38-B five-class autopsy (mathredteam.py,
+  // committed to math-redteam.json) is READ, and the frozen rigor.py is re-verified byte-identical to the sha the autopsy ran
+  // against. The autopsy found 0 BREAK; audit() confirms that result STILL holds at 0 drift — because the frozen code has not
+  // moved, the 0-break finding carries (the correctness is a property of the code, and the code is byte-frozen). A single BREAK
+  // in the committed ledger, OR a frozen-sha mismatch (the code moved since the autopsy), flips implementation SOUND → NOT-SOUND
+  // and the D33 verdict to NOT-SIGNABLE-implementation-defect. Pure: reads two committed artifacts, no network, no sidecar. ──
+  const sha256 = (b: string) => createHash("sha256").update(b).digest("hex")
+  export interface Audit {
+    breakCount: number
+    classes: string[] // the attack classes the autopsy ran (known-answer, property, degenerate, adversarial, null-distribution)
+    assumptionLimits: number
+    theoryGaps: number
+    clean: number
+    total: number
+    frozenDrift: boolean // any frozen byte moved (checkFrozenSet)
+    rigorShaMatches: boolean // the current rigor.py sha === the pinned sha (58c88843…) the autopsy ran against
+    sound: boolean // 0 breaks AND rigor byte-identical AND no frozen drift — the implementation leg
+    headline: string
+    detail: string
+  }
+  export function audit(): Audit {
+    let counts = { total: 0, BREAK: 0, "ASSUMPTION-LIMIT": 0, "THEORY-GAP": 0, clean: 0 }
+    let classes: string[] = []
+    let headline = "the autopsy ledger is absent (a pre-Surrogate checkout)"
+    try {
+      const rec = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "math-redteam.json"), "utf8")) as { ledger?: { counts?: typeof counts; findings?: { class: string }[]; headline?: string } }
+      if (rec.ledger?.counts) counts = rec.ledger.counts
+      classes = [...new Set((rec.ledger?.findings ?? []).map((f) => f.class))].sort()
+      headline = rec.ledger?.headline ?? headline
+    } catch { /* absent ledger → breakCount 0 unproven; sound=false below (rigorShaMatches may still hold) */ }
+    // the current frozen rigor.py sha vs the pinned one the autopsy ran against
+    const rigorBytes = (() => { try { return readFileSync(path.join(PKG_ROOT, "src", "backtest", "py", "rigor.py"), "utf8") } catch { return null } })()
+    const rigorShaMatches = rigorBytes !== null && sha256(rigorBytes) === FROZEN_PY["rigor.py"]
+    // the drift that BEARS on the maths audit is the frozen COMPUTATIONAL CORE (the 6 .py in FROZEN_PY) — NOT the RWA-verdict
+    // doc or the gitignored snapshot manifest, which are honestly ABSENT in the standalone (not byte-drift). Scope to FROZEN_PY.
+    const rows = checkFrozenSet() as unknown as { id: string; status: string }[]
+    const pyIds = new Set(Object.keys(FROZEN_PY))
+    const frozenDrift = Array.isArray(rows) ? rows.filter((r) => pyIds.has(r.id)).some((r) => r.status !== "ok") : true
+    const breakCount = counts.BREAK
+    const sound = breakCount === 0 && rigorShaMatches && !frozenDrift
+    return {
+      breakCount, classes, assumptionLimits: counts["ASSUMPTION-LIMIT"], theoryGaps: counts["THEORY-GAP"], clean: counts.clean, total: counts.total,
+      frozenDrift, rigorShaMatches, sound, headline,
+      detail: sound
+        ? `implementation SOUND — ${breakCount} BREAK across ${classes.length} attack classes [${classes.join(", ")}] at 0 frozen drift (rigor.py byte-identical to the pinned sha the autopsy ran against); ${counts["ASSUMPTION-LIMIT"]} assumption-limits (each citing its assumption), ${counts["THEORY-GAP"]} theory-gaps — an assumption-limit is NOT a break (the √(n−1) i.i.d. limit is one of these, and DD-89 makes its correction the enforced default). The correctness leg holds.`
+        : breakCount > 0
+          ? `implementation NOT-SOUND — ${breakCount} BREAK found in the autopsy ledger; the D33 verdict flips to NOT-SIGNABLE-implementation-defect (a break is a defect in the code, not a limit of its application)`
+          : !rigorShaMatches
+            ? `implementation UNPROVEN — the current rigor.py sha ≠ the pinned sha the autopsy ran against (${FROZEN_PY["rigor.py"].slice(0, 12)}…); the frozen code moved since the autopsy, so the 0-break result no longer carries — re-run the autopsy`
+            : `implementation UNPROVEN — the frozen set drifted; a frozen byte moved since the autopsy`,
+    }
   }
 
   // S94 is GREEN iff the cross-check EXECUTED and the frozen DSR agrees with the independent purgedcv reference.

@@ -38,16 +38,39 @@ export namespace Backfill {
     key: string; feedAddress: string; description: string
     observableType: ObservableType; decimals: number; tier: "REAL-DERIVED"
     pinnedCodeHash?: string
+    // RECKONING V44 (O-3, S194) — the EXPLICIT rate-space membership. A backfilled observable must state, in words, WHY it is
+    // rate-space and NOT a valuation (the fence forbids USD). rateSpace:true only for a rate/exchange-rate whose statement holds.
+    rateSpace: boolean
+    rateSpaceMembership: string
   }
   export const FEEDS: Feed[] = [
     // rETH/ETH — a genuinely RATE-SPACE Chainlink feed: the rETH redemption ratio (18-dec), whose slope IS the staking yield.
     // getRoundData walks its real history; phaseId 2 is deeply historical. REAL-DERIVED, re-derivable at each round.
-    { key: "reth-eth-exchange-rate", feedAddress: "0x536218f9E9Eb48863970252233c8F271f554C2d0", description: "RETH / ETH", observableType: "exchange-rate", decimals: 18, tier: "REAL-DERIVED", pinnedCodeHash: "330cc39684c86b86aaffa993fe3404625371898b472845b18c8659db25965056" },
+    { key: "reth-eth-exchange-rate", feedAddress: "0x536218f9E9Eb48863970252233c8F271f554C2d0", description: "RETH / ETH", observableType: "exchange-rate", decimals: 18, tier: "REAL-DERIVED", pinnedCodeHash: "330cc39684c86b86aaffa993fe3404625371898b472845b18c8659db25965056",
+      rateSpace: true, rateSpaceMembership: "rETH/ETH is a redemption RATIO (ETH per rETH, 18-dec) — a UNITLESS ratio of one asset to another, NOT a USD price; its SLOPE is the RocketPool staking rate. NO USD enters, no valuation is taken. Rate-space membership: YES (exchange-rate — the same-asset redemption ratio the fence permits, S194/O-3)." },
     // FRAX/USD — a PRICE feed, the S187 NEGATIVE CONTROL. It is NOT a moat subject (the fence forbids valuation/USD); it exists
     // only to prove S187: a price feed chained into a RATE subject's series FAILS (the observable types do not match).
-    { key: "frax-usd-price", feedAddress: "0xB9E1E3A9feFF48998E45Fa90847ed4D467E8BcfD", description: "FRAX / USD", observableType: "price", decimals: 8, tier: "REAL-DERIVED" },
+    { key: "frax-usd-price", feedAddress: "0xB9E1E3A9feFF48998E45Fa90847ed4D467E8BcfD", description: "FRAX / USD", observableType: "price", decimals: 8, tier: "REAL-DERIVED",
+      rateSpace: false, rateSpaceMembership: "FRAX/USD is a PRICE feed (a USD valuation, 8-dec) — NOT rate-space. It is the S187 negative control ONLY; a price feed backfilled into a rate subject FAILS. The fence forbids valuation/USD; this is never a moat subject." },
   ]
   export function feed(key: string): Feed | undefined { return FEEDS.find((f) => f.key === key) }
+
+  // ── RECKONING V44 (O-3, S194) — every backfilled observable states its rate-space membership EXPLICITLY. A rate/exchange-rate
+  // feed with rateSpace:false or an empty membership statement FAILS; a price feed must be rateSpace:false (never chained as a
+  // rate — S187). This makes the implicit rate-space justification (O-3) an explicit, checkable statement per observable. ──
+  export type RateSpaceVerdict = { ok: true; detail: string } | { ok: false; reason: string }
+  export function rateSpaceVerdict(): RateSpaceVerdict {
+    for (const f of FEEDS) {
+      if (!f.rateSpaceMembership || f.rateSpaceMembership.trim().length < 20)
+        return { ok: false, reason: `feed ${f.key} (${f.observableType}) does not state its rate-space membership — a backfilled observable with no explicit rate-space justification FAILS (O-3/S194)` }
+      // a rate/exchange-rate must be rateSpace:true; a price must be rateSpace:false (the negative control, never chained as a rate)
+      const shouldBeRateSpace = f.observableType !== "price"
+      if (f.rateSpace !== shouldBeRateSpace)
+        return { ok: false, reason: `feed ${f.key} (${f.observableType}) has rateSpace:${f.rateSpace} — a ${f.observableType} must be rateSpace:${shouldBeRateSpace} (a price backfilled as a rate, or a rate not justified as rate-space, FAILS — S194/S187)` }
+    }
+    const rateFeeds = FEEDS.filter((f) => f.rateSpace)
+    return { ok: true, detail: `every backfilled observable states its rate-space membership: ${rateFeeds.length} rate-space feed(s) (${rateFeeds.map((f) => f.key).join(", ")}), each with an explicit unitless-ratio justification and no USD; the price feed (frax-usd-price) is the S187 control, rateSpace:false, never chained as a rate (S194/O-3)` }
+  }
 
   // ── ROUND-ID DECOMPOSITION (F-3/RP-3) — roundId = (phaseId << 64) | aggregatorRoundId. ──
   const AGG_MASK = (1n << 64n) - 1n

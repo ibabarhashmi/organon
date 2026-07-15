@@ -33,14 +33,14 @@ export namespace Continuity {
   // the PREVIOUS sprint's terminal wall id (V42's last wall was S179) — walls with id > this are NEW this sprint (S180–S189),
   // so they are ADDITIONS to the census, not inter-bucket TRANSFERS (F-4/RP-4: the movement is decomposed into additions +
   // reclassification). Note: this is the terminal id (179), NOT the Falsify.WALL_MAX ceiling (which this sprint bumps to 190).
-  export const WALL_MAX_PREV = 179
+  export const WALL_MAX_PREV = 189
 
   // ── DD-81 — the pinned countable registry + the prev-marker snapshot (both from Phase-0 pins) ──
   export function registry(): Countable[] {
-    return ((read("backfill-pins.json").delegatedDecisions as Record<string, { countables?: Countable[] }>).DD81.countables ?? []) as Countable[]
+    return ((read("reckoning-pins.json").delegatedDecisions as Record<string, { countables?: Countable[] }>).DD81.countables ?? []) as Countable[]
   }
   export function prevMarker(): Record<string, number> {
-    return (read("backfill-pins.json").prevMarker as { countables: Record<string, number> }).countables
+    return (read("reckoning-pins.json").prevMarker as { countables: Record<string, number> }).countables
   }
 
   // ── THE LIVE SNAPSHOT — the SAME flat numeric keys as prevMarker, read from live producers this run. The battery numbers are
@@ -59,7 +59,7 @@ export namespace Continuity {
     const b = baseline()
     const c = Falsify.census()
     const led = observeLedger()
-    const consts = (read("backfill-pins.json").carried as { laws: number; exitKinds: number }) ?? { laws: 17, exitKinds: 7 }
+    const consts = (read("reckoning-pins.json").carried as { laws: number; exitKinds: number }) ?? { laws: 17, exitKinds: 7 }
     return {
       "battery.pass": b.fullPass,
       "battery.skip": b.fullSkip ?? 2,
@@ -94,10 +94,51 @@ export namespace Continuity {
     key: string; type: CType
     prev: number | null; now: number; reconciles: boolean
     delta: number | null; moved: Moved | null; display: string; contradiction: string | null
+    twoIdentity?: CensusTwoIdentity | null // RECKONING V44 (S190) — the census PARTITION's two separate identities
   }
 
   export interface PartitionNow { demonstrated: number; weak: number; exempt: number; originUnrecorded: number; total: number; newInDemonstrated: number }
-  export interface Opts { added?: number; removed?: number; partition?: PartitionNow; recompute?: () => number }
+  export interface Opts { added?: number; removed?: number; partition?: PartitionNow; recompute?: () => number; newWallsInto?: Record<string, number>; wallsRemoved?: number }
+
+  // ── RECKONING V44 (DD-91/O-1, S190) — THE CENSUS PARTITION, TWO IDENTITIES. This is the DD-91 `Census.partition` producer,
+  // living where the reconciliation lives (Continuity). V43 reconciled `prevDem + newWalls + reclassified === dem_now` — a
+  // single identity that SUMS a GROWTH term (newWalls) with a CONSERVATION term (reclassified), re-blurring the transfer-vs-
+  // addition distinction RP-4 was built to draw. The fix: TWO SEPARATE identities.
+  //   · CONSERVATION — Σ_bucket [(now[b] − prev[b]) − newWallsInto[b]] === 0. A reclassification is a ZERO-SUM move between
+  //     buckets (OU loses exactly what DEMONSTRATED gains); the inter-bucket transfers net to zero. A transfer that does not
+  //     net to zero (a count invented from nowhere) FAILS.
+  //   · GROWTH — total_now === total_prev + wallsAdded − wallsRemoved. New/removed walls change the TOTAL; a transfer does not.
+  //     A total that moved by more than the walls born/removed (growth faked by a transfer) FAILS.
+  // A partition that sums a transfer and an addition in one identity FAILS (S190). ──
+  export interface Conservation { netTransferByBucket: Record<string, number>; sumOfTransfers: number; sumsToZero: boolean; display: string }
+  export interface Growth { prevTotal: number; wallsAdded: number; wallsRemoved: number; nowTotal: number; reconciles: boolean; display: string }
+  export interface CensusTwoIdentity { conservation: Conservation; growth: Growth; reconciles: boolean; display: string; contradiction: string | null }
+  export function censusPartition(
+    now: { DEMONSTRATED: number; WEAK: number; EXEMPT: number; ORIGIN_UNRECORDED: number; total: number },
+    prev: { DEMONSTRATED: number; WEAK: number; EXEMPT: number; ORIGIN_UNRECORDED: number; total: number },
+    newWallsInto: Record<string, number>,
+    wallsRemoved = 0,
+  ): CensusTwoIdentity {
+    const buckets = ["DEMONSTRATED", "WEAK", "EXEMPT", "ORIGIN_UNRECORDED"] as const
+    // CONSERVATION — the per-bucket transfer (delta minus the new walls born into it); the transfers net to zero.
+    const netTransferByBucket: Record<string, number> = {}
+    for (const b of buckets) netTransferByBucket[b] = (now[b] - prev[b]) - (newWallsInto[b] ?? 0)
+    const sumOfTransfers = buckets.reduce((s, b) => s + netTransferByBucket[b], 0)
+    const sumsToZero = sumOfTransfers === 0
+    const transferDisplay = buckets.filter((b) => netTransferByBucket[b] !== 0).map((b) => `${b} ${netTransferByBucket[b] > 0 ? "+" : ""}${netTransferByBucket[b]}`).join(", ") || "no transfers"
+    const conservation: Conservation = { netTransferByBucket, sumOfTransfers, sumsToZero, display: `CONSERVATION — inter-bucket transfers [${transferDisplay}] net to ${sumOfTransfers} (must be 0: a reclassification leaves the total unchanged)` }
+    // GROWTH — the total moved only by walls born/removed.
+    const wallsAdded = buckets.reduce((s, b) => s + (newWallsInto[b] ?? 0), 0)
+    const growthReconciles = now.total === prev.total + wallsAdded - wallsRemoved
+    const growth: Growth = { prevTotal: prev.total, wallsAdded, wallsRemoved, nowTotal: now.total, reconciles: growthReconciles, display: `GROWTH — total ${now.total} === prev ${prev.total} + wallsAdded ${wallsAdded} − wallsRemoved ${wallsRemoved} (new walls change the total; a transfer does not)` }
+    const reconciles = sumsToZero && growthReconciles
+    const contradiction = !growthReconciles
+      ? `the census GROWTH does not reconcile: total ${now.total} ≠ prev ${prev.total} + wallsAdded ${wallsAdded} − wallsRemoved ${wallsRemoved} — the total moved by more than the walls born/removed (a growth faked by a transfer, S190/O-1)`
+      : !sumsToZero
+        ? `the census CONSERVATION does not close: inter-bucket transfers [${transferDisplay}] net to ${sumOfTransfers} ≠ 0 — a reclassification invented or lost a count (S190/O-1)`
+        : null
+    return { conservation, growth, reconciles, display: `${conservation.display}; ${growth.display}`, contradiction }
+  }
 
   export function reconcile(c: Countable, now: number, prev: number | null, opts: Opts = {}): Reconciliation {
     if (c.type === "INVARIANT") {
@@ -117,24 +158,26 @@ export namespace Continuity {
       const p = opts.partition!
       const sum = p.demonstrated + p.weak + p.exempt + p.originUnrecorded
       const identity = sum === p.total
-      // the MOVED transfer map (N-2/F-4): the census total grew by newWalls; the demonstrated movement is decomposed into
-      // NEW walls that landed demonstrated + any reclassification from originUnrecorded (a residual, checked non-negative).
-      const prevTotal = prevMarker()["census.total"] ?? p.total
-      const prevDem = prevMarker()["census.demonstrated"] ?? p.demonstrated
-      const newWalls = p.total - prevTotal
-      const newInDem = p.newInDemonstrated
-      const reclassifiedIntoDem = (p.demonstrated - prevDem) - newInDem // OU→DEMONSTRATED reclassification (a residual)
-      const moved: Moved = { newWalls, newInDemonstrated: newInDem, reclassifiedIntoDemonstrated: reclassifiedIntoDem,
-        display: `demonstrated ${prevDem} + newWalls-demonstrated ${newInDem} + reclassified-from-OU ${reclassifiedIntoDem} === ${p.demonstrated}` }
-      const transferOk = reclassifiedIntoDem >= 0 && prevDem + newInDem + reclassifiedIntoDem === p.demonstrated
-      const reconciles = identity && transferOk
+      // RECKONING V44 (S190/O-1) — the census reconciles as TWO SEPARATE identities (never one that sums a transfer and an
+      // addition): CONSERVATION (inter-bucket transfers net to zero) + GROWTH (new walls change the total). The per-bucket
+      // new-wall map comes from reconcileAll (opts.newWallsInto); default all new walls into DEMONSTRATED.
+      const pm = prevMarker()
+      const prevDem = pm["census.demonstrated"] ?? p.demonstrated
+      const newWallsInto = opts.newWallsInto ?? { DEMONSTRATED: p.newInDemonstrated, WEAK: 0, EXEMPT: 0, ORIGIN_UNRECORDED: 0 }
+      const two = censusPartition(
+        { DEMONSTRATED: p.demonstrated, WEAK: p.weak, EXEMPT: p.exempt, ORIGIN_UNRECORDED: p.originUnrecorded, total: p.total },
+        { DEMONSTRATED: prevDem, WEAK: pm["census.weak"] ?? 0, EXEMPT: pm["census.exempt"] ?? p.exempt, ORIGIN_UNRECORDED: pm["census.originUnrecorded"] ?? p.originUnrecorded, total: pm["census.total"] ?? p.total },
+        newWallsInto, opts.wallsRemoved ?? 0,
+      )
+      // the Moved shape kept for continuity (the demonstrated decomposition), but the reconcile criterion is the TWO identities
+      const reclassifiedIntoDem = two.conservation.netTransferByBucket["DEMONSTRATED"] ?? 0
+      const moved: Moved = { newWalls: two.growth.wallsAdded, newInDemonstrated: newWallsInto["DEMONSTRATED"] ?? 0, reclassifiedIntoDemonstrated: reclassifiedIntoDem, display: two.display }
+      const reconciles = identity && two.reconciles
       const contradiction = !identity
         ? `the census identity does not close: ${p.demonstrated} + ${p.weak} + ${p.exempt} + ${p.originUnrecorded} = ${sum} ≠ total ${p.total} (S173/S181)`
-        : !transferOk
-          ? `the census MOVEMENT does not reconcile as a transfer: ${moved.display} (reclassified ${reclassifiedIntoDem} < 0 means demonstrated fell more than new walls explain — N-2/F-4)`
-          : null
-      return { key: c.key, type: c.type, prev: prevDem, now: p.demonstrated, reconciles, delta: p.demonstrated - prevDem, moved,
-        display: `census PARTITION — identity: demonstrated ${p.demonstrated} + weak ${p.weak} + exempt ${p.exempt} + originUnrecorded ${p.originUnrecorded} === total ${p.total}; MOVED: ${moved.display}`,
+        : two.contradiction
+      return { key: c.key, type: c.type, prev: prevDem, now: p.demonstrated, reconciles, delta: p.demonstrated - prevDem, moved, twoIdentity: two,
+        display: `census PARTITION — identity: demonstrated ${p.demonstrated} + weak ${p.weak} + exempt ${p.exempt} + originUnrecorded ${p.originUnrecorded} === total ${p.total}; ${two.display}`,
         contradiction }
     }
     // ADDITIVE
@@ -169,7 +212,11 @@ export namespace Continuity {
     const c = Falsify.census()
     const base = baseline() as { added?: number; removed?: number }
     const newInDem = c.rows.filter((r) => r.n > WALL_MAX_PREV && r.bucket === "DEMONSTRATED").length
-    const newDeviations = countNamedNewDeviations() // the deviations THIS sprint's pins name (D87–D89)
+    // RECKONING V44 (S190) — the per-bucket new-wall map (walls minted THIS sprint, n > WALL_MAX_PREV, grouped by their bucket)
+    // feeds the census CONSERVATION identity: a new wall born into a bucket is GROWTH, not a transfer into it.
+    const newWallsInto: Record<string, number> = { DEMONSTRATED: 0, WEAK: 0, EXEMPT: 0, ORIGIN_UNRECORDED: 0 }
+    for (const r of c.rows) if (r.n > WALL_MAX_PREV) newWallsInto[r.bucket] = (newWallsInto[r.bucket] ?? 0) + 1
+    const newDeviations = countNamedNewDeviations() // the deviations THIS sprint's pins name (D90–D91)
     const results: Reconciliation[] = []
     for (const cnt of reg) {
       const nowV = valueOf(cnt, now)
@@ -182,7 +229,7 @@ export namespace Continuity {
         continue
       }
       if (cnt.type === "PARTITION") {
-        results.push(reconcile(cnt, nowV, prevV, { partition: { demonstrated: now["census.demonstrated"], weak: now["census.weak"], exempt: now["census.exempt"], originUnrecorded: now["census.originUnrecorded"], total: now["census.total"], newInDemonstrated: newInDem } }))
+        results.push(reconcile(cnt, nowV, prevV, { partition: { demonstrated: now["census.demonstrated"], weak: now["census.weak"], exempt: now["census.exempt"], originUnrecorded: now["census.originUnrecorded"], total: now["census.total"], newInDemonstrated: newInDem }, newWallsInto, wallsRemoved: 0 }))
       } else if (cnt.type === "DERIVED") {
         results.push(reconcile(cnt, nowV, prevV, { recompute: () => Guard.mutationRate().caught }))
       } else if (cnt.key === "battery.pass") {
@@ -200,7 +247,7 @@ export namespace Continuity {
   // the number of deviations THIS sprint's pins name (D87–D89) — the independent `added` for deviations.count. A code that
   // adds a deviation the pins do not name, or vice versa, makes the ADDITIVE reconciliation fail.
   export function countNamedNewDeviations(): number {
-    const devs = (read("backfill-pins.json").deviations as Record<string, unknown>) ?? {}
+    const devs = (read("reckoning-pins.json").deviations as Record<string, unknown>) ?? {}
     return Object.keys(devs).filter((k) => /^D\d+$/.test(k)).length
   }
 
@@ -254,6 +301,7 @@ export namespace Continuity {
     { pattern: /^reach\.reachableHumans$/, reason: "reachableHumans 1 BY DESIGN (D51 INSTRUMENT) — a pinned invariant, not a countable" },
     { pattern: /^newProductCapability$/, reason: "the disclosed capability count (1) — priced as a SEARCH, disclosed at the gate, not a drift-prone countable" },
     { pattern: /^d50\./, reason: "the D50 release booleans/counts — a release-state record, not a cross-sprint countable" },
+    { pattern: /^reckoning\./, reason: "RECKONING V44 — the pen's-reckoning verdict-state (D33 implementation/application, riderEnforced), the strict-bar/N_eff facts, the contagion guard flag, and the per-manifest census two-identities — all DERIVED this run + verdict-core, guarded by the bundle 9c1e7bd8 + the pins, NOT cross-sprint countables (the countables are battery/census/deviations/archive/laws/deps/screens/exitKinds/guardEfficacy, already registered)" },
   ]
   export function markerNumbers(marker: Record<string, unknown>): { path: string; value: number }[] {
     const out: { path: string; value: number }[] = []
