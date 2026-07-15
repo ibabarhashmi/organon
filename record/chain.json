@@ -3,7 +3,7 @@
   "at": "2026-07-14",
   "rule": "S108 / DD-32 (G-5) — the build logs, committed under record/ and HASH-CHAINED (tamper-evident). The reasons for the code now live inside the moat. These are RECORD, never CLAIM: a wall asserts NO Claim.producer reads a build log (X-DERIVE reads artifacts, not prose). Order is content-sorted (deterministic), not a source of truth. SUBSTANCE V38 (S122/H-6): the D53 SEARCH record (halt-lifts.json) is folded into the chain so the Halt-lift carries a real immutable LEDGER HASH — committed and hash-chained in record/, NOT appended to the strategy-trial ledger (a meta-event is not a strategy manifest, so the strategy ledger has no coherent append site).",
   "boundary": "record/ is NOT a source of truth for any producer. A Claim.producer reading a build log would import unverified human prose into a computation — forbidden (S108). Prose is evidence for humans; artifacts are input for machines.",
-  "count": 19,
+  "count": 20,
   "chain": [
     {
       "name": "BUILDLOG-ALPHA.md",
@@ -102,29 +102,35 @@
       "selfSha": "282a24b465e864e349e0b860c5727c3fdea3d45b9a799c4a553cf9e51393b522"
     },
     {
+      "name": "BUILDLOG-VARIANT.md",
+      "contentSha": "f1901baa348974d4fa79cf09dc3f0e80a72462f12668af7a60907417e40b82b2",
+      "prevSha": "282a24b465e864e349e0b860c5727c3fdea3d45b9a799c4a553cf9e51393b522",
+      "selfSha": "efa381c2f1c1cba2a27d75a0ae47d778c24e53cb33721794befba07d5853013b"
+    },
+    {
       "name": "halt-lifts.json",
       "contentSha": "f44ed14665361fcc35429982f90bba8dc31607a0e42deaefbe666991684fb586",
-      "prevSha": "282a24b465e864e349e0b860c5727c3fdea3d45b9a799c4a553cf9e51393b522",
-      "selfSha": "2a458c3be80064370dd5968a0453e597e8dd76a551b8b915688704d80a69b7f8"
+      "prevSha": "efa381c2f1c1cba2a27d75a0ae47d778c24e53cb33721794befba07d5853013b",
+      "selfSha": "7cb62582175da53135aa48c65839a793b646a4d0ba522f17c782a2e45e8393fd"
     },
     {
       "name": "kill-criterion-amendment.json",
       "contentSha": "e206703279bc6a350439a475ebeeb4b98f732a7666de388ce3b65a8c09f960e4",
-      "prevSha": "2a458c3be80064370dd5968a0453e597e8dd76a551b8b915688704d80a69b7f8",
-      "selfSha": "12ce0131713d5f00a28067b3f525aa51c7724bb92aa137aea790d92906db353e"
+      "prevSha": "7cb62582175da53135aa48c65839a793b646a4d0ba522f17c782a2e45e8393fd",
+      "selfSha": "1032376ac9451b7105819509972a04cd3a1ee941be7d1b81e905df63cebb7f25"
     },
     {
       "name": "test-redesign-search.json",
       "contentSha": "08b77667ecb796d06b2234ecb4c1ab7a7b2a4f74bc377385d26ea01fbc4c9da2",
-      "prevSha": "12ce0131713d5f00a28067b3f525aa51c7724bb92aa137aea790d92906db353e",
-      "selfSha": "a578032b4b5459d7e11c29247fce074febcdec6aa063d74cc14d787e2b003033"
+      "prevSha": "1032376ac9451b7105819509972a04cd3a1ee941be7d1b81e905df63cebb7f25",
+      "selfSha": "d5147f8d14be46de4257073639a4bb584f37c6245d71cc707c298ea2b3e507d2"
     }
   ],
-  "headSha": "a578032b4b5459d7e11c29247fce074febcdec6aa063d74cc14d787e2b003033",
-  "d53SearchLedgerHash": "2a458c3be80064370dd5968a0453e597e8dd76a551b8b915688704d80a69b7f8",
+  "headSha": "d5147f8d14be46de4257073639a4bb584f37c6245d71cc707c298ea2b3e507d2",
+  "d53SearchLedgerHash": "7cb62582175da53135aa48c65839a793b646a4d0ba522f17c782a2e45e8393fd",
   "d53Note": "the Halt-lift is a META-event (sprint-level optional stopping), NOT a strategy manifest; the X-RECKON strategy-trial ledger counts acts over lineage ids and has no coherent site for it — so the price is paid HERE, committed + hash-chained, and the log no longer claims it was 'appended to the strategy ledger'.",
-  "d67SearchLedgerHash": "12ce0131713d5f00a28067b3f525aa51c7724bb92aa137aea790d92906db353e",
+  "d67SearchLedgerHash": "1032376ac9451b7105819509972a04cd3a1ee941be7d1b81e905df63cebb7f25",
   "d67Note": "the kill-criterion amendment is a SEARCH (re-pinning a pre-registered criterion after seeing data — the exact act X-RECKON catches); like the Halt-lift it is a meta-event, not a strategy manifest, so its price is paid HERE (committed + hash-chained), not in the strategy-trial ledger. The old criterion (8b4e094b) is preserved beside the amendment forever.",
-  "d56SearchLedgerHash": "a578032b4b5459d7e11c29247fce074febcdec6aa063d74cc14d787e2b003033",
+  "d56SearchLedgerHash": "d5147f8d14be46de4257073639a4bb584f37c6245d71cc707c298ea2b3e507d2",
   "d56Note": "the S116 power test was redesigned after it failed and D33 flipped to SIGNABLE on the redesign (J-1); the change of TEST is a SEARCH (branch (b) of DD-33). Like the Halt-lift and the amendment it is a meta-event, so its price is paid HERE (committed + hash-chained). D33's state reads this hash and carries testRedesigns beside the verdict PERMANENTLY (RP-1); the count never resets. The project gets no exemption from the discipline it sells."
 }
