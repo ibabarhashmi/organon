@@ -41,7 +41,7 @@ test("S93/RP-6 — the living wall: a test that references a wall id beyond the 
   const futureId = "S" + "191"
   const injected = [{ file: "x", text: `test(${JSON.stringify(futureId + " — a hypothetical future wall")})` }] as unknown as { file: string; text: string }[]
   expect(Falsify.orphanWallIds(injected)).toEqual([futureId])
-  expect(Falsify.WALL_MAX).toBe(180) // Provenance Sprint V42: bumped 170→180 for the S169..S179 band (identity gate + REAL★ capture engine / RETROSPECTIVE boundary / capture window; consciously admitted)
+  expect(Falsify.WALL_MAX).toBe(190) // Backfill Sprint V43: bumped 180→190 for the S180..S189 band (continuity-total S180–S183 + the on-chain backfill engine / tier ladder / own-leg S184–S189; consciously admitted)
 })
 
 test("S93/RP-1 — DEMONSTRATED is the STRONG claim and is never invented: every DEMONSTRATED wall carries a NAMED originating defect (a W-tag) OR a treatment route (S104)", () => {

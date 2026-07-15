@@ -18,6 +18,8 @@ import { Verify } from "./verify"
 import { State, Evidence } from "./state"
 import { Freshness } from "./freshness"
 import { Consistency } from "./consistency"
+import { Continuity } from "./continuity"
+import { Capability } from "./capability"
 import { Capture } from "../strategy/capture"
 
 export namespace Rollup {
@@ -56,6 +58,13 @@ export namespace Rollup {
       // (not merely gated): prev + added − removed === now, and demonstrated + weak + exempt + originUnrecorded === total.
       batteryContinuity: Consistency.batteryFullDelta().display,
       censusIdentity: Consistency.censusIdentity().display,
+      // BACKFILL V43 (S181/S183) — CONTINUITY MADE TOTAL: every cross-sprint countable reconciled through the ONE reconciler
+      // (the census MOVEMENT shown as a transfer, not asserted — N-2), and the capability→verdict isolation fence, RENDERED.
+      continuity: continuityLine(),
+      capabilityIsolation: Capability.verdictIsolationLine(),
+      // BACKFILL V43 (S189/F-2/RP-2) — the own-archive tier mix + ratio (REAL★ own live + REAL-DERIVED backfilled history),
+      // confidence capped by the weakest dominant tier; the false-fire own-leg's re-derivable series depth.
+      ownArchive: Capture.ownArchive().mix.label,
       d50: { i: v("d50i_binary"), ii: v("d50ii_install"), iii: v("d50iii_published"), iv: v("d50iv_window") },
       reach: v("reach"),
       theNumber: v("theNumber"),
@@ -84,10 +93,23 @@ export namespace Rollup {
   // (Capture.realStarWindow — the archive that feeds the false-fire leg), NOT the TVL window. At ownCaptures 0 it renders
   // UNJUDGEABLE, honestly (an AGENT proof capture is quarantined and never counts).
   export function d67Line(): { line: string; cls: Freshness.Computed } {
-    const own = Capture.realStarWindow().humanCaptures
-    const line = `the amended kill-criterion — ⟨N⟩ STILL EMPTY, awaiting the pen; and now the REAL★ archive feeds the own-capture false-fire leg (ownCaptures ${own} today — UNJUDGEABLE${own === 0 ? " (0 HUMAN captures; an AGENT proof capture is quarantined)" : ` (${own} captures, below the floor)`}), so changedByCompile has a growing point-in-time series to be changed BY.`
-    return { line, cls: Freshness.computed("gate.firstSection.d67", "Capture.realStarWindow (HUMAN ownCaptures) + the amended D67", line) }
+    // BACKFILL V43 (S189, DD-87) — the own-capture false-fire leg now has a REAL★+REAL-DERIVED series with real depth. D67's
+    // ⟨N⟩ is STILL EMPTY (the manifest is the pen's), but changedByCompile has a re-derivable point-in-time series to be
+    // changed BY. The own-archive renders a COUNT with its tier mix + ratio, never a verdict.
+    const oa = Capture.ownArchive()
+    const line = `the amended kill-criterion — ⟨N⟩ STILL EMPTY, awaiting the pen; and now the own-capture false-fire leg has a REAL★+REAL-DERIVED series with real depth: ${oa.mix.label}. ${oa.render}`
+    return { line, cls: Freshness.computed("gate.firstSection.d67", "Capture.ownArchive (REAL★ + REAL-DERIVED, mix + ratio) + the amended D67", line) }
   }
+  // BACKFILL V43 (S181, N-2) — the CONTINUITY line: every cross-sprint countable reconciled through the ONE reconciler, and
+  // the census MOVEMENT shown as a TRANSFER (the demonstrated bucket's movement decomposed into new walls + reclassification),
+  // not a delta from nowhere. COMPUTED this run (X-DERIVE(a)).
+  export function continuityLine(): string {
+    const chk = Continuity.check()
+    const census = chk.reconciliations.find((r) => r.type === "PARTITION")
+    const transfer = census?.moved ? ` · census MOVED: ${census.moved.display}` : ""
+    return chk.ok ? `${chk.detail}${transfer}` : `NOT TOTAL — ${chk.reason}`
+  }
+
   // S170 — the freshness audit over the generated header/gate fields. Every field is COMPUTED (a producer ran this run) or
   // carried:{from,why,reverified}; Freshness.honest() refuses a carried claim that would recompute differently.
   export function freshnessAudit(): Freshness.Class[] {
@@ -98,6 +120,9 @@ export namespace Rollup {
       Freshness.computed("header.batteryDelta", "Claim.producer(battery) → battery-baseline (full)", JSON.stringify(v("battery"))),
       Freshness.computed("header.census", "Claim.producer(census) → Falsify.census", JSON.stringify(v("census"))),
       Freshness.computed("terminalTree", "git rev-parse HEAD^{tree}", String(v("terminalTree"))),
+      // BACKFILL V43 — the continuity + capability lines are COMPUTED this run (S181/S183 producers).
+      Freshness.computed("header.continuity", "Continuity.check → the ONE reconciler + marker-diff", continuityLine()),
+      Freshness.computed("header.capabilityIsolation", "Capability.verdictIsolation → the import fence", Capability.verdictIsolationLine()),
     ]
   }
 

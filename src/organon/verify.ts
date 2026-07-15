@@ -21,10 +21,37 @@ export namespace Verify {
 
   // ── SOCKET V37 (S114 / D54, G-2) — THE SUB-CHECK SET IS DECLARED AND STABLE ────────────────────────────────────────────
   // verify silently lost a sub-check between V35 (three) and V36 (two): the V36 generator called Verify.run without a battery
-  // count, so `battery-count-matches-committed` — the one V35 spent a phase repairing under Rule XVII — vanished with no
-  // deviation entry (X-DEVLEDGER: a silent deviation is a Halt). D54 RESTORES it; this DECLARED set is the contract, and
-  // S114 fails if the full run's actual sub-checks ever diverge from it (G-2 never again).
-  export const DECLARED_SUBCHECKS = ["evidence-bundle-reproduces", "frozen-set-intact", "battery-count-matches-committed"] as const
+  // count, so the third sub-check — the one V35 spent a phase repairing under Rule XVII — vanished with no deviation entry
+  // (X-DEVLEDGER: a silent deviation is a Halt). D54 RESTORES it; this DECLARED set is the contract, and S114 fails if the
+  // full run's actual sub-checks ever diverge from it (G-2 never again).
+  //
+  // BACKFILL V43 (S180 / DD-82 / N-1) — THE SUB-CHECK NAMES WHAT IT MEASURES. It was `battery-count-matches-committed`, but it
+  // compares the CURATED EVIDENCE SUBSET (1281) to its committed copy — a real, useful invariant (the evidence bundle is
+  // stable), NOT a check of the full battery (1941). Its old name implied THE battery in a header that reads 1941 everywhere
+  // else — the last home of the 1281/1941 split M-3 exposed. RENAMED to state its domain; the FULL battery is reconciled
+  // separately through Continuity (Consistency.batteryFullDelta, S171/S172). A sub-check whose name implies a domain it does
+  // not check FAILS (S180). The prior pins (socket-pins V37, ship-pins V40) describe the OLD name — those are HISTORICAL
+  // records, NOT rewritten (S182: history does not drift); the rename is a V43 act in code only.
+  export const DECLARED_SUBCHECKS = ["evidence-bundle-reproduces", "frozen-set-intact", "curated-evidence-subset-matches-committed"] as const
+
+  // S180 (DD-82) — the DOMAIN a sub-check actually measures. A domain-implying name that checks LESS than it implies FAILS: a
+  // name mentioning "battery" (unqualified) claims the FULL battery; the curated-subset check must SAY "curated" / "subset" /
+  // "evidence". Returns the domain, or null for a name that overclaims (mentions the battery without qualifying it as curated).
+  export type Domain = "full-battery" | "curated-evidence-subset" | "evidence-bundle" | "frozen-set" | null
+  export function subcheckDomain(name: string): Domain {
+    if (/curated|subset|evidence-subset/.test(name)) return "curated-evidence-subset"
+    if (/evidence-bundle|bundle-reproduces/.test(name)) return "evidence-bundle"
+    if (/frozen-set/.test(name)) return "frozen-set"
+    // an unqualified "battery" name claims THE full battery — an overclaim for a sub-check that reads the curated subset.
+    if (/\bbattery\b/.test(name)) return "full-battery"
+    return null
+  }
+  // S180 — a sub-check whose NAME implies the full battery while its check reads the curated subset is an overclaim (N-1). The
+  // curated-subset sub-check must name its domain; a name resolving to "full-battery" for the curated check FAILS.
+  export function nameStatesItsDomain(name: string): boolean {
+    // the curated-subset sub-check (the third one) must NOT resolve to the full-battery domain — it must name curated/subset.
+    return subcheckDomain(name) !== "full-battery"
+  }
 
   // the sub-check names a FULL run (bundle + battery) must produce — a silent removal is caught by comparing to DECLARED.
   export function subcheckNames(r: Result): string[] {
@@ -81,9 +108,9 @@ export namespace Verify {
     if (opts.battery) {
       const match = opts.battery.live === opts.battery.committed
       subchecks.push({
-        name: "battery-count-matches-committed",
+        name: "curated-evidence-subset-matches-committed", // S180/DD-82 — the name states its domain (the CURATED subset, not THE battery)
         status: match ? "pass" : "fail",
-        detail: match ? `curated battery ${opts.battery.live} == committed evidence ${opts.battery.committed}` : `curated battery ${opts.battery.live} ≠ committed evidence ${opts.battery.committed} — regenerate + re-pin (DD-10)`,
+        detail: match ? `curated evidence subset ${opts.battery.live} == committed evidence ${opts.battery.committed} (the CURATED subset — the FULL battery is reconciled through Continuity, S180)` : `curated evidence subset ${opts.battery.live} ≠ committed evidence ${opts.battery.committed} — regenerate + re-pin (DD-10)`,
       })
     }
 

@@ -69,13 +69,14 @@ test("S110/S116 — the state is DERIVED from the legs, not hardcoded: a seeded 
 })
 
 test("S114 (W-SK08, G-2) — verify's sub-check set is DECLARED and stable; a silent removal (V36's 2-of-3 marker) FAILS", () => {
-  expect(Verify.DECLARED_SUBCHECKS).toEqual(["evidence-bundle-reproduces", "frozen-set-intact", "battery-count-matches-committed"])
+  // BACKFILL V43 (S180/DD-82): the third sub-check names its domain — curated-evidence-subset, not "battery" (N-1: the split closed)
+  expect(Verify.DECLARED_SUBCHECKS).toEqual(["evidence-bundle-reproduces", "frozen-set-intact", "curated-evidence-subset-matches-committed"])
   // a FULL run's set matches the declared set
   const full = { exitCode: 0, subchecks: Verify.DECLARED_SUBCHECKS.map((name) => ({ name, status: "pass" as const, detail: "" })) }
   expect(Verify.subcheckSetStable(full).ok).toBe(true)
-  // SEEDED NEGATIVE — the exact G-2 defect: V36's marker carried only two sub-checks (battery-count silently dropped)
+  // SEEDED NEGATIVE — the exact G-2 defect: V36's marker carried only two sub-checks (the curated-subset check silently dropped)
   const v36Silent = { exitCode: 0, subchecks: [{ name: "evidence-bundle-reproduces", status: "pass" as const, detail: "" }, { name: "frozen-set-intact", status: "pass" as const, detail: "" }] }
   const stable = Verify.subcheckSetStable(v36Silent)
   expect(stable.ok).toBe(false)
-  expect(stable.missing).toEqual(["battery-count-matches-committed"]) // G-2 caught — never again
+  expect(stable.missing).toEqual(["curated-evidence-subset-matches-committed"]) // G-2 caught — never again
 })

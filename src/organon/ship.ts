@@ -29,6 +29,9 @@ import { Freshness } from "./freshness"
 import { State } from "./state"
 import { Rollup } from "./rollup"
 import { Claim } from "./claim"
+import { Continuity } from "./continuity"
+import { HistoricalAct } from "./historical"
+import { Capability } from "./capability"
 
 export namespace Ship {
   // ── BATTERY CONTINUITY (S156, K-7) — the cross-boundary check the within-sprint reconciliation never made ──
@@ -80,6 +83,13 @@ export namespace Ship {
     batteryFullDelta: Consistency.FullDelta // S172 — the FULL-battery delta across the boundary (DISPLAYED, seedable at emit)
     censusIdentity: Consistency.CensusIdentity // S173 — the full census identity (DISPLAYED, seedable at emit)
     deviationStateIds: string[] // S174/MR20 — the ids State.deviations() enumerates
+    // BACKFILL V43 (S180–S183) — CONTINUITY MADE TOTAL: the verify sub-check names its domain (S180); every cross-sprint
+    // countable reconciles through the ONE reconciler AND no number moved unrouted vs the prev marker (S181); a historical
+    // act's hash is stable-or-carried (S182); the capability→verdict isolation fence holds (S183).
+    verifyDomainsStated: boolean // S180 — every declared sub-check names its domain (none overclaims the full battery)
+    continuity: Continuity.Verdict // S181 — the continuity-total check (every countable reconciled + marker-diff clean)
+    searchHashStable: HistoricalAct.Verdict // S182 — the D56 SEARCH's rendered hash is stable-or-carried
+    capabilityIsolation: Capability.Isolation // S183 — the capability→verdict import fence
   }
 
   export type Refusal = { wall: string; artifact: string; value: string }
@@ -161,6 +171,31 @@ export namespace Ship {
     if (missingDevs.length > 0) return fail("S174", "deviationStates", `pinned deviation(s) [${missingDevs.join(", ")}] absent from deviationStates — Phase 0 pinned them and the gate lists them, but the machine-readable state list under-enumerated (M-6/MR20)`)
     checks.push({ wall: "S174", artifact: "deviationStates", ok: true, detail: `every pinned deviation present incl D80–D86 (${a.deviationStateIds.length} states enumerated)` })
 
+    // ── BACKFILL V43 (S180–S183) — CONTINUITY MADE TOTAL. V42 taught the gate IDENTITY; V43 makes the continuity discipline
+    // TOTAL — one reconciler every countable routes through, the gate diffing the whole marker so a number cannot move
+    // unrouted, on the REAL emit artifacts. ──
+
+    // S180 (N-1, W-BF01) — the verify sub-check names its domain: no declared sub-check's name implies the FULL battery while
+    // reading the curated subset (the last home of the 1281/1941 split). A name resolving to "full-battery" for a subset check REFUSES.
+    if (!a.verifyDomainsStated) return fail("S180", "the verify sub-check names", `a verify sub-check's name implies the FULL battery while it reads the curated subset — the name must state its domain (curated-evidence-subset); the last home of the 1281/1941 split (N-1, DD-82)`)
+    checks.push({ wall: "S180", artifact: "the verify sub-check names", ok: true, detail: `every declared sub-check names its domain (curated-evidence-subset-matches-committed — not "battery"); the full battery is reconciled through Continuity` })
+
+    // S181 (N-2/F-1/RP-1, W-BF02) — every registered countable reconciles through the ONE reconciler AND no number moved vs the
+    // prev marker that is neither reconciled nor exempted. THE SPRINT'S SPINE: the reconciler cannot be forgotten because the
+    // gate counts the countables, not the diligence. A moved-but-unrouted countable REFUSES the log (proven on the emit path).
+    if (!a.continuity.ok) return fail("S181", "the countable continuity", `continuity is NOT total: ${a.continuity.reason} (N-2/F-1/RP-1 — a discipline you can forget to apply is not a discipline; the gate counts the countables)`)
+    checks.push({ wall: "S181", artifact: "the countable continuity", ok: true, detail: a.continuity.detail })
+
+    // S182 (N-3, W-BF03) — a historical act's hash is stable or carried:{from}. The D56 SEARCH's rendered hash is its stable
+    // immutable-core hash (not the drifting chain selfSha a578032b→d5147f8d); a drift without a tag REFUSES.
+    if (!a.searchHashStable.ok) return fail("S182", "the historical-act hash", `${a.searchHashStable.reason} (N-3 — the one carried hash that drifted, in the sprint about carried identity)`)
+    checks.push({ wall: "S182", artifact: "the historical-act hash", ok: true, detail: a.searchHashStable.detail })
+
+    // S183 (N-4, W-BF04) — the capability→verdict isolation fence holds: no capture/backfill engine imports a verdict-path
+    // module, no verdict-path module imports a capability engine. RENDERED and CHECKED, not implied by the bundle hash.
+    if (!a.capabilityIsolation.isolated) return fail("S183", "the capability→verdict fence", `${a.capabilityIsolation.detail} — a capture must move no verdict, asserted structurally not implied by 9c1e7bd8 (N-4): ${a.capabilityIsolation.violations[0]}`)
+    checks.push({ wall: "S183", artifact: "the capability→verdict fence", ok: true, detail: a.capabilityIsolation.detail })
+
     return { pass: true, checks }
   }
 
@@ -192,7 +227,21 @@ export namespace Ship {
       batteryFullDelta: Consistency.batteryFullDelta(), // S172 — the FULL-battery delta across the boundary
       censusIdentity: Consistency.censusIdentity(), // S173 — the full census identity
       deviationStateIds: State.deviations().map((d) => d.id), // S174/MR20 — the enumerated deviation ids
+      // BACKFILL V43 (S180–S183) — the continuity-total artifacts, from the live producers.
+      verifyDomainsStated: Verify.DECLARED_SUBCHECKS.every((n) => Verify.nameStatesItsDomain(n)), // S180
+      continuity: Continuity.checkWithMarker(marker), // S181 — every countable reconciled + snapshot diff + RAW-marker leaf coverage (red-team hardening)
+      searchHashStable: searchHashVerdict(), // S182 — the D56 SEARCH's rendered hash is stable-or-carried
+      capabilityIsolation: Capability.verdictIsolation(), // S183 — the capability→verdict import fence
     }
+  }
+
+  // S182 — the D56 SEARCH's rendered hash (from the live d33 claim) must be its stable immutable-core hash. When no redesign
+  // is recorded (a pre-Family checkout), there is nothing rendered and nothing can drift → ok.
+  function searchHashVerdict(): HistoricalAct.Verdict {
+    const d33 = Claim.producer("d33").value as { redesignSearchHashes?: string[] }
+    const rendered = d33.redesignSearchHashes?.[0]
+    if (!rendered) return { ok: true, detail: "no test-redesign SEARCH rendered (a pre-Family checkout) — nothing to drift" }
+    return HistoricalAct.verifyFile("test-redesign-search.json", rendered)
   }
 
   // ── THE REFUSAL LOG (RP-2) — one artifact, the SAME path, no --force. When the gate refuses, THIS is the build log. ──

@@ -17,6 +17,7 @@ import { readFileSync } from "node:fs"
 import { createHash } from "node:crypto"
 import path from "node:path"
 import { PKG_ROOT } from "../organon/frozen"
+import { Tier } from "../plane/tier"
 
 export namespace Capture {
   const H = path.join(PKG_ROOT, "data", "honesty")
@@ -109,14 +110,42 @@ export namespace Capture {
   // finally polls block-pinned rate-space yield, so the window renders from ACTUAL captures. The HUMAN own-count is what feeds
   // the false-fire leg; an AGENT capture (the builder's known-answer proof the engine works) is QUARANTINED (DD-79/S128) and
   // NEVER advances the HUMAN count. The UNJUDGEABLE floor holds at every length (F-6/RP-6): 0 is UNJUDGEABLE and says so.
-  export interface RealStarLedger { minWindowCaptures: number; ownCapturesHuman: number; agentCaptures: number; realStar: unknown[]; retrospective: unknown[] }
+  export interface RealStarLedger { minWindowCaptures: number; ownCapturesHuman: number; agentCaptures: number; realStar: unknown[]; realDerived: unknown[]; retrospective: unknown[] }
   export function realStarLedger(): RealStarLedger {
     try {
       const j = JSON.parse(readFileSync(path.join(H, "observe-ledger.json"), "utf8"))
-      return { minWindowCaptures: j.minWindowCaptures ?? 180, ownCapturesHuman: j.ownCapturesHuman ?? 0, agentCaptures: j.agentCaptures ?? 0, realStar: j.realStar ?? [], retrospective: j.retrospective ?? [] }
+      return { minWindowCaptures: j.minWindowCaptures ?? 180, ownCapturesHuman: j.ownCapturesHuman ?? 0, agentCaptures: j.agentCaptures ?? 0, realStar: j.realStar ?? [], realDerived: j.realDerived ?? [], retrospective: j.retrospective ?? [] }
     } catch {
-      return { minWindowCaptures: 180, ownCapturesHuman: 0, agentCaptures: 0, realStar: [], retrospective: [] }
+      return { minWindowCaptures: 180, ownCapturesHuman: 0, agentCaptures: 0, realStar: [], realDerived: [], retrospective: [] }
     }
+  }
+
+  // ── BACKFILL V43 (S189, DD-87, F-2/RP-2) — THE OWN-ARCHIVE, NOW WITH REAL-DERIVED DEPTH. The false-fire own-leg's series is
+  // the re-derivable archive (REAL★ own live + REAL-DERIVED backfilled third-party history). It can now cross the 180-point
+  // floor and be JUDGEABLE — but it renders a COUNT with its tier MIX + RATIO (never a verdict, never a threshold), and its
+  // confidence is capped by the weakest DOMINANT tier: a series that is predominantly REAL-DERIVED is 'third-party historical,
+  // re-derivable but NOT self-captured'. Below the floor it stays UNJUDGEABLE and says how many points remain. The HUMAN
+  // own-capture count stays separate (0 — the Operator has never run the verb; a backfill is third-party, not a self-capture). ──
+  export interface OwnArchive {
+    realStar: number; realDerived: number; retrospective: number; humanCaptures: number
+    reDerivableSeries: number // REAL★ + REAL-DERIVED — the re-derivable points a kill-criterion can replay over
+    minWindow: number; judgeable: boolean; pointsToJudgeable: number
+    mix: Tier.Mix; render: string
+  }
+  export function ownArchive(): OwnArchive {
+    const l = realStarLedger()
+    const realStar = l.realStar.length
+    const realDerived = l.realDerived.length
+    const retrospective = l.retrospective.length
+    const min = l.minWindowCaptures
+    const reDerivableSeries = realStar + realDerived // both tiers are re-derivable (REAL★ at block, REAL-DERIVED at round)
+    const judgeable = reDerivableSeries >= min
+    const pointsToJudgeable = Math.max(0, min - reDerivableSeries)
+    const mix = Tier.mixLabel({ realStar, realDerived, retrospective })
+    const render = judgeable
+      ? `the own-capture false-fire leg is JUDGEABLE: ${reDerivableSeries} re-derivable points (${mix.label}) reach the ${min}-point floor. It renders a COUNT with its tier mix + ratio, NEVER a verdict, NEVER a suggested threshold (S145 carried). ${mix.predominantlyThirdParty ? "PREDOMINANTLY THIRD-PARTY HISTORICAL — the confidence is capped by REAL-DERIVED (re-derivable, not self-captured)." : ""} HUMAN own-captures: ${l.ownCapturesHuman} (a backfill is third-party, not a self-capture; the HUMAN count is the Operator's to make).`
+      : `the own-capture false-fire leg is UNJUDGEABLE: ${reDerivableSeries} of ${min} re-derivable points (${mix.label}) — ${pointsToJudgeable} to a judgeable own-count, never a projected date (RP-6). HUMAN own-captures: ${l.ownCapturesHuman}.`
+    return { realStar, realDerived, retrospective, humanCaptures: l.ownCapturesHuman, reDerivableSeries, minWindow: min, judgeable, pointsToJudgeable, mix, render }
   }
 
   // S128/DD-79 — the quarantine: only a HUMAN capture advances the HUMAN own-count. An AGENT capture cannot (the differential

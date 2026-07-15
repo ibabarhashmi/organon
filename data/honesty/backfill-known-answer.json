@@ -1,0 +1,20 @@
+{
+  "protocol": "backfill-known-answer",
+  "note": "BACKFILL V43 (S184) — a REAL, re-derivable Chainlink getRoundData round, captured live over the pinned public RPC before design (the sprint's ground truth, applied to itself). Anyone can eth_call getRoundData(roundId) on the feed and reproduce rawReturn, then decode identically — the round is FINALIZED (aggRound 700 < the latest 742) and IMMUTABLE. This is the engine's re-derivability proof; the tier is REAL-DERIVED (third-party historical, re-derivable at the round), the observable is a rate-space EXCHANGE RATE (rETH per ETH, NOT a USD price — the fence holds).",
+  "feed": "0x536218f9E9Eb48863970252233c8F271f554C2d0",
+  "description": "RETH / ETH",
+  "observableType": "exchange-rate",
+  "decimals": 18,
+  "roundId": "36893488147419103932",
+  "phaseId": 2,
+  "aggregatorRoundId": "700",
+  "answer": "1164925914735908000",
+  "decoded": 1.1649259147359081,
+  "updatedAt": 1780427447,
+  "startedAt": 1780427427,
+  "answeredInRound": "36893488147419103932",
+  "feedCodeHash": "330cc39684c86b86aaffa993fe3404625371898b472845b18c8659db25965056",
+  "rawReturn": "0x00000000000000000000000000000000000000000000000200000000000002bc000000000000000000000000000000000000000000000000102aa5f2897b14a0000000000000000000000000000000000000000000000000000000006a1f2aa3000000000000000000000000000000000000000000000000000000006a1f2ab700000000000000000000000000000000000000000000000200000000000002bc",
+  "reDerivability": "re-derivable via getRoundData(36893488147419103932) on feed 0x5362…C2d0 — the round is finalized/immutable; the guarantee is 'here is exactly what to query to reproduce this', not 'this RPC will always answer' (F-5/RP-5).",
+  "capturedAt": 1752598800000
+}

@@ -19,6 +19,8 @@ import { Verify } from "../../src/organon/verify"
 import { Pins } from "../../src/organon/pins"
 import { Rollup } from "../../src/organon/rollup"
 import { State } from "../../src/organon/state"
+import { Continuity } from "../../src/organon/continuity"
+import { Capability } from "../../src/organon/capability"
 
 const TERMINAL = "abc1234def5678000000000000000000000000ff"
 
@@ -46,6 +48,9 @@ function artifacts(cr: Ship.Artifacts["censusReconciliation"] = reconcilingCensu
     batteryDelta: { full: true, pass: Consistency.batteryFullDelta().now },
     batteryFullDelta: Consistency.batteryFullDelta(), censusIdentity: Consistency.censusIdentity(),
     deviationStateIds: State.deviations().map((d) => d.id),
+    // BACKFILL V43 (S180–S183) — the continuity-total artifacts, honest.
+    verifyDomainsStated: true, continuity: Continuity.check(),
+    searchHashStable: { ok: true, detail: "stable (test)" }, capabilityIsolation: Capability.verdictIsolation(),
   }
 }
 
@@ -62,7 +67,7 @@ test("S161 (W-VR01) — the Ship Gate PASSES on a reconciling census (the check 
   const g = Ship.gate(artifacts())
   expect(g.pass).toBe(true)
   expect(g.checks.some((c) => c.wall === "S161" && c.ok)).toBe(true)
-  expect(g.checks.length).toBe(12) // S152–S156 + S161 + S169–S174 (V42 identity gate)
+  expect(g.checks.length).toBe(16) // S152–S156 + S161 + S169–S174 (V42 identity gate) + S180–S183 (V43 continuity-total)
 })
 
 test("S161 (W-VR01) — SEEDED NEGATIVE: a non-reconciling census REFUSES the log (a reconciling total that hides a regression)", () => {

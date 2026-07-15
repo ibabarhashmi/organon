@@ -20,7 +20,7 @@ test("S95 — the verify exitCode is DERIVED, not typed: any fail/blocked sub-ch
 })
 
 test("S95 — greenConsistency BITES: a prose that types green while the exit code is non-zero is a violation (the seeded negative)", () => {
-  const red: Verify.Result = { exitCode: 1, subchecks: [{ name: "battery-count-matches-committed", status: "fail", detail: "1281 ≠ 1225" }] }
+  const red: Verify.Result = { exitCode: 1, subchecks: [{ name: "curated-evidence-subset-matches-committed", status: "fail", detail: "1281 ≠ 1225" }] }
   // the SEEDED NEGATIVE — the original defect this wall was minted for (C-2: six phase markers typed "verify green" while
   // the battery-count sub-check was red). It must be caught.
   expect(Verify.greenConsistency(red, "verify green end-to-end")).toMatch(/types "green"/i)
@@ -34,7 +34,7 @@ test("S95 — Marker.validate rejects a marker that TYPES green against a non-ze
   const lie = {
     treeHash: "0".repeat(40), commitSha: "abc1234", pinsSha: "8c80367a", battery: "1508/2/0", expect: "9436",
     verifyOutput: "VERIFY GREEN", verifyCoverage: "7/9 because RWA-VERDICT.md + MANIFEST.json are absent on a clone", goldenMoves: 0,
-    verify: { exitCode: 1, subchecks: [{ name: "battery-count-matches-committed", status: "fail", detail: "stale" }] },
+    verify: { exitCode: 1, subchecks: [{ name: "curated-evidence-subset-matches-committed", status: "fail", detail: "stale" }] },
   }
   const r = Marker.validate(lie, "terminal")
   expect(r.ok).toBe(false)
@@ -72,8 +72,8 @@ test("S95 LIVE — Verify.run() derives {exitCode, subchecks[]} from the real ev
 
 test("S95 — the battery-count sub-check is derived: a live count ≠ the committed evidence → fail (the DD-10 defect, made a value)", () => {
   const mismatch = Verify.run({ skipBundle: true, battery: { live: "1508/0", committed: "1225/0" } })
-  expect(mismatch.subchecks.find((s) => s.name === "battery-count-matches-committed")?.status).toBe("fail")
+  expect(mismatch.subchecks.find((s) => s.name === "curated-evidence-subset-matches-committed")?.status).toBe("fail")
   expect(mismatch.exitCode).toBe(1)
   const match = Verify.run({ skipBundle: true, battery: { live: "1225/0", committed: "1225/0" } })
-  expect(match.subchecks.find((s) => s.name === "battery-count-matches-committed")?.status).toBe("pass")
+  expect(match.subchecks.find((s) => s.name === "curated-evidence-subset-matches-committed")?.status).toBe("pass")
 })

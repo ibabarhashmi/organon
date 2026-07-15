@@ -42,10 +42,11 @@ test("S170 (RP-2/F-2) — the D33 note is SPLIT: SIGNABILITY carried (D33 unchan
   expect(note.reverified).toBe(true) // D33 is still SIGNABLE, so the carry re-verifies
   expect(note.inputs).toEqual(["d33.state"]) // its ONLY input — recomputed, not transitively-coupled state (RP-2)
   expect(note.inputsMoved).toBe(false)
-  // the d67 FALSE-FIRE reference is COMPUTED (its input, the own-capture count, moves with the REAL★ archive — F-2)
+  // the d67 FALSE-FIRE reference is COMPUTED (its input, the own-capture archive, moves with the REAL★/REAL-DERIVED series — F-2)
   const d67 = Rollup.d67Line()
   expect(d67.cls.kind).toBe("COMPUTED")
-  expect(d67.line).toMatch(/ownCaptures 0|UNJUDGEABLE/) // computed from the live own-capture count, honestly
+  // BACKFILL V43: the own-leg now has REAL★+REAL-DERIVED depth; the HUMAN own-count stays 0 (the invariant), computed live
+  expect(d67.line).toMatch(/HUMAN own-captures: 0|⟨N⟩ STILL EMPTY/) // computed from the live own-capture archive, honestly
 })
 
 test("S170 (W-PR02) — SEEDED NEGATIVE: a carried claim whose recompute would DIFFER is a lie (staleness cannot be BLESSED) — the audit is NOT honest", () => {

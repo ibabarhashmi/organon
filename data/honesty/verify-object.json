@@ -16,7 +16,7 @@
         "detail": "7/9 present & byte-identical, 0 drift (2 absent on a clone, named)"
       },
       {
-        "name": "battery-count-matches-committed",
+        "name": "curated-evidence-subset-matches-committed",
         "status": "pass",
         "detail": "curated battery 1281/0 == committed evidence 1281/0"
       }

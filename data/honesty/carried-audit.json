@@ -1,8 +1,8 @@
 {
   "protocol": "carried-audit",
-  "rule": "S170/RP-2 — every generated field is COMPUTED (recomputed this run) or carried:{from, why, reverified}; a carried field re-runs its OWN inputs and the carried value must equal the recompute (a carry that would recompute differently is a lie the Ship Gate refuses). The D33 note is SPLIT: SIGNABILITY (carried, D33 unchanged) from FALSE-FIRE (computed, the REAL★ archive feeds it this sprint).",
+  "rule": "S170/RP-2 — every generated field is COMPUTED (recomputed this run) or carried:{from, why, reverified}; a carried field re-runs its OWN inputs and the carried value must equal the recompute (a carry that would recompute differently is a lie the Ship Gate refuses). The D33 note is SPLIT: SIGNABILITY (carried, D33 unchanged) from FALSE-FIRE (computed). BACKFILL V43 (S182/N-3): a HISTORICAL act's hash is STABLE (its immutable-core hash) or carried:{from} — a fixed act yields a fixed hash; a drift without a tag REFUSES the log.",
   "honest": true,
-  "computed": 5,
+  "computed": 7,
   "carried": 1,
   "fields": [
     {
@@ -19,7 +19,7 @@
     {
       "field": "gate.firstSection.d67",
       "kind": "COMPUTED",
-      "producer": "Capture.realStarWindow (HUMAN ownCaptures) + the amended D67"
+      "producer": "Capture.ownArchive (REAL★ + REAL-DERIVED, mix + ratio) + the amended D67"
     },
     {
       "field": "header.pinsSha",
@@ -40,6 +40,28 @@
       "field": "terminalTree",
       "kind": "COMPUTED",
       "producer": "git rev-parse HEAD^{tree}"
+    },
+    {
+      "field": "header.continuity",
+      "kind": "COMPUTED",
+      "producer": "Continuity.check → the ONE reconciler + marker-diff"
+    },
+    {
+      "field": "header.capabilityIsolation",
+      "kind": "COMPUTED",
+      "producer": "Capability.verdictIsolation → the import fence"
+    }
+  ],
+  "historicalActs": [
+    {
+      "act": "D56 SEARCH (test-redesign-search.json)",
+      "renderedHash": "7d63b5e25df25e9d3f8398d4105fd7e832abbcade4bccbdfd36fcea50b58d6c8",
+      "stableHash": "7d63b5e25df25e9d3f8398d4105fd7e832abbcade4bccbdfd36fcea50b58d6c8",
+      "verdict": {
+        "ok": true,
+        "detail": "stable — the rendered hash 7d63b5e25df2… equals the act's immutable-core hash (a fixed act yields a fixed hash)"
+      },
+      "note": "N-3: previously the rendered hash was the record chain's selfSha (position-dependent — drifted a578032b→d5147f8d as the chain grew). Now it is the act's immutable-core hash (deviation + act + redesigns + redesignLog), STABLE forever; the chain selfSha remains the chain's tamper-evidence, a different concern."
     }
   ]
 }

@@ -18,6 +18,8 @@ import path from "node:path"
 import { PKG_ROOT } from "../../src/organon/frozen"
 import { Ship } from "../../src/organon/ship"
 import { Pins } from "../../src/organon/pins"
+import { Continuity } from "../../src/organon/continuity"
+import { Capability } from "../../src/organon/capability"
 import { Freshness } from "../../src/organon/freshness"
 import { Consistency } from "../../src/organon/consistency"
 import { Rollup } from "../../src/organon/rollup"
@@ -45,19 +47,25 @@ function artifacts(over: Partial<Ship.Artifacts> = {}): Ship.Artifacts {
     marker: marker(), terminalCommit: TERMINAL, clone: { clonedCommit: TERMINAL, ran: true },
     verify: { exitCode: 0, subchecks: Verify.DECLARED_SUBCHECKS.map((name) => ({ name, status: "pass", detail: "ok" })) },
     census: { newWallsInOu: [] }, battery: battery(), censusReconciliation: Consistency.censusContinuityDisplay(),
-    pinsEmitted: PROVENANCE_PINS, freshness: Rollup.freshnessAudit(),
+    pinsEmitted: Pins.selfHash().recomputed, freshness: Rollup.freshnessAudit(), // BACKFILL V43: the CURRENT head (provenance is now superseded)
     batteryDelta: { full: true, pass: Consistency.batteryFullDelta().now },
     batteryFullDelta: Consistency.batteryFullDelta(), censusIdentity: Consistency.censusIdentity(),
     deviationStateIds: State.deviations().map((d) => d.id),
+    // BACKFILL V43 (S180–S183) — the continuity-total artifacts, honest, so the V42 identity walls run under the V43 gate.
+    verifyDomainsStated: true, continuity: Continuity.check(),
+    searchHashStable: { ok: true, detail: "stable (test)" }, capabilityIsolation: Capability.verdictIsolation(),
   }
   return { ...base, ...over }
 }
 
-test("S169 (W-PR01) — the emitted pins-sha equals sha256(this sprint's pins file); Pins.selfHash is self-consistent", () => {
-  const sh = Pins.selfHash()
-  expect(sh.matches).toBe(true) // provenance-pins.json is self-consistent (unedited after Phase 0)
+test("S169 (W-PR01) — provenance-pins.json is still self-consistent, but is now SUPERSEDED by backfill (V43) — the chain-tip guard bites", () => {
+  const sh = Pins.selfHash("provenance-pins.json")
+  expect(sh.matches).toBe(true) // still self-consistent (unedited after V42's Phase 0)
   expect(sh.recomputed).toBe(PROVENANCE_PINS)
-  expect(Pins.verifyEmitted(PROVENANCE_PINS).ok).toBe(true)
+  // emitting the V42 head now REFUSES — provenance is no longer the tip (backfill carries from it; the M-1 recurrence caught)
+  expect(Pins.verifyEmitted(PROVENANCE_PINS, "provenance-pins.json").ok).toBe(false)
+  // the CURRENT head (backfill) verifies as emitted
+  expect(Pins.verifyEmitted(Pins.selfHash().recomputed).ok).toBe(true)
 })
 
 test("S169 (W-PR01) — SEEDED NEGATIVE: a PARENT pin emission (V41's eb64cebe) is SHAPE-VALID (40-hex) and IDENTITY-WRONG — REFUSE", () => {
@@ -77,7 +85,7 @@ test("S169 (W-PR01) — SEEDED NEGATIVE: a pins file edited after Phase 0 (self-
 })
 
 test("S169 (W-PR01) — HARDENING (red-team): HEAD_FILE must be the CHAIN TIP; a not-advanced head is caught structurally (the M-1 RECURRENCE)", () => {
-  // provenance-pins.json IS the tip today — nothing carries from it
+  // backfill-pins.json IS the tip today (V43) — nothing carries from it; provenance is now one link back
   const tip = Pins.headIsChainTip()
   expect(tip.tip).toBe(true)
   expect(tip.supersededBy).toBeNull()

@@ -24,6 +24,8 @@ import { Pins } from "../../src/organon/pins"
 import { Rollup } from "../../src/organon/rollup"
 import { Consistency } from "../../src/organon/consistency"
 import { State } from "../../src/organon/state"
+import { Continuity } from "../../src/organon/continuity"
+import { Capability } from "../../src/organon/capability"
 
 const TERMINAL = "abc1234def5678000000000000000000000000ff"
 
@@ -69,13 +71,18 @@ function goodArtifacts(): Ship.Artifacts {
     batteryFullDelta: Consistency.batteryFullDelta(), // reconciles across the boundary — S172 passes
     censusIdentity: Consistency.censusIdentity(), // the full partition closes — S173 passes
     deviationStateIds: State.deviations().map((d) => d.id), // incl D80–D86 — S174 passes
+    // BACKFILL V43 (S180–S183) — continuity-total artifacts, honest, so the V40/V42 walls run under the continuity-total gate.
+    verifyDomainsStated: true, // S180 — the verify sub-check names its domain
+    continuity: Continuity.check(), // S181 — every countable reconciled + marker-diff clean
+    searchHashStable: { ok: true, detail: "stable (test)" }, // S182 — the historical-act hash is stable
+    capabilityIsolation: Capability.verdictIsolation(), // S183 — the capability→verdict fence holds
   }
 }
 
 test("S151 (W-SH01) — Ship.gate PASSES on clean real-shaped artifacts; Ship.emit writes the LOG only then", () => {
   const g = Ship.gate(goodArtifacts())
   expect(g.pass).toBe(true)
-  expect(g.checks.length).toBe(12) // S152–S156 + S161 (V41 census fold) + S169–S174 (V42 identity gate), all ✓
+  expect(g.checks.length).toBe(16) // S152–S156 + S161 + S169–S174 (V42 identity gate) + S180–S183 (V43 continuity-total), all ✓
   const e = Ship.emit("FULL BUILD LOG CONTENT", goodArtifacts(), "2026-07-15")
   expect(e.wrote).toBe("log")
   if (e.wrote === "log") expect(e.content).toBe("FULL BUILD LOG CONTENT")
@@ -169,6 +176,7 @@ test("S156 (W-SH06) — the continuity ledger EXPLAINS the 1706→1738 gap (MR19
   expect(terminals).toContain(1738)
   expect(terminals).toContain(1793) // V39's terminal — what V40's baseline.prevFullPass equalled
   expect(terminals).toContain(1844) // V40's terminal — what V41's baseline.prevFullPass equalled
-  expect(terminals[terminals.length - 1]).toBe(1892) // PROVENANCE V42: V41's terminal appended — what V42's baseline.prevFullPass must equal
+  expect(terminals).toContain(1892) // V41's terminal
+  expect(terminals[terminals.length - 1]).toBe(1941) // BACKFILL V43: V42's terminal appended — what V43's baseline.prevFullPass must equal
   expect(ledger.mr19).toMatch(/1706→1738|Surrogate Addendum/)
 })

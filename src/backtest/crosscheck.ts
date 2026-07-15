@@ -18,6 +18,7 @@ import { readFileSync } from "node:fs"
 import path from "node:path"
 import { PKG_ROOT } from "../organon/frozen"
 import { Rigor } from "./rigor"
+import { HistoricalAct } from "../organon/historical"
 
 export namespace CrossCheck {
   export type Quantity = "dsr" | "psr" | "pbo"
@@ -321,11 +322,12 @@ export namespace Signability {
     try {
       const rec = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "test-redesign-search.json"), "utf8"))
       testRedesigns = rec.redesigns ?? 0
+      // BACKFILL V43 (N-3/S182) — the SEARCH's identity is the act's STABLE immutable-core hash (HistoricalAct.hash),
+      // NOT the record chain's `selfSha` (which is POSITION-dependent and drifted a578032b→d5147f8d as the chain grew,
+      // untagged, though the act never changed). A fixed act now yields a fixed hash forever; the chain selfSha remains the
+      // chain's tamper-evidence (record/chain.json.d56SearchLedgerHash), a different, position-dependent concern.
+      if (testRedesigns > 0) redesignSearchHashes.push(HistoricalAct.hash(rec))
     } catch { /* pre-Family — no redesign recorded */ }
-    try {
-      const chain = JSON.parse(readFileSync(path.join(PKG_ROOT, "record", "chain.json"), "utf8"))
-      if (chain.d56SearchLedgerHash) redesignSearchHashes.push(chain.d56SearchLedgerHash)
-    } catch { /* the chain is not built on this checkout */ }
     let iidRider: Result["iidRider"] = null
     try {
       const d = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honesty", "effective-n-determination.json"), "utf8"))
