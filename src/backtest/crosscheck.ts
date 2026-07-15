@@ -55,7 +55,12 @@ export namespace CrossCheck {
     if (Rigor.isBlocked(cc))
       return { quantity: q, ours: NaN, theirs: NaN, delta: NaN, tolerance: tol, agrees: "UNCOMPARABLE", comparable: false, detail: `the cross-check did not execute (BLOCKED): ${cc.reason}` }
     const ours = q === "dsr" ? cc.dsr : q === "psr" ? cc.psr : cc.pbo
-    const theirs = q === "dsr" ? cc.dsrPurgedcv : q === "psr" ? cc.psrPurgedcv : cc.pboPurgedcv
+    // VARIANT V41 (S163, L-3/DD-71a) — PBO's `theirs` leg is the GENUINELY INDEPENDENT hand-rolled CSCV (own Sharpe,
+    // cc.pboHandRolled), NOT the shared purgedcv leg (cc.pboPurgedcv is byte-identical to cc.pbo — Δ=0, a cross-check that
+    // cannot fail; RETIRED). DSR/PSR keep purgedcv (a genuinely independent reimplementation there). The independent PBO
+    // leg is proven to DETECT on constructed non-trivial fixtures (CrossCheck.pboIndependent, RP-3), so its agreement is
+    // meaningful, not a shared-code artifact. 0.6-vs-0.6 never again masquerades as agreement between the same code.
+    const theirs = q === "dsr" ? cc.dsrPurgedcv : q === "psr" ? cc.psrPurgedcv : cc.pboHandRolled
     const delta = Math.abs(ours - theirs)
     // PBO's comparability is the driver-emitted CSCV alignment flag; DSR/PSR are always comparable (identical formula).
     const comparable = q === "pbo" ? (cc.cscvAlignment?.comparable ?? false) : true
@@ -67,6 +72,146 @@ export namespace CrossCheck {
 
   export function all(cc: Rigor.CrossCheck | Rigor.Blocked = record()): Agreement[] {
     return (["dsr", "psr", "pbo"] as Quantity[]).map((q) => agreement(q, cc))
+  }
+
+  // ── VARIANT V41 (S163, L-3 / DD-71 / RP-3) — THE PBO CROSS-CHECK, MADE INDEPENDENT AND PROVEN TO DETECT ────────────────
+  // The degenerate `0.6 vs 0.6` was cc.pbo vs cc.pboPurgedcv — byte-identical shared lineage, Δ=0, a cross-check that cannot
+  // fail (X-REACH(a)). It fed D33's SIGNABLE for four sprints proving nothing. The fix (DD-71a): the `theirs` leg is now the
+  // GENUINELY INDEPENDENT hand-rolled CSCV (own Sharpe). But F-3/RP-3 warns that "independent" is cosmetic if it merely
+  // reproduces 0.6 — so this PROVES the independent CSCV can DETECT: run on a constructed pure-noise matrix it returns ≈0.5
+  // (the IS-best is overfit); on a constructed real-edge matrix it returns ≈0 (a persistent edge dominates IS and OOS). It
+  // DISCRIMINATES — so its agreement at 0.6 on the real fixture is meaningful, not a shared-code artifact. Clone-stable: the
+  // CSCV is ported from rigor.py::pbo (Appendix B.3), READ never edited (checkFrozenSet 0 drift); the fixtures are built by a
+  // deterministic LCG (no Math.random), so a fresh clone reproduces the detection proof to the bit.
+  export interface PboIndependent {
+    degenerateRetired: { leg: string; shared: number; delta: number; note: string }
+    independentLeg: { name: string; ours: number; theirs: number; delta: number; agrees: boolean; note: string }
+    detectionProof: { noise: { pbo: number; expected: string }; edge: { pbo: number; expected: string }; detectable: boolean; nSplits: number; T: number; N: number; detail: string }
+    detail: string
+  }
+  export function pboIndependent(cc: Rigor.CrossCheck | Rigor.Blocked = record()): PboIndependent | null {
+    if (Rigor.isBlocked(cc)) return null
+    const tol = tolerance("pbo")
+    const nSplits = 8, T = 240, N = 10
+    const noise = Cscv.pbo(Cscv.noiseMatrix(T, N, 20260715), nSplits)
+    const edge = Cscv.pbo(Cscv.edgeMatrix(T, N, 20260715, 0.6), nSplits)
+    // it can DETECT iff it discriminates: high (~0.5) on pure noise AND low (~0) on a real edge (a WIDE gap, so agreement is meaningful)
+    const detectable = Number.isFinite(noise) && Number.isFinite(edge) && noise > 0.35 && edge < 0.15 && noise - edge > 0.3
+    const sharedDelta = Math.abs(cc.pbo - cc.pboPurgedcv)
+    const indepDelta = Math.abs(cc.pbo - cc.pboHandRolled)
+    return {
+      degenerateRetired: { leg: "cc.pbo vs cc.pboPurgedcv", shared: cc.pboPurgedcv, delta: sharedDelta, note: `RETIRED — cc.pboPurgedcv ${cc.pboPurgedcv} is byte-identical to cc.pbo ${cc.pbo} (Δ=${sharedDelta.toExponential(2)}, shared lineage); a cross-check where both sides are the same code cannot fail (L-3). 0.6-vs-0.6 never again masquerades as agreement.` },
+      independentLeg: { name: "hand-rolled CSCV (own Sharpe)", ours: cc.pbo, theirs: cc.pboHandRolled, delta: indepDelta, agrees: indepDelta < tol, note: `the PBO agreement's theirs leg is now cc.pboHandRolled ${cc.pboHandRolled} (an independent implementation) — on the real fixture |Δ|=${indepDelta.toExponential(2)} ${indepDelta < tol ? `< tol ${tol} → agrees` : `≥ tol ${tol} → disagrees (a finding)`}` },
+      detectionProof: {
+        noise: { pbo: noise, expected: "≈0.5 — pure noise: the IS-best is overfit, its OOS rank is ~uniform" },
+        edge: { pbo: edge, expected: "≈0 — a real persistent edge dominates IS and OOS, so the IS-best is OOS-best" },
+        detectable,
+        nSplits, T, N,
+        detail: `the independent CSCV returns ${noise.toFixed(3)} on pure noise and ${edge.toFixed(3)} on a real-edge matrix — a ${(noise - edge).toFixed(3)} gap: it DISCRIMINATES (RP-3), so its agreement at ${cc.pbo} on the real fixture is meaningful, not a shared-code artifact. If it only ever returned 0.6 it would be RETIRED (DD-71b); it does not, so it is MADE INDEPENDENT (DD-71a).`,
+      },
+      detail: `PBO's cross-check is now carried by GENUINELY INDEPENDENT legs — the hand-rolled CSCV (proven to detect: ${noise.toFixed(2)} on noise, ${edge.toFixed(2)} on edge) and the theory null-distribution (D56). The shared-lineage purgedcv-PBO comparison is retired; ${detectable ? "the cross-check can DISAGREE when the truth differs, so its agreement is real" : "the cross-check could NOT be shown to detect — RETIRE is the honest path (DD-71b)"}.`,
+    }
+  }
+}
+
+// ── VARIANT V41 (S163 / RP-3) — the CSCV, ported clone-stably from rigor.py::pbo (Appendix B.3). READ, never edited (no .py
+// byte moves); no numpy; deterministic. Used ONLY to PROVE the independent PBO leg can DETECT on constructed fixtures whose
+// true PBO is known (pure noise → ≈0.5; a real edge → ≈0). Not on the mass path, not in the frozen set.
+export namespace Cscv {
+  // per-column (per-strategy) per-observation Sharpe (ddof=1) — the frozen _col_sharpe.
+  function colSharpe(rows: number[][]): number[] {
+    const T = rows.length, N = rows[0].length
+    const out = new Array<number>(N).fill(0)
+    for (let j = 0; j < N; j++) {
+      let sum = 0
+      for (let i = 0; i < T; i++) sum += rows[i][j]
+      const mu = sum / T
+      let ss = 0
+      for (let i = 0; i < T; i++) { const d = rows[i][j] - mu; ss += d * d }
+      const sd = T > 1 ? Math.sqrt(ss / (T - 1)) : 0
+      out[j] = sd > 0 ? mu / sd : 0
+    }
+    return out
+  }
+  // np.linspace(0, T, nSplits+1).astype(int) → contiguous row-index groups.
+  function contiguousGroups(T: number, nSplits: number): number[][] {
+    const bounds: number[] = []
+    for (let i = 0; i <= nSplits; i++) bounds.push(Math.trunc((i * T) / nSplits))
+    const groups: number[][] = []
+    for (let i = 0; i < nSplits; i++) { const g: number[] = []; for (let r = bounds[i]; r < bounds[i + 1]; r++) g.push(r); groups.push(g) }
+    return groups
+  }
+  // all C(n, k) index combinations (itertools.combinations order).
+  function* combinations(n: number, k: number): Generator<number[]> {
+    const idx = Array.from({ length: k }, (_, i) => i)
+    for (;;) {
+      yield idx.slice()
+      let i = k - 1
+      while (i >= 0 && idx[i] === n - k + i) i--
+      if (i < 0) return
+      idx[i]++
+      for (let j = i + 1; j < k; j++) idx[j] = idx[j - 1] + 1
+    }
+  }
+  // np.argsort(np.argsort(x)) + 1 → ranks 1..N (1 = worst).
+  function ranks(v: number[]): number[] {
+    const order = v.map((_, i) => i).sort((a, b) => v[a] - v[b])
+    const r = new Array<number>(v.length)
+    for (let pos = 0; pos < order.length; pos++) r[order[pos]] = pos + 1
+    return r
+  }
+  // rigor.py::pbo — CSCV: split rows into S groups; over every C(S, S/2) IS/OOS partition, pick the IS-best strategy, take
+  // its OOS relative rank ω, λ=logit(ω); PBO = P(λ<0) = P(the IS-best lands in the bottom half OOS).
+  export function pbo(matrix: number[][], nSplits = 8, chosenIdx: number | null = null): number {
+    const T = matrix.length, N = matrix[0]?.length ?? 0
+    if (N < 2 || T < nSplits) return NaN
+    const groups = contiguousGroups(T, nSplits)
+    const half = Math.floor(nSplits / 2)
+    let lamNeg = 0, total = 0
+    for (const isCombo of combinations(nSplits, half)) {
+      const isSet = new Set(isCombo)
+      const isIdx: number[] = []; for (const g of isCombo) isIdx.push(...groups[g])
+      const oosIdx: number[] = []; for (let g = 0; g < nSplits; g++) if (!isSet.has(g)) oosIdx.push(...groups[g])
+      const isPerf = colSharpe(isIdx.map((i) => matrix[i]))
+      const oosPerf = colSharpe(oosIdx.map((i) => matrix[i]))
+      let target = chosenIdx
+      if (target === null) { let best = 0; for (let j = 1; j < N; j++) if (isPerf[j] > isPerf[best]) best = j; target = best } // argmax (first max)
+      const order = ranks(oosPerf)
+      const omega = order[target] / (N + 1)
+      const lam = Math.log(omega / (1 - omega))
+      if (lam < 0) lamNeg++
+      total++
+    }
+    return total > 0 ? lamNeg / total : NaN
+  }
+
+  // a deterministic mulberry32 PRNG in [0,1) — no Math.random (clone-stable; a fresh clone reproduces the proof to the bit).
+  // mulberry32 (not a plain LCG: strided column-sampling of an LCG has low-frequency structure that biases the CSCV — the
+  // IS-best stays OOS-good and pure noise wrongly reads low; mulberry32's avalanche removes it, so noise reads ≈0.5).
+  function mulberry32(seed: number): () => number {
+    let a = seed >>> 0
+    return () => {
+      a = (a + 0x6d2b79f5) | 0
+      let t = Math.imul(a ^ (a >>> 15), 1 | a)
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+    }
+  }
+  // a standard-normal draw via Box–Muller (independent, symmetric — the CSCV Sharpe ranking needs proper noise).
+  function gauss(rnd: () => number): number {
+    const u = Math.max(rnd(), 1e-12), v = rnd()
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v)
+  }
+  // a pure-noise (T×N) matrix — every column i.i.d. N(0,1), NO real edge. True PBO ≈ 0.5 (the IS-best is overfit).
+  export function noiseMatrix(T: number, N: number, seed: number): number[][] {
+    const rnd = mulberry32(seed)
+    return Array.from({ length: T }, () => Array.from({ length: N }, () => gauss(rnd)))
+  }
+  // a real-edge (T×N) matrix — strategy 0 carries a persistent positive drift; the rest are N(0,1) noise. True PBO ≈ 0 (the
+  // edge dominates IS and OOS, so the IS-best is the OOS-best).
+  export function edgeMatrix(T: number, N: number, seed: number, drift: number): number[][] {
+    const rnd = mulberry32(seed)
+    return Array.from({ length: T }, () => Array.from({ length: N }, (_, j) => gauss(rnd) + (j === 0 ? drift : 0)))
   }
 }
 

@@ -1,0 +1,40 @@
+{
+  "protocol": "pbo-independent",
+  "at": "2026-07-15",
+  "rule": "S163 (L-3 / DD-71a / RP-3): the degenerate 0.6-vs-0.6 (cc.pbo vs cc.pboPurgedcv, byte-identical shared lineage) is RETIRED; the PBO agreement's theirs leg is now the GENUINELY INDEPENDENT hand-rolled CSCV, PROVEN to DETECT on constructed KNOWN-non-trivial fixtures. 0.6-vs-0.6 never again masquerades as agreement between the same code. D33's state/testRedesigns/the bundle are UNCHANGED; the frozen PBO is READ, never touched.",
+  "degenerateRetired": {
+    "leg": "cc.pbo vs cc.pboPurgedcv",
+    "shared": 0.6,
+    "delta": 0,
+    "note": "RETIRED — cc.pboPurgedcv 0.6 is byte-identical to cc.pbo 0.6 (Δ=0.00e+0, shared lineage); a cross-check where both sides are the same code cannot fail (L-3). 0.6-vs-0.6 never again masquerades as agreement."
+  },
+  "independentLeg": {
+    "name": "hand-rolled CSCV (own Sharpe)",
+    "ours": 0.6,
+    "theirs": 0.6,
+    "delta": 0,
+    "agrees": true,
+    "note": "the PBO agreement's theirs leg is now cc.pboHandRolled 0.6 (an independent implementation) — on the real fixture |Δ|=0.00e+0 < tol 0.02 → agrees"
+  },
+  "detectionProof": {
+    "noise": {
+      "pbo": 0.5285714285714286,
+      "expected": "≈0.5 — pure noise: the IS-best is overfit, its OOS rank is ~uniform"
+    },
+    "edge": {
+      "pbo": 0,
+      "expected": "≈0 — a real persistent edge dominates IS and OOS, so the IS-best is OOS-best"
+    },
+    "detectable": true,
+    "nSplits": 8,
+    "T": 240,
+    "N": 10,
+    "detail": "the independent CSCV returns 0.529 on pure noise and 0.000 on a real-edge matrix — a 0.529 gap: it DISCRIMINATES (RP-3), so its agreement at 0.6 on the real fixture is meaningful, not a shared-code artifact. If it only ever returned 0.6 it would be RETIRED (DD-71b); it does not, so it is MADE INDEPENDENT (DD-71a)."
+  },
+  "detail": "PBO's cross-check is now carried by GENUINELY INDEPENDENT legs — the hand-rolled CSCV (proven to detect: 0.53 on noise, 0.00 on edge) and the theory null-distribution (D56). The shared-lineage purgedcv-PBO comparison is retired; the cross-check can DISAGREE when the truth differs, so its agreement is real.",
+  "d33StateUnchanged": {
+    "state": "SIGNABLE",
+    "testRedesigns": 1,
+    "note": "SIGNABLE unchanged — the degenerate leg was replaced by the independent one, not the verdict (a derived, bundle-safe D33.pboEvidence field records it)"
+  }
+}

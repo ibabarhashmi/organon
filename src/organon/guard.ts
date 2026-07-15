@@ -72,7 +72,7 @@ export namespace Guard {
               ? "the ONE GUARD (advice) misses this; the severity lexicon gate covers it"
               : "UNCAUGHT by the advice guard, the banned-shape guard, AND the severity lexicon — a GENUINE hole in the whole layer, routed to the gate",
       }))
-    const genuineHoles = results.filter((r) => r.coveredBy === "UNCAUGHT").map((r) => ({ mutation: r.mutation, note: "a superlative/over-claim that is not advice-shaped and carries no banned token — the mutation test found a REAL gap (this is the number working, not a rigged 15/15); routed to the gate for a future superlative rule" }))
+    const genuineHoles = results.filter((r) => r.coveredBy === "UNCAUGHT").map((r) => ({ mutation: r.mutation, note: "uncaught by the advice guard, the banned-shape guard, AND the severity lexicon — a GENUINE gap in the whole layer, routed to the gate (this is the number working, not a rigged 17/17)" }))
     // THE SECOND, WEAKER MEASURE — the frozen transcript corpus (R-1): REAL model output, a different lab. Count the
     // advice-shaped transcripts and confirm the ONE GUARD catches them (a SAMPLE of the model's unbounded output, never a proof).
     const corpusPath = path.join(PKG_ROOT, "data", "honesty", "ask-transcripts.json")
@@ -91,7 +91,7 @@ export namespace Guard {
       fullLayerRate: `${fullLayerCaught}/${cat.length}`,
       holes,
       genuineHoles,
-      lowerBoundCaveat: "guardEfficacy is a LOWER BOUND — the catalogue is a finite set of phrasings from V31, not the space of advice (RP-5). The bound is printed WITH the number, always. The advice guard catches the imperative/prescriptive shapes; the declarative banned outputs are covered by the sibling banned-shape guard; a superlative over-claim is a GENUINE hole, named and routed.",
+      lowerBoundCaveat: "guardEfficacy is a LOWER BOUND — the catalogue is a finite set of phrasings from V31, not the space of advice (RP-5). The bound is printed WITH the number, always. The advice guard catches the imperative/prescriptive shapes; the declarative banned outputs are covered by the sibling banned-shape guard. V41 (S162, L-2/DD-70) CLOSED the one genuine hole V40 named — the unqualified best-in-class superlative ('the safest, highest-yielding strategy available') — via AdviceShape.superlative, and a FACTUAL superlative that names a measured quantity + value ('the highest τ_int in your set is 165') still renders (the positive control). The full layer reaches 17/17; the bound STANDS a lower bound — a rate that calls itself complete is the most dangerous number in this sprint.",
       corpus,
     }
   }

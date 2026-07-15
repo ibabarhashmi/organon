@@ -1,0 +1,52 @@
+{
+  "protocol": "variant-residues",
+  "at": "2026-07-15",
+  "deviations": {
+    "D80": {
+      "status": "RESERVED (Operator-signed=false)",
+      "what": "RESERVED — THE VARIANT LEDGER: two authored variants side by side, chronological, each under its own independent Stamp with its own inline evidence, the cumulative search count between them, an authorship breakdown; a group-by over the moat that ranks nothing; a PATH off the lineage view (screens stay 3); copy pinned verbatim. Operator-signed=false."
+    },
+    "D81": {
+      "status": "RESERVED (Operator-signed=false)",
+      "what": "RESERVED — THE DARK SEARCH PRICE: the deflation for N searches COMPUTED via the frozen sr0_deflated + the enforced rider, stored as INGREDIENTS tagged DARK-COMPUTE NOT A VERDICT, rendered DARK; a lit meter FAILS; familyN === 1 governs every live verdict. Operator-signed=false."
+    },
+    "D82": {
+      "status": "RESERVED (Operator-signed=false)",
+      "what": "RESERVED — THE PBO CROSS-CHECK CORRECTED: the degenerate 0.6-vs-0.6 consistency comparison retired from D33's evidence; PBO carried by the theory null-distribution + the hand-rolled non-shared-oracle leg, proven to DETECT on a known-non-trivial fixture (RP-3). D33.pboEvidence a derived, bundle-safe field. Operator-signed=false."
+    },
+    "D83": {
+      "status": "RESERVED (Operator-signed=false)",
+      "what": "RESERVED — THE GUARD HOLE CLOSED: an unqualified advice-superlative on a verdict surface is caught by Guard.superlativeHole composed into the ONE GUARD; a true factual superlative still renders; guardEfficacy re-measured 8/17 → 9/17 (advice), 17/17 (full layer), the lower-bound caveat printed always. Operator-signed=false."
+    }
+  },
+  "mr13": {
+    "status": "RECORDED UNDISCHARGEABLE (not silently dropped)",
+    "what": "MR9 (the reachability/live-value ceiling) has been carried since V32. It is undischargeable by the AGENT: it turns on the Operator opening the tool (realLineageCount: 0). V41 removes the last remaining REASON not to author a second manifest (the variant ledger makes authoring a second variant produce something the first could not show); the remaining action is a human opening a door, which has never been a Phase. Recorded, not dropped (sixth sprint)."
+  },
+  "capability": {
+    "count": 1,
+    "disclosed": [
+      "THE VARIANT LEDGER (two authored variants side by side, chronological, each under its own independent Stamp with its own inline evidence, the cumulative search count between them, an authorship breakdown, and a DARK search price — a group-by over the moat that ranks nothing)"
+    ],
+    "cleanup": [
+      "the census reconciliation DISPLAYED and folded into the Ship Gate (L-1, S161)",
+      "the one open guard hole CLOSED (L-2, S162 — guardEfficacy 8/17 → 10/17)",
+      "the degenerate 0.6-vs-0.6 PBO cross-check made INDEPENDENT and proven to DETECT (L-3, S163)"
+    ],
+    "proof": [
+      "the rider's enforcement EXERCISED in a DARK dry-run on real data (L-4, S164 — nothing lit)",
+      "the capture verb's MARGINAL VALUE rendered (L-5, S165 — in captures)"
+    ],
+    "note": "reported as 1 disclosed capability (the variant ledger); the other five items are the three V40 owings made mechanical + two dark-safety exercises — clean-up and proof, not new scored capability. Honest, not a Halt."
+  },
+  "darkPrice": {
+    "lit": false,
+    "tag": "DARK-COMPUTE, NOT A VERDICT",
+    "rule": "the deflation for N searches is COMPUTED (the frozen sr0_deflated + the enforced rider) and stored as INGREDIENTS — NOT a rendered verdict — tagged DARK-COMPUTE NOT A VERDICT. familyN === 1 governs every live verdict. The day D63 is reversed, the meter lights over history already computed — zero rework. D63's reversal is the Operator's to make; the agent never makes it (the meter stays dark by the pen's own hand)."
+  },
+  "theNumber": {
+    "realLineageCount": 0,
+    "reachableHumans": 1,
+    "reachableHumansNote": "BY DESIGN under D51 (INSTRUMENT). The variant ledger is the first feature whose VALUE the Operator cannot see without authoring a SECOND manifest — the first feature that is also an INVITATION. The agent cannot open the door; it made the room behind it worth entering. That is the honest limit of what construction can do."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "protocol": "variant-positive-control",
+  "at": "2026-07-15",
+  "rule": "RP-1 — the positive control on the REAL emit path: a seeded bad marker slot, the REAL emit command, and NO build log written (a refusal at the same path instead). The Ship Gate (V40) is REUSED, and now runs the V41 census-fold wall (S161) too.",
+  "command": "bun run script/honesty/variant-ship.ts --seed-bad treeHash --out ../../../../tmp/variant-pc.md",
+  "seededSlot": "treeHash",
+  "wrote": "refusal",
+  "refusal": {
+    "wall": "S152",
+    "artifact": "the terminal marker",
+    "value": "Marker.validate FAILED — missing [] · invalid [treeHash: not a 40-hex git tree object (a hand-typed value, not a re-derived hash)]"
+  },
+  "outIsRefusalNotLog": true,
+  "realLogUntouched": "the real build log did not exist before this control run"
+}

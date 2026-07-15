@@ -45,6 +45,10 @@ function goodBattery(): Ship.Battery.Continuity {
     { chain: [{ sprint: "V39 (Family)", terminalFullPass: 1793 }] },
   )
 }
+function goodCensus(): Ship.Artifacts["censusReconciliation"] {
+  // a reconciling census (VARIANT V41, S161): prev + new − moved === now
+  return { prev: 83, newThisSprint: 9, moved: 13, now: 79, reconciles: true, display: "prev 83 + new 9 − moved 13 === now 79", contradiction: null }
+}
 function goodArtifacts(): Ship.Artifacts {
   return {
     marker: goodMarker(),
@@ -53,13 +57,14 @@ function goodArtifacts(): Ship.Artifacts {
     verify: goodVerify(),
     census: { newWallsInOu: [] },
     battery: goodBattery(),
+    censusReconciliation: goodCensus(),
   }
 }
 
 test("S151 (W-SH01) — Ship.gate PASSES on clean real-shaped artifacts; Ship.emit writes the LOG only then", () => {
   const g = Ship.gate(goodArtifacts())
   expect(g.pass).toBe(true)
-  expect(g.checks.length).toBe(5) // S152–S156, all ✓
+  expect(g.checks.length).toBe(6) // S152–S156 + S161 (the V41 census fold), all ✓
   const e = Ship.emit("FULL BUILD LOG CONTENT", goodArtifacts(), "2026-07-15")
   expect(e.wrote).toBe("log")
   if (e.wrote === "log") expect(e.content).toBe("FULL BUILD LOG CONTENT")
@@ -151,6 +156,7 @@ test("S156 (W-SH06) — the continuity ledger EXPLAINS the 1706→1738 gap (MR19
   const terminals = ledger.chain.map((c: { terminalFullPass: number }) => c.terminalFullPass)
   expect(terminals).toContain(1706)
   expect(terminals).toContain(1738)
-  expect(terminals[terminals.length - 1]).toBe(1793) // V39's terminal — what V40's baseline.prevFullPass must equal
+  expect(terminals).toContain(1793) // V39's terminal — what V40's baseline.prevFullPass equalled
+  expect(terminals[terminals.length - 1]).toBe(1844) // VARIANT V41: V40's terminal appended — what V41's baseline.prevFullPass must equal
   expect(ledger.mr19).toMatch(/1706→1738|Surrogate Addendum/)
 })

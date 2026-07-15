@@ -29,6 +29,9 @@ console.log(`  ORGΛNON schedules NOTHING — you run this on your own cadence; 
 if (!live) {
   console.log("\n  subjects that would be snapshot (run with --live to fetch a REAL@ts snapshot and grow the window):")
   for (const s of Capture.subjects()) console.log(`    · ${s.project} ${s.asset} (${s.subjectKey.slice(0, 8)}…) → ${s.observable}`)
+  // VARIANT V41 (S165, DD-72) — the MARGINAL VALUE of the NEXT capture, so the cadence pays visibly from the first run.
+  console.log(`\n  what your NEXT capture buys (V41): each run advances the own-capture window toward judgeable, in CAPTURES (not days).`)
+  if (w.captures === 0) console.log(`  the FIRST capture turns a UNJUDGEABLE into a 1 of ${Capture.ledger().minWindowDays} CAPTURES — the cadence pays from the very first run.`)
   console.log("\n  (offline — nothing fetched, nothing appended. `organon.sh capture --live` snapshots and appends.)")
   process.exit(0)
 }
@@ -65,4 +68,6 @@ writeFileSync(LEDGER, JSON.stringify(ledger, null, 2) + "\n")
 const w2 = Capture.window()
 console.log(`\n  ✓ ${result.reason}`)
 console.log(`  appended a REAL@${now} snapshot — the window is now ${w2.captures} captures.`)
+// VARIANT V41 (S165, DD-72) — the MARGINAL VALUE this run bought (in CAPTURES, never days). `w` is the window BEFORE append.
+console.log(`  marginal value         : ${Capture.marginalValue(result, w).render}`)
 console.log(`  daysToJudgeable        : ${Capture.judgeability().verdict}`)

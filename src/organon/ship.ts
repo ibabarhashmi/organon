@@ -23,6 +23,7 @@ import { Marker } from "../studio/marker"
 import { Clone } from "./clone"
 import { Verify } from "./verify"
 import { Falsify } from "./falsify"
+import { Consistency } from "./consistency"
 
 export namespace Ship {
   // ── BATTERY CONTINUITY (S156, K-7) — the cross-boundary check the within-sprint reconciliation never made ──
@@ -64,6 +65,7 @@ export namespace Ship {
     verify: Verify.Result // the REAL verify Result — S154 runs subcheckSetStable on THIS
     census: { newWallsInOu: string[] } // this sprint's new walls (id > NEW_WALL_FLOOR) that landed in ORIGIN_UNRECORDED
     battery: Battery.Continuity // S156 — the cross-boundary continuity result
+    censusReconciliation: Consistency.CensusContinuity // VARIANT V41 (S161, L-1) — the census reconciliation, DISPLAYED
   }
 
   export type Refusal = { wall: string; artifact: string; value: string }
@@ -101,6 +103,14 @@ export namespace Ship {
     if (!a.battery.ok) return fail("S156", "the battery baseline", `a cross-boundary battery gap of ${a.battery.gap.n}: ${a.battery.gap.unexplained} (K-7)`)
     checks.push({ wall: "S156", artifact: "the battery baseline", ok: true, detail: a.battery.detail })
 
+    // S161 (VARIANT V41, L-1) — the census reconciles in DISPLAYED prev + new − moved === now arithmetic. V40 left this in
+    // prose; here it is run against the REAL census at emit time and a non-reconciling census REFUSES the log (the one
+    // continuity V40 left un-mechanical is now mechanical, like every other). Circularity answered (A′ #5): the Ship Gate
+    // checking the census it emits is the Ship Gate doing its one job — refusing to write a number that does not reconcile.
+    const cr = a.censusReconciliation
+    if (!cr.reconciles) return fail("S161", "the census reconciliation", `the census does NOT reconcile — ${cr.display}${cr.contradiction ? ` (${cr.contradiction.why})` : ""}; L-1 demands prev + new − moved === now, DISPLAYED not asserted`)
+    checks.push({ wall: "S161", artifact: "the census reconciliation", ok: true, detail: `${cr.display} ✓ (displayed, run against the real census at emit time — L-1)` })
+
     return { pass: true, checks }
   }
 
@@ -122,6 +132,7 @@ export namespace Ship {
       verify: verify ?? Verify.run({ skipBundle: true }),
       census: { newWallsInOu },
       battery: Battery.continuity(),
+      censusReconciliation: Consistency.censusContinuityDisplay(), // S161 (V41) — run against the REAL census at emit
     }
   }
 

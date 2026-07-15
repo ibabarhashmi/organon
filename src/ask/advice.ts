@@ -58,6 +58,30 @@ export namespace AdviceShape {
       if (/\b(buy|sell)\s+(button|order|-?side|wall)/.test(around)) continue // a noun compound ("buy button"), not an imperative
       return { advice: true, shape: label }
     }
+    // VARIANT V41 (S162, L-2, DD-70) — THE SUPERLATIVE HOLE, CLOSED. The mutation test (V40) found one banned shape the whole
+    // layer missed: an unqualified desirability/safety/yield superlative applied to a STRATEGY/investment ("the safest,
+    // highest-yielding strategy available") — a best-in-class claim about the world, not a second-person prescription, so the
+    // shape rules above miss it. It is an implicit recommendation and is caught HERE. A FACTUAL superlative that names a
+    // measured quantity WITH a value ("the highest τ_int in your set is 165"; "the highest-APY pool is fluid at 8% — rank 1
+    // of 48", the enumerator's own selection-rank fact) is NOT advice and still renders (the DD-70 positive control).
+    const sup = superlative(text)
+    if (sup.caught) return { advice: true, shape: sup.shape }
     return { advice: false, shape: null }
+  }
+
+  // S162 / DD-70 — the superlative detector, factual-escape-guarded. `caught` = an ADVICE superlative (best-in-class,
+  // no measured basis); `factual` = a superlative that names a measured quantity AND a number (a FACT, renders). Exposed so
+  // the guard's mutation harness and the positive control can both read the distinction directly.
+  const SUPERLATIVE_DESIRABILITY = /\b(safest|best|top|optimal|most profitable|lowest[- ]risk|highest[- ]yielding|highest[- ]apy|highest[- ]yield|greatest|hottest|surest|smartest|number one|no\.? ?1)\b/
+  const STRATEGY_NOUN = /\b(strateg(y|ies)|investments?|pools?|vaults?|options?|choices?|plays?|picks?|opportunit(y|ies)|bets?|coins?|tokens?|assets?|returns?)\b/
+  const MEASURED_QUANTITY = /τ_?int|tau[_ ]?int|\bapy\b|\btvl\b|sharpe|deflation|coverage|funding|\bratio\b|\bcount\b|\brank\b|observations?/
+  export function superlative(text: string): { caught: boolean; factual: boolean; shape: string | null } {
+    const t = ` ${text.toLowerCase()} `
+    if (!SUPERLATIVE_DESIRABILITY.test(t)) return { caught: false, factual: false, shape: null }
+    if (!STRATEGY_NOUN.test(t)) return { caught: false, factual: false, shape: null } // a superlative not applied to a strategy — not this hole
+    // FACTUAL ESCAPE — a measured quantity named WITH a number is a FACT about the user's own set, never advice (DD-70). This
+    // is exactly the enumerator's selection-rank fact; suppressing it would hide a true fact, which X-HONEST forbids.
+    if (/\d/.test(t) && MEASURED_QUANTITY.test(t)) return { caught: false, factual: true, shape: "factual-superlative" }
+    return { caught: true, factual: false, shape: "superlative-best-in-class" }
   }
 }

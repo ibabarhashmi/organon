@@ -83,6 +83,25 @@ export namespace Consistency {
     return { after, reclassified: r.reclassified, namedReclassified: r.namedReclassified, newOuThisSprint, contradiction: r.contradiction }
   }
 
+  // VARIANT V41 (S161, L-1) — THE CENSUS CONTINUITY, DISPLAYED. V40 made every OTHER continuity mechanical (battery, marker,
+  // clone) but left its own census reconciled in PROSE, not in the displayed `prev + new − moved === now` arithmetic S107
+  // demands elsewhere. This renders the SAME reconciliation as `prev + new − moved === now` (algebraically identical:
+  // before + newOu − (treated + reclassified) === after) so the Ship Gate can run it against the REAL census at emit time
+  // (Ship S161) and REFUSE a non-reconciling census. `new` is the new-this-sprint OU walls; `moved` is treated + reclassified.
+  export interface CensusContinuity { prev: number; newThisSprint: number; moved: number; now: number; reconciles: boolean; display: string; contradiction: Contradiction | null }
+  export function censusContinuityDisplay(): CensusContinuity {
+    const c = Falsify.census()
+    const rec = censusReconciliation() // {after, reclassified, namedReclassified, newOuThisSprint, contradiction}
+    const treated = c.recovered + c.reFounded + c.deleted.length
+    const moved = treated + rec.namedReclassified
+    const prev = CENSUS_BEFORE
+    const now = rec.after
+    const newThisSprint = rec.newOuThisSprint
+    const reconciles = prev + newThisSprint - moved === now && rec.contradiction === null
+    const display = `prev ${prev} + new ${newThisSprint} − moved ${moved} === now ${now}`
+    return { prev, newThisSprint, moved, now, reconciles, display, contradiction: rec.contradiction }
+  }
+
   // THE BATTERY RECONCILIATION — the full pass === prev + added − removed. A hand-typed added (the V36 FILE count) that
   // does not reconcile with the measured full pass is a contradiction (G-1's exact defect).
   export function batteryReconciliation(): { fullPass: number; reconciles: boolean; contradiction: Contradiction | null } {

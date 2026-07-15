@@ -61,9 +61,11 @@ test("S116 — the theory leg can still FAIL (X-REACH(a)): a seeded powered mean
 })
 
 test("S101 — RP-1: a SEEDED disagreement (the claim's own inversion — 'PBO disagrees') makes D33 compute UNSIGNABLE (the headline finding, not a bug)", () => {
-  // fake a cross-check record where purgedcv's PBO diverges far beyond the pinned 0.02 — the tolerance is STILL read from
-  // the pins (the seed changes only the quantities, never the tolerance).
-  const seeded = { ...(rec.crossCheck as Rigor.CrossCheck), pbo: 0.6, pboPurgedcv: 0.95, pboDiff: 0.35 }
+  // fake a cross-check record where the INDEPENDENT hand-rolled CSCV's PBO diverges far beyond the pinned 0.02 — the
+  // tolerance is STILL read from the pins (the seed changes only the quantities, never the tolerance). VARIANT V41 (S163):
+  // the PBO agreement's theirs leg is now cc.pboHandRolled (the GENUINELY INDEPENDENT leg), not the degenerate shared
+  // cc.pboPurgedcv — so the seeded inversion is now a REAL independent-implementation disagreement (L-3/DD-71a).
+  const seeded = { ...(rec.crossCheck as Rigor.CrossCheck), pbo: 0.6, pboHandRolled: 0.95, pboHandRolledDiff: 0.35 }
   const all = CrossCheck.all(seeded)
   const pbo = all.find((a) => a.quantity === "pbo")!
   expect(pbo.agrees).toBe(false) // a comparable disagreement, not UNCOMPARABLE

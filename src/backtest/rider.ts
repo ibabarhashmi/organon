@@ -157,6 +157,48 @@ export namespace Rider {
     }
   }
 
+  // ── VARIANT V41 (S164, L-4 / RP-5) — THE ENFORCEMENT, EXERCISED IN A DARK DRY-RUN ON REAL DATA ──────────────────────────
+  // V40 proved the enforcement bites by SEEDED NEGATIVE only; it never ran against a live Stamp, because D63 is off and no
+  // real lineage exists (L-4). This runs the WHOLE enforcement path against a REAL autocorrelated series — the clone-stable
+  // AR(1) demonstration (τ_int ≈ 36, √τ ≈ 6, the exact one V39's determination cites; live-reproducible from a fresh clone)
+  // — computes the naive + Newey–West-corrected statistics, and shows the enforcement WOULD render CORRECTED/UNJUDGEABLE if
+  // the meter were lit. But it renders NOTHING LIT: deflationActiveOnLivePath is false (D63 off, familyN === 1), so
+  // renderedLit is false. RP-5: this output goes to a TEST ARTIFACT (data/honesty/rider-dryrun.json), NEVER a render surface —
+  // the wall proves the enforcement EXECUTES on real data; it creates no render path a later sprint could quietly light.
+  export interface DarkDryRun {
+    series: string
+    n: number
+    tauInt: number
+    naive: number
+    corrected: number
+    inflation: number
+    triggered: boolean
+    enforcementIfLit: { ok: boolean; required: RenderMode | "any"; why: string } // what the enforcement WOULD do if deflation were live
+    deflationActiveOnLivePath: false // D63 OFF — familyN === 1; the enforcement is ARMED, not firing
+    renderedLit: false // NOTHING is rendered lit (a lit render FAILS — S164)
+    note: string
+  }
+  export function darkDryRun(): DarkDryRun {
+    // the REAL autocorrelated series — the clone-stable AR(1)(ρ=0.95) demonstration (live-reproducible, no gitignored payload).
+    const demo = EffectiveN.demoAr1()
+    const c = correct(demo)
+    // what the enforcement WOULD decide IF the meter were lit: a NAIVE render on this autocorrelated series is REFUSED.
+    const enforcementIfLit = enforce("naive", { deflationActive: true, tauInt: c.tauInt })
+    return {
+      series: "clone-stable AR(1)(ρ=0.95) demonstration — the real autocorrelated case (the exact series V39's determination cites; the V26 funding panel τ_int 27–165 is the recorded, raw-gitignored evidence)",
+      n: demo.length,
+      tauInt: c.tauInt,
+      naive: c.naive,
+      corrected: c.corrected,
+      inflation: c.inflation,
+      triggered: c.triggered,
+      enforcementIfLit,
+      deflationActiveOnLivePath: false,
+      renderedLit: false,
+      note: `the enforcement EXECUTED on a REAL autocorrelated series (τ_int ${c.tauInt.toFixed(1)}, √τ ${Math.sqrt(c.tauInt).toFixed(1)}× ≥ ${threshold().inflationTrigger} → ${c.triggered ? "TRIGGERS" : "below trigger"}); if the meter were lit it would render ${enforcementIfLit.ok ? "any (permitted)" : "CORRECTED/UNJUDGEABLE — a naive render REFUSED"}. But D63 is OFF (familyN === 1): renderedLit is false, NOTHING is lit. The dry-run proves the path runs on real data, not fixtures — and lights nothing (RP-5: the output is a test artifact, never a render surface).`,
+    }
+  }
+
   // ── THE COMPOUNDED GENEROSITY (A′ #9) — D27's knowing generosity AND the ≈√τ_int overstatement, rendered together. ──
   export interface Compounded { d27: string; overstatementFactor: number; overstatementRange: string; compounded: string }
   export function compoundedGenerosity(): Compounded {

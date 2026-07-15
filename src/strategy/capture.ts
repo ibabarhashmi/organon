@@ -71,6 +71,39 @@ export namespace Capture {
     return { captures: caps.length, observations: caps.reduce((a, c) => a + c.pit.length, 0), oldestTs: oldest, newestTs: newest, spanDays }
   }
 
+  // ── VARIANT V41 (S165, L-5 / DD-72) — THE CAPTURE'S MARGINAL VALUE. At "0 captures" the own-capture leg is UNJUDGEABLE
+  // forever, and the only actionable false-fire number is the RETROSPECTIVE (revisable) tier (L-5). The tool cannot make the
+  // Operator run the cadence, but it can make the FIRST run visibly worth it: each capture advances at least one observable's
+  // own-capture window toward judgeable, and the FIRST capture turns a UNJUDGEABLE into a 1. Rendered in CAPTURES, never days
+  // (RP-6: a count ORGΛNON has, not a date it cannot know — do NOT project to a date).
+  export interface MarginalValue {
+    ran: boolean
+    seriesAdvanced: number // how many observables this run resolved (non-null PIT values) — each moves toward a judgeable own-count
+    ownCapturesBefore: number
+    ownCapturesAfter: number
+    minWindow: number // the minimum window, IN CAPTURES (not days)
+    firstCapture: boolean // did this run turn a UNJUDGEABLE (0 captures) into a 1?
+    unit: "CAPTURES"
+    render: string
+  }
+  export function marginalValue(run: RunResult, before: Window = window()): MarginalValue {
+    const l = ledger()
+    const seriesAdvanced = run.pit.filter((p) => p.value != null).length
+    const ownBefore = before.captures
+    const ownAfter = run.ran ? ownBefore + 1 : ownBefore
+    const firstCapture = run.ran && ownBefore === 0
+    const minWindow = l.minWindowDays // the requirement expressed in CAPTURES (an honest lower bound; the unit is captures)
+    let render: string
+    if (!run.ran) {
+      render = `no capture ran (OFFLINE) — nothing advanced. When you run \`organon.sh capture\` with a live fetcher, each run advances the own-capture window toward judgeable, in CAPTURES (not days).`
+    } else if (firstCapture) {
+      render = `this capture advanced ${seriesAdvanced} series; your own-capture count is now 1 of ${minWindow} CAPTURES (not days) toward a judgeable own-count. The FIRST capture turns a UNJUDGEABLE into a 1 — the cadence pays from the very first run (RP-6: a count, never a projected date).`
+    } else {
+      render = `this capture advanced ${seriesAdvanced} series; your own-capture count is now ${ownAfter} of ${minWindow} CAPTURES (not days) toward a judgeable own-count — judgeability depends on YOUR cadence, never a date ORGΛNON can promise (RP-6).`
+    }
+    return { ran: run.ran, seriesAdvanced, ownCapturesBefore: ownBefore, ownCapturesAfter: ownAfter, minWindow, firstCapture, unit: "CAPTURES", render }
+  }
+
   // daysToJudgeable — in CAPTURES, not days (RP-6). The false-fire count needs a minimum window; the requirement is stated
   // in CAPTURES, and the cadence is measured in captures. It is UNJUDGEABLE because ORGΛNON cannot know the Operator's future cadence.
   export interface Judgeability { minWindowDays: number; ownCaptures: number; capturesNeeded: number; unit: "CAPTURES"; verdict: string }

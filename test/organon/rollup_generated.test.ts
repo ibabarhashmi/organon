@@ -58,8 +58,9 @@ test("S100 (W-DV01) — X-REACH(c) carried into the generator: a marker that TYP
 })
 
 test("S100/RP-1 — the SEEDED NEGATIVE is the CLAIM'S OWN INVERSION: d33 'PBO disagrees' → UNSIGNABLE; Release 'artifact absent' → D50(i) false", () => {
-  // d33 inversion — a seeded PBO disagreement flips SIGNABLE → UNSIGNABLE (not an arbitrary mutation)
-  const seeded = { ...(rec.crossCheck as Rigor.CrossCheck), pbo: 0.6, pboPurgedcv: 0.95, pboDiff: 0.35 }
+  // d33 inversion — a seeded PBO disagreement flips SIGNABLE → UNSIGNABLE (not an arbitrary mutation). VARIANT V41 (S163):
+  // the theirs leg is now the INDEPENDENT hand-rolled CSCV (cc.pboHandRolled), so the seed is a real independent divergence.
+  const seeded = { ...(rec.crossCheck as Rigor.CrossCheck), pbo: 0.6, pboHandRolled: 0.95, pboHandRolledDiff: 0.35 }
   expect(Signability.d33(CrossCheck.all(seeded)).state).toBe("UNSIGNABLE")
   // Release inversion — the artifact is absent (dist gitignored) → D50(i) computes false, and the producer reflects it
   expect(Release.artifact()).toBe("ABSENT")

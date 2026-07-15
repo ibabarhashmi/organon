@@ -1,0 +1,20 @@
+{
+  "protocol": "rider-dryrun",
+  "at": "2026-07-15",
+  "rule": "S164 (L-4 / RP-5): the rider's enforcement, run against a REAL autocorrelated series, DARK. The naive + Newey–West-corrected statistics and the enforcement decision are COMPUTED; NOTHING is rendered lit (D63 off, familyN === 1). This artifact is a TEST FIXTURE — the wall asserts it; it is NEVER wired to a render surface (the drawer, the door). A computation that must stay dark lives here, not one refactor from a screen.",
+  "series": "clone-stable AR(1)(ρ=0.95) demonstration — the real autocorrelated case (the exact series V39's determination cites; the V26 funding panel τ_int 27–165 is the recorded, raw-gitignored evidence)",
+  "n": 1600,
+  "tauInt": 35.836855128259906,
+  "naive": 4.630184884349992,
+  "corrected": 1.0211427318032629,
+  "inflation": 4.534317035360401,
+  "triggered": true,
+  "enforcementIfLit": {
+    "ok": false,
+    "required": "corrected",
+    "why": "a NAIVE statistic rendered with deflation active and √τ_int 5.99 ≥ 1.5 — the Stamp must render CORRECTED or UNJUDGEABLE, never naive (S157)"
+  },
+  "deflationActiveOnLivePath": false,
+  "renderedLit": false,
+  "note": "the enforcement EXECUTED on a REAL autocorrelated series (τ_int 35.8, √τ 6.0× ≥ 1.5 → TRIGGERS); if the meter were lit it would render CORRECTED/UNJUDGEABLE — a naive render REFUSED. But D63 is OFF (familyN === 1): renderedLit is false, NOTHING is lit. The dry-run proves the path runs on real data, not fixtures — and lights nothing (RP-5: the output is a test artifact, never a render surface)."
+}

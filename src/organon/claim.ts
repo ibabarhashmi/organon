@@ -104,7 +104,13 @@ export namespace Claim {
       // SHIP V40 (D76/S157) — riderEnforced: the rider stops being a sticky note. DERIVED, not asserted: it is true iff the
       // enforcement BITES (a naive Stamp on autocorrelated input with deflation active is refused). The rider now has teeth.
       const riderEnforced = !Rider.enforce("naive", { deflationActive: true, tauInt: Rider.threshold().tauIntTrigger + 1 }).ok
-      return { value: { state: d.state, operatorSigned: d.operatorSigned, testRedesigns: d.testRedesigns, redesignSearchHashes: d.redesignSearchHashes, iidRider: d.iidRider, riderEnforced }, partial: /PRECONDITION-MET/.test(d.state) }
+      // VARIANT V41 (D82/S163, L-3) — pboEvidence: the degenerate shared-lineage 0.6-vs-0.6 (cc.pbo vs cc.pboPurgedcv) is
+      // RETIRED; PBO's cross-check leg is the GENUINELY INDEPENDENT hand-rolled CSCV (own Sharpe), proven to DETECT on
+      // constructed non-trivial fixtures (≈0.5 noise / ≈0 edge — CrossCheck.pboIndependent, RP-3), plus the theory
+      // null-distribution (D56). DERIVED (bundle-safe, like riderEnforced): "independent" iff the CSCV discriminates.
+      const pi = CrossCheck.pboIndependent()
+      const pboEvidence = pi ? (pi.detectionProof.detectable ? "independent (hand-rolled CSCV proven to detect + theory null-dist; degenerate 0.6-vs-0.6 retired)" : "theory-leg-only (independent CSCV could not be shown to detect — degenerate 0.6-vs-0.6 retired, DD-71b)") : "blocked"
+      return { value: { state: d.state, operatorSigned: d.operatorSigned, testRedesigns: d.testRedesigns, redesignSearchHashes: d.redesignSearchHashes, iidRider: d.iidRider, riderEnforced, pboEvidence }, partial: /PRECONDITION-MET/.test(d.state) }
     },
     census: () => {
       const c = Falsify.census()

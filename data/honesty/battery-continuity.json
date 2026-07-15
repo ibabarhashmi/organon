@@ -6,6 +6,7 @@
   "chain": [
     { "sprint": "V38 (Substance)", "terminalFullPass": 1706, "at": "2026-07-14" },
     { "sprint": "V38-B (Surrogate Addendum)", "terminalFullPass": 1738, "at": "2026-07-14", "note": "MR19 — +32 tests after V38's 1706 marker (a distinct commit); the K-7 gap, explained and chained" },
-    { "sprint": "V39 (Family)", "terminalFullPass": 1793, "at": "2026-07-15" }
+    { "sprint": "V39 (Family)", "terminalFullPass": 1793, "at": "2026-07-15" },
+    { "sprint": "V40 (Ship)", "terminalFullPass": 1844, "at": "2026-07-15", "note": "the first FULLY-ACHIEVED sprint; the ship gate held, the clone ran from zero to 1844" }
   ]
 }

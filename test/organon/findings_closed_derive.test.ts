@@ -30,7 +30,7 @@ test("PART A′ — all 10 attacks are recorded with a binding consequence (atta
 })
 
 test("PART A′ #1 — every producer has a demonstrated seeded negative that HOLDS: d33 flips to UNSIGNABLE on a seeded disagreement (the claim's own inversion)", () => {
-  const seeded = { ...(rec.crossCheck as Rigor.CrossCheck), pbo: 0.6, pboPurgedcv: 0.95, pboDiff: 0.35 }
+  const seeded = { ...(rec.crossCheck as Rigor.CrossCheck), pbo: 0.6, pboHandRolled: 0.95, pboHandRolledDiff: 0.35 } // V41 (S163): the independent hand-rolled CSCV leg
   expect(Signability.d33(CrossCheck.all(seeded)).state).toBe("UNSIGNABLE") // A1 / RP-1 holds
 })
 

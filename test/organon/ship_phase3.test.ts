@@ -18,10 +18,10 @@ const manifestPins = JSON.parse(readFileSync(path.join(PKG_ROOT, "data", "honest
 
 test("S158 (W-SH08) — guardEfficacy is a RAW FRACTION (caught/seeded), a VALUE not a promise (K-6)", () => {
   const r = Guard.mutationRate()
-  expect(r.rate).toMatch(/^\d+\/\d+$/) // "8/15" — a number, not "UNJUDGEABLE" / "said louder"
-  expect(r.caught).toBe(8)
+  expect(r.rate).toMatch(/^\d+\/\d+$/) // "10/17" — a number, not "UNJUDGEABLE" / "said louder"
+  expect(r.caught).toBe(10) // VARIANT V41 (S162, L-2): 8→10 — the superlative rule closes the genuine hole AND upgrades a "rankings…top to bottom" mutation from sibling-covered to advice-caught
   expect(r.seeded).toBe(17)
-  expect(r.caught).toBeLessThan(r.seeded) // NOT a rigged 17/17 — the mutation test found real holes
+  expect(r.caught).toBeLessThan(r.seeded) // still NOT a rigged 17/17 on the ADVICE guard alone — the bound stays honest (RP-5)
 })
 
 test("S158 (W-SH08) — the catalogue IS X-MANIFEST's banned-output list, quoted from V31 (DD-63; not invented — A7)", () => {
@@ -47,12 +47,12 @@ test("S158 (W-SH08) — the LOWER-BOUND caveat is printed WITH the number, ALWAY
 
 test("S158 (W-SH08) — EVERY uncaught mutation is a NAMED HOLE, routed to the gate (nothing dropped silently)", () => {
   const r = Guard.mutationRate()
-  // the advice guard misses 7; each is named with WHERE it is (or is not) covered
+  // the advice guard misses 7 (all sibling-covered, banned-shape declaratives); each is named with WHERE it is covered
   expect(r.holes.length).toBe(r.seeded - r.caught)
   for (const h of r.holes) { expect(h.mutation.length).toBeGreaterThan(0); expect(h.note.length).toBeGreaterThan(0); expect(h.coveredBy).toBeTruthy() }
-  // the GENUINE holes (uncaught by EVERY guard) are named — the mutation test found a real gap (the superlative)
-  expect(r.genuineHoles.length).toBe(1)
-  expect(r.genuineHoles[0].mutation).toMatch(/safest|highest-yielding/)
+  // VARIANT V41 (S162, L-2): the ONE genuine hole V40 named (the superlative) is CLOSED — 0 genuine holes now; full layer 17/17
+  expect(r.genuineHoles.length).toBe(0)
+  expect(r.fullLayerCaught).toBe(r.seeded) // 17/17 — every mutation caught by SOME guard
 })
 
 test("S158 (W-SH08) — the transcript corpus is the SECOND, WEAKER measure (a different lab; a sample, not a proof)", () => {

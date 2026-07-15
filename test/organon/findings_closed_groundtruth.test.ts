@@ -57,6 +57,12 @@ test("AL4/AL6 — the PBO/CSCV trigger is pinned (≥20-50 trials/family) and it
   // that assembles ≥20-50 trials/family and surfaces a live overfitting metric below the trigger). Allowlist the frozen-core
   // .py by their REAL path; assert no companion elsewhere. Comment-stripped + signature-anchored so a MENTION never false-positives.
   const FROZEN_CORE_PY = ["rigor.py", "neutralize.py", "funding_discriminate.py", "effective_n.py", "funding_accrual.py", "funding_crossvenue.py"].map((n) => `src/backtest/py/${n}`)
+  // VARIANT V41 (S163, L-3/DD-71a) — the CROSS-CHECK VALIDATION port. The blueprint (RP-3) mandates a clone-stable ported
+  // CSCV to PROVE the independent PBO leg can DETECT (≈0.5 on noise / ≈0 on a real edge) — off the Stamp/deflation path, on
+  // CONSTRUCTED fixtures for a cross-check, NOT a live adjudicator that assembles ≥20-50 trials and deflates a Stamp. It is
+  // exempt from the offenders grep AND held to a STRONGER invariant below (it is proven off the adjudication path). The
+  // distinction the filing draws: a validation harness ≠ the forbidden companion; the adjudicator stays ABSENT (D63).
+  const CROSSCHECK_VALIDATION = "src/backtest/crosscheck.ts"
   const walk = (dir: string): string[] => {
     const o: string[] = []
     for (const e of readdirSync(dir)) {
@@ -75,6 +81,7 @@ test("AL4/AL6 — the PBO/CSCV trigger is pinned (≥20-50 trials/family) and it
   for (const abs of [...walk(path.join(PKG_ROOT, "src")), ...walk(path.join(PKG_ROOT, "script"))]) {
     const rel = path.relative(PKG_ROOT, abs)
     if (FROZEN_CORE_PY.includes(rel)) continue // the frozen adjudicator math is exempt — it IS the Stamp core (inert on the single-trial path)
+    if (rel === CROSSCHECK_VALIDATION) continue // the RP-3 cross-check VALIDATION port (V41) — exempt here, held to the stronger off-path invariant below
     const body = abs.endsWith(".py") ? stripPy(readFileSync(abs, "utf8")) : stripTs(readFileSync(abs, "utf8"))
     if (IMPL.test(body)) offenders.push(rel)
   }
@@ -83,6 +90,17 @@ test("AL4/AL6 — the PBO/CSCV trigger is pinned (≥20-50 trials/family) and it
   expect(read("src/backtest/py/rigor.py")).toMatch(/def pbo\(/)
   // and it is NOT surfaced as a live companion metric in the Stamp render (the render shows the inert-deflation label, not a pbo number)
   expect(read("src/studio/reality.ts")).not.toMatch(/pbo.*value|surface.*pbo|companion.*metric/i)
+
+  // VARIANT V41 (S163) — the STRONGER invariant on the cross-check VALIDATION port: it is a cross-check detection proof, NOT
+  // a live adjudicator. Proven off the adjudication path: (1) neither the Stamp render (reality.ts) nor the Stamp itself
+  // (stamp.ts) imports it — so no live overfitting metric reaches a verdict; (2) it does NOT assemble ≥20-50 trials/family
+  // (it never reads trialsPerFamily / the trigger) — it runs on CONSTRUCTED fixtures for the cross-check. The adjudicator
+  // that D63 parks stays ABSENT; a validation harness that PROVES the frozen math can detect is a red-team asset, not the
+  // forbidden companion. A future companion wired into the Stamp/deflation would re-appear as an offender OR trip these.
+  expect(read("src/studio/reality.ts")).not.toMatch(/from ["'].*crosscheck["']|Cscv\b|pboIndependent/) // the Stamp render never imports the CSCV port
+  expect(read("src/studio/stamp.ts")).not.toMatch(/from ["'].*crosscheck["']|Cscv\b|pboIndependent/) // the Stamp never imports it
+  const ccBody = stripTs(read("src/backtest/crosscheck.ts"))
+  expect(ccBody).not.toMatch(/trialsPerFamily|StrategyTrial|activateKIntoStamp/) // the validation port never assembles live trials (not an adjudicator)
 })
 
 test("PC1 — the discrimination claim renders precisely (governance-claim.json + ALPHA.md), the does-NOT-claim sentence walled, tracking evidence BOTH directions (no premature 'would have caught it')", () => {
