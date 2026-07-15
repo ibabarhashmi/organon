@@ -1,0 +1,16 @@
+{
+  "protocol": "provenance-positive-control",
+  "at": "2026-07-15",
+  "rule": "RP-1 / PART A′ #1 (the FATAL RECURSION, the THIRD time this arc has faced it): the positive control on the REAL emit path. A seeded PARENT pins-sha (V41's eb64cebe — SHAPE-VALID, IDENTITY-WRONG) on the real emit command, and NO build log written (a refusal at the same path). The Ship Gate is REUSED and now runs the V42 identity walls (S169–S174); a stale pin REFUSES at S169. A gate that cannot fail on last sprint's truth is the exact defect; the control proves it CAN.",
+  "command": "bun run script/honesty/provenance-ship.ts --seed-bad pinsSha --out ../../../../tmp/provenance-pc.md",
+  "seededSlot": "pinsSha",
+  "seededValue": "eb64cebe435bc0797dd3752cef35afc36da3ff23230b2d69cd41b5f86c756d08",
+  "wrote": "refusal",
+  "refusal": {
+    "wall": "S169",
+    "artifact": "the emitted pins-sha",
+    "value": "the emitted pins-sha eb64cebe435b… ≠ sha256(provenance-pins.json) 04c606dd5846… — a STALE (parent) pin; the header must carry THIS sprint's pins (M-1, S169/X-SHOWN(c)) — a hash never compared to its own source is a SHAPE check wearing an identity check's clothes (X-REACH(a))"
+  },
+  "outIsRefusalNotLog": true,
+  "realLogUntouched": "the real build log did not exist before this control run"
+}
