@@ -3,7 +3,7 @@
   "at": "2026-07-14",
   "rule": "S108 / DD-32 (G-5) — the build logs, committed under record/ and HASH-CHAINED (tamper-evident). The reasons for the code now live inside the moat. These are RECORD, never CLAIM: a wall asserts NO Claim.producer reads a build log (X-DERIVE reads artifacts, not prose). Order is content-sorted (deterministic), not a source of truth. SUBSTANCE V38 (S122/H-6): the D53 SEARCH record (halt-lifts.json) is folded into the chain so the Halt-lift carries a real immutable LEDGER HASH — committed and hash-chained in record/, NOT appended to the strategy-trial ledger (a meta-event is not a strategy manifest, so the strategy ledger has no coherent append site).",
   "boundary": "record/ is NOT a source of truth for any producer. A Claim.producer reading a build log would import unverified human prose into a computation — forbidden (S108). Prose is evidence for humans; artifacts are input for machines.",
-  "count": 18,
+  "count": 19,
   "chain": [
     {
       "name": "BUILDLOG-ALPHA.md",
@@ -78,47 +78,53 @@
       "selfSha": "d2535f4da95992cdb7d638e3efb02f1236513deca29f15bfc12b74b38eeab169"
     },
     {
+      "name": "BUILDLOG-SHIP.md",
+      "contentSha": "54ea5d5f2b640cf85b046e0ca204d84d8935ad0ace2db806745f374746336279",
+      "prevSha": "d2535f4da95992cdb7d638e3efb02f1236513deca29f15bfc12b74b38eeab169",
+      "selfSha": "1b3535fd17d19ff2113ae6019025b8ed0232b1c944d4c78d125a2050df32ff24"
+    },
+    {
       "name": "BUILDLOG-SHOWING.md",
       "contentSha": "96228a23ea1a51c401f14d141e47b64d702f395c627c095419dabf61d4afd15f",
-      "prevSha": "d2535f4da95992cdb7d638e3efb02f1236513deca29f15bfc12b74b38eeab169",
-      "selfSha": "ff837843b247d9a1c5bf0506fd06cd4776b04bfc91f90e3f85287f40e9e2009b"
+      "prevSha": "1b3535fd17d19ff2113ae6019025b8ed0232b1c944d4c78d125a2050df32ff24",
+      "selfSha": "7d437a6921ab4019f783f062abfd2f6932a87d100254916b80eeb1be6fd60408"
     },
     {
       "name": "BUILDLOG-SOCKET.md",
       "contentSha": "48fa0f47f67a0d420c80907ecd13cbcc80f41972700114f7782afa274515277f",
-      "prevSha": "ff837843b247d9a1c5bf0506fd06cd4776b04bfc91f90e3f85287f40e9e2009b",
-      "selfSha": "c7b8e8e47d73b38c10f902ff9c294326b0a1fb86c7f627335f7e6e6250f82cd7"
+      "prevSha": "7d437a6921ab4019f783f062abfd2f6932a87d100254916b80eeb1be6fd60408",
+      "selfSha": "9f8239ed8bb6729226d47e495fa46373541e61e2971171b56773c41d43438042"
     },
     {
       "name": "BUILDLOG-SUBSTANCE.md",
       "contentSha": "d5ef4cc34ba8cc77058e196f46f547f5411822c293ed3e41e5fa40a264085642",
-      "prevSha": "c7b8e8e47d73b38c10f902ff9c294326b0a1fb86c7f627335f7e6e6250f82cd7",
-      "selfSha": "4b886ce064640e3b937667c571b63dcf6e595b1144abe1b07f084db6a4c0c403"
+      "prevSha": "9f8239ed8bb6729226d47e495fa46373541e61e2971171b56773c41d43438042",
+      "selfSha": "282a24b465e864e349e0b860c5727c3fdea3d45b9a799c4a553cf9e51393b522"
     },
     {
       "name": "halt-lifts.json",
       "contentSha": "f44ed14665361fcc35429982f90bba8dc31607a0e42deaefbe666991684fb586",
-      "prevSha": "4b886ce064640e3b937667c571b63dcf6e595b1144abe1b07f084db6a4c0c403",
-      "selfSha": "058e106b278290f4160d73a1e2d6d5d898889c4a1d76021edd9c398a75f2b028"
+      "prevSha": "282a24b465e864e349e0b860c5727c3fdea3d45b9a799c4a553cf9e51393b522",
+      "selfSha": "2a458c3be80064370dd5968a0453e597e8dd76a551b8b915688704d80a69b7f8"
     },
     {
       "name": "kill-criterion-amendment.json",
       "contentSha": "e206703279bc6a350439a475ebeeb4b98f732a7666de388ce3b65a8c09f960e4",
-      "prevSha": "058e106b278290f4160d73a1e2d6d5d898889c4a1d76021edd9c398a75f2b028",
-      "selfSha": "6ad7b4319645b22df66307851fc9239e105c6cbde9efd2a6cb8515c600de490a"
+      "prevSha": "2a458c3be80064370dd5968a0453e597e8dd76a551b8b915688704d80a69b7f8",
+      "selfSha": "12ce0131713d5f00a28067b3f525aa51c7724bb92aa137aea790d92906db353e"
     },
     {
       "name": "test-redesign-search.json",
       "contentSha": "08b77667ecb796d06b2234ecb4c1ab7a7b2a4f74bc377385d26ea01fbc4c9da2",
-      "prevSha": "6ad7b4319645b22df66307851fc9239e105c6cbde9efd2a6cb8515c600de490a",
-      "selfSha": "44f2be5acbca64a48b3d13e24106775f31c01842e79a3a7584919d8b6b90636c"
+      "prevSha": "12ce0131713d5f00a28067b3f525aa51c7724bb92aa137aea790d92906db353e",
+      "selfSha": "a578032b4b5459d7e11c29247fce074febcdec6aa063d74cc14d787e2b003033"
     }
   ],
-  "headSha": "44f2be5acbca64a48b3d13e24106775f31c01842e79a3a7584919d8b6b90636c",
-  "d53SearchLedgerHash": "058e106b278290f4160d73a1e2d6d5d898889c4a1d76021edd9c398a75f2b028",
+  "headSha": "a578032b4b5459d7e11c29247fce074febcdec6aa063d74cc14d787e2b003033",
+  "d53SearchLedgerHash": "2a458c3be80064370dd5968a0453e597e8dd76a551b8b915688704d80a69b7f8",
   "d53Note": "the Halt-lift is a META-event (sprint-level optional stopping), NOT a strategy manifest; the X-RECKON strategy-trial ledger counts acts over lineage ids and has no coherent site for it — so the price is paid HERE, committed + hash-chained, and the log no longer claims it was 'appended to the strategy ledger'.",
-  "d67SearchLedgerHash": "6ad7b4319645b22df66307851fc9239e105c6cbde9efd2a6cb8515c600de490a",
+  "d67SearchLedgerHash": "12ce0131713d5f00a28067b3f525aa51c7724bb92aa137aea790d92906db353e",
   "d67Note": "the kill-criterion amendment is a SEARCH (re-pinning a pre-registered criterion after seeing data — the exact act X-RECKON catches); like the Halt-lift it is a meta-event, not a strategy manifest, so its price is paid HERE (committed + hash-chained), not in the strategy-trial ledger. The old criterion (8b4e094b) is preserved beside the amendment forever.",
-  "d56SearchLedgerHash": "44f2be5acbca64a48b3d13e24106775f31c01842e79a3a7584919d8b6b90636c",
+  "d56SearchLedgerHash": "a578032b4b5459d7e11c29247fce074febcdec6aa063d74cc14d787e2b003033",
   "d56Note": "the S116 power test was redesigned after it failed and D33 flipped to SIGNABLE on the redesign (J-1); the change of TEST is a SEARCH (branch (b) of DD-33). Like the Halt-lift and the amendment it is a meta-event, so its price is paid HERE (committed + hash-chained). D33's state reads this hash and carries testRedesigns beside the verdict PERMANENTLY (RP-1); the count never resets. The project gets no exemption from the discipline it sells."
 }
