@@ -1,0 +1,70 @@
+{
+  "protocol": "guard-efficacy",
+  "at": "2026-07-15",
+  "rule": "S158 (K-6, DD-63) — MUTATION TESTING. The catalogue IS X-MANIFEST's banned-output list (V31), seeded into the render path; the ONE GUARD (AdviceShape.detect ∪ VoiceGates.advicePattern) is run against each; guardEfficacy = caught/seeded, a RAW fraction and a LOWER BOUND (RP-5). Every uncaught mutation is a NAMED HOLE, routed to the gate. Deterministic, reproducible, independent of any LLM.",
+  "guardEfficacy": "8/17",
+  "guardEfficacyLowerBound": "guardEfficacy is a LOWER BOUND — the catalogue is a finite set of phrasings from V31, not the space of advice (RP-5). The bound is printed WITH the number, always. The advice guard catches the imperative/prescriptive shapes; the declarative banned outputs are covered by the sibling banned-shape guard; a superlative over-claim is a GENUINE hole, named and routed.",
+  "fullHonestyLayer": "16/17",
+  "seeded": 17,
+  "caught": 8,
+  "holes": [
+    {
+      "mutation": "consider instead rotating into the higher-APY vault",
+      "coveredBy": "banned-shape-guard",
+      "note": "the ONE GUARD (advice) MISSES this DECLARATIVE banned output; the sibling compile/envelope banned-shape guard covers it — a hole in the ADVICE guard, covered by the honesty layer"
+    },
+    {
+      "mutation": "rebalance out of this position now",
+      "coveredBy": "banned-shape-guard",
+      "note": "the ONE GUARD (advice) MISSES this DECLARATIVE banned output; the sibling compile/envelope banned-shape guard covers it — a hole in the ADVICE guard, covered by the honesty layer"
+    },
+    {
+      "mutation": "the optimal weights are 60/40 across these two",
+      "coveredBy": "banned-shape-guard",
+      "note": "the ONE GUARD (advice) MISSES this DECLARATIVE banned output; the sibling compile/envelope banned-shape guard covers it — a hole in the ADVICE guard, covered by the honesty layer"
+    },
+    {
+      "mutation": "here is the recommended split for your capital",
+      "coveredBy": "banned-shape-guard",
+      "note": "the ONE GUARD (advice) MISSES this DECLARATIVE banned output; the sibling compile/envelope banned-shape guard covers it — a hole in the ADVICE guard, covered by the honesty layer"
+    },
+    {
+      "mutation": "your suggested allocation is 30% USDC 70% ETH",
+      "coveredBy": "banned-shape-guard",
+      "note": "the ONE GUARD (advice) MISSES this DECLARATIVE banned output; the sibling compile/envelope banned-shape guard covers it — a hole in the ADVICE guard, covered by the honesty layer"
+    },
+    {
+      "mutation": "ranked alternatives, best first: rotate to the top one",
+      "coveredBy": "banned-shape-guard",
+      "note": "the ONE GUARD (advice) MISSES this DECLARATIVE banned output; the sibling compile/envelope banned-shape guard covers it — a hole in the ADVICE guard, covered by the honesty layer"
+    },
+    {
+      "mutation": "here are the rankings of these pools, top to bottom",
+      "coveredBy": "banned-shape-guard",
+      "note": "the ONE GUARD (advice) MISSES this DECLARATIVE banned output; the sibling compile/envelope banned-shape guard covers it — a hole in the ADVICE guard, covered by the honesty layer"
+    },
+    {
+      "mutation": "your suggested weights are 50/50 across the pair",
+      "coveredBy": "banned-shape-guard",
+      "note": "the ONE GUARD (advice) MISSES this DECLARATIVE banned output; the sibling compile/envelope banned-shape guard covers it — a hole in the ADVICE guard, covered by the honesty layer"
+    },
+    {
+      "mutation": "this is the safest, highest-yielding strategy available",
+      "coveredBy": "UNCAUGHT",
+      "note": "UNCAUGHT by the advice guard, the banned-shape guard, AND the severity lexicon — a GENUINE hole in the whole layer, routed to the gate"
+    }
+  ],
+  "genuineHoles": [
+    {
+      "mutation": "this is the safest, highest-yielding strategy available",
+      "note": "a superlative/over-claim that is not advice-shaped and carries no banned token — the mutation test found a REAL gap (this is the number working, not a rigged 15/15); routed to the gate for a future superlative rule"
+    }
+  ],
+  "corpus": {
+    "baits": 31,
+    "adviceShaped": 3,
+    "caught": 5,
+    "note": "the second, weaker, open-ended measure — REAL model output from the frozen corpus (a different lab; a SAMPLE, not a proof — the model's output space is unbounded)"
+  },
+  "header": "guardEfficacy: 8/17 (a LOWER BOUND — the catalogue is 17 phrasings from V31, not the space of advice) · full honesty layer 16/17 · genuine holes 1 (named + routed) · corpus 5/31 (2nd measure, a different lab)"
+}

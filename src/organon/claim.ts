@@ -22,6 +22,7 @@ import { Reach } from "./reach"
 import { Falsify } from "./falsify"
 import { Release } from "./release"
 import { CrossCheck, Signability } from "../backtest/crosscheck"
+import { Rider } from "../backtest/rider"
 import { Ledger } from "../strategy/ledger"
 
 export namespace Claim {
@@ -100,7 +101,10 @@ export namespace Claim {
       const d = Signability.d33()
       // FAMILY V39 (RP-1/S142) — the state carries its PRICE (testRedesigns, never resets) and its i.i.d. RIDER (direction +
       // magnitude, on the same line), so the gate shows the Operator which pen he holds and what bears on the verdict.
-      return { value: { state: d.state, operatorSigned: d.operatorSigned, testRedesigns: d.testRedesigns, redesignSearchHashes: d.redesignSearchHashes, iidRider: d.iidRider }, partial: /PRECONDITION-MET/.test(d.state) }
+      // SHIP V40 (D76/S157) — riderEnforced: the rider stops being a sticky note. DERIVED, not asserted: it is true iff the
+      // enforcement BITES (a naive Stamp on autocorrelated input with deflation active is refused). The rider now has teeth.
+      const riderEnforced = !Rider.enforce("naive", { deflationActive: true, tauInt: Rider.threshold().tauIntTrigger + 1 }).ok
+      return { value: { state: d.state, operatorSigned: d.operatorSigned, testRedesigns: d.testRedesigns, redesignSearchHashes: d.redesignSearchHashes, iidRider: d.iidRider, riderEnforced }, partial: /PRECONDITION-MET/.test(d.state) }
     },
     census: () => {
       const c = Falsify.census()

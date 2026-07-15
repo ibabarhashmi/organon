@@ -1,0 +1,80 @@
+{
+  "protocol": "rider-enforcement",
+  "at": "2026-07-15",
+  "rule": "S157 (K-5, D76) — the frozen Newey–West correction, COMPOSED beside the naive statistic (never wired into the frozen core — HARNESS-COMPOSITION-GAP). Renders BOTH with τ_int beside them (RP-3); enforces CORRECTED-or-UNJUDGEABLE when deflation is active and √τ_int exceeds the pre-registered trigger; computes the compounded generosity (A′ #9). checkFrozenSet 0 drift.",
+  "threshold": {
+    "inflationTrigger": 1.5,
+    "tauIntTrigger": 2.25,
+    "zStar": 1.6448536269514722,
+    "derivedFrom": "the Stamp's DSR 0.95 GO bar (z* = Φ⁻¹(0.95)); the inflation factor is √τ_int; a 1.5× inflation flips any naive-GO within 50% of the bar — PRE-REGISTERED before measurement (X-DERIVE(f), F-3)"
+  },
+  "ownSeriesReport": {
+    "demonstration": {
+      "name": "clone-stable AR(1)(ρ=0.95) demonstration",
+      "provenance": "DEMONSTRATION",
+      "n": 1600,
+      "tauInt": 35.836855128259906,
+      "sqrtTauInt": 5.986389156099017,
+      "exceeds": true,
+      "note": "an autocorrelated return series — the mechanism, live-reproducible (the exact demo V39's determination cites)"
+    },
+    "captured": [
+      {
+        "name": "USDC/fluid-lending TVL returns (194-pt)",
+        "provenance": "CAPTURED",
+        "n": 193,
+        "tauInt": 1,
+        "sqrtTauInt": 1,
+        "exceeds": false,
+        "note": "near-white increments (τ_int ≈ 1) — the correction does NOT trigger; the DIRECTION holds (τ_int ≥ 1), the MAGNITUDE is ≈1"
+      },
+      {
+        "name": "USDC/USD peg returns (154-pt)",
+        "provenance": "CAPTURED",
+        "n": 153,
+        "tauInt": 1,
+        "sqrtTauInt": 1,
+        "exceeds": false,
+        "note": "near-white increments (τ_int ≈ 1) — the correction does NOT trigger; the DIRECTION holds (τ_int ≥ 1), the MAGNITUDE is ≈1"
+      }
+    ],
+    "fundingPanel": {
+      "name": "V26 funding-rate panel (500-pt, raw gitignored)",
+      "provenance": "CAPTURED-RECORDED",
+      "n": 500,
+      "tauInt": "27–165 (median 124)",
+      "sqrtTauInt": "5–13× (median ≈ 11×)",
+      "exceeds": true,
+      "note": "recorded V26 via this same frozen effective_n.py; the real autocorrelated yield case — WOULD trigger; the raw is gitignored (E-PREVENT ≥400 numbers)"
+    },
+    "capturedExceeding": 0,
+    "capturedTotal": 2,
+    "representativeFactor": 5.986389156099017,
+    "note": "the correction triggers exactly where YIELDS PERSIST: the AR(1) demonstration (√τ ≈ 6.0) and the recorded funding panel (√τ 5–13×) TRIGGER; the committed TVL/peg RETURNS are near-white (0 of 2 trigger). The DIRECTION always holds (τ_int ≥ 1); the MAGNITUDE is the finding, and it is largest exactly where a yield strategy's returns persist. The measured answer, whatever it is (F-3)."
+  },
+  "compoundedGenerosity": {
+    "d27": "the Stamp is knowingly generous until D27 is signed (unsigned, the fifteenth sprint) — a FIRST, deliberate generosity.",
+    "overstatementFactor": 5.986389156099017,
+    "overstatementRange": "on ORGΛNON's real captured funding panel (V26), √τ_int ran ≈ 5–13× (τ_int 27–165, median ≈ 11×); the clone-stable demonstration reproduces the mechanism at ≈ √τ_int; the committed TVL/peg increments are near-white (≈ 1×).",
+    "compounded": "TWO known generosities, never before rendered together (A′ #9): (1) the Stamp is knowingly generous (D27, unsigned, 15 sprints), AND (2) its confidence is overstated by a factor of ≈ √τ_int on autocorrelated yield input — ≈ 6.0× on the clone-stable demonstration and ≈ 5–13× (median ≈ 11×) on the real V26 funding panel. They STACK where yields persist: a generous verdict, made more generous. The Operator has never seen these two facts in one line, and he should."
+  },
+  "enforcement": {
+    "seededNaiveOnAutocorrelated": {
+      "ok": false,
+      "required": "corrected",
+      "why": "a NAIVE statistic rendered with deflation active and √τ_int 10.00 ≥ 1.5 — the Stamp must render CORRECTED or UNJUDGEABLE, never naive (S157)"
+    },
+    "correctedPermitted": {
+      "ok": true,
+      "required": "any",
+      "why": "deflation active + triggered → corrected is permitted (not naive)"
+    },
+    "deflationOffArmedNotFiring": {
+      "ok": true,
+      "required": "any",
+      "why": "deflation OFF (D63) → the enforcement is armed, not firing"
+    }
+  },
+  "frozenDrift": 0,
+  "riderEnforced": true
+}

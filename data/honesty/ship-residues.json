@@ -1,0 +1,60 @@
+{
+  "protocol": "ship-residues",
+  "at": "2026-07-15",
+  "d79_oracleStaleness": {
+    "decision": "FROZEN at a named subset",
+    "namedSubset": [
+      "USDC/USD",
+      "USDT/USD",
+      "DAI/USD"
+    ],
+    "coverage": "3/1284",
+    "rule": "the resolver reaches the three Chainlink USD-stable feeds (USDC/USDT/DAI), block-pinned REAL★; expansion beyond this needs a live capture pass (network), which this sprint does not run. So oracle-staleness is FROZEN at its named subset and SAYS SO: 'this kind resolves for these 3 feeds and is UNJUDGEABLE elsewhere' — honest, and not a decoration, because it names its own boundary (D79). The dependency map's oracle key carries the same 3/1284 caveat.",
+    "honestFreeze": "this kind resolves for USDC/USDT/DAI (Chainlink) and is UNJUDGEABLE elsewhere"
+  },
+  "k8_falseFireCoverage": {
+    "subjects": [
+      "tvl-drawdown",
+      "peg-floor"
+    ],
+    "subjectMatch": {
+      "tvl-drawdown": [
+        "fluid-lending",
+        "4438dabc"
+      ],
+      "peg-floor": [
+        "USDC"
+      ]
+    },
+    "coverage": "2 of 7 exit kinds have a materialized series (tvl-drawdown per-pool fluid-lending; peg-floor per-asset USDC)",
+    "note": "TVL is per-POOL (fluid-lending's TVL is not aave's), so tvl-drawdown matches ONLY this pool; PEG is per-ASSET (USDC's peg is USDC's peg in any pool), so peg-floor matches any USDC subject. A subject that matches neither renders UNJUDGEABLE (never the wrong subject's count).",
+    "unstatedNoMore": "V39 emitted oracle-staleness's coverage but not the false-fire count's; this states it: the false-fire count materializes 2 of 7 exit kinds (tvl-drawdown, peg-floor); the other 5 render UNJUDGEABLE where no point series exists (honest, not a blanket default — S145)."
+  },
+  "mr13": {
+    "status": "RECORDED UNDISCHARGEABLE (not silently dropped)",
+    "what": "MR9 (the reachability/live-value ceiling item) has been carried since V32. It is undischargeable by the AGENT: it turns on the Operator opening the tool (realLineageCount: 0). V40 removes the last TECHNICAL excuses (the record is honest, the math is safe, the guard has a number, the map names the dependencies); the remaining action is a human opening a door, which has never been a Phase. Recorded, not dropped."
+  },
+  "mr17": {
+    "status": "ACCOUNTED",
+    "d57_d61": "D57–D61 were reserved in earlier sprints for phases that shed. No V40 phase claimed them (V40's deviations are D75–D79). They remain RESERVED-UNUSED, stated here so the ledger carries no cruft — an unused reservation named is not a leak; an unused reservation forgotten is."
+  },
+  "mr19": {
+    "status": "EXPLAINED + STRUCTURALLY PREVENTED",
+    "gap": "V38's terminal marker recorded 1706; V39's baseline `prev` was 1738; 32 tests appeared unaccounted (K-7).",
+    "explanation": "V38-B (the Surrogate Addendum) is a DISTINCT commit AFTER V38's 1706 marker; it added the 32 tests that took the count to 1738. The gap was a real sprint boundary the baseline never chained across — not a miscount. Recorded in battery-continuity.json.",
+    "prevention": "S156 (Ship.Battery.continuity) now compares baseline.prevFullPass against the chained previous terminal at SHIP time; an unexplained cross-boundary delta REFUSES the build log."
+  },
+  "k9_capability": {
+    "count": 4,
+    "disclosed": [
+      "the SHIP GATE (a program that refuses to write a build log if any wall fails against the real artifacts)",
+      "the RIDER, ENFORCED (the frozen Newey–West correction composed; CORRECTED-or-UNJUDGEABLE when deflation is live)",
+      "the GUARD'S MEASURED NUMBER (mutation testing over X-MANIFEST's banned-output list — 8/17, a lower bound)",
+      "the SHARED-DEPENDENCY MAP (a count over a join — the curator-loss literature's core fact)"
+    ],
+    "plumbing": [
+      "the CAPTURE verb (a verb, no scheduler) and the residues are plumbing/records, not scored capability"
+    ],
+    "note": "reported as 4, not a redefined 0 — the roadmap was OWED to V40 (K-9/K-10); the shed order protected the record, the math, the guard, and the map (the four never-sheds)."
+  }
+}

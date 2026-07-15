@@ -38,10 +38,10 @@ test("S93/RP-6 — the living wall: a test that references a wall id beyond the 
   // the mechanism is real: orphanWallIds scans the whole test tree; a future wall numbered beyond the pinned range is
   // caught and must be consciously admitted. Proven directly — the id is BUILT at runtime so no ">99" token appears
   // literally in this file (which would make the census flag its own test — the living wall really does bite).
-  const futureId = "S" + "158"
+  const futureId = "S" + "171"
   const injected = [{ file: "x", text: `test(${JSON.stringify(futureId + " — a hypothetical future wall")})` }] as unknown as { file: string; text: string }[]
   expect(Falsify.orphanWallIds(injected)).toEqual([futureId])
-  expect(Falsify.WALL_MAX).toBe(150) // Family Sprint V39: bumped 139→150 for the S140..S150 band (price/number/builder walls; consciously admitted)
+  expect(Falsify.WALL_MAX).toBe(160) // Ship Sprint V40: bumped 150→160 for the S151..S160 band (ship-gate/rider/guard/dependency-map/capture walls; consciously admitted)
 })
 
 test("S93/RP-1 — DEMONSTRATED is the STRONG claim and is never invented: every DEMONSTRATED wall carries a NAMED originating defect (a W-tag) OR a treatment route (S104)", () => {

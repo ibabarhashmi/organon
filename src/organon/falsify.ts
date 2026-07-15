@@ -23,7 +23,7 @@ import { PKG_ROOT } from "./frozen"
 
 export namespace Falsify {
   export const WALL_MIN = 1
-  export const WALL_MAX = 150 // Family Sprint V39: bumped 139→150 for the S140–S150 band (the price/number/builder walls; consciously admitted); a test referencing S(>MAX) is an ORPHAN (RP-6 living wall)
+  export const WALL_MAX = 160 // Ship Sprint V40: bumped 150→160 for the S151–S160 band (the ship-gate/rider/guard/dependency-map/capture walls; consciously admitted); a test referencing S(>MAX) is an ORPHAN (RP-6 living wall)
 
   export type Bucket = "DEMONSTRATED" | "WEAK" | "EXEMPT" | "ORIGIN_UNRECORDED"
   // Derivation V36 (S104/DD-20): the census gets a TREATMENT. An ORIGIN_UNRECORDED wall is processed via one route, in

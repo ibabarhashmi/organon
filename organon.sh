@@ -24,15 +24,15 @@ MODE="menu"; FULL=""; STAMP_ARG=""; ASK_ARGS=(); PASS_ARGS=()
 # like `--screen ask` cannot flip the mode (a targeted fix for AH11 on the value-taking verbs; Probe Phase 2).
 for a in "$@"; do
   case "$a" in
-    menu|status|check|setup|setup-deps|doctor|launch|verify|stamp|ask|monitor|telemetry|feedback)
-      case "$MODE" in ask) ASK_ARGS+=("$a");; monitor|telemetry|feedback) PASS_ARGS+=("$a");; *) MODE="$a";; esac;;
+    menu|status|check|setup|setup-deps|doctor|launch|verify|stamp|ask|monitor|telemetry|feedback|ship|capture)
+      case "$MODE" in ask) ASK_ARGS+=("$a");; monitor|telemetry|feedback|ship|capture) PASS_ARGS+=("$a");; *) MODE="$a";; esac;;
     --full) FULL="--full";;
     --version) MODE="version";;
     *)
       case "$MODE" in
         stamp) [ -z "$STAMP_ARG" ] && STAMP_ARG="$a";;
         ask) ASK_ARGS+=("$a");;
-        monitor|telemetry|feedback) PASS_ARGS+=("$a");;
+        monitor|telemetry|feedback|ship|capture) PASS_ARGS+=("$a");;
       esac;;
   esac
 done
@@ -171,6 +171,17 @@ do_ask() { need_bun; bun run script/ask.ts ${ASK_ARGS[@]+"${ASK_ARGS[@]}"}; }
 do_telemetry() { need_bun; bun run script/telemetry.ts ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}; }
 do_feedback() { need_bun; bun run script/feedback.ts ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}; }
 
+# ── the SHIP verb (Ship V40, S151–S156/D75) — THE PROGRAM THAT WILL NOT WRITE. Runs every wall against THIS sprint's REAL
+# artifacts (the terminal marker, the clone, verify's sub-check set, new-wall origins, battery continuity) and writes the
+# build log ONLY if all pass — otherwise a REFUSAL at the same path (RP-2; no --force). The positive control (RP-1) runs
+# `ship --seed-bad treeHash --out /tmp/...` and shows the refusal on the REAL emit path. NOT a checklist; a gate that refuses.
+do_ship() { need_bun; bun run script/honesty/ship.ts ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}; }
+
+# ── the CAPTURE verb (Ship V40, S160/D78) — a VERB, not a service. Snapshots the pinned subjects' observables into the moat
+# (PIT-honest, content-hashed, REAL@ts) and renders the own-capture window + daysToJudgeable (in CAPTURES, not days).
+# ORGΛNON schedules NOTHING: no daemon, no cron, no service — the Operator runs this on his own schedule (a wall greps the tree).
+do_capture() { need_bun; bun run script/honesty/capture.ts ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}; }
+
 case "$MODE" in
   check)  prereq_check;;
   setup)  exec bash "$(dirname "$0")/organon-setup.sh";;   # the wizard (masked BYOK keys · chmod 600 · doctor chained)
@@ -184,6 +195,8 @@ case "$MODE" in
   release) do_release;;
   socket) do_socket;;
   ask)    do_ask;;
+  ship)   do_ship;;
+  capture) do_capture;;
   monitor) need_bun; bun run script/monitor-manifests.ts "${PASS_ARGS[@]}";;  # re-judge held manifests on the capture cadence (X-CADENCE; reads-never-acts; no daemon)
   telemetry) do_telemetry;;
   feedback)  do_feedback;;

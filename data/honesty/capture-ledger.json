@@ -1,0 +1,8 @@
+{
+  "protocol": "capture-ledger",
+  "at": "2026-07-15",
+  "rule": "S160 (D78) — the own-capture MOAT. `organon.sh capture` appends a PIT snapshot here (REAL@ts, content-hashed) each time the Operator runs it. ORGΛNON schedules NOTHING: no daemon, no cron, no service — the Operator runs the verb on his own cadence. The false-fire count's own-capture leg reads this; the window and daysToJudgeable (in CAPTURES, not days — RP-6) are derived from it.",
+  "minWindowDays": 180,
+  "note": "captures is EMPTY: the Operator has run the verb 0 times (realLineageCount: 0 — the tool has never been opened). The verb exists; the cadence is the Operator's. The window grows one snapshot at a time, and that is the first mechanism this project has built that rewards running the cadence (what IN2 has asked for since V32).",
+  "captures": []
+}

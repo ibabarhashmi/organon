@@ -1,0 +1,50 @@
+{
+  "protocol": "dependency-map",
+  "at": "2026-07-15",
+  "rule": "S159 (K-10, D77) — a COUNT over a join on three keys (underlying · admin key · oracle feed), the curator-loss literature's core fact. Per-key coverage emitted; the admin-key join matches ONLY the RESOLVED terminal authority (UNRESOLVED → UNJUDGEABLE, never a match — RP-4); it ranks nothing, suggests nothing, and NEVER says 'diversify' (through the ONE GUARD). The copy is PINNED VERBATIM (no LLM).",
+  "demonstrationManifest": "3 USDC (aave-v3, fluid-lending, compound-v3) + 2 DAI (aave-v3, sparklend) — real shelf subjects",
+  "map": {
+    "positions": 5,
+    "header": "positions that die together — a COUNT over a join. nothing ranked, nothing weighted, nothing suggested.",
+    "byUnderlying": {
+      "key": "underlying",
+      "sharedCount": 3,
+      "sharedValue": "USDC",
+      "line": "3 of your 5 positions share the same underlying asset (USDC).",
+      "coverage": {
+        "resolved": 5,
+        "total": 5,
+        "unjudgeable": 0
+      }
+    },
+    "byAdminKey": {
+      "key": "adminKey",
+      "sharedCount": 0,
+      "sharedValue": null,
+      "line": "admin key: UNJUDGEABLE for 4 of your 5 positions — the terminal authority is UNRESOLVED (a proxy / unverified contract) — never a match (RP-4). an unresolved dependency is INVISIBLE, not absent; this map never claims independence it cannot prove.",
+      "coverage": {
+        "resolved": 1,
+        "total": 5,
+        "unjudgeable": 4
+      }
+    },
+    "byOracle": {
+      "key": "oracle",
+      "sharedCount": 3,
+      "sharedValue": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "line": "3 of your 5 positions read the same oracle feed (0x8fFfFfd4Af…).",
+      "coverage": {
+        "resolved": 5,
+        "total": 5,
+        "unjudgeable": 0
+      }
+    },
+    "rule": "a count over a join. it ranks nothing, weights nothing, suggests nothing, and it NEVER says 'diversify'. the map's confidence is asymmetric: it may say two positions DEFINITELY share X; it may never say two positions DEFINITELY do NOT — the dangerous dependencies are the invisible ones (RP-4).",
+    "shelfWideOracleCoverage": "oracle-feed resolution is 3/1284 shelf-wide (a PROXY); within THIS manifest, coverage is 5/5. A key that cannot resolve is UNJUDGEABLE, never a silent zero."
+  },
+  "guardClean": true,
+  "registers": {
+    "simple": "positions that die together — a COUNT over a join. nothing ranked, nothing weighted, nothing suggested.\n3 of your 5 positions share the same underlying asset (USDC).\nadmin key: UNJUDGEABLE for 4 of your 5 positions — the terminal authority is UNRESOLVED (a proxy / unverified contract) — never a match (RP-4). an unresolved dependency is INVISIBLE, not absent; this map never claims independence it cannot prove.\n3 of your 5 positions read the same oracle feed (0x8fFfFfd4Af…).",
+    "pro": "positions that die together — a COUNT over a join. nothing ranked, nothing weighted, nothing suggested.\n3 of your 5 positions share the same underlying asset (USDC).\nadmin key: UNJUDGEABLE for 4 of your 5 positions — the terminal authority is UNRESOLVED (a proxy / unverified contract) — never a match (RP-4). an unresolved dependency is INVISIBLE, not absent; this map never claims independence it cannot prove.\n3 of your 5 positions read the same oracle feed (0x8fFfFfd4Af…).\ncoverage — underlying 5/5 · admin key 1/5 (RESOLVED terminal authority) · oracle 5/5. oracle-feed resolution is 3/1284 shelf-wide (a PROXY); within THIS manifest, coverage is 5/5. A key that cannot resolve is UNJUDGEABLE, never a silent zero."
+  }
+}
