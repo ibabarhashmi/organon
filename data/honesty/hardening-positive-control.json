@@ -1,0 +1,15 @@
+{
+  "protocol": "hardening-positive-control",
+  "at": "2026-07-16",
+  "rule": "THE PART-F POSITIVE CONTROLS on the REAL emit path. `--seed-bad twostate` (P-1/S198) sets the reckoning block's D87 to a state DISAGREEING with the ONE producer → S198 REFUSES; `--seed-bad untraced` (S209) injects a rogue built wall with no registry entry → S209 REFUSES; `--seed-bad sign` (S192, carried) flips operatorSigned:true → S192 REFUSES. Each can ONLY make the gate REFUSE, never PASS — the defect class is caught where it matters (X-REACH(a)).",
+  "command": "bun run script/honesty/hardening-ship.ts --seed-bad twostate --out ../../../../tmp/hd-pc.md",
+  "seededSlot": "twostate",
+  "wrote": "refusal",
+  "refusal": {
+    "wall": "S198",
+    "artifact": "the one-state deviation wall",
+    "value": "a generated block holds a SECOND state for D87: at reckoning.delegation.D87 it says \"RESERVED\" while the ONE producer (State.deviations) says \"AGENT-RATIFIED\" — the S150 two-state defect (P-1/S198); every block must READ the producer"
+  },
+  "outIsRefusalNotLog": true,
+  "realLogUntouched": "the real build log did not exist before this control run"
+}
