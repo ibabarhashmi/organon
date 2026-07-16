@@ -112,6 +112,6 @@ test("S100 (W-DV01) — Rollup.header + gate are pure reads that assemble the pr
   // (M-1/S169): the generator now reads the ACTUAL head (Pins.head → provenance-pins.json), so the header shows THIS sprint's
   // disclosed capability count. (Before the M-1 fix, currentPins was frozen at family-pins.json and this test hardcoded
   // substance-pins — the same stale-head class of defect the identity gate now forbids.)
-  const currentCap = JSON.parse(require("node:fs").readFileSync(require("node:path").join(PKG_ROOT, "data", "honesty", "backfill-pins.json"), "utf8")).carried.newProductCapability
-  expect(g.newProductCapability).toBe(currentCap)
+  const currentCap = JSON.parse(require("node:fs").readFileSync(require("node:path").join(PKG_ROOT, "data", "honesty", "hardening-pins.json"), "utf8")).carried.newProductCapability
+  expect(g.newProductCapability).toBe(currentCap) // HARDENING V45 — reads the CURRENT head (hardening-pins), sprint-invariant; this sprint's disclosed capability is 0 (it hardens, builds none — S209)
 })

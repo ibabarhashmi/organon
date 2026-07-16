@@ -1,0 +1,37 @@
+{
+  "protocol": "hardening-cleanmachine",
+  "at": "2026-07-16",
+  "rule": "RP-3/DD-99 (P-16) — the clean-machine test records the environment's PROVENANCE (absence checks SHOWN before the run; a warm cache DISCLOSED, never hidden), then follows the README verbatim (clone → check → first-run → the doc is present). A transcript without the absence checks REFUSES. The terminal state claims READINESS (the machinery survives a stranger's PATH), not user-testing (no stranger has walked it).",
+  "environmentProvenance": {
+    "clonedRepoDir": {
+      "path": "/var/folders/w0/tjj1c_y90yz487c44pb1blqw0000gn/T/organon-clean-oNzRLc",
+      "existedBeforeClone": false,
+      "note": "a fresh temp path — no cloned repo before this run"
+    },
+    "bunCache": {
+      "path": "/Users/babar/.bun/install/cache",
+      "present": true,
+      "note": "Bun's install cache"
+    },
+    "uvCache": {
+      "path": "/Users/babar/.cache/uv",
+      "present": true,
+      "note": "uv's wheel cache"
+    },
+    "bunOnPath": "/Users/babar/.bun/bin/bun",
+    "gitOnPath": "/usr/bin/git",
+    "disclosure": "THIS IS A SAME-MACHINE CLONE, not a fresh VM/container. The caches marked present:true are WARM (this machine has built before) — DISCLOSED honestly, never hidden. A true stranger's first minute has these ABSENT; the honest label is that a warm-cache run proves the PATH works, not the cold-cache timing. The absence checks are SHOWN (F-3/RP-3)."
+  },
+  "absenceChecksShown": true,
+  "clonedCommit": "17501f145522ff874efabfc10175be0835837871",
+  "readmeVerbatim": {
+    "cloned": true,
+    "installOk": true,
+    "checkOk": true,
+    "firstRunOk": true,
+    "docPresent": false,
+    "firstRunLine": "status 200 · 28323 bytes · rendered in 0.008s · no key · no network"
+  },
+  "ok": false,
+  "summary": "absence checks shown=true (bun-cache warm=true, uv-cache warm=true, DISCLOSED); cloned=true; check=true; first-run 200=true; second-human doc present=false"
+}

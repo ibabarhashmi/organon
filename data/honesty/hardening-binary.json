@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "sourceLen": 28323,
+  "binaryLen": 28323,
+  "equalAfterNorm": true,
+  "seededDivergenceCaught": true,
+  "note": "byte-equal after the pinned normalization (timestamps + path prefixes, nothing else)"
+}

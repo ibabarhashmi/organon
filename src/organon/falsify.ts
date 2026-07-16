@@ -23,7 +23,7 @@ import { PKG_ROOT } from "./frozen"
 
 export namespace Falsify {
   export const WALL_MIN = 1
-  export const WALL_MAX = 198 // Reckoning Sprint V44: bumped 190→198 for the S190–S197 band (census two-identity S190 + hash re-basing S191 + D33 maths/N_eff S192 + strict bar S193 + backfill residues S194–S195 + contagion S196 + delegation S197); a test referencing S(>MAX) is an ORPHAN (RP-6 living wall)
+  export const WALL_MAX = 209 // Hardening Sprint V45: bumped 198→209 for the S198–S209 band (one-state S198 + empty-state S199 + crash-safety S200 + RPC honesty S201 + disclosures S202 + workflow transcripts S203 + guard aggregate S204 + sidecar freeze S205 + binary parity S206 + docs S207 + concurrent S208 + trace S209); a test referencing S(>MAX) is an ORPHAN (RP-6 living wall)
 
   export type Bucket = "DEMONSTRATED" | "WEAK" | "EXEMPT" | "ORIGIN_UNRECORDED"
   // Derivation V36 (S104/DD-20): the census gets a TREATMENT. An ORIGIN_UNRECORDED wall is processed via one route, in

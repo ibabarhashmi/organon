@@ -13,6 +13,7 @@ import { createHash } from "node:crypto"
 import { readFileSync, writeFileSync, readdirSync, copyFileSync, mkdirSync, existsSync } from "node:fs"
 import path from "node:path"
 import { PKG_ROOT } from "../../src/organon/frozen"
+import { Chain } from "../../src/organon/chain"
 
 const sha256 = (b: string) => createHash("sha256").update(b).digest("hex")
 const SRC = path.join(PKG_ROOT, "sprint", "sprint-result")
@@ -98,7 +99,22 @@ const manifest = {
 }
 writeFileSync(path.join(REC, "chain.json"), JSON.stringify(manifest, null, 2) + "\n")
 
+// HARDENING V45 (S200/P-10) — THE CRASH-SAFE APPEND SEGMENT. chain.json is a whole-file write (a kill mid-write could tear
+// it); beside it, mirror each chain entry into an atomic (O_APPEND + fsync) hash-linked segment via Chain.append. This is the
+// crash-safe source `organon.sh verify-chain` walks and recovers (a torn tail → quarantined `.torn`, NEVER deleted). Idempotent
+// (re-running dedupes by content hash); a same-slot-different-content CONFLICT is a loud integrity HALT (DD-96).
+const appendSeg = path.join(REC, "chain.append.jsonl")
+let chained = 0, deduped = 0
+for (const e of chain as { name: string; contentSha: string }[]) {
+  const r = Chain.append(appendSeg, { subject: e.name, blockOrRound: e.contentSha, value: "chained" })
+  if (r.kind === "CHAINED") chained++
+  else if (r.kind === "DEDUPED") deduped++
+  else { console.error(r.alarm); process.exitCode = 1 }
+}
+const rec = Chain.verifyAndRecover(appendSeg) // verify the segment we just wrote (a no-op recovery on a clean segment)
+
 console.log("── SOCKET — the reasons in the moat (S108) ─────────────────")
+console.log(`  crash-safe append segment          : ${chained} chained · ${deduped} deduped · recover=${rec.kind} (S200/P-10)`)
 console.log(`  build logs committed under record/ : ${chain.length}`)
 console.log(`  chain head sha                     : ${prevSha.slice(0, 16)}…`)
 console.log(`  boundary                           : RECORD, never CLAIM (no producer reads prose)`)

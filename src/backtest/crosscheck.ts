@@ -431,4 +431,28 @@ export namespace D33 {
       detail: `D33 — implementation ${implementation} (${audit.breakCount} breaks, ${audit.classes.length} classes, ${audit.frozenDrift ? "DRIFT" : "0 drift"}) · application ${application} (N_eff ${riderEnforced ? "enforced: the AR(1) demo deflates PSR " + demoP.psrNaive.toFixed(3) + "→" + demoP.psrCorrected.toFixed(3) + " at τ_int " + demoP.tauInt.toFixed(1) : "correction NOT yet biting"}) · recommended-for-signature ${recommendedForSignature} · operatorSigned false (the pen is the human's, LN5). Accountability split: the agent owns the math verdict; the Operator owns the decision to rely on it (RP-4).`,
     }
   }
+
+  // ── HARDENING V45 (P-2/S202) — BOTH PSR STATISTICS, SIDE BY SIDE. V44's header showed a high naive PSR beside
+  // riderEnforced:true — the enforcement is Stamp-scoped, but the juxtaposition read as contradiction (a high naive number
+  // next to "the rider is enforced" that would LOWER it). The fix: render BOTH — the naive √(n−1) PSR AND the N_eff-corrected
+  // √(N_eff−1) PSR — with riderEnforced's SCOPE inline, so an enforced rider never again sits beside an unscoped naive number.
+  export interface Both {
+    naive: { psr: number; basis: string }
+    nEff: { psr: number; tauInt: number; nEff: number; basis: string }
+    riderEnforced: boolean
+    riderScope: string
+    display: string
+  }
+  export function both(): Both {
+    const d = verdict()
+    const dd = d.demoDeflation
+    const riderScope = "riderEnforced scopes to THE STAMP — the ONLY harness surface that renders a Sharpe-derived verdict (the mass path carries no verdicts, P-5). The naive PSR is the frozen i.i.d. statistic (mass path, cross-check); the N_eff PSR is the Stamp's enforced default (autocorrelation-adjusted). Both shown (S202) so the rider never sits beside an unscoped naive number."
+    return {
+      naive: { psr: dd.psrNaive, basis: "√(n−1) over the raw count (i.i.d.; the frozen cross-check statistic, mass path — no verdict)" },
+      nEff: { psr: dd.psrCorrected, tauInt: dd.tauInt, nEff: dd.nEff, basis: "√(N_eff−1), N_eff = n/τ_int (autocorrelation-adjusted; the Stamp's enforced default)" },
+      riderEnforced: d.riderEnforced,
+      riderScope,
+      display: `PSR naive ${dd.psrNaive.toFixed(4)} (√(n−1), i.i.d.) │ PSR N_eff ${dd.psrCorrected.toFixed(4)} (√(N_eff−1), τ_int ${dd.tauInt.toFixed(1)}, N_eff ${dd.nEff.toFixed(1)}) — riderEnforced ${d.riderEnforced} scoped to the Stamp (P-2/P-5/S202)`,
+    }
+  }
 }

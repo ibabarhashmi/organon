@@ -1,0 +1,46 @@
+{
+  "protocol": "hardening-discovery",
+  "at": "2026-07-16",
+  "rule": "DD-94 — the three mechanical discovery sweeps that GROW the seeded registry (never silently shrink it). The sweep, not the audit memory, is the guarantee (A′#3). A genuine finding becomes a DISCOVERED P-entry with a disposition; a sweep that finds nothing NEW records that honestly.",
+  "crossRead": {
+    "blocksChecked": 90,
+    "distinctIds": [
+      "D27",
+      "D33",
+      "D51",
+      "D63",
+      "D80",
+      "D81",
+      "D82",
+      "D83",
+      "D84",
+      "D85",
+      "D86",
+      "D87",
+      "D88",
+      "D89",
+      "D90",
+      "D91",
+      "D92",
+      "D93",
+      "D94",
+      "D95",
+      "D96"
+    ],
+    "twoStateFound": false,
+    "detail": "90 deviation-state claim(s) across the artifact, every one === the ONE producer (S198 — the two-state defect class closed for blocks that do not exist yet)"
+  },
+  "grep": {
+    "filesScanned": 194,
+    "todos": 0,
+    "placeholders": 0,
+    "bareCatches": 0,
+    "findings": []
+  },
+  "emptyState": {
+    "rendered": true,
+    "bareRenders": []
+  },
+  "discoveredEntries": [],
+  "summary": "cross-read: 90 claims across 21 deviations, twoStateFound=false · grep: 194 files, 0 todo, 0 placeholder, 0 bare-catch · empty-state: 0 bare renders · DISCOVERED: 0"
+}

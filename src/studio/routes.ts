@@ -23,7 +23,7 @@ import { StudioErrors } from "./errors"
 // x-forwarded-for ONLY behind a declared proxy (TRUST_PROXY); otherwise key on the real socket peer; no socket → "local".
 function callerId(c: { req: { header(name: string): string | undefined } }): string {
   if (process.env.TRUST_PROXY) { const xff = c.req.header("x-forwarded-for"); if (xff) return String(xff).split(",")[0]!.trim() }
-  try { const a = getConnInfo(c as never)?.remote?.address; if (a) return a } catch {}
+  try { const a = getConnInfo(c as never)?.remote?.address; if (a) return a } catch { /* HARDENING V45 (P-20) — no socket peer (getConnInfo threw on this transport): fall through to the header/local fallback below; recoverable, the fallback is explicit, never a silent swallow */ }
   return c.req.header("x-forwarded-for") ?? "local"
 }
 

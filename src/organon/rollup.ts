@@ -25,6 +25,8 @@ import { D33 } from "../backtest/crosscheck"
 import { Contagion } from "../strategy/contagion"
 import { Backfill } from "../plane/backfill"
 import { Delegation } from "./delegation"
+import { Registry } from "./registry"
+import { HistoricalAct } from "./historical"
 
 export namespace Rollup {
   export interface RunMeasured {
@@ -76,6 +78,7 @@ export namespace Rollup {
       newProductCapability: v("newProductCapability"),
       verifyOnClone: v("verifyOnClone"),
       reckoning: reckoningSection(),
+      hardening: hardeningSection(),
     }
   }
 
@@ -192,6 +195,7 @@ export namespace Rollup {
       newProductCapability: v("newProductCapability"),
       verifyOnClone: v("verifyOnClone"),
       reckoning: reckoningSection(),
+      hardening: hardeningSection(),
     }
   }
 
@@ -214,8 +218,36 @@ export namespace Rollup {
       censusTwoIdentities: { conservation: two?.conservation.sumsToZero ?? null, growth: two?.growth.reconciles ?? null }, // S190
       contagionGuardComplete: Contagion.mutationRate().complete, // S196 — the dedicated advisory guard is complete
       backfill: { rateSpace: Backfill.rateSpaceVerdict().ok, judgeableTier: arch.judgeableTier }, // S194/S195
-      delegation: { D87: "AGENT-RATIFIED", D88: "AGENT-RATIFIED", D89: "AGENT-RATIFIED", operatorSigned: false }, // S197 — ratified, not signed
+      // HARDENING V45 (P-1/S198) — THE DELEGATION STATES ARE READ FROM THE ONE PRODUCER, never hardcoded. V44 hardcoded
+      // "AGENT-RATIFIED" here while State.deviations() said "RESERVED" — the S150 two-state defect. Now this block READS
+      // State.byId(id).state; a block cannot hold a second state because it is the producer's state (S198 asserts it).
+      delegation: { D87: State.byId("D87")?.state, D88: State.byId("D88")?.state, D89: State.byId("D89")?.state, operatorSigned: false }, // S197/S198 — the producer's state, ratified not signed
       bundle: "9c1e7bd8 byte-identical — the strict bar + N_eff land in the opt-in Stamp (off the mass path, outside the deterministic bundle); the Stamp's own verdict change is versioned in stamp-strict-record.json (F-1 ground truth, RP-1's scoped diff manifest)",
+    }
+  }
+
+  // ── HARDENING V45 — the production-readiness section: the registry census (RP-1), the terminal state (RP-6), the one-state
+  // proof (S198), BOTH psr statistics with the rider scoped (P-2/S202), the rebased tag inline (P-3), and the disposition
+  // census. Strings/booleans; the numeric leaves are exempt via MARKER_EXEMPT `^hardening\.` (per-run counts + verdict-core
+  // floats, DERIVED this run — the countables are already registered). Rendered in the marker + header. ──
+  export function hardeningSection(): Record<string, unknown> {
+    const both = D33.both()
+    const reb = HistoricalAct.rebasing() // the raw tag {from,to,scheme,at} — P-3 rendered inline
+    const oneState = State.oneStateVerdict({ deviationStates: State.deviations().map((d) => ({ id: d.id, state: d.state })), reckoning: reckoningSection() })
+    const c = Registry.census()
+    return {
+      terminalState: "READY-UNVERIFIED-BY-A-SECOND-HUMAN", // RP-6 — the pinned enum; VERIFIED settable only by a HUMAN-tier event
+      registryCensus: Registry.censusLine(), // RP-1 — FIXED n · ACCEPTED m (each with its clause) · PEN'S k
+      registryProven: Registry.check().ok, // S209 — every FIX proven, every ACCEPT cites a clause, every built wall traces
+      oneState: oneState.ok, // S198 — every generated block's deviation-state claims === the ONE producer (P-1 closed)
+      crossCheckBoth: both.display, // S202/P-2 — PSR naive AND PSR N_eff, side by side
+      riderScope: both.riderScope, // P-2 — riderEnforced scoped inline (to the Stamp)
+      rebasedTag: reb ? `rebased:{from:${reb.from.slice(0, 8)}, to:${reb.to.slice(0, 8)}, scheme:${reb.scheme}, at:${reb.at}}${reb.stable ? " (stable)" : " (DRIFTED)"}` : "no re-basing tagged", // P-3 — the tag inline
+      stampScopeByDesign: "the strict bar + N_eff are Stamp-scoped BY DESIGN — the mass path carries no verdicts (P-5, pinned)",
+      mr13: "CLOSED — undischargeable-by-agent, converted to the standing IN2·realLineageCount line (P-6)",
+      discovery: Registry.discover()?.summary ?? "discovery artifact absent", // DD-94 — the three sweeps' result
+      dispositions: { fixed: c.fixed, accepted: c.accepted.length, pens: c.pens }, // RP-1 — the census
+      ln5: "operatorSigned:false on every deviation — the pen's six keystrokes render at the gate, none made",
     }
   }
 

@@ -24,7 +24,7 @@ MODE="menu"; FULL=""; STAMP_ARG=""; ASK_ARGS=(); PASS_ARGS=()
 # like `--screen ask` cannot flip the mode (a targeted fix for AH11 on the value-taking verbs; Probe Phase 2).
 for a in "$@"; do
   case "$a" in
-    menu|status|check|setup|setup-deps|doctor|launch|verify|stamp|ask|monitor|telemetry|feedback|ship|capture)
+    menu|status|check|setup|setup-deps|doctor|launch|verify|verify-chain|stamp|ask|monitor|telemetry|feedback|ship|capture)
       case "$MODE" in ask) ASK_ARGS+=("$a");; monitor|telemetry|feedback|ship|capture) PASS_ARGS+=("$a");; *) MODE="$a";; esac;;
     --full) FULL="--full";;
     --version) MODE="version";;
@@ -191,6 +191,7 @@ case "$MODE" in
   status) do_status;;
   launch) do_launch;;
   verify) do_verify;;
+  verify-chain) need_bun; bun run script/verify-chain.ts;;  # HARDENING V45 (S200/P-10) — walk every append-only chain, quarantine a torn tail (never delete)
   stamp)  do_stamp;;
   release) do_release;;
   socket) do_socket;;

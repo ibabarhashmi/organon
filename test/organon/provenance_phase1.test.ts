@@ -32,6 +32,12 @@ import { Consistency } from "../../src/organon/consistency"
 import { Rollup } from "../../src/organon/rollup"
 import { State } from "../../src/organon/state"
 import { Verify } from "../../src/organon/verify"
+import { Registry } from "../../src/organon/registry"
+import { Rpc } from "../../src/organon/rpc"
+import { GuardAggregate } from "../../src/organon/guardaggregate"
+import { Sidecar } from "../../src/organon/sidecar"
+import { Docs } from "../../src/organon/docs"
+import { Hardening } from "../../src/organon/hardening"
 
 const PROVENANCE_PINS = "04c606dd5846e7cdcd9fab86bff7ae4de2dd3c942563fda114abf63e9d3df3f8" // this sprint's own pins sha
 const PARENT_PINS = "eb64cebe435bc0797dd3752cef35afc36da3ff23230b2d69cd41b5f86c756d08" // V41 Variant — a SHAPE-VALID, IDENTITY-WRONG parent
@@ -68,6 +74,12 @@ function artifacts(over: Partial<Ship.Artifacts> = {}): Ship.Artifacts {
     rateSpace: Backfill.rateSpaceVerdict(), judgeableReconciled: Capture.judgeableReconciled(),
     contagion: (() => { const r = Contagion.mutationRate(); return { complete: r.complete, detail: r.note } })(),
     delegation: Delegation.verdict(),
+    // HARDENING V45 (S198–S209) — the production-readiness walls, honest so the V42/V43 identity walls run under the V45 gate.
+    oneState: State.oneStateVerdict(marker()),
+    emptyState: Hardening.emptyState(), crashSafety: Hardening.crashSafety(), rpcPolicy: Rpc.policyVerdict(),
+    disclosures: { ok: true, detail: "test disclosures" }, workflows: Hardening.workflows(),
+    guardAggregate: GuardAggregate.verdict(), sidecar: Sidecar.verdict(), binaryParity: Hardening.binaryParity(),
+    docs: Docs.verdict(), cleanMachine: { ok: true, detail: "test clean-machine" }, registry: Registry.check(),
   }
   return { ...base, ...over }
 }

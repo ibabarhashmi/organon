@@ -101,7 +101,12 @@ test("S104 (W-DV05) — the census is a TREATMENT: origin_unrecorded strictly BE
   const c = Falsify.census()
   // twelve walls RE-FOUNDED this sprint — a demonstrated seeded negative, its origin reconstructed not remembered
   expect(c.reFounded).toBeGreaterThanOrEqual(10) // DD-20: >=10 processed
-  expect(c.recovered + c.reFounded).toBe(c.reFounded) // recovered is 0 (committed history did not carry a per-wall defect); honest
+  // HARDENING V45 (P-4) — the FIRST recovered wall this arc: one wall's origin (the live-AI grounding wall, Persistence V18
+  // finding V2) was RECOVERED, not re-founded (a purpose recorded, not reconstructed). recovered 0→1 — the ONE real census
+  // reclassification of the sprint (OU→DEMONSTRATED) that exercises the CONSERVATION identity against a live transfer.
+  // recovered and reFounded stay DISTINCT sub-counts (RP-3). (The wall id is not named HERE — this block carries a W-tag, and
+  // naming the recovered wall would bleed its origin, exactly the RP-1 lesson; its RECOVERED-ORIGIN lives in its own block.)
+  expect(c.recovered).toBe(1)
   // the count moved: 83 (V35) -> strictly lower. The 7 new walls S100-S106 are W-tagged (DEMONSTRATED), so they do not inflate it.
   expect(c.counts.ORIGIN_UNRECORDED).toBeLessThan(83)
   // recovered and re-founded are DISTINCT sub-counts, forever (a purpose reconstructed is not a purpose remembered)

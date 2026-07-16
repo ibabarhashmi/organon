@@ -43,6 +43,12 @@
       "terminalFullPass": 1991,
       "at": "2026-07-16",
       "note": "continuity made total + the moats second stone; battery 1991 from zero, clone ran on this tree"
+    },
+    {
+      "sprint": "V44 (Reckoning)",
+      "terminalFullPass": 2024,
+      "at": "2026-07-16",
+      "note": "the pen's maths audited + N_eff enforced, D27 strict, the moat's third stone; battery 2024 from zero, clone ran on this tree"
     }
   ]
 }

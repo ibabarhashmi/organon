@@ -30,17 +30,17 @@ export namespace Continuity {
   export type CType = "ADDITIVE" | "PARTITION" | "DERIVED" | "INVARIANT"
   export interface Countable { key: string; type: CType; markerPath: string; note: string }
 
-  // the PREVIOUS sprint's terminal wall id (V42's last wall was S179) — walls with id > this are NEW this sprint (S180–S189),
+  // the PREVIOUS sprint's terminal wall id (V44's last wall was S197) — walls with id > this are NEW this sprint (S198–S209),
   // so they are ADDITIONS to the census, not inter-bucket TRANSFERS (F-4/RP-4: the movement is decomposed into additions +
-  // reclassification). Note: this is the terminal id (179), NOT the Falsify.WALL_MAX ceiling (which this sprint bumps to 190).
-  export const WALL_MAX_PREV = 189
+  // reclassification). Note: this is the terminal id (197), NOT the Falsify.WALL_MAX ceiling (which this sprint bumps to 209).
+  export const WALL_MAX_PREV = 197
 
   // ── DD-81 — the pinned countable registry + the prev-marker snapshot (both from Phase-0 pins) ──
   export function registry(): Countable[] {
-    return ((read("reckoning-pins.json").delegatedDecisions as Record<string, { countables?: Countable[] }>).DD81.countables ?? []) as Countable[]
+    return ((read("hardening-pins.json").delegatedDecisions as Record<string, { countables?: Countable[] }>).DD81.countables ?? []) as Countable[]
   }
   export function prevMarker(): Record<string, number> {
-    return (read("reckoning-pins.json").prevMarker as { countables: Record<string, number> }).countables
+    return (read("hardening-pins.json").prevMarker as { countables: Record<string, number> }).countables
   }
 
   // ── THE LIVE SNAPSHOT — the SAME flat numeric keys as prevMarker, read from live producers this run. The battery numbers are
@@ -59,7 +59,7 @@ export namespace Continuity {
     const b = baseline()
     const c = Falsify.census()
     const led = observeLedger()
-    const consts = (read("reckoning-pins.json").carried as { laws: number; exitKinds: number }) ?? { laws: 17, exitKinds: 7 }
+    const consts = (read("hardening-pins.json").carried as { laws: number; exitKinds: number }) ?? { laws: 17, exitKinds: 7 }
     return {
       "battery.pass": b.fullPass,
       "battery.skip": b.fullSkip ?? 2,
@@ -247,7 +247,7 @@ export namespace Continuity {
   // the number of deviations THIS sprint's pins name (D87–D89) — the independent `added` for deviations.count. A code that
   // adds a deviation the pins do not name, or vice versa, makes the ADDITIVE reconciliation fail.
   export function countNamedNewDeviations(): number {
-    const devs = (read("reckoning-pins.json").deviations as Record<string, unknown>) ?? {}
+    const devs = (read("hardening-pins.json").deviations as Record<string, unknown>) ?? {}
     return Object.keys(devs).filter((k) => /^D\d+$/.test(k)).length
   }
 
@@ -302,6 +302,7 @@ export namespace Continuity {
     { pattern: /^newProductCapability$/, reason: "the disclosed capability count (1) — priced as a SEARCH, disclosed at the gate, not a drift-prone countable" },
     { pattern: /^d50\./, reason: "the D50 release booleans/counts — a release-state record, not a cross-sprint countable" },
     { pattern: /^reckoning\./, reason: "RECKONING V44 — the pen's-reckoning verdict-state (D33 implementation/application, riderEnforced), the strict-bar/N_eff facts, the contagion guard flag, and the per-manifest census two-identities — all DERIVED this run + verdict-core, guarded by the bundle 9c1e7bd8 + the pins, NOT cross-sprint countables (the countables are battery/census/deviations/archive/laws/deps/screens/exitKinds/guardEfficacy, already registered)" },
+    { pattern: /^hardening\./, reason: "HARDENING V45 — the production-readiness section: the registry disposition census (FIXED/ACCEPTED/PEN'S per-run counts), the one-state proof, BOTH psr statistics (verdict-core floats), the rebased tag, the guard aggregate — all DERIVED this run + verdict-core, guarded by the registry proof (S209) + the pins, NOT cross-sprint countables (the countables — battery/census/deviations/archive/laws/deps/screens/exitKinds/guardEfficacy — are already registered)" },
   ]
   export function markerNumbers(marker: Record<string, unknown>): { path: string; value: number }[] {
     const out: { path: string; value: number }[] = []

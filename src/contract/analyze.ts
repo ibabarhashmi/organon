@@ -461,7 +461,7 @@ function precisionHint(value: string): number | undefined {
       while (v > 1n) { v >>= 1n; bits++ }
       return bits
     }
-  } catch {}
+  } catch { /* HARDENING V45 (P-20) — value is not a decodable integer literal: return undefined (the caller treats absent as "unknown" and never fabricates a bit-length), never a silent swallow of a real error */ }
   return undefined
 }
 

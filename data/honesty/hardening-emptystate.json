@@ -1,0 +1,45 @@
+{
+  "protocol": "hardening-emptystate",
+  "at": "2026-07-16",
+  "rule": "S199 (P-12/P-17) — the offline fixture Reality Check (a zero-data user's first screen) has NO bare verdict word: every UNJUDGEABLE/UNVERIFIED/INSUFFICIENT in the visible text carries BOTH a why and a path-to-judgeable (Unjudgeable.checkText). The empty state is not hostile — it explains itself and names its path. P-17: the frozen limits render at the point of use.",
+  "rendered": true,
+  "status": 200,
+  "verdictWordsChecked": 26,
+  "bareRenders": [],
+  "ok": true,
+  "producerExamples": [
+    {
+      "verdict": "SAMPLE",
+      "why": "this pool's APY is SAMPLE — a fallback shape, NOT a value in the record (no live capture yet).",
+      "whatWouldMakeItJudgeable": "run `./organon.sh capture` (keyless) to fetch and record a REAL, point-in-time reading; SAMPLE becomes REAL the moment it is in the moat."
+    },
+    {
+      "verdict": "UNVERIFIED",
+      "why": "not enough recorded history to show a reliable band for this pool's APY (12 observation(s) recorded).",
+      "whatWouldMakeItJudgeable": "the band appears once enough point-in-time observations are captured (about 30 are needed) — capture on the cadence and it fills in."
+    },
+    {
+      "verdict": "INSUFFICIENT",
+      "why": "the track record is too short or too autocorrelated to certify at 95% (12 observation(s)) — INSUFFICIENT is the honest name for \"not enough evidence yet,\" never a failure.",
+      "whatWouldMakeItJudgeable": "INSUFFICIENT clears to GO when the observed length exceeds MinTRL AND PSR(N_eff) > 0.95 (the literature's bar) — about 30 more observation(s); a real edge, recorded long enough, clears it."
+    },
+    {
+      "verdict": "UNJUDGEABLE",
+      "why": "this pool's APY cannot be resolved to a terminal answer (fewer than two positions) — UNJUDGEABLE is never silently treated as \"independent\" or \"zero.\"",
+      "whatWouldMakeItJudgeable": "add a second resolved position to the manifest — a shared-dependency count needs at least two to compare."
+    }
+  ],
+  "limitsAtPointOfUse": [
+    {
+      "axis": "oracle-staleness",
+      "resolvesFor": "a named 3-feed subset (Chainlink USDC/USDT/DAI/ETH — D79)",
+      "whyBounded": "the staleness bound is verified only for these feeds; outside the subset the axis is UNJUDGEABLE by design, not silently degraded — the door says so before you rely on it."
+    },
+    {
+      "axis": "selectionRank",
+      "resolvesFor": "a demonstrated family of 2 (the manifest pair, D-family)",
+      "whyBounded": "selection rank is demonstrated at family scale; a single-position family renders UNJUDGEABLE (a rank needs a field), stated at the point of use, not only in the log."
+    }
+  ],
+  "summary": "26 verdict words in the visible empty-state render, 0 bare (each must carry why + path); limits at point of use: oracle-staleness, selectionRank"
+}

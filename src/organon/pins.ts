@@ -29,7 +29,7 @@ export namespace Pins {
   // THE CURRENT HEAD — this sprint's pins file, PINNED. Advancing the arc moves this ONE constant. The fragility that caused
   // M-1 (a fixed list never advanced) is now STRUCTURALLY CAUGHT: even a stale HEAD_FILE cannot pass S169, because the gate
   // compares the emitted value to sha256 of THIS sprint's pins file read directly — two independent paths to the value.
-  export const HEAD_FILE = "reckoning-pins.json"
+  export const HEAD_FILE = "hardening-pins.json"
 
   export interface SelfHash { file: string; recomputed: string; stored: string; matches: boolean }
 
@@ -47,7 +47,7 @@ export namespace Pins {
   // pre-V42 checkout (clone stability); on THIS tree HEAD_FILE always exists and is returned first.
   export interface Head { pinsSha: string; carriedFromPinsSha?: string; carried: { newProductCapability: number; lawsThisSprint: string } }
   export function head(): Head | null {
-    for (const f of [HEAD_FILE, "backfill-pins.json", "provenance-pins.json", "variant-pins.json", "ship-pins.json", "family-pins.json", "substance-pins.json", "socket-pins.json"]) {
+    for (const f of [HEAD_FILE, "reckoning-pins.json", "backfill-pins.json", "provenance-pins.json", "variant-pins.json", "ship-pins.json", "family-pins.json", "substance-pins.json", "socket-pins.json"]) {
       try { return JSON.parse(readFileSync(path.join(H, f), "utf8")) } catch { /* try the next */ }
     }
     return null

@@ -23,7 +23,11 @@ export namespace GeckoTerminal {
   // the injectable fetch seam (default = global fetch). Tests inject a fixture / a 429 / a throwing impl.
   export interface FetchResult { ok: boolean; status: number; json(): Promise<unknown> }
   export type FetchImpl = (url: string) => Promise<FetchResult>
-  const globalFetch: FetchImpl = (url) => fetch(url, { headers: { Accept: "application/json" } }) as unknown as Promise<FetchResult>
+  // HARDENING V45 (P-9/S201) — the ONE dataplane fetch that had NO timeout (it could hang indefinitely on an unresponsive
+  // endpoint). Closed with an 8s AbortSignal.timeout matching DeFiLlama's budget — a hung endpoint aborts (→ SAMPLE/last-good
+  // via getJson's catch), it does not hang. DEGRADE-NEVER-HANG.
+  export const FETCH_TIMEOUT_MS = 8000
+  const globalFetch: FetchImpl = (url) => fetch(url, { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) }) as unknown as Promise<FetchResult>
 
   const cache = new Map<string, { at: number; body: unknown }>()
   export function resetCache(): void { cache.clear() } // test hook (the cache is process-global by design)

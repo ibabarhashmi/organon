@@ -38,6 +38,13 @@ import { Backfill } from "../plane/backfill"
 import { Capture } from "../strategy/capture"
 import { Strict } from "../studio/strict"
 import { Contagion } from "../strategy/contagion"
+// HARDENING V45 (S198–S209) — the production-readiness walls, run against the shipped artifacts.
+import { Registry } from "./registry"
+import { Rpc } from "./rpc"
+import { GuardAggregate } from "./guardaggregate"
+import { Sidecar } from "./sidecar"
+import { Docs } from "./docs"
+import { Hardening } from "./hardening"
 
 export namespace Ship {
   // ── BATTERY CONTINUITY (S156, K-7) — the cross-boundary check the within-sprint reconciliation never made ──
@@ -105,6 +112,19 @@ export namespace Ship {
     judgeableReconciled: { ok: boolean; detail: string } // S195 — the own-leg judgeable agrees with its tier cap
     contagion: { complete: boolean; detail: string } // S196 — the contagion surface's dedicated advisory guard is complete
     delegation: Delegation.Verdict // S197 — D87/D88/D89 AGENT-RATIFIED, operatorSigned:false (LN5 mechanized)
+    // HARDENING V45 (S198–S209) — production readiness, checked against the SHIPPED artifacts. S209 (the registry) is the spine.
+    oneState: State.OneState // S198 (P-1) — every generated block's deviation-state claim === the ONE producer (a seeded two-state REFUSES)
+    emptyState: Hardening.Verdict // S199 (P-12/P-17) — no bare UNJUDGEABLE; each carries why + path
+    crashSafety: Hardening.Verdict // S200 (P-10/P-11/S208) — a real kill -9 at every seam recovered; dedupe; conflict HALT
+    rpcPolicy: Rpc.Verdict // S201 (P-9) — UNREACHABLE first-class, serving provider per-point, no silent swap
+    disclosures: { ok: boolean; detail: string } // S202 (P-2/P-3/P-5/P-6) — both psr statistics, rebased tag inline, Stamp-scope pinned, MR13 CLOSED
+    workflows: Hardening.Verdict // S203 (P-13) — every workflow transcripted incl. failure paths, AGENT-labeled
+    guardAggregate: GuardAggregate.Verdict // S204 (P-7/P-8) — the aggregate guard across every surface + the socket re-verified
+    sidecar: Sidecar.Verdict // S205 (P-14) — uv.lock committed, the frozen seven attested
+    binaryParity: Hardening.Verdict // S206 (P-15) — the binary is byte-equal to the source after the pinned normalization
+    docs: Docs.Verdict // S207 (P-16) — limits-first, docs-match-producers, guard-clean, no embedded figures
+    cleanMachine: Hardening.Verdict // S207/RP-3 — the clean-machine test showed its absence checks
+    registry: Registry.Verdict // S209 (D92) — every P-entry proven or honestly dispositioned; every built wall traces (the spine)
   }
 
   export type Refusal = { wall: string; artifact: string; value: string }
@@ -247,6 +267,57 @@ export namespace Ship {
     if (!a.delegation.ok) return fail("S197", "the delegation ratification", `${(a.delegation as { reason: string }).reason}`)
     checks.push({ wall: "S197", artifact: "the delegation ratification", ok: true, detail: (a.delegation as { detail: string }).detail })
 
+    // ── HARDENING V45 (S198–S209) — PRODUCTION READINESS, against the SHIPPED artifacts. S209 (the registry) is the spine;
+    // S198 (the one-state wall) is the P-1 cure; S200 is the REAL kill-test. The last full band of the arc's red team. ──
+
+    // S209 (D92, W-HD00) — THE SPINE, FIRST: the open-issues registry — every FIX proven, every ACCEPT cites a clause (RP-1),
+    // every built wall traces to an entry (no untraced scope, A′#2). A registry entry without its proof REFUSES the log.
+    if (!a.registry.ok) return fail("S209", "the open-issues registry", `${(a.registry as { reason: string }).reason}`)
+    checks.push({ wall: "S209", artifact: "the open-issues registry", ok: true, detail: (a.registry as { detail: string }).detail })
+
+    // S198 (P-1, W-HD01) — THE ONE-STATE WALL: every generated block's deviation-state claim equals the ONE producer; a seeded
+    // two-state artifact (deviationStates vs the reckoning block) REFUSES on the emit path (the S150 defect class, closed forever).
+    if (!a.oneState.ok) return fail("S198", "the one-state deviation wall", `${(a.oneState as { reason: string }).reason}`)
+    checks.push({ wall: "S198", artifact: "the one-state deviation wall", ok: true, detail: (a.oneState as { detail: string }).detail })
+
+    // S199 (P-12/P-17, W-HD05) — no bare UNJUDGEABLE: the empty-state render carries why + path; limits at the point of use.
+    if (!a.emptyState.ok) return fail("S199", "the empty-state explained", `${(a.emptyState as { reason: string }).reason}`)
+    checks.push({ wall: "S199", artifact: "the empty-state explained", ok: true, detail: (a.emptyState as { detail: string }).detail })
+
+    // S200 (P-10/P-11/S208, W-HD02) — a REAL kill -9 at every seam recovered; the torn tail quarantined, never deleted; dedupe.
+    if (!a.crashSafety.ok) return fail("S200", "the crash-safety kill-test", `${(a.crashSafety as { reason: string }).reason}`)
+    checks.push({ wall: "S200", artifact: "the crash-safety kill-test", ok: true, detail: (a.crashSafety as { detail: string }).detail })
+
+    // S201 (P-9, W-HD03) — a dead endpoint renders UNREACHABLE; the serving provider is recorded per-point; a silent swap FAILS.
+    if (!a.rpcPolicy.ok) return fail("S201", "the RPC honesty policy", `${(a.rpcPolicy as { reason: string }).reason}`)
+    checks.push({ wall: "S201", artifact: "the RPC honesty policy", ok: true, detail: (a.rpcPolicy as { detail: string }).detail })
+
+    // S202 (P-2/P-3/P-5/P-6, W-HD04) — both psr statistics side by side, riderEnforced scoped inline, the rebased tag inline.
+    if (!a.disclosures.ok) return fail("S202", "the disclosures (both psr, rebased tag, scope)", a.disclosures.detail)
+    checks.push({ wall: "S202", artifact: "the disclosures (both psr, rebased tag, scope)", ok: true, detail: a.disclosures.detail })
+
+    // S203 (P-13, W-HD06) — every workflow transcripted incl. failure paths, AGENT-labeled, realLineageCount 0.
+    if (!a.workflows.ok) return fail("S203", "the workflow transcripts", `${(a.workflows as { reason: string }).reason}`)
+    checks.push({ wall: "S203", artifact: "the workflow transcripts", ok: true, detail: (a.workflows as { detail: string }).detail })
+
+    // S204 (P-7/P-8, W-HD08) — the aggregate guardEfficacy across every surface + the socket protocol re-verified live.
+    if (!a.guardAggregate.ok) return fail("S204", "the guard aggregate + socket", `${(a.guardAggregate as { reason: string }).reason}`)
+    checks.push({ wall: "S204", artifact: "the guard aggregate + socket", ok: true, detail: (a.guardAggregate as { detail: string }).detail })
+
+    // S205 (P-14, W-HD07) — the sidecar is frozen: uv.lock committed, uv sync --frozen reproduces, the frozen seven attest.
+    if (!a.sidecar.ok) return fail("S205", "the sidecar freeze", `${(a.sidecar as { reason: string }).reason}`)
+    checks.push({ wall: "S205", artifact: "the sidecar freeze", ok: true, detail: (a.sidecar as { detail: string }).detail })
+
+    // S206 (P-15, W-HD09) — the compiled binary is byte-equal to the source after the pinned normalization; seeded divergence CAUGHT.
+    if (!a.binaryParity.ok) return fail("S206", "the binary parity", `${(a.binaryParity as { reason: string }).reason}`)
+    checks.push({ wall: "S206", artifact: "the binary parity", ok: true, detail: (a.binaryParity as { detail: string }).detail })
+
+    // S207 (P-16, W-HD10) — the second-human README leads with limits, ties every structural claim to a producer, is guard-clean,
+    // embeds no drift-prone figure; the clean-machine test showed its absence checks.
+    if (!a.docs.ok) return fail("S207", "the second-human docs", `${(a.docs as { reason: string }).reason}`)
+    if (!a.cleanMachine.ok) return fail("S207", "the clean-machine test", `${(a.cleanMachine as { reason: string }).reason}`)
+    checks.push({ wall: "S207", artifact: "the second-human docs + clean-machine", ok: true, detail: `${(a.docs as { detail: string }).detail}; ${(a.cleanMachine as { detail: string }).detail}` })
+
     return { pass: true, checks }
   }
 
@@ -292,7 +363,38 @@ export namespace Ship {
       judgeableReconciled: Capture.judgeableReconciled(), // S195 — the own-leg judgeable agrees with its tier cap
       contagion: (() => { const r = Contagion.mutationRate(); return { complete: r.complete, detail: r.note } })(), // S196 — the dedicated advisory guard is complete
       delegation: Delegation.verdict(), // S197 — D87/D88/D89 AGENT-RATIFIED, operatorSigned:false (LN5 mechanized)
+      // HARDENING V45 (S198–S209) — production readiness, from the live producers + the committed transcripts + the REAL marker.
+      oneState: State.oneStateVerdict(marker), // S198 — every generated block's deviation-state claim === the ONE producer (a seeded two-state REFUSES)
+      emptyState: Hardening.emptyState(), // S199 — no bare UNJUDGEABLE
+      crashSafety: Hardening.crashSafety(), // S200 — the real kill-test recovered at every seam
+      rpcPolicy: Rpc.policyVerdict(), // S201 — UNREACHABLE first-class, provider per-point, no silent swap
+      disclosures: disclosuresVerdict(marker), // S202 — both psr, rebased tag, Stamp-scope, MR13 CLOSED
+      workflows: Hardening.workflows(), // S203 — every workflow transcripted incl. failure paths
+      guardAggregate: GuardAggregate.verdict(), // S204 — the aggregate guard + socket re-verified
+      sidecar: Sidecar.verdict(), // S205 — uv.lock committed, the frozen seven attested
+      binaryParity: Hardening.binaryParity(), // S206 — the binary is byte-equal to the source
+      docs: Docs.verdict(), // S207 — limits-first, docs-match-producers, guard-clean
+      cleanMachine: Hardening.cleanMachine(), // S207/RP-3 — the clean-machine test showed its absence checks
+      registry: Registry.check(), // S209 — the spine: every FIX proven, every ACCEPT cites a clause, every built wall traces
     }
+  }
+
+  // S202 — the disclosures verdict, read from the REAL marker's hardening section: both psr statistics present, the rebased tag
+  // inline, the Stamp-scope pinned, MR13 CLOSED. A marker missing any of these is a disclosure gap (P-2/P-3/P-5/P-6).
+  function disclosuresVerdict(marker: Record<string, unknown>): { ok: boolean; detail: string } {
+    const h = marker.hardening as { crossCheckBoth?: string; riderScope?: string; rebasedTag?: string; stampScopeByDesign?: string; mr13?: string } | undefined
+    if (!h) return { ok: false, detail: "the marker has no hardening section — the disclosures are absent (S202)" }
+    const hasBoth = /PSR naive .* │ PSR N_eff/.test(h.crossCheckBoth ?? "")
+    const hasScope = /scopes? to the Stamp|scoped to the Stamp/i.test(h.riderScope ?? "")
+    const hasRebased = /rebased:\{from:/.test(h.rebasedTag ?? "")
+    const hasStampScope = /Stamp-scoped BY DESIGN/i.test(h.stampScopeByDesign ?? "")
+    const hasMr13 = /CLOSED/.test(h.mr13 ?? "")
+    if (!hasBoth) return { ok: false, detail: "the cross-check does NOT render BOTH psr(naive) and psr(N_eff) side by side (P-2/S202)" }
+    if (!hasScope) return { ok: false, detail: "riderEnforced is not scoped inline to the Stamp (P-2/S202)" }
+    if (!hasRebased) return { ok: false, detail: "the rebased:{from,to,scheme,at} tag is not rendered inline (P-3/S202)" }
+    if (!hasStampScope) return { ok: false, detail: "the Stamp-scoped-BY-DESIGN record is not present (P-5/S202)" }
+    if (!hasMr13) return { ok: false, detail: "MR13 is not rendered CLOSED (P-6/S202)" }
+    return { ok: true, detail: "both psr statistics side by side (P-2), riderEnforced scoped to the Stamp, the rebased tag inline (P-3), Stamp-scope pinned BY DESIGN (P-5), MR13 CLOSED (P-6) — the disclosures are whole (S202)" }
   }
 
   // S182 — the D56 SEARCH's rendered hash (from the live d33 claim) must be its stable immutable-core hash. When no redesign

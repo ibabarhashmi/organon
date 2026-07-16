@@ -28,6 +28,12 @@ import { Strict } from "../../src/studio/strict"
 import { Backfill } from "../../src/plane/backfill"
 import { Capture } from "../../src/strategy/capture"
 import { Contagion } from "../../src/strategy/contagion"
+import { Registry } from "../../src/organon/registry"
+import { Rpc } from "../../src/organon/rpc"
+import { GuardAggregate } from "../../src/organon/guardaggregate"
+import { Sidecar } from "../../src/organon/sidecar"
+import { Docs } from "../../src/organon/docs"
+import { Hardening } from "../../src/organon/hardening"
 
 const TERMINAL = "abc1234def5678000000000000000000000000ff"
 
@@ -65,6 +71,12 @@ function artifacts(cr: Ship.Artifacts["censusReconciliation"] = reconcilingCensu
     rateSpace: Backfill.rateSpaceVerdict(), judgeableReconciled: Capture.judgeableReconciled(),
     contagion: (() => { const r = Contagion.mutationRate(); return { complete: r.complete, detail: r.note } })(),
     delegation: Delegation.verdict(),
+    // HARDENING V45 (S198–S209) — the production-readiness walls, honest so the V41 census-fold wall runs under the V45 gate.
+    oneState: State.oneStateVerdict(marker()),
+    emptyState: Hardening.emptyState(), crashSafety: Hardening.crashSafety(), rpcPolicy: Rpc.policyVerdict(),
+    disclosures: { ok: true, detail: "test disclosures" }, workflows: Hardening.workflows(),
+    guardAggregate: GuardAggregate.verdict(), sidecar: Sidecar.verdict(), binaryParity: Hardening.binaryParity(),
+    docs: Docs.verdict(), cleanMachine: { ok: true, detail: "test clean-machine" }, registry: Registry.check(),
   }
 }
 
@@ -81,7 +93,7 @@ test("S161 (W-VR01) — the Ship Gate PASSES on a reconciling census (the check 
   const g = Ship.gate(artifacts())
   expect(g.pass).toBe(true)
   expect(g.checks.some((c) => c.wall === "S161" && c.ok)).toBe(true)
-  expect(g.checks.length).toBe(24) // + S190–S197 (V44 reckoning: the pen's reckoning + the moat's third stone)
+  expect(g.checks.length).toBe(35) // + S190–S197 (V44 reckoning) + S198–S209 (11 HARDENING V45 production-readiness walls)
 })
 
 test("S161 (W-VR01) — SEEDED NEGATIVE: a non-reconciling census REFUSES the log (a reconciling total that hides a regression)", () => {

@@ -1,0 +1,55 @@
+{
+  "protocol": "hardening-killtest",
+  "at": "2026-07-16",
+  "rule": "RP-2/S200 (P-10) — a REAL kill -9 (SIGKILL, uncatchable) at EVERY seam of the append path (Chain.KILL_SEAMS, derived from the mechanism's own steps). Each seam runs in its OWN spawned subprocess; verifyAndRecover recovers from every one; the verb resumes without fork or double. The torn-tail test proves the quarantine path (a genuinely torn write → .torn, preserved not deleted).",
+  "seams": [
+    {
+      "seam": "before-open",
+      "killed": true,
+      "signal": "SIGKILL",
+      "recovery": "OK",
+      "recoveredEntries": 1,
+      "resume": "CHAINED",
+      "resumeDetail": "killtest:rETH/ETH @ 25537838 chained (seq 1, self 5a89761afcc2…)",
+      "forkedOrDoubled": false
+    },
+    {
+      "seam": "after-open-before-write",
+      "killed": true,
+      "signal": "SIGKILL",
+      "recovery": "OK",
+      "recoveredEntries": 1,
+      "resume": "CHAINED",
+      "resumeDetail": "killtest:rETH/ETH @ 25537838 chained (seq 1, self 5a89761afcc2…)",
+      "forkedOrDoubled": false
+    },
+    {
+      "seam": "after-write-before-fsync",
+      "killed": true,
+      "signal": "SIGKILL",
+      "recovery": "OK",
+      "recoveredEntries": 2,
+      "resume": "DEDUPED",
+      "resumeDetail": "killtest:rETH/ETH @ 25537838 already chained (sha 6a2d7b3c8498…) — nothing appended (idempotent, DD-96)",
+      "forkedOrDoubled": false
+    },
+    {
+      "seam": "after-fsync-before-index",
+      "killed": true,
+      "signal": "SIGKILL",
+      "recovery": "OK",
+      "recoveredEntries": 2,
+      "resume": "DEDUPED",
+      "resumeDetail": "killtest:rETH/ETH @ 25537838 already chained (sha 6a2d7b3c8498…) — nothing appended (idempotent, DD-96)",
+      "forkedOrDoubled": false
+    }
+  ],
+  "tornTail": {
+    "recovery": "TORN",
+    "quarantinedNotDeleted": true,
+    "validPrefixKept": 1,
+    "segmentStillValid": true
+  },
+  "allSeamsRecovered": true,
+  "proofShape": "4 seams, each a separate spawned subprocess self-killed with SIGKILL; 4 confirmed killed; all recovered=true; torn-tail quarantined-not-deleted=true"
+}

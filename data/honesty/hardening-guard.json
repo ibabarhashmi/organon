@@ -1,0 +1,53 @@
+{
+  "protocol": "hardening-guard",
+  "at": "2026-07-16",
+  "rule": "S204 (P-7/P-8) — the guard mutation catalogue across EVERY render surface in one pass (aggregate + per-surface + named holes + lower-bound caveat); the Socket protocol negotiation re-verified LIVE against the real negotiate() and the range re-pinned.",
+  "guardAggregate": {
+    "overall": {
+      "caught": 24,
+      "total": 31,
+      "rate": "24/31"
+    },
+    "perSurface": [
+      {
+        "name": "advice/ask",
+        "seeded": 17,
+        "caught": 10,
+        "rate": "10/17",
+        "uncaught": []
+      },
+      {
+        "name": "contagion",
+        "seeded": 9,
+        "caught": 9,
+        "rate": "9/9",
+        "uncaught": []
+      },
+      {
+        "name": "docs/README",
+        "seeded": 5,
+        "caught": 5,
+        "rate": "5/5",
+        "uncaught": []
+      }
+    ],
+    "uncaught": [],
+    "lowerBoundCaveat": "the aggregate is a LOWER BOUND on the guard's reach — the mutation catalogue is a finite, pinned set of KNOWN advice shapes; a model's output space is unbounded, so a real render could carry a shape not in the catalogue. Every uncaught mutation is NAMED and routed to the gate; this is the number working, not a rigged N/N.",
+    "complete": true
+  },
+  "socketReVerified": {
+    "supportedVersions": [
+      "2024-11-05",
+      "2025-03-26",
+      "2025-06-18",
+      "2025-11-25"
+    ],
+    "liveVerifiedFlag": true,
+    "everyInRangeAccepted": true,
+    "outOfRangeRefused": true,
+    "refusalNamesRange": true,
+    "transport": "MCP over stdio only — NO port, NO listener, NO daemon (a subprocess of the user's own agent)",
+    "rePinned": "the range [2024-11-05, 2025-03-26, 2025-06-18, 2025-11-25] re-exercised live against negotiate(); the newest (2025-11-25) is served by default; an out-of-range version is refused LOUDLY, naming the range (S120/RP-5)"
+  },
+  "summary": "guardEfficacy AGGREGATE 24/31 across 3 surfaces [advice/ask 10/17, contagion 9/9, docs/README 5/5], 0 named holes; socket: 4/4 in-range accepted, out-of-range refused=true"
+}

@@ -1,0 +1,24 @@
+# ORGΛNON — THE HARDENING SPRINT (V45, P-14/DD-100/S205): THE FROZEN SIDECAR ENVIRONMENT, LOCKED.
+#
+# The frozen seven (rigor.py, neutralize.py, funding_discriminate.py, effective_n.py, funding_accrual.py,
+# funding_crossvenue.py + loop.ts) run the studio verdict path over numpy + scipy ONLY. Their SOURCE is byte-frozen (the
+# LAW — checkFrozenSet re-attests the sha256 of each .py post-install); their ENVIRONMENT (the wheels) is what this lock
+# freezes so a fresh clone reproduces the sidecar. uv.lock is committed; `uv sync --frozen` on the clone installs exactly
+# the locked wheels; checkFrozenSet() then re-attests the seven byte-hashes (the wheels are the environment; the seven are
+# the law — a wheel that differs while the seven attest identical is RECORDED, never a Halt).
+#
+# NOT a mass-path dependency: the mass path stays hono+zod (SBOM-proven, zero transitive). uv is the sidecar's INSTALLER,
+# not a mass-path dep. The heavy engine stack (quantstats, cvxpy, riskfolio-lib, PyPortfolioOpt, purgedcv cross-check
+# oracle) is the PARKED real-data layer (requirements.txt), not the studio verdict path locked here.
+[project]
+name = "organon-sidecar"
+version = "0.0.0"
+description = "ORGANON frozen sidecar — the studio verdict path (numpy + scipy); source byte-frozen, environment uv-locked"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.26,<3",
+    "scipy>=1.11,<2",
+]
+
+[tool.uv]
+package = false

@@ -27,9 +27,9 @@ test("BACKFILL Phase 0 — the pins file stays SELF-CONSISTENT (S169 carried): s
   expect(sh.recomputed).toBe(pinsSha)
 })
 
-test("BACKFILL Phase 0 — backfill-pins is now SUPERSEDED by reckoning-pins (V44): HEAD_FILE advanced, and the chain-tip guard BITES (the M-1 recurrence, caught)", () => {
-  // V44 advanced the head — HEAD_FILE is reckoning-pins.json now (the arc moved one link forward)
-  expect(Pins.HEAD_FILE).toBe("reckoning-pins.json")
+test("BACKFILL Phase 0 — backfill-pins is SUPERSEDED (HARDENING V45 advanced HEAD to hardening-pins.json): the chain-tip guard BITES (the M-1 recurrence, caught)", () => {
+  // the arc moved two links forward since V43: HEAD_FILE is hardening-pins.json now (backfill ← reckoning ← hardening)
+  expect(Pins.HEAD_FILE).toBe("hardening-pins.json")
   // backfill-pins is NO LONGER the tip — reckoning-pins carries from it (the chain-tip guard proves the supersession is real)
   const tip = Pins.headIsChainTip("backfill-pins.json")
   expect(tip.tip).toBe(false)

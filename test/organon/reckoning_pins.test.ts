@@ -13,16 +13,19 @@ test("Phase 0 — RECKONING pins self-hash: sha256(file minus pinsSha) === the s
   const j = pins()
   const { pinsSha, ...rest } = j
   expect(sha256(JSON.stringify(rest))).toBe(pinsSha)
-  // and Pins.selfHash agrees (HEAD_FILE is advanced to reckoning-pins.json)
-  expect(Pins.HEAD_FILE).toBe("reckoning-pins.json")
-  expect(Pins.selfHash().matches).toBe(true)
+  // HARDENING V45 — reckoning-pins is SUPERSEDED; HEAD_FILE advanced to hardening-pins.json (the arc moved one link forward).
+  // reckoning-pins stays self-consistent (its own selfHash still matches — the record is immutable), but it is no longer HEAD.
+  expect(Pins.HEAD_FILE).toBe("hardening-pins.json")
+  expect(Pins.selfHash("reckoning-pins.json").matches).toBe(true)
 })
 
 test("Phase 0 — the chain carries the TRUE V43 (Backfill) head 7bf877ce, read from disk", () => {
   const j = pins()
   expect(j.carriedFromPinsSha.slice(0, 8)).toBe("7bf877ce")
-  // reckoning-pins is the chain TIP (nothing carries from it — the M-1 recurrence guard)
-  expect(Pins.headIsChainTip().tip).toBe(true)
+  // HARDENING V45 — reckoning-pins is NO LONGER the tip (hardening-pins carries from it); the M-1 chain-tip guard BITES.
+  const tip = Pins.headIsChainTip("reckoning-pins.json")
+  expect(tip.tip).toBe(false)
+  expect(tip.supersededBy).toBe("hardening-pins.json")
 })
 
 test("Phase 0 — NO NEW LAW (a NINTH sprint); 17 laws, 0 minted; deps 2, screens 3", () => {

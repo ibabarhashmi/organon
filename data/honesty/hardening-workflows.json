@@ -1,0 +1,60 @@
+{
+  "protocol": "hardening-workflows",
+  "at": "2026-07-16",
+  "rule": "S203 (P-13) — every workflow a second human would walk is EXECUTED and committed as a transcript, FAILURE PATHS included (X-SHOWN(b)). The authoring is AGENT-labeled; realLineageCount stays 0 (an agent proves the door opens, never that a stranger walked it — A′#4). The terminal state is READY-UNVERIFIED-BY-A-SECOND-HUMAN.",
+  "workflows": [
+    {
+      "name": "first-run (offline Reality Check)",
+      "ran": true,
+      "agentTier": false,
+      "happyPath": "the fixture renders (status 200); every UNJUDGEABLE carries why + path (S199)",
+      "failurePath": "a nonexistent manifest id → status 404, an honest degrade (SAMPLE/empty), never a crash",
+      "failureExercised": true
+    },
+    {
+      "name": "capture (RPC read)",
+      "ran": true,
+      "agentTier": true,
+      "happyPath": "served by llamarpc, provider recorded per-point (S201)",
+      "failurePath": "UNREACHABLE{attempts:4, lastError} — nothing chained, the point is UNREACHABLE not REAL★",
+      "failureExercised": true
+    },
+    {
+      "name": "backfill (resume + dedupe)",
+      "ran": true,
+      "agentTier": true,
+      "happyPath": "CHAINED then DEDUPED on re-walk (idempotent — the same block twice does not fork the moat, DD-96)",
+      "failurePath": "a same-block-different-value CONFLICT is a loud HALT, never silently resolved",
+      "failureExercised": true
+    },
+    {
+      "name": "socket (MCP-over-stdio negotiation)",
+      "ran": true,
+      "agentTier": false,
+      "happyPath": "in-range version accepted (2025-11-25); stdio only, NO listener/port/daemon",
+      "failurePath": "out-of-range version REFUSED, naming the supported range [2024-11-05, 2025-03-26, 2025-06-18, 2025-11-25]",
+      "failureExercised": true
+    },
+    {
+      "name": "contagion score (dependency map)",
+      "ran": true,
+      "agentTier": false,
+      "happyPath": "two positions → a shared-dependency count (never counsel)",
+      "failurePath": "one position → UNJUDGEABLE (a count needs ≥2), never silently \"independent\"",
+      "failureExercised": true
+    },
+    {
+      "name": "author-to-the-brink (AGENT-quarantined)",
+      "ran": true,
+      "agentTier": true,
+      "happyPath": "the authoring door OPENS (the strategy layer accepts a manifest to its brink); a zero-observation strategy renders INSUFFICIENT with its path: \"INSUFFICIENT clears to GO when the observed length exceeds MinTRL AND …\"",
+      "failurePath": "the door is walked by the AGENT only — realLineageCount stays 0, IN2 (the first REAL manifest) is the Operator's; the transcript proves the MACHINERY, never a stranger's footprint (RP-6/A′#4)",
+      "failureExercised": true
+    }
+  ],
+  "allRan": true,
+  "allFailurePathsExercised": true,
+  "realLineageCount": 0,
+  "agentLabeledCount": 3,
+  "summary": "6 workflows executed, all ran=true, all failure-paths exercised=true; 3 AGENT-labeled; realLineageCount 0 (BY DESIGN)"
+}

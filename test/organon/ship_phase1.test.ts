@@ -33,6 +33,12 @@ import { Strict } from "../../src/studio/strict"
 import { Backfill } from "../../src/plane/backfill"
 import { Capture } from "../../src/strategy/capture"
 import { Contagion } from "../../src/strategy/contagion"
+import { Registry } from "../../src/organon/registry"
+import { Rpc } from "../../src/organon/rpc"
+import { GuardAggregate } from "../../src/organon/guardaggregate"
+import { Sidecar } from "../../src/organon/sidecar"
+import { Docs } from "../../src/organon/docs"
+import { Hardening } from "../../src/organon/hardening"
 
 const TERMINAL = "abc1234def5678000000000000000000000000ff"
 
@@ -92,13 +98,19 @@ function goodArtifacts(): Ship.Artifacts {
     judgeableReconciled: Capture.judgeableReconciled(), // S195
     contagion: (() => { const r = Contagion.mutationRate(); return { complete: r.complete, detail: r.note } })(), // S196
     delegation: Delegation.verdict(), // S197
+    // HARDENING V45 (S198–S209) — production readiness, honest so the V40/V42/V43/V44 walls run under the V45 gate.
+    oneState: State.oneStateVerdict(goodMarker()), // S198
+    emptyState: Hardening.emptyState(), crashSafety: Hardening.crashSafety(), rpcPolicy: Rpc.policyVerdict(), // S199/S200/S201
+    disclosures: { ok: true, detail: "test disclosures" }, workflows: Hardening.workflows(), // S202/S203
+    guardAggregate: GuardAggregate.verdict(), sidecar: Sidecar.verdict(), binaryParity: Hardening.binaryParity(), // S204/S205/S206
+    docs: Docs.verdict(), cleanMachine: { ok: true, detail: "test clean-machine" }, registry: Registry.check(), // S207/S209
   }
 }
 
 test("S151 (W-SH01) — Ship.gate PASSES on clean real-shaped artifacts; Ship.emit writes the LOG only then", () => {
   const g = Ship.gate(goodArtifacts())
   expect(g.pass).toBe(true)
-  expect(g.checks.length).toBe(24) // S152–S156 + S161 + S169–S174 (V42 identity gate) + S180–S183 (V43 continuity-total), all ✓
+  expect(g.checks.length).toBe(35) // S152–S156 + S161 + S169–S174 + S180–S183 + S190–S197 (24) + S198–S209 (11 HARDENING V45), all ✓
   const e = Ship.emit("FULL BUILD LOG CONTENT", goodArtifacts(), "2026-07-15")
   expect(e.wrote).toBe("log")
   if (e.wrote === "log") expect(e.content).toBe("FULL BUILD LOG CONTENT")
@@ -194,6 +206,7 @@ test("S156 (W-SH06) — the continuity ledger EXPLAINS the 1706→1738 gap (MR19
   expect(terminals).toContain(1844) // V40's terminal — what V41's baseline.prevFullPass equalled
   expect(terminals).toContain(1892) // V41's terminal
   expect(terminals).toContain(1941) // V42's terminal — what V43's baseline.prevFullPass equalled
-  expect(terminals[terminals.length - 1]).toBe(1991) // RECKONING V44: V43's terminal appended — what V44's baseline.prevFullPass must equal
+  expect(terminals).toContain(1991) // V43's terminal — what V44's baseline.prevFullPass equalled
+  expect(terminals[terminals.length - 1]).toBe(2024) // HARDENING V45: V44's terminal appended — what V45's baseline.prevFullPass must equal
   expect(ledger.mr19).toMatch(/1706→1738|Surrogate Addendum/)
 })

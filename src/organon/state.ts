@@ -83,18 +83,26 @@ export namespace State {
     })
 
     // PROVENANCE V42 (MR20/S174) — M-6: D80–D83 were pinned and gated (V41) but ABSENT from the machine-readable state list,
-    // which enumerated only D51/D33/D63/D27. The ONE producer now folds in every RESERVED deviation from the current pins
-    // heads (variant D80–D83, provenance D84–D86), each RESERVED and Operator-signed=false (LN5). A pinned deviation absent
-    // from deviationStates FAILS S174 — the state list can no longer under-enumerate what the gate presents.
+    // which enumerated only D51/D33/D63/D27. The ONE producer now folds in every pinned deviation from the current pins heads
+    // (variant D80–D83, provenance D84–D86, backfill/reckoning D87–D91, hardening D92–D96), Operator-signed=false (LN5). A
+    // pinned deviation absent from deviationStates FAILS S174 — the state list can no longer under-enumerate the gate.
+    //
+    // HARDENING V45 (P-1/S198/DD-95) — THE STATE IS NO LONGER HARDCODED "RESERVED". V44's marker held D87/D88/D89 as
+    // deviationStates:RESERVED while its reckoning block said AGENT-RATIFIED — the S150 defect class recurring because the
+    // fold hardcoded "RESERVED" for every folded deviation, contradicting the block that ratified them. The fix: the state
+    // comes from the PINNED AUTHORITY MAP (hardening-pins.deviationStates — DEVIATION_STATE_AUTHORITY), which is THE single
+    // source of a folded deviation's current state (D87/D88/D89 AGENT-RATIFIED, D90 SHIPPED, the rest RESERVED). Every
+    // generated block that names a state now READS this producer; a disagreeing block REFUSES the log (S198).
+    const authority = deviationStateAuthority()
     const seen = new Set(out.map((d) => d.id))
-    for (const f of ["variant-pins.json", "provenance-pins.json", "backfill-pins.json", "reckoning-pins.json"]) {
+    for (const f of ["variant-pins.json", "provenance-pins.json", "backfill-pins.json", "reckoning-pins.json", "hardening-pins.json"]) {
       const p = tryRead(f)
       const devs = p?.deviations as Record<string, unknown> | undefined
       if (!devs) continue
       for (const [id, detail] of Object.entries(devs)) {
         if (!/^D\d+$/.test(id) || seen.has(id)) continue // skip mr13/mr20/operatorGatedNote and any already-enumerated id
         const s = String(detail)
-        out.push({ id, state: "RESERVED", detail: `${s.slice(0, 220)}${s.length > 220 ? "…" : ""}`, source: `${f} → deviations.${id} (Operator-signed=false, LN5)` })
+        out.push({ id, state: authority[id] ?? "RESERVED", detail: `${s.slice(0, 220)}${s.length > 220 ? "…" : ""}`, source: `${f} → deviations.${id}; state from hardening-pins.deviationStates (the ONE authority, S198); Operator-signed=false, LN5` })
         seen.add(id)
       }
     }
@@ -104,6 +112,71 @@ export namespace State {
 
   export function byId(id: string): Deviation | undefined {
     return deviations().find((d) => d.id === id)
+  }
+
+  // HARDENING V45 (P-1/S198/DD-95) — the PINNED AUTHORITY MAP: a folded deviation's TRUE current state (the derived four —
+  // D51/D33/D63/D27 — keep their live derivations). hardening-pins.deviationStates is THE single source; before V45 the fold
+  // hardcoded "RESERVED", which is exactly how V44's marker came to hold two states for D87/D88/D89 (S150 recurring).
+  export function deviationStateAuthority(): Record<string, string> {
+    const h = tryRead("hardening-pins.json")
+    return (h?.deviationStates as Record<string, string> | undefined) ?? {}
+  }
+  // the extended state vocabulary (DD-95) — one word can now be true everywhere (AGENT-RATIFIED, SHIPPED, …). A rendered
+  // state outside this set is itself a defect (a block invented a word the producer does not know).
+  export function stateVocabulary(): string[] {
+    const h = tryRead("hardening-pins.json")
+    return (h?.stateVocabulary as string[] | undefined) ?? ["ANSWERED", "SIGNABLE", "OFF", "FIRST", "STRICT", "AGENT-RATIFIED", "SHIPPED", "RESERVED", "CLOSED"]
+  }
+
+  // ── S198 (P-1/DD-95) — THE CROSS-READ. Extract every (deviationId, state) claim a generated artifact makes — the
+  // deviationStates array [{id, state}], the reckoning.delegation block {D87: "AGENT-RATIFIED", …}, or ANY object that pairs a
+  // /^D\d+$/ key with a vocabulary-word string, or an {id, state} shape. A claim whose state ≠ the ONE producer's REFUSES the
+  // log. This closes the S150 defect class for blocks that DO NOT EXIST YET: a V50 block that names a state without reading
+  // State.deviations() lands in `contradictions` and the gate refuses at emit. ──
+  export interface Claim { id: string; state: string; where: string }
+  export function deviationClaims(artifact: unknown): Claim[] {
+    const vocab = new Set(stateVocabulary())
+    const claims: Claim[] = []
+    const walk = (o: unknown, at: string) => {
+      if (o === null || typeof o !== "object") return
+      if (Array.isArray(o)) {
+        // an {id, state} array element (the deviationStates shape) — or nested arrays
+        for (let i = 0; i < o.length; i++) {
+          const el = o[i] as Record<string, unknown>
+          if (el && typeof el === "object" && !Array.isArray(el) && typeof el.id === "string" && /^D\d+$/.test(el.id) && typeof el.state === "string")
+            claims.push({ id: el.id, state: el.state, where: `${at}[${i}]` })
+          walk(o[i], `${at}[${i}]`)
+        }
+        return
+      }
+      const rec = o as Record<string, unknown>
+      // an {id, state} object (a single deviation)
+      if (typeof rec.id === "string" && /^D\d+$/.test(rec.id) && typeof rec.state === "string")
+        claims.push({ id: rec.id, state: rec.state, where: at })
+      for (const [k, val] of Object.entries(rec)) {
+        // a key that IS a deviation id mapped to a vocabulary state-word (the reckoning.delegation shape: {D87: "AGENT-RATIFIED"})
+        if (/^D\d+$/.test(k) && typeof val === "string" && vocab.has(val))
+          claims.push({ id: k, state: val, where: `${at}.${k}` })
+        walk(val, at ? `${at}.${k}` : k)
+      }
+    }
+    walk(artifact, "")
+    return claims
+  }
+
+  export type OneState = { ok: true; detail: string; claims: Claim[] } | { ok: false; reason: string; claims: Claim[] }
+  // S198 — every claim in the artifact must equal the ONE producer's state for that id. A seeded two-state artifact (the P-1
+  // defect, e.g. reckoning.delegation.D87 = "RESERVED" while the producer says AGENT-RATIFIED) REFUSES.
+  export function oneStateVerdict(artifact: unknown): OneState {
+    const producer = new Map(deviations().map((d) => [d.id, d.state]))
+    const claims = deviationClaims(artifact)
+    for (const c of claims) {
+      const truth = producer.get(c.id)
+      if (truth === undefined) continue // a claim about a deviation the producer does not enumerate — S174 catches under-enumeration separately
+      if (truth !== c.state)
+        return { ok: false, reason: `a generated block holds a SECOND state for ${c.id}: at ${c.where} it says "${c.state}" while the ONE producer (State.deviations) says "${truth}" — the S150 two-state defect (P-1/S198); every block must READ the producer`, claims }
+    }
+    return { ok: true, detail: `${claims.length} deviation-state claim(s) across the artifact, every one === the ONE producer (S198 — the two-state defect class closed for blocks that do not exist yet)`, claims }
   }
 
   // S150 — given the states a render actually emitted ({id: renderedState}), return the ids whose rendered state CONTRADICTS
